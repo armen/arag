@@ -25,9 +25,6 @@ wget -c -P /tmp http://smarty.php.net/do_download.php?download_file=Smarty-2.6.1
 tar xvfz /tmp/Smarty-2.6.18.tar.gz
 mv ./Smarty-2.6.18/libs ${LIBS_PATH}/smarty
 
-rm -rf ./Smarty-2.6.18/
-rm -rf /tmp/Smarty-2.6.18.tar.gz
-
 # Download ci
 
 if [ -d $LIBS_PATH/ci ]; then
@@ -38,6 +35,11 @@ wget -c -P /tmp http://codeigniter.com/downloads/CodeIgniter_1.5.4.zip
 unzip /tmp/CodeIgniter_1.5.4.zip
 
 mv ./CodeIgniter_1.5.4/system ${LIBS_PATH}/ci
+
+# Cleanup
+
+rm -rf ./Smarty-2.6.18/
+rm -rf /tmp/Smarty-2.6.18.tar.gz
 
 rm -rf ./CodeIgniter_1.5.4
 rm -rf /tmp/CodeIgniter_1.5.4.zip
