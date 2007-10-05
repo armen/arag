@@ -1,0 +1,555 @@
+﻿===== Getting Started =====
+
+==== Installation Instructions ====
+
+=== Installing from SVN ===
+
+1) Checkout a copy from SVN:
+<code bash>
+  svn co svn+ssh://<your-username>@svn.projects.des/svnroot/arag/trunk arag
+</code>
+2) Download third party libraries:
+<code bash>
+  ./arag/etc/scripts/get_third_party.sh
+</code>
+
+This command simply downloads and extracts the "CodeIgniter-1.5.4" and moves the system directory content to "libs/ci" then it downloads and extracts the "Smarty-2.6.18" and moves libs directory content to "libs/smarty".
+
+3) Set "webapp/cache" directory to be writeable by your web server:
+<code bash>
+  chmod 777 arag/webapp/cache/
+</code>
+
+===== Arag Basics =====
+
+==== Directory structure ====
+These are the directories found at the root of the Arag project:
+
+  +-- etc
+  |    +-- scripts
+  |
+  +-- libs
+  |    +-- smarty
+  |    +-- ci
+  |  
+  +-- public_html
+  |    +-- images
+  |    +-- styles
+  |    +-- index.php
+  |
+  +-- webapp
+       +-- cache
+       +-- components  
+       +-- config
+       +-- errors  
+       +-- helpers 
+       +-- hooks
+       +-- libraries
+       +-- models
+       +-- modules
+       +-- templates
+
+In the following table you can find a brief introduction for some of these directories(for directories not listed below refer to the CodeIgniter  documentation):
+
+^ Directory  	    ^ Description ^
+| etc/scripts       | Contains bash or PHP scripts called from a command line. |
+| libs              | Contains libraries which will be used in applications. At least it contains Smarty (/smarty) and CodeIgniter (/ci). |
+| public_html       | Contains front controller, styles and images. In general it contains everything we need to send to end user client. |
+| webapp/components | Contains Smarty components. |
+| webapp/helpers    | Contains Smarty helper wrappers. |
+| weabpp/libraries  | Contains Arag libraries which extends CodeIgneter libraries. | 
+| webapp/modules    | Contains modules. |
+| webapp/templates  | Contains global templates and Smarty plugins/configs. |
+
+==== Arag configuration file ====
+Arag configuration file is located at "webapp/configs/arag_configs.php". 
+The major configurations are Smarty settings, you can enable or disable Smarty integration, change security settings add filters and etc.
+
+==== Arag Controllers ====
+In Arag project has its own controller class which your controller should extends the parent controller class so that it can inherit all its functions.
+
+For example:
+
+  class MyController extends Arag_Controller
+  {
+     
+  }
+
+If you intend to use a constructor in any of your Controllers, you MUST place parent constructor call in custroctor as following example:
+
+  class MyController extends Arag_Controller
+  {
+      function MyController()
+      {
+          parent::MyController();
+      }     
+  }
+
+==== Modules ====
+In CodeIgniter we don't have Modules. Modules are implemented for Arag project.
+Two major things you have to know about Arag modules: first there is an additional segment in URI that specified what modules should be executed and the second one is directory structure of modules.
+
+In Arag there is no application directory, instead we have modules directory contains modules. 
+Directory structure of modules could be something like this:
+
+  +-- webapp
+       ...
+       +-- modules
+            +-- <module_name>
+            |      +-- controllers
+            |      +-- models
+            |      +-- templates
+            |
+            +-- <module_name2>
+                   +-- controllers
+                   +-- models
+                   +-- templates
+
+For example the URI for first module specified in above structure, in the case of executing backend controller and post method is: "/<module_name>/backend/post"
+
+The CodeIgniter routing system changed to handle the modules in URI. Also an additional route settings added to set default module.
+
+For example this is the default "webapp/configs/routes.php" file of Arag project:
+
+  $route['default_module']      = "arag";
+  $route['default_controller']  = "arag";
+  $route['scaffolding_trigger'] = "";
+
+Above example will load Arag controller from Arag module, when module and controller names are not specified in URI.
+
+
+
+
+
+==== Models and Global Models ====
+Models are exactly same as what they are in CodeIgniter, the only difference is the location of related files. In general, models are located at "webapp/modules/<module_name>/models/<model_name>.php".
+
+You can load models in same way you do in CodeIgniter but it has some additional tricks:
+
+  $this->load->model('ExampleModel');
+
+This will load a model called ExampleModel in current module. But what if you want to specify a module name too? Just use an Array to specify the model and module name as following example:
+
+  $this->load->model(Array('ExampleModel', 'ExampleModule'));
+
+In both above examples if the called model doesn't exist, the loader will try to load a global model from "webapp/models/" directory. Simple, isn't it?!
+
+==== Templates ====
+
+Don't worry, there is nothing new here except that in Arag, "views" directory renamed to "templates", so that you can put Smarty template files there, too.
+
+Lets have a closer look at it. For example you can have a file called "index.php" and another one "index.tpl" and simply load the view with following code:
+
+  $this->load->view('index'); 
+
+If Smarty integration is enabled in "arag_configs.php", loader will load "index.tpl" file otherwise it will load "index.php".
+In ".tpl" files you can use Smarty templates engine language, Smarty plugins and helpers.
+
+==== Global smarty plugins ====
+
+In Arag project there is several smarty plugins located at "webapp/templates/smarty_templates/". These plugins are loaded by default and are accessible in all smarty template files.
+
+=== Blocks ===
+
+"arag_block" is just Smarty block plugin to wrap contents. Blocks make templates much readable and flexibly in case of designing.
+
+The following sample code shows how to use a block:
+
+  {arag_block title="This is a test!"}
+     {arag_block template="blank"}
+        This is a default block wrapped in a blank block.
+     {/arag_block}
+  {/arag_block}
+
+This code generates this XHTML: 
+
+   <div class="arag_block" dir="ltr">
+       <div class="arag_block_title">This is a test!</div>
+       <div class="arag_block_content arag_tags_ds">
+           <div class="arag_blank_block" dir="ltr">
+               <div class="arag_blank_block_content arag_tags_ds">This is a default block wrapped in a blank block.</div> 
+           </div>
+       </div>
+   </div>
+
+As you can see blocks are much cleaner and flexible than plain XHTML. When you are using blocks, there is no difficulty to validate the xhtml markup or taking care of padding, margin and in other general design concepts of blocks.
+
+Each block has two optional attribute. The first one is "title" which specifies title of block and "template" is the second one which specifies which template the block should use.
+
+Possible templates which you can use are:
+
+^ Template Name ^ Description ^
+| arag_block | When "template" attribute was not specified this template will be used as default template |
+| blank         | This templates create an blank block without any styles except that it taking care of padding |
+| default       | This is default template of the application, beware that, this is not the default template when "template" attribute was not specified  |
+| empty         | This is actually an empty block without any kind of style |
+| error         | This is template for error messages |
+| info          | This is template for info messages |
+| warning       | This is template for warning messages |
+
+
+You can find all the block templates at "webapp/templates/arag_blocks/<template_name>.tpl" and style sheet file of all blocks is located at "public_html/styles/styles.css".
+
+You can simply add custom template for "arag_block" if it's needed. For more information check out one of existing templates .
+If you are interested about arag_block plugin itself, it is accessible at "webapp/templates/smarty_plugins/block.arag_block.php"
+
+=== Directions and Alignments ===
+
+There are three plugins for working with direction and alignment of XHTML tags. These plugins return correct values depend on what language is selected and what its text direction is.
+
+Following code shows how to use these plugins:
+
+  <table border="0" dir="{dir}">
+  <tr>
+      <td align="{right}">_("Title"):</td>
+      <td align="{left}">
+          <input type="text" name="title" />
+      </td>
+  </tr>
+  <!-- ... -->
+  </table>
+
+In above example, {dir} returns exactly the current language direction (for example ltr, rtl, etc.) and {right} or {left} returns alignment depends on the current language text direction. For example in ltr(left to right) direction, {right} will return 'right' (without quotes) and {left} will return 'left'(without quotes) if it was rtl.
+
+Using these plugins, make templates flexible to different languages with different text directions.
+
+=== Escape ===
+
+"arag_escape" is a Smarty modifier and prefilter to convert all applicable characters to HTML entities; In general it escapes the output.
+
+So when you are using a Smarty variable it will be escaped automatically. Following example shows what we are talking about:
+
+  // Controller
+  $this->load->vars('my_html_code', '<script language="javascript">alert('XSS');</script>');
+  
+  // Template
+  {$my_html_code}
+  
+  // Expected output
+  <script language="javascript">alert('XSS');</script> 
+
+If you execute this example resulting in an unexpected output it shows that "arag_escape" modifier is not enabled. To solve the problem you should configure it in "arag_config.php" file.
+
+Sometimes you don't want to escape a variable by default, so you can use following code in such cases:
+
+ {$my_safe_html|smarty:nodefaults}
+
+Also in some cases you might have to use "smarty:nodefaults", otherwise Smarty will throw a strange error. For example when you are using "isset" function in "if" statements:
+
+  {if isset($my_var|smarty:nodefaults)}
+     My var is defined.
+  {/if}
+
+=== Head ===
+
+"arag_head" is also a Smarty function plugin which returns site's head contents.
+
+You can see how to use it between "head" XHTML tags in the below:
+
+  <html>
+  <head>
+       <title>Arag</title>
+       {arag_head}
+  </head>
+  <body>
+       <!-- ... -->
+  </body>
+  </html>
+
+This plugin simply includes a template file located at "webapp/templates/arag_templates/head.tpl".
+
+Following example is the default "head.tpl" file for Arag project:
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="icon" href="{$arag_base_url|smarty:nodefaults}/images/misc/favicon.ico" type="image/x-icon" />
+  <link rel="shortcut icon" href="{$arag_base_url|smarty:nodefaults}/images/misc/favicon.ico" type="image/x-icon" />
+  <link rel="stylesheet" media="all" type="text/css" title="Arag" 
+        href="{$arag_base_url|smarty:nodefaults}/styles/styles.css" />    
+
+==== Decoration and Decorators ====
+
+"Decoration and Decorators" is a new feature implemented in Arag project.
+
+By this feature, any method in controller might have a decorator template. Following code shows how to use a decorator template to decorate a controller:
+
+  // Controller
+  function index()
+  {
+      $this->load->decorator('decorator');            
+      $this->load->view('index');
+  }
+  
+  // index.tpl
+  <h3>This is index page</h3>
+  
+  // Decorator (decorate.tpl)
+  <html>
+  <head>
+      <title>Arag</title>
+      {arag_head}
+  </head>
+  <body>
+      {slot name="content"}
+  </body>
+  </html>
+
+With "slot", Smarty function plugin, you can fetch a specified slot's contents. For example in above example slot fetches a slot called "content", expected output of this line is "<h3>This is index page</h3>". 
+
+"content" slot is a general slot and it contains requested method's contents. For example if requested URI is "blog/backend/index", it contains the index method from "backend" controller output.
+
+To create a slot, you can simply call a method from controller as following example:
+
+  // Controller
+  function index()
+  {
+      $this->load->decorator('decorator');            
+      $this->load->view('index');
+      
+      $this->post();
+  }
+  
+  function post()
+  {
+      $this->load->view('post');
+  }
+  
+  // post.tpl
+  <h3>This is post page</h3>
+  
+  // Decorator (decorate.tpl)
+  <html>
+  <head>
+      <title>Arag</title>
+      {arag_head}
+  </head>
+  <body>
+      {slot name="post"}
+      {slot name="content"}
+  </body>
+  </html>
+
+If your decorator template file is not located at "templates" directory of module then loader will try to fetch it from global templates directory at "webapp/templates/". So you can have a global decorator which will be accessible in all Smarty templates.
+
+==== Helpers ====
+
+When Smarty integration is enabled, helpers are not accessible in Smarty templates. But we can implement some Smarty plugins as wrappers between Smarty and helper functions in "webapp/helpers/<helper_name>" directory. We implemented some helper wrappers for you, so if you load a helper and it was accessible in Smarty templates, it shows it is implemented before, otherwise you have to write it yourself. Writing a wrapper is very simple. You can checkout "webapp/helpers/url/function.anchore.php" or any existing wrapper source code available at "webapp/helpers/" folder to understand "How to write a wrapper yourself in 24 seconds" :P.
+
+Loading a wrapper is simply done when you load a helper as following:
+
+  $this->load->helper('url');
+
+And it will be accessible in Smarty templates as simple as writing (in this case we are using anchor wrapper):
+
+  {anchor uri="example/test/sample_id"}
+
+If Smarty throws an error you have to handle it yourself as described :).
+
+==== Components ====
+
+Component is a new feature implemented in Arag project which probably you are not familiar with it.
+
+components are located at "webapp/components" directory and has a directory structure as following:
+
+  +-- webapp
+       ...
+       +-- components
+            +-- <component_name>
+            |      +-- component
+            |      |      +-- <component_name>.php
+            |      |
+            |      +-- plugins
+            |      +-- templates
+            |
+            +-- <component_name2>
+                   +-- component
+                   |      +-- <component_name2>.php
+                   |
+                   +-- plugins
+                   +-- templates
+
+At the moment components are just accessible in Smarty templates, so you don't have any chance to use components when Smarty integration is disabled.
+We don't have any plan to implement it for native template engine but it is not hard to do that.
+
+Lets see how to load a component with an example:
+
+  $this->load->component('MyComponent');
+
+And it will be accessible in Smarty templates as following:
+  
+  {my_component attribute="hi"}
+
+If you need to do something directly with a component itself, e.g. setting an option, you can do it like this:
+
+  $this->MyComponent->setAnExampleOption('BlahBlah');
+
+If you are confused don't worry we will explain how to use components with real world examples later.
+
+=== PList Component ===
+
+"PList" is a paginate list component. You can simply pass Array or any type of Iterator to it and it will generate a paginate list.
+
+The following example shows how to create a simple list:
+
+  // Controller
+  $this->load->component('PList');
+  $this->Plist->setResource(Array(Array('Brous', 'Willis'), Array('Tom', 'Cruise'), Array('John', 'Travolta')));
+  $this->Plist->addColumn(0, 'Name');        
+  $this->Plist->addColumn(1, 'Lastname');
+  
+  // Template
+  {arag_plist}
+
+"setResource" method used to specify our resource and "addColumn" used to create columns of the list.
+"addColumn" simply used to specify what column we want to show and what label it should take.
+
+and another example
+
+  // Controller
+  $this->load->model('BlogModel');
+  $this->load->component('PList', 'BlogList');
+  
+  $this->BlogList->setResource($this->BlogModel->getEntries());
+  $this->BlogList->setLimit(4);
+  $this->BlogList->addColumn('subject', 'Subject');        
+  $this->BlogList->addColumn('author', 'Author');
+  $this->BlogList->addColumn('BlogModel.getDate', 'Create Date', PList::VIRTUAL_COLUMN);
+  $this->BlogList->addAction('blog/backend/edit/#id#', 'Edit', 'edit_action', 'BlogModel.editIsDisble');
+  $this->BlogList->addAction('blog/backend/delete/#id#', 'Delete');
+  
+  // Template 
+  {arag_plist name="BlogList"}
+
+We passed an additional parameter to "load->component" to make a custom name for our list. This feature is useful when you want to use more than one "PList" in a single template file.
+
+As you probably guessed "setLimit" used to set number of rows which should be shown in the list. If number of records is greater than our limit, "Plist" will use paginate to provide access to other pages and actually paginate our list.
+
+In third "addColumn" method you can see how to create virtual columns. Virtual columns are used to show additional columns which are not in resource it self.
+Every virtual column is simply a callback and it called with passed current row data. 
+In above example "BlogMode.getDate" is a virtual column callback. The following code shows "getDate" method of "BlogModel" model.
+
+  class BlogModel extends Model 
+  {
+      // ...
+      
+      function getDate($row)
+      {
+          return date('Y-m-d H:i:s', $row['create_date']);
+      }
+  }
+ 
+Lets try to explain how it works. When "Plist" reaches a virtual column in its columns list, it tries to call the virtual column callback. For example in above sample, "PList" will call "getDate" method from "BlogModel" model for each row of the list. "getDate" in each call, takes a parameter that is the current row content in which "PList" iterator is in; Then it uses that parameter to format a Unix timestamp to a human readable date string.
+
+Long story short, in general, returned content of a virtual column will be presented exactly in current row of the list.
+
+Following table shows possible formats of virtual column callback names:
+
+^ Callback                     ^ Description ^
+| <model_name>.<callback_name> | Will call "callback_name" method from "model_name" model | 
+| <class_name>::<method_name>  | Will call "method_name" static method from "class_name" class |
+| <method_name>                | Will call "method_name" method from specified resource (In case of the resource was Iterator) |
+
+Now lets create a directory listing from "/tmp" directory:
+
+  // Controller
+  $this->load->component('PList', 'directory');
+  $this->directory->setResource(new RecursiveDirectoryIterator('/tmp'));
+  $this->directory->setLimit(4);
+  $this->directory->addColumn('Directory');
+  $this->directory->addColumn('getOwner', 'Owner', PList::VIRTUAL_COLUMN);
+  $this->directory->addColumn('getGroup', 'Group', PList::VIRTUAL_COLUMN);
+  $this->directory->addColumn('getSize', 'Size', PList::VIRTUAL_COLUMN);
+  
+  // Template
+  {arag_plist name="directory"}
+
+As you probably guessed "getOwner", "getGroup" and "getSize" methods belongs to "RecursiveDirectoryIterator" object.
+
+There is an optional attribute for "arag_plist" plugin called "template". You can specify a custom template for list, following example shows how to use this feature.
+
+  {arag_plist template="my_custom_template"}
+
+You can put your custom template file (in this case "my_custom_template.tpl") in your module "templates/" directory or in "components/plist/templates" directory if you want it become accessible from everywhere.
+
+For more information about how to write a custom template for "Plist" you can checkout "Plist" default template file located at "components/plist/templates/horizontal.tpl".
+
+If you are interested about callable methods of "PList" component which you can use, please check out "components/plist/component/plist.php".
+
+=== TabbedBlock Component ===
+
+"TabbedBlock" is a component for creating tabs. Following example shows you how to create tabs with "TabbedBlock" component:
+
+  // Controller
+  $this->TabbedBlock->setTitle('Hello');
+  $this->TabbedBlock->addItem('Index', 'blog/backend/index');
+  $this->TabbedBlock->addItem('Post', 'blog/backend/post');
+  $this->TabbedBlock->addItem('Arag', 'arag/');
+
+  // Template
+  {arag_tabbed_block}
+     
+     <h3>This is content of tabbed block</h3>  
+      
+  {/arag_tabbed_block}
+ 
+As you saw you can simply add items or tabs to "TabbedBlock" component with "addItem" method. You can also set title of "TabbedBlock" with "setTitle" method.
+
+If you want to share a "TabbedBlock" component between a controller's methods you can simply put it in the constructor of the controller as following example:
+
+  class ExampleCtrl extends Arag_Controller {
+  
+      function ExampleCtrl()
+      {
+          parent::Arag_Controller();
+    
+          $this->TabbedBlock->setTitle('ExampleCtrl');
+          $this->TabbedBlock->addItem('Index', 'blog/examplectrl/index');
+          $this->TabbedBlock->addItem('Post', 'blog/examplectrl/create');
+      }
+  
+      function index()
+      {
+          // ...
+      }
+  
+      function create()
+      {
+          // ...
+      }
+  }
+
+There is an optional attribute for "arag_tabbed_block" plugin called "template". With this attribute you can specify a custom template for your "TabbedBlock". following example shows you how to use this feature:
+
+  {arag_tabbed_block template="my_custom_template"}
+
+You should put your custom template file (in this case "my_custom_template.tpl") in your module "templates/" directory or in "components/tabbedblock/tempates" directory if you want it becomes accessible from everywhere.
+
+For more information about how to write a custom template for "TabbedBlock" you can checkout "TabbedBlock" default template file located at "components/tabbedblock/templates/arag_tabbed_block.tpl".
+
+If you are interested about callable methods of "TabbedBlock" component which you can use, please check out "components/tabbedblock/component/tabbedblock.php".
+
+==== Arag Libraries ====
+
+There are several libraries in Arag project which each of them extends some libraries from CodeIgniter. In the lake of API documentation of implemented features, this directory is a good place to start with.
+
+Currently there are several libraries in Arags project listed below:
+
+^ Library  	     ^ Extends      ^
+| Arag_Controller | Controller   |
+| Arag_Loader     | Loader       |
+| Arag_Output     | Output       |
+| Arag_Router     | Router       |
+| Arag_Smarty     |      -       |
+| Components         |      -       |
+| Arag            |      -       |
+
+Arag ("Arag.php") is what called "CodeIgniter.php" in CodeIgniter libraries directory.
+
+Components and "Arag_Smarty" are implemented for Arag project and those not have parent class in CodeIgniter.
+
+==== Benchmark ====
+
+|               ^ RPS (Enabled caching) ^       RPS      ^
+^ Arag (ESI) |          77.56        |      26.93     |   
+^ Arag       |          78.02        |      39.58     |  
+^ CodeIgniter   |          84.17        |      47.52     |
+| ESI: Enabled Smarty integration |||

@@ -1,0 +1,11 @@
+Installing from SVN
+-------------------------------------
+
+1) Checkout a copy from SVN
+        svn co svn+ssh://<your-username>@svn.projects.des/svnroot/arag/trunk arag
+
+2) Download third party libraries
+        ./arag/etc/scripts/get_third_party.sh
+
+3) Set webapp/cache directory to be writeable by your web server
+        chmod 777 arag/webapp/cache/
