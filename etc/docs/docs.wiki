@@ -6,7 +6,7 @@
 
 1) Checkout a copy from SVN:
 <code bash>
-  svn co svn+ssh://<your-username>@svn.projects.des/svnroot/arag/trunk arag
+  svn checkout svn://svn.osp.ir/svnroot/arag/trunk arag
 </code>
 2) Download third party libraries:
 <code bash>
@@ -51,7 +51,7 @@ These are the directories found at the root of the Arag project:
 
 In the following table you can find a brief introduction for some of these directories(for directories not listed below refer to the CodeIgniter  documentation):
 
-^ Directory  	    ^ Description ^
+^ Directory         ^ Description ^
 | etc/scripts       | Contains bash or PHP scripts called from a command line. |
 | libs              | Contains libraries which will be used in applications. At least it contains Smarty (/smarty) and CodeIgniter (/ci). |
 | public_html       | Contains front controller, styles and images. In general it contains everything we need to send to end user client. |
@@ -533,13 +533,13 @@ There are several libraries in Arag project which each of them extends some libr
 
 Currently there are several libraries in Arags project listed below:
 
-^ Library  	     ^ Extends      ^
+^ Library         ^ Extends      ^
 | Arag_Controller | Controller   |
 | Arag_Loader     | Loader       |
 | Arag_Output     | Output       |
 | Arag_Router     | Router       |
 | Arag_Smarty     |      -       |
-| Components         |      -       |
+| Components      |      -       |
 | Arag            |      -       |
 
 Arag ("Arag.php") is what called "CodeIgniter.php" in CodeIgniter libraries directory.
@@ -549,7 +549,7 @@ Components and "Arag_Smarty" are implemented for Arag project and those not have
 ==== Benchmark ====
 
 |               ^ RPS (Enabled caching) ^       RPS      ^
-^ Arag (ESI) |          77.56        |      26.93     |   
-^ Arag       |          78.02        |      39.58     |  
-^ CodeIgniter   |          84.17        |      47.52     |
+^ Arag (ESI)    |        77.56          |      26.93     |   
+^ Arag          |        78.02          |      39.58     |  
+^ CodeIgniter   |        84.17          |      47.52     |
 | ESI: Enabled Smarty integration |||
