@@ -63,7 +63,7 @@ function smarty_block_arag_tabbed_block($params, $content, &$smarty, &$repeat)
 
                 @list($module, $class, $method) = explode('/', $item['uri']);
 
-                if ($module == $moduleName && $class == $className && 
+                if ($item['selected'] != True && $module == $moduleName && $class == $className && 
                     ($method == $methodName || ($methodName == Null && $method == 'index'))) {
 
                     $selectedItem = $item['name'];

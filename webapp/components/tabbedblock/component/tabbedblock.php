@@ -37,12 +37,13 @@ class TabbedBlock extends Component
     }
     // }}}
     // {{{ addItem
-    function addItem($name, $uri, $title = Null, $enabled = True)
+    function addItem($name, $uri, $title = Null, $selected = Null, $enabled = True)
     {
-        $items = Array( 'name'    => $name, 
-                        'uri'     => $uri,
-                        'enabled' => $enabled,
-                        'title'   => ($title == Null) ? $name : $title);
+        $items = Array( 'name'     => $name, 
+                        'uri'      => $uri,
+                        'selected' => $selected,
+                        'enabled'  => $enabled,
+                        'title'    => ($title == Null) ? $name : $title);
 
         $this->_items[] = $items;
     }
