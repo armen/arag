@@ -15,7 +15,7 @@ body {
 input, textarea, select {
     font-size       : 12px;
     font-family     : Tahoma, Verdana, Arial, Helvetica, sans-serif;
-    border          : 1px dotted #aaaaaa;
+    border          : 1px dotted #776655;
     padding         : 0px;
     background-color: #eeeeee;
     color           : #888888;
@@ -34,14 +34,14 @@ input, textarea, select {
     background-color: #ffffff;
     margin          : 0px 0px 10px 0px;
     padding         : 10px 10px 0px 10px;
-    border          : 1px dotted #aaaaaa;
+    border          : 1px dotted #776655;
 }
 .arag_block_title {
     margin          : 0px;
     padding         : 6px;
-    border-right    : 1px dotted #aaaaaa;
-    border-left     : 1px dotted #aaaaaa;
-    border-top      : 1px dotted #aaaaaa;
+    border-right    : 1px dashed #776655;
+    border-left     : 1px dashed #776655;
+    border-top      : 1px dashed #776655;
     background-color: #eeeeee;
     color           : #888888;    
     text-align      : center;
@@ -85,8 +85,8 @@ input, textarea, select {
 .arag_default_block_body {
     margin          : 0px;
     padding         : 2px;
-    border-left     : 1px solid #dcdcdc;
-    border-right    : 1px solid #dcdcdc;
+    border-left     : 1px solid #776655;
+    border-right    : 1px solid #776655;
 }
 .arag_default_block_bl {
     background      : transparent url(../images/block/rounded_line_bottom_left.png) bottom left no-repeat;
@@ -105,7 +105,7 @@ input, textarea, select {
 .arag_error_block_content {
     margin          : 0px 0px 10px 0px;
     padding         : 9px 35px;
-    border          : 1px solid #ff7575;
+    border          : 1px solid #776655;
 }
 /* end of arag_error_block# }}} */
 /* {{{ #arag_info_block */
@@ -116,7 +116,7 @@ input, textarea, select {
 .arag_info_block_content {
     margin          : 0px 0px 10px 0px;
     padding         : 9px 35px;
-    border          : 1px solid #4dbd60;
+    border          : 1px solid #776655;
 }
 /* end of arag_info_block# }}} */
 /* {{{ #arag_warning_block */
@@ -131,7 +131,7 @@ input, textarea, select {
 .arag_warning_block_content {
     margin          : 0px 0px 10px 0px;
     padding         : 9px 35px;
-    border          : 1px solid #ffdf49;
+    border          : 1px solid #776655;
 }
 /* end of arag_warning_block# }}} */
 /* {{{ #arag_blank_block */
@@ -170,7 +170,7 @@ input, textarea, select {
     margin-bottom   : 0px;
 }
 .arag_tags_ds input, select {
-    border          : 1px solid #bcbaa2;
+    border          : 1px solid #776655;
     margin          : 1px;
     background-color: #f5f4eb;
 }
@@ -178,7 +178,7 @@ input, textarea, select {
     padding         : 1px;
     width           : 300px;
     height          : 100px;
-    border          : 1px solid #bcbaa2;
+    border          : 1px solid #776655;
     margin          : 3px;
     background-color: #f5f4eb;
 }
@@ -186,7 +186,7 @@ input, textarea, select {
 /* end of Blocks }}} */
 /* {{{ #PList */
 .plist {
-    border-left     : 1px dotted #aaaaaa;
+    border-left     : 1px dotted #776655;
     width           : 100%;
     width           : "91%"; /* IE5.5 hack */
     padding         : 0px;
@@ -195,7 +195,7 @@ input, textarea, select {
 .plist caption {
     padding         : 0px;
     margin          : 0px;
-    border-bottom   : 2px solid #aaaaaa;
+    border-bottom   : 2px solid #776655;
     color           : #000000;
     font-size       : 12px;
 }
@@ -206,7 +206,7 @@ input, textarea, select {
     text-align      : center;
     height          : 20px;
     font-size       : 12px;
-    border-right    : 1px dotted #aaaaaa;    
+    border-right    : 1px dotted #776655;    
 }
 .plist th a:visited,
 .plist th a:link {
@@ -227,23 +227,23 @@ input, textarea, select {
 .plist a:hover {
     color           : #5a5a5a;
 }
-.plist_odd {
-    height          : 20px;
-}
-.plist_even {
+.plist td {
+    border-right    : dotted 1px #aaaaaa;
+    border-top      : dotted 1px #aaaaaa; 
+    text-align      : center;
     height          : 20px;
 }
 .plist_odd td {
-    border-right    : dotted 1px #aaaaaa;
-    border-top      : dotted 1px #aaaaaa; 
     background      : #ffffff url(../images/misc/background.png);
-    text-align      : center;
 }
 .plist_even td{
-    border-right    : dotted 1px #aaaaaa;
-    border-top      : dotted 1px #aaaaaa;
     background-color: #ffffff;
-    text-align      : center;
+}
+.plist_hilight {
+    background-color: #dddddd;
+}
+.plist_shilight {
+    background-color: #cdcdcd;
 }
 .plist_footer {
     padding         : 4px;
@@ -253,9 +253,36 @@ input, textarea, select {
     height          : 20px;
 }
 .plist_footer td {
-    border-right    : 1px dotted #aaaaaa;
-    border-top      : 1px dotted #aaaaaa;    
-    border-bottom   : 1px dotted #aaaaaa;
+    border-right    : 1px dotted #776655;
+    border-top      : 1px dotted #776655;    
+    border-bottom   : 1px dotted #776655;
+}
+.plist_group_actions_col {
+    width           : 20px;
+}
+.plist_group_actions_ltr {
+    margin          : 0px 0px 0px 6px;
+    padding         : 6px 0px 0px 30px;
+    background      : transparent url('../images/list/arrow_ltr.png') no-repeat left top;
+    width           : 24px;
+    height          : 16px;    
+}
+.plist_group_actions_rtl {
+    padding         : 0px 14px;
+    background      : transparent url('../images/list/arrow_rtl.png') no-repeat;
+    width           : 24px;
+    height          : 24px;
+}
+.plist_group_actions_ltr a:visited,
+.plist_group_actions_ltr a:link,
+.plist_group_actions_rtl a:visited,
+.plist_group_actions_rtl a:link {
+    color           : #888888;
+    text-decoration : none;
+}
+.plist_group_actions_ltr a:hover,
+.plist_group_actions_rtl a:hover {
+    color           : #5a5a5a;
 }
 .pager_wrapper {
     text-align      : center;
@@ -320,8 +347,8 @@ input, textarea, select {
     margin          : 0px 1px 2px 0px;
     padding         : 5px 15px;
     background-color: #eeeeee; /* background image? */
-    border-right    : dotted 1px #aaaaaa;
-    border-bottom   : dotted 1px #aaaaaa;
+    border-right    : dotted 1px #776655;
+    border-bottom   : dotted 1px #776655;
     color           : #888888;
     text-decoration : none;
     font-weight     : bold;
@@ -337,8 +364,7 @@ input, textarea, select {
     color           : #ffffff;
     background-color: #aaaaaa; /* this is same as tabbed block background color! */
 }
-.tabbed_block_nav .selected a,
-.tabbed_block_nav .disabled {
+.tabbed_block_nav .selected {
     margin          : 0px;
     padding         : 5px 15px 8px 10px;
     color           : #888888;
@@ -347,7 +373,30 @@ input, textarea, select {
     border-right    : 0px;
     border-top      : 0px;
     border-bottom   : 0px;
-    border-left     : 1px dotted #aaaaaa;
+    border-left     : 1px dotted #776655;
+}
+.tabbed_block_nav .selected {
+    margin          : 0px;
+    padding         : 5px 15px 8px 10px;
+    color           : #888888;
+    /* tabbed block background */
+    background      : #ffffff url("../images/tabbed_block/tb_shadow.png") right bottom no-repeat;     
+    border-right    : 0px;
+    border-top      : 0px;
+    border-bottom   : 0px;
+    border-left     : 1px dotted #776655;
+}
+.tabbed_block_nav .selected a {
+    margin          : 0px;
+    padding         : 0px;
+    color           : #888888;
+    background-color: #ffffff;
+    border          : 0px;
+}
+.tabbed_block_nav .deselected div {
+    margin          : 0px;
+    padding         : 5px 15px 5px 10px;
+    border-bottom   : 1px dotted #776655;    
 }
 /* commented backslash hack hides rule from IE5-Mac \*/
 .tabbed_block_nav a { float   : none; }
@@ -357,25 +406,58 @@ input, textarea, select {
     color           : #000000;
     padding         : 10px 10px 0px 10px;
     margin          : 0px 0px 10px 0px;
-    border-bottom   : 1px dotted #aaaaaa;
-    border-left     : 1px dotted #aaaaaa;
-    border-right    : 1px dotted #aaaaaa;
+    border-bottom   : 1px dotted #776655;
+    border-left     : 1px dotted #776655;
+    border-right    : 1px dotted #776655;
 }
 .tabbed_block_btn {
-    visibility        : hidden;
-    position          : absolute;
-    width             : 8px;
-    background-color  : #ffffff; /* this is same as tabbed block background color! */
-    color             : #000000;
-    text-align        : center;
-    cursor            : default;
-    border-left       : 1px solid red;
-    border-right      : 1px solid red;
+    visibility      : hidden;
+    position        : absolute;
+    width           : 8px;
+    background-color: #ffffff; /* this is same as tabbed block background color! */
+    color           : #000000;
+    text-align      : center;
+    cursor          : default;
+    border-left     : 1px solid #776655;
+    border-right    : 1px solid #776655;
 }
 .delimiter {
-    visibility        : hidden;
-    padding           : 0px;
-    margin            : 0px;
-    height            : 0px;
+    visibility      : hidden;
+    padding         : 0px;
+    margin          : 0px;
+    height          : 0px;
 }
 /* end of Tabbed Block# }}} */
+/* {{{ #Tabbed Block Simple */
+.tabbed_block_simple {
+    float           : left;
+    width           : 100%;
+    font-size       : 93%;
+    line-height     : normal;
+}
+.tabbed_block_simple ul {
+    margin          : 0;
+    padding         : 10px 0px 0px 0px;
+    list-style      : none;
+}
+.tabbed_block_simple li {
+    float           : left;
+    margin          : 0;
+    padding         : 0 9px 0 0px;
+}
+.tabbed_block_simple a {
+    float           : left;
+    display         : block;
+    padding         : 0px 0px 4px 0px;
+    text-decoration : none;
+    font-weight     : bold;
+    color           : #888888;
+}
+/* Commented Backslash Hack hides rule from IE5-Mac \*/
+.tabbed_block_simple a {float:none;}
+/* End IE5-Mac hack */
+.tabbed_block_simple a:hover {
+    color             : #333333;
+    text-decoration   : underline;
+}
+/* end of Tabbed Block Simple# }}} */

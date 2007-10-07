@@ -3,10 +3,10 @@
 // +-------------------------------------------------------------------------+
 // | Author: Armen Baghumian <armen@OpenSourceClub.org>                      |
 // +-------------------------------------------------------------------------+
-// | Smarty {arag_plist} list plugin                                         |
+// | Smarty {arag_plist} list plugin                                      |
 // |                                                                         |
 // | Type:    list function                                                  |
-// | Name:    arag_plist                                                     |
+// | Name:    arag_plist                                                  |
 // | Purpose: Generating plist                                               |
 // +-------------------------------------------------------------------------+
 // $Id$

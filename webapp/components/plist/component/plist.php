@@ -23,8 +23,11 @@ class PList extends Component implements IteratorAggregate, ArrayAccess
     private $columns        = Array();
     private $virtualColumns = Array();
     private $actions        = Array();
-    private $groupActions   = Array();    
     private $baseURI        = Array();
+
+    private $groupActions             = Array();
+    private $groupActionType          = 'button';
+    private $groupActionParameterName = 'id';
 
     private $limit    = 0;   // How many results per page. 0 is infinity
     private $offset   = 0;   // Offset
@@ -136,6 +139,18 @@ class PList extends Component implements IteratorAggregate, ArrayAccess
         return $this->properties;
     }
     // }}}
+    // {{{ setGroupActionType
+    function setGroupActionType($type)
+    {
+        $this->groupActionType = $type;
+    }
+    // }}}
+    // {{{ getGroupActionType
+    function getGroupActionType()
+    {
+        return $this->groupActionType;
+    }
+    // }}}    
     // {{{ hasHeader
     function hasHeader()
     {
@@ -175,7 +190,7 @@ class PList extends Component implements IteratorAggregate, ArrayAccess
     }
     // }}}
     // {{{ addAction
-    function addAction($uri, $label, $className = Null, $alternateCallback = False)
+    function addAction($uri, $label, $className = Null, $alternateCallback = False, $title = Null)
     {
         if (is_array($uri)) {
             $uri = implode('/', $uri);
@@ -187,31 +202,19 @@ class PList extends Component implements IteratorAggregate, ArrayAccess
             $this->groupActions[] = Array('uri'             => $uri,
                                           'label'           => $label,
                                           'class_name'      => $className,
-                                          'class_attribute' => ($className != Null) ? 'class="'.$className.'"' : Null);
+                                          'class_attribute' => ($className != Null) ? 'class="'.$className.'"' : Null,
+                                          'title'           => ($title == Null) ? $label : $title);
         } else {
 
             $this->actions[] = Array('uri'                => $uri,
                                      'label'              => $label,
                                      'class_name'         => $className,
                                      'class_attribute'    => ($className != Null) ? 'class="'.$className.'"' : Null,
-                                     'alternate_callback' => $alternateCallback);
+                                     'alternate_callback' => $alternateCallback,
+                                     'title'              => ($title == Null) ? $label : $title);
         }
     }
     // }}}
-    // {{{ addGroupAction
-    function addGroupAction($uri, $label, $className = Null)
-    {
-        if (is_array($uri)) {
-            $uri = implode('/', $uri);
-        }
-
-        $this->groupActions[] = Array('uri'                => $uri,
-                                      'label'              => $label,
-                                      'class_name'         => $className,
-                                      'class_attribute'    => ($className != Null) ? 'class="'.$className.'"' : Null,
-                                      );
-    }
-    // }}}    
     // {{{ & getVirtualColumns
     function & getVirtualColumns()
     {
@@ -236,6 +239,18 @@ class PList extends Component implements IteratorAggregate, ArrayAccess
         return count($this->actions);
     }
     // }}}
+    // {{{ setGroupActionParameterName
+    function setGroupActionParameterName($name)
+    {
+        $this->groupActionParameterName = $name;
+    }
+    // }}}
+    // {{{ getGroupActionParameterName
+    function getGroupActionParameterName()
+    {
+        return $this->groupActionParameterName;
+    }
+    // }}}    
     // {{{ & getColumns
     function & getColumns()
     {
