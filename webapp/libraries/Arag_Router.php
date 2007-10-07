@@ -142,19 +142,16 @@ class Arag_Router extends CI_Router {
      */    
     function _validate_segments($segments)
     {
-        // Throw away the module name
-        $segments = array_slice($segments, 1);
-
-        if (count($segments) == 0) {
-            $this->set_class($this->fetch_module());
+        if (count($segments) == 2) {
+            $this->set_class($segments[0]);
             $this->set_method('index');
             
-            if ( ! file_exists(APPPATH.'modules/'.$this->fetch_module().'/controllers/'.$this->fetch_module().EXT)) {
+            if ( ! file_exists(APPPATH.'modules/'.$segments[0].'/controllers/'.$segments[0].EXT)) {
                 
                 $this->set_class($this->default_controller);
 
                 // Does the default controller exist in the sub-folder?
-                if ( ! file_exists(APPPATH.'modules/'.$this->fetch_module().'/controllers/'.$this->default_controller.EXT)) {
+                if ( ! file_exists(APPPATH.'modules/'.$segments[0].'/controllers/'.$this->default_controller.EXT)) {
                     $this->directory = '';
                     return array();
                 }
@@ -164,19 +161,19 @@ class Arag_Router extends CI_Router {
         }
 
         // Does the requested controller exist in the root folder?
-        if (file_exists(APPPATH.'modules/'.$this->fetch_module().'/controllers/'.$segments[0].EXT)) {
+        if (file_exists(APPPATH.'modules/'.$segments[0].'/controllers/'.$segments[1].EXT)) {
             return $segments;
         }
 
         // Is the controller in a sub-folder?
-        if (is_dir(APPPATH.'modules/'.$this->fetch_module().'/controllers/'.$segments[0])) {
+        if (is_dir(APPPATH.'modules/'.$segments[0].'/controllers/'.$segments[1])) {
             // Set the directory and remove it from the segment array
-            $this->set_directory($segments[0]);
-            $segments = array_slice($segments, 1);
+            $this->set_directory($segments[1]);
+            $segments = array_slice($segments, 2, 1);
 
-            if (count($segments) > 0) {
+            if (count($segments) > 2) {
                 // Does the requested controller exist in the sub-folder?
-                if ( ! file_exists(APPPATH.'modules/'.$this->fetch_module().'/controllers/'.$this->fetch_directory().$segments[0].EXT)) {
+                if ( ! file_exists(APPPATH.'modules/'.$segments[0].'/controllers/'.$this->fetch_directory().$segments[1].EXT)) {
                     show_404();    
                 }
 
@@ -186,7 +183,7 @@ class Arag_Router extends CI_Router {
                 $this->set_method('index');
             
                 // Does the default controller exist in the sub-folder?
-                if ( ! file_exists(APPPATH.'modules/'.$this->fetch_module().'/controllers/'.$this->fetch_directory().$this->default_controller.EXT)) {
+                if ( ! file_exists(APPPATH.'modules/'.$segments[0].'/controllers/'.$this->fetch_directory().$this->default_controller.EXT)) {
                     $this->directory = '';
                     return array();
                 }
@@ -197,6 +194,48 @@ class Arag_Router extends CI_Router {
     
         // Can't find the requested controller...
         show_404();    
+    }
+    // }}}
+    // {{{ _compile_segments
+    /**
+     * Compile Segments
+     *
+     * This function takes an array of URI segments as
+     * input, and puts it into the $this->segments array.
+     * It also sets the current class/method
+     *
+     * @access    private
+     * @param    array
+     * @param    bool
+     * @return    void
+     */
+    function _compile_segments($segments = array())
+    {    
+        $segments = $this->_validate_segments($segments);
+        
+        if (count($segments) == 1) {
+            return;
+        }
+                        
+        $this->set_module($segments[0]);
+        $this->set_class($segments[1]);
+        
+        if (isset($segments[2])) {
+            // A scaffolding request. No funny business with the URL
+            if ($this->routes['scaffolding_trigger'] == $segments[1] AND $segments[1] != '_ci_scaffolding') {
+                $this->scaffolding_request = TRUE;
+                unset($this->routes['scaffolding_trigger']);
+
+            } else {
+                // A standard method request
+                $this->set_method($segments[2]);
+            }
+        }
+        
+        // Update our "routed" segment array to contain the segments.
+        // Note: If there is no custom routing, this array will be
+        // identical to $this->segments
+        $this->rsegments = $segments;
     }
     // }}}
     // {{{ set_module
