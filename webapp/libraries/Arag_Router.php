@@ -118,7 +118,12 @@ class Arag_Router extends CI_Router {
 
         // Set the specified module
         $this->set_module($this->segments[0]);
-        
+
+        // Load the routes.php file of requested module
+        @include(APPPATH.'modules/'.$this->fetch_module().'/config/routes'.EXT);
+        $this->routes = ( ! isset($route) OR ! is_array($route)) ? $this->routes : array_merge($this->routes, $route);
+        unset($route);
+
         // Parse any custom routing that may exist
         $this->_parse_routes();        
         
