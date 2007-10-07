@@ -306,7 +306,80 @@ input, textarea, select {
     font-weight     : normal;
     color           : #414175;
 }
+.pager_lt a {
+    display         : block;
+    background      : transparent url(../images/list/lt.png) no-repeat center;
+    font-size       : 0px;
+    width           : 16px;
+    height          : 16px; 
+}
+.pager_ltlt a {
+    display         : block;
+    background      : transparent url(../images/list/ltlt.png) no-repeat center;
+    font-size       : 0px;
+    width           : 16px;
+    height          : 16px; 
+}
+.pager_disabled_lt {
+    background      : transparent url(../images/list/lt_disabled.png) no-repeat center;
+    font-size       : 0px;
+    width           : 16px;
+    height          : 16px; 
+}
+.pager_disabled_ltlt {
+    background      : transparent url(../images/list/ltlt_disabled.png) no-repeat center;
+    font-size       : 0px;
+    width           : 16px;
+    height          : 16px; 
+}
+.pager_gt a {
+    display         : block;
+    background      : transparent url(../images/list/gt.png) no-repeat center;
+    font-size       : 0px;
+    width           : 16px;
+    height          : 16px; 
+}
+.pager_gtgt a {
+    display         : block;
+    background      : transparent url(../images/list/gtgt.png) no-repeat center;
+    font-size       : 0px;
+    width           : 16px;
+    height          : 16px; 
+}
+.pager_disabled_gt {
+    background      : transparent url(../images/list/gt_disabled.png) no-repeat center;
+    font-size       : 0px;
+    width           : 16px;
+    height          : 16px; 
+}
+.pager_disabled_gtgt {
+    background      : transparent url(../images/list/gtgt_disabled.png) no-repeat center;
+    font-size       : 0px;
+    width           : 16px;
+    height          : 16px; 
+}
 /* end of PList# }}} */
+/* {{{ List icons */
+.list_icon {
+    width           : 24px;
+}
+.list_icon a {
+    display         : block;
+    margin          : 0px auto;    
+}
+.edit_action {
+    background      : transparent url(../images/list/edit.png) no-repeat center;
+    font-size       : 0px;
+    width           : 16px;
+    height          : 16px;    
+}
+.delete_action {
+    background      : transparent url(../images/list/trash.png) no-repeat center;
+    font-size       : 0px;
+    width           : 16px;
+    height          : 16px;
+}
+/* end of List actions */
 /* {{{ #Tabbed Block */
 .tabbed_block_title {
     padding         : 25px 55px;

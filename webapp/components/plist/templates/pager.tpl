@@ -46,7 +46,7 @@
             {* end of Creating page numbers *}
             {* Creating ... *}
             {if $pager.lastpage != end(array_keys($pager.pages))}
-                <td>...</td>
+                <td class="pager_dots">...</td>
             {/if}
             {* end of creating ... *}
             {* Creating >> & > *}
@@ -59,7 +59,7 @@
                     {anchor uri=$plist->parseURI($uri, "page=page`$namespace`:`$pager.lastpage`;") title='&nbsp;&gt;&gt;&nbsp;'}
                 </td>
             {else}
-                <td class="pager_gt">&nbsp;&gt;&nbsp;</td><td class="pager_gtgt">&nbsp;&gt;&gt;&nbsp;</td>        
+                <td class="pager_disabled_gt">&nbsp;&gt;&nbsp;</td><td class="pager_disabled_gtgt">&nbsp;&gt;&gt;&nbsp;</td>        
             {/if}
             {* end of Creating >> & > *}
             </tr>

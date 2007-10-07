@@ -75,15 +75,15 @@
             {if count($actions) > 0}
                 {foreach from=$actions item=action}
                     {assign var=uri value=$plist->parseURI($action.uri, $row)}
-                    <td>
+                    <td class="list_icon">
                         {if isset($action.alternate_callback|smarty:nodefaults) && $action.alternate_callback != false}
                             {if $plist->callCallback($action.alternate_callback, $row)}
-                                {anchor uri=$uri title=$action.label attributes="`$action.class_attribute`"}
+                                <a href="{site_url uri=$action.uri}" title="{$action.title}" class="{$action.class_name}">{$action.label}</a>
                             {else}
                                 {$action.label}
                             {/if}
                         {else}
-                            {anchor uri=$uri title=$action.label attributes="`$action.class_attribute`"}
+                            <a href="{site_url uri=$action.uri}" title="{$action.title}" class="{$action.class_name}">{$action.label}</a>
                         {/if}
                     </td>
                 {/foreach}
@@ -129,8 +129,8 @@
                 <table border="0" cellpadding="0" cellspacing="0">
                 <tr>
                 {foreach from=$group_actions item=action}
-                    <td>
-                        <a href="{site_url uri=$action.uri}" title="{$action.title}" class="{$action.class_attribute}"
+                    <td class="list_icon">
+                        <a href="{site_url uri=$action.uri}" title="{$action.title}" class="{$action.class_name}"
                            onclick="listForward(this, '{$namespace}')">{$action.label}</a>
                     </td>
                 {/foreach}
