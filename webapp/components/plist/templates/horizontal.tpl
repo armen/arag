@@ -114,7 +114,7 @@
     </table>
 
     {if count($group_actions) > 0}
-        <div class="plist_group_actions_{dir}">
+        <div class="plist_group_actions plist_group_actions_{dir}">
             {if $plist->getGroupActionType() == 'select'}
 
                 <select onchange="listForward(this, '{$namespace}')">
@@ -125,11 +125,17 @@
                 </select>
 
             {else}
-
+                
+                <table border="0" cellpadding="0" cellspacing="0">
+                <tr>
                 {foreach from=$group_actions item=action}
-                    <a href="{site_url uri=$action.uri}" title="{$action.title}" class="{$action.class_attribute}"
-                       onclick="listForward(this, '{$namespace}')">{$action.label}</a>&nbsp;&nbsp;&nbsp;
-                {/foreach}            
+                    <td>
+                        <a href="{site_url uri=$action.uri}" title="{$action.title}" class="{$action.class_attribute}"
+                           onclick="listForward(this, '{$namespace}')">{$action.label}</a>
+                    </td>
+                {/foreach}
+                </tr>
+                </table>
                 
             {/if}
         </div>

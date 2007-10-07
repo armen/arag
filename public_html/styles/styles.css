@@ -273,16 +273,16 @@ input, textarea, select {
     width           : 24px;
     height          : 24px;
 }
-.plist_group_actions_ltr a:visited,
-.plist_group_actions_ltr a:link,
-.plist_group_actions_rtl a:visited,
-.plist_group_actions_rtl a:link {
+.plist_group_actions a:visited,
+.plist_group_actions a:link {
     color           : #888888;
     text-decoration : none;
 }
-.plist_group_actions_ltr a:hover,
-.plist_group_actions_rtl a:hover {
+.plist_group_actions a:hover {
     color           : #5a5a5a;
+}
+.plist_group_actions td {
+    padding         : 0px 5px;
 }
 .pager_wrapper {
     text-align      : center;
