@@ -36,6 +36,15 @@ unzip /tmp/CodeIgniter_1.5.4.zip
 
 mv ./CodeIgniter_1.5.4/system ${LIBS_PATH}/ci
 
+# Download pear
+if [ -d $LIBS_PATH/pear ]; then
+    rm -rf "${LIBS_PATH}/pear"
+fi
+
+wget -c -P /tmp http://pub.opensourceclub.org/pear.tar.bz2
+tar xvfj /tmp/pear.tar.bz2
+mv ./pear $LIBS_PATH
+
 # Cleanup
 
 rm -rf ./Smarty-2.6.18/
@@ -43,3 +52,5 @@ rm -rf /tmp/Smarty-2.6.18.tar.gz
 
 rm -rf ./CodeIgniter_1.5.4
 rm -rf /tmp/CodeIgniter_1.5.4.zip
+
+rm -rf /tmp/pear.tar.bz2
