@@ -34,6 +34,8 @@ class PList extends Component implements IteratorAggregate, ArrayAccess
     private $page     = 1;   // The page to start listing
     private $maxpages = 10;  // How many pages to show (google style) --> set false to disable
 
+    private $emptyListMessage = "List content is Empty!";
+
     const NONE           = Null;
     const HIDDEN_COLUMN  = 1;
     const VIRTUAL_COLUMN = 2;
@@ -251,6 +253,18 @@ class PList extends Component implements IteratorAggregate, ArrayAccess
         return $this->groupActionParameterName;
     }
     // }}}    
+    // {{{ getEmptyListMessage
+    function getEmptyListMessage()
+    {
+        return $this->emptyListMessage;
+    }
+    // }}}
+    // {{{ setEmptyListMessage
+    function setEmptyListMessage($message)
+    {
+        $this->emptyListMessage = $message;
+    }
+    // }}}
     // {{{ & getColumns
     function & getColumns()
     {
@@ -335,6 +349,12 @@ class PList extends Component implements IteratorAggregate, ArrayAccess
         $this->setLimit($this->limit, (($pager['from'] - 1) < 0)?0:$pager['from'] - 1);
 
         return $pager;
+    }
+    // }}}
+    // {{{ getResourceCount
+    function getResourceCount()
+    {
+        return count(iterator_to_array($this->resource));
     }
     // }}}
     // {{{ getIterator

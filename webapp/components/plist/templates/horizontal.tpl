@@ -17,129 +17,137 @@
 {assign var=virtualColumns value=$plist->getVirtualColumns()}
 {assign var=pager value=$plist->getPager()}
 
-{arag_form method="post" id="plist_$namespace"}
-    <table border="0" cellpadding="0" cellspacing="0" dir="{dir}" width="100%" class="plist" >
-        <caption dir="{dir}">&nbsp;</caption>
-        {if $plist->hasHeader() && count($columns) > 0}
-        <tr>
-            {if count($group_actions) > 0}
-                <th class="plist_group_actions_col"><input type="checkbox" onclick="toggleCheckboxesStatus(this.checked, '{$namespace}');" /></th>
-            {/if}
+{if $plist->getResourceCount() > 0}
 
-            {foreach from=$columnNames item=name}
-                {if isset($columns.$name|smarty:nodefaults) && !$columns.$name.hidden}
-                    <th>{$columns.$name.label}</th>
+    {arag_form method="post" id="plist_$namespace"}
+        <table border="0" cellpadding="0" cellspacing="0" dir="{dir}" width="100%" class="plist" >
+            <caption dir="{dir}">&nbsp;</caption>
+            {if $plist->hasHeader() && count($columns) > 0}
+            <tr>
+                {if count($group_actions) > 0}
+                    <th class="plist_group_actions_col"><input type="checkbox" onclick="toggleCheckboxesStatus(this.checked, '{$namespace}');" /></th>
                 {/if}
-            {/foreach}
 
-            {if count($actions) > 0}
-                <th colspan="{$plist->getActionsCount()}">Actions</th>
-            {/if}
-        </tr>
-        {/if}
-
-        {foreach name=list from=$plist item=row key=key}
-            
-            {capture assign="class"}{cycle values="plist_odd,plist_even"}{/capture}
-            <tr class="{$class}" onmouseover="listMouseEvent(this, 'over', '{$class}')" onmouseout="listMouseEvent(this, 'out', '{$class}')" 
-                onclick="listMouseEvent(this, 'click', '{$class}')">
-
-            {assign var="onclick" value=""}
-            {if count($group_actions) > 0}
-                {assign var="parameter_name" value=$plist->getGroupActionParameterName()}
-                <td>
-                    {if isset($row.$parameter_name|smarty:nodefaults)}
-                        {assign var="onclick" value="onclick=\"toggleListCheckbox($('`$namespace``$parameter_name`_`$row.$parameter_name`'))\""}
-                        <input type="checkbox" name="{$parameter_name}[]" value="{$row.$parameter_name}" 
-                               id="{$namespace}{$parameter_name}_{$row.$parameter_name}" />
-                    {/if}
-                </td>
-            {/if}
-
-            {if is_array($row) && count($row) > 0}
-                {foreach from=$row|smarty:nodefaults item=field key=name}
-                    {if count($columns) == 0 || (isset($columns.$name|smarty:nodefaults) && !$columns.$name.hidden)}
-                        <td {$onclick|smarty:nodefaults}>{$field}</td>
+                {foreach from=$columnNames item=name}
+                    {if isset($columns.$name|smarty:nodefaults) && !$columns.$name.hidden}
+                        <th>{$columns.$name.label}</th>
                     {/if}
                 {/foreach}
-            {else}
-                <td>{$row}</td>
+
+                {if count($actions) > 0}
+                    <th colspan="{$plist->getActionsCount()}">Actions</th>
+                {/if}
+            </tr>
             {/if}
 
-            {if count($virtualColumns) > 0}
-                {foreach from=$virtualColumns item=column key=callback}
-                    <td {$onclick|smarty:nodefaults}>{$plist->callCallback($callback, $row)}</td>
-                {/foreach}
-            {/if}
+            {foreach name=list from=$plist item=row key=key}
+                
+                {capture assign="class"}{cycle values="plist_odd,plist_even"}{/capture}
+                <tr class="{$class}" onmouseover="listMouseEvent(this, 'over', '{$class}')" onmouseout="listMouseEvent(this, 'out', '{$class}')" 
+                    onclick="listMouseEvent(this, 'click', '{$class}')">
 
-            {if count($actions) > 0}
-                {foreach from=$actions item=action}
-                    {assign var=uri value=$plist->parseURI($action.uri, $row)}
-                    <td class="list_icon">
-                        {if isset($action.alternate_callback|smarty:nodefaults) && $action.alternate_callback != false}
-                            {if $plist->callCallback($action.alternate_callback, $row)}
-                                <a href="{site_url uri=$action.uri}" title="{$action.title}" class="{$action.class_name}">{$action.label}</a>
-                            {else}
-                                {$action.label}
-                            {/if}
-                        {else}
-                            <a href="{site_url uri=$action.uri}" title="{$action.title}" class="{$action.class_name}">{$action.label}</a>
+                {assign var="onclick" value=""}
+                {if count($group_actions) > 0}
+                    {assign var="parameter_name" value=$plist->getGroupActionParameterName()}
+                    <td>
+                        {if isset($row.$parameter_name|smarty:nodefaults)}
+                            {assign var="onclick" value="onclick=\"toggleListCheckbox($('`$namespace``$parameter_name`_`$row.$parameter_name`'))\""}
+                            <input type="checkbox" name="{$parameter_name}[]" value="{$row.$parameter_name}" 
+                                   id="{$namespace}{$parameter_name}_{$row.$parameter_name}" />
                         {/if}
                     </td>
-                {/foreach}
-            {/if}
-            </tr>
-        {foreachelse}
-            List content is Empty!    
-        {/foreach}
-
-        {if $plist->hasFooter() && count($columns) > 0}    
-        <tr class="plist_footer">
-
-            {if count($group_actions) > 0}
-                <td><input type="checkbox" onclick="toggleCheckboxesStatus(this.checked, '{$namespace}');" /></td>
-            {/if}
-        
-            {foreach from=$columnNames item=name}
-                {if isset($columns.$name|smarty:nodefaults) && !$columns.$name.hidden}
-                    <td>-</td>
                 {/if}
+
+                {if is_array($row) && count($row) > 0}
+                    {foreach from=$row|smarty:nodefaults item=field key=name}
+                        {if count($columns) == 0 || (isset($columns.$name|smarty:nodefaults) && !$columns.$name.hidden)}
+                            <td {$onclick|smarty:nodefaults}>{$field}</td>
+                        {/if}
+                    {/foreach}
+                {else}
+                    <td>{$row}</td>
+                {/if}
+
+                {if count($virtualColumns) > 0}
+                    {foreach from=$virtualColumns item=column key=callback}
+                        <td {$onclick|smarty:nodefaults}>{$plist->callCallback($callback, $row)}</td>
+                    {/foreach}
+                {/if}
+
+                {if count($actions) > 0}
+                    {foreach from=$actions item=action}
+                        {assign var=uri value=$plist->parseURI($action.uri, $row)}
+                        <td class="list_icon">
+                            {if isset($action.alternate_callback|smarty:nodefaults) && $action.alternate_callback != false}
+                                {if $plist->callCallback($action.alternate_callback, $row)}
+                                    <a href="{site_url uri=$action.uri}" title="{$action.title}" class="{$action.class_name}">{$action.label}</a>
+                                {else}
+                                    {$action.label}
+                                {/if}
+                            {else}
+                                <a href="{site_url uri=$action.uri}" title="{$action.title}" class="{$action.class_name}">{$action.label}</a>
+                            {/if}
+                        </td>
+                    {/foreach}
+                {/if}
+                </tr>
             {/foreach}
 
-            {if count($actions) > 0}
-                <td colspan="{$plist->getActionsCount()}">&nbsp;</td>
+            {if $plist->hasFooter() && count($columns) > 0}    
+            <tr class="plist_footer">
+
+                {if count($group_actions) > 0}
+                    <td><input type="checkbox" onclick="toggleCheckboxesStatus(this.checked, '{$namespace}');" /></td>
+                {/if}
+            
+                {foreach from=$columnNames item=name}
+                    {if isset($columns.$name|smarty:nodefaults) && !$columns.$name.hidden}
+                        <td>-</td>
+                    {/if}
+                {/foreach}
+
+                {if count($actions) > 0}
+                    <td colspan="{$plist->getActionsCount()}">&nbsp;</td>
+                {/if}
+            </tr>
             {/if}
-        </tr>
+        </table>
+
+        {if count($group_actions) > 0}
+            <div class="plist_group_actions plist_group_actions_{dir}">
+                {if $plist->getGroupActionType() == 'select'}
+
+                    <select onchange="listForward(this, '{$namespace}')">
+                    <option value="">- Select an action -</option>
+                    {foreach from=$group_actions item=action}
+                        <option value="{site_url uri=$action.uri}" title="{$action.title}">{$action.label}</option>
+                    {/foreach}
+                    </select>
+
+                {else}
+                    
+                    <table border="0" cellpadding="0" cellspacing="0">
+                    <tr>
+                    {foreach from=$group_actions item=action}
+                        <td class="list_icon">
+                            <a href="{site_url uri=$action.uri}" title="{$action.title}" class="{$action.class_name}"
+                               onclick="listForward(this, '{$namespace}')">{$action.label}</a>
+                        </td>
+                    {/foreach}
+                    </tr>
+                    </table>
+                    
+                {/if}
+            </div>
         {/if}
-    </table>
+    {/arag_form}
 
-    {if count($group_actions) > 0}
-        <div class="plist_group_actions plist_group_actions_{dir}">
-            {if $plist->getGroupActionType() == 'select'}
+    {include file="`$plist_templates_path`/pager.tpl"}
 
-                <select onchange="listForward(this, '{$namespace}')">
-                <option value="">- Select an action -</option>
-                {foreach from=$group_actions item=action}
-                    <option value="{site_url uri=$action.uri}" title="{$action.title}">{$action.label}</option>
-                {/foreach}
-                </select>
-
-            {else}
-                
-                <table border="0" cellpadding="0" cellspacing="0">
-                <tr>
-                {foreach from=$group_actions item=action}
-                    <td class="list_icon">
-                        <a href="{site_url uri=$action.uri}" title="{$action.title}" class="{$action.class_name}"
-                           onclick="listForward(this, '{$namespace}')">{$action.label}</a>
-                    </td>
-                {/foreach}
-                </tr>
-                </table>
-                
-            {/if}
+{else}
+    {arag_block template="blank"}
+        <div class="plist_norecords">
+            {$plist->getEmptyListMessage()}
         </div>
-    {/if}
-{/arag_form}
-
-{include file="`$plist_templates_path`/pager.tpl"}
+    {/arag_block}
+{/if}
