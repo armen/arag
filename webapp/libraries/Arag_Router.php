@@ -101,13 +101,13 @@ class Arag_Router extends CI_Router {
         unset($this->routes['default_controller']);
 
         // Do we need to remove the suffix specified in the config file?
-        if  ($this->config->item('url_suffix') != "") {
+        if ($this->config->item('url_suffix') != "") {
             $this->uri_string = preg_replace("|".preg_quote($this->config->item('url_suffix'))."$|", "", $this->uri_string);
         }
         
         // Explode the URI Segments. The individual segments will
         // be stored in the $this->segments array.    
-        foreach(explode("/", preg_replace("|/*(.+?)/*$|", "\\1", $this->uri_string)) as $val) {
+        foreach (explode("/", preg_replace("|/*(.+?)/*$|", "\\1", $this->uri_string)) as $val) {
             // Filter segments for security
             $val = trim($this->_filter_uri($val));
             
@@ -142,11 +142,15 @@ class Arag_Router extends CI_Router {
      */    
     function _validate_segments($segments)
     {
-        if (count($segments) == 2) {
-            $this->set_class($segments[0]);
+        if (count($segments) <= 2) {
+            // XXX: URI could be /<module_name> or /<module_name>/<class_name>
+
+            $this->set_module($segments[0]);
+            // If segment was /<module_name> make class name same as module name otherwise we have it
+            $this->set_class((count($segments) == 1) ? $segments[0] : $segments[1]); 
             $this->set_method('index');
             
-            if ( ! file_exists(APPPATH.'modules/'.$segments[0].'/controllers/'.$segments[0].EXT)) {
+            if ( ! file_exists(APPPATH.'modules/'.$segments[0].'/controllers/'.$this->fetch_class().EXT)) {
                 
                 $this->set_class($this->default_controller);
 
@@ -156,7 +160,7 @@ class Arag_Router extends CI_Router {
                     return array();
                 }
             }
-            
+
             return $segments;
         }
 
@@ -213,7 +217,8 @@ class Arag_Router extends CI_Router {
     {    
         $segments = $this->_validate_segments($segments);
         
-        if (count($segments) == 1) {
+        if (count($segments) <= 1) {
+            // XXX: URI could be / or /<module_name>
             return;
         }
                         
