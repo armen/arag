@@ -29,6 +29,18 @@ if ($realpath_exists AND @realpath($libs_folder) !== FALSE)
 
 /*
 |---------------------------------------------------------------
+| PUB FOLDER NAME
+|---------------------------------------------------------------
+*/
+
+$pub_folder = dirname(__FILE__);
+if ($realpath_exists AND @realpath($pub_folder) !== FALSE)
+{
+    $pub_folder = realpath($pub_folder);
+}
+
+/*
+|---------------------------------------------------------------
 | SYSTEM FOLDER NAME
 |---------------------------------------------------------------
 |
@@ -103,6 +115,7 @@ else
 | SELF		- The name of THIS file (typically "index.php)
 | BASEPATH	- The full server path to the "system" folder
 | APPPATH	- The full server path to the "application" folder
+| PUBPATH	- The full server path to the "public_html" folder
 |
 */
 define('EXT', '.'.pathinfo(__FILE__, PATHINFO_EXTENSION));
@@ -110,6 +123,7 @@ define('FCPATH', __FILE__);
 define('SELF', pathinfo(__FILE__, PATHINFO_BASENAME));
 define('BASEPATH', $system_folder.'/');
 define('LIBSPATH', $libs_folder.'/');
+define('PUBPATH', $pub_folder.'/');
 
 if (is_dir($application_folder))
 {
