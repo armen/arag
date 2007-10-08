@@ -1,6 +1,6 @@
 <?php
 
-$module['enabled']     = False;
+$module['enabled']     = True;
 $module['title']       = 'Arag';
 $module['version']     = '1.0';
 $module['name']        = 'arag';
