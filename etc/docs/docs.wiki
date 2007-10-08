@@ -147,7 +147,7 @@ In ".tpl" files you can use Smarty templates engine language, Smarty plugins and
 
 ==== Global smarty plugins ====
 
-In Arag project there is several smarty plugins located at "webapp/templates/smarty_templates/". These plugins are loaded by default and are accessible in all smarty template files.
+In Arag project there is several smarty plugins located at "webapp/templates/smarty_plugins/". These plugins are loaded by default and are accessible in all smarty template files.
 
 === Blocks ===
 
@@ -265,6 +265,18 @@ Following example is the default "head.tpl" file for Arag project:
   <link rel="shortcut icon" href="{$arag_base_url|smarty:nodefaults}/images/misc/favicon.ico" type="image/x-icon" />
   <link rel="stylesheet" media="all" type="text/css" title="Arag" 
         href="{$arag_base_url|smarty:nodefaults}/styles/styles.css" />    
+
+=== WISIWIG Editor ===
+
+This is a functional Smarty plugin for adding a rich text editor - powered by FCKeditor - to your Smarty templates. You can use this plugin simply like the following example:
+
+  {aticket_rte name="Aticket"}
+
+This will give you an editor based on the default properties. But if you want to have a customized one you should use the attributes considered for this task as:
+
+  {aticket_rte name="Aticket" value="Default text value going to be edited" height="450" width="75%" toolbar_set="Default"}
+
+For more information about "toolbar_set" and other issues about editor, please refer to FCKeditor's official documentation.
 
 ==== Decoration and Decorators ====
 
