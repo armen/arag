@@ -358,6 +358,15 @@ input, textarea, select {
     width           : 16px;
     height          : 16px; 
 }
+.plist_norecords {
+    text-align      : center;
+    padding         : 10px;
+    background-color: #eeeeee;        
+    border-top      : 2px solid #776655;
+    border-bottom   : 1px dotted #776655;    
+    border-right    : 1px dotted #776655;    
+    border-left     : 1px dotted #776655;    
+}
 /* end of PList# }}} */
 /* {{{ List icons */
 .list_icon {
