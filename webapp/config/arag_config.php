@@ -41,8 +41,8 @@ $config['Arag_smarty_modifier_funcs'] = Array('sprintf', 'count');
 // Smarty filters (After change clear the cache to take effect - only pre/post filter)
 $config['Arag_smarty_post_filters']   = Array();
 $config['Arag_smarty_output_filters'] = Array('trimwhitespace');
-$config['Arag_smarty_pre_filters']    = Array('arag_escape');  // XXX: DO NOT REMOVE arag_escape prefilter, 
-                                                                     //      SERIOUS SECURITY RISK IF REMOVED!
+$config['Arag_smarty_pre_filters']    = Array('arag_escape', 'arag_gettext');  // XXX: DO NOT REMOVE arag_escape prefilter, 
+                                                                                        //      SERIOUS SECURITY RISK IF REMOVED!
 // Do not escape these directories and files
 // Prototype:
 //          
@@ -59,6 +59,19 @@ $config['Arag_smarty_escape_exclude_list'] = Array();
 
 $config['Arag_module_segment']     = 1;
 $config['Arag_controller_segment'] = 1;
+
+// }}}
+// {{{ i18n
+
+// $config['Arag_i18n_language']           = 'en';
+// $config['Arag_i18n_language_name']      = 'en_US.utf8';
+// $config['Arag_i18n_language_direction'] = 'ltr';
+$config['Arag_i18n_language']           = 'fa_IR.utf8';
+$config['Arag_i18n_language_name']      = 'fa';
+$config['Arag_i18n_language_direction'] = 'rtl';
+$config['Arag_i18n_language_charset']   = 'utf-8';
+$config['Arag_i18n_gettext_domain']     = 'messages';
+$config['Arag_i18n_gettext_msgsdir']    = 'locale/';
 
 // }}}
 
