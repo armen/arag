@@ -10,9 +10,7 @@
 {/if}
 
 {if $pager.numpages > 1}
-    
-    {arag_block template="blank"}
-        <div class="pager_wrapper">
+    <div class="pager_wrapper">
         <table border="0" cellpadding="0" cellspacing="0" class="pager" dir="ltr">
             <tr>
             {* Creating << & < *}
@@ -64,6 +62,5 @@
             {* end of Creating >> & > *}
             </tr>
         </table>
-        </div>
-    {/arag_block}
+    </div>
 {/if}
