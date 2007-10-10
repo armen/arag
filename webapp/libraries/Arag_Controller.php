@@ -31,6 +31,9 @@ class Arag_Controller extends Controller {
         if ($this->config->item('Arag_smarty_integriation') == True) {
             $this->load->library('Arag_Smarty');
         }
+
+        // XXX: better to move to autoload file?
+        $this->lang->load();        
     }
     // }}}
 }
