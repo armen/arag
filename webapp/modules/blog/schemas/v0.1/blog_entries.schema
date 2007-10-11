@@ -25,6 +25,11 @@
                 <type>integer</type>
             </field>
             <field>
+                <name>modified_by</name>
+                <type>text</type>
+                <length>255</length>
+            </field>            
+            <field>
                 <name>subject</name>
                 <type>text</type>
                 <length>255</length>
@@ -46,9 +51,20 @@
                 <type>clob</type>
             </field>            
             <field>
-                <name>properties</name>
+                <name>published</name>
                 <type>integer</type>
+                <length>1</length>
             </field>
+            <field>
+                <name>allow_comments</name>
+                <type>integer</type>
+                <length>1</length>
+            </field>
+            <field>
+                <name>requires_moderation</name>
+                <type>integer</type>
+                <length>1</length>
+            </field>            
             <index>
                 <name>primary</name>
                 <primary>true</primary>

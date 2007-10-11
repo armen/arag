@@ -30,29 +30,39 @@ class BlogModel extends Model
     }
     // }}}
     // {{{ createEntry
-    function createEntry($subject, $entry, $extendedEntry, $properties, $author)
+    function createEntry($subject, $entry, $extendedEntry, $author, $published, $allowComments, $requiresModeration, $category)
     {
-        $row = Array('subject'        => $subject, 
-                     'entry'          => $entry, 
-                     'extended_entry' => $extendedEntry,
-                     'author'         => $author,
-                     'create_date'    => time(),
-                     'modify_date'    => 0, 
-                     'properties'     => $properties);
+        $row = Array('subject'             => $subject, 
+                     'entry'               => $entry, 
+                     'extended_entry'      => $extendedEntry,
+                     'author'              => $author,
+                     'create_date'         => time(),
+                     'modify_date'         => 0,
+                     'modified_by'         => Null,
+                     'published'           => $published,
+                     'allow_comments'      => $allowComments,
+                     'requires_moderation' => $requiresModeration,
+                     'category'            => $category);
 
         $this->db->insert($this->tableName, $row);
     }
     // }}}
     // {{{ editEntry
-    function editEntry($id, $subject, $entryBody)
+    function editEntry($id, $subject, $entryBody, $extendedEntry, $modifiedBy, $published, $allowComments, $requiresModeration, $category)
     {
         $entry = $this->getEntry($id);
 
-        $row = Array('subject'     => $subject, 
-                     'entry'       => $entryBody, 
-                     'author'      => $entry['author'],
-                     'create_date' => $entry['create_date'],
-                     'modify_date' => time());
+        $row = Array('subject'             => $subject, 
+                     'entry'               => $entryBody, 
+                     'extended_entry'      => $extendedEntry,                     
+                     'author'              => $entry['author'],
+                     'create_date'         => $entry['create_date'],
+                     'modify_date'         => time(),
+                     'modified_by'         => $modifiedBy,
+                     'published'           => $published,
+                     'allow_comments'      => $allowComments,
+                     'requires_moderation' => $requiresModeration,
+                     'category'            => $category);
        
        $this->db->where('id', $id);
        $this->db->update($this->tableName, $row);
@@ -67,7 +77,8 @@ class BlogModel extends Model
     // {{{ & getEntry
     function & getEntry($id)
     {
-        $this->db->select('id, subject, entry, extended_entry, author, create_date, modify_date, properties');
+        $this->db->select('id, subject, entry, extended_entry, author, create_date, modify_date, modified_by, '.
+                          'published, allow_comments, requires_moderation, category');
         $query = $this->db->getwhere($this->tableName, Array('id' => $id));
 
         $retval = $query->first_row('array');
@@ -77,7 +88,8 @@ class BlogModel extends Model
     // {{{ & getEntries
     function & getEntries()
     {
-        $this->db->select('id, subject, entry, extended_entry, author, create_date, modify_date, properties');
+        $this->db->select('id, subject, entry, extended_entry, author, create_date, modify_date, modified_by, '.
+                          'published, allow_comments, requires_moderation, category');
         $this->db->orderby('create_date', 'desc');
         $query = $this->db->get($this->tableName);
 
@@ -91,7 +103,8 @@ class BlogModel extends Model
         $retval = Array();
         return $retval;
     }
-    // }}}    
+    // }}}
+
     // {{{ List callbacks
     // {{{ getDate
     function getDate($row)
@@ -103,6 +116,12 @@ class BlogModel extends Model
     function getModifyDate($row)
     {
         return ($row['modify_date']) ? date('Y-m-d H:i:s', $row['modify_date']) : '-';
+    }
+    // }}}
+    // {{{ getModifiedBy
+    function getModifiedBy($row)
+    {
+        return ($row['modified_by']) ? $row['modified_by'] : '-';
     }
     // }}}
     // }}}
