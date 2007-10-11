@@ -53,13 +53,5 @@
             </index>
         </declaration>
     </table>
-    <sequence>
-        <name><variable>TABLES_PREFIX</variable>blog_entries</name>
-        <start>1</start>
-        <on>
-            <field>id</field>
-            <table><variable>TABLES_PREFIX</variable>blog_entries</table>
-        </on>
-    </sequence>
 
 </database>
