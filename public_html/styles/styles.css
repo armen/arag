@@ -170,17 +170,18 @@ input, textarea, select {
     margin-bottom   : 0px;
 }
 .arag_tags_ds input, select {
-    border          : 1px solid #776655;
-    margin          : 1px;
-    background-color: #f5f4eb;
+    border          : 1px dotted #776655;
+    background-color: #eeeeee;
+    color           : #888888;
 }
 .arag_tags_ds textarea {
     padding         : 1px;
     width           : 300px;
     height          : 100px;
-    border          : 1px solid #776655;
     margin          : 3px;
-    background-color: #f5f4eb;
+    border          : 1px dotted #776655;
+    background-color: #eeeeee;
+    color           : #888888;    
 }
 /* arag_tags_ds }}} */
 /* end of Blocks }}} */
@@ -499,7 +500,7 @@ input, textarea, select {
 }
 /* Subtabs */
 .tabbed_block_subnav {
-    margin          : 0px 0px 10px 0px;
+    margin          : 0px 0px 25px 0px;
     padding         : 0px;
     background-color: #ffffff; /* same as background of selected tab */
     color           : #888888;
@@ -520,7 +521,7 @@ input, textarea, select {
     float           : left;
     display         : block;
     margin          : 0px 1px 2px 0px;
-    padding         : 0px 15px;
+    padding         : 2px 15px;
     background-color: #ffffff;
     border-right    : dotted 1px #776655;
     color           : #888888;
@@ -539,13 +540,13 @@ input, textarea, select {
 }
 .tabbed_block_subnav .selected a {
     margin          : 0px;
-    padding         : 0px 15px;    
+    padding         : 2px 15px;    
     color           : #888888;
     background-color: #eeeeee;
 }
 .tabbed_block_subnav .deselected div {
     margin          : 0px 1px 2px 0px;
-    padding         : 0px 15px;
+    padding         : 2px 15px;
 }
 /* commented backslash hack hides rule from IE5-Mac \*/
 .tabbed_block_subnav a { float   : none; }
