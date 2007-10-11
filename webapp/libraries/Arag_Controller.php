@@ -36,6 +36,20 @@ class Arag_Controller extends Controller {
         $this->lang->load();        
     }
     // }}}
+    // {{{ _invalid_request
+    function _invalid_request($uri = Null)
+    {
+        $this->load->helper('url');
+        
+        // Replace current decorator with global decorator
+        $this->output->set_decorator('arag_templates/decorator.tpl');
+
+        $this->load->vars(Array('page_title' => _("Invalid Request!"),
+                                '_site_url'  => site_url($uri)));
+
+        $this->load->view('arag_templates/invalid_request.tpl');
+    }
+    // }}}
 }
 
 ?>

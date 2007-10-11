@@ -111,12 +111,11 @@ class Arag_Loader extends CI_Loader {
         $slot_name = $calling_method;
 
         // Is calling method the requested method?
-        if ($RTR->fetch_method() == $calling_method) {
+        if ($RTR->fetch_method() == $calling_method || $calling_method == '_invalid_request') {
             $slot_name = 'content';
         }        
         
-        global $OUT;
-        $OUT->set_output($output, $slot_name, True);
+        $CI->output->set_output($output, $slot_name, True);
     }
     // }}}
     // {{{ model
