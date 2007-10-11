@@ -15,10 +15,41 @@
 
 function smarty_function_arag_rte($params, &$smarty)
 {
-    $toolbar_set = 'Default';     // Default toolbar set
-    $width       = '100%';        // Default width
-    $height      = '400';         // Default height
-    $value       = '';            // Default value
+    $toolbar_set      = 'Default';
+    $width            = '100%';
+    $height           = '300';
+    $value            = '';
+    $language         = 'en';
+    $skin             = 'default';
+    $toolbar_expanded = true;
+    
+    $CI      =& get_instance();
+    $pub_url =  $CI->config->slash_item('base_url');    
+    
+    // Detecting language
+    switch ($CI->config->item('Arag_i18n_language_name')) {
+        case 'fa_IR.utf8': $language = 'fa'; break;
+    }
+
+    if ($CI->config->item('Arag_fckeditor_skin') != Null) {
+        $skin = $CI->config->item('Arag_fckeditor_skin');
+    }
+
+    if ($CI->config->item('Arag_fckeditor_width') != Null) {
+        $width = $CI->config->item('Arag_fckeditor_width');
+    }
+
+    if ($CI->config->item('Arag_fckeditor_height') != Null) {
+        $height = $CI->config->item('Arag_fckeditor_height');
+    }    
+
+    if ($CI->config->item('Arag_fckeditor_toolbar_set') != Null) {
+        $toolbar_set = $CI->config->item('Arag_fckeditor_toolbar_set');
+    }
+
+    if ($CI->config->item('Arag_fckeditor_toolbar_expanded') === False) {
+        $toolbar_expanded = $CI->config->item('Arag_fckeditor_toolbar_expanded');
+    }    
 
     foreach ($params as $_key => $_val) {
         switch ($_key) {
@@ -40,20 +71,13 @@ function smarty_function_arag_rte($params, &$smarty)
        return;
     }
     
-    $CI      =& get_instance();
-    $pub_url =  $CI->config->slash_item('base_url');    
-    
-    // Detecting language
-    $language = 'en';
-    switch ($CI->config->item('Arag_i18n_language_name')) {
-        case 'fa_IR.utf8': $language = 'fa'; break;
-    }
-    
     require_once PUBPATH . 'scripts/FCKeditor/fckeditor.php';
 
     $FCKeditor =& new FCKeditor($name);
     
     $FCKeditor->Config['CustomConfigurationsPath'] = $pub_url . 'scripts/FCKeditor/fckconfig.js';
+    $FCKeditor->Config['SkinPath']                 = $pub_url . 'scripts/FCKeditor/editor/skins/' . $skin . '/';
+    $FCKeditor->Config['ToolbarStartExpanded']     = $toolbar_expanded;
     $FCKeditor->Config['AutoDetectLanguage']       = False ;
     $FCKeditor->Config['DefaultLanguage']          = $language;
     $FCKeditor->Config['ContentLangDirection']     = $CI->config->item('Arag_i18n_language_direction');
@@ -66,6 +90,7 @@ function smarty_function_arag_rte($params, &$smarty)
     $FCKeditor->Value      = $value;
     $FCKeditor->ToolbarSet = $toolbar_set;
 
+   
     return $FCKeditor->CreateHtml();
 }
 

@@ -74,5 +74,14 @@ $config['Arag_i18n_gettext_domain']     = 'messages';
 $config['Arag_i18n_gettext_msgsdir']    = 'locale/';
 
 // }}}
+// {{{ FCKeditor settings
+
+$config['Arag_fckeditor_skin']             = 'silver';
+$config['Arag_fckeditor_width']            = '100%';
+$config['Arag_fckeditor_height']           = '300';
+$config['Arag_fckeditor_toolbar_set']      = 'Default';
+$config['Arag_fckeditor_toolbar_expanded'] = False;
+
+// }}}
 
 ?>
