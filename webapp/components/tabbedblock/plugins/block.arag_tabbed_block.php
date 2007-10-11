@@ -3,10 +3,10 @@
 // +-------------------------------------------------------------------------+
 // | Author: Armen Baghumian <armen@OpenSourceClub.org>                      |
 // +-------------------------------------------------------------------------+
-// | Smarty {arag_tabbed_block}{/arag_tabbed_block} tabbed block plugin      |
+// | Smarty {arag_tabbed_block}{/arag_tabbed_block} tabbed block plugin|
 // |                                                                         |
 // | Type:    tabbed block function                                          |
-// | Name:    arag_tabbed_block                                              |
+// | Name:    arag_tabbed_block                                           |
 // | Purpose: Generating tabbed block                                        |
 // +-------------------------------------------------------------------------+
 // $Id$
@@ -56,8 +56,10 @@ function smarty_block_arag_tabbed_block($params, $content, &$smarty, &$repeat)
         $uri = $CI->uri->uri_string();
         @list($dummy, $moduleName, $className, $methodName) = $CI->uri->rsegment_array();
 
-        // Get selected item name
-        $selectedItem = Null;
+        // Get selected item
+        $selectedItemName = Null;        
+        $selectedItem     = Null;
+
         foreach ($tabbedBlock->getItems() as $key => $item) {
             if ($item['enabled'] && isset($item['uri'])) {
 
@@ -66,24 +68,48 @@ function smarty_block_arag_tabbed_block($params, $content, &$smarty, &$repeat)
                 if ($item['selected'] != True && $module == $moduleName && $class == $className && 
                     ($method == $methodName || ($methodName == Null && $method == 'index'))) {
 
-                    $selectedItem = $item['name'];
-
                     // Set selected to true
                     $tabbedBlock->_items[$key]['selected'] = True;
+
+                    $selectedItemName = $tabbedBlock->_items[$key]['name'];
+                    $selectedItem     = $tabbedBlock->_items[$key];                    
+
+                } else if (is_array(($item['subtabs']))) {
+                    // Try to find selected tab in subtabs
+                    
+                    foreach ($item['subtabs'] as $_key => $subtab) {
+
+                        if ($subtab['enabled'] && isset($subtab['uri'])) {
+
+                            @list($module, $class, $method) = explode('/', $subtab['uri']);
+
+                            if ($subtab['selected'] != True && $module == $moduleName && $class == $className && 
+                                ($method == $methodName || ($methodName == Null && $method == 'index'))) {
+
+                                $tabbedBlock->_items[$key]['subtabs'][$_key]['selected'] = True;
+                                $tabbedBlock->_items[$key]['has_subtab']                 = True;       
+                                $tabbedBlock->_items[$key]['selected']                   = True;                                
+
+                                $selectedItemName = $subtab['name'];
+                                $selectedItem     = $tabbedBlock->_items[$key]; // Parenet item                                
+                            }
+                        }
+                    }                    
                 }
             }
-            
-            $tabbedBlock->_items[$key]['href'] = $tabbedBlock->genURL($item['uri']);
         }
 
         if (isset($tabbedBlock) && count($tabbedBlock->getItems()) != 0) {
 
             $moduleIconURL = $CI->config->item('base_url') . 'images/modules/' . $moduleName . '.png';    
 
+            $smarty->assign_by_ref('tabbedblock', $tabbedBlock);
             $smarty->assign_by_ref('tabbedblock_content', $content);
             $smarty->assign_by_ref('tabbedblock_items', $tabbedBlock->getItems());
             $smarty->assign('tabbedblock_title', $tabbedBlock->getTitle());
+            $smarty->assign('tabbedblock_selected_tab_name', $selectedItemName);
             $smarty->assign('tabbedblock_selected_tab', $selectedItem);
+
             $smarty->assign('tabbedblock_module_icon_url', $moduleIconURL);
             $smarty->assign('tabbedblock_current_uri', $uri);
 

@@ -3,7 +3,7 @@
     File: $Id$
 */
 
-/* {{{ #Global */
+/* {{{ Global */
 body {
     font-size       : 12px;
     font-family     : Tahoma, Verdana, Arial, Helvetica, sans-serif;
@@ -20,9 +20,9 @@ input, textarea, select {
     background-color: #eeeeee;
     color           : #888888;
 }
-/* end of Global# }}} */
+/* end of Global }}} */
 /* {{{ Blocks
-/* {{{ #arag_block */
+/* {{{ arag_block */
 .arag_block {
     margin          : 0px;
     padding         : 0px;
@@ -48,8 +48,8 @@ input, textarea, select {
     font-weight     : bold;
     font-size       : 10px;
 }
-/* end of arag_block# }}} */
-/* {{{ #arag_default_block */
+/* end of arag_block }}} */
+/* {{{ arag_default_block */
 .arag_default_block { 
     margin          : 0px;
     padding         : 0px;
@@ -96,8 +96,8 @@ input, textarea, select {
 .arag_default_block_br { /* footer */
     background      : transparent url(../images/block/rounded_line_bottom_right.png) bottom right no-repeat;
 }
-/* end of arag_default_block# }}} */
-/* {{{ #arag_error_block */
+/* end of arag_default_block }}} */
+/* {{{ arag_error_block */
 .arag_error_block {
     margin          : 0px;
     padding         : 0px;
@@ -107,8 +107,8 @@ input, textarea, select {
     padding         : 9px 35px;
     border          : 1px solid #776655;
 }
-/* end of arag_error_block# }}} */
-/* {{{ #arag_info_block */
+/* end of arag_error_block }}} */
+/* {{{ arag_info_block */
 .arag_info_block {
     margin          : 0px;
     padding         : 0px;
@@ -118,8 +118,8 @@ input, textarea, select {
     padding         : 9px 35px;
     border          : 1px solid #776655;
 }
-/* end of arag_info_block# }}} */
-/* {{{ #arag_warning_block */
+/* end of arag_info_block }}} */
+/* {{{ arag_warning_block */
 .arag_warning_block {
     margin          : 0px;
     padding         : 0px;
@@ -133,8 +133,8 @@ input, textarea, select {
     padding         : 9px 35px;
     border          : 1px solid #776655;
 }
-/* end of arag_warning_block# }}} */
-/* {{{ #arag_blank_block */
+/* end of arag_warning_block }}} */
+/* {{{ arag_blank_block */
 .arag_blank_block {
     margin          : 0px;
     padding         : 0px;
@@ -143,8 +143,8 @@ input, textarea, select {
     margin          : 0px 0px 10px 0px;
     padding         : 0px;
 }
-/* end of arag_blank_block# }}} */
-/* {{{ #arag_tags_ds */
+/* end of arag_blank_block }}} */
+/* {{{ arag_tags_ds */
 .arag_tags_ds a:link, 
 .arag_tags_ds a:visited,
 .arag_tags_ds a:active {
@@ -182,9 +182,9 @@ input, textarea, select {
     margin          : 3px;
     background-color: #f5f4eb;
 }
-/* arag_tags_ds# }}} */
+/* arag_tags_ds }}} */
 /* end of Blocks }}} */
-/* {{{ #PList */
+/* {{{ PList */
 .plist {
     border-left     : 1px dotted #776655;
     width           : 100%;
@@ -231,7 +231,7 @@ input, textarea, select {
     border-right    : dotted 1px #aaaaaa;
     border-top      : dotted 1px #aaaaaa; 
     text-align      : center;
-    height          : 20px;
+    height          : 24px;
 }
 .plist_odd td {
     background      : #ffffff url(../images/misc/background.png);
@@ -270,9 +270,8 @@ input, textarea, select {
 .plist_group_actions_rtl {
     direction       : rtl;
     margin          : 0px 6px 0px 0px;
-    padding         : 6px 50px 0px 0px;
+    padding         : 6px 30px 0px 0px;
     background      : transparent url('../images/list/arrow_rtl.png') no-repeat right top;
-    width           : 24px;
     height          : 16px;
 }
 .plist_group_actions a:visited,
@@ -369,12 +368,15 @@ input, textarea, select {
     border-right    : 1px dotted #776655;    
     border-left     : 1px dotted #776655;    
 }
-/* end of PList# }}} */
-/* {{{ List icons */
-.list_icon {
+/* end of PList }}} */
+/* {{{ PList icons */
+.plist_icon {
     width           : 24px;
 }
-.list_icon a {
+.plist_group_actions .plist_icon {
+    width           : 16px;
+}
+.plist_icon a {
     display         : block;
     margin          : 0px auto;    
 }
@@ -402,8 +404,8 @@ input, textarea, select {
     width           : 16px;
     height          : 16px;
 }
-/* end of List actions */
-/* {{{ #Tabbed Block */
+/* }}} end of List actions */
+/* {{{ Tabbed Block */
 .tabbed_block_title {
     padding         : 25px 55px;
     margin          : 0px 5px;
@@ -471,17 +473,6 @@ input, textarea, select {
     border-bottom   : 0px;
     border-left     : 1px dotted #776655;
 }
-.tabbed_block_nav .selected {
-    margin          : 0px;
-    padding         : 5px 15px 8px 10px;
-    color           : #888888;
-    /* tabbed block background */
-    background      : #ffffff url("../images/tabbed_block/tb_shadow.png") right bottom no-repeat;     
-    border-right    : 0px;
-    border-top      : 0px;
-    border-bottom   : 0px;
-    border-left     : 1px dotted #776655;
-}
 .tabbed_block_nav .selected a {
     margin          : 0px;
     padding         : 0px;
@@ -506,25 +497,61 @@ input, textarea, select {
     border-left     : 1px dotted #776655;
     border-right    : 1px dotted #776655;
 }
-.tabbed_block_btn {
-    visibility      : hidden;
-    position        : absolute;
-    width           : 8px;
-    background-color: #ffffff; /* this is same as tabbed block background color! */
-    color           : #000000;
-    text-align      : center;
-    cursor          : default;
-    border-left     : 1px solid #776655;
-    border-right    : 1px solid #776655;
-}
-.delimiter {
-    visibility      : hidden;
+/* Subtabs */
+.tabbed_block_subnav {
+    margin          : 0px 0px 10px 0px;
     padding         : 0px;
-    margin          : 0px;
-    height          : 0px;
+    background-color: #ffffff; /* same as background of selected tab */
+    color           : #888888;
+    font-size       : 10px;
 }
-/* end of Tabbed Block# }}} */
-/* {{{ #Tabbed Block Simple */
+.tabbed_block_subnav ul {
+    margin          : 0px;
+    padding         : 0px;
+    list-style      : none;
+}
+.tabbed_block_subnav li {
+    float           : right; /* left or right depend on language direction (right for rtl!) */
+    margin          : 0px;
+    padding         : 0px;
+}
+.tabbed_block_subnav a {
+    font-size       : .9em; 
+    float           : left;
+    display         : block;
+    margin          : 0px 1px 2px 0px;
+    padding         : 0px 15px;
+    background-color: #ffffff;
+    border-right    : dotted 1px #776655;
+    color           : #888888;
+    text-decoration : none;
+    font-weight     : bold;
+    white-space     : nowrap;
+}
+.tabbed_block_subnav a:link, 
+.tabbed_block_subnav a:visited,
+.tabbed_block_subnav a:active {
+    color           : #888888;
+}
+.tabbed_block_subnav a:hover {
+    background      : none;
+    background-color: #eeeeee;
+}
+.tabbed_block_subnav .selected a {
+    margin          : 0px;
+    padding         : 0px 15px;    
+    color           : #888888;
+    background-color: #eeeeee;
+}
+.tabbed_block_subnav .deselected div {
+    margin          : 0px 1px 2px 0px;
+    padding         : 0px 15px;
+}
+/* commented backslash hack hides rule from IE5-Mac \*/
+.tabbed_block_subnav a { float   : none; }
+/* end IE5-Mac hack */
+/* end of Tabbed Block }}} */
+/* {{{ Tabbed Block Simple */
 .tabbed_block_simple {
     float           : left;
     width           : 100%;
@@ -556,4 +583,4 @@ input, textarea, select {
     color             : #333333;
     text-decoration   : underline;
 }
-/* end of Tabbed Block Simple# }}} */
+/* end of Tabbed Block Simple }}} */
