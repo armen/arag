@@ -6,7 +6,7 @@ if [ ! -f ./ref.po ]; then
     echo ""
     echo "Extracting messages..."
 
-    find . -type f | grep -v .svn | grep -v .swp | grep -v 'LC_MESSAGES' | xgettext --keyword=_ --force-po --files-from - --output=ref.po
+    find . -type f | grep -v '.svn' | grep -v -e '/\..*' | grep -v 'schemas' | grep -v 'LC_MESSAGES' | xgettext --keyword=_ --force-po --files-from - --output=ref.po
     sed -i -e 's/CHARSET/utf-8/' ./ref.po
 
     echo ""
