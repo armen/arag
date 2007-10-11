@@ -61,7 +61,7 @@ class BlogModel extends Model
     // {{{ & getEntry
     function & getEntry($id)
     {
-        $this->db->select('id, subject, entry, author, create_date');
+        $this->db->select('id, subject, entry, extended_entry, author, create_date, modify_date, properties');
         $query = $this->db->getwhere($this->tableName, Array('id' => $id));
 
         $retval = $query->first_row('array');
@@ -71,7 +71,7 @@ class BlogModel extends Model
     // {{{ & getEntries
     function & getEntries()
     {
-        $this->db->select('id, subject, entry, author, create_date');
+        $this->db->select('id, subject, entry, extended_entry, author, create_date, modify_date, properties');
         $this->db->orderby('create_date', 'desc');
         $query = $this->db->get($this->tableName);
 
@@ -79,11 +79,26 @@ class BlogModel extends Model
         return $retval;
     }
     // }}}
+    // {{{ & getCategories
+    function & getCategories()
+    {
+        $retval = Array();
+        return $retval;
+    }
+    // }}}    
+    // {{{ List callbacks
     // {{{ getDate
     function getDate($row)
     {
-        return date('Y-m-d H:i:s', $row['create_date']);
+        return ($row['create_date']) ? date('Y-m-d H:i:s', $row['create_date']) : '-';        
     }
+    // }}}
+    // {{{ getModifyDate
+    function getModifyDate($row)
+    {
+        return ($row['modify_date']) ? date('Y-m-d H:i:s', $row['modify_date']) : '-';
+    }
+    // }}}
     // }}}
 }
 
