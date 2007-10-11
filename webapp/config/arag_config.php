@@ -61,14 +61,14 @@ $config['Arag_module_segment']     = 1;
 $config['Arag_controller_segment'] = 1;
 
 // }}}
-// {{{ i18n
+// {{{ I18N
 
-// $config['Arag_i18n_language']           = 'en';
-// $config['Arag_i18n_language_name']      = 'en_US.utf8';
-// $config['Arag_i18n_language_direction'] = 'ltr';
-$config['Arag_i18n_language']           = 'fa_IR.utf8';
-$config['Arag_i18n_language_name']      = 'fa';
-$config['Arag_i18n_language_direction'] = 'rtl';
+$config['Arag_i18n_language']           = 'en';
+$config['Arag_i18n_language_name']      = 'en_US.utf8';
+$config['Arag_i18n_language_direction'] = 'ltr';
+// $config['Arag_i18n_language']           = 'fa_IR.utf8';
+// $config['Arag_i18n_language_name']      = 'fa';
+// $config['Arag_i18n_language_direction'] = 'rtl';
 $config['Arag_i18n_language_charset']   = 'utf-8';
 $config['Arag_i18n_gettext_domain']     = 'messages';
 $config['Arag_i18n_gettext_msgsdir']    = 'locale/';
