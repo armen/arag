@@ -38,6 +38,10 @@
                 <type>clob</type>
             </field>
             <field>
+                <name>category</name>
+                <type>integer</type>
+            </field>            
+            <field>
                 <name>tags</name>
                 <type>clob</type>
             </field>            

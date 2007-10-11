@@ -12,6 +12,9 @@ class Backend extends Arag_Controller
     function Backend()
     {
         parent::Arag_Controller();
+
+        // Load the model
+        $this->load->model('BlogModel');        
        
         // Backend decorator
         $this->load->decorator('backend/decorator');
@@ -34,8 +37,6 @@ class Backend extends Arag_Controller
     // {{{ index
     function index()
     {
-        $this->load->model('BlogModel');
-
         $this->load->component('PList', 'entries');
 
         $this->entries->setResource($this->BlogModel->getEntries());
@@ -56,37 +57,85 @@ class Backend extends Arag_Controller
     // {{{ post
     function post()
     {
-        $this->load->model('BlogModel');
-
-        $data = Array ('categories' => $this->BlogModel->getCategories());
+        $data = Array ('categories' => $this->BlogModel->getCategories(), 
+                       'status'     => $this->BlogModel->getStatusOptions());
 
         $this->load->vars($data);
-        $this->load->view('backend/post');     
+        $this->load->view('backend/post');
     }
     // }}}
     // {{{ do_post
     function do_post()
     {
-        
-    }
-    // }}}
-    // {{{ categories
-    function categories()
-    {
+        $this->load->helper('url');
+
+        $properties = 0;
+
+        $properties |= $this->input->post('status') == BlogModel::PROP_PUBLISH ? BlogModel::PROP_PUBLISH : 0;
+        $properties |= $this->input->post('allow_comments') == 'on' ? BlogModel::PROP_ALLOW_COMMENTS : 0;
+        $properties |= $this->input->post('requires_moderation') == 'on' ? BlogModel::PROP_REQUIRES_MODERATION : 0;
+
+        $this->BlogModel->createEntry($this->input->post('subject'), 
+                                      $this->input->post('entry'), 
+                                      $this->input->post('extended_entry'),
+                                      $properties, 'guest');
+
+        redirect('blog/backend/index');
     }
     // }}}
     // {{{ edit
     function edit($dummy, $id = 0)
     {
         $this->global_tabs->setParameter('id', $id);
-        $this->load->view('backend/edit'); 
+
+        $entry = $this->BlogModel->getEntry($id);
+
+        $entry['published']           = $entry['properties'] & BlogModel::PROP_PUBLISH;
+        $entry['allow_comments']      = $entry['properties'] & BlogModel::PROP_ALLOW_COMMENTS;
+        $entry['requires_moderation'] = $entry['properties'] & BlogModel::PROP_REQUIRES_MODERATION;
+
+        unset($entry['properties']);
+
+        $entry['category'] = 0;
+
+        $data = Array ('categories' => $this->BlogModel->getCategories(), 
+                       'status'     => $this->BlogModel->getStatusOptions());
+
+        $this->load->vars($data);
+        $this->load->vars($entry);        
+        $this->load->view('backend/edit');
     }
     // }}}
+    // {{{ do_edit
+    function do_edit()
+    {
+        $this->load->helper('url');
+
+        $properties = 0;
+
+        $properties |= $this->input->post('status') == BlogModel::PROP_PUBLISH ? BlogModel::PROP_PUBLISH : 0;
+        $properties |= $this->input->post('allow_comments') == 'on' ? BlogModel::PROP_ALLOW_COMMENTS : 0;
+        $properties |= $this->input->post('requires_moderation') == 'on' ? BlogModel::PROP_REQUIRES_MODERATION : 0;
+
+        $result = $this->BlogModel->createEntry($this->input->post('id'),
+                                                $this->input->post('subject'), 
+                                                $this->input->post('entry'), 
+                                                $this->input->post('extended_entry'),
+                                                $properties, 'guest');
+
+        redirect('blog/backend/index');
+    }
+    // }}}    
     // {{{ delete
     function delete()
     {
     }
     // }}}
+    // {{{ categories
+    function categories()
+    {
+    }
+    // }}}    
     // {{{ settings
     function settings()
     {

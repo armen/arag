@@ -12,6 +12,10 @@ class BlogModel extends Model
     
     var $tableName;
 
+    const PROP_PUBLISH             = 1;
+    const PROP_ALLOW_COMMENTS      = 2;
+    const PROP_REQUIRES_MODERATION = 4;
+
     // }}}
     // {{{ BlogModel
     function BlogModel()
@@ -26,13 +30,15 @@ class BlogModel extends Model
     }
     // }}}
     // {{{ createEntry
-    function createEntry($subject, $entry)
+    function createEntry($subject, $entry, $extendedEntry, $properties, $author)
     {
-        $row = Array('subject'     => $subject, 
-                     'entry'       => $entry, 
-                     'author'      => 'admin',
-                     'create_date' => time(),
-                     'modify_date' => 0);
+        $row = Array('subject'        => $subject, 
+                     'entry'          => $entry, 
+                     'extended_entry' => $extendedEntry,
+                     'author'         => $author,
+                     'create_date'    => time(),
+                     'modify_date'    => 0, 
+                     'properties'     => $properties);
 
         $this->db->insert($this->tableName, $row);
     }
@@ -97,6 +103,15 @@ class BlogModel extends Model
     function getModifyDate($row)
     {
         return ($row['modify_date']) ? date('Y-m-d H:i:s', $row['modify_date']) : '-';
+    }
+    // }}}
+    // }}}
+    // {{{ Options
+    // {{{ getStatusOptions
+    function getStatusOptions()
+    {
+        return Array(1 => _("Publish"),
+                     0 => _("Draft"));
     }
     // }}}
     // }}}
