@@ -267,7 +267,43 @@ class Arag_Router extends CI_Router {
     {
         return $this->module;
     }
-    // }}}    
+    // }}}
+    // {{{ fetch_request_method
+    function fetch_request_method()
+    {
+        $methods = Array('GET' => 'read', 'POST' => 'write', 'PUT' => 'create', 'DELETE' => 'remove');
+    
+        if (isset($_SERVER['REQUEST_METHOD'])) {
+            $REQUEST_METHOD = $_SERVER['REQUEST_METHOD'];
+
+        } elseif (isset($_ENV['REQUEST_METHOD'])) {
+            $REQUEST_METHOD = $_ENV['REQUEST_METHOD'];
+        }
+
+        switch($REQUEST_METHOD) {
+            case 'POST':
+                $this->set_request_method($methods['POST']);
+                break;
+
+            case 'PUT':
+                $this->set_request_method($methods['PUT']);
+                break;
+
+            case 'DELETE':
+                $this->set_request_method($methods['DELETE']);
+                break;
+
+            default:
+                $this->set_request_method($methods['GET']);
+        }
+    }
+    // }}}
+    // {{{ set_request_method
+    function set_request_method($method)
+    {
+        $this->request_method = strtolower($method);
+    }
+    // }}}
 }
 
 ?>

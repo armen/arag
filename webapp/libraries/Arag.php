@@ -4,12 +4,12 @@
  *
  * An open source application development framework for PHP 4.3.2 or newer
  *
- * @package		CodeIgniter
- * @author		Rick Ellis
- * @copyright	Copyright (c) 2006, EllisLab, Inc.
- * @license		http://www.codeignitor.com/user_guide/license.html
- * @link		http://www.codeigniter.com
- * @since		Version 1.0
+ * @package        CodeIgniter
+ * @author        Rick Ellis
+ * @copyright    Copyright (c) 2006, EllisLab, Inc.
+ * @license        http://www.codeignitor.com/user_guide/license.html
+ * @link        http://www.codeigniter.com
+ * @since        Version 1.0
  * @filesource
  */
 
@@ -20,15 +20,15 @@
  *
  * Loads the base classes and executes the request.
  *
- * @package		CodeIgniter
- * @subpackage	codeigniter
- * @category	Front-controller
- * @author		Rick Ellis
- * @link		http://www.codeigniter.com/user_guide/
+ * @package        CodeIgniter
+ * @subpackage    codeigniter
+ * @category    Front-controller
+ * @author        Rick Ellis
+ * @link        http://www.codeigniter.com/user_guide/
  */
 
 // CI Version
-define('CI_VERSION',	'1.5.4');
+define('CI_VERSION',    '1.5.4');
 
 /*
  * ------------------------------------------------------
@@ -82,16 +82,16 @@ $OUT =& load_class('Output');
 
 /*
  * ------------------------------------------------------
- *	Is there a valid cache file?  If so, we're done...
+ *    Is there a valid cache file?  If so, we're done...
  * ------------------------------------------------------
  */
 
 if ($EXT->_call_hook('cache_override') === FALSE)
 {
-	if ($OUT->_display_cache($CFG, $RTR) == TRUE)
-	{
-		exit;
-	}
+    if ($OUT->_display_cache($CFG, $RTR) == TRUE)
+    {
+        exit;
+    }
 }
 
 /*
@@ -100,9 +100,9 @@ if ($EXT->_call_hook('cache_override') === FALSE)
  * ------------------------------------------------------
  */
 
-$IN		=& load_class('Input');
-$URI	=& load_class('URI');
-$LANG	=& load_class('Language');
+$IN        =& load_class('Input');
+$URI    =& load_class('URI');
+$LANG    =& load_class('Language');
 
 /*
  * ------------------------------------------------------
@@ -118,12 +118,12 @@ $LANG	=& load_class('Language');
  */
 if (floor(phpversion()) < 5)
 {
-	load_class('Loader', FALSE);
-	require(BASEPATH.'codeigniter/Base4'.EXT);
+    load_class('Loader', FALSE);
+    require(BASEPATH.'codeigniter/Base4'.EXT);
 }
 else
 {
-	require(BASEPATH.'codeigniter/Base5'.EXT);
+    require(BASEPATH.'codeigniter/Base5'.EXT);
 }
 
 // Load the base controller class
@@ -134,7 +134,7 @@ load_class('Controller', FALSE);
 // means that the default controller in the Routes.php file is not resolving to something valid.
 if ( ! @include(APPPATH.'modules/'.$RTR->fetch_module().'/controllers/'.$RTR->fetch_directory().$RTR->fetch_class().EXT))
 {
-	show_error('Unable to load your default controller.  Please make sure the controller specified in your Routes.php file is valid.');
+    show_error('Unable to load your default controller.  Please make sure the controller specified in your Routes.php file is valid.');
 }
 
 // Set a mark point for benchmarking
@@ -155,12 +155,12 @@ $method = $RTR->fetch_method();
 
 
 if ( ! class_exists($class)
-	OR $method == 'controller'
-	OR substr($method, 0, 1) == '_'
-	OR in_array($method, get_class_methods('Controller'), TRUE)
-	)
+    OR $method == 'controller'
+    OR substr($method, 0, 1) == '_'
+    OR in_array($method, get_class_methods('Controller'), TRUE)
+    )
 {
-	show_404();
+    show_404();
 }
 
 /*
@@ -185,36 +185,42 @@ $CI = new $class();
 // Is this a scaffolding request?
 if ($RTR->scaffolding_request === TRUE)
 {
-	if ($EXT->_call_hook('scaffolding_override') === FALSE)
-	{
-		$CI->_ci_scaffolding();
-	}
+    if ($EXT->_call_hook('scaffolding_override') === FALSE)
+    {
+        $CI->_ci_scaffolding();
+    }
 }
 else
 {
-	/*
-	 * ------------------------------------------------------
-	 *  Is there a "post_controller_constructor" hook?
-	 * ------------------------------------------------------
-	 */
-	$EXT->_call_hook('post_controller_constructor');
-	
-	// Is there a "remap" function?
-	if (method_exists($CI, '_remap'))
-	{
-		$CI->_remap($method);
-	}
-	else
-	{
-		if ( ! method_exists($CI, $method))
-		{
-			show_404();
-		}
+    /*
+     * ------------------------------------------------------
+     *  Is there a "post_controller_constructor" hook?
+     * ------------------------------------------------------
+     */
+    $EXT->_call_hook('post_controller_constructor');
+    
+    // Is there a "remap" function?
+    if (method_exists($CI, '_remap'))
+    {
+        $CI->_remap($method);
+    }
+    else
+    {
+        if ( ! method_exists($CI, $method))
+        {
+            if ( ! method_exists($CI, $method . '_' . $RTR->fetch_request_method())) 
+            {
+                show_404();               
+            } else {
+                
+                $method = $method . '_' . $RTR->fetch_request_method();
+            }
+        }
 
-		// Call the requested method.
-		// Any URI segments present (besides the class/function) will be passed to the method for convenience		
-		call_user_func_array(array(&$CI, $method), array_slice($RTR->rsegments, (($RTR->fetch_directory() == '') ? 2 : 3)));		
-	}
+        // Call the requested method.
+        // Any URI segments present (besides the class/function) will be passed to the method for convenience        
+        call_user_func_array(array(&$CI, $method), array_slice($RTR->rsegments, (($RTR->fetch_directory() == '') ? 2 : 3)));        
+    }
 }
 
 // Mark a benchmark end point
@@ -235,7 +241,7 @@ $EXT->_call_hook('post_controller');
 
 if ($EXT->_call_hook('display_override') === FALSE)
 {
-	$OUT->_display();
+    $OUT->_display();
 }
 
 /*
@@ -252,7 +258,7 @@ $EXT->_call_hook('post_system');
  */
 if (class_exists('CI_DB') AND isset($CI->db))
 {
-	$CI->db->close();
+    $CI->db->close();
 }
 
 

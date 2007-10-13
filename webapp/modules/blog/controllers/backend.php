@@ -55,8 +55,8 @@ class Backend extends Arag_Controller
         $this->load->view('backend/index');
     }
     // }}}
-    // {{{ postRead
-    function postRead()
+    // {{{ post_read
+    function post_read()
     {
         $this->load->library('validation');    
         $this->validation->set_rules(Array('subject' => 'numeric'));
@@ -70,8 +70,8 @@ class Backend extends Arag_Controller
         $this->load->view('backend/post');
     }
     // }}}
-    // {{{ postWrite
-    function postWrite()
+    // {{{ post_write
+    function post_write()
     {
         $this->load->helper('url');
 
@@ -163,8 +163,8 @@ class Backend extends Arag_Controller
     // {{{ _get_rule
     function _get_rule($name)
     {
-        $validor['post']['subject'] = Array ('rule'           => 'trim|required|min_length[5]|max_length[12]|xss_clean', 
-                                             'required_error' => _("You have to enter a number!"));
+        $validator['post']['subject'] = Array ('rule'           => 'trim|required|min_length[5]|max_length[12]|xss_clean', 
+                                               'required_error' => _("You have to enter a number!"));
 
         return $rules[$name];
     }
