@@ -218,11 +218,15 @@ if ($RTR->scaffolding_request === TRUE) {
                     $CI->load->library('validation');
                     $CI->validation->set_rules($_validator['rules']);
                     
-                    if (is_array($messages = $_validator['error_messages'])) {
+                    if (is_array($messages = $validator['error_messages'])) {
                         
                         foreach ($messages as $rule => $message) {
                             $CI->validation->set_message($rule, $message);
                         }
+                    }
+
+                    if (is_array($_validator['fields'])) {
+                        $CI->validation->set_fields($_validator['fields']);
                     }
 
                     $validated = $CI->validation->run();
