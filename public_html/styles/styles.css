@@ -20,6 +20,9 @@ input, textarea, select {
     background-color: #eeeeee;
     color           : #888888;
 }
+.asterisk {
+    color           : red;
+}
 /* end of Global }}} */
 /* {{{ Blocks
 /* {{{ arag_block */
@@ -105,7 +108,7 @@ input, textarea, select {
 .arag_error_block_content {
     margin          : 0px 0px 10px 0px;
     padding         : 9px 35px;
-    border          : 1px solid #776655;
+    border          : 1px solid #ff7575;    
 }
 /* end of arag_error_block }}} */
 /* {{{ arag_info_block */
@@ -116,7 +119,7 @@ input, textarea, select {
 .arag_info_block_content {
     margin          : 0px 0px 10px 0px;
     padding         : 9px 35px;
-    border          : 1px solid #776655;
+    border          : 1px solid #4dbd60;    
 }
 /* end of arag_info_block }}} */
 /* {{{ arag_warning_block */
@@ -131,7 +134,7 @@ input, textarea, select {
 .arag_warning_block_content {
     margin          : 0px 0px 10px 0px;
     padding         : 9px 35px;
-    border          : 1px solid #776655;
+    border          : 1px solid #ffdf49;    
 }
 /* end of arag_warning_block }}} */
 /* {{{ arag_blank_block */
