@@ -32,6 +32,10 @@ class Arag_Controller extends Controller {
             $this->load->library('Arag_Smarty');
         }
 
+        // Load module config file and do not throw error if there was an error
+        global $RTR;
+        $this->config->load(APPPATH . 'modules/'. $RTR->fetch_module() . '/config/config'.EXT, False, True);
+
         // XXX: better to move to autoload file?
         $this->lang->load();        
     }
