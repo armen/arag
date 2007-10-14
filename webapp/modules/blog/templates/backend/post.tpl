@@ -4,6 +4,10 @@
     File: $Id$
 *}
 {arag_block}
+    
+    {$this->validation->error_string|smarty:nodefaults|default:""}
+    {$this->validation->subject_error|smarty:nodefaults|default:""}
+
     {arag_form uri="blog/backend/post" method="post"}
     <table border="0" dir="{dir}" width="100%">
     <tr>
