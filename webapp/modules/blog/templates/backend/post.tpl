@@ -4,7 +4,7 @@
     File: $Id$
 *}
 {arag_block}
-    {arag_form uri="blog/backend/do_post" method="post"}
+    {arag_form uri="blog/backend/post" method="post"}
     <table border="0" dir="{dir}" width="100%">
     <tr>
         <td align="{right}" width="100"><span class="form_required">&nbsp;*&nbsp;</span>_("Subject"):</td>

@@ -58,11 +58,6 @@ class Backend extends Arag_Controller
     // {{{ post_read
     function post_read()
     {
-        $this->load->library('validation');    
-        $this->validation->set_rules(Array('subject' => 'numeric'));
-
-
-
         $data = Array ('categories' => $this->BlogModel->getCategories(), 
                        'status'     => $this->BlogModel->getStatusOptions());
 
@@ -75,32 +70,24 @@ class Backend extends Arag_Controller
     {
         $this->load->helper('url');
 
-        $this->load->library('validation');
-        $this->validation->set_rules($this->_get_rule('post'));
+        $this->BlogModel->createEntry($this->input->post('subject'), 
+                                      $this->input->post('entry'), 
+                                      $this->input->post('extended_entry'),
+                                      'guest',
+                                      $this->input->post('status'),
+                                      $this->input->post('allow_comments'),
+                                      $this->input->post('requires_moderation'),
+                                      $this->input->post('category'));
+
+        redirect('blog/backend/index');
+    }
+    // }}}
+    // {{{ post_write_error
+    function post_write_error()
+    {
+        $this->validation->set_fields(Array('subject' => $this->input->post('subject')));
         
-        if ($this->validation->run()) {
-
-            $this->BlogModel->createEntry($this->input->post('subject'), 
-                                          $this->input->post('entry'), 
-                                          $this->input->post('extended_entry'),
-                                          'guest',
-                                          $this->input->post('status'),
-                                          $this->input->post('allow_comments'),
-                                          $this->input->post('requires_moderation'),
-                                          $this->input->post('category'));
-
-            redirect('blog/backend/index');
-
-        } else {
-
-            $this->validation->set_fields(Array('subject' => $this->input->post('subject')));
-        
-            $data = Array ('categories' => $this->BlogModel->getCategories(), 
-                           'status'     => $this->BlogModel->getStatusOptions());
-
-            $this->load->vars($data);
-            $this->load->view('backend/post');        
-        }
+        $this->post_read();
     }
     // }}}
     // {{{ edit
@@ -158,15 +145,6 @@ class Backend extends Arag_Controller
     // {{{ preview
     function preview()
     {
-    }
-    // }}}
-    // {{{ _get_rule
-    function _get_rule($name)
-    {
-        $validator['post']['subject'] = Array ('rule'           => 'trim|required|min_length[5]|max_length[12]|xss_clean', 
-                                               'required_error' => _("You have to enter a number!"));
-
-        return $rules[$name];
     }
     // }}}
 }
