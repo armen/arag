@@ -58,7 +58,8 @@ class Arag_Smarty extends Smarty {
                                         'post'   => $CI->config->item('Arag_smarty_post_filters'),
                                         'output' => $CI->config->item('Arag_smarty_output_filters'));
     
-        // Send base_url to all templates
+        // Send $CI and base_url to all templates
+        $this->assign('this', $CI);
         $this->assign('arag_base_url', $CI->config->item('base_url'));
     }
     // }}}
