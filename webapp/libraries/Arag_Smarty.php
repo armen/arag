@@ -33,10 +33,13 @@ class Arag_Smarty extends Smarty {
         $this->force_compile  = $CI->config->item('Arag_smarty_force_compile');
         $this->security       = $CI->config->item('Arag_smarty_security');
 
-        // check if compile directory is exists
+        // check if cache directory is exists
+        $this->checkDirectory($CI->config->item('Arag_cache_path'));
+
+        // check if smarty_compile directory is exists
         $this->checkDirectory($this->compile_dir);
         
-        // check if cache directory is exists
+        // check if smarty_cache directory is exists
         $this->checkDirectory($this->cache_dir);
 
         if ($this->security) {

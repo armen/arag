@@ -116,13 +116,11 @@ $LANG    =& load_class('Language');
  *  Note: The Loader class needs to be included first
  *
  */
-if (floor(phpversion()) < 5)
-{
+if (floor(phpversion()) < 5) {
     load_class('Loader', FALSE);
     require(BASEPATH.'codeigniter/Base4'.EXT);
-}
-else
-{
+
+} else {
     require(BASEPATH.'codeigniter/Base5'.EXT);
 }
 
@@ -132,14 +130,15 @@ load_class('Controller', FALSE);
 // Load the local application controller
 // Note: The Router class automatically validates the controller path.  If this include fails it 
 // means that the default controller in the Routes.php file is not resolving to something valid.
-if ( ! @include(APPPATH.'modules/'.$RTR->fetch_module().'/controllers/'.$RTR->fetch_directory().$RTR->fetch_class().EXT))
-{
+if ( ! @include(APPPATH.'modules/'.$RTR->fetch_module().'/controllers/'.$RTR->fetch_directory().$RTR->fetch_class().EXT)) {
     show_error('Unable to load your default controller.  Please make sure the controller specified in your Routes.php file is valid.');
 }
 
 // Set a mark point for benchmarking
 $BM->mark('loading_time_base_classes_end');
 
+$module         = $RTR->fetch_module();
+$request_method = $RTR->fetch_request_method();
 
 /*
  * ------------------------------------------------------
@@ -153,13 +152,10 @@ $BM->mark('loading_time_base_classes_end');
 $class  = $RTR->fetch_class();
 $method = $RTR->fetch_method();
 
-
-if ( ! class_exists($class)
-    OR $method == 'controller'
-    OR substr($method, 0, 1) == '_'
-    OR in_array($method, get_class_methods('Controller'), TRUE)
-    )
-{
+if (!class_exists($class) || 
+    $method == 'controller' ||
+    substr($method, 0, 1) == '_' ||
+    in_array($method, get_class_methods('Controller'), TRUE)) {
     show_404();
 }
 
@@ -183,43 +179,70 @@ $BM->mark('controller_execution_time_( '.$class.' / '.$method.' )_start');
 $CI = new $class();
 
 // Is this a scaffolding request?
-if ($RTR->scaffolding_request === TRUE)
-{
-    if ($EXT->_call_hook('scaffolding_override') === FALSE)
-    {
+if ($RTR->scaffolding_request === TRUE) {
+
+    if ($EXT->_call_hook('scaffolding_override') === FALSE) {
         $CI->_ci_scaffolding();
     }
-}
-else
-{
+
+} else {
+
     /*
      * ------------------------------------------------------
      *  Is there a "post_controller_constructor" hook?
      * ------------------------------------------------------
      */
     $EXT->_call_hook('post_controller_constructor');
-    
+
     // Is there a "remap" function?
-    if (method_exists($CI, '_remap'))
-    {
+    if (method_exists($CI, '_remap')) {
         $CI->_remap($method);
-    }
-    else
-    {
-        if ( ! method_exists($CI, $method))
-        {
-            if ( ! method_exists($CI, $method . '_' . $RTR->fetch_request_method())) 
-            {
-                show_404();               
-            } else {
+
+    } else {
+
+        // Validate the method
+        $validated = True;
+
+        if (file_exists($validator_file = APPPATH.'modules/'.$module.'/validator/'.$RTR->fetch_directory().$class.EXT)) {
+            
+            require($validator_file);
+            
+            if (isset($validator[$method]['rules']) && is_array($validator[$method]['rules']) || 
+                isset($validator[$method][$request_method]['rules']) && is_array($validator[$method][$request_method]['rules'])) {
                 
-                $method = $method . '_' . $RTR->fetch_request_method();
+                $CI->load->library('validation');
+
+                if (isset($validator[$method]['rules'])) {
+                    $CI->validation->set_rules($validator[$method]['rules']);
+                } else {
+                    $CI->validation->set_rules($validator[$method][$request_method]['rules']);
+                }
+           
+                $validated = $CI->validation->run();
             }
         }
 
+        if ($validated) {
+            
+            $method_name = $method;
+
+            if (!method_exists($CI, $method)) {
+                if (!method_exists($CI, $method . '_' . $request_method)) {
+                    show_404();
+                } else {
+                    $method_name = $method . '_' . $request_method;
+                }
+            }
+       
+        } else {
+
+            // An error occured in validation
+            $method_name = $method . '_' . $request_method . '_error';
+        }
+ 
         // Call the requested method.
         // Any URI segments present (besides the class/function) will be passed to the method for convenience        
-        call_user_func_array(array(&$CI, $method), array_slice($RTR->rsegments, (($RTR->fetch_directory() == '') ? 2 : 3)));        
+        call_user_func_array(array(&$CI, $method_name), array_slice($RTR->rsegments, (($RTR->fetch_directory() == '') ? 3 : 4)));        
     }
 }
 
@@ -239,8 +262,7 @@ $EXT->_call_hook('post_controller');
  * ------------------------------------------------------
  */
 
-if ($EXT->_call_hook('display_override') === FALSE)
-{
+if ($EXT->_call_hook('display_override') === FALSE) {
     $OUT->_display();
 }
 
@@ -256,10 +278,8 @@ $EXT->_call_hook('post_system');
  *  Close the DB connection if one exists
  * ------------------------------------------------------
  */
-if (class_exists('CI_DB') AND isset($CI->db))
-{
+if (class_exists('CI_DB') AND isset($CI->db)) {
     $CI->db->close();
 }
-
 
 ?>

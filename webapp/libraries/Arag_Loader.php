@@ -100,9 +100,10 @@ class Arag_Loader extends CI_Loader {
         }
 
         // What is callig method name?
+        // Remove appended requested method from function name
         $backtrace      = debug_backtrace();
-        $calling_method = $backtrace[1]['function'];        
-
+        $calling_method = preg_replace('/_('.implode('|', $RTR->fetch_request_methods()).')(_error)?/', '', $backtrace[1]['function']);        
+        
         // Remove the extension and replace the dot with underscore
         // $template_name = str_replace(ARAG_TPL_EXT, '', $template);
         // $template_name = str_replace('/', '_', $template_name);

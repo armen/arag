@@ -26,6 +26,8 @@ class Arag_Router extends CI_Router {
 
     var $module;
     var $default_module;
+    var $request_method = Null;
+    var $methods        = Array('GET' => 'read', 'POST' => 'write', 'PUT' => 'create', 'DELETE' => 'remove');
 
     // }}}
     // {{{ Constructor
@@ -271,37 +273,46 @@ class Arag_Router extends CI_Router {
     // {{{ fetch_request_method
     function fetch_request_method()
     {
-        $methods = Array('GET' => 'read', 'POST' => 'write', 'PUT' => 'create', 'DELETE' => 'remove');
-    
-        if (isset($_SERVER['REQUEST_METHOD'])) {
-            $REQUEST_METHOD = $_SERVER['REQUEST_METHOD'];
+        if ($this->request_method == Null) {
+        
+            if (isset($_SERVER['REQUEST_METHOD'])) {
+                $REQUEST_METHOD = $_SERVER['REQUEST_METHOD'];
 
-        } elseif (isset($_ENV['REQUEST_METHOD'])) {
-            $REQUEST_METHOD = $_ENV['REQUEST_METHOD'];
+            } elseif (isset($_ENV['REQUEST_METHOD'])) {
+                $REQUEST_METHOD = $_ENV['REQUEST_METHOD'];
+            }
+
+            switch($REQUEST_METHOD) {
+                case 'POST':
+                    $this->set_request_method($this->methods['POST']);
+                    break;
+
+                case 'PUT':
+                    $this->set_request_method($this->methods['PUT']);
+                    break;
+
+                case 'DELETE':
+                    $this->set_request_method($this->methods['DELETE']);
+                    break;
+
+                default:
+                    $this->set_request_method($this->methods['GET']);
+            }
         }
 
-        switch($REQUEST_METHOD) {
-            case 'POST':
-                $this->set_request_method($methods['POST']);
-                break;
-
-            case 'PUT':
-                $this->set_request_method($methods['PUT']);
-                break;
-
-            case 'DELETE':
-                $this->set_request_method($methods['DELETE']);
-                break;
-
-            default:
-                $this->set_request_method($methods['GET']);
-        }
+        return $this->request_method;
     }
     // }}}
     // {{{ set_request_method
     function set_request_method($method)
     {
         $this->request_method = strtolower($method);
+    }
+    // }}}
+    // {{{ fetch_request_methods
+    function fetch_request_methods()
+    {
+        return $this->methods;
     }
     // }}}
 }
