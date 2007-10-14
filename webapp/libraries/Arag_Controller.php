@@ -28,7 +28,7 @@ class Arag_Controller extends Controller {
     {
         parent::_ci_initialize();
 
-        if ($this->config->item('Arag_smarty_integriation') == True) {
+        if ($this->config->item('Arag_smarty_integration') == True) {
             $this->load->library('Arag_Smarty');
         }
 

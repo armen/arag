@@ -64,12 +64,12 @@ class Arag_Loader extends CI_Loader {
         $CI =& get_instance();
 
         // Check if we should use smarty or not
-        if ($CI->config->item('Arag_smarty_integriation') == False) {
+        if ($CI->config->item('Arag_smarty_integration') == False) {
             $output = parent::view($template, $vars, True);
 
         } else {
 
-            // Okey, integriation is enabled
+            // Okey, integration is enabled
 
             if (is_array($vars)) {
                 $this->_ci_cached_vars = array_merge($this->_ci_cached_vars, $vars);
@@ -290,9 +290,9 @@ class Arag_Loader extends CI_Loader {
 
         $CI =& get_instance();
 
-        if ($CI->config->item('Arag_smarty_integriation') == True) {
+        if ($CI->config->item('Arag_smarty_integration') == True) {
 
-            // Okey, integriation is enabled
+            // Okey, integration is enabled
 
             if ( !is_array($helpers)) {
                 $helpers = Array($helpers);

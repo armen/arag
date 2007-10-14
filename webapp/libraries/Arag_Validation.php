@@ -31,7 +31,7 @@ class Arag_Validation extends CI_Validation {
         if (!$retval) {
         
             // Populate all fileds to smarty templates
-            if (!$data && !$field && $CI->config->item('Arag_smarty_integriation') == True) {
+            if (!$data && !$field && $CI->config->item('Arag_smarty_integration') == True) {
                 
                 $fields        = array_keys($this->_fields);
                 $escape_filter = in_array('arag_escape', $CI->config->item('Arag_smarty_pre_filters'));

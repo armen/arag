@@ -11,11 +11,11 @@ class Arag_Smarty extends Smarty {
         $CI =& get_instance();
 
         // Check if we should use smarty or not
-        if ($CI->config->item('Arag_smarty_integriation') == False) {
+        if ($CI->config->item('Arag_smarty_integration') == False) {
             return;
         }
 
-        // Okey, integriation is enabled, so call the parent constructor
+        // Okey, integration is enabled, so call the parent constructor
         parent::Smarty();
 
         // Make smarty accessable in controller

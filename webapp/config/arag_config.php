@@ -15,8 +15,8 @@ $config['Arag_cache_path']     = APPPATH . 'cache/';
 // }}}
 // {{{ Smarty settings
 
-// Enable/Disable CI Smarty integriation
-$config['Arag_smarty_integriation'] = True;
+// Enable/Disable CI Smarty integration
+$config['Arag_smarty_integration'] = True;
 
 // Extension of tpl files
 define ('ARAG_TPL_EXT', '.tpl');
@@ -61,11 +61,11 @@ $config['Arag_module_segment']     = 1;
 $config['Arag_controller_segment'] = 1;
 
 // }}}
-// {{{ I18N
+// {{{ i18n
 
-$config['Arag_i18n_language']           = 'en';
-$config['Arag_i18n_language_name']      = 'en_US.utf8';
-$config['Arag_i18n_language_direction'] = 'ltr';
+ $config['Arag_i18n_language']           = 'en';
+ $config['Arag_i18n_language_name']      = 'en_US.utf8';
+ $config['Arag_i18n_language_direction'] = 'ltr';
 // $config['Arag_i18n_language']           = 'fa_IR.utf8';
 // $config['Arag_i18n_language_name']      = 'fa';
 // $config['Arag_i18n_language_direction'] = 'rtl';
