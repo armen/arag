@@ -21,7 +21,7 @@ class Arag_Smarty extends Smarty {
         // Make smarty accessable in controller
         $CI->smarty =& $this;
 
-        $this->template_dir   = $CI->config->item('Arag_templates_path');
+        $this->template_dir   = APPPATH . 'modules/'. $RTR->fetch_module() . '/templates';        
         $this->cache_dir      = $CI->config->item('Arag_cache_path') . 'smarty_cache/';
         $this->compile_dir    = $CI->config->item('Arag_cache_path') . 'smarty_compile/';
         $this->config_dir     = $CI->config->item('Arag_templates_path') . 'smarty_configs/';
@@ -45,10 +45,9 @@ class Arag_Smarty extends Smarty {
         if ($this->security) {
             
             $configSecureDirectories = $CI->config->item('Arag_smarty_secure_dirs');
-            $modulesView             = Array(APPPATH . 'modules/'. $RTR->fetch_module() . '/templates');
-            //$modulesView            = $this->getModulesViewPath();
+            $safeTemplates           = Array($CI->config->item('Arag_templates_path')); // $this->getModulesViewPath();
 
-            $this->secure_dir                          = array_merge($configSecureDirectories, $modulesView);
+            $this->secure_dir                          = array_merge($configSecureDirectories, $safeTemplates);
             $this->security_settings['IF_FUNCS']       = $CI->config->item('Arag_smarty_if_funcs');
             $this->security_settings['MODIFIER_FUNCS'] = $CI->config->item('Arag_smarty_modifier_funcs');
         }    
