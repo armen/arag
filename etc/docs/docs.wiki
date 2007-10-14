@@ -270,11 +270,11 @@ Following example is the default "head.tpl" file for Arag project:
 
 This is a functional Smarty plugin for adding a rich text editor - powered by FCKeditor - to your Smarty templates. You can use this plugin simply like the following example:
 
-  {arag_rte name="Aticket"}
+  {arag_rte name="Arag"}
 
 This will give you an editor based on the default properties. But if you want to have a customized one you should use the attributes considered for this task as:
 
-  {arag_rte name="Aticket" value="Default text value going to be edited" height="450" width="75%" toolbar_set="Default"}
+  {arag_rte name="Arag" value="Default text value going to be edited" height="450" width="75%" toolbar_set="Default"}
 
 For more information about "toolbar_set" and other issues about editor, please refer to FCKeditor's official documentation.
 
