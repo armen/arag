@@ -5,51 +5,22 @@
 *}
 {arag_block}
     
-    {$this->validation->error_string|smarty:nodefaults|default:""}
-    {$this->validation->subject_error|smarty:nodefaults|default:""}
+    {arag_validation_errors}
+
+    {arag_block template="info"}
+        {capture assign="info_msg"}_("Fields marked with a %s are required."){/capture}
+        {asterisk message=$info_msg}
+    {/arag_block}
 
     {arag_form uri="blog/backend/post" method="post"}
-    <table border="0" dir="{dir}" width="100%">
-    <tr>
-        <td align="{right}" width="100"><span class="form_required">&nbsp;*&nbsp;</span>_("Subject"):</td>
-        <td><input type="text" name="subject" value="{populate name="subject"}" /></td>
-    </tr>
-    <tr>
-        <td align="{right}" width="100">_("Status"):</td>
-        <td>
-            {html_options options=$status name="status"}    
-        </td>
-    </tr>
-    <tr>
-        <td align="{right}" width="100">_("Category"):</td>
-        <td>
-            <select name="category">
-                <option value="0">_("[No Category]")</option>
-                {html_options options=$categories}
-            </select>
-        </td>
-    </tr>
-    <tr>
-        <td align="{right}">_("Entry Body"):</td>
-        <td>{arag_rte name="entry"}</td>
-    </tr>
-    <tr>
-        <td align="{right}" width="100">&nbsp;</td>
-        <td>
-            <div><label><input type="checkbox" name="allow_comments" value="1" />_("Allow comments to this entry")</label></div>
-            <div><label><input type="checkbox" name="requires_moderation" value="1" />_("Comments to this entry requires moderation")</label></div>
-        </td>
-    </tr>
-    <tr>
-        <td align="{right}">_("Extended Body"):</td>
-        <td>{arag_rte name="extended_entry"}</td>
-    </tr>
+    {include file="backend/entry_form.tpl"}
     <tr>
         <td>&nbsp;</td>
         <td>
             <input type="submit" value={quote}_("Create"){/quote} />
+            <input type="reset" value={quote}_("Reset"){/quote} />            
         </td>
     </tr>
     </table>
     {/arag_form}
-{/arag_block}    
+{/arag_block}

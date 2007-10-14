@@ -58,8 +58,8 @@ class Backend extends Arag_Controller
     // {{{ post_read
     function post_read()
     {
-        $data = Array ('categories' => $this->BlogModel->getCategories(), 
-                       'status'     => $this->BlogModel->getStatusOptions());
+        $data = Array ('categories'  => $this->BlogModel->getCategories(), 
+                       'status_list' => $this->BlogModel->getStatusOptions());
 
         $this->load->vars($data);
         $this->load->view('backend/post');
@@ -85,13 +85,11 @@ class Backend extends Arag_Controller
     // {{{ post_write_error
     function post_write_error()
     {
-        $this->validation->set_fields(Array('subject' => $this->input->post('subject')));
-        
         $this->post_read();
     }
     // }}}
-    // {{{ edit
-    function edit($dummy, $id = 0)
+    // {{{ edit_read
+    function edit_read($id = 0)
     {
         $this->global_tabs->setParameter('id', $id);
 
@@ -102,16 +100,16 @@ class Backend extends Arag_Controller
             return;
         }
 
-        $data = Array ('categories' => $this->BlogModel->getCategories(), 
-                       'status'     => $this->BlogModel->getStatusOptions());
+        $data = Array ('categories'  => $this->BlogModel->getCategories(), 
+                       'status_list' => $this->BlogModel->getStatusOptions());
 
         $this->load->vars($data);
         $this->load->vars($entry);
         $this->load->view('backend/edit');
     }
     // }}}
-    // {{{ do_edit
-    function do_edit()
+    // {{{ edit_write
+    function edit_write()
     {
         $this->load->helper('url');
 
@@ -126,10 +124,17 @@ class Backend extends Arag_Controller
                                               $this->input->post('category'));
         redirect('blog/backend/index');
     }
+    // }}}
+    // {{{ edit_write_error
+    function edit_write_error()
+    {
+        $this->edit_read($this->input->post('id'));
+    }
     // }}}    
     // {{{ delete
-    function delete()
+    function delete($id)
     {
+        $this->global_tabs->setParameter('id', $id);    
     }
     // }}}
     // {{{ categories
@@ -143,8 +148,9 @@ class Backend extends Arag_Controller
     }
     // }}}    
     // {{{ preview
-    function preview()
+    function preview($id)
     {
+        $this->global_tabs->setParameter('id', $id);    
     }
     // }}}
 }
