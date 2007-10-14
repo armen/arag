@@ -206,19 +206,27 @@ if ($RTR->scaffolding_request === TRUE) {
         if (file_exists($validator_file = APPPATH.'modules/'.$module.'/validator/'.$RTR->fetch_directory().$class.EXT)) {
             
             require($validator_file);
-            
-            if (isset($validator[$method]['rules']) && is_array($validator[$method]['rules']) || 
-                isset($validator[$method][$request_method]['rules']) && is_array($validator[$method][$request_method]['rules'])) {
-                
-                $CI->load->library('validation');
 
-                if (isset($validator[$method]['rules'])) {
-                    $CI->validation->set_rules($validator[$method]['rules']);
-                } else {
-                    $CI->validation->set_rules($validator[$method][$request_method]['rules']);
+            $_validator = isset($validator[$method]['rules']) ? $validator[$method] : 
+                          isset($validator[$method][$request_method]['rules']) ? $validator[$method][$request_method] : Null;
+            
+            if ($_validator != Null) {
+
+
+                if (is_array($_validator['rules'])) {
+
+                    $CI->load->library('validation');
+                    $CI->validation->set_rules($_validator['rules']);
+                    
+                    if (is_array($messages = $_validator['error_messages'])) {
+                        
+                        foreach ($messages as $rule => $message) {
+                            $CI->validation->set_message($rule, $message);
+                        }
+                    }
+
+                    $validated = $CI->validation->run();
                 }
-           
-                $validated = $CI->validation->run();
             }
         }
 
