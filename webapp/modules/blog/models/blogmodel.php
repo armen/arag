@@ -17,7 +17,7 @@ class BlogModel extends Model
     const PROP_REQUIRES_MODERATION = 4;
 
     // }}}
-    // {{{ BlogModel
+    // {{{ Constructor
     function BlogModel()
     {
         parent::Model();
@@ -85,6 +85,24 @@ class BlogModel extends Model
         return $retval;
     }
     // }}}
+    // {{{ hasEntry
+    function hasEntry($id)
+    {
+        $this->db->select('id');
+        $query = $this->db->getwhere($this->tableName, Array('id' => $id));
+
+        return (boolean)$query->num_rows();
+    }
+    // }}}
+    // {{{ getEntrySubject
+    function getEntrySubject($id)
+    {
+        $this->db->select('subject');
+        $query = $this->db->getwhere($this->tableName, Array('id' => $id));
+
+        return $query->row()->subject;
+    }
+    // }}}    
     // {{{ & getEntries
     function & getEntries()
     {

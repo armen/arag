@@ -1,7 +1,7 @@
 <?php
 
 $_fields = Array (
-                   'id'                  => 'Id',
+                   'id'                  => 'ID',
                    'subject'             => 'Subject', 
                    'entry'               => 'Entry Body',
                    'extended_entry'      => 'Extended Body',
@@ -35,14 +35,34 @@ $validator['error_messages'] = Array (
  * Validation of Post method
  */
 
-$validator['post']['write']['fields']         = $_fields;
-$validator['post']['write']['rules']          = $_rules;
+$validator['post']['write']['fields'] = $_fields;
+$validator['post']['write']['rules']  = $_rules;
 
 /*
  * Validation of Edit method
  */
 
-$validator['edit']['write']['fields']         = $_fields;
-$validator['edit']['write']['rules']          = array_merge($_rules, Array('id' => 'required|numeric'));
+$validator['edit']['read']['fields'] = Array(1 => 'Id');
+$validator['edit']['read']['rules']  = Array(1 => 'required|numeric|callback__check_entry');
+
+$validator['edit']['write']['fields'] = $_fields;
+$validator['edit']['write']['rules']  = array_merge($_rules, Array('id' => 'required|numeric'));
+
+/* 
+ * Validation of Delete method
+ */
+
+$validator['delete']['read']['fields'] = Array(1 => 'Id');
+$validator['delete']['read']['rules']  = Array(1 => 'required|numeric|callback__check_entry');
+
+$validator['delete']['write']['fields'] = Array('id' => 'Id');
+$validator['delete']['write']['rules']  = Array('id' => 'required|numeric|callback__check_entry');
+
+/*
+ * Validation of Preview method 
+ */
+
+$validator['preview']['fields'] = Array(1 => 'Id');
+$validator['preview']['rules']  = Array(1 => 'required|numeric|callback__check_entry');
 
 ?>

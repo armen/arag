@@ -89,17 +89,12 @@ class Backend extends Arag_Controller
     }
     // }}}
     // {{{ edit_read
-    function edit_read($id = 0)
+    function edit_read($id)
     {
         $this->global_tabs->setParameter('id', $id);
 
-        $entry = $this->BlogModel->getEntry($id);
-
-        if (count($entry) == 0) {
-            $this->_invalid_request('blog/backend/index');
-            return;
-        }
-
+        $entry = $this->BlogModel->getEntry($id);        
+        
         $data = Array ('categories'  => $this->BlogModel->getCategories(), 
                        'status_list' => $this->BlogModel->getStatusOptions());
 
@@ -108,6 +103,12 @@ class Backend extends Arag_Controller
         $this->load->view('backend/edit');
     }
     // }}}
+    // {{{ edit_read_error
+    function edit_read_error()
+    {
+        $this->_invalid_request('blog/backend/index');
+    }
+    // }}}    
     // {{{ edit_write
     function edit_write()
     {
@@ -115,8 +116,8 @@ class Backend extends Arag_Controller
 
         $result = $this->BlogModel->editEntry($this->input->post('id'),
                                               $this->input->post('subject'), 
-                                              $this->input->post('entry'), 
-                                              $this->input->post('extended_entry'),
+                                              $this->input->post('entry', True), 
+                                              $this->input->post('extended_entry', True),
                                               'guest',
                                               $this->input->post('status'),
                                               $this->input->post('allow_comments'),
@@ -128,13 +129,47 @@ class Backend extends Arag_Controller
     // {{{ edit_write_error
     function edit_write_error()
     {
-        $this->edit_read($this->input->post('id'));
+        $this->global_tabs->setParameter('id', $this->input->post('id'));
+
+        $data = Array ('categories'  => $this->BlogModel->getCategories(), 
+                       'status_list' => $this->BlogModel->getStatusOptions());
+
+        $this->load->vars($data);
+        $this->load->view('backend/edit');
+    }
+    // }}}
+    // {{{ delete_read
+    function delete_read($id)
+    {
+        $this->global_tabs->setParameter('id', $id);
+
+        $data = Array('id'      => $id, 
+                      'subject' => $this->BlogModel->getEntrySubject($id));
+
+        $this->load->vars($data);
+        $this->load->view('backend/delete.tpl');        
+    }
+    // }}}
+    // {{{ delete_read_error
+    function delete_read_error()
+    {
+        $this->_invalid_request('blog/backend/index');
+    }
+    // }}}
+    // {{{ delete_write
+    function delete_write()
+    {
+        $this->load->helper('url');
+        
+        $this->BlogModel->deleteEntry($this->input->post('id'));
+
+        redirect('blog/backend/index');        
     }
     // }}}    
-    // {{{ delete
-    function delete($id)
+    // {{{ delete_write_error
+    function delete_write_error()
     {
-        $this->global_tabs->setParameter('id', $id);    
+        $this->_invalid_request('blog/backend/index');        
     }
     // }}}
     // {{{ categories
@@ -150,7 +185,32 @@ class Backend extends Arag_Controller
     // {{{ preview
     function preview($id)
     {
-        $this->global_tabs->setParameter('id', $id);    
+        $this->global_tabs->setParameter('id', $id);        
+        $this->load->helper('url');    
+
+        $this->load->component('PList', 'entry');
+
+        $this->entry->setResource(Array($this->BlogModel->getEntry($id)));
+        $this->entry->addColumn('BlogModel.getDate', Null, PList::VIRTUAL_COLUMN);        
+        // $this->entry->addColumn('subject');
+        // $this->entry->addColumn('author');
+        // $this->entry->addColumn('entry');
+        // $this->entry->addColumn('extended_entry');
+
+        $this->load->vars(Array('extended'  => True, 'entry_uri' => '/blog/backend/preview/#id#'));
+        $this->load->view('backend/preview');
+    }
+    // }}}
+    // {{{ preview_error
+    function preview_error()
+    {
+        $this->_invalid_request('blog/backend/index');
+    }
+    // }}}
+    // {{{ _check_entry
+    function _check_entry($id)
+    {
+        return $this->BlogModel->hasEntry($id);
     }
     // }}}
 }

@@ -588,3 +588,20 @@ input, textarea, select {
     text-decoration   : underline;
 }
 /* end of Tabbed Block Simple }}} */
+/* {{{ Blog */
+.blog_entry {
+    border-top        : 1px dotted #888888;
+    margin-bottom     : 10px;
+    padding           : 10px;
+}
+.blog_subject {
+    font-size         : 13px;
+    font-weight       : bold;
+}
+.blog_posted {
+    color             : #888888;
+    font-size         : 9px;
+}
+.blog_body {}
+.blog_extended_body {}
+/* }}} end of Blog */
