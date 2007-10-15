@@ -61,19 +61,15 @@
                     {/if}
 
                     {if is_array($row) && count($row) > 0}
-                        {foreach from=$row|smarty:nodefaults item=field key=name}
-                            {if count($columns) == 0 || (isset($columns.$name|smarty:nodefaults) && !$columns.$name.hidden)}
-                                <td {$onclick|smarty:nodefaults}>{$field}</td>
+                        {foreach from=$columnNames item=name}
+                            {if count($columns) == 0 || (isset($columns.$name|smarty:nodefaults) && !$columns.$name.hidden && !$columns.$name.virtual)}
+                                <td {$onclick|smarty:nodefaults}>{$row.$name}</td>
+                            {else if isset($columns.$name|smarty:nodefaults) && $columns.$name.virtual}
+                                <td {$onclick|smarty:nodefaults}>{$plist->callCallback($name, $row)}</td>
                             {/if}
                         {/foreach}
                     {else}
                         <td>{$row}</td>
-                    {/if}
-
-                    {if count($virtualColumns) > 0}
-                        {foreach from=$virtualColumns item=column key=callback}
-                            <td {$onclick|smarty:nodefaults}>{$plist->callCallback($callback, $row)}</td>
-                        {/foreach}
                     {/if}
 
                     {if count($actions) > 0}
