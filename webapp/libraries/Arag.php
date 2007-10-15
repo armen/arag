@@ -208,7 +208,7 @@ if ($RTR->scaffolding_request === TRUE) {
             require($validator_file);
 
             $_validator = isset($validator[$method]['rules']) ? $validator[$method] : 
-                          isset($validator[$method][$request_method]['rules']) ? $validator[$method][$request_method] : Null;
+                          (isset($validator[$method][$request_method]['rules']) ? $validator[$method][$request_method] : Null);
             
             if ($_validator != Null) {
 
@@ -217,15 +217,17 @@ if ($RTR->scaffolding_request === TRUE) {
 
                     $CI->load->library('validation');
                     $CI->validation->set_rules($_validator['rules']);
-                    
-                    if (is_array($messages = $validator['error_messages'])) {
-                        
+
+                    // XXX: this should be $validator not $_validator
+                    if (isset($validator['error_messages']) && 
+                        is_array($messages = $validator['error_messages'])) {
+
                         foreach ($messages as $rule => $message) {
                             $CI->validation->set_message($rule, $message);
                         }
                     }
 
-                    if (is_array($_validator['fields'])) {
+                    if (isset($_validator['fields']) && is_array($_validator['fields'])) {
                         $CI->validation->set_fields($_validator['fields']);
                     }
 
@@ -239,10 +241,11 @@ if ($RTR->scaffolding_request === TRUE) {
             $method_name = $method;
 
             if (!method_exists($CI, $method)) {
-                if (!method_exists($CI, $method . '_' . $request_method)) {
+
+                $method_name = $method . '_' . $request_method;            
+                
+                if (!method_exists($CI, $method_name)) {
                     show_404();
-                } else {
-                    $method_name = $method . '_' . $request_method;
                 }
             }
        
@@ -250,6 +253,15 @@ if ($RTR->scaffolding_request === TRUE) {
 
             // An error occured in validation
             $method_name = $method . '_' . $request_method . '_error';
+                
+            if (!method_exists($CI, $method_name)) {
+
+                $method_name = $method . '_error';
+    
+                if (!method_exists($CI, $method_name)) {
+                    show_404();
+                }
+            }
         }
  
         // Call the requested method.
