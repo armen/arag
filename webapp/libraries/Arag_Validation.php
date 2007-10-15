@@ -21,31 +21,34 @@
 
 class Arag_Validation extends CI_Validation {
     
-    // {{{ set_fields    
+    // {{{ set_fields
     function set_fields($data = '', $field = '')
     {
         $retval = parent::set_fields($data, $field);
 
-        $CI =& get_instance();        
+        if ($this->CI->uri->router->fetch_request_method() == 'read') {
+            // Map request to POST
+            $this->_map_request();
+        }        
 
         if (!$retval) {
         
             // Populate all fileds to smarty templates
-            if (!$data && !$field && $CI->config->item('Arag_smarty_integration') == True) {
+            if (!$data && !$field && $this->CI->config->item('Arag_smarty_integration') == True) {
                 
                 $fields        = array_keys($this->_fields);
-                $escape_filter = in_array('arag_escape', $CI->config->item('Arag_smarty_pre_filters'));
+                $escape_filter = in_array('arag_escape', $this->CI->config->item('Arag_smarty_pre_filters'));
             
                 foreach($fields as $field) {
 
                     if ($escape_filter) {
                         // filed will be escaped at template automatically so escape is unnecessary
                         if (isset($_POST[$field])) {
-                            $CI->smarty->assign($field, $_POST[$field]);
+                            $this->CI->smarty->assign($field, $_POST[$field]);
                         }
                     } else {
                         // $this->$field is secured in parent::set_fields with prep_for_form function
-                        $CI->smarty->assign($field, $this->$field);
+                        $this->CI->smarty->assign($field, $this->$field);
                     }
                 }
             }
@@ -54,6 +57,25 @@ class Arag_Validation extends CI_Validation {
             return $retval;
         }       
     }
+    // }}}
+    // {{{ _map_request
+    function _map_request()
+    {
+        if (is_array($this->_fields)) {
+
+            $fields        = array_keys($this->_fields);
+            $query_strings = $this->CI->config->item('enable_query_strings');
+
+            foreach ($fields as $field) {
+                if (is_numeric($field)) {
+                    $_POST[$field] = $this->CI->uri->rsegment($field + 3); // We have 3 leader segments /<module_name>/<class_name>/<method_name>/
+                } elseif ($query_strings) {
+                    $_POST[$field] = $_GET[$field];
+                }
+            }
+        }
+    }
+    // }}}
 }
 
 ?>
