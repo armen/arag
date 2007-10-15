@@ -25,7 +25,7 @@ class Backend extends Arag_Controller
         // Global tabbedbock
         $this->load->component('TabbedBlock', 'global_tabs');
         $this->global_tabs->setTitle(_("Blog"));
-        $this->global_tabs->addItem(_("Edit Entries"), 'blog/backend/index');
+        $this->global_tabs->addItem(_("Entries"), 'blog/backend/index');
         $this->global_tabs->addItem(_("Edit Entry"), 'blog/backend/edit/%id%', 'blog/backend/index');
         $this->global_tabs->addItem(_("Delete Entry"), 'blog/backend/delete/%id%', 'blog/backend/index');
         $this->global_tabs->addItem(_("Preview Entry"), 'blog/backend/preview/%id%', 'blog/backend/index');
@@ -34,6 +34,7 @@ class Backend extends Arag_Controller
         $this->global_tabs->addItem(_("Settings"), 'blog/backend/settings');
     }
     // }}}
+    
     // {{{ index
     function index()
     {
@@ -55,6 +56,7 @@ class Backend extends Arag_Controller
         $this->load->view('backend/index');
     }
     // }}}
+
     // {{{ post_read
     function post_read()
     {
@@ -88,6 +90,7 @@ class Backend extends Arag_Controller
         $this->post_read();
     }
     // }}}
+
     // {{{ edit_read
     function edit_read($id)
     {
@@ -138,6 +141,7 @@ class Backend extends Arag_Controller
         $this->load->view('backend/edit');
     }
     // }}}
+    
     // {{{ delete_read
     function delete_read($id)
     {
@@ -172,16 +176,7 @@ class Backend extends Arag_Controller
         $this->_invalid_request('blog/backend/index');        
     }
     // }}}
-    // {{{ categories
-    function categories()
-    {
-    }
-    // }}}    
-    // {{{ settings
-    function settings()
-    {
-    }
-    // }}}    
+    
     // {{{ preview
     function preview($id)
     {
@@ -207,6 +202,19 @@ class Backend extends Arag_Controller
         $this->_invalid_request('blog/backend/index');
     }
     // }}}
+    
+    // {{{ categories
+    function categories()
+    {
+    }
+    // }}}    
+
+    // {{{ settings
+    function settings()
+    {
+    }
+    // }}}
+
     // {{{ _check_entry
     function _check_entry($id)
     {

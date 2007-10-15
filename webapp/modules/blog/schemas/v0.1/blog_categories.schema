@@ -2,7 +2,7 @@
 <database>
     <name><variable>DATABASE_NAME</variable></name>
     <table>
-        <name><variable>TABLES_PREFIX</variable>blog_entries</name>
+        <name><variable>TABLES_PREFIX</variable>blog_categories</name>
         <declaration>
             <field>
                 <name>id</name>
@@ -10,6 +10,12 @@
                 <notnull>true</notnull>
                 <default>0</default>
                 <autoincrement>true</autoincrement>
+            </field>
+            <field>
+                <name>parent_id</name>
+                <type>integer</type>
+                <notnull>true</notnull>
+                <default>0</default>
             </field>
             <field>
                 <name>author</name>
@@ -28,43 +34,22 @@
                 <name>modified_by</name>
                 <type>text</type>
                 <length>255</length>
-            </field>            
+            </field>
             <field>
-                <name>subject</name>
+                <name>name</name>
                 <type>text</type>
                 <length>255</length>
             </field>
             <field>
-                <name>entry</name>
-                <type>clob</type>
+                <name>description</name>
+                <type>text</type>
+                <length>255</length>
             </field>
             <field>
-                <name>extended_entry</name>
-                <type>clob</type>
+                <name>image</name>
+                <type>text</type>
+                <length>255</length>
             </field>
-            <field>
-                <name>category</name>
-                <type>integer</type>
-            </field>            
-            <field>
-                <name>tags</name>
-                <type>clob</type>
-            </field>            
-            <field>
-                <name>published</name>
-                <type>integer</type>
-                <length>1</length>
-            </field>
-            <field>
-                <name>allow_comments</name>
-                <type>integer</type>
-                <length>1</length>
-            </field>
-            <field>
-                <name>requires_moderation</name>
-                <type>integer</type>
-                <length>1</length>
-            </field>            
             <index>
                 <name>primary</name>
                 <primary>true</primary>
