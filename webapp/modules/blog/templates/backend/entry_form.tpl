@@ -11,7 +11,7 @@
 <tr>
     <td align="{right}" width="100">_("Status"):</td>
     <td>
-        {html_options options=$status_list name="status" selected=$status|smarty:nodefaults|default:null}
+        {html_options options=$status_list name="status" selected=$published|smarty:nodefaults|default:1}
     </td>
 </tr>
 <tr>

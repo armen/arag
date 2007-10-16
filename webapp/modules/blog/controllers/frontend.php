@@ -29,7 +29,7 @@ class Frontend extends Arag_Controller
         $this->load->helper('url');    
 
         $this->load->component('PList', 'entry');
-        $this->entry->setResource($this->BlogModel->getEntries());
+        $this->entry->setResource($this->BlogModel->getEntries(True));
         $this->entry->addColumn('BlogModel.getDate', Null, PList::VIRTUAL_COLUMN);
 
         $this->load->vars(Array('entry_uri' => '/blog/frontend/view/#id#/extended'));
@@ -42,7 +42,7 @@ class Frontend extends Arag_Controller
         $this->load->helper('url');
 
         $this->load->component('PList', 'entry');
-        $this->entry->setResource(Array($this->BlogModel->getEntry($id)));
+        $this->entry->setResource(Array($this->BlogModel->getEntry($id, True)));
         $this->entry->addColumn('BlogModel.getDate', Null, PList::VIRTUAL_COLUMN);
 
         $this->load->vars(Array('extended'  => $extended == 'extended', 

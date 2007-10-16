@@ -75,11 +75,16 @@ class BlogModel extends Model
     }
     // }}}
     // {{{ & getEntry
-    function & getEntry($id)
+    function & getEntry($id, $published = false)
     {
         $this->db->select('id, subject, entry, extended_entry, author, create_date, modify_date, modified_by, '.
                           'published, allow_comments, requires_moderation, category');
-        $query = $this->db->getwhere($this->tableName, Array('id' => $id));
+
+        if ($published) {
+            $query = $this->db->getwhere($this->tableName, Array('id' => $id, 'published' => '1'));
+        } else {
+            $query = $this->db->getwhere($this->tableName, Array('id' => $id));
+        }
 
         $retval = $query->first_row('array');
         return $retval;
@@ -104,12 +109,17 @@ class BlogModel extends Model
     }
     // }}}    
     // {{{ & getEntries
-    function & getEntries()
+    function & getEntries($published = false)
     {
         $this->db->select('id, subject, entry, extended_entry, author, create_date, modify_date, modified_by, '.
                           'published, allow_comments, requires_moderation, category');
         $this->db->orderby('create_date', 'desc');
-        $query = $this->db->get($this->tableName);
+        
+        if ($published) {
+            $query = $this->db->getwhere($this->tableName, Array('published' => '1'));
+        } else {
+            $query = $this->db->get($this->tableName);
+        }
 
         $retval = $query->result_array();
         return $retval;
@@ -147,8 +157,8 @@ class BlogModel extends Model
     // {{{ getStatusOptions
     function getStatusOptions()
     {
-        return Array(1 => _("Publish"),
-                     0 => _("Draft"));
+        return Array(0 => _("Draft"),
+                     1 => _("Publish"));
     }
     // }}}
     // }}}
