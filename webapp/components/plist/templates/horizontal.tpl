@@ -64,7 +64,7 @@
                         {foreach from=$columnNames item=name}
                             {if count($columns) == 0 || (isset($columns.$name|smarty:nodefaults) && !$columns.$name.hidden && !$columns.$name.virtual)}
                                 <td {$onclick|smarty:nodefaults}>{$row.$name}</td>
-                            {else if isset($columns.$name|smarty:nodefaults) && $columns.$name.virtual}
+                            {elseif isset($columns.$name|smarty:nodefaults) && $columns.$name.virtual}
                                 <td {$onclick|smarty:nodefaults}>{$plist->callCallback($name, $row)}</td>
                             {/if}
                         {/foreach}
