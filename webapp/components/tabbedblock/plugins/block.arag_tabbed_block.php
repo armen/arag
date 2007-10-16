@@ -54,7 +54,12 @@ function smarty_block_arag_tabbed_block($params, $content, &$smarty, &$repeat)
         $CI =& get_instance();
 
         $uri = $CI->uri->uri_string();
-        @list($dummy, $moduleName, $className, $methodName) = $CI->uri->rsegment_array();
+        @list($dummy, $moduleName, $directoryName, $className, $methodName) = $CI->uri->rsegment_array();
+        
+        if ($CI->uri->router->fetch_directory() == Null) {        
+            $methodName = $className;
+            $className  = $directoryName;
+        }
 
         // Get selected item
         $selectedItemName = Null;        
@@ -63,7 +68,11 @@ function smarty_block_arag_tabbed_block($params, $content, &$smarty, &$repeat)
         foreach ($tabbedBlock->getItems() as $key => $item) {
             if ($item['enabled'] && isset($item['uri'])) {
 
-                @list($module, $class, $method) = explode('/', $item['uri']);
+                @list($module, $directory, $class, $method) = explode('/', $item['uri']);
+                if ($CI->uri->router->fetch_directory() == Null) {        
+                    $method = $class;
+                    $class  = $directory;
+                }
 
                 if ($item['selected'] != True && $module == $moduleName && $class == $className && 
                     ($method == $methodName || ($methodName == Null && $method == 'index'))) {
@@ -81,8 +90,12 @@ function smarty_block_arag_tabbed_block($params, $content, &$smarty, &$repeat)
 
                         if ($subtab['enabled'] && isset($subtab['uri'])) {
 
-                            @list($module, $class, $method) = explode('/', $subtab['uri']);
-
+                            @list($module, $directory, $class, $method) = explode('/', $subtab['uri']);
+                            if ($CI->uri->router->fetch_directory() == Null) {        
+                                $method = $class;
+                                $class  = $directory;
+                            }                            
+                        
                             if ($subtab['selected'] != True && $module == $moduleName && $class == $className && 
                                 ($method == $methodName || ($methodName == Null && $method == 'index'))) {
 
