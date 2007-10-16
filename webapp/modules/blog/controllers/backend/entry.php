@@ -6,35 +6,10 @@
 // $Id$
 // ---------------------------------------------------------------------------
 
-class Backend extends Arag_Controller 
+require_once "backend.php";
+
+class Entry extends Backend 
 {
-    // {{{ Constructor
-    function Backend()
-    {
-        parent::Arag_Controller();
-
-        // Load the model
-        $this->load->model('BlogModel');        
-       
-        // Backend decorator
-        $this->load->decorator('backend/decorator');
-
-        // Default page title
-        $this->load->vars(Array('page_title' => 'Blog'));
-
-        // Global tabbedbock
-        $this->load->component('TabbedBlock', 'global_tabs');
-        $this->global_tabs->setTitle(_("Blog"));
-        $this->global_tabs->addItem(_("Entries"), 'blog/backend/index');
-        $this->global_tabs->addItem(_("Edit Entry"), 'blog/backend/edit/%id%', 'blog/backend/index');
-        $this->global_tabs->addItem(_("Delete Entry"), 'blog/backend/delete/%id%', 'blog/backend/index');
-        $this->global_tabs->addItem(_("Preview Entry"), 'blog/backend/preview/%id%', 'blog/backend/index');
-        $this->global_tabs->addItem(_("New Entry"), 'blog/backend/post');
-        $this->global_tabs->addItem(_("Categories"), 'blog/backend/categories');
-        $this->global_tabs->addItem(_("Settings"), 'blog/backend/settings');
-    }
-    // }}}
-    
     // {{{ index
     function index()
     {
@@ -47,16 +22,15 @@ class Backend extends Arag_Controller
         $this->entries->addColumn('BlogModel.getDate', _("Create Date"), PList::VIRTUAL_COLUMN);
         $this->entries->addColumn('BlogModel.getModifyDate', _("Modify Date"), PList::VIRTUAL_COLUMN);        
         $this->entries->addColumn('BlogModel.getModifiedBy', _("Modified By"), PList::VIRTUAL_COLUMN);
-        $this->entries->addAction('blog/backend/edit/#id#', 'Edit', 'edit_action');
-        $this->entries->addAction('blog/backend/delete/#id#', 'Delete', 'delete_action');
-        $this->entries->addAction('blog/backend/preview/#id#', 'Preview', 'view_action');        
-        $this->entries->addAction('blog/backend/delete', 'Delete', 'delete_action', PList::GROUP_ACTION);
+        $this->entries->addAction('blog/backend/entry/edit/#id#', 'Edit', 'edit_action');
+        $this->entries->addAction('blog/backend/entry/delete/#id#', 'Delete', 'delete_action');
+        $this->entries->addAction('blog/backend/entry/preview/#id#', 'Preview', 'view_action');        
+        // $this->entries->addAction('blog/backend/entry/delete', 'Delete', 'delete_action', PList::GROUP_ACTION);
         $this->entries->setEmptyListMessage(_("There is no entry!"));
 
         $this->load->view('backend/index');
     }
     // }}}
-
     // {{{ post_read
     function post_read()
     {
@@ -81,7 +55,7 @@ class Backend extends Arag_Controller
                                       $this->input->post('requires_moderation'),
                                       $this->input->post('category'));
 
-        redirect('blog/backend/index');
+        redirect('blog/backend/entry');
     }
     // }}}
     // {{{ post_write_error
@@ -90,7 +64,6 @@ class Backend extends Arag_Controller
         $this->post_read();
     }
     // }}}
-
     // {{{ edit_read
     function edit_read($id)
     {
@@ -109,7 +82,7 @@ class Backend extends Arag_Controller
     // {{{ edit_read_error
     function edit_read_error()
     {
-        $this->_invalid_request('blog/backend/index');
+        $this->_invalid_request('blog/backend/entry');
     }
     // }}}    
     // {{{ edit_write
@@ -126,7 +99,7 @@ class Backend extends Arag_Controller
                                               $this->input->post('allow_comments'),
                                               $this->input->post('requires_moderation'),
                                               $this->input->post('category'));
-        redirect('blog/backend/index');
+        redirect('blog/backend/entry');
     }
     // }}}
     // {{{ edit_write_error
@@ -141,7 +114,6 @@ class Backend extends Arag_Controller
         $this->load->view('backend/edit');
     }
     // }}}
-    
     // {{{ delete_read
     function delete_read($id)
     {
@@ -151,13 +123,13 @@ class Backend extends Arag_Controller
                       'subject' => $this->BlogModel->getEntrySubject($id));
 
         $this->load->vars($data);
-        $this->load->view('backend/delete.tpl');        
+        $this->load->view('backend/delete');
     }
     // }}}
     // {{{ delete_read_error
     function delete_read_error()
     {
-        $this->_invalid_request('blog/backend/index');
+        $this->_invalid_request('blog/backend/entry');
     }
     // }}}
     // {{{ delete_write
@@ -167,16 +139,15 @@ class Backend extends Arag_Controller
         
         $this->BlogModel->deleteEntry($this->input->post('id'));
 
-        redirect('blog/backend/index');        
+        redirect('blog/backend/entry');
     }
     // }}}    
     // {{{ delete_write_error
     function delete_write_error()
     {
-        $this->_invalid_request('blog/backend/index');        
+        $this->_invalid_request('blog/backend/entry');        
     }
     // }}}
-    
     // {{{ preview
     function preview($id)
     {
@@ -192,29 +163,16 @@ class Backend extends Arag_Controller
         // $this->entry->addColumn('entry');
         // $this->entry->addColumn('extended_entry');
 
-        $this->load->vars(Array('extended'  => True, 'entry_uri' => '/blog/backend/preview/#id#'));
+        $this->load->vars(Array('extended'  => True, 'entry_uri' => '/blog/backend/entry/preview/#id#'));
         $this->load->view('backend/preview');
     }
     // }}}
     // {{{ preview_error
     function preview_error()
     {
-        $this->_invalid_request('blog/backend/index');
+        $this->_invalid_request('blog/backend/entry');
     }
     // }}}
-    
-    // {{{ categories
-    function categories()
-    {
-    }
-    // }}}    
-
-    // {{{ settings
-    function settings()
-    {
-    }
-    // }}}
-
     // {{{ _check_entry
     function _check_entry($id)
     {
