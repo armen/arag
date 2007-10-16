@@ -126,6 +126,14 @@ class Arag_Router extends CI_Router {
         $this->routes = ( ! isset($route) OR ! is_array($route)) ? $this->routes : array_merge($this->routes, $route);
         unset($route);
 
+        if (count($this->segments) == 1) {
+            // Module name specified but controller name is not specified, we should chack if
+            // there is default controller in routes.php file of module
+            $this->default_controller = ( ! isset($this->routes['default_controller']) || $this->routes['default_controller'] == '') ? 
+                                        Null : strtolower($this->routes['default_controller']);
+            $this->set_class($this->default_controller);
+        }
+
         // Parse any custom routing that may exist
         $this->_parse_routes();        
         
