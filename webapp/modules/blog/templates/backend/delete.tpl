@@ -13,13 +13,13 @@
             {$msg|sprintf:$subject}
         </td>
         <td>    
-            {arag_form uri="blog/backend/delete" method="post"}
+            {arag_form uri="blog/backend/entry/delete" method="post"}
                 <input type="hidden" name="id" value="{$id}" />
                 <input type="submit" value={quote}_("Yes"){/quote} />
             {/arag_form}
         </td>
         <td>
-            {arag_form uri="blog/backend/index" method="post"}
+            {arag_form uri="blog/backend/entry" method="post"}
                 <input type="submit" value={quote}_("No"){/quote} />        
             {/arag_form}
         </td>            

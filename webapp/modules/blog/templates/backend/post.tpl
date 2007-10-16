@@ -12,7 +12,7 @@
         {asterisk message=$info_msg}
     {/arag_block}
 
-    {arag_form uri="blog/backend/post" method="post"}
+    {arag_form uri="blog/backend/entry/post" method="post"}
     {include file="backend/entry_form.tpl"}
     <tr>
         <td>&nbsp;</td>
