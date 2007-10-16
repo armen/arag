@@ -167,17 +167,22 @@ class Arag_Router extends CI_Router {
         }
 
         // Does the requested controller exist in the root folder?
-        if (file_exists(APPPATH.'modules/'.$segments[0].'/controllers/'.$segments[1].EXT)) {
+        if (file_exists(APPPATH.'modules/'.$segments[0].'/controllers/'.$segments[1].EXT) && 
+            !is_dir(APPPATH.'modules/'.$segments[0].'/controllers/'.$segments[1])) {
             return $segments;
         }
 
         // Is the controller in a sub-folder?
         if (is_dir(APPPATH.'modules/'.$segments[0].'/controllers/'.$segments[1])) {
-            // Set the directory and remove it from the segment array
-            $this->set_directory($segments[1]);
-            $segments = array_slice($segments, 2, 1);
 
-            if (count($segments) > 2) {
+            if (file_exists(APPPATH.'modules/'.$segments[0].'/controllers/'.$segments[1].'/'.$segments[2].EXT)) {
+                // There is a directory and a controller in it so
+                // set the directory and remove it from the segment array
+                $this->set_directory($segments[1]);
+                array_splice($segments, 1, 1, Null);
+            }
+            
+            if (count($segments) >= 2) {
                 // Does the requested controller exist in the sub-folder?
                 if ( ! file_exists(APPPATH.'modules/'.$segments[0].'/controllers/'.$this->fetch_directory().$segments[1].EXT)) {
                     show_404();    
