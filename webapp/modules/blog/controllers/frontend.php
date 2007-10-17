@@ -59,7 +59,7 @@ class Frontend extends Arag_Controller
     // {{{ _check_entry
     function _check_entry($id)
     {
-        return $this->BlogModel->hasEntry($id);
+        return $this->BlogModel->hasEntry($id, True);
     }
     // }}}    
 }

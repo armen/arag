@@ -91,10 +91,15 @@ class BlogModel extends Model
     }
     // }}}
     // {{{ hasEntry
-    function hasEntry($id)
+    function hasEntry($id, $published = false)
     {
         $this->db->select('id');
-        $query = $this->db->getwhere($this->tableName, Array('id' => $id));
+
+        if ($published) {
+            $query = $this->db->getwhere($this->tableName, Array('id' => $id, 'published' => '1'));
+        } else {
+            $query = $this->db->getwhere($this->tableName, Array('id' => $id));        
+        }
 
         return (boolean)$query->num_rows();
     }
