@@ -54,12 +54,11 @@ function smarty_block_arag_tabbed_block($params, $content, &$smarty, &$repeat)
         $CI =& get_instance();
 
         $uri = $CI->uri->uri_string();
-        @list($dummy, $moduleName, $directoryName, $className, $methodName) = $CI->uri->rsegment_array();
-        
-        if ($CI->uri->router->fetch_directory() == Null) {        
-            $methodName = $className;
-            $className  = $directoryName;
-        }
+
+        $moduleName    = $CI->uri->router->fetch_module();
+        $directoryName = $CI->uri->router->fetch_directory();
+        $className     = $CI->uri->router->fetch_class();
+        $methodName    = $CI->uri->router->fetch_method();
 
         // Get selected item
         $selectedItemName = Null;        
@@ -75,13 +74,15 @@ function smarty_block_arag_tabbed_block($params, $content, &$smarty, &$repeat)
                 }
 
                 if ($item['selected'] != True && $module == $moduleName && $class == $className && 
-                    ($method == $methodName || ($methodName == Null && $method == 'index'))) {
+                    ($method == $methodName || ($method == Null && $methodName == 'index'))) {
 
                     // Set selected to true
                     $tabbedBlock->_items[$key]['selected'] = True;
 
                     $selectedItemName = $tabbedBlock->_items[$key]['name'];
-                    $selectedItem     = $tabbedBlock->_items[$key];                    
+                    $selectedItem     = $tabbedBlock->_items[$key];
+
+                    break;
 
                 } else if (is_array(($item['subtabs']))) {
                     // Try to find selected tab in subtabs
@@ -97,14 +98,16 @@ function smarty_block_arag_tabbed_block($params, $content, &$smarty, &$repeat)
                             }                            
                         
                             if ($subtab['selected'] != True && $module == $moduleName && $class == $className && 
-                                ($method == $methodName || ($methodName == Null && $method == 'index'))) {
+                                ($method == $methodName || ($method == Null && $methodName == 'index'))) {
 
                                 $tabbedBlock->_items[$key]['subtabs'][$_key]['selected'] = True;
                                 $tabbedBlock->_items[$key]['has_subtab']                 = True;       
                                 $tabbedBlock->_items[$key]['selected']                   = True;                                
 
                                 $selectedItemName = $subtab['name'];
-                                $selectedItem     = $tabbedBlock->_items[$key]; // Parenet item                                
+                                $selectedItem     = $tabbedBlock->_items[$key]; // Parenet item
+
+                                break;
                             }
                         }
                     }                    
