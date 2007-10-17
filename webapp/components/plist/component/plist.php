@@ -70,10 +70,10 @@ class PList extends Component implements IteratorAggregate, ArrayAccess
         // If namespace is not empty add an underscore at the begining
         $namespace = ($namespace) ? '_'.$namespace : $namespace;
 
-        if (preg_match('/page'.$namespace.':([0-9]+)*\//', $uri, $matchs)) {
+        if (preg_match('/page'.$namespace.':([0-9]+)*\//', $uri, $matches)) {
             // Check if page parameter is already in uri
-            $this->page = $matchs[1];
-            $uri        = str_replace($matchs[0], '#page#/', $uri);
+            $this->page = $matches[1];
+            $uri        = str_replace($matches[0], '#page#/', $uri);
         } else {
             // Okey uri is clean so append #page# to uri
             $uri .= '#page#';
@@ -287,14 +287,14 @@ class PList extends Component implements IteratorAggregate, ArrayAccess
             $uri = implode('/', $uri);
         }
 
-        if (preg_match($pattern, $uri, $matchs)) {
+        if (preg_match($pattern, $uri, $matches)) {
 
             // Checking for url Variables
-            if (is_array($row) && array_key_exists($matchs[1], $row)) {
-                $uri = str_replace("#{$matchs[1]}#", $row[$matchs[1]], $uri);
+            if (is_array($row) && array_key_exists($matches[1], $row)) {
+                $uri = str_replace("#{$matches[1]}#", $row[$matches[1]], $uri);
             
-            } else if (is_string($row) && preg_match('/([a-zA-z_][a-zA-Z_0-9]*)=([a-zA-Z_0-9:]+);/', $row, $matchs)) {
-                $uri = str_replace("#{$matchs[1]}#", $matchs[2], $uri);
+            } else if (is_string($row) && preg_match('/([a-zA-z_][a-zA-Z_0-9]*)=([a-zA-Z_0-9:]+);/', $row, $matches)) {
+                $uri = str_replace("#{$matches[1]}#", $matches[2], $uri);
             }
         }
 
