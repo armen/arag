@@ -1,14 +1,14 @@
 <?php
 
 $_fields = Array (
-                   'id'                  => 'ID',
-                   'subject'             => 'Subject', 
-                   'entry'               => 'Entry Body',
-                   'extended_entry'      => 'Extended Body',
+                   'id'                  => _("ID"),
+                   'subject'             => _("Subject"), 
+                   'entry'               => _("Entry Body"),
+                   'extended_entry'      => _("Extended Body"),
                    'status'              => '',
                    'allow_comments'      => '',
                    'requires_moderation' => '',
-                   'category'            => ''
+                   // 'category'            => ''
                  );
 
 $_rules = Array (
@@ -18,7 +18,7 @@ $_rules = Array (
                   'status'              => 'numeric',
                   'allow_comments'      => 'numeric',
                   'requires_moderation' => 'numeric',
-                  'category'            => 'numeric'
+                  // 'category'            => 'numeric'
                 );
 
 /*
@@ -26,9 +26,9 @@ $_rules = Array (
  */
 
 $validator['error_messages'] = Array (
-                                       'required'   => '%s is required.', 
-                                       'min_length' => 'minimum length of %s is %d',
-                                       'numeric'    => '%s should be numeric'
+                                       'required'   => _("%s is required."), 
+                                       'min_length' => _("minimum length of %s is %d"),
+                                       'numeric'    => _("%s should be numeric")
                                      );
 
 /*

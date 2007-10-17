@@ -14,6 +14,7 @@
         {html_options options=$status_list name="status" selected=$published|smarty:nodefaults|default:1}
     </td>
 </tr>
+{*
 <tr>
     <td align="{right}" width="100">_("Category"):</td>
     <td>
@@ -23,10 +24,12 @@
         </select>
     </td>
 </tr>
+*}
 <tr>
     <td align="{right}">{asterisk}_("Entry Body"):</td>
     <td>{arag_rte name="entry" value=$entry|smarty:nodefaults|default:null}</td>
 </tr>
+{*
 <tr>
     <td align="{right}" width="100">&nbsp;</td>
     <td>
@@ -39,6 +42,7 @@
         </label></div>
     </td>
 </tr>
+*}
 <tr>
     <td align="{right}">_("Extended Body"):</td>
     <td>{arag_rte name="extended_entry" value=$extended_entry|smarty:nodefaults|default:null}</td>
