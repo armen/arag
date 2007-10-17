@@ -305,9 +305,6 @@ class Arag_Loader extends CI_Loader {
                     // Load the helper wrappers for the helper              
                     $CI->smarty->plugins_dir[] = APPPATH.'helpers/'.$helper;
                     array_unique($CI->smarty->plugins_dir);
-
-                } else {
-                    show_error('Unable to load the requested helpers in directory: '.APPPATH.'helpers/'.$helper);
                 }
             }
         }        
