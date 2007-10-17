@@ -6,9 +6,15 @@
 | This file lets you define "hooks" to extend CI without hacking the core
 | files.  Please see the user guide for info:
 |
-|	http://www.codeigniter.com/user_guide/general/hooks.html
+|   http://www.codeigniter.com/user_guide/general/hooks.html
 |
 */
 
+$hook['pre_controller'] = array(
+                                 'class'    => 'Arag_Auth',
+                                 'function' => 'check',
+                                 'filename' => 'Arag_Auth.php',
+                                 'filepath' => 'hooks'
+                               );
 
 ?>

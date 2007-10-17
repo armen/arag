@@ -8,7 +8,7 @@
 | URL to your CodeIgniter root. Typically this will be your base URL,
 | WITH a trailing slash:
 |
-|	http://www.your-site.com/
+|    http://www.your-site.com/
 |
 */
 
@@ -41,14 +41,14 @@ $config['index_page'] = "index.php";
 | URI string.  The default setting of "AUTO" works for most servers.
 | If your links do not seem to work, try one of the other delicious flavors:
 |
-| 'AUTO'			Default - auto detects
-| 'PATH_INFO'		Uses the PATH_INFO
-| 'QUERY_STRING'	Uses the QUERY_STRING
-| 'REQUEST_URI'		Uses the REQUEST_URI
-| 'ORIG_PATH_INFO'	Uses the ORIG_PATH_INFO
+| 'AUTO'            Default - auto detects
+| 'PATH_INFO'       Uses the PATH_INFO
+| 'QUERY_STRING'    Uses the QUERY_STRING
+| 'REQUEST_URI'     Uses the REQUEST_URI
+| 'ORIG_PATH_INFO'  Uses the ORIG_PATH_INFO
 |
 */
-$config['uri_protocol']	= "AUTO";
+$config['uri_protocol']    = "AUTO";
 
 /*
 |--------------------------------------------------------------------------
@@ -73,7 +73,7 @@ $config['url_suffix'] = "";
 | than english.
 |
 */
-$config['language']	= "english";
+$config['language'] = "english";
 
 /*
 |--------------------------------------------------------------------------
@@ -95,7 +95,7 @@ $config['charset'] = "UTF-8";
 | setting this variable to TRUE (boolean).  See the user guide for details.
 |
 */
-$config['enable_hooks'] = FALSE;
+$config['enable_hooks'] = True;
 
 
 /*
@@ -170,11 +170,11 @@ $config['function_trigger'] = 'f';
 | You can enable error logging by setting a threshold over zero. The
 | threshold determines what gets logged. Threshold options are:
 |
-|	0 = Disables logging, Error logging TURNED OFF
-|	1 = Error Messages (including PHP errors)
-|	2 = Debug Messages
-|	3 = Informational Messages
-|	4 = All Messages
+|    0 = Disables logging, Error logging TURNED OFF
+|    1 = Error Messages (including PHP errors)
+|    2 = Debug Messages
+|    3 = Informational Messages
+|    4 = All Messages
 |
 | For a live site you'll usually only enable Errors (1) to be logged otherwise
 | your log files will fill up very fast.
@@ -237,13 +237,13 @@ $config['encryption_key'] = "";
 |  by default sessions last 7200 seconds (two hours).  Set to zero for no expiration.
 |
 */
-$config['sess_cookie_name']		= 'ci_session';
-$config['sess_expiration']		= 7200;
-$config['sess_encrypt_cookie']	= FALSE;
-$config['sess_use_database']	= FALSE;
-$config['sess_table_name']		= 'ci_sessions';
-$config['sess_match_ip']		= FALSE;
-$config['sess_match_useragent']	= TRUE;
+$config['sess_cookie_name']     = 'ci_session';
+$config['sess_expiration']      = 7200;
+$config['sess_encrypt_cookie']  = FALSE;
+$config['sess_use_database']    = FALSE;
+$config['sess_table_name']      = 'ci_sessions';
+$config['sess_match_ip']        = FALSE;
+$config['sess_match_useragent'] = TRUE;
 
 /*
 |--------------------------------------------------------------------------
@@ -255,9 +255,9 @@ $config['sess_match_useragent']	= TRUE;
 | 'cookie_path'   =  Typically will be a forward slash
 |
 */
-$config['cookie_prefix']	= "";
-$config['cookie_domain']	= "";
-$config['cookie_path']		= "/";
+$config['cookie_prefix'] = "";
+$config['cookie_domain'] = "";
+$config['cookie_path']   = "/";
 
 /*
 |--------------------------------------------------------------------------
