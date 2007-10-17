@@ -68,7 +68,8 @@ class Arag_Validation extends CI_Validation {
 
             foreach ($fields as $field) {
                 if (is_numeric($field)) {
-                    $_POST[$field] = $this->CI->uri->rsegment($field + 3); // We have 3 leader segments /<module_name>/<class_name>/<method_name>/
+                    // We have 3/4 leader segments /<module_name>/[<directory_name>/]<class_name>/<method_name>/                
+                    $_POST[$field] = $this->CI->uri->rsegment($field + (($this->CI->uri->router->fetch_directory() == '') ? 3 : 4));
                 } elseif ($query_strings) {
                     $_POST[$field] = $_GET[$field];
                 }
