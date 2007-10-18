@@ -100,9 +100,9 @@ if ($EXT->_call_hook('cache_override') === FALSE)
  * ------------------------------------------------------
  */
 
-$IN        =& load_class('Input');
-$URI    =& load_class('URI');
-$LANG    =& load_class('Language');
+$IN   =& load_class('Input');
+$URI  =& load_class('URI');
+$LANG =& load_class('Language');
 
 /*
  * ------------------------------------------------------
