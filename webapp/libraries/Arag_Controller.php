@@ -44,14 +44,9 @@ class Arag_Controller extends Controller {
     function _invalid_request($uri = Null)
     {
         $this->load->helper('url');
-        
-        // Replace current decorator with global decorator
-        $this->output->set_decorator('arag_templates/decorator.tpl');
+        $this->session->set_userdata('_invalid_request_uri', $uri);
 
-        $this->load->vars(Array('page_title' => _("Invalid Request!"),
-                                '_site_url'  => site_url($uri)));
-
-        $this->load->view('arag_templates/invalid_request.tpl');
+        redirect('core/invalid_request');
     }
     // }}}
 }
