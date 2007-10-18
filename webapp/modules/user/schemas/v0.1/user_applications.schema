@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<database>
+    <name><variable>DATABASE_NAME</variable></name>
+    <table>
+        <name><variable>TABLES_PREFIX</variable>user_applications</name>
+        <declaration>
+            <field>
+                <name>name</name>
+                <type>text</type>
+                <length>255</length>
+                <notnull>true</notnull>
+            </field>
+            <field>
+                <name>database_id</name>
+                <type>integer</type>
+                <notnull>true</notnull>
+                <default>0</default>
+            </field>            
+            <field>
+                <name>create_date</name>
+                <type>integer</type>
+            </field>
+            <field>
+                <name>isactive</name>
+                <type>integer</type>
+                <length>1</length>
+                <notnull>true</notnull>
+                <default>0</default>
+            </field>
+            <field>
+                <name>default_group</name>
+                <type>text</type>
+                <length>255</length>                
+            </field>
+            <index>
+                <name>primary</name>
+                <primary>true</primary>
+                <field>
+                    <name>name</name>
+                </field>
+            </index>
+        </declaration>
+    </table>
+</database>
