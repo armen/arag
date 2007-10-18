@@ -23,6 +23,9 @@ input, textarea, select {
 .asterisk {
     color           : red;
 }
+.smallfont {
+    font-size       : 10px;
+}
 /* end of Global }}} */
 /* {{{ Blocks
 /* {{{ arag_block */
