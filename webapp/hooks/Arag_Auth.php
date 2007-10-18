@@ -37,16 +37,20 @@ class Arag_Auth {
     // {{{ check
     function check()
     {
-        // $permissions = Array('*', 'blog', 'blog/*', '*/backend/*', 'blog/backend/*', 'blog/*/index', 'blog/*/*', 'blog/backend/index');
-        // $permissions = Array('blog/frontend/*', 'blog/backend/entry/post');
-        $permissions = Array('*');
+        // Hard coded permissions :)
+        $permissions = Array('', 'core/*', 'staticpages/*', 'ta_locator/*', 'ta_minor_profile/*', 'user/*', 'blog/*');
+        
+        // XXX: We have to allow this destinatin otherwise it is possible to happen an infinity loop 
+        $permissions[] = 'core/frontend/messages/not_authorized';
+
         $authorized  = False;
 
         foreach ($permissions as $permission) {
 
             // Validate the permission, it contains four section which every section separated with a /.
-            // it should contain at least one section. each section contains * or lower case characters
-            if (preg_match('/^([a-z]*|\*)(\/([a-z]*|\*)){0,3}$/', $permission)) {
+            // it should contain at least one section. each section contains * (except first section) 
+            // or lower case characters
+            if (preg_match('/^([a-z_]*)(\/([a-z_]*|\*)){0,3}$/', $permission)) {
                 
                 $permission = str_replace('*', '.*', $permission);
                 $permission = '|^'.$permission.'$|';
@@ -59,7 +63,9 @@ class Arag_Auth {
         }
 
         if (!$authorized) {
-            die('you are not authorized');
+            $CFG =& load_class('Config');
+            header("location: " . $CFG->site_url('core/not_authorized'));
+            exit;
         }
     }
     // }}}
