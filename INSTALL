@@ -1,5 +1,5 @@
 Installing from SVN
--------------------------------------
+-------------------------------------------------------------------------------
 
 1) Checkout a copy from SVN
         svn co svn+ssh://<your-username>@svn.projects.des/svnroot/arag/trunk arag
@@ -9,3 +9,24 @@ Installing from SVN
 
 3) Set webapp/cache directory to be writeable by your web server
         chmod 777 arag/webapp/cache/
+
+Installation of Sample module
+-------------------------------------------------------------------------------
+
+1) Follow arag installation steps
+
+2) Create a database (currently only MySQL tested but feel free to use PostgreSQL and SQLite)
+
+3) Cahnge database configuration located at ./arag/webapp/config/database.php
+
+4) Create necessary tables
+        ./arag/etc/scripts/create_schema.php --dsn=<DBMS name>://<username>[:<password>]@<server>/<database_name> --all-modules
+
+   Example:
+        ./arag/etc/scripts/create_schema.php --dsn=mysql://myuser:mypass@localhost/arag --all-modules
+
+5) use following URL to execute backend of sample module
+        http://<domain_name>/index.php/blog/admin
+   
+   and following URL to execute frontend of sample module
+        http://<domain_name>/index.php/blog     
