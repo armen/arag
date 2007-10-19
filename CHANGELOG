@@ -1,0 +1,43 @@
+AGAVI CHANGELOG
+===============
+
+0.2 (Oct 19, 2007)
+-------------------------------------------------------------------------------
+
+ADD: method execution based on request_method (GET, POST, etc). (Armen)
+ADD: $CI (controller) object passed to all templates with "$this" name. (Armen)
+ADD: Automatic validation implemented. (Armen)
+ADD: arag_validation_errors smarty function plugin implemented to make life easier in validation hood. (Armen)
+ADD: Form populatin implemented for smarty templates. (Armen)
+ADD: Segments/GET validation implemented. (Armen)
+ADD: Configuration model implemented. (Armen, Sasan)
+ADD: Invalid request handler implemented. (Armen)
+ADD: Subtabs of tabbedblock implemented. (Armen)
+ADD: I18N implemented (based on gettext). (Armen)
+ADD: extract_gettext.sh and format_gettext.sh scripts implemented. (Armen)
+ADD: Sample module (Blog) implemented. (Armen)
+ADD: create_schema.php script implemented, it can create a specifid database schema file(s) or all enabled modules schema files. (Armen)
+ADD: Modules have their own config.php and routes.php files. (Armen)
+ADD: Text helpers are implemented. (Sasan)
+ADD: simple.tpl template for tabbedblock implemented. (Sasan)
+ADD: Group actions are implemented for PList (Armen)
+ADD: Icons are added for PList. (Armen)
+ADD: arag_form smarty block plugin implemented. (Armen)
+ADD: quote smarty fuction implemented. (Armen)
+ADD: asterisk smarty function plugin implemented. (Armen)
+ADD: arag_rte smarty plugin implemented (current RTE supports FCKeditor). (Sasan)
+ADD: (Incomplete!) Initial version of user module imported. (Armen)
+ADD: (Experimental, Incomplete!) Initial version of Authorization hook implemented. (Armen)
+
+CHG: TabbedBlock changed due to subtabs implementation. *BC BREAK* (Armen)
+
+FIX: Columns will shown in order that developer specified in code. (Armen)
+FIX: Routing system didn't understand /<module_name> URIs but just /<module_name>/<class_name>/* (Armen)
+FIX: Current method of routing system makes rsegments unusable, this problem fixed. (Armen)
+FIX: CodeIgniter can't handle a directory name same as a controller name but it is handy tohave such ability. (Armen)
+FIX: Do not throw an error when smarty wrapper is not exists for helper. (Armen)
+
+0.1 (Oct 5, 2007)
+-------------------------------------------------------------------------------
+
+- Initial Release
