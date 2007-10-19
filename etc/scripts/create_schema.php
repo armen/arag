@@ -73,8 +73,9 @@ foreach ($options[0] as $option) {
 
 // Check for empty options and missing required options
 if (!isset($dsn) || empty($options[0]) || (!isset($allModules) && empty($options[1]))) {
-    echo "Usage: ./create_schema.php --dsn=... [-p|--prefix=...] [-d|--data-set=...] [--all-modules] schema_file.schema ".
-         "[schema_file.schema]...\n\n";
+    echo "Usage: ./create_schema.php --dsn=... [-p|--prefix=...] [-d|--data-set=...] schema_file.schema [schema_file.schema]...\n".
+         "       ./create_schema.php --dsn=... [-p|--prefix=...] [-d|--data-set=...] --all-modules \n\n";
+         
     exit;
 }
 
