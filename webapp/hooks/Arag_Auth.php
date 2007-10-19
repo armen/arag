@@ -38,7 +38,7 @@ class Arag_Auth {
     function check()
     {
         // Hard coded permissions :)
-        $permissions = Array('', 'core/*', 'staticpages/*', 'ta_locator/*', 'ta_minor_profile/*', 'user/*', 'blog/*');
+        $permissions = Array('arag/*', 'core/*', 'staticpages/*', 'ta_locator/*', 'ta_minor_profile/*', 'user/*', 'blog/*');
         
         // XXX: We have to allow this destinatin otherwise it is possible to happen an infinity loop 
         $permissions[] = 'core/frontend/messages/not_authorized';
