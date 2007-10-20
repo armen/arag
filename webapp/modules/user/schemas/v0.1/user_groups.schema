@@ -5,6 +5,11 @@
         <name><variable>TABLES_PREFIX</variable>user_groups</name>
         <declaration>
             <field>
+                <name>id</name>
+                <type>integer</type>
+                <notnull>true</notnull>                
+            </field>        
+            <field>
                 <name>name</name>
                 <type>text</type>
                 <length>255</length>                
@@ -41,7 +46,7 @@
                 <name>primary</name>
                 <primary>true</primary>
                 <field>
-                    <name>name</name>
+                    <name>id</name>
                 </field>
             </index>
         </declaration>
