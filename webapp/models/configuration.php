@@ -12,7 +12,15 @@ class Configuration extends Model
 
     var $tableName = 'core_configuration';
 
-    // }}}    
+    // }}}
+    // {{{ Constructor
+    function Configuration()
+    {
+        parent::Model();
+
+        $this->load->database();
+    }
+    // }}}
     // {{{ setVar
     function setVar($name, $value, $namespace = Null)
     {
