@@ -20,6 +20,21 @@
  */
 class Arag_Session extends CI_Session {
 
+    // {{{ userdata
+    /**
+     * Fetch a specific item form  the session array
+     *
+     * @access    public
+     * @param     string
+     * @return    string
+     */        
+    function userdata($item, $default_value = False)
+    {
+        $result = parent::userdata($item);
+
+        return ($result === False) ? $default_value : $result;
+    }
+    // }}}
     // {{{ has_userdate
     function has_userdata($item)
     {
