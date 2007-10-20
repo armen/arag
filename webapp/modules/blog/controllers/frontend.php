@@ -29,6 +29,7 @@ class Frontend extends Arag_Controller
         $this->load->helper('url');    
 
         $this->load->component('PList', 'entry');
+        $this->entry->setLimit($this->config->item('post_limit', NULL, 0));        
         $this->entry->setResource($this->BlogModel->getEntries(True));
         $this->entry->addColumn('BlogModel.getDate', Null, PList::VIRTUAL_COLUMN);
 

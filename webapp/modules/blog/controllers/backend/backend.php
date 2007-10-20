@@ -35,6 +35,7 @@ class Backend extends Arag_Controller
         // $this->global_tabs->addItem(_("Delete Category"), 'blog/backend/category/delete/%id%', 'blog/backend/category');
         // $this->global_tabs->addItem(_("New Category"), 'blog/backend/category/create');        
         $this->global_tabs->addItem(_("Settings"), 'blog/backend/settings');
+        $this->global_tabs->addItem(_("Preview"), 'blog');    
     }
     // }}}
 }

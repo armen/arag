@@ -16,9 +16,15 @@
     {arag_form uri="blog/backend/settings" method="post"}
     <table border="0" dir="{dir}" width="100%">
     <tr>
-        <td align="{right}" width="100">_("Limit"):</td>
-        <td><input type="text" name="limit" value="{$limit|smarty:nodefaults|default:null}" /></td>
+        <td align="{right}" width="200">_("List items per page"):</td>
+        <td><input type="text" name="limit" value="{$limit|smarty:nodefaults|default:null}" />&nbsp;
+            <span class="smallfont">_("0 means unlimited.")</span></td>
     </tr>
+    <tr>
+        <td align="{right}" width="200">_("Number of posts per page"):</td>
+        <td><input type="text" name="post_limit" value="{$post_limit|smarty:nodefaults|default:null}" />&nbsp;
+            <span class="smallfont">_("0 means unlimited.")</span></td>
+    </tr>    
     <tr>
         <td>&nbsp;</td>
         <td>

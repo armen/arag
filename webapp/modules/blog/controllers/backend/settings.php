@@ -19,9 +19,10 @@ class Settings extends Backend
     // {{{ index_read
     function index_read($saved = Null)
     {
-        $data          = Array();
-        $data['limit'] = $this->config->item('limit');
-        $data['saved'] = $saved;
+        $data               = Array();
+        $data['limit']      = $this->config->item('limit');
+        $data['post_limit'] = $this->config->item('post_limit');
+        $data['saved']      = $saved;
 
         $this->load->vars($data);        
         $this->load->view('backend/settings');
@@ -33,6 +34,7 @@ class Settings extends Backend
         $this->load->helper('url');
     
         $this->config->set_item('limit', $this->input->post('limit'));
+        $this->config->set_item('post_limit', $this->input->post('post_limit'));
 
         redirect('blog/backend/settings/index/saved');
     }
