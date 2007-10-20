@@ -17,7 +17,7 @@ class Entry extends Backend
         $this->load->component('PList', 'entries');
 
         $this->entries->setResource($this->BlogModel->getEntries());
-        $this->entries->setLimit($this->configuration->getVar('limit', 0));
+        $this->entries->setLimit($this->config->item('limit', NULL, 0));
         $this->entries->addColumn('subject', _("Subject"));        
         $this->entries->addColumn('author', _("Author"));
         $this->entries->addColumn('BlogModel.getDate', _("Create Date"), PList::VIRTUAL_COLUMN);

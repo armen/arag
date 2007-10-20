@@ -14,15 +14,13 @@ class Settings extends Backend
     function Settings()
     {
         parent::Backend();
-        
-        $this->load->model('configuration');
     }
     // }}}
     // {{{ index_read
     function index_read($saved = Null)
     {
         $data          = Array();
-        $data['limit'] = $this->configuration->getVar('limit');
+        $data['limit'] = $this->config->item('limit');
         $data['saved'] = $saved;
 
         $this->load->vars($data);        
@@ -34,7 +32,7 @@ class Settings extends Backend
     {
         $this->load->helper('url');
     
-        $this->configuration->setVar('limit', $this->input->post('limit'));
+        $this->config->set_item('limit', $this->input->post('limit'));
 
         redirect('blog/backend/settings/index/saved');
     }
