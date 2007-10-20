@@ -1,4 +1,4 @@
-﻿===== Getting Started =====
+===== Getting Started =====
 
 ==== Installation Instructions ====
 
@@ -6,7 +6,7 @@
 
 1) Checkout a copy from SVN:
 <code bash>
-  svn checkout svn://svn.osp.ir/svnroot/arag/trunk arag
+  svn checkout svn://svn.osp.ir/svnroot/arag/trunk arag  
 </code>
 2) Download third party libraries:
 <code bash>
@@ -64,6 +64,7 @@ In the following table you can find a brief introduction for some of these direc
 ==== Arag configuration file ====
 Arag configuration file is located at "webapp/configs/arag_configs.php". 
 The major configurations are Smarty settings, you can enable or disable Smarty integration, change security settings add filters and etc.
+There is also a config file in each module which hast the module's own configuration. To see where you can find this file refer to the [[#modules|modules]] section.
 
 ==== Arag Controllers ====
 In Arag project has its own controller class which your controller should extends the parent controller class so that it can inherit all its functions.
@@ -85,6 +86,38 @@ If you intend to use a constructor in any of your Controllers, you MUST place pa
       }     
   }
 
+A new feature is implemented in Arag to make the naming and calling of a controller's methods very easy and understandable. By this way, Arag recognize when you call a function within a post or get method. so that if it is GET, it will call "<functionname>_read" and it will call "<functionname>_write" if it is POST. If none of them available, automatically it will call <"functionname>":
+
+  function edit_write()
+  {
+    Statements
+  }
+
+  function edit_read()
+  {
+    Statement
+  }
+
+In the above example, if you load address "<controller>/edit", it will automatically call "edit_read". Cause it is a get method. And if you give a  HTML form an action of "<controller>/edit", it will load "edit_write", because it happens through a post method.\\
+But remember that the raw function of "<functionname>", has more priority than "<functionname>_write" and "<functionname>_read". Take a look at the following codes:
+
+  function edit()
+  {
+    Statements
+  }
+
+  function edit_write()
+  {
+    Statements
+  }
+
+  function edit_read()
+  {
+    Statement
+  }
+
+In these codes, always "edit" will be called, independent of you request method. 
+
 ==== Modules ====
 In CodeIgniter we don't have Modules. Modules are implemented for Arag project.
 Two major things you have to know about Arag modules: first there is an additional segment in URI that specified what modules should be executed and the second one is directory structure of modules.
@@ -96,13 +129,19 @@ Directory structure of modules could be something like this:
        ...
        +-- modules
             +-- <module_name>
+            |      +-- config
             |      +-- controllers
+            |      +-- locale
             |      +-- models
+            |      +-- schemas
             |      +-- templates
             |
             +-- <module_name2>
+                   +-- config
                    +-- controllers
+                   +-- locale
                    +-- models
+                   +-- schemas
                    +-- templates
 
 For example the URI for first module specified in above structure, in the case of executing backend controller and post method is: "/<module_name>/backend/post"
@@ -115,13 +154,45 @@ For example this is the default "webapp/configs/routes.php" file of Arag project
   $route['default_controller']  = "arag";
   $route['scaffolding_trigger'] = "";
 
-Above example will load Arag controller from Arag module, when module and controller names are not specified in URI.
+Above example will load Arag controller from Arag module, when module and controller names are not specified in URI.\\
+There is also a private routing configuration file in each modules directory, which can contain each module's routing configurations. You can refer to the above diagram of modules structure, to see where you can find the private configuration files of each module.
+
+In Arag a new method of routing system is implemented, by which, you can have a bunch of controllers - in your "controllers" directory of each module - that extend the main controller of that module. In this way you can break your controller into new ones which inherit the main controller, so that you will have a neat and more flexible code.\\ Imagine these scenario. You have a "backend.php" controller in the root of your controller directory. In this backend controller you have bunch of methods, from index to settings, list, create, edit and etc. Whenever you want to call one of these controllers you have to for example use this address: "<modulename>/backend/edit". At first sight it seems that it's much easier and simple, but if you think more you will understand that you have a thousand lines source code just for your backend. Besides implementing special features, like authorization, on each of your controller's methods individually,  will be so difficult. But if you break it into new controllers, like "settings.php" or "edit.php" which has their own constructor, "index_read" and "index_write" methods, all of these problems will be solved automatically. In this way, you can create a "tabbedblock" in your main controller's constructor and then share it with other controllers by making them extend it. Our new controllers directory will be something like this: 
 
 
+  +-- webapp
+       ...
+       +-- modules
+            +-- <module_name>
+                   +-- config
+                   +-- controllers
+                   |     +-- backend
+                   |     |   +-- backend.php
+                   |     |   +-- edit.php
+                   |     |   +-- settings.php
+                   |     |
+                   |     +-- frontend.php
+                   | 
+                   +-- locale
+                   +-- models
+                   +-- schemas
+                   +-- templates
+            
+Just remember that doing this, you have to change your validation directory too. It means that every controller you have, should have it's own validation file, in it the associated directory. For more information about validations, refer to [[#form_validation|Form Validation]] section.
 
+==== Database Schemes ====
 
+Every module can have its own database schema with which you can create new tables with new entries. In this way you can revert to previous versions of your database schema any time it is needed. Schemes are located at "<moduleName>/schemas/<VersionNumber>/<ModuleName>.schema". There is also a "module.php" file for every module, which has information about the related module - such as schema version. This file is located at "<ModuleName>/config/module.php".\\
+Now, lets take a look at how we should implement a schema. To create a schema, you have to use a script located at "etc/scripts", called "create_schema.php", as below:
+
+  ./create_schema.php --dsn=mysql://<username>:<password>@<host>/<dbname> <ModuleName>/schemas/<VersionNumber>/<ModuleName>.schema
+
+  ./create_schema.php --dsn=mysql://root:root@localhost/cms blog/schemas/v0.1/blog_entries.schema
+
+To see how to create a schema you can read a schema's codes.
 
 ==== Models and Global Models ====
+
 Models are exactly same as what they are in CodeIgniter, the only difference is the location of related files. In general, models are located at "webapp/modules/<module_name>/models/<model_name>.php".
 
 You can load models in same way you do in CodeIgniter but it has some additional tricks:
@@ -266,6 +337,22 @@ Following example is the default "head.tpl" file for Arag project:
   <link rel="stylesheet" media="all" type="text/css" title="Arag" 
         href="{$arag_base_url|smarty:nodefaults}/styles/styles.css" />    
 
+=== Form ===
+
+This Smarty plugin will let you to put HTML forms into your Smarty templates:
+
+  {arag_form uri="staticpages/backend/create" method="post"}
+    HTML Form Elements
+  {/arag_form}
+
+The above code generates the following:
+
+  <form actin="staticpages/backend/create"  method="post">
+    HTML Form Elements
+  </form>
+
+If you don't send any method, by the default it will be post.
+
 === WISIWIG Editor ===
 
 This is a functional Smarty plugin for adding a rich text editor - powered by FCKeditor - to your Smarty templates. You can use this plugin simply like the following example:
@@ -277,6 +364,34 @@ This will give you an editor based on the default properties. But if you want to
   {arag_rte name="Arag" value="Default text value going to be edited" height="450" width="75%" toolbar_set="Default"}
 
 For more information about "toolbar_set" and other issues about editor, please refer to FCKeditor's official documentation.
+
+=== Arag Validation ===
+
+This plugin is for showing form validation error messages. It's almost like an Arag block:
+
+  {arag_validation_errors}
+
+For more information about the usage of this plugin and Arag's form validator refer to "[[#form_validation|Form Validation]]" section.
+
+=== Asterisk ===
+
+This plugin helps you to put a red asterisk into your templates (e.g. required fields in a from):
+
+  {asterisk}
+
+will generate:
+
+  <span class="asterisk">&nbsp;*&nbsp;</span>
+
+=== Quote ===
+
+Some times you need nested quotes in your template. This block will help you to do that:
+
+  <input type="submit" name="submit" value={quote}_("Yes"){/quote} />
+
+which generates:
+
+  <input type="submit" name="submit" value=\"_("yes")\" />
 
 ==== Decoration and Decorators ====
 
@@ -486,6 +601,10 @@ For more information about how to write a custom template for "Plist" you can ch
 
 If you are interested about callable methods of "PList" component which you can use, please check out "components/plist/component/plist.php".
 
+With Arag "Plist", it is also possible to add group actions to your list. So that you give your list the ability of doing an action on more than one item of your list simultaneously. To add a group action to you list you should use the following syntax in which, the first parameter is the URL of the action, the second is the title and the third one specifies the icon which the action uses:
+
+  $this->staticpages->addAction('staticpages/backend/gdelete', 'Delete', 'delete_action', PList::GROUP_ACTION);
+
 === TabbedBlock Component ===
 
 "TabbedBlock" is a component for creating tabs. Following example shows you how to create tabs with "TabbedBlock" component:
@@ -539,29 +658,141 @@ For more information about how to write a custom template for "TabbedBlock" you 
 
 If you are interested about callable methods of "TabbedBlock" component which you can use, please check out "components/tabbedblock/component/tabbedblock.php".
 
+Arag tabbedblock has also a feature wich lets you to add sub tabs to your top tabs. Imagine that you have TabbedBlock containing "List" and "Create". In "List" you have a list of your objects with actions of "Edit" and "Delete. Now you want to add sub tabs "Edit" and "Delete" every time user clicks on "List". For doing that you should use the following code:
+
+  $this->load->component('TabbedBlock', 'global_tabs');
+  $this->global_tabs->setTitle(_("StaticPages"));
+  $this->global_tabs->addItem(_("List"), 'staticpages/backend/index');
+  $this->global_tabs->addItem(_("Create"), 'staticpages/backend/create');
+  $this->global_tabs->addItem(_("Edit"), 'staticpages/backend/edit/%id%', 'staticpages/backend/index');
+  $this->global_tabs->addItem(_("Delete"), 'staticpages/backend/delete/%id%', 'staticpages/backend/index');
+
+As you see, "addItem" can take a third parameter in which you can define this item is the sub tab of the tab which its address is "staticpages/backend/index".
+
+==== I18N ====
+
+Internationalization is a method for supporting international languages in Arag. Actually it is a extended library depending on CI and PHP's "gettext". Using this library will let you have different linguistic versions of Arag. Adding this feature to your modules is very simple. You just have to add a new directory to your modules directory named "locale". In "locale" directory you have to add your desired language systems such as en_US.utf8, fa_IR.utf8 and ... and then in each of your language system's directories, a "LC_MESSAGES" directory for storing '.po' (Portable Object) and '.mo' (Machine Object) messages to include your translations. You can see the structure of a "locale" directory in the following diagram:
+
+  +-- (Module Name)
+      +-- config
+      +-- controllers
+      +-- locale
+          +-- fa_IR.utf8
+              +-- LC_MESSAGES
+      +-- models
+      +-- schemas
+      +-- templates
+
+After adding mentioned directories to your modules then you have to make a '.po' message from all of your strings, using a shield script called "extract_gettext.sh" located in "etc/scripts. But remember before doing that you have to put all of your strings (which you want to be translated), in your source, in a _(" "), so that the script would be able to recognize them. You can see some examples below:
+
+  $this->tabBock->addItem(_("List"));
+
+  {capture assign="msg"}_("Do you really want to delete '%s'?"){/capture}
+
+  <input type="submit" name="submit" value={quote}_("No"){/quote} />
+
+After running the script and generating ".po" files, you have to compile them to ".mo" files (readable by the application) using the "format_gettext.sh" script located in the same place.
+But lets take a closer look at this procedure. "extract_gettext.sh" actually fetch all the strings marked by _(" ") in your source code and add them to a ".po" file. ".po" extensions are very easy to modify, so even someone without any knowledge of programming can simply add translations of the extracted strings to the ".po" files. In the next step, "format_gettext.sh" will compile those ".po"s to ".mo" files. Notice that you have to recompile ".po" files every time that you modify them.
+
+There are some important notes about using the I18N:
+  * Before using I18N you have to reconfigure your locale with and add your desired language system like this:
+     #dpkg-reconfigure locales
+  * You also have to reconfigure the config file - "config/arag_config.php".
+  * If you can't see your translations, first check the code, then empty your cache in "cache/smart_compile/", restart your apache server and check again.
+  *  If there have been any problem with your coding or the language system you are using, or even if you don't use the I18N at all, the application will automatically use the pure strings in the _(" ") by the default language system configured at your config file.
+
 ==== Arag Libraries ====
 
 There are several libraries in Arag project which each of them extends some libraries from CodeIgniter. In the lake of API documentation of implemented features, this directory is a good place to start with.
 
 Currently there are several libraries in Arags project listed below:
 
-^ Library         ^ Extends      ^
+^ Library            ^ Extends      ^
 | Arag_Controller | Controller   |
 | Arag_Loader     | Loader       |
 | Arag_Output     | Output       |
 | Arag_Router     | Router       |
 | Arag_Smarty     |      -       |
-| Components      |      -       |
+| Components         |      -       |
 | Arag            |      -       |
 
 Arag ("Arag.php") is what called "CodeIgniter.php" in CodeIgniter libraries directory.
 
 Components and "Arag_Smarty" are implemented for Arag project and those not have parent class in CodeIgniter.
 
+
 ==== Benchmark ====
 
 |               ^ RPS (Enabled caching) ^       RPS      ^
-^ Arag (ESI)    |        77.56          |      26.93     |   
-^ Arag          |        78.02          |      39.58     |  
-^ CodeIgniter   |        84.17          |      47.52     |
+^ Arag (ESI) |          77.56        |      26.93     |   
+^ Arag       |          78.02        |      39.58     |  
+^ CodeIgniter   |          84.17        |      47.52     |
 | ESI: Enabled Smarty integration |||
+
+==== Form Validation ====
+
+This feature will help you to validate your forms according to your own rules definitions. Arag's "Form Validation" is based on CI form validator library, but it is much more comprehensive and easier to implement than the CI's form validator. It lets you to check filled forms for errors and repopulate them very easily. In CI, as you know, you had to set rules every time you called form validation library, but in Arag, every controller of a module has it's own global sets of rules located at "<module name>/validator/<controller>.php". This file consists of some arrays for setting rules and fields.\\
+Just like CI you have to set rules for every form you have, except that here you just set them in an array and pass them to your validator of the relative method. Like the following example:
+
+  $_rules = Array (
+                    'subject' => 'trim|required|alpha_numeric',
+                    'page'    => 'required|xss_clean',
+                  );
+
+  $validator['create']['write']['rules'] = $_rules;
+
+You also have to set Fields for repopulating:
+
+  $_fields = Array (
+                    'subject' => 'Subject', 
+                    'page'    => 'Page'
+                   );
+  $validator['create']['write']['fields'] = $_fields;
+
+And error messages that have to be shown in case of error occurring (according to your rules):
+
+  $validator['error_messages'] = Array (
+                                        'required'   => '%s is required.',
+                                       );
+
+For more informations about CI rules and their jobs take a look at CI official documentation.\\
+Now in you main controller you have to add a error method in which, if error occured it will let the job continues, else, it will do what you put in the method:
+
+    function create_write_error()
+    {   
+        $this->create_read();
+    }
+
+What we have done until know was the backend of your form validation. But to make it enable in your Smarty template you have to change your template.\\ First you have to use a plugin for showing error messages:
+
+  {arag_validation_errors}
+
+And adding values to your form elements for enabling repopulating:
+
+  {arag_rte name="page" value=$page|smarty:nodefaults}
+
+  
+  <input type="text" name="subject" value="{$subject}" />
+
+And now it's done!!\\ \\ 
+Arag's form validation also supports validating of data passing through URL. In this case you can check if the correct data is passed or not. For example you want to pass a page's id for editing through address bar. So you use "<controller>/edit/<id>". Arag Form Validation, helps you to check the existence of the given id, take numeric ids and etc. It's almost same as post method, except that you give segment number (starting from 1) instead of field name:
+
+  $validator['edit']['read']['fields'] = array (1 => "ID");
+  $validator['edit']['read']['rules']  = array (1 => "required");
+
+and in your controller backend:
+
+  function edit_read_error()
+  {
+    Statement;
+  }
+
+In the above example, "1" is segment number one in the URL after "edit". Like "<controller>/edit/**23**".
+
+==== Invalid Request Page ====
+
+This page contains an error block and a return link, for showing in cases in which user has an invalid request. Imagine these scenario that user pass an ID through URL. But the ID doesn't exist. So you can handle the error with Arag form validation and redirect user to the invalid request page using the following code:
+
+  $this->_invalid_request("staticpages/backend/index");
+
+The parameter which we sent is the address of the return link.
