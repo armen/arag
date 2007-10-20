@@ -64,8 +64,17 @@ class PList extends Component implements IteratorAggregate, ArrayAccess
         $CI->load->helper('url');
 
         // Set default URI
-        $uri = $CI->uri->uri_string();
-        $uri = (substr($uri, -1) == '/') ? $uri : $uri . '/'; // Add trailing slash
+        // $uri = $CI->uri->ruri_string();
+        // $uri = (substr($uri, -1) == '/') ? $uri : $uri . '/'; // Add trailing slash
+
+        $rsegments = $CI->uri->rsegment_array();
+        $segnum    = $CI->uri->router->fetch_directory() ? 4 : 3;
+
+        if ($CI->uri->router->fetch_method() == 'index' && !isset($rsegments[$segnum])) {
+            $rsegments[] = 'index';
+        }
+
+        $uri = '/'.implode('/', $rsegments).'/';
 
         // If namespace is not empty add an underscore at the begining
         $namespace = ($namespace) ? '_'.$namespace : $namespace;
