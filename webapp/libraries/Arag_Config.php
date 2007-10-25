@@ -100,7 +100,7 @@ class Arag_Config extends CI_Config {
     }
     // }}}
     // {{{ fetch_item
-    function _fetch_item($item, $defaultValue, $namespace)
+    function _fetch_item($item, $defaultValue, $namespace = Null)
     {
         $result = $defaultValue;
         
