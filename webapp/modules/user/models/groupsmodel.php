@@ -13,6 +13,7 @@ class GroupsModel extends Model
     var $tableNameApps;
     var $tableNameGroups;
     var $tableNameUsers;
+    var $tableNameFilters;
 
     // }}}
     // {{{ Constructor
@@ -24,9 +25,10 @@ class GroupsModel extends Model
         $this->load->database();
 
         // set tables' names
-        $this->tableNameApps   = "user_applications";
-        $this->tableNameGroups = "user_groups";
-        $this->tableNameUsers  = "user_users";
+        $this->tableNameApps    = "user_applications";
+        $this->tableNameGroups  = "user_groups";
+        $this->tableNameUsers   = "user_users";
+        $this->tableNameFilters = "user_filters";        
     }
     // }}}
     // {{{ & getAnonymousGroup
@@ -52,6 +54,41 @@ class GroupsModel extends Model
         }
 
         return $group;
+    }
+    // }}}
+    // {{{ filterPrivileges
+    function filterPrivileges($appname, $privileges)
+    {
+        $safePrivileges = Array();
+
+        if (is_array($privileges) && count($privileges) > 0) {
+
+            $filters = array();
+
+            if ($appname === '_master_') {
+                // Sir, you are the master and you don't need any filter \:)
+                return $privileges;
+            }
+            
+            $this->db->select('appname, filter')->from($this->tableNameFilters);
+            $this->db->where('appname', $appname)->orwhere('appname', '_default_')->orwhere('appname', '_global_');
+
+            // Get appname, _default_ and _global_ filter.
+            $_filters = $this->db->get()->result();
+
+            // Save filters more friendly schema
+            foreach ($_filters as $filter) {
+                $filters[$filter->appname] = ($filter->filter != Null) ? unserialize($filter->filter) : Array();
+            }
+
+            // If there was no filter for application, use _default_ filter
+            $appname = (isset($filters[$appname]) && count($filters[$appname]) > 0 ) ? $appname : '_default_';
+            
+            // Merge filters to generate a single filter;
+            $filters = array_unique(array_merge($filters[$appname], $filters['_global_']));
+        }
+
+        return $safePrivileges;
     }
     // }}}
     // {{{ getGroups
