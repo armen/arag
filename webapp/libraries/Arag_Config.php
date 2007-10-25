@@ -108,7 +108,7 @@ class Arag_Config extends CI_Config {
             
         if (isset($CI)) {
             $CI->load->model('configuration');
-            $result = $CI->configuration->getVar($item);
+            $result = $CI->configuration->getVar($item, $namespace);
         }
 
         return $result;       
