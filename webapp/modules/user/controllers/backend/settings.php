@@ -20,7 +20,7 @@ class Settings extends Backend
     function index_read($saved = Null)
     {
         $data          = Array();
-        $data['limit'] = $this->config->item('limit');
+        $data['limit'] = $this->config->item('limit', NULL, 0);
         $data['saved'] = $saved;
 
         $this->load->vars($data);        
@@ -30,11 +30,9 @@ class Settings extends Backend
     // {{{ index_write
     function index_write()
     {
-        $this->load->helper('url');
-    
         $this->config->set_item('limit', $this->input->post('limit'));
 
-        redirect('blog/backend/settings/index/saved');
+        redirect('user/backend/settings/index/saved');
     }
     // }}}
     // {{{ index_write_error
