@@ -31,6 +31,10 @@
                      <value><variable>NOW_TIMESTAMP</variable></value>
                 </field>
                 <field>
+                     <name>created_by</name>
+                     <value>core</value>
+                </field>
+                <field>
                      <name>modify_date</name>
                      <value></value>
                 </field>                

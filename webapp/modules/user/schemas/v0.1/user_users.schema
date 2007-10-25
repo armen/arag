@@ -36,6 +36,11 @@
                 <type>integer</type>
             </field>
             <field>
+                <name>created_by</name>
+                <type>text</type>
+                <length>255</length>
+            </field>
+            <field>
                 <name>modify_date</name>
                 <type>integer</type>
             </field>
