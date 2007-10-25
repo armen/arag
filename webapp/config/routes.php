@@ -45,4 +45,8 @@ $route['default_module']      = "arag";
 $route['default_controller']  = "arag";
 $route['scaffolding_trigger'] = "";
 
+$route['not_authorized'] = "core/frontend/messages/not_authorized";
+$route['login']          = "user/frontend/login";
+$route['logout']         = "user/frontend/logout";
+
 ?>

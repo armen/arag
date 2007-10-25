@@ -29,6 +29,31 @@ class GroupsModel extends Model
         $this->tableNameUsers  = "user_users";
     }
     // }}}
+    // {{{ & getAnonymousGroup
+    function & getAnonymousGroup($appname)
+    {
+        $this->db->select('name, appname, privileges, redirect');
+        $this->db->from($this->tableNameGroups);
+        $this->db->where('appname', $appname);
+        $this->db->where('name', 'anonymous');
+
+        $group = $this->db->getwhere()->row_array();
+
+        if (!empty($group)) {
+            $group['privileges'] = unserialize($group['privileges']);
+        } else {
+
+            // XXX: Okay, there is no anonymous group for this appname so just construct a Null
+            //      anonymous group
+            $group['name']       = 'anonymous';
+            $group['appname']    = $appname;
+            $group['privileges'] = Null;
+            $group['redirect']   = False;
+        }
+
+        return $group;
+    }
+    // }}}
     // {{{ getGroups
     function getGroups($appName = NULL)
     {

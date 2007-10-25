@@ -10,11 +10,11 @@
 |
 */
 
-$hook['pre_controller'] = array(
-                                 'class'    => 'Arag_Auth',
-                                 'function' => 'check',
-                                 'filename' => 'Arag_Auth.php',
-                                 'filepath' => 'hooks'
-                               );
+$hook['post_controller_constructor'] = array(
+                                             'class'    => 'Arag_Auth',
+                                             'function' => 'check',
+                                             'filename' => 'Arag_Auth.php',
+                                             'filepath' => 'hooks'
+                                            );
 
 ?>

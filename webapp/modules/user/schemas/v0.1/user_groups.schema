@@ -8,6 +8,7 @@
                 <name>id</name>
                 <type>integer</type>
                 <notnull>true</notnull>                
+                <autoincrement>true</autoincrement>
             </field>        
             <field>
                 <name>name</name>

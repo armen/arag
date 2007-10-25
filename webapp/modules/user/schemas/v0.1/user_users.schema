@@ -13,7 +13,7 @@
             <field>
                 <name>password</name>
                 <type>text</type>
-                <length>32</length>
+                <length>40</length>
                 <notnull>true</notnull>
             </field>
             <field>

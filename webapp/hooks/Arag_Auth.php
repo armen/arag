@@ -37,25 +37,32 @@ class Arag_Auth {
     // {{{ check
     function check()
     {
-        // Hard coded permissions :)
-        $permissions = Array('arag/*', 'core/*', 'staticpages/*', 'ta_locator/*', 'ta_minor_profile/*', 'user/*', 'blog/*');
-        
-        // XXX: We have to allow this destinatin otherwise it is possible to happen an infinity loop 
-        $permissions[] = 'core/frontend/messages/not_authorized';
+        $CI =& get_instance();
 
-        $authorized  = False;
+        if (!$CI->session->userdata('authenticated') && $CI->session->userdata('username') != 'anonymous') {
+            $CI->load->model(Array('UsersModel', 'user'), 'Users');        
+            $CI->session->set_userdata($CI->Users->getAnonymouseUser('_master_'));
+        }
 
-        foreach ($permissions as $permission) {
+        $privileges = $CI->session->userdata('privileges');
 
-            // Validate the permission, it contains four section which every section separated with a /.
+        // XXX: We have to allow this destination otherwise it is possible to happen an infinity loop.
+        //      Another reason of this line is converting a Null privileges to an Array
+        $privileges[] = 'core/frontend/messages/not_authorized';
+
+        $authorized = False;
+
+        foreach ($privileges as $privilege) {
+
+            // Validate the privilege, it contains four section which every section separated with a /.
             // it should contain at least one section. each section contains * (except first section) 
             // or lower case characters
-            if (preg_match('/^([a-z_]*)(\/([a-z_]*|\*)){0,3}$/', $permission)) {
+            if (preg_match('/^([a-z_]*)(\/([a-z_]*|\*)){0,3}$/', $privilege)) {
                 
-                $permission = str_replace('*', '.*', $permission);
-                $permission = '|^'.$permission.'$|';
+                $privilege = str_replace('*', '.*', $privilege);
+                $privilege = '|^'.$privilege.'$|';
 
-                if (preg_match($permission, $this->destination)) {
+                if (preg_match($privilege, $this->destination)) {
                     $authorized = True;
                     break;
                 }
@@ -64,7 +71,7 @@ class Arag_Auth {
 
         if (!$authorized) {
             $CFG =& load_class('Config');
-            header("location: " . $CFG->site_url('core/not_authorized'));
+            header("location: " . $CFG->site_url('not_authorized'));
             exit;
         }
     }

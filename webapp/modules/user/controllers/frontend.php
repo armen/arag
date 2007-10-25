@@ -13,17 +13,57 @@ class Frontend extends Arag_Controller
     {
         parent::Arag_Controller();
        
-        // Backend decorator
-        $this->load->decorator('frontend/frontend_decorator');
+        // Frontend decorator
+        $this->load->decorator('frontend/decorator');
+
+        // Load the URL helper
+        $this->load->helper('url');        
 
         // Default page title
-        $this->load->vars(Array('page_title' => 'TA Locator'));
+        $this->load->vars(Array('page_title' => 'User Management'));
     }
     // }}}
-    // {{{ index
-    function index()
+    // {{{ login_read
+    function login_read()
     {
+        $this->load->view('frontend/login');
+    }
+    // }}}
+    // {{{ login_write
+    function login_write()
+    {
+        $this->load->model('UsersModel', 'Users');
+
+        $username = $this->input->post('username');
+        $password = $this->input->post('password');
+
+        // If you attempt to login I'll distroy your session /;)
+        $this->session->sess_destroy();        
         
+        if ($this->Users->check($username, $password)) {
+
+            $user =& $this->Users->getUser($username);
+
+            $this->session->set_userdata('authenticated', True);
+            $this->session->set_userdata($user);
+
+            // Redirect to front controller
+            redirect();
+        
+        } else {
+            // Shit, you missed!
+            redirect('user/frontend/login');
+        }
+    }
+    // }}}
+    // {{{ logout
+    function logout()
+    {
+        // Good bye!
+        $this->session->sess_destroy();
+
+        // Redirect to front controller
+        redirect();
     }
     // }}}
 }
