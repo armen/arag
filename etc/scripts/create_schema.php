@@ -153,7 +153,7 @@ if (isset($allModules)) {
     // Foreach through files and execute schemas
     foreach ($schemaFiles as $file) {
 
-        $output = execSchema($manager, $file, $data, Array('DATABASE_NAME' => $db, 'TABLES_PREFIX' => $prefix));
+        $output = execSchema($manager, $file, $data, Array('DATABASE_NAME' => $db, 'TABLES_PREFIX' => $prefix, 'NOW_TIMESTAMP' => time()));
 
         if (dirname($file) != $lastDirectory) {
             echo "\n";
