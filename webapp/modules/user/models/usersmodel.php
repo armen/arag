@@ -76,7 +76,11 @@ class UsersModel extends Model
 
         $user = $this->db->get()->row_array();
 
-        $user['privileges'] = unserialize($user['privileges']);
+        if (isset($user['privileges'])) {
+            $user['privileges'] = unserialize($user['privileges']);
+        } else {    
+            $user['privileges'] = Array();
+        }
 
         return $user;
     }
@@ -89,17 +93,118 @@ class UsersModel extends Model
 
         $anonymous = $CI->Groups->getAnonymousGroup($appname);
 
-        $anonymous['groupname'] = $anonymous['name'];
-        $anonymous['username']  = $anonymous['name'];
-        $anonymous['name']      = ucfirst($anonymous['name']);
-        
+        $anonymous['groupname']  = $anonymous['name'];
+        $anonymous['username']   = $anonymous['name'];
+        $anonymous['name']       = ucfirst($anonymous['name']);
+
         return $anonymous;
     }
     // }}}
-    // {{{ getUserProfile
-    function getUserProfile($username)
+    // {{{ & getUserProfile
+    function & getUserProfile($username)
     {
-        // XXX: Not implemented but it should same as getUser
+        $this->db->select('*');
+        $this->db->from($this->tableNameUsers);
+        $this->db->where('username', $username);
+
+        $userProfile = $this->db->get()->row_array();
+
+        return $userProfile;        
+    }
+    // }}}
+    // {{{ & getUsers
+    function & getUsers($groupID = NULL, $appName, $groupName, $user)
+    {
+        $this->db->select('username, lastname, email, appname, id');
+        $this->db->select($this->db->dbprefix.$this->tableNameGroups.".name as group_name");
+        $this->db->select($this->db->dbprefix.$this->tableNameUsers.".name as user_name");
+        $this->db->select($this->db->dbprefix.$this->tableNameUsers.".modify_date");
+        $this->db->select($this->db->dbprefix.$this->tableNameUsers.".create_date");
+        $this->db->select($this->db->dbprefix.$this->tableNameUsers.".modified_by");
+        $this->db->from($this->tableNameUsers);
+        $this->db->join($this->tableNameGroups, $this->tableNameGroups.".id = ".$this->tableNameUsers.".group_id");
+
+        if ($groupID != NULL) {
+            $this->db->where('group_id', $groupID);
+        }
+
+        if ($groupName != NULL) {
+            $this->db->like($this->db->dbprefix.$this->tableNameGroups.".name", $groupName);
+        }
+        
+        if ($appName != NULL) {
+            $this->db->like('appname', $groupID);
+        }
+
+        if ($user != NULL) {
+            $row = explode(" ", $user);
+            foreach ($row as $tag) {
+                $this->db->like('username', $tag);
+                $this->db->orlike($this->db->dbprefix.$this->tableNameUsers.".name", $tag);
+                $this->db->orlike('lastname', $tag);
+            }
+        }
+
+        $this->db->orderby('appname, lastname, group_name asc');
+
+        $retval = $this->db->get()->result_array();
+
+        return $retval;
+    }
+    // }}}
+    // {{{ createUser
+    function createUser($appname, $email, $name, $lastname, $groupname, $username, $password)
+    {
+        $CI =& get_instance();
+        $CI->load->model(Array('GroupsModel', 'user'), 'Groups');
+
+        $group = $CI->Groups->getGroup($appname, $groupname);
+        
+        $row = Array('username'    => $username, 
+                     'create_date' => time(),
+                     'modify_date' => time(),
+                     'modified_by' => $this->session->userdata('username'),
+                     'name'        => $name,
+                     'lastname'    => $lastname,
+                     'group_id'    => $group['id'],
+                     'email'       => $email,
+                     'password'    => sha1($password),
+                     'verified'    => 1);
+
+        $this->db->insert($this->tableNameUsers, $row);
+    }
+    // }}}
+    // {{{ editUser
+    function editUser($appname, $email, $name, $lastname, $groupname, $username, $password = "")
+    {
+        $CI =& get_instance();
+        $CI->load->model(Array('GroupsModel', 'user'), 'Groups');
+
+        $group = $CI->Groups->getGroup(NULL, $appname, $groupname);
+        
+        $row = Array('username'    => $username, 
+                     'create_date' => time(),
+                     'modify_date' => time(),
+                     'modified_by' => $this->session->userdata('username'),
+                     'name'        => $name,
+                     'lastname'    => $lastname,
+                     'group_id'    => $group['id'],
+                     'email'       => $email);
+
+        if ($password != "") {
+            $row['password'] = sha1($password);
+        }
+
+        $this->db->where('username', $username);
+        $this->db->update($this->tableNameUsers, $row);
+    }
+    // }}}
+    // {{{ hasUserName
+    function hasUserName($username)
+    {
+        $this->db->select('username');
+        $query = $this->db->getwhere($this->tableNameUsers, Array('username' => $username)); 
+        return (boolean)$query->num_rows();
     }
     // }}}
 }
