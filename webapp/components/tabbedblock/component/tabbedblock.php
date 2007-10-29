@@ -37,20 +37,24 @@ class TabbedBlock extends Component
     }
     // }}}
     // {{{ addItem
-    function addItem($name, $uri, $parentUri = Null, $title = Null, $enabled = True, $selected = Null)
+    function addItem($name, $uri, $parentUri = Null, $title = Null, $enabled = True, $selected = False)
     {
-        $item = Array('name'     => $name, 
-                      'uri'      => $uri,
-                      'selected' => $selected,
-                      'subtabs'  => Null,
-                      'enabled'  => $enabled,
-                      'title'    => ($title == Null) ? $name : $title);
+        $item = Array('name'                => $name, 
+                      'uri'                 => $uri,
+                      'selected'            => $selected,
+                      'is_parent'           => True,
+                      'has_selected_subtab' => False,
+                      'enabled'             => $enabled,
+                      'title'               => ($title == Null) ? $name : $title);
 
         if ($parentUri == Null) {
-            $this->_items[$uri] = $item;
-        
-        } elseif (isset($this->_items[$parentUri])) {
-            $this->_items[$parentUri]['subtabs'][] = $item;
+            $this->_items[md5($uri.$parentUri)] = $item;
+
+        } else if ($parentUri != Null && isset($this->_items[md5($parentUri)])) {
+
+            $this->_items[md5($uri.$parentUri)] = $item;            
+            $this->_items[md5($uri.$parentUri)]['parent_uri'] = $parentUri;
+            $this->_items[md5($uri.$parentUri)]['is_parent']  = False;
         }
     }
     // }}}
