@@ -39,34 +39,28 @@ class Arag_Auth {
     {
         $CI =& get_instance();
 
+        // Fetch current appname
+        $appname = '_master_';
+
         if (!$CI->session->userdata('authenticated') && $CI->session->userdata('username') != 'anonymous') {
+            // Fetch Anonymouse user information and store in session
             $CI->load->model(Array('UsersModel', 'user'), 'Users');        
-            $CI->session->set_userdata($CI->Users->getAnonymouseUser('_master_'));
+            $CI->session->set_userdata($CI->Users->getAnonymouseUser($appname));
         }
 
-        $privileges = $CI->session->userdata('privileges');
+        // When user Logins session destroied by login and we fetch current application
+        // privilege filters here
+        if ($CI->session->userdata('privilege_filters') === False) {
+            // Fetch privilege filters for current application
+            $CI->load->model(Array('FiltersModel', 'user'), 'Filters');
+            $CI->session->set_userdata('privilege_filters', $CI->Filters->getPrivilegeFilters($appname));
+        }
 
-        // XXX: We have to allow this destination otherwise it is possible to happen an infinity loop.
-        //      Another reason of this line is converting a Null privileges to an Array
-        $privileges[] = 'core/frontend/messages/not_authorized';
+        $authorized = $this->isAuthorized($CI->session->userdata('privileges'));
 
-        $authorized = False;
-
-        foreach ($privileges as $privilege) {
-
-            // Validate the privilege, it contains four section which every section separated with a /.
-            // it should contain at least one section. each section contains * (except first section) 
-            // or lower case characters
-            if (preg_match('/^([a-z_]*)(\/([a-z_]*|\*)){0,3}$/', $privilege)) {
-                
-                $privilege = str_replace('*', '.*', $privilege);
-                $privilege = '|^'.$privilege.'$|';
-
-                if (preg_match($privilege, $this->destination)) {
-                    $authorized = True;
-                    break;
-                }
-            }
+        if ($authorized) {
+            // The user is authorized so we will try to filter his/her privileges with a blacklist
+            $authorized = $this->isAuthorized($CI->session->userdata('privilege_filters'), False);
         }
 
         if (!$authorized) {
@@ -74,6 +68,44 @@ class Arag_Auth {
             header("location: " . $CFG->site_url('not_authorized'));
             exit;
         }
+    }
+    // }}}
+    // {{{ isAuthorized
+    function isAuthorized($privileges, $whiteList = True)
+    {
+        // XXX: We have to allow this destination otherwise it is possible to happen an infinity loop.
+        if ($this->destination === 'core/frontend/messages/not_authorized') {
+            return True;
+        }
+    
+        if (is_array($privileges)) {
+
+            // Privilege validation pattern
+            $pattern = ((boolean) $whiteList) ? 
+                       // It contains four section which every section separated with a /.
+                       // It should contain at least one section. Each section contains * 
+                       // (except first section) or lower case characters
+                       '/^([a-z_]*)(\/([a-z_]*|\*)){0,3}$/' : 
+                       // It contains four section which every section separated with a /.
+                       // It should contain at least one section. Each section contains * 
+                       // or lower case characters                        
+                       '/^([a-z_]*|\*)(\/([a-z_]*|\*)){0,3}$/';
+
+            foreach ($privileges as $privilege) {
+
+                if (preg_match($pattern, $privilege)) {
+                    
+                    $privilege = str_replace('*', '.*', $privilege);
+                    $privilege = '|^'.$privilege.'$|';
+
+                    if (preg_match($privilege, $this->destination)) {
+                        return (boolean) $whiteList;
+                    }
+                }
+            }
+        }
+
+        return !(boolean) $whiteList;
     }
     // }}}
 }

@@ -38,6 +38,8 @@ class Frontend extends Arag_Controller
         $password = $this->input->post('password');
 
         // If you attempt to login I'll distroy your session /;)
+        // This is so important to Arag_Auth! we will fetch 
+        // privilege filters of current application there.
         $this->session->sess_destroy();        
         
         if ($this->Users->check($username, $password)) {
