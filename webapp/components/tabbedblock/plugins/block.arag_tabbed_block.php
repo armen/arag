@@ -51,73 +51,67 @@ function smarty_block_arag_tabbed_block($params, $content, &$smarty, &$repeat)
         // Returned tabbedBlock is an array, we need first element
         list($tabbedBlock) = $smarty->get_template_vars($name);
 
-        $CI =& get_instance();
-
-        $uri = $CI->uri->uri_string();
-
-        $moduleName    = $CI->uri->router->fetch_module();
-        $directoryName = $CI->uri->router->fetch_directory();
-        $className     = $CI->uri->router->fetch_class();
-        $methodName    = $CI->uri->router->fetch_method();
+        $CI        =& get_instance();
+        $rsegments =  $CI->uri->rsegment_array();
 
         // Get selected item
         $selectedItemName = Null;        
         $selectedItem     = Null;
 
         foreach ($tabbedBlock->getItems() as $key => $item) {
-            if ($item['enabled'] && isset($item['uri'])) {
 
-                @list($module, $directory, $class, $method) = explode('/', $item['uri']);
-                if ($CI->uri->router->fetch_directory() == Null) {        
-                    $method = $class;
-                    $class  = $directory;
+            if (isset($item['uri'])) {
+
+                $segments = explode('/', rtrim($item['uri'], '/'));
+                $selected = True;
+
+                foreach ($segments as $id => $segment) {
+
+                    if (!preg_match('|^%[a-zA-Z_0-9]*%$|', $segment) && (!isset($rsegments[$id+1]) || $segment != $rsegments[$id+1])) {
+                        $selected = False;
+                        break;
+                    }
                 }
 
-                if ($item['selected'] != True && $module == $moduleName && $class == $className && 
-                    ($method == $methodName || ($method == Null && $methodName == 'index'))) {
+                if (count($segments) < count($rsegments)) {
+                    
+                    $methodSegmentNum = ($CI->uri->router->fetch_directory() == Null) ? 3 : 4;
+
+                    if (count($segments) < $methodSegmentNum-1 ||       // default method is not present in item uri
+                        $rsegments[$methodSegmentNum] != 'index') {     // routed method is not index
+                        $selected = False;
+                    }
+                }
+
+                if ($item['selected'] != True && $selected) {
 
                     // Set selected to true
                     $tabbedBlock->_items[$key]['selected'] = True;
 
+                    // Set selected item name
                     $selectedItemName = $tabbedBlock->_items[$key]['name'];
-                    $selectedItem     = $tabbedBlock->_items[$key];
 
-                    break;
+                    if ($tabbedBlock->_items[$key]['is_parent']) {
+                        // Selected item is parent
+                        $selectedItem = $tabbedBlock->_items[$key];
+                    } else {
 
-                } else if (is_array(($item['subtabs']))) {
-                    // Try to find selected tab in subtabs
+                        $parentUri = $tabbedBlock->_items[$key]['parent_uri'];
                     
-                    foreach ($item['subtabs'] as $_key => $subtab) {
+                        // Set parent status to selected 
+                        $tabbedBlock->_items[md5($parentUri)]['selected']            = True;
+                        $tabbedBlock->_items[md5($parentUri)]['has_selected_subtab'] = True;
 
-                        if ($subtab['enabled'] && isset($subtab['uri'])) {
-
-                            @list($module, $directory, $class, $method) = explode('/', $subtab['uri']);
-                            if ($CI->uri->router->fetch_directory() == Null) {        
-                                $method = $class;
-                                $class  = $directory;
-                            }                            
-                        
-                            if ($subtab['selected'] != True && $module == $moduleName && $class == $className && 
-                                ($method == $methodName || ($method == Null && $methodName == 'index'))) {
-
-                                $tabbedBlock->_items[$key]['subtabs'][$_key]['selected'] = True;
-                                $tabbedBlock->_items[$key]['has_subtab']                 = True;       
-                                $tabbedBlock->_items[$key]['selected']                   = True;                                
-
-                                $selectedItemName = $subtab['name'];
-                                $selectedItem     = $tabbedBlock->_items[$key]; // Parenet item
-
-                                break;
-                            }
-                        }
-                    }                    
-                }
+                        // Selected item is not parent, so set parent as selected item
+                        $selectedItem = $tabbedBlock->_items[md5($parentUri)];                        
+                    }
+                } 
             }
         }
 
         if (isset($tabbedBlock) && count($tabbedBlock->getItems()) != 0) {
 
-            $moduleIconURL = $CI->config->item('base_url') . 'images/modules/' . $moduleName . '.png';    
+            $moduleIconURL = $CI->config->item('base_url') . 'images/modules/' . $CI->uri->router->fetch_module() . '.png';    
 
             $smarty->assign_by_ref('tabbedblock', $tabbedBlock);
             $smarty->assign_by_ref('tabbedblock_content', $content);
@@ -127,7 +121,6 @@ function smarty_block_arag_tabbed_block($params, $content, &$smarty, &$repeat)
             $smarty->assign('tabbedblock_selected_tab', $selectedItem);
 
             $smarty->assign('tabbedblock_module_icon_url', $moduleIconURL);
-            $smarty->assign('tabbedblock_current_uri', $uri);
 
             if (file_exists(APPPATH . 'components/tabbedblock/templates/' . $template . '.tpl')) {
                 $template = APPPATH . 'components/tabbedblock/templates/' . $template . '.tpl';
