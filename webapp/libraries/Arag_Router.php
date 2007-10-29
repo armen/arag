@@ -256,6 +256,11 @@ class Arag_Router extends CI_Router {
         // Note: If there is no custom routing, this array will be
         // identical to $this->segments
         $this->rsegments = $segments;
+
+        if ($this->fetch_directory()) {
+            // We have to inject directory to rsegments!
+            array_splice($this->rsegments, 1, 0, rtrim($this->fetch_directory(), '/'));
+        }
     }
     // }}}
     // {{{ set_module
