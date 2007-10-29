@@ -97,7 +97,7 @@ class TabbedBlock extends Component
             $uri = implode('/', $uri);
         }
 
-        if (preg_match($pattern, $uri, $matches)) {
+        while (preg_match($pattern, $uri, $matches)) {
 
             // Checking for url Variables
             if (array_key_exists($matches[1], $this->_parameters)) {
