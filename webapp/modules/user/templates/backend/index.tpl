@@ -1,11 +1,16 @@
 {* Smarty *}
 {*  
     vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:             
-    File: $Id: index.tpl 53 2007-10-11 18:38:57Z armen $
+    File: $Id: index.tpl 53 2007-10-11 18:38:57Z sasan $
 *}
 {arag_block}
     {arag_validation_errors}
-    {arag_form uri="user/backend/applications/index"}
+    {if $flag}
+        {assign var =uri value="user/backend/applications/apps_filters"}
+    {else}
+        {assign var =uri value="user/backend/applications/index"}
+    {/if}
+    {arag_form uri=$uri}
         <table border="0" dir="{dir}">
             <tr>
                  <td align="{right}">
