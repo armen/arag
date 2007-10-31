@@ -17,12 +17,15 @@ class Settings extends Backend
     }
     // }}}
     // {{{ index_read
-    function index_read($saved = Null)
+    function index_read()
     {
         $data               = Array();
         $data['limit']      = $this->config->item('limit');
         $data['post_limit'] = $this->config->item('post_limit');
-        $data['saved']      = $saved;
+        $data['saved']      = $this->session->userdata('configuration_saved');
+
+        // unset configuration_set 
+        $this->session->unset_userdata('configuration_saved');        
 
         $this->load->vars($data);        
         $this->load->view('backend/settings');
@@ -36,7 +39,9 @@ class Settings extends Backend
         $this->config->set_item('limit', $this->input->post('limit'));
         $this->config->set_item('post_limit', $this->input->post('post_limit'));
 
-        redirect('blog/backend/settings/index/saved');
+        $this->session->set_userdata('configuration_saved', True);
+
+        redirect('blog/backend/settings/index');
     }
     // }}}
     // {{{ index_write_error
