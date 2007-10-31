@@ -80,28 +80,22 @@ class Arag_Auth {
     
         if (is_array($privileges)) {
 
-            // Privilege validation pattern
-            $pattern = ((boolean) $whiteList) ? 
-                       // It contains four section which every section separated with a /.
-                       // It should contain at least one section. Each section contains * 
-                       // (except first section) or lower case characters
-                       '/^([a-z_]*)(\/([a-z_]*|\*)){0,3}$/' : 
-                       // It contains four section which every section separated with a /.
-                       // It should contain at least one section. Each section contains * 
-                       // or lower case characters                        
-                       '/^([a-z_]*|\*)(\/([a-z_]*|\*)){0,3}$/';
-
             foreach ($privileges as $privilege) {
 
-                if (preg_match($pattern, $privilege)) {
+                // * is allowed when we are working with black lists
+                if (((boolean) $whiteList == False && $privilege === '*') || 
+                    // It contains four section which every section separated with a /.
+                    // It should contain at least two sections. Each section contains * 
+                    // (except first section) or lower case character(s)
+                    preg_match('/^([a-z_]+)(\/([a-z_]+|\*)){1,3}$/', $privilege)) {
                     
-                    $privilege = str_replace('*', '.*', $privilege);
-                    $privilege = '|^'.$privilege.'$|';
+                    // Replace * with .*
+                    $privilege = '|^'.str_replace('*', '.*', $privilege).'$|';
 
                     if (preg_match($privilege, $this->destination)) {
                         return (boolean) $whiteList;
                     }
-                }
+                } // else, privilege is invalid, ignore it
             }
         }
 
