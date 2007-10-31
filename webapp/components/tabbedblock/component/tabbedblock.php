@@ -6,8 +6,6 @@
 // $Id$
 // ---------------------------------------------------------------------------
 
-// {{{ class TabbedBlock
-
 /*
  * Class for create Tabbed page
  * 
@@ -41,6 +39,7 @@ class TabbedBlock extends Component
     {
         $item = Array('name'                => $name, 
                       'uri'                 => $uri,
+                      'is_url'              => (boolean) preg_match('!^\w+://!i', $uri),
                       'selected'            => $selected,
                       'is_parent'           => True,
                       'has_selected_subtab' => False,
@@ -91,18 +90,17 @@ class TabbedBlock extends Component
     // {{{ parseURI
     function parseURI($uri)
     {
-        $pattern = '/%(.+?)%/';
-
         if (is_array($uri)) {
             $uri = implode('/', $uri);
         }
 
-        while (preg_match($pattern, $uri, $matches)) {
+        if (preg_match('/%(.+?)%/', $uri, $matches)) {
 
-            // Checking for url Variables
-            if (array_key_exists($matches[1], $this->_parameters)) {
-                $uri = str_replace("%{$matches[1]}%", $this->_parameters[$matches[1]], $uri);
-            }
+            $parameter = isset($this->_parameters[$matches[1]]) ? $this->_parameters[$matches[1]] : Null;
+            $uri       = str_replace("%{$matches[1]}%", $parameter, $uri);
+    
+            // Check for another variable
+            return $this->parseURI($uri);
         }
 
         return $uri;
@@ -117,8 +115,8 @@ class TabbedBlock extends Component
             $uri = $this->parseURI($uri);
         }
 
-        if (strpos($uri, 'http://') === 0 || strpos($uri, 'https://') === 0) {
-            // http:// or https:// is at begining of uri
+        if (preg_match('!^\w+://!i', $uri)) {
+            // there is \w:// at begining of uri            
             return $uri;
         } else {
             return $CI->config->item('base_url') . $CI->config->item('index_page') . '/' . $uri;
@@ -126,6 +124,5 @@ class TabbedBlock extends Component
     }
     // }}}
 }
-// }}}
 
 ?>

@@ -51,8 +51,8 @@ function smarty_block_arag_tabbed_block($params, $content, &$smarty, &$repeat)
         // Returned tabbedBlock is an array, we need first element
         list($tabbedBlock) = $smarty->get_template_vars($name);
 
-        $CI        =& get_instance();
-        $rsegments =  $CI->uri->rsegment_array();
+        $CI   =& get_instance();
+        $ruri =  preg_replace('|/index$|', '', trim($CI->uri->ruri_string(), '/'));
 
         // Get selected item
         $selectedItemName = Null;        
@@ -62,28 +62,10 @@ function smarty_block_arag_tabbed_block($params, $content, &$smarty, &$repeat)
 
             if (isset($item['uri'])) {
 
-                $segments = explode('/', rtrim($item['uri'], '/'));
-                $selected = True;
+                $uri = preg_replace('|/index$|', '', rtrim($item['uri'], '/'));
+                $uri = '|^'.preg_replace('|%[a-zA-Z_0-9]*%|', '[^/]+', preg_quote($uri, '|')).'$|';
 
-                foreach ($segments as $id => $segment) {
-
-                    if (!preg_match('|^%[a-zA-Z_0-9]*%$|', $segment) && (!isset($rsegments[$id+1]) || $segment != $rsegments[$id+1])) {
-                        $selected = False;
-                        break;
-                    }
-                }
-
-                if (count($segments) < count($rsegments)) {
-                    
-                    $methodSegmentNum = ($CI->uri->router->fetch_directory() == Null) ? 3 : 4;
-
-                    if (count($segments) < $methodSegmentNum-1 ||       // default method is not present in item uri
-                        $rsegments[$methodSegmentNum] != 'index') {     // routed method is not index
-                        $selected = False;
-                    }
-                }
-
-                if ($item['selected'] != True && $selected) {
+                if ($item['selected'] != True && preg_match($uri, $ruri)) {
 
                     // Set selected to true
                     $tabbedBlock->_items[$key]['selected'] = True;

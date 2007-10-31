@@ -20,8 +20,15 @@
                         <li class="deselected" style="float:{left};">
                     {/if}
                     {if $tabbedblock_item.enabled}
-                        <a href="{$tabbedblock->genURL($tabbedblock_item.uri)}" 
-                           title="{$tabbedblock_item.title|default:""}">{$tabbedblock_item.name}</a>
+                        {if $tabbedblock_item.is_url}
+                            <a href="{$tabbedblock_item.uri}" target="_blank"
+                               onclick="window.open(this.href); return false;"
+                               onkeypress="window.open(this.href); return false;"
+                               title="{$tabbedblock_item.title|default:""}">{$tabbedblock_item.name}</a>
+                        {else}
+                            <a href="{$tabbedblock->genURL($tabbedblock_item.uri)}" 
+                               title="{$tabbedblock_item.title|default:""}">{$tabbedblock_item.name}</a>
+                        {/if}
                     {/if}        
                     </li>
                 {/if}                    
@@ -43,8 +50,15 @@
                         <li class="deselected" style="float:{left};">
                     {/if}
                     {if $tabbedblock_item.enabled}
-                        <a href="{$tabbedblock->genURL($tabbedblock_item.uri)}" 
-                           title="{$tabbedblock_item.title|default:""}">{$tabbedblock_item.name}</a>
+                        {if $tabbedblock_item.is_url}
+                            <a href="{$tabbedblock_item.uri}" target="_blank"
+                               onclick="window.open(this.href); return false;"
+                               onkeypress="window.open(this.href); return false;"
+                               title="{$tabbedblock_item.title|default:""}">{$tabbedblock_item.name}</a>
+                        {else}
+                            <a href="{$tabbedblock->genURL($tabbedblock_item.uri)}" 
+                               title="{$tabbedblock_item.title|default:""}">{$tabbedblock_item.name}</a>
+                        {/if}
                     {/if}        
                     </li>
                 {/if}                    
