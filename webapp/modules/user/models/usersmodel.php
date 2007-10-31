@@ -1,7 +1,8 @@
 <?php
 // vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:             
 // +-------------------------------------------------------------------------+
-// | Author: Armen Baghumian <armen@OpenSourceClub.org                       |
+// | Authors: Armen Baghumian <armen@OpenSourceClub.org                      |
+// |          Sasan Rose <sasan.rose@gmail.com>                              |
 // +-------------------------------------------------------------------------+
 // $Id$
 // ---------------------------------------------------------------------------
@@ -56,18 +57,19 @@ class UsersModel extends Model
                 $status &= ~self::USER_OK;              // Remove the USER_OK flag
             }
  
-            return (boolean)($status & self::USER_OK);  // Check if USER_OK flag is set
+            //return (boolean)($status & self::USER_OK);  // Check if USER_OK flag is set
+            return $status;
         }
 
         $status = self::USER_NOT_FOUND; // Status is 0
-        return False;
+        return $status;
     }
     // }}}
     // {{{ & getUser
     function & getUser($username)
     {
         $this->db->select('appname, '.$this->db->dbprefix.$this->tableNameGroups.'.name as group_name, username, privileges, redirect,'.
-                          $this->db->dbprefix.$this->tableNameUsers.'.name as name, lastname, email');
+                          $this->db->dbprefix.$this->tableNameUsers.'.name as name, lastname, email, group_id');
         $this->db->from($this->tableNameUsers);
         $this->db->join($this->tableNameGroups, $this->tableNameGroups.'.id = '.$this->tableNameUsers.'.group_id');
         $this->db->where('username', $username);
@@ -121,6 +123,7 @@ class UsersModel extends Model
         $this->db->select($this->db->dbprefix.$this->tableNameUsers.".modify_date");
         $this->db->select($this->db->dbprefix.$this->tableNameUsers.".create_date");
         $this->db->select($this->db->dbprefix.$this->tableNameUsers.".modified_by");
+        $this->db->select($this->db->dbprefix.$this->tableNameUsers.".created_by");
         $this->db->from($this->tableNameUsers);
         $this->db->join($this->tableNameGroups, $this->tableNameGroups.".id = ".$this->tableNameUsers.".group_id");
 
@@ -158,7 +161,37 @@ class UsersModel extends Model
         $CI =& get_instance();
         $CI->load->model(Array('GroupsModel', 'user'), 'Groups');
 
-        $group = $CI->Groups->getGroup($appname, $groupname);
+        $group = $CI->Groups->getGroup(NULL, $appname, $groupname);
+        
+        $row = Array('username'    => $username, 
+                     'create_date' => time(),
+                     'modify_date' => time(),
+                     'modified_by' => $this->session->userdata('username'),
+                     'created_by'  => $this->session->userdata('username'),
+                     'name'        => $name,
+                     'lastname'    => $lastname,
+                     'group_id'    => $group['id'],
+                     'email'       => $email,
+                     'password'    => sha1($password),
+                     'verified'    => 1);
+        
+        $CI->Groups->changeModifiers($group['id']);
+        $this->db->insert($this->tableNameUsers, $row);
+    }
+    // }}}
+    // {{{ editUser
+    function editUser($appname, $email, $name, $lastname, $groupname, $username, $password = "", $blocked)
+    {
+        $CI =& get_instance();
+        $CI->load->model(Array('GroupsModel', 'user'), 'Groups');
+
+        $group = $CI->Groups->getGroup(NULL, $appname, $groupname);
+
+        if ($blocked) {
+            $blocked = 1;
+        } else {
+            $blocked = 0;
+        }
         
         $row = Array('username'    => $username, 
                      'create_date' => time(),
@@ -168,33 +201,13 @@ class UsersModel extends Model
                      'lastname'    => $lastname,
                      'group_id'    => $group['id'],
                      'email'       => $email,
-                     'password'    => sha1($password),
-                     'verified'    => 1);
-
-        $this->db->insert($this->tableNameUsers, $row);
-    }
-    // }}}
-    // {{{ editUser
-    function editUser($appname, $email, $name, $lastname, $groupname, $username, $password = "")
-    {
-        $CI =& get_instance();
-        $CI->load->model(Array('GroupsModel', 'user'), 'Groups');
-
-        $group = $CI->Groups->getGroup(NULL, $appname, $groupname);
-        
-        $row = Array('username'    => $username, 
-                     'create_date' => time(),
-                     'modify_date' => time(),
-                     'modified_by' => $this->session->userdata('username'),
-                     'name'        => $name,
-                     'lastname'    => $lastname,
-                     'group_id'    => $group['id'],
-                     'email'       => $email);
+                     'blocked'     => $blocked);
 
         if ($password != "") {
             $row['password'] = sha1($password);
         }
 
+        $CI->Groups->changeModifiers($group['id']);
         $this->db->where('username', $username);
         $this->db->update($this->tableNameUsers, $row);
     }
@@ -207,6 +220,28 @@ class UsersModel extends Model
         return (boolean)$query->num_rows();
     }
     // }}}
+    // {{{ deleteUsers
+    function deleteUsers($usernames = NULL, $groupid = NULL)
+    {   
+        if ($groupid == NULL) {
+            $CI =& get_instance();
+            $CI->load->model(Array('GroupsModel', 'user'), 'Groups');
+            foreach ($usernames as $username) {
+                $row = $this->getUserProfile($username);
+                $CI->Groups->changeModifiers($row['group_id']);
+                $this->db->delete($this->tableNameUsers, Array('username' => $username));
+            }
+        } else {
+            $this->db->delete($this->tableNameUsers, Array('group_id' => $groupid));
+        }
+    }
+    // }}}
+    //{{{ isBlock
+    function isBlock($row)
+    {
+        return boolean($row['block']);
+    }
+    //}}}
 }
 
 ?>
