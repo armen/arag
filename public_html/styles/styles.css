@@ -383,7 +383,8 @@ input, textarea, select {
 .plist_group_actions .plist_icon {
     width           : 16px;
 }
-.plist_icon a {
+.plist_icon a, 
+.plist_icon div {
     display         : block;
     margin          : 0px auto;    
 }

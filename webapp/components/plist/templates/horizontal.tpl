@@ -74,15 +74,19 @@
 
                     {if count($actions) > 0}
                         {foreach from=$actions item=action}
-                            {assign var=uri value=$plist->parseURI($action.uri, $row)}
                             <td class="plist_icon">
-                                {if isset($action.alternate_callback|smarty:nodefaults) && $action.alternate_callback != false}
-                                    {if $plist->callCallback($action.alternate_callback, $row)}
-                                        <a href="{site_url uri=$uri}" title="{$action.title}" class="{$action.class_name}">{$action.label}</a>
+                                {if isset($action.alternate_callback|smarty:nodefaults) && 
+                                    $action.alternate_callback != false && 
+                                    $plist->callCallback($action.alternate_callback, $row)}
+
+                                    {if $action.alternate_uri != null}
+                                        {assign var=uri value=$plist->parseURI($action.alternate_uri, $row)}
+                                        <a href="{site_url uri=$uri}" title="{$action.title}" class="{$action.class_name}_alt">{$action.label}</a>
                                     {else}
-                                        {$action.label}
+                                        <div title="{$action.title}"  class="{$action.class_name}_alt">{$action.label}</div>
                                     {/if}
                                 {else}
+                                    {assign var=uri value=$plist->parseURI($action.uri, $row)}                                
                                     <a href="{site_url uri=$uri}" title="{$action.title}" class="{$action.class_name}">{$action.label}</a>
                                 {/if}
                             </td>

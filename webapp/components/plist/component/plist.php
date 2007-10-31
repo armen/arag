@@ -6,8 +6,6 @@
 // $Id$
 // ---------------------------------------------------------------------------
 
-// {{{ List
-
 /*
  * Class for create paginated list
  * 
@@ -201,10 +199,16 @@ class PList extends Component implements IteratorAggregate, ArrayAccess
     }
     // }}}
     // {{{ addAction
-    function addAction($uri, $label, $className = Null, $alternateCallback = False, $title = Null)
+    function addAction($uri, $label, $className = Null, $alternateCallback = False, $alternateUri = Null)
     {
+        $title = Null;
+
         if (is_array($uri)) {
             $uri = implode('/', $uri);
+        }
+
+        if (is_array($label)) {
+            @list($label, $title) = $label;
         }
 
         // Is it a group action?
@@ -222,6 +226,7 @@ class PList extends Component implements IteratorAggregate, ArrayAccess
                                      'class_name'         => $className,
                                      'class_attribute'    => ($className != Null) ? 'class="'.$className.'"' : Null,
                                      'alternate_callback' => $alternateCallback,
+                                     'alternate_uri'      => $alternateUri,
                                      'title'              => ($title == Null) ? $label : $title);
         }
     }
@@ -409,6 +414,5 @@ class PList extends Component implements IteratorAggregate, ArrayAccess
     }
     // }}}
 }
-// }}}
 
 ?>
