@@ -4,10 +4,19 @@
     File: $Id: edit.tpl 53 2007-10-11 18:38:57Z armen $
 *}
 {arag_block}
+    {if $showstatus}
+        {arag_block template="warning"}
+            {if $status eq 0}
+                Wrong username or password!!
+            {elseif $status eq 2}
+                You are not a verified user!
+            {elseif $status eq 4}
+                This username is blocked!
+            {/if}
+        {/arag_block}
+    {/if}
     {arag_block template="blank"}
     
-        {arag_validation_errors}
-
         {arag_form uri="user/frontend/login" method="post"}
         <table border="0" dir="{dir}" width="100%">
         <tr>
