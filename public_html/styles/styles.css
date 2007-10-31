@@ -400,6 +400,12 @@ input, textarea, select {
     width           : 16px;
     height          : 16px;    
 }
+.view_action_alt {
+    background      : transparent url(../images/list/disabled_view.png) no-repeat center;
+    font-size       : 0px;
+    width           : 16px;
+    height          : 16px;    
+}
 .print_action {
     background      : transparent url(../images/list/printer.png) no-repeat center;
     font-size       : 0px;
@@ -408,6 +414,12 @@ input, textarea, select {
 }
 .delete_action {
     background      : transparent url(../images/list/trash.png) no-repeat center;
+    font-size       : 0px;
+    width           : 16px;
+    height          : 16px;
+}
+.delete_action_alt {
+    background      : transparent url(../images/list/disabled_trash.png) no-repeat center;
     font-size       : 0px;
     width           : 16px;
     height          : 16px;
