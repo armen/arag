@@ -2,6 +2,7 @@
 // vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:             
 // +-------------------------------------------------------------------------+
 // | Author: Armen Baghumian <armen@OpenSourceClub.org>                      |
+// |         Sasan Rose <sasan.rose@gmail.com>                               |
 // +-------------------------------------------------------------------------+
 // $Id$
 // ---------------------------------------------------------------------------
@@ -26,6 +27,7 @@ class Frontend extends Arag_Controller
     // {{{ login_read
     function login_read()
     {
+        $this->load->vars(array('showstatus' => false));
         $this->load->view('frontend/login');
     }
     // }}}
@@ -42,7 +44,10 @@ class Frontend extends Arag_Controller
         // privilege filters of current application there.
         $this->session->sess_destroy();        
         
-        if ($this->Users->check($username, $password)) {
+        $status = $this->Users->check($username, $password);
+
+        
+        if ($status === 1) {
 
             $user =& $this->Users->getUser($username);
 
@@ -54,7 +59,9 @@ class Frontend extends Arag_Controller
         
         } else {
             // Shit, you missed!
-            redirect('user/frontend/login');
+            $this->load->vars(array('status'     => $status,
+                                    'showstatus' => true));
+            $this->load->view('frontend/login');
         }
     }
     // }}}
