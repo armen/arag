@@ -51,8 +51,10 @@ function smarty_block_arag_tabbed_block($params, $content, &$smarty, &$repeat)
         // Returned tabbedBlock is an array, we need first element
         list($tabbedBlock) = $smarty->get_template_vars($name);
 
-        $CI   =& get_instance();
-        $ruri =  preg_replace('|/index$|', '', trim($CI->uri->ruri_string(), '/'));
+        $CI =& get_instance();
+
+        // Remove the trailing /index and trim /
+        $rsegments =  explode('/', preg_replace('|/index$|', '', trim($CI->uri->ruri_string(), '/')));
 
         // Get selected item
         $selectedItemName = Null;        
@@ -62,7 +64,15 @@ function smarty_block_arag_tabbed_block($params, $content, &$smarty, &$repeat)
 
             if (isset($item['uri'])) {
 
-                $uri = preg_replace('|/index$|', '', rtrim($item['uri'], '/'));
+                // Remove the trailing /index and trim /
+                $uri = preg_replace('|/index$|', '', trim($item['uri'], '/'));
+
+                // Ignore additional segments based on number of segments in item's uri
+                // number of segemens should be at least 4 this is why max used
+                $number_of_segs = substr_count($uri, '/') + 1;
+                $ruri           = implode('/', array_slice($rsegments, 0, max($number_of_segs, 4)));
+
+                // Replace configuration variables with a [^/]+ to match everything except /
                 $uri = '|^'.preg_replace('|%[a-zA-Z_0-9]*%|', '[^/]+', preg_quote($uri, '|')).'$|';
 
                 if ($item['selected'] != True && preg_match($uri, $ruri)) {
