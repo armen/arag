@@ -75,7 +75,7 @@
                 </field>
                 <field>
                      <name>privileges</name>
-                     <value>a:7:{i:0;s:9:"arag/*";i:1;s:6:"core/*";i:2;s:13:"staticpages/*";i:3;s:12:"ta_locator/*";i:4;s:18:"ta_minor_profile/*";i:5;s:6:"user/*";i:6;s:6:"blog/*";}</value>
+                     <value>a:8:{i:0;s:9:"arag/*";i:1;s:6:"core/*";i:2;s:13:"staticpages/*";i:3;s:12:"ta_locator/*";i:4;s:18:"ta_minor_profile/*";i:5;s:6:"user/*";i:6;s:6:"blog/*";i:7;s:11:"multisite/*";}</value>
                 </field>
                 <field>
                      <name>redirect</name>
