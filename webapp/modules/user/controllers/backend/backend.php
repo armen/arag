@@ -33,7 +33,7 @@ class Backend extends Arag_Controller
         $this->load->decorator('backend/decorator');
     }
     // }}}
-       // {{{ _create_users_plist
+    // {{{ _create_users_plist
     function _create_users_plist($id, $appname = NULL, $groupname = NULL, $user = NULL)
     {
         $this->load->component('PList', 'users');
@@ -155,7 +155,10 @@ class Backend extends Arag_Controller
         $this->privileges->addColumn('privilege', _("Privilege"));
         $this->privileges->addAction('user/backend/applications/privileges_edit/#id#', _("Edit"), 'edit_action');
         $this->privileges->addAction('user/backend/applications/privileges/#id#', _("View"), 'view_action', 'PrivilegesModel.isParent');
-        
+        $this->privileges->addAction('user/backend/applications/privileges_delete/#id#', _("Delete"), 'delete_action');
+        $this->privileges->addAction("user/backend/applications/privileges_delete", _("Delete"), 'delete_action', PList::GROUP_ACTION);
+        $this->privileges->setGroupActionParameterName('id'); 
+
         $this->load->vars(array("parentid"  => $parentid,
                                 "flagsaved" => $flagsaved));
 
