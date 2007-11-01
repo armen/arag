@@ -11,7 +11,7 @@ class PrivilegesModel extends Model
     // {{{ Properties
     
     var $tableNamePrivileges;
-
+    var $tableNameGroups;
     // }}}
     // {{{ Constructor
     function PrivilegesModel()
@@ -23,6 +23,7 @@ class PrivilegesModel extends Model
 
         // set tables' names
         $this->tableNamePrivileges = "user_privileges";        
+        $this->tableNameGroups     = "user_groups";
     }
     // }}}
     // {{{ getFilteredPrivileges
@@ -133,6 +134,73 @@ class PrivilegesModel extends Model
         return (boolean)$query->num_rows();
     }
     // }}}
+    // {{{ deletePrivileges
+    function deletePrivileges($objects)
+    {
+        foreach ($objects as $object) {
+            $label = $this->getLabel($object);    
+
+            if ($label->parent_id === "0") {
+                $this->db->delete($this->tableNamePrivileges, array('parent_id' => $object));
+            } else {
+                $row = array ('modified_by' => $this->session->userdata('username'),
+                              'modify_date' => time());
+                $this->db->where('id', $label->parent_id);
+                $this->db->update($this->tableNamePrivileges, $row);
+            }
+
+            $this->db->delete($this->tableNamePrivileges, array('id' => $object));
+        }
+    }
+    // }}}
+    // {{{ getPrivileges
+    function getPrivileges($id, $flag = false)
+    {
+        $this->db->select('privileges');
+        $this->db->from($this->tableNameGroups);
+        $this->db->where('id', $id);
+
+        $row  = $this->db->get()->result_array();
+
+        if ($row[0]['privileges'] == NULL) {
+            return $filter = array();
+        }
+        
+        $rows = unserialize($row[0]['privileges']);
+
+        if ($flag) {
+            return $rows;
+        }
+        
+        $privileges = array();
+
+        foreach ($rows as $key => $privilege) {
+            
+            $privileges[$key]['privilege'] = $privilege;
+            $privileges[$key]['id']        = $key;
+            $privileges[$key]['label']     = Null;
+
+            if ($labels = $this->getLabelByPrivilege($privilege)) {
+                foreach ($labels as $keys => $row) {
+                    $alllabels[$keys] = $row->label;
+                }
+                $privileges[$key]['label'] = implode(", ", $alllabels);               
+            }
+        }
+
+        return $privileges;
+    }
+    // }}}
+    //{{{ getLabelByPrivilege
+    function getLabelByPrivilege($privilege)
+    {
+        $this->db->select('label');
+        $query = $this->db->getwhere($this->tableNamePrivileges, array('privilege' => $privilege));
+        if ((boolean) $query->num_rows()) {
+            return $query->result();
+        }
+    }
+    //}}}
 }
 
 ?>
