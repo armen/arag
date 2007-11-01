@@ -79,6 +79,7 @@ class Applications extends Backend
         $this->groups->addColumn('modified_by', _("Modified By"));
         $this->groups->addColumn('ApplicationsModel.getDate', _("Create Date"), PList::VIRTUAL_COLUMN);
         $this->groups->addColumn('ApplicationsModel.getModifyDate', _("Modify Date"), PList::VIRTUAL_COLUMN);
+        $this->groups->addAction('user/backend/applications/group_privileges/#id#/'.$appname, _("Privileges"), 'privileges_action');
         $this->groups->addAction('user/backend/applications/users/#id#/'.$appname, _("Edit"), 'edit_action'); 
         $this->groups->addAction('user/backend/applications/delete/group/#id#', _("Delete"), 'delete_action');
         $this->groups->addAction("user/backend/applications/delete/group", _("Delete"), 'delete_action', PList::GROUP_ACTION);
@@ -801,5 +802,92 @@ class Applications extends Backend
         $this->privileges_edit_read($id);
     }
     // }}}
+    // {{{ privileges_delete
+    function privileges_delete($objects = NULL)
+    {
+        
+        // This flag decides wheter to show a caption message in case the
+        // deleting privilege is a parent
+        $flagcaption = false;
+        
+        // check if it is a group action or not
+        if ($objects != NULL) {
+            //add a sub tab to the global tabs
+            $this->global_tabs->addItem(_("Delete"), "user/backend/applications/privileges_delete/".$objects, "user/backend/applications/privileges_parents");
+            $objects = array($objects);
+        } else {
+            if ($this->input->post('id')) {
+                $objects = $this->input->post('id');
+            }
+            //add a sub tab to the global tabs
+            $this->global_tabs->addItem(_("Delete"), "user/backend/applications/privileges_delete/", "user/backend/applications/privileges_parents");
+        }
+
+        $subjects = array();
+
+        foreach ($objects as $key) {
+            $exist = false;
+
+            // check if the passed app(s) exist(s)
+            $exist  = $this->PrivilegesModel->hasLabel($key);
+
+            // Fetch label(s) name(s)
+            $labels =  $this->PrivilegesModel->getLabel($key);
+
+            if ($labels->parent_id === "0") {
+                $flagcaption = true;
+            }
+                
+            if (!$exist) {
+                $this->_invalid_request("user/backend/applications/privileges_parents");
+            }
+
+            $subjects[] = $labels->label;
+        }
+        
+        $subjects = implode(", ", $subjects);
+        
+        $this->load->vars(array('objects'     => $objects,
+                                'subjects'    => $subjects,
+                                'flagcaption' => $flagcaption));
+
+        $this->load->view('backend/privileges_delete');
+    }
+    // }}}
+    // {{{  privileges_do_delete
+    function privileges_do_delete()
+    {
+        $objects = $this->input->post('objects');
+        
+        $this->PrivilegesModel->deletePrivileges($objects);
+
+        redirect('user/backend/applications/privileges_parents');
+    }
+    // }}}
+    //{{{ group_privileges
+    function group_privileges($id, $appname)
+    {
+        $row  = $this->GroupsModel->getGroup($id);
+        $name = $row['name'];
+
+        $this->global_tabs->setParameter('name', $appname);
+ 
+        $this->global_tabs->addItem(_("$name's Privileges"), "user/backend/applications/group_privileges/".$id."/".$appname, "user/backend/applications");
+        $this->global_tabs->addItem(_("Add Privileges to $name"), "user/backend/applications/group_privileges_add/".$id."/".$appname, "user/backend/applications");
+
+        $this->load->component('PList', 'privileges');
+
+        $this->privileges->setResource($this->PrivilegesModel->getPrivileges($id));
+        $this->privileges->setLimit($this->config->item('limit', NULL, 0));
+        $this->privileges->addColumn('label', _("Label"));
+        $this->privileges->addColumn('privilege', _("Privilege"));        
+        $this->privileges->addColumn('id', Null, PList::HIDDEN_COLUMN);
+        $this->privileges->addAction('user/backend/applications/group_privileges_delete/'.$id.'/'.$appname.'/#id#', _("delete"), 'delete_action');
+        $this->privileges->addAction("user/backend/applications/group_privileges_delete/".$id.'/'.$appname, _("Delete"), 'delete_action', PList::GROUP_ACTION);
+        $this->privileges->setGroupActionParameterName('id');
+
+        $this->load->view('backend/group_privileges');
+    }
+    //}}}
 }
 ?>
