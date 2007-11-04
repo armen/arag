@@ -627,3 +627,22 @@ input, textarea, select {
 .blog_body {}
 .blog_extended_body {}
 /* }}} end of Blog */
+/* {{{ User Manegment */
+.prilist {
+    border-left     : dotted 1px #aaaaaa;
+    border-bottom   : dotted 1px #aaaaaa;
+}
+.prilist td {
+    border-right    : dotted 1px #aaaaaa;
+    border-top      : dotted 1px #aaaaaa;
+    height          : 24px;
+}
+.prilist_parent td {
+    background      : #ffffff url(../images/misc/background.png);
+    padding-left    : 5px;
+}
+.prilist_sub td {
+    background-color: #ffffff;
+    padding-left    : 20px;
+}
+/* }}} end of User Management */
