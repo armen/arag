@@ -47,9 +47,10 @@ class PrivilegesModel extends Model
             foreach ($filters as $filter) {
             
                 // It contains four section which every section separated with a /.
-                // It should contain at least two section. Each section contains * 
-                // or lower case character(s)
-                if ($filter === '*' || preg_match('/^([a-z_]+)(\/([a-z_]+|\*)){1,3}$/', $filter)) {
+                // It should contain at least two sections. Each section contains * 
+                // (except first section and last when we have 4 or 3 sections) or 
+                // lower case character(s)
+                if ($filter === '*' || preg_match('/^([a-z_]+)((\/[a-z_]+){0,2}(\/\*))|((\/[a-z_]+){2,3})$/', $filter)) {
 
                     $filter = '|^'.str_replace('*', '.*', $filter).'$|';
 
@@ -76,14 +77,14 @@ class PrivilegesModel extends Model
     }
     // }}}
     // {{{ addLabel
-    function addLabel($label, $parentid, $privilege)
+    function addLabel($label, $parentid, $privilege = NULL)
     {
         $modified_by = $this->session->userdata('username');
         $created_by  = $this->session->userdata('username');
 
         $rows = array ('label'       => $label,
                        'parent_id'   => $parentid,
-                       'privilege'   => strtolower($privilege),
+                       'privilege'   => trim(strtolower($privilege), '/'),
                        'modified_by' => $modified_by,
                        'created_by'  => $created_by,
                        'modify_date' => time(),
@@ -98,13 +99,13 @@ class PrivilegesModel extends Model
     }
     // }}}
     // {{{ editLabel
-    function editLabel($label, $id, $privilege)
+    function editLabel($label, $id, $privilege = NULL)
     {
         $modified_by = $this->session->userdata('username');
         $row         = $this->getLabel($id);
         
         $rows = array ('label'       => $label,
-                       'privilege'   => strtolower($privilege),
+                       'privilege'   => trim(strtolower($privilege), '/'),
                        'modified_by' => $modified_by,
                        'modify_date' => time());
         
@@ -199,6 +200,79 @@ class PrivilegesModel extends Model
         if ((boolean) $query->num_rows()) {
             return $query->result();
         }
+    }
+    //}}}
+    //{{{ getAppPrivileges
+    function getAppPrivileges($appname)
+    {
+        $rows = $this->getFilteredPrivileges($appname, "0");
+        
+        $subpris = array();
+        
+        foreach ($rows as $row) {
+            $subpris[$row['id']] = $this->getFilteredPrivileges($appname, $row['id']);
+        }
+
+        return $subpris;
+    }
+    //}}}
+    //{{{ getSelectedPrivileges
+    function getSelectedPrivileges($subpris, $allselected)
+    {
+        foreach ($subpris as $key => $privilege) {
+            foreach ($privilege as $key2 => $subprivilege) {
+                foreach ($allselected as $selected) {
+                    if ($subprivilege['privilege'] == $selected) {
+                        $subpris[$key][$key2]['selected'] = true;
+                        break;
+                    } else {
+                        $subpris[$key][$key2]['selected'] = false;
+                    }
+                }
+            }
+        }
+
+        return $subpris;
+    }
+    //}}}
+    //{{{ getSelectedParents
+    function getSelectedParents($selected, $parents)
+    {
+        foreach ($parents as $key => $parent) {
+            foreach ($selected[$parent['id']] as $select) {
+                if ($select['selected']) {
+                    $parents[$key]['selected'] = true;
+                } else {
+                    $parents[$key]['selected'] = false;
+                    break;
+                }
+            }
+        }
+
+        return $parents;
+    }
+    //}}}
+    //{{{ editPrivileges
+    function editPrivileges($ids, $groupid, $appname)
+    {
+        $privileges = array();
+        
+        foreach ($ids as $id) {
+            $label = $this->getLabel($id);
+            if ($label->parent_id === "0") {
+                $subpris = $this->getFilteredPrivileges($appname, $id);
+                foreach ($subpris as $subpri) {
+                    $privileges[] = $subpri['privilege'];
+                }
+            } else {
+                $privileges[] = $label->privilege;
+            }
+        }
+
+        $privileges = serialize(array_unique($privileges));
+
+        $this->db->where('id', $groupid);
+        $this->db->update($this->tableNameGroups, array('privileges' => $privileges));
     }
     //}}}
 }
