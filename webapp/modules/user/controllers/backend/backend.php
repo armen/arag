@@ -118,13 +118,16 @@ class Backend extends Arag_Controller
     // {{{ _check_filter
     function _check_filter($filter)
     {
-        return ($filter === '*') || (boolean) preg_match("/^([a-z_]+)(\/([a-z_]+|\*)){1,3}$/", strtolower($filter));
+        return ($filter === '*') || $this->_check_privilege($filter);
     }
     // }}}
     // {{{ _check_privilege
     function _check_privilege($privilege)
     {
-        return (boolean) preg_match("/^([a-z_]+)(\/([a-z_]+|\*)){1,3}$/", strtolower($privilege));
+        if ($this->input->post('parentid') === "0") {
+            return true;
+        }
+        return (boolean) preg_match('/^([a-z_]+)((\/[a-z_]+){0,2}(\/\*))|((\/[a-z_]+){2,3})$/', strtolower(trim($privilege, '/')));
     }
     // }}}
     // {{{ _check_label
