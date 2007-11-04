@@ -86,8 +86,9 @@ class Arag_Auth {
                 if (((boolean) $whiteList == False && $privilege === '*') || 
                     // It contains four section which every section separated with a /.
                     // It should contain at least two sections. Each section contains * 
-                    // (except first section) or lower case character(s)
-                    preg_match('/^([a-z_]+)(\/([a-z_]+|\*)){1,3}$/', $privilege)) {
+                    // (except first section and last when we have 4 or 3 sections) or 
+                    // lower case character(s)
+                    preg_match('/^([a-z_]+)((\/[a-z_]+){0,2}(\/\*))|((\/[a-z_]+){2,3})$/', $privilege)) {
                     
                     // Replace * with .*
                     $privilege = '|^'.str_replace('*', '.*', $privilege).'$|';
