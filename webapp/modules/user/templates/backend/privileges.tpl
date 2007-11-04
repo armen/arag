@@ -27,14 +27,16 @@
                     <input type="hidden" value="{$parentid}" name="parentid" />
                 </td>
             </tr>
-            <tr>
-                <td align="{right}">
-                    _("Privilege"):{asterisk}
-                </td>
-                <td align="{left}">
-                    <input type="text" name="privilege" value="{$privilege|smarty:nodefaults|default = null}" />
-                </td>
-            </tr>
+            {if $parentid neq 0}
+                <tr>
+                    <td align="{right}">
+                        _("Privilege"):{asterisk}
+                    </td>
+                    <td align="{left}">
+                        <input type="text" name="privilege" value="{$privilege|smarty:nodefaults|default = null}" />
+                    </td>
+                </tr>
+            {/if}
             <tr>
                 <td align="{right}">
                 </td>
