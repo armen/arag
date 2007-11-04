@@ -79,7 +79,7 @@ class Applications extends Backend
         $this->groups->addColumn('modified_by', _("Modified By"));
         $this->groups->addColumn('ApplicationsModel.getDate', _("Create Date"), PList::VIRTUAL_COLUMN);
         $this->groups->addColumn('ApplicationsModel.getModifyDate', _("Modify Date"), PList::VIRTUAL_COLUMN);
-        $this->groups->addAction('user/backend/applications/group_privileges/#id#/'.$appname, _("Privileges"), 'privileges_action');
+        $this->groups->addAction('user/backend/applications/group_privileges_edit/#id#/'.$appname, _("Privileges"), 'privileges_action');
         $this->groups->addAction('user/backend/applications/users/#id#/'.$appname, _("Edit"), 'edit_action'); 
         $this->groups->addAction('user/backend/applications/delete/group/#id#', _("Delete"), 'delete_action');
         $this->groups->addAction("user/backend/applications/delete/group", _("Delete"), 'delete_action', PList::GROUP_ACTION);
@@ -702,9 +702,8 @@ class Applications extends Backend
     function privileges_parents_write()
     {
         $label     = $this->input->post('newlabel');
-        $privilege = $this->input->post('privilege');
-
-        $this->PrivilegesModel->addLabel($label, 0, $privilege);
+      
+        $this->PrivilegesModel->addLabel($label, 0);
 
         $this->session->set_userdata('privileges_add_saved', true);
         
@@ -759,10 +758,10 @@ class Applications extends Backend
         $flagsaved = false;
         if ($this->session->userdata('privilege_edited_saved')) {
             $flagsaved = $this->session->userdata('privilege_edited_saved');
-            $this->session->userdata('privilege_edited_saved');
+            $this->session->unset_userdata('privilege_edited_saved');
         }
         
-        $label    = $this->PrivilegesModel->getLabel($id);
+        $label = $this->PrivilegesModel->getLabel($id);
             
         $this->global_tabs->addItem(_("Edit"), "user/backend/applications/privileges_edit/%id%", "user/backend/applications/privileges_parents");
         $this->global_tabs->setParameter('id', $id);
@@ -770,6 +769,7 @@ class Applications extends Backend
         $this->load->vars(array('label'     => $label->label,
                                 'privilege' => $label->privilege,
                                 'id'        => $id,
+                                'parentid'  => $label->parent_id,
                                 'flagsaved' => $flagsaved));
 
         $this->load->view('backend/privileges_edit');
@@ -864,29 +864,49 @@ class Applications extends Backend
         redirect('user/backend/applications/privileges_parents');
     }
     // }}}
-    //{{{ group_privileges
-    function group_privileges($id, $appname)
+    //{{{ group_privileges_edit_read
+    function group_privileges_edit_read($id, $appname)
     {
+
+        $flagsaved = false;
+        if ($this->session->userdata('group_privileges_edit_saved')) {
+            $flagsaved = $this->session->userdata('group_privileges_edit_saved');
+            $this->session->unset_userdata('group_privileges_edit_saved');
+        }
+
         $row  = $this->GroupsModel->getGroup($id);
         $name = $row['name'];
-
         $this->global_tabs->setParameter('name', $appname);
  
-        $this->global_tabs->addItem(_("$name's Privileges"), "user/backend/applications/group_privileges/".$id."/".$appname, "user/backend/applications");
-        $this->global_tabs->addItem(_("Add Privileges to $name"), "user/backend/applications/group_privileges_add/".$id."/".$appname, "user/backend/applications");
+        $this->global_tabs->addItem(_("Edit $name's privileges"), "user/backend/applications/group_privileges_edit/".$id."/".$appname, "user/backend/applications");
 
-        $this->load->component('PList', 'privileges');
+        $parents         = $this->PrivilegesModel->getFilteredPrivileges($appname, "0");
+        $subpris         = $this->PrivilegesModel->getAppPrivileges($appname);
+        $allselected     = $this->PrivilegesModel->getPrivileges($id, true);
+        $selected        = $this->PrivilegesModel->getSelectedPrivileges($subpris, $allselected);
+        $selectedparents = $this->PrivilegesModel->getSelectedParents($selected, $parents);
 
-        $this->privileges->setResource($this->PrivilegesModel->getPrivileges($id));
-        $this->privileges->setLimit($this->config->item('limit', NULL, 0));
-        $this->privileges->addColumn('label', _("Label"));
-        $this->privileges->addColumn('privilege', _("Privilege"));        
-        $this->privileges->addColumn('id', Null, PList::HIDDEN_COLUMN);
-        $this->privileges->addAction('user/backend/applications/group_privileges_delete/'.$id.'/'.$appname.'/#id#', _("delete"), 'delete_action');
-        $this->privileges->addAction("user/backend/applications/group_privileges_delete/".$id.'/'.$appname, _("Delete"), 'delete_action', PList::GROUP_ACTION);
-        $this->privileges->setGroupActionParameterName('id');
+        $this->load->vars(array('parent_privileges' => $selectedparents,
+                                'sub_privileges'    => $selected,
+                                'id'                => $id,
+                                'appname'           => $appname,
+                                'flagsaved'         => $flagsaved));
 
         $this->load->view('backend/group_privileges');
+    }
+    //}}}
+    //{{{ group_privileges_edit_write
+    function group_privileges_edit_write()
+    {
+        $ids     = $this->input->post('privileges');
+        $appname = $this->input->post('appname');
+        $groupid = $this->input->post('id');
+        
+        $this->PrivilegesModel->editPrivileges($ids, $groupid, $appname);
+
+        $this->session->set_userdata('group_privileges_edit_saved', true);
+
+        $this->group_privileges_edit_read($groupid, $appname);
     }
     //}}}
 }
