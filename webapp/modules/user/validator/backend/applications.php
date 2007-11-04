@@ -47,14 +47,18 @@ $_new_label_fields = Array ('newlabel'  => _("Name for new label"),
 $_new_label_rules  = Array ('newlabel'  => 'trim|required',
                             'privilege' => 'trim|required|callback__check_privilege');
 
+$_new_label_parent_fields = Array ('newlabel'  => _("Name for new label"));
+
+$_new_label_parent_rules  = Array ('newlabel'  => 'trim|required');
+
 $_edit_label_fields = Array ('label'     => _("Label name"),
                              'privilege' => _("Privilege"));
 
 $_edit_label_rules  = Array ('label'     => 'trim|required',
-                             'privilege' => 'trim|required|callback__check_privilege');
+                             'privilege' => 'trim|callback__check_privilege');
 
-$validator['privileges_parents']['write']['fields'] = $_new_label_fields;
-$validator['privileges_parents']['write']['rules']  = $_new_label_rules;
+$validator['privileges_parents']['write']['fields'] = $_new_label_parent_fields;
+$validator['privileges_parents']['write']['rules']  = $_new_label_parent_rules;
 
 $validator['privileges']['write']['fields'] = $_new_label_fields;
 $validator['privileges']['write']['rules']  = $_new_label_rules;
