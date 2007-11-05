@@ -6,32 +6,30 @@
 // $Id$
 // ---------------------------------------------------------------------------
 
-class Frontend extends Arag_Controller 
+class Frontend_Controller extends Controller 
 {
     // {{{ Constructor
-    function Frontend()
+    function __construct()
     {
-        parent::Arag_Controller();
+        parent::__construct();
 
         // Load the model
-        $this->load->model('BlogModel');        
+        $this->load->model('Blog');
        
         // Backend decorator
         $this->load->decorator('frontend/decorator');
 
         // Default page title
-        $this->load->vars(Array('page_title' => 'Blog'));
+        $this->decorator->page_title = 'Blog';
     }
     // }}}
     // {{{ index
     function index()
     {
-        $this->load->helper('url');    
-
         $this->load->component('PList', 'entry');
-        $this->entry->setLimit($this->config->item('post_limit', NULL, 0));        
-        $this->entry->setResource($this->BlogModel->getEntries(True));
-        $this->entry->addColumn('BlogModel.getDate', Null, PList::VIRTUAL_COLUMN);
+        $this->entry->setLimit(Config::item('post_limit', NULL, 0));        
+        $this->entry->setResource($this->Blog->getEntries(True));
+        $this->entry->addColumn('Blog.getDate', Null, PList::VIRTUAL_COLUMN);
 
         $this->load->vars(Array('entry_uri' => '/blog/frontend/view/#id#/extended'));
         $this->load->view('frontend/view');    
@@ -40,11 +38,9 @@ class Frontend extends Arag_Controller
     // {{{ view
     function view($id, $extended = False)
     {
-        $this->load->helper('url');
-
         $this->load->component('PList', 'entry');
-        $this->entry->setResource(Array($this->BlogModel->getEntry($id, True)));
-        $this->entry->addColumn('BlogModel.getDate', Null, PList::VIRTUAL_COLUMN);
+        $this->entry->setResource(Array($this->Blog->getEntry($id, True)));
+        $this->entry->addColumn('Blog.getDate', Null, PList::VIRTUAL_COLUMN);
 
         $this->load->vars(Array('extended'  => $extended == 'extended', 
                                 'entry_uri' => '/blog/frontend/view/#id#/extended'));
@@ -60,7 +56,7 @@ class Frontend extends Arag_Controller
     // {{{ _check_entry
     function _check_entry($id)
     {
-        return $this->BlogModel->hasEntry($id, True);
+        return $this->Blog->hasEntry($id, True);
     }
     // }}}    
 }

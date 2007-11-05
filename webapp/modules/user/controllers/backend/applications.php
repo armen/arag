@@ -8,12 +8,12 @@
 
 require_once "backend.php";
 
-class Applications extends Backend 
+class Applications_Controller extends Backend_Controller 
 {   
     // {{{ Constructor
-    function Applications()
+    function __construct()
     {   
-        parent::Backend();
+        parent::__construct();
 
         // Global tabbedbock
         $this->global_tabs->setTitle(_("User Management"));
@@ -38,18 +38,18 @@ class Applications extends Backend
         $this->load->component('PList', 'applications');
 
         if ($page != Null && preg_match('|page[a-z_]*:[0-9]*|', $page)) {        
-            $name = $this->session->userdata('user_app_name');
+            $name = $this->session->get('user_app_name');
         } else {
             $name = $this->input->post('name', True);
         }
 
-        $this->session->set_userdata('user_app_name', $name);
+        $this->session->set('user_app_name', $name);
 
-        $this->applications->setResource($this->ApplicationsModel->getApps($name));
-        $this->applications->setLimit($this->config->item('limit', NULL, 0));
+        $this->applications->setResource($this->Applications->getApps($name));
+        $this->applications->setLimit(Arag_Config::get('limit', 0));
         $this->applications->addColumn('name', _("Name"));        
         $this->applications->addColumn('default_group', _("Default Group"));
-        $this->applications->addColumn('ApplicationsModel.getDate', _("Create Date"), PList::VIRTUAL_COLUMN);
+        $this->applications->addColumn('Applications.getDate', _("Create Date"), PList::VIRTUAL_COLUMN);
         $this->applications->addAction('user/backend/applications/groups/#name#', _("Edit"), 'edit_action');      
         
         $this->load->vars(array("name" => $name,
@@ -74,7 +74,7 @@ class Applications extends Backend
         $this->groups->addAction("user/backend/applications/delete/group", _("Delete"), 'delete_action', PList::GROUP_ACTION);
         $this->groups->setGroupActionParameterName('id');
 
-        $this->session->set_userdata('delete_appname', $appname);
+        $this->session->set('delete_appname', $appname);
 
         $this->load->view('backend/groups'); 
     }
@@ -138,18 +138,18 @@ class Applications extends Backend
     function all_users($page = NULL)
     {
         if ($page != Null && preg_match('|page[a-z_]*:[0-9]*|', $page)) {        
-            $user       = $this->session->userdata('user_user_user');
-            $app_name   = $this->session->userdata('user_user_app');
-            $group_name = $this->session->userdata('user_user_group');
+            $user       = $this->session->get('user_user_user');
+            $app_name   = $this->session->get('user_user_app');
+            $group_name = $this->session->get('user_user_group');
         } else {
             $user       = $this->input->post('user', True);
             $app_name   = $this->input->post('app_name', True);
             $group_name = $this->input->post('group_name', True);
         }
 
-        $this->session->set_userdata('user_user_user', $user);
-        $this->session->set_userdata('user_user_app', $app_name);
-        $this->session->set_userdata('user_user_group', $group_name);
+        $this->session->set('user_user_user', $user);
+        $this->session->set('user_user_app', $app_name);
+        $this->session->set('user_user_group', $group_name);
         
         $this->_create_users_plist(NULL, $app_name, $group_name, $user);
 
@@ -221,7 +221,7 @@ class Applications extends Backend
             $exist = false;
 
             if (preg_match("/^user$/", $type)) {
-                $exist = $this->UsersModel->hasUserName($key);
+                $exist = $this->Users->hasUserName($key);
                 
                 if (!$exist) {
                     $this->_invalid_request("user/backend/applications/index");
@@ -229,13 +229,13 @@ class Applications extends Backend
                 
                 array_push($subjects, $key);
             } else if (preg_match("/^group$/", $type)) {
-                $exist = $this->GroupsModel->hasGroup(NULL, NULL, $key);
+                $exist = $this->Groups->hasGroup(NULL, NULL, $key);
                 
                 if (!$exist) {
                     $this->_invalid_request("user/backend/applications/index");
                 }
                 
-                $row = $this->GroupsModel->getGroup($key);
+                $row = $this->Groups->getGroup($key);
                 array_push($subjects, $row['name']);
             } else {
                 $this->_invalid_request("user/backend/applications/index");                
@@ -243,8 +243,8 @@ class Applications extends Backend
 
         }
         
-        $appname = $this->session->userdata('delete_appname');
-        $this->session->unset_userdata('delete_appname');
+        $appname = $this->session->get('delete_appname');
+        $this->session->del('delete_appname');
 
         $subjects = implode(",", $subjects);
         
@@ -266,11 +266,11 @@ class Applications extends Backend
         if ($this->input->post('submit')) {
             if ($flag) {
                 $application = $this->input->post('application');
-                $this->GroupsModel->deleteGroups($objects);
-                redirect('user/backend/applications/groups/'.$application);
+                $this->Groups->deleteGroups($objects);
+                url::redirect('user/backend/applications/groups/'.$application);
             } else {
-                $this->UsersModel->deleteUsers($objects);
-                redirect('user/backend/applications/all_users');
+                $this->Users->deleteUsers($objects);
+                url::redirect('user/backend/applications/all_users');
             }
         } else {
             $this->_invalid_request("user/backend/applications/index");
@@ -283,22 +283,22 @@ class Applications extends Backend
         $this->load->component('PList', 'applications');
 
         if ($page != Null && preg_match('|page[a-z_]*:[0-9]*|', $page)) {        
-            $name = $this->session->userdata('user_app_name');
+            $name = $this->session->get('user_app_name');
         } else {
             $name = $this->input->post('name', True);
         }
 
-        $this->session->set_userdata('user_app_name', $name);
+        $this->session->set('user_app_name', $name);
 
-        $this->applications->setResource($this->FiltersModel->getFilterProperties($name, false));
-        $this->applications->setLimit($this->config->item('limit', NULL, 0));
+        $this->applications->setResource($this->Filters->getFilterProperties($name, false));
+        $this->applications->setLimit(Arag_Config::get('limit', 0));
         $this->applications->addColumn('appname', _("Name"));        
         $this->applications->addColumn('created_by', _("Created By"));
         $this->applications->addColumn('modified_by', _("Modified By"));
-        $this->applications->addColumn('FiltersModel.getDate', _("Create Date"), PList::VIRTUAL_COLUMN);
-        $this->applications->addColumn('FiltersModel.getModifyDate', _("Modify Date"), PList::VIRTUAL_COLUMN);      
+        $this->applications->addColumn('Filters.getDate', _("Create Date"), PList::VIRTUAL_COLUMN);
+        $this->applications->addColumn('Filters.getModifyDate', _("Modify Date"), PList::VIRTUAL_COLUMN);      
         $this->applications->addAction('user/backend/applications/app_filters/#appname#', _("Edit"), 'edit_action');
-        $this->applications->addAction('user/backend/applications/app_filters_delete/#appname#', _("Delete"), 'delete_action', 'FiltersModel.isDeletable');
+        $this->applications->addAction('user/backend/applications/app_filters_delete/#appname#', _("Delete"), 'delete_action', 'Filters.isDeletable');
         $this->applications->addAction("user/backend/applications/app_filters_delete/", _("Delete"), 'delete_action', PList::GROUP_ACTION);
         $this->applications->setGroupActionParameterName('appname');
         
@@ -321,9 +321,9 @@ class Applications extends Backend
         $filter  = $this->input->post('filter');
         $appname = $this->input->post('application');
 
-        $this->FiltersModel->addFilter($filter, $appname);
+        $this->Filters->addFilter($filter, $appname);
         
-        $this->session->set_userdata('filter_saved', true);
+        $this->session->set('filter_saved', true);
 
         $this->app_filters_read($appname);
     }
@@ -339,25 +339,25 @@ class Applications extends Backend
     {   
         $flagsaved = false;
 
-        if ($this->session->userdata('filter_saved')) {
-            $flagsaved = $this->session->userdata('filter_saved');
-            $this->session->unset_userdata('filter_saved');
+        if ($this->session->get('filter_saved')) {
+            $flagsaved = $this->session->get('filter_saved');
+            $this->session->del('filter_saved');
         }
 
         $this->load->component('PList', 'filters_pro');
 
-        $this->filters_pro->setResource($this->FiltersModel->getFilterProperties($appname));
-        $this->filters_pro->setLimit($this->config->item('limit', NULL, 0));
+        $this->filters_pro->setResource($this->Filters->getFilterProperties($appname));
+        $this->filters_pro->setLimit(Arag_Config::get('limit', 0));
         $this->filters_pro->addColumn('appname', _("Name"));        
         $this->filters_pro->addColumn('created_by', _("Created By"));
         $this->filters_pro->addColumn('modified_by', _("Modified By"));
-        $this->filters_pro->addColumn('FiltersModel.getDate', _("Create Date"), PList::VIRTUAL_COLUMN);
-        $this->filters_pro->addColumn('FiltersModel.getModifyDate', _("Modify Date"), PList::VIRTUAL_COLUMN);
+        $this->filters_pro->addColumn('Filters.getDate', _("Create Date"), PList::VIRTUAL_COLUMN);
+        $this->filters_pro->addColumn('Filters.getModifyDate', _("Modify Date"), PList::VIRTUAL_COLUMN);
 
         $this->load->component('PList', 'filters');
 
-        $this->filters->setResource($this->FiltersModel->getFilters($appname));
-        $this->filters->setLimit($this->config->item('limit', NULL, 0));
+        $this->filters->setResource($this->Filters->getFilters($appname));
+        $this->filters->setLimit(Arag_Config::get('limit', 0));
         $this->filters->addColumn('filter', _("Title"));        
         $this->filters->addColumn('id', Null, PList::HIDDEN_COLUMN);
         $this->filters->addAction('user/backend/applications/filters_edit/'.$appname.'/#id#', _("Edit"), 'edit_action');
@@ -380,7 +380,7 @@ class Applications extends Backend
     //{{{ filters_edit_read
     function filters_edit_read($appname, $id, $flagsaved = false)
     {
-        $filters = $this->FiltersModel->getFilters($appname);
+        $filters = $this->Filters->getFilters($appname);
 
         $this->global_tabs->addItem(_("Edit Filters"), 'user/backend/applications/filters_edit/%name%/%id%', 'user/backend/applications/apps_filters');
         $this->global_tabs->setParameter('id', $id);
@@ -401,7 +401,7 @@ class Applications extends Backend
         $appname = $this->input->post('application');
         $id      = $this->input->post('id');
 
-        $this->FiltersModel->editFilter($filter, $id, $appname);
+        $this->Filters->editFilter($filter, $id, $appname);
 
         $this->filters_edit_read($appname, $id, true);
     }
@@ -425,7 +425,8 @@ class Applications extends Backend
         // check if it is a group action or not
         if ($objects != NULL) {
             //add a sub tab to the global tabs
-            $this->global_tabs->addItem(_("Delete"), "user/backend/applications/filters_delete/".$appname."/".$objects, "user/backend/applications/apps_filters");
+            $this->global_tabs->addItem(_("Delete"), "user/backend/applications/filters_delete/".$appname."/".$objects, 
+                                                     "user/backend/applications/apps_filters");
             $objects = array($objects);
         } else {
             if ($this->input->post('id')) {
@@ -437,7 +438,7 @@ class Applications extends Backend
 
         $subjects = array();
 
-        $filters = $this->FiltersModel->getFilters($appname);
+        $filters = $this->Filters->getFilters($appname);
 
         foreach ($objects as $key) {
             $exist = false;
@@ -446,7 +447,7 @@ class Applications extends Backend
                 $filter = $filters[$key]['filter']; 
 
                 // check if the passed filter(s) exist(s)
-                $exist = $this->FiltersModel->hasFilter($appname, $filter);
+                $exist = $this->Filters->hasFilter($appname, $filter);
             }
                 
             if (!$exist) {
@@ -493,7 +494,7 @@ class Applications extends Backend
             $exist = false;
 
             // check if the passed app(s) exist(s)
-            $exist = $this->FiltersModel->hasApp($key);
+            $exist = $this->Filters->hasApp($key);
                 
             if (!$exist) {
                 $this->_invalid_request("user/backend/applications/apps_filters");
@@ -520,12 +521,12 @@ class Applications extends Backend
          
         if ($this->input->post('submit')) {
             if ($objecttype) {
-                $this->FiltersModel->deleteApps($objects);
-                redirect('user/backend/applications/apps_filters');
+                $this->Filters->deleteApps($objects);
+                url::redirect('user/backend/applications/apps_filters');
             } else {
                 $appname = $this->input->post('application');
-                $this->FiltersModel->deleteFilters($objects, $appname);
-                redirect('user/backend/applications/app_filters/'.$appname);
+                $this->Filters->deleteFilters($objects, $appname);
+                url::redirect('user/backend/applications/app_filters/'.$appname);
             }
         } else {
             $this->_invalid_request("user/backend/applications/index");
@@ -537,9 +538,9 @@ class Applications extends Backend
     {
         $flagsaved = false;
         
-        if ($this->session->userdata('app_add_filter_saved')) {
+        if ($this->session->get('app_add_filter_saved')) {
             $flagsaved = true;
-            $this->session->unset_userdata('app_add_filter_saved');
+            $this->session->del('app_add_filter_saved');
         }
         
         $this->load->vars(array('flagsaved' => $flagsaved));
@@ -552,10 +553,10 @@ class Applications extends Backend
     function add_apps_filters_write()
     {
         $appname = $this->input->post('appname');
-        $this->FiltersModel->addApp($appname);
+        $this->Filters->addApp($appname);
 
-        $this->session->set_userdata('app_add_filter_saved', true);
-        redirect('user/backend/applications/add_apps_filters');
+        $this->session->set('app_add_filter_saved', true);
+        url::redirect('user/backend/applications/add_apps_filters');
     }
     // }}}
     // {{{ add_apps_filters_write_error
@@ -575,9 +576,9 @@ class Applications extends Backend
     {
         $label     = $this->input->post('newlabel');
       
-        $this->PrivilegesModel->addLabel($label, 0);
+        $this->Privileges->addLabel($label, 0);
 
-        $this->session->set_userdata('privileges_add_saved', true);
+        $this->session->set('privileges_add_saved', true);
         
         $this->privileges_parents_read();
     }
@@ -597,7 +598,7 @@ class Applications extends Backend
     // {{{ privileges_read
     function privileges_read($id)
     {
-        $label = $this->PrivilegesModel->getLabel($id);
+        $label = $this->Privileges->getLabel($id);
         $this->global_tabs->addItem(_("$label->label"), "user/backend/applications/privileges/%id%", "user/backend/applications/privileges_parents");
         $this->global_tabs->setParameter('id', $id);
         $this->_create_privileges_list("_master_", $id);
@@ -610,9 +611,9 @@ class Applications extends Backend
         $privilege = $this->input->post('privilege');
         $parentid  = $this->input->post('parentid');
 
-        $this->PrivilegesModel->addLabel($label, $parentid, $privilege);
+        $this->Privileges->addLabel($label, $parentid, $privilege);
 
-        $this->session->set_userdata('privileges_add_saved', true);
+        $this->session->set('privileges_add_saved', true);
         
         $this->privileges_read($parentid);
     }
@@ -628,12 +629,12 @@ class Applications extends Backend
     function privileges_edit_read($id)
     {
         $flagsaved = false;
-        if ($this->session->userdata('privilege_edited_saved')) {
-            $flagsaved = $this->session->userdata('privilege_edited_saved');
-            $this->session->unset_userdata('privilege_edited_saved');
+        if ($this->session->get('privilege_edited_saved')) {
+            $flagsaved = $this->session->get('privilege_edited_saved');
+            $this->session->del('privilege_edited_saved');
         }
         
-        $label = $this->PrivilegesModel->getLabel($id);
+        $label = $this->Privileges->getLabel($id);
             
         $this->global_tabs->addItem(_("Edit"), "user/backend/applications/privileges_edit/%id%", "user/backend/applications/privileges_parents");
         $this->global_tabs->setParameter('id', $id);
@@ -660,9 +661,9 @@ class Applications extends Backend
         $id        = $this->input->post('id');
         $privilege = $this->input->post('privilege');
 
-        $this->PrivilegesModel->editLabel($label, $id, $privilege);
+        $this->Privileges->editLabel($label, $id, $privilege);
 
-        $this->session->set_userdata('privilege_edited_saved', true);
+        $this->session->set('privilege_edited_saved', true);
 
         $this->privileges_edit_read($id);
     }
@@ -685,7 +686,8 @@ class Applications extends Backend
         // check if it is a group action or not
         if ($objects != NULL) {
             //add a sub tab to the global tabs
-            $this->global_tabs->addItem(_("Delete"), "user/backend/applications/privileges_delete/".$objects, "user/backend/applications/privileges_parents");
+            $this->global_tabs->addItem(_("Delete"), "user/backend/applications/privileges_delete/".$objects, 
+                                                     "user/backend/applications/privileges_parents");
             $objects = array($objects);
         } else {
             if ($this->input->post('id')) {
@@ -701,10 +703,10 @@ class Applications extends Backend
             $exist = false;
 
             // check if the passed app(s) exist(s)
-            $exist  = $this->PrivilegesModel->hasLabel($key);
+            $exist  = $this->Privileges->hasLabel($key);
 
             // Fetch label(s) name(s)
-            $labels =  $this->PrivilegesModel->getLabel($key);
+            $labels =  $this->Privileges->getLabel($key);
 
             if ($labels->parent_id === "0") {
                 $flagcaption = true;
@@ -731,19 +733,20 @@ class Applications extends Backend
     {
         $objects = $this->input->post('objects');
         
-        $this->PrivilegesModel->deletePrivileges($objects);
+        $this->Privileges->deletePrivileges($objects);
 
-        redirect('user/backend/applications/privileges_parents');
+        url::redirect('user/backend/applications/privileges_parents');
     }
     // }}}
     //{{{ group_privileges_edit_read
     function group_privileges_edit_read($id, $appname)
     {
-        $row  = $this->GroupsModel->getGroup($id);
+        $row  = $this->Groups->getGroup($id);
         $name = $row['name'];
         $this->global_tabs->setParameter('name', $appname);
  
-        $this->global_tabs->addItem(_("Edit $name's privileges"), "user/backend/applications/group_privileges_edit/".$id."/".$appname, "user/backend/applications");
+        $this->global_tabs->addItem(_("Edit $name's privileges"), "user/backend/applications/group_privileges_edit/".$id."/".$appname, 
+                                                                  "user/backend/applications");
         $this->_privileges_edit_read($id, $appname);
     }
     //}}}
@@ -790,4 +793,5 @@ class Applications extends Backend
     }
     // }}}
 }
+
 ?>

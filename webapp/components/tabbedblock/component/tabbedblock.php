@@ -109,8 +109,6 @@ class TabbedBlock extends Component
     // {{{ genURL
     function genURL($uri, $parseURI = True)
     {
-        $CI =& get_instance();
-
         if ($parseURI) {
             $uri = $this->parseURI($uri);
         }
@@ -119,7 +117,7 @@ class TabbedBlock extends Component
             // there is \w:// at begining of uri            
             return $uri;
         } else {
-            return $CI->config->item('base_url') . $CI->config->item('index_page') . '/' . $uri;
+            return url::site($uri);
         }
     }
     // }}}

@@ -26,17 +26,6 @@ wget -c -P /tmp http://smarty.php.net/do_download.php?download_file=Smarty-2.6.1
 tar xvfz /tmp/Smarty-2.6.18.tar.gz
 mv ./Smarty-2.6.18/libs ${LIBS_PATH}/smarty
 
-# Download ci
-
-if [ -d $LIBS_PATH/ci ]; then
-    rm -rf "${LIBS_PATH}/ci"
-fi
-
-wget -c -P /tmp http://codeigniter.com/downloads/CodeIgniter_1.5.4.zip
-unzip -o /tmp/CodeIgniter_1.5.4.zip
-
-mv ./CodeIgniter_1.5.4/system ${LIBS_PATH}/ci
-
 # Download pear
 if [ -d $LIBS_PATH/pear ]; then
     rm -rf "${LIBS_PATH}/pear"
@@ -70,9 +59,6 @@ mv ./fckeditor ${PUB_PATH}/scripts/FCKeditor
 
 rm -rf ./Smarty-2.6.18/
 rm -rf /tmp/Smarty-2.6.18.tar.gz
-
-rm -rf ./CodeIgniter_1.5.4
-rm -rf /tmp/CodeIgniter_1.5.4.zip
 
 rm -rf /tmp/pear.tar.bz2
 

@@ -7,7 +7,7 @@
 // $Id$
 // ---------------------------------------------------------------------------
 
-class UsersModel extends Model 
+class Users_Model extends Model 
 {
     // {{{ Properties
 
@@ -18,12 +18,12 @@ class UsersModel extends Model
 
     // }}}
     // {{{ Constructor
-    function UsersModel()
+    function __construct()
     {
-        parent::Model();
+        parent::__construct();
 
         // Connecting to the database
-        $this->load->database();
+// $this->load->database();
 
         // Set table name
         $this->tableNameUsers  = "user_users";
@@ -42,7 +42,7 @@ class UsersModel extends Model
 
         if ($query->num_rows() == 1) {
 
-            $user   = $query->row();
+            $user   = $query->current();
             $status = self::USER_OK;
 
             // Check if user verified
@@ -68,15 +68,15 @@ class UsersModel extends Model
     // {{{ & getUser
     function & getUser($username)
     {
-        $this->db->select('appname, '.$this->db->dbprefix.$this->tableNameGroups.'.name as group_name, username, privileges, redirect,'.
-                          $this->db->dbprefix.$this->tableNameUsers.'.name as name, lastname, email, group_id');
+        $this->db->select('appname, '.$this->tablePrefix.$this->tableNameGroups.'.name as group_name, username, privileges, redirect,'.
+                          $this->tablePrefix.$this->tableNameUsers.'.name as name, lastname, email, group_id');
         $this->db->from($this->tableNameUsers);
         $this->db->join($this->tableNameGroups, $this->tableNameGroups.'.id = '.$this->tableNameUsers.'.group_id');
         $this->db->where('username', $username);
         $this->db->where('verified', True);
         $this->db->where('blocked',  False);
 
-        $user = $this->db->get()->row_array();
+        $user = (Array) $this->db->get()->current();
 
         if (isset($user['privileges'])) {
             $user['privileges'] = unserialize($user['privileges']);
@@ -90,10 +90,10 @@ class UsersModel extends Model
     // {{{ & getAnonymousUser
     function & getAnonymouseUser($appname)
     {
-        $CI =& get_instance();
-        $CI->load->model(Array('GroupsModel', 'user'), 'Groups');
+        $controller = Kohana::instance();
+        $controller->load->model('Groups', 'Groups', 'user');
 
-        $anonymous = $CI->Groups->getAnonymousGroup($appname);
+        $anonymous = $controller->Groups->getAnonymousGroup($appname);
 
         $anonymous['groupname']  = $anonymous['name'];
         $anonymous['username']   = $anonymous['name'];
@@ -109,7 +109,7 @@ class UsersModel extends Model
         $this->db->from($this->tableNameUsers);
         $this->db->where('username', $username);
 
-        $userProfile = $this->db->get()->row_array();
+        $userProfile = (Array) $this->db->get()->current();
 
         return $userProfile;        
     }
@@ -118,12 +118,12 @@ class UsersModel extends Model
     function & getUsers($groupID = NULL, $appName, $groupName, $user, $flagappname)
     {
         $this->db->select('username, lastname, email, appname, id');
-        $this->db->select($this->db->dbprefix.$this->tableNameGroups.".name as group_name");
-        $this->db->select($this->db->dbprefix.$this->tableNameUsers.".name as user_name");
-        $this->db->select($this->db->dbprefix.$this->tableNameUsers.".modify_date");
-        $this->db->select($this->db->dbprefix.$this->tableNameUsers.".create_date");
-        $this->db->select($this->db->dbprefix.$this->tableNameUsers.".modified_by");
-        $this->db->select($this->db->dbprefix.$this->tableNameUsers.".created_by");
+        $this->db->select($this->tablePrefix.$this->tableNameGroups.".name as group_name");
+        $this->db->select($this->tablePrefix.$this->tableNameUsers.".name as user_name");
+        $this->db->select($this->tablePrefix.$this->tableNameUsers.".modify_date");
+        $this->db->select($this->tablePrefix.$this->tableNameUsers.".create_date");
+        $this->db->select($this->tablePrefix.$this->tableNameUsers.".modified_by");
+        $this->db->select($this->tablePrefix.$this->tableNameUsers.".created_by");
         $this->db->from($this->tableNameUsers);
         $this->db->join($this->tableNameGroups, $this->tableNameGroups.".id = ".$this->tableNameUsers.".group_id");
         
@@ -133,7 +133,7 @@ class UsersModel extends Model
         }
 
         if ($groupName != NULL) {
-            $this->db->like($this->db->dbprefix.$this->tableNameGroups.".name", $groupName);
+            $this->db->like($this->tablePrefix.$this->tableNameGroups.".name", $groupName);
         }
         
         if ($appName != NULL) {
@@ -148,14 +148,14 @@ class UsersModel extends Model
             $row = explode(" ", $user);
             foreach ($row as $tag) {
                 $this->db->like('username', $tag);
-                $this->db->orlike($this->db->dbprefix.$this->tableNameUsers.".name", $tag);
+                $this->db->orlike($this->tablePrefix.$this->tableNameUsers.".name", $tag);
                 $this->db->orlike('lastname', $tag);
             }
         }
 
         $this->db->orderby('appname, lastname, group_name asc');
 
-        $retval = $this->db->get()->result_array();
+        $retval = $this->db->get()->result(False);
 
         //echo $this->db->last_query();
 
@@ -165,16 +165,16 @@ class UsersModel extends Model
     // {{{ createUser
     function createUser($appname, $email, $name, $lastname, $groupname, $username, $password)
     {
-        $CI =& get_instance();
-        $CI->load->model(Array('GroupsModel', 'user'), 'Groups');
+        $controller = Kohana::instance();
+        $controller->load->model('Groups', 'Groups', 'user');
 
-        $group = $CI->Groups->getGroup(NULL, $appname, $groupname);
+        $group = $controller->Groups->getGroup(NULL, $appname, $groupname);
         
         $row = Array('username'    => $username, 
                      'create_date' => time(),
                      'modify_date' => time(),
-                     'modified_by' => $this->session->userdata('username'),
-                     'created_by'  => $this->session->userdata('username'),
+                     'modified_by' => $this->session->get('username'),
+                     'created_by'  => $this->session->get('username'),
                      'name'        => $name,
                      'lastname'    => $lastname,
                      'group_id'    => $group['id'],
@@ -182,17 +182,17 @@ class UsersModel extends Model
                      'password'    => sha1($password),
                      'verified'    => 1);
         
-        $CI->Groups->changeModifiers($group['id']);
+        $controller->Groups->changeModifiers($group['id']);
         $this->db->insert($this->tableNameUsers, $row);
     }
     // }}}
     // {{{ editUser
     function editUser($appname, $email, $name, $lastname, $groupname, $username, $password = "", $blocked)
     {
-        $CI =& get_instance();
-        $CI->load->model(Array('GroupsModel', 'user'), 'Groups');
+        $controller = Kohana::instance();
+        $controller->load->model('Groups', 'Groups', 'user');
 
-        $group = $CI->Groups->getGroup(NULL, $appname, $groupname);
+        $group = $controller->Groups->getGroup(NULL, $appname, $groupname);
 
         if ($blocked) {
             $blocked = 1;
@@ -202,7 +202,7 @@ class UsersModel extends Model
         
         $row = Array('create_date' => time(),
                      'modify_date' => time(),
-                     'modified_by' => $this->session->userdata('username'),
+                     'modified_by' => $this->session->get('username'),
                      'name'        => $name,
                      'lastname'    => $lastname,
                      'group_id'    => $group['id'],
@@ -213,7 +213,7 @@ class UsersModel extends Model
             $row['password'] = sha1($password);
         }
 
-        $CI->Groups->changeModifiers($group['id']);
+        $controller->Groups->changeModifiers($group['id']);
         $this->db->where('username', $username);
         $this->db->update($this->tableNameUsers, $row);
     }
@@ -230,11 +230,11 @@ class UsersModel extends Model
     function deleteUsers($usernames = NULL, $groupid = NULL)
     {   
         if ($groupid == NULL) {
-            $CI =& get_instance();
-            $CI->load->model(Array('GroupsModel', 'user'), 'Groups');
+            $controller = Kohana::instance();
+            $controller->load->model('Groups', 'Groups', 'user');
             foreach ($usernames as $username) {
                 $row = $this->getUserProfile($username);
-                $CI->Groups->changeModifiers($row['group_id']);
+                $controller->Groups->changeModifiers($row['group_id']);
                 $this->db->delete($this->tableNameUsers, Array('username' => $username));
             }
         } else {

@@ -7,7 +7,7 @@
 // |                                                                         |
 // | Type:    function                                                       |
 // | Name:    url_title                                                      |
-// | Purpose: Takes a string as input and return a human friendly string     |
+// | Purpose: Convert a phrase to a URL-safe title                           |
 // +-------------------------------------------------------------------------+
 // $Id$
 // ---------------------------------------------------------------------------
@@ -15,13 +15,13 @@
 function smarty_function_url_title($params, &$smarty)
 {
     // Default variables
-    $separator = 'dash';
+    $separator = '-';
 
     foreach ($params as $_key => $_val) {
         switch ($_key) {
-            case 'string':       
+            case 'title':       
             case 'separator':
-                $$_key = (string)$_val;
+                $$_key = $_val;
                 break;
 
             default:
@@ -29,14 +29,11 @@ function smarty_function_url_title($params, &$smarty)
         }
     }
 
-    if (!isset($string)) {
-       $smarty->trigger_error("url_title: missing 'string' attribute");
+    if (!isset($title)) {
+       $smarty->trigger_error("url_title: missing 'title' attribute");
     }    
 
-    $CI =& get_instance();
-    $CI->load->helper('url');
-
-    return url_title($string, $separator);
+    return url::title($title, $separator);
 }
 
 ?>

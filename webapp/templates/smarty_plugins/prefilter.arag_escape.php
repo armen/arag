@@ -14,9 +14,7 @@
 
 function smarty_prefilter_arag_escape($tpl, &$smarty) 
 {
-    $CI =& get_instance();
-
-    $exclude = $CI->config->item('Arag_smarty_escape_exclude_list');
+    $exclude = Config::item('smarty.escape_exclude_list');
     $matched = False;
 
     foreach ($exclude as $pattern) {
@@ -27,7 +25,7 @@ function smarty_prefilter_arag_escape($tpl, &$smarty)
     }
 
     if (!$matched) {
-        $smarty->default_modifiers = Array("arag_escape:'" . $CI->config->item('charset') . "'");
+        $smarty->default_modifiers = Array("arag_escape:'" . Config::item('arag.i18n_language_charset') . "'");
     }
 
     return $tpl;

@@ -8,13 +8,13 @@
 
 require_once "backend.php";
 
-class Application extends Backend 
+class Application_Controller extends Backend_Controller 
 {
 
     // {{{ Constructor
-    function Application()
+    function __construct()
     {
-        parent::Backend();
+        parent::__construct();
 
         // Global tabbedbock
         $this->global_tabs->setTitle(_("User Management"));
@@ -37,7 +37,7 @@ class Application extends Backend
         $this->groups->addAction("user/backend/application/delete/group", _("Delete"), 'delete_action', PList::GROUP_ACTION);
         $this->groups->setGroupActionParameterName('id');
 
-        $this->session->set_userdata('delete_appname', $this->appname);
+        $this->session->set('delete_appname', $this->appname);
 
         $this->load->view('backend/groups');
     }
@@ -130,7 +130,7 @@ class Application extends Backend
             $exist = false;
 
             if (preg_match("/^user$/", $type)) {
-                $exist = $this->UsersModel->hasUserName($key);
+                $exist = $this->Users->hasUserName($key);
                 
                 if (!$exist) {
                     $this->_invalid_request("user/backend/application/index");
@@ -138,13 +138,13 @@ class Application extends Backend
                 
                 array_push($subjects, $key);
             } else if (preg_match("/^group$/", $type)) {
-                $exist = $this->GroupsModel->hasGroup(NULL, NULL, $key);
+                $exist = $this->Groups->hasGroup(NULL, NULL, $key);
                 
                 if (!$exist) {
                     $this->_invalid_request("user/backend/application/index");
                 }
                 
-                $row = $this->GroupsModel->getGroup($key);
+                $row = $this->Groups->getGroup($key);
                 array_push($subjects, $row['name']);
             } else {
                 $this->_invalid_request("user/backend/application/index");                
@@ -152,8 +152,8 @@ class Application extends Backend
 
         }
         
-        $appname = $this->session->userdata('delete_appname');
-        $this->session->unset_userdata('delete_appname');
+        $appname = $this->session->get('delete_appname');
+        $this->session->del('delete_appname');
 
         $subjects = implode(",", $subjects);
         
@@ -175,11 +175,11 @@ class Application extends Backend
         if ($this->input->post('submit')) {
             if ($flag) {
                 $application = $this->input->post('application');
-                $this->GroupsModel->deleteGroups($objects);
-                redirect('user/backend/application/index/');
+                $this->Groups->deleteGroups($objects);
+                url::redirect('user/backend/application/index/');
             } else {
-                $this->UsersModel->deleteUsers($objects);
-                redirect('user/backend/application/all_users');
+                $this->Users->deleteUsers($objects);
+                url::redirect('user/backend/application/all_users');
             }
         } else {
             $this->_invalid_request("user/backend/application/index");
@@ -190,7 +190,7 @@ class Application extends Backend
     function group_privileges_edit_read($id, $appname = NULL)
     {
         $appname = $this->appname;
-        $row  = $this->GroupsModel->getGroup($id);
+        $row  = $this->Groups->getGroup($id);
         $name = $row['name'];
         $this->global_tabs->addItem(_("Edit $name's privileges"), "user/backend/application/group_privileges_edit/".$id);
         $this->_privileges_edit_read($id, $appname, false);
@@ -206,15 +206,15 @@ class Application extends Backend
     function all_users($page = NULL)
     {
         if ($page != Null && preg_match('|page[a-z_]*:[0-9]*|', $page)) {        
-            $user       = $this->session->userdata('user_user_user');
-            $group_name = $this->session->userdata('user_user_group');
+            $user       = $this->session->get('user_user_user');
+            $group_name = $this->session->get('user_user_group');
         } else {
             $user       = $this->input->post('user', True);
             $group_name = $this->input->post('group_name', True);
         }
 
-        $this->session->set_userdata('user_user_user', $user);
-        $this->session->set_userdata('user_user_group', $group_name);
+        $this->session->set('user_user_user', $user);
+        $this->session->set('user_user_group', $group_name);
         
         $app_name = $this->appname;
         

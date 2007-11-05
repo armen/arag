@@ -6,34 +6,34 @@
 // $Id$
 // ---------------------------------------------------------------------------
 
-class Backend extends Arag_Controller 
+class Backend_Controller extends Controller 
 {
     // {{{ properties
     var $appname;
     // }}}
     // {{{ Constructor
-    function Backend()
+    function __construct()
     {
-        parent::Arag_Controller();
+        parent::__construct();
 
         // Load the models
-        $this->load->model('ApplicationsModel');        
-        $this->load->model('GroupsModel');        
-        $this->load->model('UsersModel');        
-        $this->load->model('FiltersModel');
-        $this->load->model('PrivilegesModel');
+        $this->load->model('Applications');        
+        $this->load->model('Groups');        
+        $this->load->model('Users');        
+        $this->load->model('Filters');
+        $this->load->model('Privileges');
 
-        // Load URL helper
-        $this->load->helper('url');
-
-        // Default page title
-        $this->load->vars(Array('page_title' => 'User Management'));
-
-        // load Clobal Tabs
+        // load global Tabs
         $this->load->component('TabbedBlock', 'global_tabs'); 
 
         // Backend decorator
         $this->load->decorator('backend/decorator');
+
+        // Load URL helper
+// $this->load->helper('url');
+
+        // Default page title
+        $this->decorator->page_title = 'User Management';
 
         // Current Application
         $this->appname = "_master_";
@@ -44,16 +44,16 @@ class Backend extends Arag_Controller
     {
         $this->load->component('PList', 'users');
  
-        $this->users->setResource($this->UsersModel->getUsers($id, $appname, $groupname, $user, $flagappname));
-        $this->users->setLimit($this->config->item('limit', NULL, 0));
+        $this->users->setResource($this->Users->getUsers($id, $appname, $groupname, $user, $flagappname));
+        $this->users->setLimit(Arag_Config::get('limit', 0));
         $this->users->addColumn('appname', _("Application"));
         $this->users->addColumn('group_name', _("Group"));
         $this->users->addColumn('lastname', _("Lastname"));
         $this->users->addColumn('user_name', _("Name"));
         $this->users->addColumn('username', _("Username"));
         $this->users->addColumn('email', _("Email"));
-        $this->users->addColumn('ApplicationsModel.getDate', _("Create Date"), PList::VIRTUAL_COLUMN);
-        $this->users->addColumn('ApplicationsModel.getModifyDate', _("Modify Date"), PList::VIRTUAL_COLUMN);
+        $this->users->addColumn('Applications.getDate', _("Create Date"), PList::VIRTUAL_COLUMN);
+        $this->users->addColumn('Applications.getModifyDate', _("Modify Date"), PList::VIRTUAL_COLUMN);
         $this->users->addColumn('modified_by', _("Modified By"));
         $this->users->addColumn('created_by', _("Created By"));
     }
@@ -62,13 +62,13 @@ class Backend extends Arag_Controller
     function settings_read()
     {   
         $saved = NULL;
-        if ($this->session->userdata('settings_saved')) {
-            $saved = $this->session->userdata('settings_saved');
-            $this->session->unset_userdata('settings_saved');
+        if ($this->session->get('settings_saved')) {
+            $saved = $this->session->get('settings_saved');
+            $this->session->del('settings_saved');
         }
 
         $data          = Array();
-        $data['limit'] = $this->config->item("limit");
+        $data['limit'] = Arag_Config::get("limit");
         $data['saved'] = $saved;
 
         $this->load->vars($data);        
@@ -79,11 +79,11 @@ class Backend extends Arag_Controller
     // {{{ settings_write
     function settings_write()
     {
-        $this->config->set_item('limit', $this->input->post('limit'));
+        Arag_Config::set('limit', $this->input->post('limit'));
         
-        $this->session->set_userdata('settings_saved', true);
+        $this->session->set('settings_saved', true);
 
-        redirect('user/backend/applications/settings');
+        url::redirect('user/backend/applications/settings');
     }
     // }}}
     // {{{ settings_write_error
@@ -95,26 +95,27 @@ class Backend extends Arag_Controller
     // {{{ _check_group
     function _check_group($id)
     {
-        return $this->GroupsModel->hasGroup(NULL, NULL, $id);
+        return $this->Groups->hasGroup(NULL, NULL, $id);
     }
     // }}}
     // {{{ _check_group_name
     function _check_group_name($name)
     {
         $appname = $this->input->post('application');
-        return !$this->GroupsModel->hasGroup($name, $appname);
+        return !$this->Groups->hasGroup($name, $appname);
     }
     // }}}
     // {{{ _check_user_name
     function _check_user_name($username)
     {
-        return (!preg_match("/^[a-z0-9_.]+_admin$/", strtolower($username)) && !$this->UsersModel->hasUserName($username) && preg_match("/^[a-z][a-z0-9_.]*$/", strtolower($username)));
+        return (!preg_match("/^[a-z0-9_.]+_admin$/", strtolower($username)) && 
+                !$this->Users->hasUserName($username) && preg_match("/^[a-z][a-z0-9_.]*$/", strtolower($username)));
     }
     // }}}
     // {{{ _check_user_name_profile
     function _check_user_name_profile($username)
     {
-        return $this->UsersModel->hasUserName($username);
+        return $this->Users->hasUserName($username);
     }
     // }}}
     // {{{ _check_filter
@@ -135,37 +136,37 @@ class Backend extends Arag_Controller
     // {{{ _check_label
     function _check_label($id)
     {
-        return $this->PrivilegesModel->hasLabel($id);
+        return $this->Privileges->hasLabel($id);
     }
     // }}}
     // {{{ _check_app_filter
     function _check_app_filter($appname)
     {
-        return !$this->FiltersModel->hasApp($appname);
+        return !$this->Filters->hasApp($appname);
     }
     // }}}
     // {{{ _create_privileges_list
     function _create_privileges_list($appname, $parentid = NULL)
     {
         $flagsaved = false;
-        if ($this->session->userdata('privileges_add_saved')) {
-            $flagsaved = $this->session->userdata('privileges_add_saved');
-            $this->session->unset_userdata('privileges_add_saved');
+        if ($this->session->get('privileges_add_saved')) {
+            $flagsaved = $this->session->get('privileges_add_saved');
+            $this->session->del('privileges_add_saved');
         }
         
         $this->load->component('PList', 'privileges');
 
-        $this->privileges->setResource($this->PrivilegesModel->getFilteredPrivileges($appname, $parentid));
-        $this->privileges->setLimit($this->config->item('limit', NULL, 0));
+        $this->privileges->setResource($this->Privileges->getFilteredPrivileges($appname, $parentid));
+        $this->privileges->setLimit(Arag_Config::get('limit', 0));
         $this->privileges->addColumn('id', _("ID"), PList::HIDDEN_COLUMN);        
         $this->privileges->addColumn('label', _("Label"));
         $this->privileges->addColumn('modified_by', _("Modified By"));
         $this->privileges->addColumn('created_by', _("Created By"));
-        $this->privileges->addColumn('ApplicationsModel.getDate', _("Create Date"), PList::VIRTUAL_COLUMN);
-        $this->privileges->addColumn('ApplicationsModel.getModifyDate', _("Modify Date"), PList::VIRTUAL_COLUMN);
+        $this->privileges->addColumn('Applications.getDate', _("Create Date"), PList::VIRTUAL_COLUMN);
+        $this->privileges->addColumn('Applications.getModifyDate', _("Modify Date"), PList::VIRTUAL_COLUMN);
         $this->privileges->addColumn('privilege', _("Privilege"));
         $this->privileges->addAction('user/backend/applications/privileges_edit/#id#', _("Edit"), 'edit_action');
-        $this->privileges->addAction('user/backend/applications/privileges/#id#', _("View"), 'view_action', 'PrivilegesModel.isParent');
+        $this->privileges->addAction('user/backend/applications/privileges/#id#', _("View"), 'view_action', 'Privileges.isParent');
         $this->privileges->addAction('user/backend/applications/privileges_delete/#id#', _("Delete"), 'delete_action');
         $this->privileges->addAction("user/backend/applications/privileges_delete", _("Delete"), 'delete_action', PList::GROUP_ACTION);
         $this->privileges->setGroupActionParameterName('id'); 
@@ -183,28 +184,28 @@ class Backend extends Arag_Controller
 
         $this->global_tabs->setParameter('name', $appname);
 
-        $this->groups->setResource($this->GroupsModel->getGroups($appname));
-        $this->groups->setLimit($this->config->item('limit', NULL, 0));
+        $this->groups->setResource($this->Groups->getGroups($appname));
+        $this->groups->setLimit(Arag_Config::get('limit', 0));
         $this->groups->addColumn('id', Null, PList::HIDDEN_COLUMN);       
         $this->groups->addColumn('name', _("Name"));
         $this->groups->addColumn('appname', _("Application"));
         $this->groups->addColumn('created_by', _("Created By"));
         $this->groups->addColumn('modified_by', _("Modified By"));
-        $this->groups->addColumn('ApplicationsModel.getDate', _("Create Date"), PList::VIRTUAL_COLUMN);
-        $this->groups->addColumn('ApplicationsModel.getModifyDate', _("Modify Date"), PList::VIRTUAL_COLUMN);
+        $this->groups->addColumn('Applications.getDate', _("Create Date"), PList::VIRTUAL_COLUMN);
+        $this->groups->addColumn('Applications.getModifyDate', _("Modify Date"), PList::VIRTUAL_COLUMN);
     }
     // }}}
     // {{{ _default_group
     function _default_group($appname, $flagform = true)
     {
         $flagsaved = false;
-        if ($this->session->userdata('default_group_saved')) {
-            $flagsaved = $this->session->userdata('default_group_saved');
-            $this->session->unset_userdata('default_group_saved');
+        if ($this->session->get('default_group_saved')) {
+            $flagsaved = $this->session->get('default_group_saved');
+            $this->session->del('default_group_saved');
         }
 
-        $row  = $this->GroupsModel->getAllAppGroups($appname);
-        $row2 = $this->GroupsModel->getDefaultGroup($appname);
+        $row  = $this->Groups->getAllAppGroups($appname);
+        $row2 = $this->Groups->getDefaultGroup($appname);
 
         $this->global_tabs->setParameter('name', $appname);
 
@@ -222,9 +223,9 @@ class Backend extends Arag_Controller
     {
         $group   = $this->input->post("dgroup");
 
-        $this->session->set_userdata('default_group_saved', true);
+        $this->session->set('default_group_saved', true);
             
-        $this->GroupsModel->setGroup($appname, $group);
+        $this->Groups->setGroup($appname, $group);
 
         $this->default_group_read($appname);
     }
@@ -233,9 +234,9 @@ class Backend extends Arag_Controller
     function _new_group($appname, $flagform = true)
     {
         $flagsaved = false;
-        if ($this->session->userdata('new_group_saved')) {
-            $flagsaved = $this->session->userdata('new_group_saved');
-            $this->session->unset_userdata('new_group_saved');
+        if ($this->session->get('new_group_saved')) {
+            $flagsaved = $this->session->get('new_group_saved');
+            $this->session->del('new_group_saved');
         }
 
         $this->global_tabs->setParameter('name', $appname); 
@@ -252,9 +253,9 @@ class Backend extends Arag_Controller
     {
         $newgroup   = $this->input->post("newgroup", true);
             
-        $this->GroupsModel->newGroup($appname, $newgroup);
+        $this->Groups->newGroup($appname, $newgroup);
 
-        $this->session->set_userdata('new_group_saved', true);
+        $this->session->set('new_group_saved', true);
 
         $this->new_group_read($appname, true);
     }
@@ -263,7 +264,7 @@ class Backend extends Arag_Controller
     function _check_current_group($id)
     {
         $appname = $this->appname;
-        return $this->GroupsModel->hasGroup(NULL, $appname, $id);
+        return $this->Groups->hasGroup(NULL, $appname, $id);
     }
     // }}}
     // {{{ _new_user
@@ -271,15 +272,15 @@ class Backend extends Arag_Controller
     {
         $flagsaved = false;
 
-        if ($this->session->userdata('new_user_saved')) {
+        if ($this->session->get('new_user_saved')) {
             $flagsaved = true;
-            $this->session->unset_userdata('new_user_saved');
+            $this->session->del('new_user_saved');
         }
         
         $this->global_tabs->setParameter('name', $appname); 
         
-        $row  = $this->GroupsModel->getAllAppGroups($appname);
-        $row2 = $this->GroupsModel->getDefaultGroup($appname);
+        $row  = $this->Groups->getAllAppGroups($appname);
+        $row2 = $this->Groups->getDefaultGroup($appname);
 
         $this->load->vars(array("appname"      => $appname,
                                 "flagsaved"    => $flagsaved,
@@ -300,9 +301,9 @@ class Backend extends Arag_Controller
         $username  = $this->input->post('username', true);
         $password  = $this->input->post('password', true);
         
-        $this->UsersModel->createUser($appname, $email, $name, $lastname, $groupname, $username, $password);
+        $this->Users->createUser($appname, $email, $name, $lastname, $groupname, $username, $password);
 
-        $this->session->set_userdata('new_user_saved', true);
+        $this->session->set('new_user_saved', true);
 
         $this->new_user_read($appname);
         
@@ -313,14 +314,14 @@ class Backend extends Arag_Controller
     {
         $flagsaved = false;
 
-        if ($this->session->userdata('edit_user_saved')) {
+        if ($this->session->get('edit_user_saved')) {
             $flagsaved = true;
-            $this->session->unset_userdata('edit_user_saved');
+            $this->session->del('edit_user_saved');
         }
 
-        $userprofile = $this->UsersModel->getUserProfile($username);
-        $group       = $this->GroupsModel->getGroup($userprofile['group_id']);
-        $row         = $this->GroupsModel->getAllAppGroups($group['appname']);
+        $userprofile = $this->Users->getUserProfile($username);
+        $group       = $this->Groups->getGroup($userprofile['group_id']);
+        $row         = $this->Groups->getAllAppGroups($group['appname']);
 
         $this->load->vars(array("appname"      => $group['appname'],
                                 "flagsaved"    => $flagsaved,
@@ -347,9 +348,9 @@ class Backend extends Arag_Controller
         $password  = $this->input->post('password', true);
         $blocked   = $this->input->post('blocked', true);
 
-        $this->UsersModel->editUser($appname, $email, $name, $lastname, $groupname, $username, $password, $blocked);
+        $this->Users->editUser($appname, $email, $name, $lastname, $groupname, $username, $password, $blocked);
 
-        $this->session->set_userdata('edit_user_saved', true);
+        $this->session->set('edit_user_saved', true);
 
         $this->user_profile_read($username);   
     }
@@ -366,16 +367,16 @@ class Backend extends Arag_Controller
     {
 
         $flagsaved = false;
-        if ($this->session->userdata('group_privileges_edit_saved')) {
-            $flagsaved = $this->session->userdata('group_privileges_edit_saved');
-            $this->session->unset_userdata('group_privileges_edit_saved');
+        if ($this->session->get('group_privileges_edit_saved')) {
+            $flagsaved = $this->session->get('group_privileges_edit_saved');
+            $this->session->del('group_privileges_edit_saved');
         }
 
-        $parents         = $this->PrivilegesModel->getFilteredPrivileges($appname, "0");
-        $subpris         = $this->PrivilegesModel->getAppPrivileges($appname);
-        $allselected     = $this->PrivilegesModel->getPrivileges($id, true);
-        $selected        = $this->PrivilegesModel->getSelectedPrivileges($subpris, $allselected);
-        $selectedparents = $this->PrivilegesModel->getSelectedParents($selected, $parents);
+        $parents         = $this->Privileges->getFilteredPrivileges($appname, "0");
+        $subpris         = $this->Privileges->getAppPrivileges($appname);
+        $allselected     = $this->Privileges->getPrivileges($id, true);
+        $selected        = $this->Privileges->getSelectedPrivileges($subpris, $allselected);
+        $selectedparents = $this->Privileges->getSelectedParents($selected, $parents);
 
         $this->load->vars(array('parent_privileges' => $selectedparents,
                                 'sub_privileges'    => $selected,
@@ -393,11 +394,17 @@ class Backend extends Arag_Controller
         $ids     = $this->input->post('privileges');
         $groupid = $this->input->post('id');
         
-        $this->PrivilegesModel->editPrivileges($ids, $groupid, $appname);
+        $this->Privileges->editPrivileges($ids, $groupid, $appname);
 
-        $this->session->set_userdata('group_privileges_edit_saved', true);
+        $this->session->set('group_privileges_edit_saved', true);
 
         $this->group_privileges_edit_read($groupid, $appname);
+    }
+    // }}}
+    // {{{ _check_app
+    function _check_app($name)
+    {
+        return $this->Applications->hasApp($name);
     }
     // }}}
 }

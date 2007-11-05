@@ -81,13 +81,13 @@
 
                                     {if $action.alternate_uri != null}
                                         {assign var=uri value=$plist->parseURI($action.alternate_uri, $row)}
-                                        <a href="{site_url uri=$uri}" title="{$action.title}" class="{$action.class_name}_alt">{$action.label}</a>
+                                        <a href="{url_site uri=$uri}" title="{$action.title}" class="{$action.class_name}_alt">{$action.label}</a>
                                     {else}
                                         <div title="{$action.title}"  class="{$action.class_name}_alt">{$action.label}</div>
                                     {/if}
                                 {else}
                                     {assign var=uri value=$plist->parseURI($action.uri, $row)}                                
-                                    <a href="{site_url uri=$uri}" title="{$action.title}" class="{$action.class_name}">{$action.label}</a>
+                                    <a href="{url_site uri=$uri}" title="{$action.title}" class="{$action.class_name}">{$action.label}</a>
                                 {/if}
                             </td>
                         {/foreach}
@@ -122,7 +122,7 @@
                         <select onchange="listForward(this, '{$namespace}')">
                         <option value="">- Select an action -</option>
                         {foreach from=$group_actions item=action}
-                            <option value="{site_url uri=$action.uri}" title="{$action.title}">{$action.label}</option>
+                            <option value="{url_site uri=$action.uri}" title="{$action.title}">{$action.label}</option>
                         {/foreach}
                         </select>
 
@@ -132,7 +132,7 @@
                         <tr>
                         {foreach from=$group_actions item=action}
                             <td class="plist_icon">
-                                <a href="{site_url uri=$action.uri}" title="{$action.title}" class="{$action.class_name}"
+                                <a href="{url_site uri=$action.uri}" title="{$action.title}" class="{$action.class_name}"
                                    onclick="listForward(this, '{$namespace}')">{$action.label}</a>
                             </td>
                         {/foreach}
@@ -144,7 +144,7 @@
             {/if}
         {/arag_form}
 
-        {include file="`$plist_templates_path`/pager.tpl"}
+        {include file="`$plist_templates_path`pager.tpl"}
 
     {else}
         <div class="plist_norecords">

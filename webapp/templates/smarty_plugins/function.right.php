@@ -28,8 +28,7 @@ function smarty_function_right($params, &$smarty)
             }
         }
     }
-    $CI    =& get_instance();
-    $align =  ($CI->config->item('Arag_i18n_language_direction') == 'rtl')?'left':'right';
+    $align = (Config::item('arag.i18n_language_direction') == 'rtl')?'left':'right';
 
     if ($assign) {
         $smarty->assign($assign, $align);

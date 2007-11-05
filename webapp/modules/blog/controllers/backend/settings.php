@@ -8,40 +8,37 @@
 
 require_once "backend.php";
 
-class Settings extends Backend 
+class Settings_Controller extends Backend_Controller 
 {
     // {{{ Constructor
-    function Settings()
+    function __construct()
     {
-        parent::Backend();
+        parent::__construct();
     }
     // }}}
     // {{{ index_read
     function index_read()
     {
         $data               = Array();
-        $data['limit']      = $this->config->item('limit');
-        $data['post_limit'] = $this->config->item('post_limit');
-        $data['saved']      = $this->session->userdata('configuration_saved');
+        $data['limit']      = Arag_Config::get('limit', 0);
+        $data['post_limit'] = Arag_Config::get('post_limit', 0);
+        $data['saved']      = $this->session->get('configuration_saved');
 
         // unset configuration_set 
-        $this->session->unset_userdata('configuration_saved');        
+        $this->session->del('configuration_saved');        
 
-        $this->load->vars($data);        
-        $this->load->view('backend/settings');
+        $this->load->view('backend/settings', $data);
     }
     // }}}    
     // {{{ index_write
     function index_write()
     {
-        $this->load->helper('url');
-    
-        $this->config->set_item('limit', $this->input->post('limit'));
-        $this->config->set_item('post_limit', $this->input->post('post_limit'));
+        Arag_Config::set('limit', $this->input->post('limit'));
+        Arag_Config::set('post_limit', $this->input->post('post_limit'));
 
-        $this->session->set_userdata('configuration_saved', True);
+        $this->session->set('configuration_saved', True);
 
-        redirect('blog/backend/settings/index');
+        url::redirect('blog/backend/settings/index');
     }
     // }}}
     // {{{ index_write_error

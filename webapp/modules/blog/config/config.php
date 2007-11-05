@@ -1,3 +1,3 @@
-<?php  if (!defined('BASEPATH')) exit('No direct script access allowed');
+<?php defined('SYSPATH') or die('No direct script access.');
 
 ?>

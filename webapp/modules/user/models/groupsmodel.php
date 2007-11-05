@@ -7,7 +7,7 @@
 // $Id$
 // ---------------------------------------------------------------------------
 
-class GroupsModel extends Model 
+class Groups_Model extends Model 
 {
     // {{{ Properties
     
@@ -18,12 +18,12 @@ class GroupsModel extends Model
 
     // }}}
     // {{{ Constructor
-    function GroupsModel()
+    function __construct()
     {
-        parent::Model();
+        parent::__construct();
 
         // Connecting to the database
-        $this->load->database();
+// $this->load->database();
 
         // set tables' names
         $this->tableNameApps    = "user_applications";
@@ -39,7 +39,7 @@ class GroupsModel extends Model
         $this->db->where('appname', $appname);
         $this->db->where('name', 'anonymous');
 
-        $group = $this->db->getwhere()->row_array();
+        $group = (Array) $this->db->getwhere()->current();
 
         if (!empty($group)) {
             $group['privileges'] = unserialize($group['privileges']);
@@ -70,7 +70,7 @@ class GroupsModel extends Model
 
         $query = $this->db->get();
         
-        $retval = $query->result_array();
+        $retval = $query->result(False);
         return $retval;
     }
     // }}}
@@ -88,7 +88,7 @@ class GroupsModel extends Model
         }
 
 
-        $group = $this->db->getwhere()->row_array();
+        $group = (Array) $this->db->getwhere()->current();
 
         return $group;
     }
@@ -122,7 +122,7 @@ class GroupsModel extends Model
         $this->db->where('name', $appName);
 
         $query = $this->db->get();
-        $row   = $query->result_array();
+        $row   = $query->result(False);
 
         return $row;        
     }
@@ -138,7 +138,7 @@ class GroupsModel extends Model
         
         $query = $this->db->get();
         
-        foreach ($query->result_array() as $row) {
+        foreach ($query->result(False) as $row) {
             array_push($allgroups, $row['name']);
         }
 
@@ -148,10 +148,10 @@ class GroupsModel extends Model
     // {{{ newGroup
     function newGroup($appname, $newgroup)
     {
-        $row = Array('modified_by' => $this->session->userdata('username'), 
+        $row = Array('modified_by' => $this->session->get('username'), 
                      'create_date' => time(),
                      'modify_date' => time(),
-                     'created_by'  => $this->session->userdata('username'),
+                     'created_by'  => $this->session->get('username'),
                      'appname'     => $appname,
                      'name'        => $newgroup);
 
@@ -180,10 +180,10 @@ class GroupsModel extends Model
         foreach ($groups as $group) {
             $this->db->delete($this->tableNameGroups, Array('id' => $group));
             
-            $CI =& get_instance();
-            $CI->load->model(Array('UsersModel', 'user'), 'Users');
+            $controller = Kohana::instance();
+            $controller->load->model('Users', 'Users', 'user');
 
-            $anonymous = $CI->Users->deleteUsers(NULL, $group);
+            $anonymous = $controller->Users->deleteUsers(NULL, $group);
         }
     }
     // }}}
@@ -191,7 +191,7 @@ class GroupsModel extends Model
     function changeModifiers($groupid)
     {
         $this->db->where('id', $groupid);
-        $this->db->update($this->tableNameGroups, array('modify_date' => time(), 'modified_by' => $this->session->userdata('username')));
+        $this->db->update($this->tableNameGroups, array('modify_date' => time(), 'modified_by' => $this->session->get('username')));
     }
     // }}}
 }

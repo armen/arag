@@ -1,8 +1,9 @@
-<?php  if (!defined('BASEPATH')) exit('No direct script access allowed');
+<?php defined('SYSPATH') or die('No direct script access.');
 
-$route['user']              = "user/backend/applications";
-$route['user/applications'] = "user/backend/applications";
-$route['user/groups']       = "user/backend/groups";
-$route['user/users']        = "user/backend/users";
-
-?>
+$config = array
+(
+    'user'              => 'user/backend/applications',
+    'user/applications' => 'user/backend/applications',
+    'user/groups'       => 'user/backend/groups',
+    'user/users'        => 'user/backend/users'
+);

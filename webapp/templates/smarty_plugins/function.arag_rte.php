@@ -23,32 +23,31 @@ function smarty_function_arag_rte($params, &$smarty)
     $skin             = 'default';
     $toolbar_expanded = true;
     
-    $CI      =& get_instance();
-    $pub_url =  $CI->config->slash_item('base_url');    
+    $pub_url = url::base();    
     
     // Detecting language
-    switch ($CI->config->item('Arag_i18n_language_name')) {
+    switch (Config::item('arag.i18n_language_name')) {
         case 'fa_IR.utf8': $language = 'fa'; break;
     }
 
-    if ($CI->config->item('Arag_fckeditor_skin') != Null) {
-        $skin = $CI->config->item('Arag_fckeditor_skin');
+    if (Config::item('arag.fckeditor_skin') != Null) {
+        $skin = Config::item('arag.fckeditor_skin');
     }
 
-    if ($CI->config->item('Arag_fckeditor_width') != Null) {
-        $width = $CI->config->item('Arag_fckeditor_width');
+    if (Config::item('arag.fckeditor_width') != Null) {
+        $width = Config::item('arag.fckeditor_width');
     }
 
-    if ($CI->config->item('Arag_fckeditor_height') != Null) {
-        $height = $CI->config->item('Arag_fckeditor_height');
+    if (Config::item('arag.fckeditor_height') != Null) {
+        $height = Config::item('arag.fckeditor_height');
     }    
 
-    if ($CI->config->item('Arag_fckeditor_toolbar_set') != Null) {
-        $toolbar_set = $CI->config->item('Arag_fckeditor_toolbar_set');
+    if (Config::item('arag.fckeditor_toolbar_set') != Null) {
+        $toolbar_set = Config::item('arag.fckeditor_toolbar_set');
     }
 
-    if ($CI->config->item('Arag_fckeditor_toolbar_expanded') === False) {
-        $toolbar_expanded = $CI->config->item('Arag_fckeditor_toolbar_expanded');
+    if (Config::item('arag.fckeditor_toolbar_expanded') === False) {
+        $toolbar_expanded = Config::item('arag.fckeditor_toolbar_expanded');
     }    
 
     foreach ($params as $_key => $_val) {
@@ -80,7 +79,7 @@ function smarty_function_arag_rte($params, &$smarty)
     $FCKeditor->Config['ToolbarStartExpanded']     = $toolbar_expanded;
     $FCKeditor->Config['AutoDetectLanguage']       = False ;
     $FCKeditor->Config['DefaultLanguage']          = $language;
-    $FCKeditor->Config['ContentLangDirection']     = $CI->config->item('Arag_i18n_language_direction');
+    $FCKeditor->Config['ContentLangDirection']     = Config::item('arag.i18n_language_direction');
     $FCKeditor->Config['DocType']                  = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" '.
                                                      '"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">';
 
@@ -90,7 +89,6 @@ function smarty_function_arag_rte($params, &$smarty)
     $FCKeditor->Value      = $value;
     $FCKeditor->ToolbarSet = $toolbar_set;
 
-   
     return $FCKeditor->CreateHtml();
 }
 

@@ -1,40 +1,34 @@
-<?php if (!defined('BASEPATH')) exit('No direct script access allowed');  
+<?php defined('SYSPATH') or die('No direct script access.');
 
 include_once "smarty/Smarty.class.php";
 
-class Arag_Smarty extends Smarty {
+class Arag_Smarty_Core extends Smarty {
 
     // {{{ Constructor
-    function Arag_Smarty() 
+    function __construct()
     {
-        global $RTR;
-        $CI =& get_instance();
-
         // Check if we should use smarty or not
-        if ($CI->config->item('Arag_smarty_integration') == False) {
+        if (Config::item('smarty.integration') == False) {
             return;
         }
 
-        // Okey, integration is enabled, so call the parent constructor
+        // Okay, integration is enabled, so call the parent constructor
         parent::Smarty();
 
-        // Make smarty accessable in controller
-        $CI->smarty =& $this;
-
-        $this->template_dir   = APPPATH . 'modules/'. $RTR->fetch_module() . '/templates';        
-        $this->cache_dir      = $CI->config->item('Arag_cache_path') . 'smarty_cache/';
-        $this->compile_dir    = $CI->config->item('Arag_cache_path') . 'smarty_compile/';
-        $this->config_dir     = $CI->config->item('Arag_templates_path') . 'smarty_configs/';
-        $this->plugins_dir[]  = $CI->config->item('Arag_templates_path') . 'smarty_plugins/';
-        $this->debug_tpl      = $CI->config->item('Arag_templates_path') . 'arag_debug.tpl';
-        $this->debugging_ctrl = $CI->config->item('Arag_debugging_ctrl');
-        $this->debugging      = $CI->config->item('Arag_smarty_debugging');
-        $this->caching        = $CI->config->item('Arag_smarty_caching');
-        $this->force_compile  = $CI->config->item('Arag_smarty_force_compile');
-        $this->security       = $CI->config->item('Arag_smarty_security');
+        $this->template_dir   = APPPATH . 'modules/' . Router::$module . '/views';
+        $this->cache_dir      = Config::item('smarty.cache_path') . 'smarty_cache/';
+        $this->compile_dir    = Config::item('smarty.cache_path') . 'smarty_compile/';
+        $this->config_dir     = Config::item('smarty.public_templates_path') . 'smarty_configs/';
+        $this->plugins_dir[]  = Config::item('smarty.public_templates_path') . 'smarty_plugins/';
+        $this->debug_tpl      = Config::item('smarty.public_templates_path') . 'arag_debug.tpl';
+        $this->debugging_ctrl = Config::item('smarty.debugging_ctrl');
+        $this->debugging      = Config::item('smarty.debugging');
+        $this->caching        = Config::item('smarty.caching');
+        $this->force_compile  = Config::item('smarty.force_compile');
+        $this->security       = Config::item('smarty.security');
 
         // check if cache directory is exists
-        $this->checkDirectory($CI->config->item('Arag_cache_path'));
+        $this->checkDirectory(Config::item('arag.cache_path'));
 
         // check if smarty_compile directory is exists
         $this->checkDirectory($this->compile_dir);
@@ -44,22 +38,25 @@ class Arag_Smarty extends Smarty {
 
         if ($this->security) {
             
-            $configSecureDirectories = $CI->config->item('Arag_smarty_secure_dirs');
-            $safeTemplates           = Array($CI->config->item('Arag_templates_path')); // $this->getModulesViewPath();
+            $configSecureDirectories = Config::item('smarty.secure_dirs');
+            $safeTemplates           = Array(Config::item('arag.templates_path'));
 
             $this->secure_dir                          = array_merge($configSecureDirectories, $safeTemplates);
-            $this->security_settings['IF_FUNCS']       = $CI->config->item('Arag_smarty_if_funcs');
-            $this->security_settings['MODIFIER_FUNCS'] = $CI->config->item('Arag_smarty_modifier_funcs');
+            $this->security_settings['IF_FUNCS']       = Config::item('smarty.if_funcs');
+            $this->security_settings['MODIFIER_FUNCS'] = Config::item('smarty.modifier_funcs');
         }    
         
         // Autoload filters
-        $this->autoload_filters = Array('pre'    => $CI->config->item('Arag_smarty_pre_filters'),
-                                        'post'   => $CI->config->item('Arag_smarty_post_filters'),
-                                        'output' => $CI->config->item('Arag_smarty_output_filters'));
-    
-        // Send $CI and base_url to all templates
-        $this->assign('this', $CI);
-        $this->assign('arag_base_url', $CI->config->item('base_url'));
+        $this->autoload_filters = Array('pre'    => Config::item('smarty.pre_filters'),
+                                        'post'   => Config::item('smarty.post_filters'),
+                                        'output' => Config::item('smarty.output_filters'));
+
+        // Add all helpers to plugins_dir
+        $helpers = glob(APPPATH . 'helpers/*', GLOB_ONLYDIR | GLOB_MARK);
+
+        foreach ($helpers as $helper) {
+            $this->plugins_dir[] = $helper;
+        }
     }
     // }}}
     // {{{ checkDirectory
@@ -71,32 +68,10 @@ class Arag_Smarty extends Smarty {
             $error = 'Compile/Cache directory "%s" is not writeable/executable';
             $error = sprintf($error, $directory);
 
-            show_error($error);
+            Kohana::show_error('Compile/Cache directory is not writeable/executable', $error);
         }
         
         return True;
-    }
-    // }}}
-    // {{{ & getModulesViewPath
-    function & getModulesViewPath()
-    {
-        $modules = Array();        
-
-        if ($dh = opendir(APPPATH.'modules')) {
-    
-            while (false !== ($moduleName = readdir($dh))) {
-
-                if ($moduleName != '.' && $moduleName != '..' && 
-                    $moduleName != 'CVS' && $moduleName != '.svn') {
-
-                    $modules[] = APPPATH . 'modules/'. $moduleName . '/templates';
-                }
-            }
-        
-            closedir($dh);
-        }
-
-        return $modules;
     }
     // }}}
 }

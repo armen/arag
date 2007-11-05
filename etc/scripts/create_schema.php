@@ -44,7 +44,7 @@ if (PEAR::isError($options)) {
 }
 
 // Optional options
-$prefix = 'arag_';
+$prefix = '';
 $data   = 'test';
 
 // Extract options

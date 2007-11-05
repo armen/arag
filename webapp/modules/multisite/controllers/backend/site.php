@@ -8,7 +8,7 @@
 
 require_once "backend.php";
 
-class Site extends Backend 
+class Site_Controller extends Backend_Controller 
 {
     // {{{ index
     function index()

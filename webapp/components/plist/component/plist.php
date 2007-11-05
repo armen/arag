@@ -57,20 +57,18 @@ class PList extends Component implements IteratorAggregate, ArrayAccess
         $this->setResource(Array());
         $this->setProperties(self::CAPTION | self::HEADER | self::FOOTER | self::SORTABLE);
 
-        // We'll need url helper
-        $CI =& get_instance();
-        $CI->load->helper('url');
+        $Controller = Kohana::instance();
 
         // Set default URI
         // $uri = $CI->uri->ruri_string();
         // $uri = (substr($uri, -1) == '/') ? $uri : $uri . '/'; // Add trailing slash
 
-        $rsegments = $CI->uri->rsegment_array();
-        $segnum    = $CI->uri->router->fetch_directory() ? 4 : 3;
+        $rsegments = Array(); // $CI->uri->rsegment_array();
+        $segnum    = 3; // $CI->uri->router->fetch_directory() ? 4 : 3;
 
-        if ($CI->uri->router->fetch_method() == 'index' && !isset($rsegments[$segnum])) {
-            $rsegments[] = 'index';
-        }
+        //if ($CI->uri->router->fetch_method() == 'index' && !isset($rsegments[$segnum])) {
+        //    $rsegments[] = 'index';
+        //}
 
         $uri = '/'.implode('/', $rsegments).'/';
 
@@ -108,7 +106,7 @@ class PList extends Component implements IteratorAggregate, ArrayAccess
     function setLimit($limit, $offset = 0) 
     {
         if (!is_numeric($limit) || $limit < 0) {
-            throw new Exception('Limit should be numeric greater than or equal to 0.');
+            $limit = 0;
         }
 
         $this->limit = $limit;
@@ -325,11 +323,11 @@ class PList extends Component implements IteratorAggregate, ArrayAccess
             // Model and function separated with a dot
             list($modelName, $functionName) = explode('.', $callback);
 
-            $CI =& get_instance();
-            $CI->load->model($modelName);
+            $Controller = Kohana::instance();
+            $Controller->load->model($modelName);
             
-            if (method_exists(&$CI->$modelName, $functionName)) {
-                return call_user_func_array(array(&$CI->$modelName, $functionName), $arg);
+            if (method_exists($Controller->$modelName, $functionName)) {
+                return call_user_func_array(array($Controller->$modelName, $functionName), $arg);
             }
         
         } else if (strpos($callback, '::') !== false) {

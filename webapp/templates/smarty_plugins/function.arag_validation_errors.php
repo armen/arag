@@ -31,13 +31,13 @@ function smarty_function_arag_validation_errors($params, &$smarty)
         }
     }
 
-    $CI =& get_instance();
+    $controller = Kohana::instance();
 
-    if (isset($CI->validation) && isset($CI->validation->error_string) && trim($CI->validation->error_string) != Null) {
-        
-        $error = str_replace($CI->validation->_error_prefix, $prefix, $CI->validation->error_string);
-        $error = str_replace($CI->validation->_error_suffix, $suffix, $error);
+    if (isset($controller->validation) && $controller->validation->error_string != Null) {
 
+        $controller->validation->error_format($prefix."{message}".$suffix);
+        $error = $controller->validation->error_string ;
+    
         if ($template) {
             include_once $smarty->_get_plugin_filepath('block', 'arag_block');
             $error = smarty_block_arag_block(Array('template' => $template), $error, $smarty);

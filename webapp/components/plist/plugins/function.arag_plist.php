@@ -24,7 +24,7 @@ function smarty_function_arag_plist($params, &$smarty)
 
             case 'template':
                 $template = $_val;
-                $template = str_replace(ARAG_TPL_EXT, '', $template);
+                $template = str_replace(Config::item('smarty.templates_ext'), '', $template);
 
                 break;
 
@@ -47,16 +47,15 @@ function smarty_function_arag_plist($params, &$smarty)
     }
 
     // Returned list is an array, we need first element
-    list($plist) = $smarty->get_template_vars($name);
+    $plist = $smarty->get_template_vars($name);
 
     // Get namespace
-    list($namespace) = $smarty->get_template_vars($name.'_namespace');    
+    $namespace = $smarty->get_template_vars($name.'_namespace');    
  
     if (file_exists(APPPATH . 'components/plist/templates/' . $template . '.tpl')) {
         $template = APPPATH . 'components/plist/templates/' . $template . '.tpl';
     } else {
-        $CI =& get_instance();    
-        $template = $CI->load->get_view_path() . $template . '.tpl';
+        $template = APPPATH . 'modules/' . Router::$module . '/views/' . $template . '.tpl';
     }
 
     if (isset($plist)) {

@@ -1,4 +1,7 @@
-<?php  if (!defined('BASEPATH')) exit('No direct script access allowed');
+<?php defined('SYSPATH') or die('No direct script access.');
+
+Event::add('system.execute', array('Arag_Auth', 'check'));
+
 /**
  * Arag
  *
@@ -24,57 +27,54 @@ class Arag_Auth {
     
     // {{{ Properties
 
-    var $destination;
+    private static $destination;
 
     // }}}
-    // {{{ Constructor
-    function Arag_Auth()
-    {
-        global $RTR;
-        $this->destination = $RTR->fetch_module() . '/' . $RTR->fetch_directory() . $RTR->fetch_class() . '/' . $RTR->fetch_method();
-    }    
-    // }}}
     // {{{ check
-    function check()
+    public static function check()
     {
-        $CI =& get_instance();
+        $directory         = substr(Router::$directory, strpos(Router::$directory, 'controllers/') + 12); // 12 is strlen('controllers/')
+        self::$destination = Router::$module . '/' . $directory . Router::$controller . '/' . Router::$method;
+
+        $session = new Session();
 
         // Fetch current appname
         $appname = '_master_';
 
-        if (!$CI->session->userdata('authenticated') && $CI->session->userdata('username') != 'anonymous') {
+        if (!$session->get('authenticated') && $session->get('username') != 'anonymous') {
+
             // Fetch Anonymouse user information and store in session
-            $CI->load->model(Array('UsersModel', 'user'), 'Users');        
-            $CI->session->set_userdata($CI->Users->getAnonymouseUser($appname));
+            $users = Model::load('Users', 'user');            
+            $session->set($users->getAnonymouseUser($appname));
         }
 
-        // When user Logins session destroied by login and we fetch current application
-        // privilege filters here
-        if ($CI->session->userdata('privilege_filters') === False) {
+        // When user Logins privilege_filters unset by login method 
+        // then we fetch current application privilege filters here
+        if ($session->get('privilege_filters') === False) {
+
             // Fetch privilege filters for current application
-            $CI->load->model(Array('FiltersModel', 'user'), 'Filters');
-            $CI->session->set_userdata('privilege_filters', $CI->Filters->getPrivilegeFilters($appname));
+            $filters = Model::load('Filters', 'user');                        
+            $session->set('privilege_filters', $filters->getPrivilegeFilters($appname));
         }
 
-        $authorized = $this->isAuthorized($CI->session->userdata('privileges'));
+        $authorized = self::is_authorized($session->get('privileges'));
 
         if ($authorized) {
             // The user is authorized so we will try to filter his/her privileges with a blacklist
-            $authorized = $this->isAuthorized($CI->session->userdata('privilege_filters'), False);
+            $authorized = self::is_authorized($session->get('privilege_filters'), False);
         }
 
         if (!$authorized) {
-            $CFG =& load_class('Config');
-            header("location: " . $CFG->site_url('not_authorized'));
+            url::redirect('not_authorized');        
             exit;
         }
     }
     // }}}
-    // {{{ isAuthorized
-    function isAuthorized($privileges, $whiteList = True)
+    // {{{ is_authorized
+    private static function is_authorized($privileges, $whiteList = True)
     {
         // XXX: We have to allow this destination otherwise it is possible to happen an infinity loop.
-        if ($this->destination === 'core/frontend/messages/not_authorized') {
+        if (self::$destination === 'core/frontend/messages/not_authorized') {
             return True;
         }
     
@@ -93,7 +93,7 @@ class Arag_Auth {
                     // Replace * with .*
                     $privilege = '|^'.str_replace('*', '.*', $privilege).'$|';
 
-                    if (preg_match($privilege, $this->destination)) {
+                    if (preg_match($privilege, self::$destination)) {
                         return (boolean) $whiteList;
                     }
                 } // else, privilege is invalid, ignore it

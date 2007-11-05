@@ -7,7 +7,7 @@
 // $Id$
 // ---------------------------------------------------------------------------
 
-class FiltersModel extends Model 
+class Filters_Model extends Model 
 {
     // {{{ Properties
     
@@ -15,12 +15,12 @@ class FiltersModel extends Model
 
     // }}}
     // {{{ Constructor
-    function FiltersModel()
+    function __construct()
     {
-        parent::Model();
+        parent::__construct();
 
         // Connecting to the database
-        $this->load->database();
+// $this->load->database();
 
         // set tables' names
         $this->tableNameFilters = "user_filters";        
@@ -33,7 +33,7 @@ class FiltersModel extends Model
         $this->db->from($this->tableNameFilters);
         $this->db->where('appname', $appname);
 
-        $row  = $this->db->get()->result_array();
+        $row  = $this->db->get()->result(False);
 
         if ($row[0]['filter'] == NULL) {
             return $filter = array();
@@ -68,7 +68,7 @@ class FiltersModel extends Model
 
         $row = array('filter'      => $filter,
                      'modify_date' => time(),
-                     'modified_by' => $this->session->userdata('username'));
+                     'modified_by' => $this->session->get('username'));
 
         $this->db->update($this->tableNameFilters, $row);
     }
@@ -86,7 +86,7 @@ class FiltersModel extends Model
 
         $row = array('filter'      => $filter,
                      'modify_date' => time(),
-                     'modified_by' => $this->session->userdata('username'));
+                     'modified_by' => $this->session->get('username'));
 
         $this->db->update($this->tableNameFilters, $row);
     }
@@ -103,7 +103,7 @@ class FiltersModel extends Model
             $this->db->like('appname', $name);
         }
 
-        $row = $this->db->get()->result_array();
+        $row = $this->db->get()->result(False);
 
         return $row;
     }
@@ -213,8 +213,8 @@ class FiltersModel extends Model
                       'filter'      => NULL,
                       'create_date' => time(),
                       'modify_date' => time(),
-                      'created_by'  => $this->session->userdata('username'),
-                      'modified_by' => $this->session->userdata('username'));
+                      'created_by'  => $this->session->get('username'),
+                      'modified_by' => $this->session->get('username'));
         
         $this->db->insert($this->tableNameFilters, $rows);
     }

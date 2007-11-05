@@ -6,15 +6,15 @@
 // $Id$
 // ---------------------------------------------------------------------------
 
-class Backend extends Arag_Controller 
+class Backend_Controller extends Controller 
 {
     // {{{ Constructor
-    function Backend()
+    function __construct()
     {
-        parent::Arag_Controller();
+        parent::__construct();
 
         // Load the model
-        $this->load->model('MultiSiteModel');        
+        $this->load->model('MultiSite');        
        
         // Backend decorator
         $this->load->decorator('backend/decorator');

@@ -1,4 +1,4 @@
-<?php  if (!defined('BASEPATH')) exit('No direct script access allowed');
+<?php defined('SYSPATH') or die('No direct script access.');
 /**
  * Arag
  *
@@ -18,244 +18,221 @@
  * @package       Arag
  * @subpackage    Libraries
  * @author        Armen Baghumian
+ * @author        Kohana Team
+ * @copyright     Copyright (c) 2007 Kohana Team 
  * @category      Router
  */
-class Arag_Router extends CI_Router {
-
-    // {{{ Properties
-
-    var $module;
-    var $default_module;
-    var $request_method = Null;
-    var $methods        = Array('GET' => 'read', 'POST' => 'write', 'PUT' => 'create', 'DELETE' => 'remove');
-
-    // }}}
-    // {{{ Constructor
-    function Arag_Router()
-    {
-        parent::CI_Router();
-    }
-    // }}}
-    // {{{ _set_route_mapping
-    /**
-     * Set the route mapping
-     *
-     * This function determines what should be served based on the URI request,
-     * as well as any "routes" that have been set in the routing config file.
-     *
-     * @access    private
-     * @return    void
-     */
-    function _set_route_mapping()
-    {
-        // Are query strings enabled in the config file?
-        // If so, we're done since segment based URIs are not used with query strings.
-        if ($this->config->item('enable_query_strings') === TRUE && 
-            isset($_GET[$this->config->item('controller_trigger')]) &&
-            isset($_GET[$this->config->item('module_trigger')])) {
-
-            $this->set_module(trim($this->_filter_uri($_GET[$this->config->item('module_trigger')])));
-            $this->set_class(trim($this->_filter_uri($_GET[$this->config->item('controller_trigger')])));
-
-            if (isset($_GET[$this->config->item('function_trigger')])) {
-                $this->set_method(trim($this->_filter_uri($_GET[$this->config->item('function_trigger')])));
-            }
-            
-            return;
-        }
-        
-        // Load the routes.php file.
-        @include(APPPATH.'config/routes'.EXT);
-        $this->routes = ( ! isset($route) OR ! is_array($route)) ? array() : $route;
-        unset($route);
-
-        // Set the default controller so we can display it in the event
-        // the URI doesn't correlated to a valid controller.
-        $this->default_controller = ( ! isset($this->routes['default_controller']) || $this->routes['default_controller'] == '') ? 
-                                    FALSE : strtolower($this->routes['default_controller']);
-
-        $this->default_module = ( ! isset($this->routes['default_module']) || $this->routes['default_module'] == '') ? 
-                                False : strtolower($this->routes['default_module']);
-        
-        // Fetch the complete URI string
-        $this->uri_string = $this->_get_uri_string();
-
-        // If the URI contains only a slash we'll kill it
-        if ($this->uri_string == '/') {
-            $this->uri_string = '';
-        }
-
-        // Is there a URI string? If not, the default module and controller specified in the "routes" file will be shown.
-        if ($this->uri_string == '') {
-
-            if ($this->default_module === False || $this->default_controller === False) {
-                show_error("Unable to determine what should be displayed. A default route has not been specified in the routing file.");
-            }
-
-            $this->set_module($this->default_module);
-            $this->set_class($this->default_controller);
-            $this->set_method('index');        
-
-            log_message('debug', "No URI present. Default module and controller set.");
-            return;
-        }
-        unset($this->routes['default_module']);
-        unset($this->routes['default_controller']);
-
-        // Do we need to remove the suffix specified in the config file?
-        if ($this->config->item('url_suffix') != "") {
-            $this->uri_string = preg_replace("|".preg_quote($this->config->item('url_suffix'))."$|", "", $this->uri_string);
-        }
-        
-        // Explode the URI Segments. The individual segments will
-        // be stored in the $this->segments array.    
-        foreach (explode("/", preg_replace("|/*(.+?)/*$|", "\\1", $this->uri_string)) as $val) {
-            // Filter segments for security
-            $val = trim($this->_filter_uri($val));
-            
-            if ($val != '') {
-                $this->segments[] = $val;
-            }
-        }
-
-        // Set the specified module
-        $this->set_module($this->segments[0]);
-
-        // Load the routes.php file of requested module
-        @include(APPPATH.'modules/'.$this->fetch_module().'/config/routes'.EXT);
-        $this->routes = ( ! isset($route) OR ! is_array($route)) ? $this->routes : array_merge($this->routes, $route);
-        unset($route);
-
-        if (count($this->segments) == 1) {
-            // Module name specified but controller name is not specified, we should chack if
-            // there is default controller in routes.php file of module
-            $this->default_controller = ( ! isset($this->routes['default_controller']) || $this->routes['default_controller'] == '') ? 
-                                        Null : strtolower($this->routes['default_controller']);
-            $this->set_class($this->default_controller);
-        }
-
-        // Parse any custom routing that may exist
-        $this->_parse_routes();        
-        
-        // Re-index the segment array so that it starts with 1 rather than 0
-        $this->_reindex_segments();
-    }
-    // }}}
-    // {{{ _validate_segments
-    /**
-     * Validates the supplied segments.  Attempts to determine the path to
-     * the controller.
-     *
-     * @access    private
-     * @param     array
-     * @return    array
-     */    
-    function _validate_segments($segments)
-    {
-        if (count($segments) <= 2) {
-            // XXX: URI could be /<module_name> or /<module_name>/<class_name>
-
-            $this->set_module($segments[0]);
-            // If segment was /<module_name> make class name same as module name otherwise we have it
-            $this->set_class((count($segments) == 1) ? $segments[0] : $segments[1]); 
-            $this->set_method('index');
-            
-            if ( ! file_exists(APPPATH.'modules/'.$segments[0].'/controllers/'.$this->fetch_class().EXT)) {
-                
-                $this->set_class($this->default_controller);
-
-                // Does the default controller exist in the sub-folder?
-                if ( ! file_exists(APPPATH.'modules/'.$segments[0].'/controllers/'.$this->default_controller.EXT)) {
-                    $this->directory = '';
-                    return array();
-                }
-            }
-
-            return $segments;
-        }
-
-        // Does the requested controller exist in the root folder?
-        if (file_exists(APPPATH.'modules/'.$segments[0].'/controllers/'.$segments[1].EXT) && 
-            !is_dir(APPPATH.'modules/'.$segments[0].'/controllers/'.$segments[1])) {
-            return $segments;
-        }
-
-        // Is the controller in a sub-folder?
-        if (is_dir(APPPATH.'modules/'.$segments[0].'/controllers/'.$segments[1])) {
-
-            if (file_exists(APPPATH.'modules/'.$segments[0].'/controllers/'.$segments[1].'/'.$segments[2].EXT)) {
-                // There is a directory and a controller in it so
-                // set the directory and remove it from the segment array
-                $this->set_directory($segments[1]);
-                array_splice($segments, 1, 1, Null);
-            }
-            
-            if (count($segments) >= 2) {
-                // Does the requested controller exist in the sub-folder?
-                if ( ! file_exists(APPPATH.'modules/'.$segments[0].'/controllers/'.$this->fetch_directory().$segments[1].EXT)) {
-                    show_404();    
-                }
-
-            } else {
-
-                $this->set_class($this->default_controller);
-                $this->set_method('index');
-            
-                // Does the default controller exist in the sub-folder?
-                if ( ! file_exists(APPPATH.'modules/'.$segments[0].'/controllers/'.$this->fetch_directory().$this->default_controller.EXT)) {
-                    $this->directory = '';
-                    return array();
-                }
-            }
-                
-            return $segments;
-        }
+class Router extends Router_Core {
     
-        // Can't find the requested controller...
-        show_404();    
-    }
-    // }}}
-    // {{{ _compile_segments
-    /**
-     * Compile Segments
-     *
-     * This function takes an array of URI segments as
-     * input, and puts it into the $this->segments array.
-     * It also sets the current class/method
-     *
-     * @access    private
-     * @param    array
-     * @param    bool
-     * @return    void
-     */
-    function _compile_segments($segments = array())
-    {    
-        $segments = $this->_validate_segments($segments);
+    // {{{ Properties
         
-        if (count($segments) <= 1) {
-            // XXX: URI could be / or /<module_name>
-            return;
-        }
-                        
-        $this->set_module($segments[0]);
-        $this->set_class($segments[1]);
-        
-        if (isset($segments[2])) {
-            // A scaffolding request. No funny business with the URL
-            if ($this->routes['scaffolding_trigger'] == $segments[1] AND $segments[1] != '_ci_scaffolding') {
-                $this->scaffolding_request = TRUE;
-                unset($this->routes['scaffolding_trigger']);
+    public static $module          = False;
+    public static $request_method  = Null;
+    public static $request_methods = Array('GET' => 'read', 'POST' => 'write', 'PUT' => 'create', 'DELETE' => 'remove');
 
+    // }}}
+    // {{{ setup
+    /**
+     * Router setup routine
+     *
+     * @access public
+     * @return void
+     */
+    public static function setup()
+    {
+        // Aet the request method
+        self::request_method();
+
+        // Set all modules in include_paths so we can fetch all routes
+        Config::set('core.include_paths', glob(APPPATH . 'modules/*', GLOB_ONLYDIR));
+
+        self::$routes = Config::item('routes');
+
+        // Make sure the default route is set
+        if ( ! isset(self::$routes['_default'])) {
+            throw new Kohana_Exception('core.no_default_route');
+        }
+
+        // The follow block of if/else attempts to retrieve the URI segments automagically
+        // Supported request_methods: CLI, GET, PATH_INFO, ORIG_PATH_INFO, PHP_SELF
+        if (PHP_SAPI === 'cli') {
+
+            // Command line requires a bit of hacking
+            if (isset($_SERVER['argv'][1])) {
+                self::$segments = $_SERVER['argv'][1];
+
+                // Remove GET string from segments
+                if (($query = strrpos(self::$segments, '?')) !== FALSE) {
+
+                    list (self::$segments, $query) = explode('?', self::$segments);
+
+                    // Insert query into GET array
+                    foreach(explode('&', $query) as $pair) {
+                        list ($key, $val) = array_pad(explode('=', $pair), 1, '');
+
+                        $_GET[utf8::clean($key)] = utf8::clean($val);
+                    }
+                }
+            }
+        
+        } elseif (count($_GET) === 1 AND current($_GET) == '') {
+            self::$segments = current(array_keys($_GET));
+
+            // Fixes really stange handling of a suffix in a GET string
+            if ($suffix = Config::item('core.url_suffix') AND substr(self::$segments, -(strlen($suffix))) === '_'.substr($suffix, 1)) {
+                self::$segments = substr(self::$segments, 0, -(strlen($suffix)));
+            }
+
+            // Destroy GET
+            $_GET = array();
+
+        } elseif (isset($_SERVER['PATH_INFO']) AND $_SERVER['PATH_INFO']) {
+            self::$segments = $_SERVER['PATH_INFO'];
+
+        } elseif (isset($_SERVER['ORIG_PATH_INFO']) AND $_SERVER['ORIG_PATH_INFO']) {
+            self::$segments = $_SERVER['ORIG_PATH_INFO'];
+
+        } elseif (isset($_SERVER['PHP_SELF']) AND $_SERVER['PHP_SELF']) {
+            self::$segments = $_SERVER['PHP_SELF'];
+        }
+
+        // Find the URI string based on the location of the front controller
+        if (($offset = strpos(self::$segments, KOHANA)) !== FALSE) {
+
+            // Add the length of the index file to the offset
+            $offset += strlen(KOHANA);
+
+            // Get the segment part of the URL
+            self::$segments = substr(self::$segments, $offset);
+            self::$segments = trim(self::$segments, '/');
+        }
+
+        // Use the default route when no segments exist 
+        if (self::$segments == '' OR self::$segments == '/') {
+            self::$segments = self::$routes['_default'];
+            $default_route = TRUE;
+        } else {
+            $default_route = FALSE;
+        }
+
+        // Remove the URL suffix
+        if ($suffix = Config::item('core.url_suffix')) {
+            self::$segments = preg_replace('!'.preg_quote($suffix).'$!u', '', self::$segments);
+        }
+
+        // Remove extra slashes from the segments that could cause fucked up routing
+        self::$segments = preg_replace('!//+!', '/', self::$segments);
+
+        // At this point, set the segments, rsegments, and current URI
+        // In many cases, all of these variables will match
+        self::$segments = self::$rsegments = self::$current_uri = trim(self::$segments, '/');
+
+        // Custom routing
+        if ($default_route == FALSE AND count(self::$routes) > 1) {
+
+            if (isset(self::$routes[self::$current_uri])) {
+                // Literal match, no need for regex
+                self::$rsegments = self::$routes[self::$current_uri];
+            
             } else {
-                // A standard method request
-                $this->set_method($segments[2]);
+
+                // Loop through the routes and see if anything matches
+                foreach(self::$routes as $key => $val) {
+
+                    if ($key == '_default') {
+                        continue;
+                    }
+
+                    // Replace helper strings
+                    $key = str_replace
+                    (
+                        array(':any', ':num'),
+                        array('.+',   '[0-9]+'),
+                        $key
+                    );
+
+                    // Does this route match the current URI?
+                    if (preg_match('!^'.$key.'$!u', self::$segments)) {
+
+                        // If the regex contains a valid callback, we'll use it
+                        if (strpos($val, '$') !== FALSE AND strpos($key, '(') !== FALSE) {
+                            self::$rsegments = preg_replace('!^'.$key.'$!u', $val, self::$segments);
+
+                        } else {
+                            self::$rsegments = $val;
+                        }
+
+                        // A valid route was found, stop parsing other routes
+                        break;
+                    }
+                }
             }
         }
-        
-        // Update our "routed" segment array to contain the segments.
-        // Note: If there is no custom routing, this array will be
-        // identical to $this->segments
-        $this->rsegments = $segments;
+
+        // Explode the segments by slashes
+        if ($default_route == TRUE OR self::$segments == '') {
+            self::$segments = array();
+        } else {
+            self::$segments = explode('/', self::$segments);
+        }
+        // Routed segments will never be blank
+        self::$rsegments = explode('/', self::$rsegments);
+
+        // Validate segments to prevent malicious characters
+        if ( ! empty(self::$segments)) {
+            foreach(self::$segments as $key => $segment) {
+                self::$segments[$key] = self::filter_uri($segment);
+            }
+        }
+
+        // Yah, routed segments too, even though it should never happen
+        if ( ! empty(self::$rsegments)) {
+            foreach(self::$rsegments as $key => $segment) {
+                self::$rsegments[$key] = self::filter_uri($segment);
+            }
+        }
+
+        // Prepare for Controller search
+        self::$directory  = '';
+        self::$controller = '';
+
+        // First segmen is module name so ignore it
+        $rsegments          = self::$rsegments;
+        list(self::$module) = array_splice($rsegments, 0, 1);
+
+        Config::set('core.include_paths', Array(APPPATH.'modules/'.self::$module));
+
+        // Fetch the include paths
+        $include_paths = Config::include_paths();
+
+        // Path to be added to as we search deeper
+        $search = 'controllers';
+
+        // Use the rsegments to find the controller
+        foreach($rsegments as $key => $segment) {
+            
+            foreach($include_paths as $path) {
+
+                // The controller has been found, all arguments can be set
+                if (strpos($path, 'modules/'.self::$module) !== False && is_file($path.$search.'/'.$segment.EXT)) {
+
+                    self::$directory  = $path.$search.'/';
+                    self::$controller = $segment;
+                    self::$method     = isset($rsegments[$key + 1]) ? $rsegments[$key + 1] : 'index';
+                    self::$arguments  = isset($rsegments[$key + 2]) ? array_slice($rsegments, $key + 2) : array();
+
+                    // Stop searching, two levels for foreach
+                    break 2;
+                }
+            }
+
+            // Add the segment to the search
+            $search .= '/'.$segment;
+        }
+
+        if (empty(self::$controller)) {
+            Kohana::show_404();
+        }
 
         if ($this->fetch_directory()) {
             // We have to inject directory to rsegments!
@@ -263,35 +240,14 @@ class Arag_Router extends CI_Router {
         }
     }
     // }}}
-    // {{{ set_module
-    /**
-     * Set the module name
-     *
-     * @access    public
-     * @param     string
-     * @return    void
-     */    
-    function set_module($module)
+    // {{{ request_method
+    public static function request_method($method = Null)
     {
-        $this->module = $module;
-    }
-    // }}}
-    // {{{ fetch_module
-    /**
-     * Fetch the current module
-     *
-     * @access    public
-     * @return    string
-     */    
-    function fetch_module()
-    {
-        return $this->module;
-    }
-    // }}}
-    // {{{ fetch_request_method
-    function fetch_request_method()
-    {
-        if ($this->request_method == Null) {
+        if ($method != Null && in_array(strtolower($method), self::$request_methods)) {
+            self::$request_method = strtolower($method);
+        }
+
+        if (self::$request_method == Null) {
         
             if (isset($_SERVER['REQUEST_METHOD'])) {
                 $REQUEST_METHOD = $_SERVER['REQUEST_METHOD'];
@@ -302,37 +258,25 @@ class Arag_Router extends CI_Router {
 
             switch($REQUEST_METHOD) {
                 case 'POST':
-                    $this->set_request_method($this->methods['POST']);
+                    self::request_method(self::$request_methods['POST']);
                     break;
 
                 case 'PUT':
-                    $this->set_request_method($this->methods['PUT']);
+                    self::request_method(self::$request_methods['PUT']);
                     break;
 
                 case 'DELETE':
-                    $this->set_request_method($this->methods['DELETE']);
+                    self::request_method(self::$request_methods['DELETE']);
                     break;
 
                 default:
-                    $this->set_request_method($this->methods['GET']);
+                    self::request_method(self::$request_methods['GET']);
             }
         }
 
-        return $this->request_method;
+        return self::$request_method;
     }
-    // }}}
-    // {{{ set_request_method
-    function set_request_method($method)
-    {
-        $this->request_method = strtolower($method);
-    }
-    // }}}
-    // {{{ fetch_request_methods
-    function fetch_request_methods()
-    {
-        return $this->methods;
-    }
-    // }}}
+    // }}}    
 }
 
 ?>

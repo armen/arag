@@ -6,7 +6,7 @@
 // $Id$
 // ---------------------------------------------------------------------------
 
-class PrivilegesModel extends Model 
+class Privileges_Model extends Model 
 {
     // {{{ Properties
     
@@ -14,12 +14,12 @@ class PrivilegesModel extends Model
     var $tableNameGroups;
     // }}}
     // {{{ Constructor
-    function PrivilegesModel()
+    function __construct()
     {
-        parent::Model();
+        parent::__construct();
 
         // Connecting to the database
-        $this->load->database();
+// $this->load->database();
 
         // set tables' names
         $this->tableNamePrivileges = "user_privileges";        
@@ -29,10 +29,10 @@ class PrivilegesModel extends Model
     // {{{ getFilteredPrivileges
     function getFilteredPrivileges($appname, $parentId)
     {
-        $CI =& get_instance();
-        $CI->load->model(Array('FiltersModel', 'user'), 'Filters');
+        $controller = Kohana::instance();
+        $controller->load->model('Filters', 'Filters', 'user');
 
-        $filters = $CI->Filters->getPrivilegeFilters($appname);
+        $filters = $controller->Filters->getPrivilegeFilters($appname);
         
         $this->db->select('*')->from($this->tableNamePrivileges);
 
@@ -40,7 +40,7 @@ class PrivilegesModel extends Model
             $this->db->where(array('parent_id' => $parentId));
         }
 
-        $privileges = $this->db->get()->result_array();
+        $privileges = $this->db->get()->result(False);
         
         if (is_array($filters)) {
 
@@ -73,14 +73,14 @@ class PrivilegesModel extends Model
         $this->db->select('*');
         $this->db->from($this->tableNamePrivileges);
         
-        return $this->db->where(array('id' => $id))->get()->row();
+        return $this->db->where(array('id' => $id))->get()->current();
     }
     // }}}
     // {{{ addLabel
     function addLabel($label, $parentid, $privilege = NULL)
     {
-        $modified_by = $this->session->userdata('username');
-        $created_by  = $this->session->userdata('username');
+        $modified_by = $this->session->get('username');
+        $created_by  = $this->session->get('username');
 
         $rows = array ('label'       => $label,
                        'parent_id'   => $parentid,
@@ -101,7 +101,7 @@ class PrivilegesModel extends Model
     // {{{ editLabel
     function editLabel($label, $id, $privilege = NULL)
     {
-        $modified_by = $this->session->userdata('username');
+        $modified_by = $this->session->get('username');
         $row         = $this->getLabel($id);
         
         $rows = array ('label'       => $label,
@@ -144,7 +144,7 @@ class PrivilegesModel extends Model
             if ($label->parent_id === "0") {
                 $this->db->delete($this->tableNamePrivileges, array('parent_id' => $object));
             } else {
-                $row = array ('modified_by' => $this->session->userdata('username'),
+                $row = array ('modified_by' => $this->session->get('username'),
                               'modify_date' => time());
                 $this->db->where('id', $label->parent_id);
                 $this->db->update($this->tableNamePrivileges, $row);
@@ -161,7 +161,7 @@ class PrivilegesModel extends Model
         $this->db->from($this->tableNameGroups);
         $this->db->where('id', $id);
 
-        $row  = $this->db->get()->result_array();
+        $row  = $this->db->get()->result(False);
 
         if ($row[0]['privileges'] == NULL) {
             return $filter = array();

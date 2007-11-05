@@ -33,12 +33,10 @@ function smarty_block_arag_block($params, $content, &$smarty)
     if (!isset($title)) { $title = Null; }
     if (!isset($align)) { $align = ''; }
 
-    $CI =& get_instance();
-
     // Find template location  
 
-    if (is_readable($CI->config->item('Arag_templates_path') . 'arag_blocks/' . $template . '.tpl')) {
-        $template = $CI->config->item('Arag_templates_path') . 'arag_blocks/' . $template . '.tpl';
+    if (is_readable(Config::item('arag.templates_path') . 'arag_blocks/' . $template . '.tpl')) {
+        $template = Config::item('arag.templates_path') . 'arag_blocks/' . $template . '.tpl';
     
     } else {
         // I can't find it

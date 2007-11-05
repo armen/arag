@@ -7,21 +7,21 @@
 // $Id$
 // ---------------------------------------------------------------------------
 
-class Frontend extends Arag_Controller 
+class Frontend_Controller extends Controller 
 {
     // {{{ Constructor
-    function Frontend()
+    function __construct()
     {
-        parent::Arag_Controller();
+        parent::__construct();
        
         // Frontend decorator
         $this->load->decorator('frontend/decorator');
 
         // Load the URL helper
-        $this->load->helper('url');        
+// $this->load->helper('url');        
 
         // Default page title
-        $this->load->vars(Array('page_title' => 'User Management'));
+        $this->decorator->page_title = 'User Management';
     }
     // }}}
     // {{{ login_read
@@ -34,28 +34,25 @@ class Frontend extends Arag_Controller
     // {{{ login_write
     function login_write()
     {
-        $this->load->model('UsersModel', 'Users');
+        $this->load->model('Users', 'Users');
 
         $username = $this->input->post('username');
         $password = $this->input->post('password');
 
-        // If you attempt to login I'll distroy your session /;)
-        // This is so important to Arag_Auth! we will fetch 
-        // privilege filters of current application there.
-        $this->session->sess_destroy();        
-        
         $status = $this->Users->check($username, $password);
 
-        
         if ($status === 1) {
 
-            $user =& $this->Users->getUser($username);
+            // Set the privilege_filter to False, This is too 
+            // important to Arag_Auth! we will fetch privilege 
+            // filters of current application there.
+            $this->session->del('privilege_filters');
 
-            $this->session->set_userdata('authenticated', True);
-            $this->session->set_userdata($user);
+            $this->session->set('authenticated', True);
+            $this->session->set($this->Users->getUser($username));
 
             // Redirect to front controller
-            redirect();
+            url::redirect();
         
         } else {
             // Shit, you missed!
@@ -69,10 +66,10 @@ class Frontend extends Arag_Controller
     function logout()
     {
         // Good bye!
-        $this->session->sess_destroy();
+        $this->session->destroy();
 
         // Redirect to front controller
-        redirect();
+        url::redirect();
     }
     // }}}
 }

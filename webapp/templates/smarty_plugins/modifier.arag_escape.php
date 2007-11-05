@@ -15,8 +15,7 @@
 function smarty_modifier_arag_escape($string, $char_set = Null)
 {
     if ($char_set == Null) {
-        $CI       =& get_instance();
-        $char_set =  $CI->config->item('charset');
+        $char_set = Config::item('charset');
     }
 
     if (is_string($string)) {

@@ -1,20 +1,14 @@
-<?php  if (!defined('BASEPATH')) exit('No direct script access allowed');
-/*
-| -------------------------------------------------------------------------
-| Hooks
-| -------------------------------------------------------------------------
-| This file lets you define "hooks" to extend CI without hacking the core
-| files.  Please see the user guide for info:
-|
-|   http://www.codeigniter.com/user_guide/general/hooks.html
-|
-*/
-
-$hook['post_controller_constructor'] = array(
-                                             'class'    => 'Arag_Auth',
-                                             'function' => 'check',
-                                             'filename' => 'Arag_Auth.php',
-                                             'filepath' => 'hooks'
-                                            );
-
-?>
+<?php defined('SYSPATH') or die('No direct script access.');
+/**
+ * Hooks Configuration
+ * ----------------------------------------------------------------------------
+ *
+ * User Guide: http://kohanaphp.com/user_guide/en/general/hooks.html
+ *
+ * @param  mixed  enable   - TRUE to enable all hooks, array of filenames to enable, FALSE to disable
+ *
+ */
+$config = array
+(
+	'enable' => True
+);

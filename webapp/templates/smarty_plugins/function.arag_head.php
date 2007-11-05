@@ -14,8 +14,7 @@
 
 function smarty_function_arag_head($params, &$smarty)
 {
-    $CI =& get_instance();
-    return $smarty->fetch($CI->config->item('Arag_templates_path') . '/arag_templates/head.tpl');
+    return $smarty->fetch(Config::item('arag.templates_path') . '/arag_templates/head.tpl');
 }
 
 ?>

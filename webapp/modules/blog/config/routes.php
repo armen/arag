@@ -1,10 +1,13 @@
-<?php  if (!defined('BASEPATH')) exit('No direct script access allowed');
+<?php defined('SYSPATH') or die('No direct script access.');
 
-$route['blog']            = "blog/frontend";
-$route['blog/backend']    = "blog/backend/entry";
-$route['blog/admin']      = "blog/backend/entry";
-$route['blog/post']       = "blog/backend/entry/post";
-$route['blog/entries']    = "blog/backend/entry";
-$route['blog/categories'] = "blog/backend/categories";
+$config = array
+(
+    'blog'            => 'blog/frontend',
+    'blog/backend'    => 'blog/backend/entry',
+    'blog/admin'      => 'blog/backend/entry',
+    'blog/post'       => 'blog/backend/entry/post',
+    'blog/entries'    => 'blog/backend/entry',
+    'blog/categories' => 'blog/backend/categories'
+);
 
 ?>

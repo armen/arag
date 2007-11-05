@@ -38,8 +38,7 @@ function smarty_block_arag_form($params, $content, &$smarty)
         }
     }
 
-    $CI     =& get_instance();
-    $action =  $CI->config->site_url($uri);
+    $action = url::site($uri);
     
     return '<form action="'.$action.'" method="'. $method.'"' . $style . $id . $enctype .'>'.$content.'</form>';
 }

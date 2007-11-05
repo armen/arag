@@ -6,22 +6,21 @@
 // $Id$
 // ---------------------------------------------------------------------------
 
-class Backend extends Arag_Controller 
+class Backend_Controller extends Controller 
 {
     // {{{ Constructor
-    function Backend()
+    function __construct()
     {
-        parent::Arag_Controller();
+        parent::__construct();
 
         // Load the model and url helper
-        $this->load->model('BlogModel');
-        $this->load->helper('url');
-       
+        $this->load->model('Blog');
+
         // Backend decorator
         $this->load->decorator('backend/decorator');
 
         // Default page title
-        $this->load->vars(Array('page_title' => 'Blog'));
+        $this->decorator->page_title = 'Blog';
 
         // Global tabbedbock
         $this->load->component('TabbedBlock', 'global_tabs');
@@ -36,7 +35,7 @@ class Backend extends Arag_Controller
         // $this->global_tabs->addItem(_("Delete Category"), 'blog/backend/category/delete/%id%', 'blog/backend/category');
         // $this->global_tabs->addItem(_("New Category"), 'blog/backend/category/create');        
         $this->global_tabs->addItem(_("Settings"), 'blog/backend/settings');
-        $this->global_tabs->addItem(_("Preview"), site_url('blog'));    
+        $this->global_tabs->addItem(_("Preview"), url::site('blog'));
     }
     // }}}
 }

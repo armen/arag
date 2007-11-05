@@ -1,4 +1,4 @@
-<?php  if (!defined('BASEPATH')) exit('No direct script access allowed');
+<?php defined('SYSPATH') or die('No direct script access.');
 /**
  * Arag
  *
@@ -20,7 +20,7 @@
  * @author      Armen Baghumian
  * @category    Component
  */
-class Component {
+class Component_Core {
     
     // {{{ Constructor
     function __construct($namespace = Null)

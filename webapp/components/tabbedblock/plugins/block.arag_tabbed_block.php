@@ -32,7 +32,7 @@ function smarty_block_arag_tabbed_block($params, $content, &$smarty, &$repeat)
 
                 case 'template':
                     $template = $_val;
-                    $template = str_replace(ARAG_TPL_EXT, '', $template);                    
+                    $template = str_replace(Config::item('smarty.templates_ext'), '', $template);                    
                     break;
                     
                 default:
@@ -49,12 +49,10 @@ function smarty_block_arag_tabbed_block($params, $content, &$smarty, &$repeat)
         }
 
         // Returned tabbedBlock is an array, we need first element
-        list($tabbedBlock) = $smarty->get_template_vars($name);
-
-        $CI =& get_instance();
+        $tabbedBlock = $smarty->get_template_vars($name);
 
         // Remove the trailing /index and trim /
-        $rsegments =  explode('/', preg_replace('|/index$|', '', trim($CI->uri->ruri_string(), '/')));
+        $rsegments =  explode('/', preg_replace('|/index$|', '', trim(Router::$current_uri, '/')));
 
         // Get selected item
         $selectedItemName = Null;        
@@ -103,7 +101,7 @@ function smarty_block_arag_tabbed_block($params, $content, &$smarty, &$repeat)
 
         if (isset($tabbedBlock) && count($tabbedBlock->getItems()) != 0) {
 
-            $moduleIconURL = $CI->config->item('base_url') . 'images/modules/' . $CI->uri->router->fetch_module() . '.png';    
+            $moduleIconURL = url::base() . 'images/modules/' . Router::$module . '.png';    
 
             $smarty->assign_by_ref('tabbedblock', $tabbedBlock);
             $smarty->assign_by_ref('tabbedblock_content', $content);
@@ -117,14 +115,12 @@ function smarty_block_arag_tabbed_block($params, $content, &$smarty, &$repeat)
             if (file_exists(APPPATH . 'components/tabbedblock/templates/' . $template . '.tpl')) {
                 $template = APPPATH . 'components/tabbedblock/templates/' . $template . '.tpl';
             } else {
-                $template = $CI->load->get_view_path() . $template . '.tpl';
+                $template = APPPATH . 'modules/' . Router::$module . '/views/' . $template . '.tpl';
             }
 
             return $smarty->fetch($template);
         }
-
-        return Null;
-    }        
+    }
 }
 
 ?>

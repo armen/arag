@@ -6,7 +6,7 @@
 // $Id$
 // ---------------------------------------------------------------------------
 
-class ApplicationsModel extends Model 
+class Applications_Model extends Model 
 {
     // {{{ Properties
     
@@ -16,12 +16,12 @@ class ApplicationsModel extends Model
 
     // }}}
     // {{{ Constructor
-    function ApplicationsModel()
+    function __construct()
     {
-        parent::Model();
+        parent::__construct();
 
         // Connecting to the database
-        $this->load->database();
+// $this->load->database();
 
         // set tables' names
         $this->tableNameApps   = "user_applications";
@@ -43,7 +43,7 @@ class ApplicationsModel extends Model
 
         $query = $this->db->get();
         
-        $retval = $query->result_array();
+        $retval = $query->result(False);
         return $retval;
     }
     // }}}
