@@ -41,7 +41,7 @@ class Privileges_Model extends Model
             $this->db->where(array('parent_id' => $parentId));
         }
 
-        $privileges = $this->db->get()->result(False);
+        $privileges = $this->db->get()->result_array(False);
         
         if (is_array($filters)) {
 
