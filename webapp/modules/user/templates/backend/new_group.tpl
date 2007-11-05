@@ -10,7 +10,12 @@
     {/arag_block}
 {/if}
 {arag_block}
-    {arag_form uri="user/backend/applications/new_group/$appname"}
+    {if $flagform}
+        {assign var=uri value="user/backend/applications/new_group/$appname"}
+    {else}
+        {assign var=uri value="user/backend/application/new_group/$appname"}
+    {/if}
+    {arag_form uri=$uri}
         <table border="0" dir="{dir}">
             <tr>
                 <td align="{right}">
@@ -18,13 +23,13 @@
                 </td>
                 <td align="{left}">
                     <input type="text" name="newgroup" />
-                    <input type="hidden" value="{$appname}" name="application" />
                 </td>
             </tr>
             <tr>
                 <td align="{right}">
                 </td>
                 <td align="{left}">
+                    <input type="hidden" name="appname" value="{$appname}" />
                     <input type="submit" name="submit" value={quote}_("Submit"){/quote} />
                 </td>
             </tr>

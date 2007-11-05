@@ -9,7 +9,7 @@
         <tr>
             <td>
                 {capture assign="msg"}_("Do you really want to delete '%s'?"){/capture}
-                {$msg|sprintf:$subjects}
+                {$msg|sprintf:$subjects|wordwrap:120:"<br />\n"}
             </td>
             <td>
                 {arag_form uri="user/backend/applications/privileges_do_delete"}

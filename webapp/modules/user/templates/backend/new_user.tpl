@@ -10,7 +10,12 @@
     {/arag_block}
 {/if}
 {arag_block}
-    {arag_form uri="user/backend/applications/new_user/$appname"}
+    {if $flagform}
+        {assign var=uri value="user/backend/applications/new_user/$appname"}
+    {else}
+        {assign var=uri value="user/backend/application/new_user/$appname"}
+    {/if}
+    {arag_form uri=$uri}
         <table border="0" dir="{dir}">
             <tr>
                 <td align="{right}">
@@ -18,7 +23,7 @@
                 </td>
                 <td align="{left}">
                     <input type="text" name="username" value="{$username|smarty:nodefaults|default = null}" />
-                    <input type="hidden" value="{$appname}" name="application" />
+                    <input type="hidden" value="{$appname}" name="appname" />
                 </td>
             </tr>
             <tr>

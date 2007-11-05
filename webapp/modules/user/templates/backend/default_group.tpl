@@ -9,7 +9,12 @@
     {/arag_block}
 {/if}
 {arag_block}
-    {arag_form uri="user/backend/applications/default_group/$appname"}
+    {if $flagform}
+        {assign var=uri value="user/backend/applications/default_group/$appname"}
+    {else}
+        {assign var=uri value="user/backend/application/default_group/$appname"}
+    {/if}
+    {arag_form uri=$uri}
         <table border="0" dir="{dir}">
             <tr>
                 <td align="{right}">
@@ -19,13 +24,13 @@
                     <select name="dgroup">
                         {html_options values=$allgroups|smarty:nodefaults selected=$defaultgroup|smarty:nodefaults|default:null output=$allgroups|smarty:nodefaults}
                     </select>
-                    <input type="hidden" value="{$appname}" name="application" />
                 </td>
             </tr>
             <tr>
                 <td align="{right}">
                 </td>
                 <td align="{left}">
+                    <input type="hidden" name="appname" value="{$appname}" />
                     <input type="submit" name="submit" value={quote}_("Set"){/quote} />
                 </td>
             </tr>

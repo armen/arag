@@ -10,7 +10,12 @@
     {/arag_block}
 {/if}
 {arag_block}
-    {arag_form uri="user/backend/applications/user_profile/$username"}
+    {if $flagform}
+        {assign var=uri value="user/backend/applications/user_profile/$username"}
+    {else}
+        {assign var=uri value="user/backend/application/user_profile/$username"}
+    {/if}
+    {arag_form uri=$uri}
         <table border="0" dir="{dir}">
             <tr>
                 <td align="{right}">

@@ -12,7 +12,12 @@
                 {$msg|sprintf:$subjects}
             </td>
             <td>
-                {arag_form uri="user/backend/applications/do_delete"}
+            {if $flagform}
+                {assign var=uri value="user/backend/applications/do_delete"}
+            {else}
+                {assign var=uri value="user/backend/application/do_delete"}
+            {/if}
+            {arag_form uri=$uri}
                     {foreach from=$objects item=object key=number}
                         <input type="hidden" name="objects[{$number}]" value="{$object}" />
                     {/foreach}
@@ -25,11 +30,21 @@
             </td>
             <td>
                 {if $flag}
-                    {arag_form uri="user/backend/applications/groups/$appname" method="get"}
+                    {if $flagform}
+                        {assign var=uri value="user/backend/applications/groups/$appname" method="get"}
+                    {else}
+                        {assign var=uri value="user/backend/application/index" method="get"}
+                    {/if}
+                    {arag_form uri=$uri}
                         <input type="submit" value={quote}_("No"){/quote} />
                     {/arag_form}
                 {else}
-                    {arag_form uri="user/backend/applications/all_users"}
+                    {if $flagform}
+                        {assign var=uri value="user/backend/applications/all_users" method="get"}
+                    {else}
+                        {assign var=uri value="user/backend/application/index" method="get"}
+                    {/if}
+                    {arag_form uri=$uri}
                         <input type="submit" name="submit" value={quote}_("No"){/quote} />        
                     {/arag_form}
                 {/if}

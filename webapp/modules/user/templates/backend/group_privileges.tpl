@@ -9,7 +9,12 @@
     {/arag_block}
 {/if}
 {arag_block}
-    {arag_form uri="user/backend/applications/group_privileges_edit/$id/$appname"}
+    {if $flagform}
+        {assign var=uri value="user/backend/applications/group_privileges_edit/$id/$appname"}
+    {else}
+        {assign var=uri value="user/backend/application/group_privileges_edit/$id/$appname"}
+    {/if} 
+    {arag_form uri=$uri}
         <table border="0" cellpadding="0" cellspacing="0" dir="{dir}" width="100%" class="prilist" >
             {foreach from=$parent_privileges item=object}
                 <tr class="prilist_parent">
