@@ -115,7 +115,7 @@ class UsersModel extends Model
     }
     // }}}
     // {{{ & getUsers
-    function & getUsers($groupID = NULL, $appName, $groupName, $user)
+    function & getUsers($groupID = NULL, $appName, $groupName, $user, $flagappname)
     {
         $this->db->select('username, lastname, email, appname, id');
         $this->db->select($this->db->dbprefix.$this->tableNameGroups.".name as group_name");
@@ -126,6 +126,7 @@ class UsersModel extends Model
         $this->db->select($this->db->dbprefix.$this->tableNameUsers.".created_by");
         $this->db->from($this->tableNameUsers);
         $this->db->join($this->tableNameGroups, $this->tableNameGroups.".id = ".$this->tableNameUsers.".group_id");
+        
 
         if ($groupID != NULL) {
             $this->db->where('group_id', $groupID);
@@ -136,7 +137,11 @@ class UsersModel extends Model
         }
         
         if ($appName != NULL) {
-            $this->db->like('appname', $groupID);
+            if ($flagappname) {
+                $this->db->like('appname', $appName);
+            } else {
+                $this->db->where('appname', $appName);
+            }
         }
 
         if ($user != NULL) {
@@ -151,6 +156,8 @@ class UsersModel extends Model
         $this->db->orderby('appname, lastname, group_name asc');
 
         $retval = $this->db->get()->result_array();
+
+        //echo $this->db->last_query();
 
         return $retval;
     }
@@ -193,8 +200,7 @@ class UsersModel extends Model
             $blocked = 0;
         }
         
-        $row = Array('username'    => $username, 
-                     'create_date' => time(),
+        $row = Array('create_date' => time(),
                      'modify_date' => time(),
                      'modified_by' => $this->session->userdata('username'),
                      'name'        => $name,
