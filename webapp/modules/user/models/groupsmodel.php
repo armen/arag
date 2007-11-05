@@ -165,8 +165,11 @@ class GroupsModel extends Model
         if ($id == NULL) {
             $query = $this->db->getwhere($this->tableNameGroups, Array('name'    => $name,
                                                                        'appname' => $appname)); 
-        } else {
+        } else if ($appname == NULL) {
             $query = $this->db->getwhere($this->tableNameGroups, Array('id' => $id));
+        } else {
+            $query = $this->db->getwhere($this->tableNameGroups, Array('id'      => $id,
+                                                                       'appname' => $appname));
         }
         return (boolean)$query->num_rows();
     }
