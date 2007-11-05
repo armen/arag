@@ -13,7 +13,8 @@ $validator['error_messages'] = Array ('required'          => _("%s is required")
                                       'valid_email'       => _("Please enter a valid email address"),
                                       'min_length'        => _("%s should be at least %d characters"),
                                       '_check_filter'     => _("Please enter a valid %s"),
-                                      '_check_privilege'  => _("Please enter a valid %s"));
+                                      '_check_privilege'  => _("Please enter a valid %s"),
+                                      '_check_app_filter' => _("This application filter exists"));
 
 /*
  * Validation of index method
@@ -119,7 +120,7 @@ $validator['settings']['write']['rules']  = $_settings_rules;
 
 $_add_apps_fields = Array ('appname' => _("application Name"));
 
-$_add_apps_rules = Array ('appname'  => 'trim|required');
+$_add_apps_rules = Array ('appname'  => 'trim|required|callback__check_app_filter');
 
 $validator['add_apps_filters']['write']['fields'] = $_add_apps_fields;
 $validator['add_apps_filters']['write']['rules']  = $_add_apps_rules;
