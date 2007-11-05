@@ -233,11 +233,6 @@ class Router extends Router_Core {
         if (empty(self::$controller)) {
             Kohana::show_404();
         }
-
-        if ($this->fetch_directory()) {
-            // We have to inject directory to rsegments!
-            array_splice($this->rsegments, 1, 0, rtrim($this->fetch_directory(), '/'));
-        }
     }
     // }}}
     // {{{ request_method
