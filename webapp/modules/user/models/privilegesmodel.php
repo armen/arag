@@ -221,13 +221,17 @@ class PrivilegesModel extends Model
     {
         foreach ($subpris as $key => $privilege) {
             foreach ($privilege as $key2 => $subprivilege) {
-                foreach ($allselected as $selected) {
-                    if ($subprivilege['privilege'] == $selected) {
-                        $subpris[$key][$key2]['selected'] = true;
-                        break;
-                    } else {
-                        $subpris[$key][$key2]['selected'] = false;
+                if ($allselected != NULL) {
+                    foreach ($allselected as $selected) {
+                        if ($subprivilege['privilege'] == $selected) {
+                            $subpris[$key][$key2]['selected'] = true;
+                            break;
+                        } else {
+                            $subpris[$key][$key2]['selected'] = false;
+                        }
                     }
+                } else {
+                    $subpris[$key][$key2]['selected'] = false;
                 }
             }
         }
