@@ -66,21 +66,10 @@ class Applications extends Backend
     // {{{ groups_read
     function groups_read($appname)
     {
-        $this->load->component('PList', 'groups');
+        $this->_create_groups_list($appname);
 
-        $this->global_tabs->setParameter('name', $appname);
-
-        $this->groups->setResource($this->GroupsModel->getGroups($appname));
-        $this->groups->setLimit($this->config->item('limit', NULL, 0));
-        $this->groups->addColumn('id', Null, PList::HIDDEN_COLUMN);       
-        $this->groups->addColumn('name', _("Name"));
-        $this->groups->addColumn('appname', _("Application"));
-        $this->groups->addColumn('created_by', _("Created By"));
-        $this->groups->addColumn('modified_by', _("Modified By"));
-        $this->groups->addColumn('ApplicationsModel.getDate', _("Create Date"), PList::VIRTUAL_COLUMN);
-        $this->groups->addColumn('ApplicationsModel.getModifyDate', _("Modify Date"), PList::VIRTUAL_COLUMN);
         $this->groups->addAction('user/backend/applications/group_privileges_edit/#id#/'.$appname, _("Privileges"), 'privileges_action');
-        $this->groups->addAction('user/backend/applications/users/#id#/'.$appname, _("Edit"), 'edit_action'); 
+        $this->groups->addAction('user/backend/applications/users/#id#/'.$appname, _("View"), 'view_action'); 
         $this->groups->addAction('user/backend/applications/delete/group/#id#', _("Delete"), 'delete_action');
         $this->groups->addAction("user/backend/applications/delete/group", _("Delete"), 'delete_action', PList::GROUP_ACTION);
         $this->groups->setGroupActionParameterName('id');
@@ -97,19 +86,9 @@ class Applications extends Backend
     }
     // }}}
     // {{{ default_group_read
-    function default_group_read($appname, $flagsaved = false)
+    function default_group_read($appname)
     {
-        $row  = $this->GroupsModel->getAllAppGroups($appname);
-        $row2 = $this->GroupsModel->getDefaultGroup($appname);
-
-        $this->global_tabs->setParameter('name', $appname);
-
-        $this->load->vars(array("allgroups"    => $row,
-                                "defaultgroup" => $row2[0]['default_group'],
-                                "appname"      => $appname,
-                                "flagsaved"    => $flagsaved));
-
-        $this->load->view('backend/default_group');
+        $this->_default_group($appname);
     }
     // }}}
     // {{{ default_group_read_error
@@ -118,50 +97,16 @@ class Applications extends Backend
         $this->_invalid_request("user/backend/applications/index");
     }
     // }}}
-    // {{{ default_group_write
-    function default_group_write()
-    {
-        $appname = $this->input->post("application");
-        $group   = $this->input->post("dgroup");
-            
-        $this->GroupsModel->setGroup($appname, $group);
-
-        $this->default_group_read($appname, true);
-    }
-    // }}}
     // {{{ new_group_read
-    function new_group_read($appname, $flagsaved = false)
+    function new_group_read($appname)
     {
-        $this->global_tabs->setParameter('name', $appname); 
-
-        $this->load->vars(array("appname"      => $appname,
-                                "flagsaved"    => $flagsaved));
-
-        $this->load->view('backend/new_group.tpl');
+        $this->_new_group($appname);
     }
     // }}}
     // {{{ new_group_read_error
     function new_group_read_error()
     {
         $this->_invalid_request("user/backend/applications/index");
-    }
-    // }}}
-    // {{{ new_group_write
-    function new_group_write()
-    {
-        $appname    = $this->input->post("application", true);
-        $newgroup   = $this->input->post("newgroup", true);
-            
-        $this->GroupsModel->newGroup($appname, $newgroup);
-
-        $this->new_group_read($appname, true);
-    }
-    // }}}
-    // {{{ new_group_write_error
-    function new_group_write_error()
-    {
-        $appname = $this->input->post("application", true);
-        $this->new_group_read($appname);
     }
     // }}}
     // {{{ users_read
@@ -172,6 +117,11 @@ class Applications extends Backend
         $this->global_tabs->addItem(_("Users"), "user/backend/applications/users/".$id."/".$appname, "user/backend/applications");
         
         $this->_create_users_plist($id);
+
+        $this->users->addAction("user/backend/applications/user_profile/#username#", _("Edit"), 'edit_action');
+        $this->users->addAction("user/backend/applications/delete/user/#username#", _("Delete"), 'delete_action');
+        $this->users->addAction("user/backend/applications/delete/user", _("Delete"), 'delete_action', PList::GROUP_ACTION);
+        $this->users->setGroupActionParameterName('username');
         
         $this->load->vars(array("flagsearch"  => false));        
 
@@ -202,11 +152,17 @@ class Applications extends Backend
         $this->session->set_userdata('user_user_group', $group_name);
         
         $this->_create_users_plist(NULL, $app_name, $group_name, $user);
+
+        $this->users->addAction("user/backend/applications/user_profile/#username#", _("Edit"), 'edit_action');
+        $this->users->addAction("user/backend/applications/delete/user/#username#", _("Delete"), 'delete_action');
+        $this->users->addAction("user/backend/applications/delete/user", _("Delete"), 'delete_action', PList::GROUP_ACTION);
+        $this->users->setGroupActionParameterName('username');
         
         $this->load->vars(array("flagsearch" => true,
                                 "user"       => $user,
                                 "app_name"   => $app_name,
-                                "group_name" => $group_name));        
+                                "group_name" => $group_name,
+                                "flagform"   => true));        
 
         $this->load->view('backend/users');    
     }
@@ -214,24 +170,7 @@ class Applications extends Backend
     // {{{ new_user_read
     function new_user_read($appname)
     {
-        $flagsaved = false;
-
-        if ($this->session->userdata('new_user_saved')) {
-            $flagsaved = true;
-            $this->session->unset_userdata('new_user_saved');
-        }
-
-        $this->global_tabs->setParameter('name', $appname); 
-        
-        $row  = $this->GroupsModel->getAllAppGroups($appname);
-        $row2 = $this->GroupsModel->getDefaultGroup($appname);
-
-        $this->load->vars(array("appname"      => $appname,
-                                "flagsaved"    => $flagsaved,
-                                "allgroups"    => $row,
-                                "defaultgroup" => $row2[0]['default_group']));
-
-        $this->load->view('backend/new_user.tpl');       
+        $this->_new_user($appname);      
     }
     // }}}
     // {{{ new_user_read_error
@@ -240,83 +179,18 @@ class Applications extends Backend
         $this->_invalid_request("user/backend/applications/index");
     }
     // }}}
-    // {{{ new_user_write
-    function new_user_write()
-    {
-        $appname   = $this->input->post('application', true);    
-        $email     = $this->input->post('email', true);
-        $name      = strtolower($this->input->post('name', true));
-        $lastname  = $this->input->post('lastname', true);
-        $groupname = $this->input->post('group', true);
-        $username  = $this->input->post('username', true);
-        $password  = $this->input->post('password', true);
-        
-        $this->UsersModel->createUser($appname, $email, $name, $lastname, $groupname, $username, $password);
-
-        $this->session->set_userdata('new_user_saved', true);
-
-        redirect('user/backend/applications/new_user/'.$appname);
-        
-    }
-    // }}}
-    // {{{ new_user_write_error
-    function new_user_write_error()
-    {
-        $appname = $this->input->post('application');
-        $this->new_user_read($appname);
-    }
-    // }}}
     // {{{ user_profile_read
-    function user_profile_read($username, $flagsaved = false)
+    function user_profile_read($username)
     {
         $this->global_tabs->addItem(_("User's Profile"), "user/backend/applications/user_profile/%username%"); 
         $this->global_tabs->setParameter('username', $username);
-
-        $userprofile = $this->UsersModel->getUserProfile($username);
-        $group       = $this->GroupsModel->getGroup($userprofile['group_id']);
-        $row         = $this->GroupsModel->getAllAppGroups($group['appname']);
-
-        $this->load->vars(array("appname"      => $group['appname'],
-                                "flagsaved"    => $flagsaved,
-                                "allgroups"    => $row,
-                                "defaultgroup" => $group['name'],
-                                "username"     => $userprofile['username'],
-                                "name"         => $userprofile['name'],
-                                "lastname"     => $userprofile['lastname'],
-                                "email"        => $userprofile['email'],
-                                "blocked"      => $userprofile['blocked']));
-
-        $this->load->view('backend/user_profile.tpl');       
+        $this->_user_profile($username, false);   
     }
     // }}}
     // {{{ user_profile_read_error
     function user_profile_read_error()
     {
         $this->_invalid_request("user/backend/applications/index");
-    }
-    // }}}
-    // {{{ user_profile_write
-    function user_profile_write()
-    {
-        $appname   = $this->input->post('application', true);    
-        $email     = $this->input->post('email', true);
-        $name      = $this->input->post('name', true);
-        $lastname  = $this->input->post('lastname', true);
-        $groupname = $this->input->post('group', true);
-        $username  = $this->input->post('username', true);
-        $password  = $this->input->post('password', true);
-        $blocked   = $this->input->post('blocked', true);
-
-        $this->UsersModel->editUser($appname, $email, $name, $lastname, $groupname, $username, $password, $blocked);
-
-        $this->user_profile_read($username, true);   
-    }
-    // }}}
-    // {{{ user_profile_write_error
-    function user_profile_write_error()
-    {
-        $username = $this->input->post('username');
-        $this->user_profile_read($username);
     }
     // }}}
     // {{{ delete
@@ -377,7 +251,8 @@ class Applications extends Backend
         $this->load->vars(array('objects'  => $objects,
                                 'subjects' => $subjects,
                                 'flag'     => $flag,
-                                'appname'  => $appname));
+                                'appname'  => $appname,
+                                'flagform' => true));
 
         $this->load->view('backend/delete');
     }
@@ -400,11 +275,8 @@ class Applications extends Backend
         } else {
             $this->_invalid_request("user/backend/applications/index");
         }
-
-        
-
     }
-    // }}}
+    // }}} 
     //{{{ apps_filters
     function apps_filters($page = NULL)
     {
@@ -867,47 +739,55 @@ class Applications extends Backend
     //{{{ group_privileges_edit_read
     function group_privileges_edit_read($id, $appname)
     {
-
-        $flagsaved = false;
-        if ($this->session->userdata('group_privileges_edit_saved')) {
-            $flagsaved = $this->session->userdata('group_privileges_edit_saved');
-            $this->session->unset_userdata('group_privileges_edit_saved');
-        }
-
         $row  = $this->GroupsModel->getGroup($id);
         $name = $row['name'];
         $this->global_tabs->setParameter('name', $appname);
  
         $this->global_tabs->addItem(_("Edit $name's privileges"), "user/backend/applications/group_privileges_edit/".$id."/".$appname, "user/backend/applications");
-
-        $parents         = $this->PrivilegesModel->getFilteredPrivileges($appname, "0");
-        $subpris         = $this->PrivilegesModel->getAppPrivileges($appname);
-        $allselected     = $this->PrivilegesModel->getPrivileges($id, true);
-        $selected        = $this->PrivilegesModel->getSelectedPrivileges($subpris, $allselected);
-        $selectedparents = $this->PrivilegesModel->getSelectedParents($selected, $parents);
-
-        $this->load->vars(array('parent_privileges' => $selectedparents,
-                                'sub_privileges'    => $selected,
-                                'id'                => $id,
-                                'appname'           => $appname,
-                                'flagsaved'         => $flagsaved));
-
-        $this->load->view('backend/group_privileges');
+        $this->_privileges_edit_read($id, $appname);
     }
     //}}}
     //{{{ group_privileges_edit_write
     function group_privileges_edit_write()
     {
-        $ids     = $this->input->post('privileges');
-        $appname = $this->input->post('appname');
-        $groupid = $this->input->post('id');
-        
-        $this->PrivilegesModel->editPrivileges($ids, $groupid, $appname);
-
-        $this->session->set_userdata('group_privileges_edit_saved', true);
-
-        $this->group_privileges_edit_read($groupid, $appname);
+        $this->_privileges_edit_write($this->input->post('appname'));
     }
     //}}}
+    // {{{ new_user_write()
+    function new_user_write()
+    {
+        $this->_new_user_write($this->input->post('appname'));
+    }
+    // }}}
+    // {{{ new_user_write_error
+    function new_user_write_error()
+    {
+        $this->new_user_read($this->input->post('appname'));
+    }
+    // }}}
+    // {{{ user_profile_write
+    function user_profile_write()
+    {
+        $this->_user_profile_write($this->input->post('appname'));       
+    }
+    // }}}
+    // {{{ new_group_write
+    function new_group_write()
+    {
+         $this->_new_group_write($this->input->post('appname'));              
+    }
+    // }}}
+    // {{{ new_group_write_error
+    function new_group_write_error()
+    {
+        $this->new_group_read($this->input->post('appname'));
+    }
+    // }}} 
+    // {{{ default_group_write
+    function default_group_write()
+    {
+         $this->_default_group_write($this->input->post('appname'));
+    }
+    // }}}
 }
 ?>
