@@ -29,9 +29,6 @@ class Backend_Controller extends Controller
         // Backend decorator
         $this->load->decorator('backend/decorator');
 
-        // Load URL helper
-// $this->load->helper('url');
-
         // Default page title
         $this->decorator->page_title = 'User Management';
 

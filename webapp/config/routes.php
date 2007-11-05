@@ -20,8 +20,4 @@ $config = array
     'logout'         => 'user/frontend/logout'
 );
 
-$route['not_authorized'] = "core/frontend/messages/not_authorized";
-$route['login']          = "user/frontend/login";
-$route['logout']         = "user/frontend/logout";
-
 ?>

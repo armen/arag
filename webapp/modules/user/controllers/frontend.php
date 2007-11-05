@@ -17,9 +17,6 @@ class Frontend_Controller extends Controller
         // Frontend decorator
         $this->load->decorator('frontend/decorator');
 
-        // Load the URL helper
-// $this->load->helper('url');        
-
         // Default page title
         $this->decorator->page_title = 'User Management';
     }
