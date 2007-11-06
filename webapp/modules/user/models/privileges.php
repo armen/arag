@@ -10,8 +10,8 @@ class Privileges_Model extends Model
 {
     // {{{ Properties
     
-    var $tableNamePrivileges;
-    var $tableNameGroups;
+    public $tableNamePrivileges;
+    public $tableNameGroups;
     private $session;
 
     // }}}
@@ -28,7 +28,7 @@ class Privileges_Model extends Model
     }
     // }}}
     // {{{ getFilteredPrivileges
-    function getFilteredPrivileges($appname, $parentId)
+    public function getFilteredPrivileges($appname, $parentId)
     {
         $controller = Kohana::instance();
         $controller->load->model('Filters', 'Filters', 'user');
@@ -69,7 +69,7 @@ class Privileges_Model extends Model
     }
     // }}}
     // {{{ getLabel
-    function getLabel($id)
+    public function getLabel($id)
     {
         $this->db->select('*');
         $this->db->from($this->tableNamePrivileges);
@@ -78,7 +78,7 @@ class Privileges_Model extends Model
     }
     // }}}
     // {{{ addLabel
-    function addLabel($label, $parentid, $privilege = NULL)
+    public function addLabel($label, $parentid, $privilege = NULL)
     {
         $modified_by = $this->session->get('username');
         $created_by  = $this->session->get('username');
@@ -100,7 +100,7 @@ class Privileges_Model extends Model
     }
     // }}}
     // {{{ editLabel
-    function editLabel($label, $id, $privilege = NULL)
+    public function editLabel($label, $id, $privilege = NULL)
     {
         $modified_by = $this->session->get('username');
         $row         = $this->getLabel($id);
@@ -120,7 +120,7 @@ class Privileges_Model extends Model
     }
     // }}}
     // {{{ isParent
-    function isParent($row)
+    public function isParent($row)
     {
         if ($row['parent_id'] === "0") {
             return false;
@@ -129,7 +129,7 @@ class Privileges_Model extends Model
     }
     // }}}
     // {{{ hasLabel
-    function hasLabel($id)
+    public function hasLabel($id)
     {
         $this->db->select('id');
         $query = $this->db->getwhere($this->tableNamePrivileges, Array('id' => $id)); 
@@ -137,7 +137,7 @@ class Privileges_Model extends Model
     }
     // }}}
     // {{{ deletePrivileges
-    function deletePrivileges($objects)
+    public function deletePrivileges($objects)
     {
         foreach ($objects as $object) {
             $label = $this->getLabel($object);    
@@ -156,7 +156,7 @@ class Privileges_Model extends Model
     }
     // }}}
     // {{{ getPrivileges
-    function getPrivileges($id, $flag = false)
+    public function getPrivileges($id, $flag = false)
     {
         $this->db->select('privileges');
         $this->db->from($this->tableNameGroups);
@@ -194,7 +194,7 @@ class Privileges_Model extends Model
     }
     // }}}
     // {{{ getLabelByPrivilege
-    function getLabelByPrivilege($privilege)
+    public function getLabelByPrivilege($privilege)
     {
         $this->db->select('label');
         $query = $this->db->getwhere($this->tableNamePrivileges, array('privilege' => $privilege));
@@ -204,7 +204,7 @@ class Privileges_Model extends Model
     }
     // }}}
     // {{{ getAppPrivileges
-    function getAppPrivileges($appname)
+    public function getAppPrivileges($appname)
     {
         $rows = $this->getFilteredPrivileges($appname, 0);
         
@@ -218,7 +218,7 @@ class Privileges_Model extends Model
     }
     // }}}
     // {{{ getSelectedPrivileges
-    function getSelectedPrivileges($subpris, $allselected)
+    public function getSelectedPrivileges($subpris, $allselected)
     {
         foreach ($subpris as $id => $privilege) {
             foreach ($privilege as $key => $subprivilege) {
@@ -241,7 +241,7 @@ class Privileges_Model extends Model
     }
     // }}}
     // {{{ getSelectedParents
-    function getSelectedParents($selected, $parents)
+    public function getSelectedParents($selected, $parents)
     {
         foreach ($parents as $key => $parent) {
             foreach ($selected[$parent['id']] as $select) {
@@ -258,7 +258,7 @@ class Privileges_Model extends Model
     }
     // }}}
     // {{{ editPrivileges
-    function editPrivileges($ids, $groupid, $appname)
+    public function editPrivileges($ids, $groupid, $appname)
     {
         $privileges = array();
         

@@ -47,7 +47,7 @@ class Pager
     *
     */
     
-    function & getData($page, $limit, $numrows, $maxpages = false)
+    public function & getData($page, $limit, $numrows, $maxpages = false)
     {
         if (empty($numrows) || ($numrows < 0)) {
             $result = Null;

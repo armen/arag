@@ -11,7 +11,7 @@ class Filters_Model extends Model
 {
     // {{{ Properties
     
-    var $tableNameFilters;
+    public $tableNameFilters;
     private $session;
 
     // }}}
@@ -27,7 +27,7 @@ class Filters_Model extends Model
     }
     // }}}
     // {{{ getFilters
-    function getFilters($appname, $flag = false)
+    public function getFilters($appname, $flag = false)
     {
         $this->db->select('filter');
         $this->db->from($this->tableNameFilters);
@@ -56,7 +56,7 @@ class Filters_Model extends Model
     }
     // }}}
     // {{{ editFilter
-    function editFilter($filter, $id, $appname)
+    public function editFilter($filter, $id, $appname)
     {
         $filters = $this->getFilters($appname, true);
         
@@ -74,7 +74,7 @@ class Filters_Model extends Model
     }
     // }}}
     // {{{ addFilter
-    function addFilter($filter, $appname)
+    public function addFilter($filter, $appname)
     {
         $filters = $this->getFilters($appname, true);
         
@@ -92,7 +92,7 @@ class Filters_Model extends Model
     }
     // }}}
     // {{{ getFilterProperties
-    function getFilterProperties($name = "", $flag = true)
+    public function getFilterProperties($name = "", $flag = true)
     {
         $this->db->select('*');
         $this->db->from($this->tableNameFilters);        
@@ -109,19 +109,19 @@ class Filters_Model extends Model
     }
     // }}}
     // {{{ getDate
-    function getDate($row)
+    public function getDate($row)
     {
         return date('Y-m-d H:i:s', $row['create_date']);
     }
     // }}}
     // {{{ getModifyDate
-    function getModifyDate($row)
+    public function getModifyDate($row)
     {
         return date('Y-m-d H:i:s', $row['modify_date']);
     }
     // }}}
     // {{{ hasFilter
-    function hasFilter($appname, $filter)
+    public function hasFilter($appname, $filter)
     {
         $filters = $this->getFilters($appname);
         
@@ -135,7 +135,7 @@ class Filters_Model extends Model
     }
     // }}}
     // {{{ hasApp
-    function hasApp($appname)
+    public function hasApp($appname)
     {
         $this->db->select('appname');
         $query = $this->db->getwhere($this->tableNameFilters, Array('appname' => $appname)); 
@@ -143,7 +143,7 @@ class Filters_Model extends Model
     }
     // }}}
     // {{{ deleteFilters
-    function deleteFilters($objects, $appname)
+    public function deleteFilters($objects, $appname)
     {
         $filters = $this->getFilters($appname, true);
         
@@ -162,7 +162,7 @@ class Filters_Model extends Model
     }
     // }}}
     // {{{ deleteApps
-    function deleteApps($appnames)
+    public function deleteApps($appnames)
     {
         foreach ($appnames as $appname) {
             if ($appname != "_global_" && $appname != "_default_") {
@@ -172,7 +172,7 @@ class Filters_Model extends Model
     }
     // }}}
     // {{{ getPrivilegeFilters
-    function getPrivilegeFilters($appname)
+    public function getPrivilegeFilters($appname)
     {
         $filters = array();
 
@@ -207,7 +207,7 @@ class Filters_Model extends Model
     }
     // }}}
     // {{{ addApp
-    function addApp($appname)
+    public function addApp($appname)
     {
         $rows = array('appname'     => $appname,
                       'filter'      => NULL,
@@ -220,7 +220,7 @@ class Filters_Model extends Model
     }
     // }}}
     //{{{ isDeletable
-    function isDeletable($row)
+    public function isDeletable($row)
     {
         if ($row['appname'] != "_global_" && $row['appname'] != "_default_") {
             return false;

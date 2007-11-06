@@ -11,10 +11,10 @@ class Groups_Model extends Model
 {
     // {{{ Properties
     
-    var $tableNameApps;
-    var $tableNameGroups;
-    var $tableNameUsers;
-    var $tableNameFilters;
+    public $tableNameApps;
+    public $tableNameGroups;
+    public $tableNameUsers;
+    public $tableNameFilters;
     private $session;
 
     // }}}
@@ -32,7 +32,7 @@ class Groups_Model extends Model
     }
     // }}}
     // {{{ & getAnonymousGroup
-    function & getAnonymousGroup($appname)
+    public function & getAnonymousGroup($appname)
     {
         $this->db->select('name, appname, privileges, redirect');
         $this->db->from($this->tableNameGroups);
@@ -57,7 +57,7 @@ class Groups_Model extends Model
     }
     // }}}
     // {{{ getGroups
-    function getGroups($appName = NULL)
+    public function getGroups($appName = NULL)
     {
         $this->db->select('id, name, modified_by, created_by, modify_date, create_date, appname');
         $this->db->from($this->tableNameGroups);
@@ -75,7 +75,7 @@ class Groups_Model extends Model
     }
     // }}}
     // {{{ & getGroup
-    function & getGroup($id = NULL, $appname = NULL, $groupname = NULL)
+    public function & getGroup($id = NULL, $appname = NULL, $groupname = NULL)
     {
         $this->db->select('*');
         $this->db->from($this->tableNameGroups);
@@ -94,19 +94,19 @@ class Groups_Model extends Model
     }
     // }}}
     // {{{ getDate
-    function getDate($row)
+    public function getDate($row)
     {
         return date('Y-m-d H:i:s', $row['create_date']);
     }
     // }}}
     // {{{ getModifyDate
-    function getModifyDate($row)
+    public function getModifyDate($row)
     {
         return date('Y-m-d H:i:s', $row['modify_date']);
     }
     // }}}
     // {{{ setGroup
-    function setGroup($appName, $group)
+    public function setGroup($appName, $group)
     {
        $row = Array('default_group' => $group); 
        
@@ -115,7 +115,7 @@ class Groups_Model extends Model
     }
     // }}}
     // {{{ getDefaultGroup
-    function getDefaultGroup($appName)
+    public function getDefaultGroup($appName)
     {
         $this->db->select('default_group');
         $this->db->from($this->tableNameApps);
@@ -128,7 +128,7 @@ class Groups_Model extends Model
     }
     // }}}
     // {{{ getAllAppGroups
-    function getAllAppGroups($appName)
+    public function getAllAppGroups($appName)
     {
         $allgroups = array();
         
@@ -146,7 +146,7 @@ class Groups_Model extends Model
     }
     // }}}
     // {{{ newGroup
-    function newGroup($appname, $newgroup)
+    public function newGroup($appname, $newgroup)
     {
         $row = Array('modified_by' => $this->session->get('username'), 
                      'create_date' => time(),
@@ -159,7 +159,7 @@ class Groups_Model extends Model
     }
     // }}}
     // {{{ hasGroup
-    function hasGroup($name = NULL, $appname = NULL, $id = NULL)
+    public function hasGroup($name = NULL, $appname = NULL, $id = NULL)
     {
         $this->db->select('id');
         if ($id == NULL) {
@@ -175,7 +175,7 @@ class Groups_Model extends Model
     }
     // }}}
     // {{{ deleteGroups
-    function deleteGroups($groups)
+    public function deleteGroups($groups)
     {
         foreach ($groups as $group) {
             $this->db->delete($this->tableNameGroups, Array('id' => $group));
@@ -188,7 +188,7 @@ class Groups_Model extends Model
     }
     // }}}
     // {{{ changeModifiers
-    function changeModifiers($groupid)
+    public function changeModifiers($groupid)
     {
         $this->db->where('id', $groupid);
         $this->db->update($this->tableNameGroups, array('modify_date' => time(), 'modified_by' => $this->session->get('username')));

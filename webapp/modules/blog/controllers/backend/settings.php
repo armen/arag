@@ -17,7 +17,7 @@ class Settings_Controller extends Backend_Controller
     }
     // }}}
     // {{{ index_read
-    function index_read()
+    public function index_read()
     {
         $data               = Array();
         $data['limit']      = Arag_Config::get('limit', 0);
@@ -31,7 +31,7 @@ class Settings_Controller extends Backend_Controller
     }
     // }}}    
     // {{{ index_write
-    function index_write()
+    public function index_write()
     {
         Arag_Config::set('limit', $this->input->post('limit'));
         Arag_Config::set('post_limit', $this->input->post('post_limit'));
@@ -42,7 +42,7 @@ class Settings_Controller extends Backend_Controller
     }
     // }}}
     // {{{ index_write_error
-    function index_write_error()
+    public function index_write_error()
     {
         $this->index_read();
     }

@@ -29,13 +29,13 @@ class TabbedBlock extends Component
     }
     // }}}
     // {{{ setTitle
-    function setTitle($title)
+    public function setTitle($title)
     {
         $this->_title = $title;
     }
     // }}}
     // {{{ addItem
-    function addItem($name, $uri, $parentUri = Null, $title = Null, $enabled = True, $selected = False)
+    public function addItem($name, $uri, $parentUri = Null, $title = Null, $enabled = True, $selected = False)
     {
         $item = Array('name'                => $name, 
                       'uri'                 => $uri,
@@ -58,13 +58,13 @@ class TabbedBlock extends Component
     }
     // }}}
     // {{{ & getItems
-    function & getItems()
+    public function & getItems()
     {
         return $this->_items;
     }
     // }}}
     // {{{ setParameter
-    function setParameter($name, $value)
+    public function setParameter($name, $value)
     {
         $params = Array();
         $params[$name] = $value;
@@ -74,7 +74,7 @@ class TabbedBlock extends Component
     }
     // }}}
     // {{{ setParameters
-    function setParameters($params)
+    public function setParameters($params)
     {
         $this->_parameters = array_merge($this->_parameters, $params);
 
@@ -82,13 +82,13 @@ class TabbedBlock extends Component
     }
     // }}}
     // {{{ getTitle
-    function getTitle()
+    public function getTitle()
     {
         return $this->_title;
     }
     // }}}
     // {{{ parseURI
-    function parseURI($uri)
+    public function parseURI($uri)
     {
         if (is_array($uri)) {
             $uri = implode('/', $uri);
@@ -107,7 +107,7 @@ class TabbedBlock extends Component
     }
     // }}}
     // {{{ genURL
-    function genURL($uri, $parseURI = True)
+    public function genURL($uri, $parseURI = True)
     {
         if ($parseURI) {
             $uri = $this->parseURI($uri);

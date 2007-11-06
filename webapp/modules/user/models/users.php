@@ -37,7 +37,7 @@ class Users_Model extends Model
     }
     // }}}
     // {{{ check
-    function check($username, $password, &$status = 0)
+    public function check($username, $password, &$status = 0)
     {
         $this->db->select('username, verified, blocked');
         $this->db->where('username', $username);
@@ -71,7 +71,7 @@ class Users_Model extends Model
     }
     // }}}
     // {{{ & getUser
-    function & getUser($username)
+    public function & getUser($username)
     {
         $this->db->select('appname, '.$this->tablePrefix.$this->tableNameGroups.'.name as group_name, username, privileges, redirect,'.
                           $this->tablePrefix.$this->tableNameUsers.'.name as name, lastname, email, group_id');
@@ -93,7 +93,7 @@ class Users_Model extends Model
     }
     // }}}
     // {{{ & getAnonymousUser
-    function & getAnonymouseUser($appname)
+    public function & getAnonymouseUser($appname)
     {
         // This will called from Arag_Auth so do not use
         // Kohana::instance()->load->model(); here
@@ -108,7 +108,7 @@ class Users_Model extends Model
     }
     // }}}
     // {{{ & getUserProfile
-    function & getUserProfile($username)
+    public function & getUserProfile($username)
     {
         $this->db->select('*');
         $this->db->from($this->tableNameUsers);
@@ -120,7 +120,7 @@ class Users_Model extends Model
     }
     // }}}
     // {{{ & getUsers
-    function & getUsers($groupID = NULL, $appName, $groupName, $user, $flagappname)
+    public function & getUsers($groupID = NULL, $appName, $groupName, $user, $flagappname)
     {
         $this->db->select('username, lastname, email, appname, id');
         $this->db->select($this->tablePrefix.$this->tableNameGroups.".name as group_name");
@@ -167,7 +167,7 @@ class Users_Model extends Model
     }
     // }}}
     // {{{ createUser
-    function createUser($appname, $email, $name, $lastname, $groupname, $username, $password)
+    public function createUser($appname, $email, $name, $lastname, $groupname, $username, $password)
     {
         $controller = Kohana::instance();
         $controller->load->model('Groups', 'Groups', 'user');
@@ -191,7 +191,7 @@ class Users_Model extends Model
     }
     // }}}
     // {{{ editUser
-    function editUser($appname, $email, $name, $lastname, $groupname, $username, $password = "", $blocked)
+    public function editUser($appname, $email, $name, $lastname, $groupname, $username, $password = "", $blocked)
     {
         $controller = Kohana::instance();
         $controller->load->model('Groups', 'Groups', 'user');
@@ -223,7 +223,7 @@ class Users_Model extends Model
     }
     // }}}
     // {{{ hasUserName
-    function hasUserName($username)
+    public function hasUserName($username)
     {
         $this->db->select('username');
         $query = $this->db->getwhere($this->tableNameUsers, Array('username' => $username)); 
@@ -231,7 +231,7 @@ class Users_Model extends Model
     }
     // }}}
     // {{{ deleteUsers
-    function deleteUsers($usernames = NULL, $groupid = NULL)
+    public function deleteUsers($usernames = NULL, $groupid = NULL)
     {   
         if ($groupid == NULL) {
             $controller = Kohana::instance();
@@ -247,7 +247,7 @@ class Users_Model extends Model
     }
     // }}}
     //{{{ isBlock
-    function isBlock($row)
+    public function isBlock($row)
     {
         return boolean($row['block']);
     }

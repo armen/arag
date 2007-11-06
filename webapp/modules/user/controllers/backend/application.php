@@ -27,7 +27,7 @@ class Application_Controller extends Backend_Controller
     }
     // }}}
     // {{{ index
-    function index()
+    public function index()
     {
         $this->_create_groups_list($this->appname);
 
@@ -43,21 +43,21 @@ class Application_Controller extends Backend_Controller
     }
     // }}}
     // {{{ default_group_read
-    function default_group_read($appname = NULL)
+    public function default_group_read($appname = NULL)
     {
         $appname = $this->appname;
         $this->_default_group($appname, false);
     }
     // }}}
     // {{{ new_group_read
-    function new_group_read($appname = NULL)
+    public function new_group_read($appname = NULL)
     {
         $appname = $this->appname;
         $this->_new_group($appname, false);
     }
     // }}}
     // {{{ users_read
-    function users_read($id, $appname = NULL)
+    public function users_read($id, $appname = NULL)
     {
         
         $appname = $this->appname;
@@ -76,20 +76,20 @@ class Application_Controller extends Backend_Controller
     }
     // }}}
     // {{{ users_read_error
-    function users_read_error()
+    public function users_read_error()
     {
         $this->_invalid_request("user/backend/application/index");
     }
     // }}}
     // {{{ new_user_read
-    function new_user_read()
+    public function new_user_read()
     {
         $appname = $this->appname;
         $this->_new_user($appname, false);      
     }
     // }}}
     // {{{ user_profile_read
-    function user_profile_read($username)
+    public function user_profile_read($username)
     {
         $this->global_tabs->addItem(_("User's Profile"), "user/backend/application/user_profile/%username%"); 
         $this->global_tabs->setParameter('username', $username);
@@ -97,13 +97,13 @@ class Application_Controller extends Backend_Controller
     }
     // }}}
     // {{{ user_profile_read_error
-    function user_profile_read_error()
+    public function user_profile_read_error()
     {
         $this->_invalid_request("user/backend/application/index");
     }
     // }}}
     // {{{ delete
-    function delete($type, $objects = NULL)
+    public function delete($type, $objects = NULL)
     {
         if ($objects != NULL) {
             $this->global_tabs->addItem(_("Delete"), "user/backend/application/delete/".$type."/".$objects);
@@ -167,7 +167,7 @@ class Application_Controller extends Backend_Controller
     }
     // }}}
     // {{{ do_delete
-    function do_delete()
+    public function do_delete()
     {
         $flag    = $this->input->post('flag');
         $objects = $this->input->post('objects');
@@ -187,7 +187,7 @@ class Application_Controller extends Backend_Controller
     }
     //}}}
     //{{{ group_privileges_edit_read
-    function group_privileges_edit_read($id, $appname = NULL)
+    public function group_privileges_edit_read($id, $appname = NULL)
     {
         $appname = $this->appname;
         $row  = $this->Groups->getGroup($id);
@@ -197,13 +197,13 @@ class Application_Controller extends Backend_Controller
     }
     //}}}
     //{{{ group_privileges_edit_write
-    function group_privileges_edit_write()
+    public function group_privileges_edit_write()
     {
         $this->_privileges_edit_write($this->appname);
     }
     //}}}
     // {{{ all_users
-    function all_users($page = NULL)
+    public function all_users($page = NULL)
     {
         if ($page != Null && preg_match('|page[a-z_]*:[0-9]*|', $page)) {        
             $user       = $this->session->get('user_user_user');
@@ -235,37 +235,37 @@ class Application_Controller extends Backend_Controller
     }
     // }}}
     // {{{ new_user_write()
-    function new_user_write()
+    public function new_user_write()
     {
         $this->_new_user_write($this->appname);
     }
     // }}}
     // {{{ new_user_write_error
-    function new_user_write_error()
+    public function new_user_write_error()
     {
         $this->new_user_read($this->appname);
     }
     // }}}
     // {{{ user_profile_write
-    function user_profile_write()
+    public function user_profile_write()
     {
         $this->_user_profile_write($this->appname);       
     }
     // }}}
     // {{{ default_group_write
-    function default_group_write()
+    public function default_group_write()
     {
          $this->_default_group_write($this->appname);
     }
     // }}} 
     // {{{ new_group_write
-    function new_group_write()
+    public function new_group_write()
     {
          $this->_new_group_write($this->appname);              
     }
     // }}}
     // {{{ new_group_write_error
-    function new_group_write_error()
+    public function new_group_write_error()
     {
         $this->new_group_read($this->appname);
     }

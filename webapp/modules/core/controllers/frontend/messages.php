@@ -18,7 +18,7 @@ class Messages_Controller extends Controller
     }
     // }}}
     // {{{ invalid_request
-    function invalid_request()
+    public function invalid_request()
     {
         $view = $this->load->view('messages/invalid_request');
         $view->page_title = _("Invalid Request!");
@@ -26,7 +26,7 @@ class Messages_Controller extends Controller
     }
     // }}}
     // {{{ not_authorized
-    function not_authorized()
+    public function not_authorized()
     {
         $view = $this->load->view('messages/not_authorized');
         $view->page_title = _("Not Authorized!");

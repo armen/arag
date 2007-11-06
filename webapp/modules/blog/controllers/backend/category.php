@@ -11,7 +11,7 @@ require_once "backend.php";
 class Category_Controller extends Backend_Controller 
 {
     // {{{ index
-    function index()
+    public function index()
     {
     }
     // }}}

@@ -10,9 +10,9 @@ class Applications_Model extends Model
 {
     // {{{ Properties
     
-    var $tableNameApps;
-    var $tableNameGroups;
-    var $tableNameUsers;
+    public $tableNameApps;
+    public $tableNameGroups;
+    public $tableNameUsers;
 
     // }}}
     // {{{ Constructor
@@ -27,7 +27,7 @@ class Applications_Model extends Model
     }
     // }}}
     // {{{ getApps
-    function getApps($name)
+    public function getApps($name)
     {
         $this->db->select('name, default_group, create_date');
         $this->db->from($this->tableNameApps);
@@ -45,19 +45,19 @@ class Applications_Model extends Model
     }
     // }}}
     // {{{ getDate
-    function getDate($row)
+    public function getDate($row)
     {
         return date('Y-m-d H:i:s', $row['create_date']);
     }
     // }}}
     // {{{ getModifyDate
-    function getModifyDate($row)
+    public function getModifyDate($row)
     {
         return date('Y-m-d H:i:s', $row['modify_date']);
     }
     // }}}
     // {{{ hasApp
-    function hasApp($name)
+    public function hasApp($name)
     {
         $this->db->select('name');
         $query = $this->db->getwhere($this->tableNameApps, Array('name' => $name)); 

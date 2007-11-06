@@ -22,14 +22,14 @@ class Frontend_Controller extends Controller
     }
     // }}}
     // {{{ login_read
-    function login_read()
+    public function login_read()
     {
         $this->load->vars(array('showstatus' => false));
         $this->load->view('frontend/login');
     }
     // }}}
     // {{{ login_write
-    function login_write()
+    public function login_write()
     {
         $this->load->model('Users', 'Users');
 
@@ -60,7 +60,7 @@ class Frontend_Controller extends Controller
     }
     // }}}
     // {{{ logout
-    function logout()
+    public function logout()
     {
         // Good bye!
         $this->session->destroy();

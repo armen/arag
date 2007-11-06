@@ -88,7 +88,7 @@ class PList extends Component implements IteratorAggregate, ArrayAccess
     }
     // }}}
     // {{{ setResource
-    function setResource($resource)
+    public function setResource($resource)
     {
         if (is_array($resource)) {
             $resource = new IteratorIterator(new ArrayIterator($resource));
@@ -103,7 +103,7 @@ class PList extends Component implements IteratorAggregate, ArrayAccess
     }
     // }}}
     // {{{ setLimit
-    function setLimit($limit, $offset = 0) 
+    public function setLimit($limit, $offset = 0) 
     {
         if (!is_numeric($limit) || $limit < 0) {
             $limit = 0;
@@ -117,7 +117,7 @@ class PList extends Component implements IteratorAggregate, ArrayAccess
     }
     // }}}
     // {{{ setURI
-    function setURI($uri)
+    public function setURI($uri)
     {
         if (is_string($uri)) {
             $uri = explode('/', $uri);
@@ -129,61 +129,61 @@ class PList extends Component implements IteratorAggregate, ArrayAccess
     }
     // }}}
     // {{{ getURI
-    function getURI()
+    public function getURI()
     {
         return $this->baseURI;
     }
     // }}}
     // {{{ setProperties
-    function setProperties($properties)
+    public function setProperties($properties)
     {
         $this->properties = ($this->properties != 0) ? $this->properties & $properties : $properties;
     }
     // }}}
     // {{{ getProperties
-    function getProperties()
+    public function getProperties()
     {
         return $this->properties;
     }
     // }}}
     // {{{ setGroupActionType
-    function setGroupActionType($type)
+    public function setGroupActionType($type)
     {
         $this->groupActionType = $type;
     }
     // }}}
     // {{{ getGroupActionType
-    function getGroupActionType()
+    public function getGroupActionType()
     {
         return $this->groupActionType;
     }
     // }}}    
     // {{{ hasHeader
-    function hasHeader()
+    public function hasHeader()
     {
         return $this->properties & self::HEADER;
     }
     // }}}
     // {{{ hasFooter
-    function hasFooter()
+    public function hasFooter()
     {
         return $this->properties & self::FOOTER;
     }
     // }}}
     // {{{ hasCaption
-    function hasCaption()
+    public function hasCaption()
     {
         return $this->properties & self::CAPTION;
     }
     // }}}
     // {{{ isSortable
-    function isSortable()
+    public function isSortable()
     {
         return $this->properties & self::SORTABLE;
     }
     // }}}
     // {{{ addColumn
-    function addColumn($name, $label = Null, $type = PList::NONE)
+    public function addColumn($name, $label = Null, $type = PList::NONE)
     {
         $label = ($label == Null) ? $name : $label;
 
@@ -197,7 +197,7 @@ class PList extends Component implements IteratorAggregate, ArrayAccess
     }
     // }}}
     // {{{ addAction
-    function addAction($uri, $label, $className = Null, $alternateCallback = False, $alternateUri = Null)
+    public function addAction($uri, $label, $className = Null, $alternateCallback = False, $alternateUri = Null)
     {
         $title = Null;
 
@@ -230,68 +230,68 @@ class PList extends Component implements IteratorAggregate, ArrayAccess
     }
     // }}}
     // {{{ & getVirtualColumns
-    function & getVirtualColumns()
+    public function & getVirtualColumns()
     {
         return $this->virtualColumns;
     }
     // }}}
     // {{{ & getActions
-    function & getActions()
+    public function & getActions()
     {
         return $this->actions;
     }
     // }}}
     // {{{ & getGroupActions
-    function & getGroupActions()
+    public function & getGroupActions()
     {
         return $this->groupActions;
     }
     // }}}    
     // {{{ getActionsCount
-    function getActionsCount()
+    public function getActionsCount()
     {
         return count($this->actions);
     }
     // }}}
     // {{{ setGroupActionParameterName
-    function setGroupActionParameterName($name)
+    public function setGroupActionParameterName($name)
     {
         $this->groupActionParameterName = $name;
     }
     // }}}
     // {{{ getGroupActionParameterName
-    function getGroupActionParameterName()
+    public function getGroupActionParameterName()
     {
         return $this->groupActionParameterName;
     }
     // }}}    
     // {{{ getEmptyListMessage
-    function getEmptyListMessage()
+    public function getEmptyListMessage()
     {
         return $this->emptyListMessage;
     }
     // }}}
     // {{{ setEmptyListMessage
-    function setEmptyListMessage($message)
+    public function setEmptyListMessage($message)
     {
         $this->emptyListMessage = $message;
     }
     // }}}
     // {{{ & getColumns
-    function & getColumns()
+    public function & getColumns()
     {
         return $this->columns;
     }
     // }}}
     // {{{ & getColumnNames
-    function & getColumnNames()
+    public function & getColumnNames()
     {
         $columnNames = array_keys($this->columns);
         return $columnNames;
     }
     // }}}
     // {{{ parseURI
-    function parseURI($uri, $row = Array())
+    public function parseURI($uri, $row = Array())
     {
         $pattern = '/#(.+?)#/';
 
@@ -314,7 +314,7 @@ class PList extends Component implements IteratorAggregate, ArrayAccess
     }
     // }}}
     // {{{ callCallback
-    function callCallback($callback, $row = Array())
+    public function callCallback($callback, $row = Array())
     {
         // There is an array argument to pass to the callback
         $arg = Array($row);
@@ -350,7 +350,7 @@ class PList extends Component implements IteratorAggregate, ArrayAccess
     }
     // }}}
     // {{{ getPager
-    function getPager()
+    public function getPager()
     {
         include_once 'pager.php';
 
@@ -364,20 +364,20 @@ class PList extends Component implements IteratorAggregate, ArrayAccess
     }
     // }}}
     // {{{ getResourceCount
-    function getResourceCount()
+    public function getResourceCount()
     {
         return count(iterator_to_array($this->resource));
     }
     // }}}
     // {{{ getIterator
-    function getIterator()
+    public function getIterator()
     {
         $limit = ($this->limit <= 0) ? -1 : $this->limit;
         return new LimitIterator($this->resource, $this->offset, $limit);
     }
     // }}}
     // {{{ offsetExists
-    function offsetExists($offset)
+    public function offsetExists($offset)
     {
         $resource = iterator_to_array($this->resource);
         if (isset($resource[$offset])) { 
@@ -388,7 +388,7 @@ class PList extends Component implements IteratorAggregate, ArrayAccess
     }   
     // }}}
     // {{{ offsetGet
-    function offsetGet($offset)
+    public function offsetGet($offset)
     {
         $resource = iterator_to_array($this->resource);
     
@@ -400,13 +400,13 @@ class PList extends Component implements IteratorAggregate, ArrayAccess
     }
     // }}}
     // {{{ offsetSet
-    function offsetSet($offset, $value)
+    public function offsetSet($offset, $value)
     {
         // Readonly
     }
     // }}}
     // {{{ offsetUnset
-    function offsetUnset($offset)
+    public function offsetUnset($offset)
     {
         // Readonly
     }

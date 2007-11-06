@@ -10,7 +10,7 @@ class MultiSite_Model extends Model
 {
     // {{{ Properties
     
-    var $tableName;
+    public $tableName;
 
     // }}}
     // {{{ Constructor

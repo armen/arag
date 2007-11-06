@@ -24,7 +24,7 @@ class Frontend_Controller extends Controller
     }
     // }}}
     // {{{ index
-    function index()
+    public function index()
     {
         $this->load->component('PList', 'entry');
         $this->entry->setLimit(Config::item('post_limit', NULL, 0));        
@@ -36,7 +36,7 @@ class Frontend_Controller extends Controller
     }
     // }}}
     // {{{ view
-    function view($id, $extended = False)
+    public function view($id, $extended = False)
     {
         $this->load->component('PList', 'entry');
         $this->entry->setResource(Array($this->Blog->getEntry($id, True)));
@@ -48,13 +48,13 @@ class Frontend_Controller extends Controller
     }
     // }}}
     // {{{ view_error
-    function view_error()
+    public function view_error()
     {
         $this->_invalid_request('blog/frontend/index');
     }
     // }}}
     // {{{ _check_entry
-    function _check_entry($id)
+    protected function _check_entry($id)
     {
         return $this->Blog->hasEntry($id, True);
     }

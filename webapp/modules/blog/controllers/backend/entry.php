@@ -11,7 +11,7 @@ require_once "backend.php";
 class Entry_Controller extends Backend_Controller 
 {
     // {{{ index
-    function index()
+    public function index()
     {
         $this->load->component('PList', 'entries');
 
@@ -32,7 +32,7 @@ class Entry_Controller extends Backend_Controller
     }
     // }}}
     // {{{ post_read
-    function post_read()
+    public function post_read()
     {
         $view = $this->load->view('backend/post');
 
@@ -41,7 +41,7 @@ class Entry_Controller extends Backend_Controller
     }
     // }}}
     // {{{ post_write
-    function post_write()
+    public function post_write()
     {
         $this->Blog->createEntry($this->input->post('subject'), 
                                       $this->input->post('entry'), 
@@ -56,13 +56,13 @@ class Entry_Controller extends Backend_Controller
     }
     // }}}
     // {{{ post_write_error
-    function post_write_error()
+    public function post_write_error()
     {
         $this->post_read();
     }
     // }}}
     // {{{ edit_read
-    function edit_read($id)
+    public function edit_read($id)
     {
         $this->global_tabs->setParameter('id', $id);
 
@@ -77,13 +77,13 @@ class Entry_Controller extends Backend_Controller
     }
     // }}}
     // {{{ edit_read_error
-    function edit_read_error()
+    public function edit_read_error()
     {
         $this->_invalid_request('blog/backend/entry');
     }
     // }}}    
     // {{{ edit_write
-    function edit_write()
+    public function edit_write()
     {
         $result = $this->Blog->editEntry($this->input->post('id'),
                                               $this->input->post('subject'), 
@@ -98,7 +98,7 @@ class Entry_Controller extends Backend_Controller
     }
     // }}}
     // {{{ edit_write_error
-    function edit_write_error()
+    public function edit_write_error()
     {
         $this->global_tabs->setParameter('id', $this->input->post('id'));
 
@@ -110,7 +110,7 @@ class Entry_Controller extends Backend_Controller
     }
     // }}}
     // {{{ delete_read
-    function delete_read($id)
+    public function delete_read($id)
     {
         $this->global_tabs->setParameter('id', $id);
 
@@ -122,13 +122,13 @@ class Entry_Controller extends Backend_Controller
     }
     // }}}
     // {{{ delete_read_error
-    function delete_read_error()
+    public function delete_read_error()
     {
         $this->_invalid_request('blog/backend/entry');
     }
     // }}}
     // {{{ delete_write
-    function delete_write()
+    public function delete_write()
     {
         $this->Blog->deleteEntry($this->input->post('id'));
 
@@ -136,13 +136,13 @@ class Entry_Controller extends Backend_Controller
     }
     // }}}    
     // {{{ delete_write_error
-    function delete_write_error()
+    public function delete_write_error()
     {
         $this->_invalid_request('blog/backend/entry');        
     }
     // }}}
     // {{{ preview
-    function preview($id)
+    public function preview($id)
     {
         $this->global_tabs->setParameter('id', $id);        
         
@@ -160,13 +160,13 @@ class Entry_Controller extends Backend_Controller
     }
     // }}}
     // {{{ preview_error
-    function preview_error()
+    public function preview_error()
     {
         $this->_invalid_request('blog/backend/entry');
     }
     // }}}
     // {{{ _check_entry
-    function _check_entry($id)
+    protected function _check_entry($id)
     {
         return $this->Blog->hasEntry($id);
     }

@@ -60,7 +60,7 @@ class Arag_Smarty_Core extends Smarty {
     }
     // }}}
     // {{{ checkDirectory
-    function checkDirectory($directory)
+    public function checkDirectory($directory)
     {
         if ((!file_exists($directory) && !@mkdir($directory, 0755)) ||
             !is_writeable($directory) || !is_executable($directory)) {

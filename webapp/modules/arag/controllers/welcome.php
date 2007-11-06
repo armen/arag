@@ -9,7 +9,7 @@ class Welcome_Controller extends Controller
     }
     // }}}
     // {{{ index
-    function index()
+    public function index()
     {
         $view = $this->load->view('index');
         $view->test = "This is Test!!!";

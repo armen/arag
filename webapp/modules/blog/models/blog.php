@@ -10,7 +10,7 @@ class Blog_Model extends Model
 {
     // {{{ Properties
     
-    var $tableName;
+    public $tableName;
 
     const PROP_PUBLISH             = 1;
     const PROP_ALLOW_COMMENTS      = 2;
@@ -27,7 +27,7 @@ class Blog_Model extends Model
     }
     // }}}
     // {{{ createEntry
-    function createEntry($subject, $entry, $extendedEntry, $author, $published, $allowComments, $requiresModeration, $category)
+    public function createEntry($subject, $entry, $extendedEntry, $author, $published, $allowComments, $requiresModeration, $category)
     {
         $row = Array('subject'             => $subject, 
                      'entry'               => $entry, 
@@ -45,7 +45,7 @@ class Blog_Model extends Model
     }
     // }}}
     // {{{ editEntry
-    function editEntry($id, $subject, $entryBody, $extendedEntry, $modifiedBy, $published, $allowComments, $requiresModeration, $category)
+    public function editEntry($id, $subject, $entryBody, $extendedEntry, $modifiedBy, $published, $allowComments, $requiresModeration, $category)
     {
         $entry = $this->getEntry($id);
 
@@ -66,13 +66,13 @@ class Blog_Model extends Model
     }
     // }}}
     // {{{ deleteEntry
-    function deleteEntry($id)
+    public function deleteEntry($id)
     {
         $this->db->delete($this->tableName, Array('id' => $id));
     }
     // }}}
     // {{{ & getEntry
-    function & getEntry($id, $published = false)
+    public function & getEntry($id, $published = false)
     {
         $this->db->select('id, subject, entry, extended_entry, author, create_date, modify_date, modified_by, '.
                           'published, allow_comments, requires_moderation, category');
@@ -88,7 +88,7 @@ class Blog_Model extends Model
     }
     // }}}
     // {{{ hasEntry
-    function hasEntry($id, $published = false)
+    public function hasEntry($id, $published = false)
     {
         $this->db->select('id');
 
@@ -102,7 +102,7 @@ class Blog_Model extends Model
     }
     // }}}
     // {{{ getEntrySubject
-    function getEntrySubject($id)
+    public function getEntrySubject($id)
     {
         $this->db->select('subject');
         $query = $this->db->getwhere($this->tableName, Array('id' => $id));
@@ -111,7 +111,7 @@ class Blog_Model extends Model
     }
     // }}}    
     // {{{ & getEntries
-    function & getEntries($published = false)
+    public function & getEntries($published = false)
     {
         $this->db->select('id, subject, entry, extended_entry, author, create_date, modify_date, modified_by, '.
                           'published, allow_comments, requires_moderation, category');
@@ -128,7 +128,7 @@ class Blog_Model extends Model
     }
     // }}}
     // {{{ & getCategories
-    function & getCategories()
+    public function & getCategories()
     {
         $retval = Array();
         return $retval;
@@ -137,19 +137,19 @@ class Blog_Model extends Model
 
     // {{{ List callbacks
     // {{{ getDate
-    function getDate($row)
+    public function getDate($row)
     {
         return ($row['create_date']) ? date('Y-m-d H:i:s', $row['create_date']) : '-';        
     }
     // }}}
     // {{{ getModifyDate
-    function getModifyDate($row)
+    public function getModifyDate($row)
     {
         return ($row['modify_date']) ? date('Y-m-d H:i:s', $row['modify_date']) : '-';
     }
     // }}}
     // {{{ getModifiedBy
-    function getModifiedBy($row)
+    public function getModifiedBy($row)
     {
         return ($row['modified_by']) ? $row['modified_by'] : '-';
     }
@@ -157,7 +157,7 @@ class Blog_Model extends Model
     // }}}
     // {{{ Options
     // {{{ getStatusOptions
-    function getStatusOptions()
+    public function getStatusOptions()
     {
         return Array(0 => _("Draft"),
                      1 => _("Publish"));
