@@ -4,10 +4,10 @@
 // | Authors: Sasan Rose <sasan.rose@gmail.com>                              |
 // |          Armen Baghumian <armen@OpenSourceClub.org>                     |
 // +-------------------------------------------------------------------------+
-// | Smarty {arag_rte} function plugin                                    |
+// | Smarty {arag_rte} function plugin                                       |
 // |                                                                         |
 // | Type:    function                                                       |
-// | Name:    arag_rte                                                    |
+// | Name:    arag_rte                                                       |
 // | Purpose: Generating a FCKeditor                                         |
 // +-------------------------------------------------------------------------+
 // $Id$
@@ -70,7 +70,7 @@ function smarty_function_arag_rte($params, &$smarty)
        return;
     }
     
-    require_once PUBPATH . 'scripts/FCKeditor/fckeditor.php';
+    require_once DOCROOT . 'scripts/FCKeditor/fckeditor.php';
 
     $FCKeditor =& new FCKeditor($name);
     
