@@ -55,7 +55,7 @@
                 </field>
                 <field>
                      <name>filter</name>
-                     <value>a:1:{i:0;s:25:"user/backend/applications";}</value>
+                     <value>a:2:{i:0;s:27:"user/backend/applications/*";i:1;s:19:"multisite/backend/*";}</value>
                 </field>
             </insert>
             

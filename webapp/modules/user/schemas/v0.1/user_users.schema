@@ -52,7 +52,7 @@
             <field>
                 <name>verify_string</name>
                 <type>text</type>
-                <length>16</length>
+                <length>40</length>
             </field>
             <field>
                 <name>verified</name>
