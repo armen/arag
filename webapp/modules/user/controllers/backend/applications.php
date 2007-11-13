@@ -778,7 +778,7 @@ class Applications_Controller extends Backend_Controller
     }
     // }}}
     // {{{ settings_read
-    function settings_read()
+    public function settings_read()
     {
         $this->_settings_read(true);
     }

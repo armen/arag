@@ -282,7 +282,7 @@ class Users_Model extends Model
     }
     //}}}
     // {{{ createDate
-    function createDate($verify_string)
+    public function createDate($verify_string)
     {
         $this->db->select('create_date');
         return $this->db->getwhere($this->tableNameUsers, array('verify_string' => $verify_string))->current()->create_date;

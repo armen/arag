@@ -121,7 +121,7 @@ class MultiSite_Model extends Model
     }
     // }}}
     // {{{ getNextDB
-    function getNextDB(&$DSN, &$databaseId) 
+    public function getNextDB(&$DSN, &$databaseId) 
     {
         $DSN        = Config::item('database.default.connection');
         $databaseId = 1;

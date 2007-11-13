@@ -25,7 +25,7 @@ class Frontend_Controller extends Controller
     }
     // }}}
     // {{{ index_read
-    function index_read($verify_uri = false)
+    public function index_read($verify_uri = false)
     {   
         $error_message = false;
         $show_form     = true;
@@ -51,7 +51,7 @@ class Frontend_Controller extends Controller
     }
     // }}}
     // {{{ index_write
-    function index_write()
+    public function index_write()
     {
         $verify_uri = $this->input->post('uri');
         $username   = $this->input->post('username');
