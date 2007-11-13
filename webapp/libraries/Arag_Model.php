@@ -21,13 +21,19 @@
 class Model extends Model_Core {
 
     // {{{ Constructor
-    public function __construct()
+    public function __construct($config = Null)
     {
+        $session = new Session();
+        $appname = $session->get('appname', APPNAME);
+
+        $config = ($appname === '_master_') ? 'default' : $config;
+        $config = ($config == Null) ? Config::item('sites/'.$appname.'.database') : $config;
+
+        // Load the database into the model
         if (Event::has_run('system.pre_controller')) {
-            // Load the database into the model
-            $this->db = isset(Kohana::instance()->db) ? Kohana::instance()->db : new Database('default');
+            $this->db = isset(Kohana::instance()->db) ? Kohana::instance()->db : new Database($config);
         } else {
-            $this->db = new Database('default');
+            $this->db = new Database($config);
         }
     }
     // }}}
@@ -38,7 +44,7 @@ class Model extends Model_Core {
             $module = Router::$module;
         }
 
-        // Load the model
+        // Change include_once to module path
         Config::set('core.include_paths', Array(APPPATH.'modules/'.$module));
 
         $model = ucfirst(strtolower($model)).'_Model';
