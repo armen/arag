@@ -60,7 +60,11 @@ class Controller extends Controller_Core {
 
         // Send Kohana::instance and base url to all templates
         $this->Arag_Smarty->assign('this', $this);
-        $this->Arag_Smarty->assign('arag_base_url', url::base());        
+
+        $base_url = Config::item('sites/'.APPNAME.'.core.parent_base_url', False, False) ? 
+                    Config::item('sites/'.APPNAME.'.core.parent_base_url') : 
+                    url::base();
+        $this->Arag_Smarty->assign('arag_base_url', $base_url);
 
         // Fetch the output
         $output = $this->Arag_Smarty->fetch($template);
@@ -71,8 +75,9 @@ class Controller extends Controller_Core {
     // {{{ _remap
     function _remap($method, $arguments)
     {
-        // Set the method in Router
-        Router::$method = $method;
+        // Set the method and arguments of Router
+        Router::$method    = $method;
+        Router::$arguments = $arguments;
 
         $validated = True;
 

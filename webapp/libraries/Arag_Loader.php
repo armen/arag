@@ -159,7 +159,7 @@ class Loader extends Loader_Core {
             $module = Router::$module;
         }
 
-        // Change include_once to current module path
+        // Change include_once to module path
         Config::set('core.include_paths', Array(APPPATH.'modules/'.$module));
 
         if (strpos($name, '/') !== FALSE) {
@@ -172,6 +172,9 @@ class Loader extends Loader_Core {
 
         // Load the model
         $model = new $class();
+
+        // Reset the include_paths
+        Config::set('core.include_paths', Array(APPPATH.'modules/'.Router::$module));        
 
         if ($alias === TRUE)
             return $model;

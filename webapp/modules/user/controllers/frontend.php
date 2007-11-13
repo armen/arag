@@ -24,7 +24,7 @@ class Frontend_Controller extends Controller
     // {{{ login_read
     public function login_read()
     {
-        $this->load->vars(array('showstatus' => false));
+        $this->load->vars(array('error_message' => false));
         $this->load->view('frontend/login');
     }
     // }}}
@@ -36,9 +36,7 @@ class Frontend_Controller extends Controller
         $username = $this->input->post('username');
         $password = $this->input->post('password');
 
-        $status = $this->Users->check($username, $password);
-
-        if ($status === 1) {
+        if ($this->Users->check($username, $password, $status)) {
 
             // Set the privilege_filter to False, This is too 
             // important to Arag_Auth! we will fetch privilege 
@@ -52,9 +50,28 @@ class Frontend_Controller extends Controller
             url::redirect();
         
         } else {
+
             // Shit, you missed!
-            $this->load->vars(array('status'     => $status,
-                                    'showstatus' => true));
+            if ($status & Users_Model::USER_NOT_FOUND) {
+                $error_message[] = _("Wrong Username or Password"); 
+            }
+
+            if ($status & Users_Model::USER_NOT_VERIFIED) {
+                $error_message[] = _("You are not a verified user."); 
+            }
+
+            if ($status & Users_Model::USER_BLOCKED) {
+                $error_message[] = _("This user name is blocked!!! Please contact site administrator for further information."); 
+            }
+
+            if (!isset($error_message)) {
+                $error_message[] = _("Unknown error");
+            }
+
+            $error_message = implode("\n", $error_message);
+
+            $this->load->vars(array('status'        => $status,
+                                    'error_message' => $error_message));
             $this->load->view('frontend/login');
         }
     }

@@ -15,20 +15,18 @@ class Groups_Model extends Model
     public $tableNameGroups;
     public $tableNameUsers;
     public $tableNameFilters;
-    private $session;
 
     // }}}
     // {{{ Constructor
     function __construct()
     {
-        parent::__construct();
+        parent::__construct('default');
 
         // set tables' names
         $this->tableNameApps   = "user_applications";
         $this->tableNameGroups = "user_groups";
         $this->tableNameUsers  = "user_users";
 
-        $this->session = Kohana::instance()->session;        
     }
     // }}}
     // {{{ & getAnonymousGroup
@@ -77,7 +75,7 @@ class Groups_Model extends Model
     // {{{ & getGroup
     public function & getGroup($id = NULL, $appname = NULL, $groupname = NULL)
     {
-        $this->db->select('*');
+        $this->db->select('id, name, modified_by, created_by, modify_date, create_date, appname, privileges');
         $this->db->from($this->tableNameGroups);
 
         if ($id != NULL) {
@@ -146,14 +144,15 @@ class Groups_Model extends Model
     }
     // }}}
     // {{{ newGroup
-    public function newGroup($appname, $newgroup)
+    public function newGroup($appname, $newgroup, $author, $privileges = NULL)
     {
-        $row = Array('modified_by' => $this->session->get('username'), 
+        $row = Array('modified_by' => $author, 
                      'create_date' => time(),
                      'modify_date' => time(),
-                     'created_by'  => $this->session->get('username'),
+                     'created_by'  => $author,
                      'appname'     => $appname,
-                     'name'        => $newgroup);
+                     'name'        => $newgroup,
+                     'privileges'  => $privileges);
 
         $this->db->insert($this->tableNameGroups, $row);
     }
@@ -175,7 +174,7 @@ class Groups_Model extends Model
     }
     // }}}
     // {{{ deleteGroups
-    public function deleteGroups($groups)
+    public function deleteGroups($groups, $author)
     {
         foreach ($groups as $group) {
             $this->db->delete($this->tableNameGroups, Array('id' => $group));
@@ -183,15 +182,15 @@ class Groups_Model extends Model
             $controller = Kohana::instance();
             $controller->load->model('Users', 'Users', 'user');
 
-            $anonymous = $controller->Users->deleteUsers(NULL, $group);
+            $anonymous = $controller->Users->deleteUsers(NULL, $group, $author);
         }
     }
     // }}}
     // {{{ changeModifiers
-    public function changeModifiers($groupid)
+    public function changeModifiers($groupid, $author)
     {
         $this->db->where('id', $groupid);
-        $this->db->update($this->tableNameGroups, array('modify_date' => time(), 'modified_by' => $this->session->get('username')));
+        $this->db->update($this->tableNameGroups, array('modify_date' => time(), 'modified_by' => $author));
     }
     // }}}
 }

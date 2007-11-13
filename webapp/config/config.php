@@ -15,10 +15,12 @@
  *  include_paths        - extra Kohana resource paths, see <Kohana.find_file>
  *  autoload             - libraries and models to be loaded with the controller
  */
+
 $config = Array
 (
-	'site_domain'          => $_SERVER['SERVER_NAME'].'/arag/',
-	'site_protocol'        => 'http',
+	'site_domain'          => $_SERVER['SERVER_NAME'] . 
+                              substr($_SERVER['SCRIPT_NAME'], 0, strpos($_SERVER['SCRIPT_NAME'], '/'.basename($_SERVER['SCRIPT_NAME']))),
+	'site_protocol'        => (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') ? 'https' : 'http',
 	'index_page'           => 'index.php',
 	'url_suffix'           => '',
 	'allow_config_set'     => True,

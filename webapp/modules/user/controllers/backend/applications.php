@@ -184,7 +184,7 @@ class Applications_Controller extends Backend_Controller
     {
         $this->global_tabs->addItem(_("User's Profile"), "user/backend/applications/user_profile/%username%"); 
         $this->global_tabs->setParameter('username', $username);
-        $this->_user_profile($username, false);   
+        $this->_user_profile($username);   
     }
     // }}}
     // {{{ user_profile_read_error
@@ -243,8 +243,7 @@ class Applications_Controller extends Backend_Controller
 
         }
         
-        $appname = $this->session->get('delete_appname');
-        $this->session->del('delete_appname');
+        $appname = $this->session->get_once('delete_appname');
 
         $subjects = implode(",", $subjects);
         
@@ -266,10 +265,10 @@ class Applications_Controller extends Backend_Controller
         if ($this->input->post('submit')) {
             if ($flag) {
                 $application = $this->input->post('application');
-                $this->Groups->deleteGroups($objects);
+                $this->Groups->deleteGroups($objects, $this->session->get('username'));
                 url::redirect('user/backend/applications/groups/'.$application);
             } else {
-                $this->Users->deleteUsers($objects);
+                $this->Users->deleteUsers($objects, NULL, $this->session->get('username'));
                 url::redirect('user/backend/applications/all_users');
             }
         } else {
@@ -321,7 +320,7 @@ class Applications_Controller extends Backend_Controller
         $filter  = $this->input->post('filter');
         $appname = $this->input->post('application');
 
-        $this->Filters->addFilter($filter, $appname);
+        $this->Filters->addFilter($filter, $appname, $this->session->get('username'));
         
         $this->session->set('filter_saved', true);
 
@@ -340,8 +339,7 @@ class Applications_Controller extends Backend_Controller
         $flagsaved = false;
 
         if ($this->session->get('filter_saved')) {
-            $flagsaved = $this->session->get('filter_saved');
-            $this->session->del('filter_saved');
+            $flagsaved = $this->session->get_once('filter_saved');
         }
 
         $this->load->component('PList', 'filters_pro');
@@ -401,7 +399,7 @@ class Applications_Controller extends Backend_Controller
         $appname = $this->input->post('application');
         $id      = $this->input->post('id');
 
-        $this->Filters->editFilter($filter, $id, $appname);
+        $this->Filters->editFilter($filter, $id, $appname, $this->session->get('username'));
 
         $this->filters_edit_read($appname, $id, true);
     }
@@ -536,14 +534,7 @@ class Applications_Controller extends Backend_Controller
     // {{{ add_apps_filters_read
     public function add_apps_filters_read()
     {
-        $flagsaved = false;
-        
-        if ($this->session->get('app_add_filter_saved')) {
-            $flagsaved = true;
-            $this->session->del('app_add_filter_saved');
-        }
-        
-        $this->load->vars(array('flagsaved' => $flagsaved));
+        $this->load->vars(array('flagsaved' => $this->session->get_once('app_add_filter_saved')));
 
         $this->load->view('backend/add_app_filter');
 
@@ -553,7 +544,7 @@ class Applications_Controller extends Backend_Controller
     public function add_apps_filters_write()
     {
         $appname = $this->input->post('appname');
-        $this->Filters->addApp($appname);
+        $this->Filters->addApp($appname, $this->session->get('username'));
 
         $this->session->set('app_add_filter_saved', true);
         url::redirect('user/backend/applications/add_apps_filters');
@@ -568,7 +559,7 @@ class Applications_Controller extends Backend_Controller
     // {{{ privileges_parents_read
     public function privileges_parents_read()
     {
-        $this->_create_privileges_list("_master_", "0");
+        $this->_create_privileges_list($this->appname, "0");
     }
     // }}}
     // {{{ privileges_parents_write
@@ -576,7 +567,7 @@ class Applications_Controller extends Backend_Controller
     {
         $label     = $this->input->post('newlabel');
       
-        $this->Privileges->addLabel($label, 0);
+        $this->Privileges->addLabel($label, 0, NULL, $this->session->get('username'));
 
         $this->session->set('privileges_add_saved', true);
         
@@ -592,16 +583,16 @@ class Applications_Controller extends Backend_Controller
     // {{{ privileges_all
     public function privileges_all()
     {
-        $this->_create_privileges_list("_master_");
+        $this->_create_privileges_list($this->appname);
     }
     // }}}
     // {{{ privileges_read
     public function privileges_read($id)
     {
         $label = $this->Privileges->getLabel($id);
-        $this->global_tabs->addItem(_("$label->label"), "user/backend/applications/privileges/%id%", "user/backend/applications/privileges_parents");
+        $this->global_tabs->addItem(_("{$label->label}"), "user/backend/applications/privileges/%id%", "user/backend/applications/privileges_parents");
         $this->global_tabs->setParameter('id', $id);
-        $this->_create_privileges_list("_master_", $id);
+        $this->_create_privileges_list($this->appname, $id);
     }
     // }}}
     // {{{ privileges_write
@@ -611,7 +602,7 @@ class Applications_Controller extends Backend_Controller
         $privilege = $this->input->post('privilege');
         $parentid  = $this->input->post('parentid');
 
-        $this->Privileges->addLabel($label, $parentid, $privilege);
+        $this->Privileges->addLabel($label, $parentid, $privilege, $this->session->get('username'));
 
         $this->session->set('privileges_add_saved', true);
         
@@ -628,12 +619,6 @@ class Applications_Controller extends Backend_Controller
     // {{{ privileges_edit_read
     public function privileges_edit_read($id)
     {
-        $flagsaved = false;
-        if ($this->session->get('privilege_edited_saved')) {
-            $flagsaved = $this->session->get('privilege_edited_saved');
-            $this->session->del('privilege_edited_saved');
-        }
-        
         $label = $this->Privileges->getLabel($id);
             
         $this->global_tabs->addItem(_("Edit"), "user/backend/applications/privileges_edit/%id%", "user/backend/applications/privileges_parents");
@@ -643,7 +628,7 @@ class Applications_Controller extends Backend_Controller
                                 'privilege' => $label->privilege,
                                 'id'        => $id,
                                 'parentid'  => $label->parent_id,
-                                'flagsaved' => $flagsaved));
+                                'flagsaved' => $this->session->get_once('privilege_edited_saved')));
 
         $this->load->view('backend/privileges_edit');
     }
@@ -661,7 +646,7 @@ class Applications_Controller extends Backend_Controller
         $id        = $this->input->post('id');
         $privilege = $this->input->post('privilege');
 
-        $this->Privileges->editLabel($label, $id, $privilege);
+        $this->Privileges->editLabel($label, $id, $privilege, $this->session->get('username'));
 
         $this->session->set('privilege_edited_saved', true);
 
@@ -733,7 +718,7 @@ class Applications_Controller extends Backend_Controller
     {
         $objects = $this->input->post('objects');
         
-        $this->Privileges->deletePrivileges($objects);
+        $this->Privileges->deletePrivileges($objects, $this->session->get('username'));
 
         url::redirect('user/backend/applications/privileges_parents');
     }
@@ -756,7 +741,7 @@ class Applications_Controller extends Backend_Controller
         $this->_privileges_edit_write($this->input->post('appname'));
     }
     //}}}
-    // {{{ new_user_write()
+    // {{{ new_user_write
     public function new_user_write()
     {
         $this->_new_user_write($this->input->post('appname'));
@@ -792,6 +777,29 @@ class Applications_Controller extends Backend_Controller
          $this->_default_group_write($this->input->post('appname'));
     }
     // }}}
-}
+    // {{{ settings_read
+    function settings_read()
+    {
+        $this->_settings_read(true);
+    }
+    // }}}
+    // {{{ settings_write
+    public function settings_write()
+    {
+        Arag_Config::set('limit', $this->input->post('limit'));
 
+              
+        $this->session->set('settings_saved', true);
+
+        //url::redirect('user/backend/applications/settings');
+        $this->settings_read();
+    }
+    // }}}
+    // {{{ settings_write_error
+    public function settings_write_error()
+    {
+        $this->settings_read();
+    }
+    // }}}
+}
 ?>

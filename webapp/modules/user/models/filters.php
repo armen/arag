@@ -12,18 +12,15 @@ class Filters_Model extends Model
     // {{{ Properties
     
     public $tableNameFilters;
-    private $session;
 
     // }}}
     // {{{ Constructor
     function __construct()
     {
-        parent::__construct();
+        parent::__construct('default');
 
         // set tables' names
         $this->tableNameFilters = "user_filters";
-        
-        $this->session = Kohana::instance()->session;        
     }
     // }}}
     // {{{ getFilters
@@ -56,7 +53,7 @@ class Filters_Model extends Model
     }
     // }}}
     // {{{ editFilter
-    public function editFilter($filter, $id, $appname)
+    public function editFilter($filter, $id, $appname, $author)
     {
         $filters = $this->getFilters($appname, true);
         
@@ -68,13 +65,13 @@ class Filters_Model extends Model
 
         $row = array('filter'      => $filter,
                      'modify_date' => time(),
-                     'modified_by' => $this->session->get('username'));
+                     'modified_by' => $author);
 
         $this->db->update($this->tableNameFilters, $row);
     }
     // }}}
     // {{{ addFilter
-    public function addFilter($filter, $appname)
+    public function addFilter($filter, $appname, $author)
     {
         $filters = $this->getFilters($appname, true);
         
@@ -86,7 +83,7 @@ class Filters_Model extends Model
 
         $row = array('filter'      => $filter,
                      'modify_date' => time(),
-                     'modified_by' => $this->session->get('username'));
+                     'modified_by' => $author);
 
         $this->db->update($this->tableNameFilters, $row);
     }
@@ -94,7 +91,7 @@ class Filters_Model extends Model
     // {{{ getFilterProperties
     public function getFilterProperties($name = "", $flag = true)
     {
-        $this->db->select('*');
+        $this->db->select('appname, create_date, created_by, modify_date, modified_by, filter');
         $this->db->from($this->tableNameFilters);        
         
         if ($flag) {
@@ -207,14 +204,14 @@ class Filters_Model extends Model
     }
     // }}}
     // {{{ addApp
-    public function addApp($appname)
+    public function addApp($appname, $author)
     {
         $rows = array('appname'     => $appname,
                       'filter'      => NULL,
                       'create_date' => time(),
                       'modify_date' => time(),
-                      'created_by'  => $this->session->get('username'),
-                      'modified_by' => $this->session->get('username'));
+                      'created_by'  => $author,
+                      'modified_by' => $author);
         
         $this->db->insert($this->tableNameFilters, $rows);
     }

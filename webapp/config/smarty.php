@@ -10,7 +10,7 @@ $config = Array
     'debugging'             => True,
     'caching'               => False,
     'force_compile'         => False,
-    'security'              => False,        // XXX: DO NOT SET TO FALSE, SERIOUS SECURITY RISK IF SET!
+    'security'              => True,         // XXX: DO NOT SET TO FALSE, SERIOUS SECURITY RISK IF SET!
     'secure_dirs'           => Array         // Smarty secure directories
     (
     ),    

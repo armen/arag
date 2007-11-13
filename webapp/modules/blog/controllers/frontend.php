@@ -27,7 +27,7 @@ class Frontend_Controller extends Controller
     public function index()
     {
         $this->load->component('PList', 'entry');
-        $this->entry->setLimit(Config::item('post_limit', NULL, 0));        
+        $this->entry->setLimit(Arag_Config::get('post_limit', 0));
         $this->entry->setResource($this->Blog->getEntries(True));
         $this->entry->addColumn('Blog.getDate', Null, PList::VIRTUAL_COLUMN);
 
@@ -54,7 +54,7 @@ class Frontend_Controller extends Controller
     }
     // }}}
     // {{{ _check_entry
-    protected function _check_entry($id)
+    public function _check_entry($id)
     {
         return $this->Blog->hasEntry($id, True);
     }

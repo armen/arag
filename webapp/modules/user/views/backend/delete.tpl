@@ -18,8 +18,8 @@
                 {assign var=uri value="user/backend/application/do_delete"}
             {/if}
             {arag_form uri=$uri}
-                    {foreach from=$objects item=object key=number}
-                        <input type="hidden" name="objects[{$number}]" value="{$object}" />
+                    {foreach from=$objects item=object}
+                        <input type="hidden" name="objects[]" value="{$object}" />
                     {/foreach}
                     <input type="hidden" name="flag" value="{$flag}" />
                     {if $flag}

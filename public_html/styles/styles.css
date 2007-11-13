@@ -125,6 +125,17 @@ input, textarea, select {
     border          : 1px solid #4dbd60;    
 }
 /* end of arag_info_block }}} */
+/* {{{ arag_tips_block */
+.arag_tips_block {
+    margin          : 0px;
+    padding         : 0px;
+}
+.arag_tips_block_content {
+    margin          : 0px 0px 10px 0px;
+    padding         : 9px 35px;
+    border          : 1px solid #66ccff;    
+}
+/* end of arag_tips_block }}} */
 /* {{{ arag_warning_block */
 .arag_warning_block {
     margin          : 0px;

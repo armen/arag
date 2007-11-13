@@ -10,7 +10,6 @@ require_once "backend.php";
 
 class Application_Controller extends Backend_Controller 
 {
-
     // {{{ Constructor
     function __construct()
     {
@@ -43,24 +42,20 @@ class Application_Controller extends Backend_Controller
     }
     // }}}
     // {{{ default_group_read
-    public function default_group_read($appname = NULL)
+    public function default_group_read()
     {
-        $appname = $this->appname;
-        $this->_default_group($appname, false);
+        $this->_default_group($this->appname, false);
     }
     // }}}
     // {{{ new_group_read
-    public function new_group_read($appname = NULL)
+    public function new_group_read()
     {
-        $appname = $this->appname;
-        $this->_new_group($appname, false);
+        $this->_new_group($this->appname, false);
     }
     // }}}
     // {{{ users_read
-    public function users_read($id, $appname = NULL)
+    public function users_read($id)
     {
-        
-        $appname = $this->appname;
         $this->global_tabs->addItem(_("Users"), "user/backend/application/users/".$id);
         
         $this->_create_users_plist($id);
@@ -70,7 +65,7 @@ class Application_Controller extends Backend_Controller
         $this->users->addAction("user/backend/application/delete/user", _("Delete"), 'delete_action', PList::GROUP_ACTION);
         $this->users->setGroupActionParameterName('username');
         
-        $this->load->vars(array("flagsearch"  => false));        
+        $this->load->vars(array("flagsearch" => false));        
 
         $this->load->view('backend/users');
     }
@@ -84,8 +79,7 @@ class Application_Controller extends Backend_Controller
     // {{{ new_user_read
     public function new_user_read()
     {
-        $appname = $this->appname;
-        $this->_new_user($appname, false);      
+        $this->_new_user($this->appname, false);      
     }
     // }}}
     // {{{ user_profile_read
@@ -93,7 +87,7 @@ class Application_Controller extends Backend_Controller
     {
         $this->global_tabs->addItem(_("User's Profile"), "user/backend/application/user_profile/%username%"); 
         $this->global_tabs->setParameter('username', $username);
-        $this->_user_profile($username, false);    
+        $this->_user_profile($username, false, true);    
     }
     // }}}
     // {{{ user_profile_read_error
@@ -152,11 +146,10 @@ class Application_Controller extends Backend_Controller
 
         }
         
-        $appname = $this->session->get('delete_appname');
-        $this->session->del('delete_appname');
+        $appname = $this->session->get_once('delete_appname');
 
         $subjects = implode(",", $subjects);
-        
+
         $this->load->vars(array('objects'  => $objects,
                                 'subjects' => $subjects,
                                 'flag'     => $flag,
@@ -175,10 +168,10 @@ class Application_Controller extends Backend_Controller
         if ($this->input->post('submit')) {
             if ($flag) {
                 $application = $this->input->post('application');
-                $this->Groups->deleteGroups($objects);
+                $this->Groups->deleteGroups($objects, $this->session->get('username'));
                 url::redirect('user/backend/application/index/');
             } else {
-                $this->Users->deleteUsers($objects);
+                $this->Users->deleteUsers($objects, NULL, $this->session->get('username'));
                 url::redirect('user/backend/application/all_users');
             }
         } else {
@@ -186,14 +179,19 @@ class Application_Controller extends Backend_Controller
         }
     }
     //}}}
+    // {{{ do_delete_error
+    public function do_delete_error()
+    {
+        $this->_invalid_request('user/backend/application');
+    }
+    // }}}
     //{{{ group_privileges_edit_read
     public function group_privileges_edit_read($id, $appname = NULL)
     {
-        $appname = $this->appname;
         $row  = $this->Groups->getGroup($id);
         $name = $row['name'];
         $this->global_tabs->addItem(_("Edit $name's privileges"), "user/backend/application/group_privileges_edit/".$id);
-        $this->_privileges_edit_read($id, $appname, false);
+        $this->_privileges_edit_read($id, $this->appname, false);
     }
     //}}}
     //{{{ group_privileges_edit_write
@@ -216,9 +214,7 @@ class Application_Controller extends Backend_Controller
         $this->session->set('user_user_user', $user);
         $this->session->set('user_user_group', $group_name);
         
-        $app_name = $this->appname;
-        
-        $this->_create_users_plist(NULL, $app_name, $group_name, $user, false);
+        $this->_create_users_plist(NULL, $this->appname, $group_name, $user, false);
 
         $this->users->addAction("user/backend/application/user_profile/#username#", _("Edit"), 'edit_action');
         $this->users->addAction("user/backend/application/delete/user/#username#", _("Delete"), 'delete_action');
@@ -227,14 +223,14 @@ class Application_Controller extends Backend_Controller
         
         $this->load->vars(array("flagsearch" => true,
                                 "user"       => $user,
-                                "app_name"   => $app_name,
+                                "app_name"   => $this->appname,
                                 "group_name" => $group_name,
                                 "flagform"   => false));        
 
         $this->load->view('backend/users');    
     }
     // }}}
-    // {{{ new_user_write()
+    // {{{ new_user_write
     public function new_user_write()
     {
         $this->_new_user_write($this->appname);
@@ -249,6 +245,9 @@ class Application_Controller extends Backend_Controller
     // {{{ user_profile_write
     public function user_profile_write()
     {
+        if ($this->input->post('password') && !$this->_check_old_password($this->input->post('oldpassword'), $this->input->post('username'))) {
+            $this->_invalid_request('user/application/index');
+        }
         $this->_user_profile_write($this->appname);       
     }
     // }}}
@@ -268,6 +267,30 @@ class Application_Controller extends Backend_Controller
     public function new_group_write_error()
     {
         $this->new_group_read($this->appname);
+    }
+    // }}}
+    // {{{ settings_read
+    function settings_read()
+    {
+        $this->_settings_read(false);
+    }
+    // }}}
+    // {{{ settings_write
+    public function settings_write()
+    {
+        Arag_Config::set('limit', $this->input->post('limit'));
+
+              
+        $this->session->set('settings_saved', true);
+
+        //url::redirect('user/backend/applications/settings');
+        $this->settings_read();
+    }
+    // }}}
+    // {{{ settings_write_error
+    public function settings_write_error()
+    {
+        $this->settings_read();
     }
     // }}}
 }

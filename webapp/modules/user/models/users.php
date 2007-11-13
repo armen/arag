@@ -17,13 +17,12 @@ class Users_Model extends Model
     const USER_BLOCKED        = 4;
 
     private $tablePrefix;
-    private $session;
 
     // }}}
     // {{{ Constructor
     function __construct()
     {
-        parent::__construct();
+        parent::__construct('default');
 
         // Set table prefix
         $this->tablePrefix = $this->db->table_prefix();
@@ -33,21 +32,21 @@ class Users_Model extends Model
         $this->tableNameGroups = "user_groups";
         $this->tableNameApps   = "user_applications";
 
-        $this->session = Kohana::instance()->session;        
     }
     // }}}
     // {{{ check
     public function check($username, $password, &$status = 0)
     {
-        $this->db->select('username, verified, blocked');
+        $this->db->select('username, password, verified, blocked');
         $this->db->where('username', $username);
         $this->db->where('password', sha1($password));
 
         $query = $this->db->get($this->tableNameUsers);
+        $user  = $query->current();
 
-        if ($query->num_rows() == 1) {
+        // Don't believe the truth! double check it ;)
+        if ($query->num_rows() == 1 && $username === $user->username && sha1($password) === $user->password) {
 
-            $user   = $query->current();
             $status = self::USER_OK;
 
             // Check if user verified
@@ -62,14 +61,32 @@ class Users_Model extends Model
                 $status &= ~self::USER_OK;              // Remove the USER_OK flag
             }
  
-            //return (boolean)($status & self::USER_OK);  // Check if USER_OK flag is set
-            return $status;
+            return (boolean)($status & self::USER_OK);  // Check if USER_OK flag is set
         }
 
         $status = self::USER_NOT_FOUND; // Status is 0
-        return $status;
+        return (boolean)$status;
     }
     // }}}
+    // {{{ checkVerify
+    public function checkVerify($username, $password, $uri)
+    {
+        $this->db->select('username, password, verify_string');
+        $this->db->where('username', $username);
+        $this->db->where('password', sha1($password));
+        $this->db->where('verify_string', $uri);
+
+        $query = $this->db->get($this->tableNameUsers); 
+        $user  = $query->current();
+
+        if ($query->num_rows() == 1 && $username === $user->username && 
+            sha1($password) === $user->password && $uri === $user->verify_string) {
+            return True;
+        }
+
+        return False;        
+    }
+    // }}}   
     // {{{ & getUser
     public function & getUser($username)
     {
@@ -110,7 +127,7 @@ class Users_Model extends Model
     // {{{ & getUserProfile
     public function & getUserProfile($username)
     {
-        $this->db->select('*');
+        $this->db->select('username, name, lastname, password, create_date, created_by, modify_date, modified_by, blocked, profile_id, email, group_id');
         $this->db->from($this->tableNameUsers);
         $this->db->where('username', $username);
 
@@ -167,31 +184,32 @@ class Users_Model extends Model
     }
     // }}}
     // {{{ createUser
-    public function createUser($appname, $email, $name, $lastname, $groupname, $username, $password)
+    public function createUser($appname, $email, $name, $lastname, $groupname, $username, $password, $author, $verify_string = NULL, $verified =  1)
     {
         $controller = Kohana::instance();
         $controller->load->model('Groups', 'Groups', 'user');
 
         $group = $controller->Groups->getGroup(NULL, $appname, $groupname);
         
-        $row = Array('username'    => $username, 
-                     'create_date' => time(),
-                     'modify_date' => time(),
-                     'modified_by' => $this->session->get('username'),
-                     'created_by'  => $this->session->get('username'),
-                     'name'        => $name,
-                     'lastname'    => $lastname,
-                     'group_id'    => $group['id'],
-                     'email'       => $email,
-                     'password'    => sha1($password),
-                     'verified'    => 1);
+        $row = Array('username'      => $username, 
+                     'create_date'   => time(),
+                     'modify_date'   => time(),
+                     'modified_by'   => $author,
+                     'created_by'    => $author,
+                     'name'          => $name,
+                     'lastname'      => $lastname,
+                     'group_id'      => $group['id'],
+                     'email'         => $email,
+                     'password'      => sha1($password),
+                     'verified'      => $verified,
+                     'verify_string' => $verify_string);
         
-        $controller->Groups->changeModifiers($group['id']);
+        $controller->Groups->changeModifiers($group['id'], $author);
         $this->db->insert($this->tableNameUsers, $row);
     }
     // }}}
     // {{{ editUser
-    public function editUser($appname, $email, $name, $lastname, $groupname, $username, $password = "", $blocked)
+    public function editUser($appname, $email, $name, $lastname, $groupname, $username, $password = "", $blocked, $author)
     {
         $controller = Kohana::instance();
         $controller->load->model('Groups', 'Groups', 'user');
@@ -206,7 +224,7 @@ class Users_Model extends Model
         
         $row = Array('create_date' => time(),
                      'modify_date' => time(),
-                     'modified_by' => $this->session->get('username'),
+                     'modified_by' => $author,
                      'name'        => $name,
                      'lastname'    => $lastname,
                      'group_id'    => $group['id'],
@@ -217,28 +235,39 @@ class Users_Model extends Model
             $row['password'] = sha1($password);
         }
 
-        $controller->Groups->changeModifiers($group['id']);
+        $controller->Groups->changeModifiers($group['id'], $author);
         $this->db->where('username', $username);
         $this->db->update($this->tableNameUsers, $row);
     }
     // }}}
     // {{{ hasUserName
-    public function hasUserName($username)
+    public function hasUserName($username, $appname = NULL)
     {
-        $this->db->select('username');
-        $query = $this->db->getwhere($this->tableNameUsers, Array('username' => $username)); 
-        return (boolean)$query->num_rows();
+        if ($appname == NULL) {
+            $this->db->select('username');
+            $query = $this->db->getwhere($this->tableNameUsers, Array('username' => $username)); 
+            return (boolean)$query->num_rows();
+        } else {
+            $this->db->select('username');
+            $this->db->from($this->tableNameUsers);
+            $this->db->join($this->tableNameGroups, $this->tablePrefix.$this->tableNameGroups.".id = ".
+                            $this->tablePrefix.$this->tableNameUsers.".group_id");           
+            $this->db->where('username', $username);
+            $this->db->where('appname', $appname);
+            $query = $this->db->get();
+            return (boolean)$query->num_rows();
+        }
     }
     // }}}
     // {{{ deleteUsers
-    public function deleteUsers($usernames = NULL, $groupid = NULL)
+    public function deleteUsers($usernames = NULL, $groupid = NULL, $author)
     {   
         if ($groupid == NULL) {
             $controller = Kohana::instance();
             $controller->load->model('Groups', 'Groups', 'user');
             foreach ($usernames as $username) {
                 $row = $this->getUserProfile($username);
-                $controller->Groups->changeModifiers($row['group_id']);
+                $controller->Groups->changeModifiers($row['group_id'], $author);
                 $this->db->delete($this->tableNameUsers, Array('username' => $username));
             }
         } else {
@@ -252,6 +281,36 @@ class Users_Model extends Model
         return boolean($row['block']);
     }
     //}}}
+    // {{{ createDate
+    function createDate($verify_string)
+    {
+        $this->db->select('create_date');
+        return $this->db->getwhere($this->tableNameUsers, array('verify_string' => $verify_string))->current()->create_date;
+    }
+    // }}}
+    // {{{ verify
+    public function verify($username, $password, $uri)
+    {
+        $this->db->where('username', $username);
+        $this->db->where('password', sha1($password));
+        $this->db->where('verify_string', $uri);       
+
+        $rows = array (
+                       'verify_string' => NULL,
+                       'verified'      => 1
+                      );
+
+        $this->db->update($this->tableNameUsers, $rows);
+    }
+    // }}}
+    // {{{ hasUri
+    public function hasUri($verify_uri)
+    {
+        $this->db->select('verify_string');
+        $query = $this->db->getwhere($this->tableNameUsers, Array('verify_string' => $verify_uri)); 
+        return (boolean)$query->num_rows();
+    }
+    // }}}
 }
 
 ?>

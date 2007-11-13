@@ -33,13 +33,19 @@ class Arag_Auth {
     // {{{ check
     public static function check()
     {
+        $session = new Session();
+        $appname = $session->get('appname');
+
+        if (APPNAME !== $appname && $session->get('authenticated') && $appname != '_master_') {
+            
+            // Redirect to user's application
+            $multisite = Model::load('MultiSite', 'multisite');
+            url::redirect($multisite->getAppUrl($appname));
+            exit;
+        }
+
         $directory         = substr(Router::$directory, strpos(Router::$directory, 'controllers/') + 12); // 12 is strlen('controllers/')
         self::$destination = Router::$module . '/' . $directory . Router::$controller . '/' . Router::$method;
-
-        $session = new Session();
-
-        // Fetch current appname
-        $appname = '_master_';
 
         if (!$session->get('authenticated') && $session->get('username') != 'anonymous') {
 
@@ -77,18 +83,25 @@ class Arag_Auth {
         if (self::$destination === 'core/frontend/messages/not_authorized') {
             return True;
         }
-    
+
         if (is_array($privileges)) {
 
             foreach ($privileges as $privilege) {
 
-                // * is allowed when we are working with black lists
+                // BLAKLIST: 
+                //     * is allowed when we are working with black lists
                 if (((boolean) $whiteList == False && $privilege === '*') || 
-                    // It contains four section which every section separated with a /.
-                    // It should contain at least two sections. Each section contains * 
-                    // (except first section and last when we have 4 or 3 sections) or 
-                    // lower case character(s)
-                    preg_match('/^([a-z_]+)((\/[a-z_]+){0,2}(\/\*))|((\/[a-z_]+){2,3})$/', $privilege)) {
+                    // BLAKLIST:
+                    //     It contains four section which every section separated with a /.
+                    //     It should contain at least two sections. last section allways is *
+                    //     and othe sections are lower case cheractrer(s)
+                    ((boolean) $whiteList == False && preg_match('/^([a-z_]+)((\/[a-z_]+){0,2}(\/\*))$/', $privilege)) ||
+                    // WHITELIST:
+                    //     It contains four section which every section separated with a /.
+                    //     It should contain at least two sections. Each section contains * 
+                    //     (except first section and last when we have 4 or 3 sections) or 
+                    //     lower case character(s)
+                    ((boolean) $whiteList == True && preg_match('/^([a-z_]+)((\/[a-z_]+){0,2}(\/\*))|((\/[a-z_]+){2,3})$/', $privilege))) {
                     
                     // Replace * with .*
                     $privilege = '|^'.str_replace('*', '.*', $privilege).'$|';
@@ -96,11 +109,21 @@ class Arag_Auth {
                     if (preg_match($privilege, self::$destination)) {
                         return (boolean) $whiteList;
                     }
+
+                } else if ((boolean) $whiteList == False) {
+                    // We are checking filters which are blacklist and the filter is invalid so 
+                    // return False
+                    return False;
+
                 } // else, privilege is invalid, ignore it
             }
+            
+            // Return depend on list type
+            return !(boolean) $whiteList;
         }
 
-        return !(boolean) $whiteList;
+        // The format is incorrect! sorry we can't let you in :)
+        return False;
     }
     // }}}
 }

@@ -8,6 +8,7 @@ $validator['error_messages'] = Array (
                                        'required'      => _("%s is required."), 
                                        'min_length'    => _("minimum length of %s is %d"),
                                        'valid_type'    => _("%s should be numeric"),
+                                       'alpha_numeric' => _("%s should be alpha numeric"),
                                        'unknown_error' => _("An unknown error occured!")
                                      );
 

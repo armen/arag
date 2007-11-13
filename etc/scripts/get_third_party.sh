@@ -31,8 +31,8 @@ if [ -d $LIBS_PATH/pear ]; then
     rm -rf "${LIBS_PATH}/pear"
 fi
 
-wget -c -P /tmp http://pub.opensourceclub.org/pear.tar.bz2
-tar xvfj /tmp/pear.tar.bz2
+wget -c -P /tmp http://arag.osp.ir/pub/pear-1.6.2.tar.bz2
+tar xvfj /tmp/pear-1.6.2.tar.bz2
 mv ./pear $LIBS_PATH
 
 # Download FCKeditor

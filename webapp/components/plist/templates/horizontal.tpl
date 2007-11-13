@@ -6,8 +6,8 @@
 
 {if !isset($_loaded|smarty:nodefaults)}
     {assign var=_loaded value=True}
-    <script type="text/javascript" src="{$arag_base_url|smarty:nodefaults}/scripts/mootools.js"></script>    
-    <script type="text/javascript" src="{$arag_base_url|smarty:nodefaults}/scripts/plist.js"></script>
+    <script type="text/javascript" src="{$arag_base_url|smarty:nodefaults}scripts/mootools.js"></script>    
+    <script type="text/javascript" src="{$arag_base_url|smarty:nodefaults}scripts/plist.js"></script>
 {/if}
 
 {assign var=columns value=$plist->getColumns()}

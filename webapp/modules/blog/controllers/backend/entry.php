@@ -16,7 +16,7 @@ class Entry_Controller extends Backend_Controller
         $this->load->component('PList', 'entries');
 
         $this->entries->setResource($this->Blog->getEntries());
-        $this->entries->setLimit(Config::item('limit', NULL, 0));
+        $this->entries->setLimit(Arag_Config::get('limit', 0));
         $this->entries->addColumn('subject', _("Subject"));        
         $this->entries->addColumn('author', _("Author"));
         $this->entries->addColumn('Blog.getDate', _("Create Date"), PList::VIRTUAL_COLUMN);
@@ -166,7 +166,7 @@ class Entry_Controller extends Backend_Controller
     }
     // }}}
     // {{{ _check_entry
-    protected function _check_entry($id)
+    public function _check_entry($id)
     {
         return $this->Blog->hasEntry($id);
     }

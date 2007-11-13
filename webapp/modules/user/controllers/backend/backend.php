@@ -8,8 +8,10 @@
 
 class Backend_Controller extends Controller 
 {
-    // {{{ properties
-    public $appname;
+    // {{{ Properties
+    
+    protected $appname = Null;
+
     // }}}
     // {{{ Constructor
     function __construct()
@@ -32,8 +34,8 @@ class Backend_Controller extends Controller
         // Default page title
         $this->decorator->page_title = 'User Management';
 
-        // Current Application
-        $this->appname = "_master_";
+        // Get the appname
+        $this->appname = $this->session->get('appname');
     }
     // }}}
     // {{{ _create_users_plist
@@ -55,102 +57,22 @@ class Backend_Controller extends Controller
         $this->users->addColumn('created_by', _("Created By"));
     }
     // }}}
-    // {{{ settings_read
-    public function settings_read()
+    // {{{ _settings_read
+    public function _settings_read($flagform)
     {   
-        $saved = NULL;
-        if ($this->session->get('settings_saved')) {
-            $saved = $this->session->get('settings_saved');
-            $this->session->del('settings_saved');
-        }
-
         $data          = Array();
         $data['limit'] = Arag_Config::get("limit");
-        $data['saved'] = $saved;
+        $data['saved'] = $this->session->get_once('settings_saved');
+        $data['form']  = $flagform;
 
         $this->load->vars($data);        
         $this->load->view('backend/settings');
 
     }
     // }}}
-    // {{{ settings_write
-    public function settings_write()
-    {
-        Arag_Config::set('limit', $this->input->post('limit'));
-        
-        $this->session->set('settings_saved', true);
-
-        url::redirect('user/backend/applications/settings');
-    }
-    // }}}
-    // {{{ settings_write_error
-    public function settings_write_error()
-    {
-        $this->settings_read();
-    }
-    // }}} 
-    // {{{ _check_group
-    protected function _check_group($id)
-    {
-        return $this->Groups->hasGroup(NULL, NULL, $id);
-    }
-    // }}}
-    // {{{ _check_group_name
-    protected function _check_group_name($name)
-    {
-        $appname = $this->input->post('application');
-        return !$this->Groups->hasGroup($name, $appname);
-    }
-    // }}}
-    // {{{ _check_user_name
-    protected function _check_user_name($username)
-    {
-        return (!preg_match("/^[a-z0-9_.]+_admin$/", strtolower($username)) && 
-                !$this->Users->hasUserName($username) && preg_match("/^[a-z][a-z0-9_.]*$/", strtolower($username)));
-    }
-    // }}}
-    // {{{ _check_user_name_profile
-    protected function _check_user_name_profile($username)
-    {
-        return $this->Users->hasUserName($username);
-    }
-    // }}}
-    // {{{ _check_filter
-    protected function _check_filter($filter)
-    {
-        return ($filter === '*') || $this->_check_privilege($filter);
-    }
-    // }}}
-    // {{{ _check_privilege
-    protected function _check_privilege($privilege)
-    {
-        if ($this->input->post('parentid') === "0") {
-            return true;
-        }
-        return (boolean) preg_match('/^([a-z_]+)((\/[a-z_]+){0,2}(\/\*))|((\/[a-z_]+){2,3})$/', strtolower(trim($privilege, '/')));
-    }
-    // }}}
-    // {{{ _check_label
-    protected function _check_label($id)
-    {
-        return $this->Privileges->hasLabel($id);
-    }
-    // }}}
-    // {{{ _check_app_filter
-    protected function _check_app_filter($appname)
-    {
-        return !$this->Filters->hasApp($appname);
-    }
-    // }}}
     // {{{ _create_privileges_list
     protected function _create_privileges_list($appname, $parentid = NULL)
     {
-        $flagsaved = false;
-        if ($this->session->get('privileges_add_saved')) {
-            $flagsaved = $this->session->get('privileges_add_saved');
-            $this->session->del('privileges_add_saved');
-        }
-        
         $this->load->component('PList', 'privileges');
 
         $this->privileges->setResource($this->Privileges->getFilteredPrivileges($appname, $parentid));
@@ -169,7 +91,7 @@ class Backend_Controller extends Controller
         $this->privileges->setGroupActionParameterName('id'); 
 
         $this->load->vars(array("parentid"  => $parentid,
-                                "flagsaved" => $flagsaved));
+                                "flagsaved" => $this->session->get_once('privileges_add_saved')));
 
         $this->load->view('backend/privileges'); 
     }
@@ -195,12 +117,6 @@ class Backend_Controller extends Controller
     // {{{ _default_group
     protected function _default_group($appname, $flagform = true)
     {
-        $flagsaved = false;
-        if ($this->session->get('default_group_saved')) {
-            $flagsaved = $this->session->get('default_group_saved');
-            $this->session->del('default_group_saved');
-        }
-
         $row  = $this->Groups->getAllAppGroups($appname);
         $row2 = $this->Groups->getDefaultGroup($appname);
 
@@ -208,7 +124,7 @@ class Backend_Controller extends Controller
 
         $this->load->vars(array("allgroups"    => $row,
                                 "defaultgroup" => $row2[0]['default_group'],
-                                "flagsaved"    => $flagsaved,
+                                "flagsaved"    => $this->session->get_once('default_group_saved'),
                                 "flagform"     => $flagform,
                                 "appname"      => $appname));
 
@@ -230,19 +146,13 @@ class Backend_Controller extends Controller
     // {{{ _new_group
     protected function _new_group($appname, $flagform = true)
     {
-        $flagsaved = false;
-        if ($this->session->get('new_group_saved')) {
-            $flagsaved = $this->session->get('new_group_saved');
-            $this->session->del('new_group_saved');
-        }
-
         $this->global_tabs->setParameter('name', $appname); 
 
-        $this->load->vars(array("flagsaved"    => $flagsaved,
+        $this->load->vars(array("flagsaved"    => $this->session->get_once('new_group_saved'),
                                 "flagform"     => $flagform,
                                 "appname"      => $appname));
 
-        $this->load->view('backend/new_group.tpl');
+        $this->load->view('backend/new_group');
     }
     // }}}
     // {{{ _new_group_write
@@ -250,42 +160,28 @@ class Backend_Controller extends Controller
     {
         $newgroup   = $this->input->post("newgroup", true);
             
-        $this->Groups->newGroup($appname, $newgroup);
+        $this->Groups->newGroup($appname, $newgroup, $this->session->get('username'));
 
         $this->session->set('new_group_saved', true);
 
         $this->new_group_read($appname, true);
     }
     // }}}
-    // {{{ _ckeck_current_group
-    protected function _check_current_group($id)
-    {
-        $appname = $this->appname;
-        return $this->Groups->hasGroup(NULL, $appname, $id);
-    }
-    // }}}
     // {{{ _new_user
     protected function _new_user($appname, $flagform = true)
     {
-        $flagsaved = false;
-
-        if ($this->session->get('new_user_saved')) {
-            $flagsaved = true;
-            $this->session->del('new_user_saved');
-        }
-        
         $this->global_tabs->setParameter('name', $appname); 
         
         $row  = $this->Groups->getAllAppGroups($appname);
         $row2 = $this->Groups->getDefaultGroup($appname);
 
         $this->load->vars(array("appname"      => $appname,
-                                "flagsaved"    => $flagsaved,
+                                "flagsaved"    => $this->session->get_once('new_user_saved'),
                                 "allgroups"    => $row,
                                 "defaultgroup" => $row2[0]['default_group'],
                                 "flagform"     => $flagform));
 
-        $this->load->view('backend/new_user.tpl');       
+        $this->load->view('backend/new_user');       
     }
     // }}}
     // {{{ _new_user_write
@@ -298,7 +194,7 @@ class Backend_Controller extends Controller
         $username  = $this->input->post('username', true);
         $password  = $this->input->post('password', true);
         
-        $this->Users->createUser($appname, $email, $name, $lastname, $groupname, $username, $password);
+        $this->Users->createUser($appname, $email, $name, $lastname, $groupname, $username, $password, $this->session->get('username'));
 
         $this->session->set('new_user_saved', true);
 
@@ -307,21 +203,14 @@ class Backend_Controller extends Controller
     }
     // }}}
     // {{{ _user_profile
-    protected function _user_profile($username, $flagform = true)
+    protected function _user_profile($username, $flagform = true, $oldpassword = false)
     {
-        $flagsaved = false;
-
-        if ($this->session->get('edit_user_saved')) {
-            $flagsaved = true;
-            $this->session->del('edit_user_saved');
-        }
-
         $userprofile = $this->Users->getUserProfile($username);
         $group       = $this->Groups->getGroup($userprofile['group_id']);
         $row         = $this->Groups->getAllAppGroups($group['appname']);
 
         $this->load->vars(array("appname"      => $group['appname'],
-                                "flagsaved"    => $flagsaved,
+                                "flagsaved"    => $this->session->get_once('edit_user_saved'),
                                 "allgroups"    => $row,
                                 "defaultgroup" => $group['name'],
                                 "username"     => $userprofile['username'],
@@ -329,9 +218,10 @@ class Backend_Controller extends Controller
                                 "lastname"     => $userprofile['lastname'],
                                 "email"        => $userprofile['email'],
                                 "blocked"      => $userprofile['blocked'],
-                                "flagform"     => $flagform));
+                                "flagform"     => $flagform,
+                                "oldpassword"  => $oldpassword));
 
-        $this->load->view('backend/user_profile.tpl');
+        $this->load->view('backend/user_profile');
     }
     // }}}
     // {{{ _user_profile_write
@@ -345,7 +235,7 @@ class Backend_Controller extends Controller
         $password  = $this->input->post('password', true);
         $blocked   = $this->input->post('blocked', true);
 
-        $this->Users->editUser($appname, $email, $name, $lastname, $groupname, $username, $password, $blocked);
+        $this->Users->editUser($appname, $email, $name, $lastname, $groupname, $username, $password, $blocked, $this->session->get('username'));
 
         $this->session->set('edit_user_saved', true);
 
@@ -362,13 +252,6 @@ class Backend_Controller extends Controller
     // {{{ _privileges_edit_read
     protected function _privileges_edit_read($id, $appname, $flagform = true)
     {
-
-        $flagsaved = false;
-        if ($this->session->get('group_privileges_edit_saved')) {
-            $flagsaved = $this->session->get('group_privileges_edit_saved');
-            $this->session->del('group_privileges_edit_saved');
-        }
-
         $parents         = $this->Privileges->getFilteredPrivileges($appname, "0");
         $subpris         = $this->Privileges->getAppPrivileges($appname);
         $allselected     = $this->Privileges->getPrivileges($id, true);
@@ -379,7 +262,7 @@ class Backend_Controller extends Controller
                                 'sub_privileges'    => $selected,
                                 'id'                => $id,
                                 'appname'           => $appname,
-                                'flagsaved'         => $flagsaved,
+                                'flagsaved'         => $this->session->get_once('group_privileges_edit_saved'),
                                 'flagform'          => $flagform));
 
         $this->load->view('backend/group_privileges');
@@ -398,11 +281,128 @@ class Backend_Controller extends Controller
         $this->group_privileges_edit_read($groupid, $appname);
     }
     // }}}
+    // {{{ callbacks
     // {{{ _check_app
-    protected function _check_app($name)
+    public function _check_app($name)
     {
         return $this->Applications->hasApp($name);
     }
+    // }}}
+    // {{{ _check_group
+    public function _check_group($id)
+    {
+        return $this->Groups->hasGroup(NULL, NULL, $id);
+    }
+    // }}}
+    // {{{ _check_group_name
+    public function _check_group_name($name)
+    {
+        $appname = $this->input->post('application');
+        return !$this->Groups->hasGroup($name, $appname);
+    }
+    // }}}
+    // {{{ _check_user_name
+    public function _check_user_name($username)
+    {
+        return (!preg_match("/^[a-z0-9_.]+_admin$/", strtolower($username)) && 
+                !$this->Users->hasUserName($username) && preg_match("/^[a-z][a-z0-9_.]*$/", strtolower($username)));
+    }
+    // }}}
+    // {{{ _check_user_name_profile
+    public function _check_user_name_profile($username)
+    {   
+        return $this->Users->hasUserName($username, $this->appname);
+    }
+    // }}}
+    // {{{ _check_user_name_profile_master
+    public function _check_user_name_profile_master($username)
+    {   
+        return $this->Users->hasUserName($username);
+    }
+    // }}}   
+    // {{{ _check_filter
+    public function _check_filter($filter)
+    {
+        return ($filter === '*') || preg_match('/^([a-z_]+)((\/[a-z_]+){0,2}(\/\*))$/', $filter);
+    }
+    // }}}
+    // {{{ _check_privilege
+    public function _check_privilege($privilege)
+    {
+        if ($this->input->post('parentid') === "0") {
+            return true;
+        }
+        return (boolean) preg_match('/^([a-z_]+)((\/[a-z_]+){0,2}(\/\*))|((\/[a-z_]+){2,3})$/', strtolower(trim($privilege, '/')));
+    }
+    // }}}
+    // {{{ _check_label
+    public function _check_label($id)
+    {
+        return $this->Privileges->hasLabel($id);
+    }
+    // }}}
+    // {{{ _check_app_filter
+    public function _check_app_filter($appname)
+    {
+        return !$this->Filters->hasApp($appname);
+    }
+    // }}}
+    // {{{ _ckeck_current_group
+    public function _check_current_group($id)
+    {
+        return $this->Groups->hasGroup(NULL, $this->appname, $id);
+    }
+    // }}}
+    // {{{ _check_current_deletables
+    public function _check_current_deletables()
+    {
+        $objects = $this->validation->objects;
+
+        foreach ($objects as $object) {
+            if ($this->validation->flag == 1) {
+                if (!$this->Groups->hasGroup(NULL, $this->appname, $object)) {
+                    return false;
+                }
+            } else {
+                if (!$this->Users->hasUserName($object, $this->appname)) {
+                    return false;
+                }
+            }
+        }
+
+        return true;
+    }
+    // }}}
+    // {{{ _check_old_password
+    public function _check_old_password($password = NULL, $username = NULL)
+    {
+        if ($password == NULL) {
+            $password = $this->validation->oldpassword;
+        }       
+
+        if ($username == NULL) {
+            $username = $this->validation->username;
+        }
+
+        $status = $this->Users->check($username, $password);
+
+        if ($status != Users_Model::USER_OK) {
+            return false;
+        }
+
+        return true;
+    }
+    // }}}
+    // {{{ _check_password
+    public function _check_password($password)
+    {
+        if ($password != "") {
+            return $this->_check_old_password();
+        }
+
+        return true;
+    }
+    // }}}
     // }}}
 }
 ?>

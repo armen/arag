@@ -44,7 +44,7 @@ if (PEAR::isError($options)) {
 }
 
 // Optional options
-$prefix = '';
+$prefix = 'arag_';
 $data   = 'test';
 
 // Extract options
@@ -118,10 +118,10 @@ if (isset($allModules)) {
                 if (file_exists($modulesPath . '/' . $moduleName . '/config/module.php')) {
                     include_once($modulesPath . '/' . $moduleName . '/config/module.php');
 
-                    $schemaPath = $modulesPath . '/' . $moduleName . '/schemas/v' . $module['version'];
+                    $schemaPath = $modulesPath . '/' . $moduleName . '/schemas/v' . $config['version'];
                     
                     // Is module enabled?
-                    if (strtolower($module['enabled']) && is_dir($schemaPath)) {
+                    if (strtolower($config['enabled']) && is_dir($schemaPath)) {
 
                         if ($fh = opendir($schemaPath)) {
                             while (false !== ($schemaFile = readdir($fh))) {

@@ -18,7 +18,7 @@ class Applications_Model extends Model
     // {{{ Constructor
     function __construct()
     {
-        parent::__construct();
+        parent::__construct('default');
 
         // set tables' names
         $this->tableNameApps   = "user_applications";
@@ -62,6 +62,20 @@ class Applications_Model extends Model
         $this->db->select('name');
         $query = $this->db->getwhere($this->tableNameApps, Array('name' => $name)); 
         return (boolean)$query->num_rows();
+    }
+    // }}}
+    // {{{ addApp
+    public function addApp($appname, $author, $defaultgroup = "admin", $databaseid = 1)
+    {
+        $rows = array (
+                       'name'          => $appname,
+                       'create_date'   => time(),
+                       'created_by'    => $author,
+                       'default_group' => $defaultgroup,
+                       'database_id'   => $databaseid
+                      );
+
+        $this->db->insert($this->tableNameApps, $rows);
     }
     // }}}
 }

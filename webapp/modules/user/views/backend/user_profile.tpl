@@ -27,6 +27,16 @@
                     <input type="hidden" value="{$appname}" name="application" />
                 </td>
             </tr>
+            {if $oldpassword}
+                <tr>
+                    <td align="{right}">
+                        _("Old Password"):
+                    </td>
+                    <td align="{left}">
+                        <input type="password" name="oldpassword" />
+                    </td>
+                </tr>               
+            {/if}
             <tr>
                 <td align="{right}">
                     _("Password"):

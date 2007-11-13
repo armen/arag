@@ -10,7 +10,7 @@
     {/arag_block}
 {/if}
 {arag_block}
-    {arag_form uri="user/backend/applications/filters_edit"}
+    {arag_form uri="user/backend/applications/filters_edit/$appname/$id"}
         <table border="0" dir="{dir}"> 
              <tr>
                 <td align="{right}">

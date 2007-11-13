@@ -5,7 +5,7 @@
 *}
 
 <div class="tabbed_block_title" align="{left}" dir="{dir}" 
-     style="background: transparent url({$tabbedblock_module_icon_url}) {left} no-repeat;">
+     style="background: transparent url({$arag_base_url|smarty:nodefaults}images/modules/{$tabbedblock_module}.png) {left} no-repeat;">
     {$tabbedblock_title}::{$tabbedblock_selected_tab_name}
 </div>
 <div style="clear:both;font-size:0px;height:0px;">&nbsp;</div>

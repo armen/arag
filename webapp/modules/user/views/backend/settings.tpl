@@ -12,8 +12,14 @@
             _("Settings are updated successfuly!")
         {/arag_block}
     {/if}
+    
+    {if $form}
+        {assign var=uri value="user/backend/applications/settings"}
+    {else}
+        {assign var=uri value="user/backend/application/settings"}
+    {/if}
 
-    {arag_form uri="user/backend/applications/settings" method="post"}
+    {arag_form uri=$uri method="post"}
     <table border="0" dir="{dir}" width="100%">
     <tr>
         <td align="{right}" width="150">_("List items per page"):</td>
