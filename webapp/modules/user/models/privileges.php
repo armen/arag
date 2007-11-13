@@ -12,19 +12,17 @@ class Privileges_Model extends Model
     
     public $tableNamePrivileges;
     public $tableNameGroups;
-    private $session;
 
     // }}}
     // {{{ Constructor
     function __construct()
     {
-        parent::__construct();
+        parent::__construct('default');
 
         // set tables' names
         $this->tableNamePrivileges = "user_privileges";        
         $this->tableNameGroups     = "user_groups";
 
-        $this->session = Kohana::instance()->session;
     }
     // }}}
     // {{{ getFilteredPrivileges
@@ -35,23 +33,22 @@ class Privileges_Model extends Model
 
         $filters = $controller->Filters->getPrivilegeFilters($appname);
         
-        $this->db->select('*')->from($this->tableNamePrivileges);
+        $this->db->select('id, parent_id, label, create_date, created_by, modify_date, modified_by, privilege')->from($this->tableNamePrivileges);
 
         if ($parentId != NULL) {
             $this->db->where(array('parent_id' => $parentId));
         }
 
-        $privileges = $this->db->get()->result_array(False);
+        $privileges = $this->db->orderby('label')->get()->result_array(False);
         
         if (is_array($filters)) {
 
             foreach ($filters as $filter) {
             
                 // It contains four section which every section separated with a /.
-                // It should contain at least two sections. Each section contains * 
-                // (except first section and last when we have 4 or 3 sections) or 
-                // lower case character(s)
-                if ($filter === '*' || preg_match('/^([a-z_]+)((\/[a-z_]+){0,2}(\/\*))|((\/[a-z_]+){2,3})$/', $filter)) {
+                // It should contain at least two sections. last section allways is *
+                // and othe sections are lower case cheractrer(s)
+                if ($filter === '*' || preg_match('/^([a-z_]+)((\/[a-z_]+){0,2}(\/\*))$/', $filter)) {
 
                     $filter = '|^'.str_replace('*', '.*', $filter).'$|';
 
@@ -71,23 +68,20 @@ class Privileges_Model extends Model
     // {{{ getLabel
     public function getLabel($id)
     {
-        $this->db->select('*');
+        $this->db->select('id, parent_id, label, create_date, created_by, modify_date, modified_by, privilege');
         $this->db->from($this->tableNamePrivileges);
         
         return $this->db->where(array('id' => $id))->get()->current();
     }
     // }}}
     // {{{ addLabel
-    public function addLabel($label, $parentid, $privilege = NULL)
+    public function addLabel($label, $parentid, $privilege = NULL, $author)
     {
-        $modified_by = $this->session->get('username');
-        $created_by  = $this->session->get('username');
-
         $rows = array ('label'       => $label,
                        'parent_id'   => $parentid,
                        'privilege'   => trim(strtolower($privilege), '/'),
-                       'modified_by' => $modified_by,
-                       'created_by'  => $created_by,
+                       'modified_by' => $author,
+                       'created_by'  => $author,
                        'modify_date' => time(),
                        'create_date' => time());
         
@@ -95,19 +89,18 @@ class Privileges_Model extends Model
 
         if ($parentid != "0") {
             $this->db->where('id', $parentid);
-            $this->db->update($this->tableNamePrivileges, array('modified_by' => $modified_by, 'modify_date' => time()));
+            $this->db->update($this->tableNamePrivileges, array('modified_by' => $author, 'modify_date' => time()));
         }
     }
     // }}}
     // {{{ editLabel
-    public function editLabel($label, $id, $privilege = NULL)
+    public function editLabel($label, $id, $privilege = NULL, $author)
     {
-        $modified_by = $this->session->get('username');
         $row         = $this->getLabel($id);
         
         $rows = array ('label'       => $label,
                        'privilege'   => trim(strtolower($privilege), '/'),
-                       'modified_by' => $modified_by,
+                       'modified_by' => $author,
                        'modify_date' => time());
         
         $this->db->where('id', $id);
@@ -115,7 +108,7 @@ class Privileges_Model extends Model
 
         if ($id != 0) {
             $this->db->where('id', $row->parent_id);
-            $this->db->update($this->tableNamePrivileges, array('modified_by' => $modified_by, 'modify_date' => time()));
+            $this->db->update($this->tableNamePrivileges, array('modified_by' => $author, 'modify_date' => time()));
         }
     }
     // }}}
@@ -137,7 +130,7 @@ class Privileges_Model extends Model
     }
     // }}}
     // {{{ deletePrivileges
-    public function deletePrivileges($objects)
+    public function deletePrivileges($objects, $author)
     {
         foreach ($objects as $object) {
             $label = $this->getLabel($object);    
@@ -145,7 +138,7 @@ class Privileges_Model extends Model
             if ($label->parent_id === "0") {
                 $this->db->delete($this->tableNamePrivileges, array('parent_id' => $object));
             } else {
-                $row = array ('modified_by' => $this->session->get('username'),
+                $row = array ('modified_by' => $author,
                               'modify_date' => time());
                 $this->db->where('id', $label->parent_id);
                 $this->db->update($this->tableNamePrivileges, $row);
@@ -244,6 +237,7 @@ class Privileges_Model extends Model
     public function getSelectedParents($selected, $parents)
     {
         foreach ($parents as $key => $parent) {
+            $parents[$key]['selected'] = false;
             foreach ($selected[$parent['id']] as $select) {
                 if ($select['selected']) {
                     $parents[$key]['selected'] = true;
@@ -281,5 +275,4 @@ class Privileges_Model extends Model
     }
     // }}}
 }
-
 ?>
