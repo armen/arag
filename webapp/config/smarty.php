@@ -17,7 +17,7 @@ $config = Array
     'if_funcs'              => Array         // We'll allow these functions in if statement
     (
         'array',  'list',     'trim',       'isset', 'empty', 
-        'sizeof', 'in_Array', 'is_Array',   'true',  'false',
+        'sizeof', 'in_array', 'is_array',   'true',  'false',
         'null',   'reset',    'array_keys', 'end',   'count'
     ),
     'modifier_funcs'        => Array         // We'll allow these modifiers
