@@ -183,31 +183,13 @@
                 </field>
                 <field>
                     <name>privilege</name>
-                    <value>ta_minor_profile/*</value>
+                    <value>ta_minor_profile/backend/profile</value>
                 </field>
             </insert>
             <insert>
                 <field>
                     <name>id</name>
                     <value>12</value>
-                </field>
-                <field>
-                    <name>parent_id</name>
-                    <value>2</value>
-                </field>            
-                <field>
-                    <name>label</name>
-                    <value>TA Locator</value>
-                </field>
-                <field>
-                    <name>privilege</name>
-                    <value>ta_locator/*</value>
-                </field>
-            </insert>
-            <insert>
-                <field>
-                    <name>id</name>
-                    <value>13</value>
                 </field>
                 <field>
                     <name>parent_id</name>
@@ -225,7 +207,7 @@
             <insert>
                 <field>
                     <name>id</name>
-                    <value>14</value>
+                    <value>13</value>
                 </field>
                 <field>
                     <name>parent_id</name>
@@ -243,7 +225,7 @@
             <insert>
                 <field>
                     <name>id</name>
-                    <value>15</value>
+                    <value>14</value>
                 </field>
                 <field>
                     <name>parent_id</name>
@@ -261,7 +243,7 @@
             <insert>
                 <field>
                     <name>id</name>
-                    <value>16</value>
+                    <value>15</value>
                 </field>
                 <field>
                     <name>parent_id</name>
@@ -279,7 +261,7 @@
             <insert>
                 <field>
                     <name>id</name>
-                    <value>17</value>
+                    <value>16</value>
                 </field>
                 <field>
                     <name>parent_id</name>
@@ -297,7 +279,7 @@
             <insert>
                 <field>
                     <name>id</name>
-                    <value>18</value>
+                    <value>17</value>
                 </field>
                 <field>
                     <name>parent_id</name>
@@ -315,7 +297,7 @@
             <insert>
                 <field>
                     <name>id</name>
-                    <value>19</value>
+                    <value>18</value>
                 </field>
                 <field>
                     <name>parent_id</name>
@@ -333,7 +315,7 @@
             <insert>
                 <field>
                     <name>id</name>
-                    <value>20</value>
+                    <value>19</value>
                 </field>
                 <field>
                     <name>parent_id</name>
@@ -351,7 +333,7 @@
             <insert>
                 <field>
                     <name>id</name>
-                    <value>21</value>
+                    <value>20</value>
                 </field>
                 <field>
                     <name>parent_id</name>
