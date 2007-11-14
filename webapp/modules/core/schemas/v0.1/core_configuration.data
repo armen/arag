@@ -15,7 +15,7 @@
                 </field>
                 <field>
                     <name>value</name>
-                    <value>a:6:{i:0;s:18:"user/application/*";i:1;s:18:"ta_minor_profile/*";i:2;s:13:"staticpages/*";i:3;s:12:"ta_locator/*";i:4;s:6:"blog/*";i:5;s:9:"arag/*";}</value>
+                    <value>a:6:{i:0;s:26:"user/backend/application/*";i:1;s:18:"ta_minor_profile/*";i:2;s:13:"staticpages/*";i:3;s:12:"ta_locator/*";i:4;s:6:"blog/*";i:5;s:9:"arag/*";}</value>
                 </field>
             </insert>
             <insert>

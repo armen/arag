@@ -165,7 +165,7 @@
                 </field>
                 <field>
                     <name>privilege</name>
-                    <value>user/application/*</value>
+                    <value>user/backend/application/*</value>
                 </field>
             </insert>
             <insert>
