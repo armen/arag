@@ -52,8 +52,8 @@ class Frontend_Controller extends Controller
         } else {
 
             // Shit, you missed!
-            if ($status & Users_Model::USER_NOT_FOUND) {
-                $error_message[] = _("Wrong Username or Password"); 
+            if ($status === Users_Model::USER_NOT_FOUND) {
+                $error_message[] = _("Wrong Username or Password."); 
             }
 
             if ($status & Users_Model::USER_NOT_VERIFIED) {
@@ -61,7 +61,7 @@ class Frontend_Controller extends Controller
             }
 
             if ($status & Users_Model::USER_BLOCKED) {
-                $error_message[] = _("This user name is blocked!!! Please contact site administrator for further information."); 
+                $error_message[] = _("This user name is blocked. Please contact site administrator for further information."); 
             }
 
             if (!isset($error_message)) {
