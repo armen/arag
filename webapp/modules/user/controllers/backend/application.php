@@ -246,7 +246,7 @@ class Application_Controller extends Backend_Controller
     public function user_profile_write()
     {
         if ($this->input->post('password') && !$this->_check_old_password($this->input->post('oldpassword'), $this->input->post('username'))) {
-            $this->_invalid_request('user/application/index');
+            $this->_invalid_request('user/backend/application/index');
         }
         $this->_user_profile_write($this->appname);       
     }
