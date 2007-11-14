@@ -756,7 +756,7 @@ class Applications_Controller extends Backend_Controller
     // {{{ user_profile_write
     public function user_profile_write()
     {
-        $this->_user_profile_write($this->input->post('appname'));       
+        $this->_user_profile_write($this->input->post('application'));
     }
     // }}}
     // {{{ new_group_write
