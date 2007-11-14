@@ -6,7 +6,7 @@
 {arag_block}
     {if $error_message}
         {arag_block template="warning"}
-            {$error_message}
+            {$error_message|nl2br}
         {/arag_block}
     {/if}
     {arag_block template="blank"}
