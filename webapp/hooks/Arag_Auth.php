@@ -36,7 +36,7 @@ class Arag_Auth {
         $session = new Session();
         $appname = $session->get('appname');
 
-        if (APPNAME !== $appname && $session->get('authenticated') && $appname != '_master_') {
+        if (APPNAME !== $appname && $session->get('authenticated') && !defined('MASTERAPP')) {
             
             // Redirect to user's application
             $multisite = Model::load('MultiSite', 'multisite');

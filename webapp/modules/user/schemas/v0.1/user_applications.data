@@ -8,7 +8,7 @@
             <insert>
                 <field>
                      <name>name</name>
-                     <value>_master_</value>
+                     <value>arag</value>
                 </field>
                 <field>
                      <name>database_id</name>

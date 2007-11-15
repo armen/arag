@@ -26,7 +26,7 @@ class Model extends Model_Core {
         $session = new Session();
         $appname = $session->get('appname', APPNAME);
 
-        $config = ($appname === '_master_') ? 'default' : $config;
+        $config = defined('MASTERAPP') ? 'default' : $config;
         $config = ($config == Null) ? Config::item('sites/'.$appname.'.database') : $config;
 
         // Load the database into the model

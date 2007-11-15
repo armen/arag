@@ -20,9 +20,10 @@ define('EXT', '.php');
 
 $docroot = pathinfo(str_replace('\\', '/', realpath(__FILE__)));
 
-define('APPNAME', '_master_');
-define('KOHANA',  $docroot['basename']);
-define('DOCROOT', $docroot['dirname'].'/');
+define('MASTERAPP', TRUE);
+define('APPNAME',   'arag');
+define('KOHANA',    $docroot['basename']);
+define('DOCROOT',   $docroot['dirname'].'/');
 
 define('APPPATH',  str_replace('\\', '/', realpath($arag_application)).'/');
 define('LIBSPATH', str_replace('\\', '/', realpath($arag_libraries)).'/');
