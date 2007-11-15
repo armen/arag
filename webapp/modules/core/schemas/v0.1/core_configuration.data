@@ -15,7 +15,7 @@
                 </field>
                 <field>
                     <name>value</name>
-                    <value>a:5:{i:0;s:26:"user/backend/application/*";i:1;s:32:"ta_minor_profile/backend/profile";i:2;s:13:"staticpages/*";i:3;s:6:"blog/*";i:4;s:9:"arag/*";}</value>
+                    <value>a:5:{i:0;s:26:"user/backend/application/*";i:1;s:32:"ta_minor_profile/backend/profile";i:2;s:13:"staticpages/*";i:3;s:6:"blog/*";i:4;s:6:"arag/*";}</value>
                 </field>
             </insert>
             <insert>
@@ -29,7 +29,7 @@
                 </field>
                 <field>
                     <name>value</name>
-                    <value>a:7:{i:0;s:9:"arag/*";i:1;s:22:"staticpages/frontend/*";i:2;s:21:"ta_locator/frontend/*";i:3;s:27:"ta_minor_profile/frontend/*";i:4;s:19:"user/frontend/login";i:5;s:15:"blog/frontend/*";i:6;s:24:"multisite/frontend/index";}</value>
+                    <value>a:7:{i:0;s:6:"arag/*";i:1;s:22:"staticpages/frontend/*";i:2;s:21:"ta_locator/frontend/*";i:3;s:27:"ta_minor_profile/frontend/*";i:4;s:19:"user/frontend/login";i:5;s:15:"blog/frontend/*";i:6;s:24:"multisite/frontend/index";}</value>
                 </field>
             </insert>
             <insert>
