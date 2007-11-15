@@ -1,0 +1,68 @@
+﻿==== Arag Controllers ====
+
+In Arag project has its own controller class which your controller should extends the parent controller class so that it can inherit all its functions.
+
+For example:
+
+  class MyController_Controller extends Controller
+  {
+     
+  }
+
+If you intend to use a constructor in any of your Controllers, you MUST place parent constructor call in custroctor as following example:
+
+  class MyController_Controller extends Controller
+  {
+      function __construct()
+      {
+          parent::__construct();
+      }     
+  }
+
+A new feature is implemented in Arag to make the naming and calling of a controller's methods very easy and understandable. By this way, Arag recognize when you call a function within a post or get method. so that if it is GET, it will call "<functionname>_read" and it will call "<functionname>_write" if it is POST. If none of them available, automatically it will call <"functionname>":
+
+  function edit_write()
+  {
+    Statements
+  }
+
+  function edit_read()
+  {
+    Statement
+  }
+
+In the above example, if you load address "<controller>/edit", it will automatically call "edit_read". Cause it is a get method. And if you give a  HTML form an action of "<controller>/edit", it will load "edit_write", because it happens through a post method.\\
+But remember that the raw function of "<functionname>", has more priority than "<functionname>_write" and "<functionname>_read". Take a look at the following codes:
+
+  function edit()
+  {
+    Statements
+  }
+
+  function edit_write()
+  {
+    Statements
+  }
+
+  function edit_read()
+  {
+    Statement
+  }
+
+In these codes, always "edit" will be called, independent of you request method.
+
+As you may know, Kohana completely uses PHP5. So you can use PHP5's OOP in your codes. E.g. you can rewrite the above codes like:
+
+  public function edit()
+  {
+    Statements
+  }
+
+or:
+
+  private function edit()
+  {
+    Statements
+  }
+
+and etc. But you should be very careful that where to use these keywords.

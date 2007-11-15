@@ -1,0 +1,197 @@
+﻿==== Components ====
+
+Component is a new feature implemented in Arag project which probably you are not familiar with it.
+
+components are located at "webapp/components" directory and has a directory structure as following:
+
+  +-- webapp
+       ...
+       +-- components
+            +-- <component_name>
+            |      +-- component
+            |      |      +-- <component_name>.php
+            |      |
+            |      +-- plugins
+            |      +-- templates
+            |
+            +-- <component_name2>
+                   +-- component
+                   |      +-- <component_name2>.php
+                   |
+                   +-- plugins
+                   +-- templates
+
+At the moment components are just accessible in Smarty templates, so you don't have any chance to use components when Smarty integration is disabled.
+We don't have any plan to implement it for native template engine but it is not hard to do that.
+
+Lets see how to load a component with an example:
+
+  $this->load->component('MyComponent');
+
+And it will be accessible in Smarty templates as following:
+  
+  {my_component attribute="hi"}
+
+If you need to do something directly with a component itself, e.g. setting an option, you can do it like this:
+
+  $this->MyComponent->setAnExampleOption('BlahBlah');
+
+If you are confused don't worry we will explain how to use components with real world examples later.
+
+=== PList Component ===
+
+"PList" is a paginate list component. You can simply pass Array or any type of Iterator to it and it will generate a paginate list.
+
+The following example shows how to create a simple list:
+
+  // Controller
+  $this->load->component('PList');
+  $this->Plist->setResource(Array(Array('Brous', 'Willis'), Array('Tom', 'Cruise'), Array('John', 'Travolta')));
+  $this->Plist->addColumn(0, 'Name');        
+  $this->Plist->addColumn(1, 'Lastname');
+  
+  // Template
+  {arag_plist}
+
+"setResource" method used to specify our resource and "addColumn" used to create columns of the list.
+"addColumn" simply used to specify what column we want to show and what label it should take.
+
+and another example
+
+  // Controller
+  $this->load->model('BlogModel');
+  $this->load->component('PList', 'BlogList');
+  
+  $this->BlogList->setResource($this->BlogModel->getEntries());
+  $this->BlogList->setLimit(4);
+  $this->BlogList->addColumn('subject', 'Subject');        
+  $this->BlogList->addColumn('author', 'Author');
+  $this->BlogList->addColumn('BlogModel.getDate', 'Create Date', PList::VIRTUAL_COLUMN);
+  $this->BlogList->addAction('blog/backend/edit/#id#', 'Edit', 'edit_action', 'BlogModel.editIsDisble');
+  $this->BlogList->addAction('blog/backend/delete/#id#', 'Delete');
+  
+  // Template 
+  {arag_plist name="BlogList"}
+
+We passed an additional parameter to "load->component" to make a custom name for our list. This feature is useful when you want to use more than one "PList" in a single template file.
+
+As you probably guessed "setLimit" used to set number of rows which should be shown in the list. If number of records is greater than our limit, "Plist" will use paginate to provide access to other pages and actually paginate our list.
+
+In third "addColumn" method you can see how to create virtual columns. Virtual columns are used to show additional columns which are not in resource it self.
+Every virtual column is simply a callback and it called with passed current row data. 
+In above example "BlogMode.getDate" is a virtual column callback. The following code shows "getDate" method of "BlogModel" model.
+
+  class BlogModel extends Model 
+  {
+      // ...
+      
+      function getDate($row)
+      {
+          return date('Y-m-d H:i:s', $row['create_date']);
+      }
+  }
+ 
+Lets try to explain how it works. When "Plist" reaches a virtual column in its columns list, it tries to call the virtual column callback. For example in above sample, "PList" will call "getDate" method from "BlogModel" model for each row of the list. "getDate" in each call, takes a parameter that is the current row content in which "PList" iterator is in; Then it uses that parameter to format a Unix timestamp to a human readable date string.
+
+Long story short, in general, returned content of a virtual column will be presented exactly in current row of the list.
+
+Following table shows possible formats of virtual column callback names:
+
+^ Callback                     ^ Description ^
+| <model_name>.<callback_name> | Will call "callback_name" method from "model_name" model | 
+| <class_name>::<method_name>  | Will call "method_name" static method from "class_name" class |
+| <method_name>                | Will call "method_name" method from specified resource (In case of the resource was Iterator) |
+
+Now lets create a directory listing from "/tmp" directory:
+
+  // Controller
+  $this->load->component('PList', 'directory');
+  $this->directory->setResource(new RecursiveDirectoryIterator('/tmp'));
+  $this->directory->setLimit(4);
+  $this->directory->addColumn('Directory');
+  $this->directory->addColumn('getOwner', 'Owner', PList::VIRTUAL_COLUMN);
+  $this->directory->addColumn('getGroup', 'Group', PList::VIRTUAL_COLUMN);
+  $this->directory->addColumn('getSize', 'Size', PList::VIRTUAL_COLUMN);
+  
+  // Template
+  {arag_plist name="directory"}
+
+As you probably guessed "getOwner", "getGroup" and "getSize" methods belongs to "RecursiveDirectoryIterator" object.
+
+There is an optional attribute for "arag_plist" plugin called "template". You can specify a custom template for list, following example shows how to use this feature.
+
+  {arag_plist template="my_custom_template"}
+
+You can put your custom template file (in this case "my_custom_template.tpl") in your module "templates/" directory or in "components/plist/templates" directory if you want it become accessible from everywhere.
+
+For more information about how to write a custom template for "Plist" you can checkout "Plist" default template file located at "components/plist/templates/horizontal.tpl".
+
+If you are interested about callable methods of "PList" component which you can use, please check out "components/plist/component/plist.php".
+
+With Arag "Plist", it is also possible to add group actions to your list. So that you give your list the ability of doing an action on more than one item of your list simultaneously. To add a group action to you list you should use the following syntax in which, the first parameter is the URL of the action, the second is the title and the third one specifies the icon which the action uses:
+
+  $this->staticpages->addAction('staticpages/backend/gdelete', 'Delete', 'delete_action', PList::GROUP_ACTION);
+
+=== TabbedBlock Component ===
+
+"TabbedBlock" is a component for creating tabs. Following example shows you how to create tabs with "TabbedBlock" component:
+
+  // Controller
+  $this->TabbedBlock->setTitle('Hello');
+  $this->TabbedBlock->addItem('Index', 'blog/backend/index');
+  $this->TabbedBlock->addItem('Post', 'blog/backend/post');
+  $this->TabbedBlock->addItem('Arag', 'arag/');
+
+  // Template
+  {arag_tabbed_block}
+     
+     <h3>This is content of tabbed block</h3>  
+      
+  {/arag_tabbed_block}
+ 
+As you saw you can simply add items or tabs to "TabbedBlock" component with "addItem" method. You can also set title of "TabbedBlock" with "setTitle" method.
+
+If you want to share a "TabbedBlock" component between a controller's methods you can simply put it in the constructor of the controller as following example:
+
+  class ExampleCtrl extends Arag_Controller {
+  
+      function ExampleCtrl()
+      {
+          parent::Arag_Controller();
+    
+          $this->TabbedBlock->setTitle('ExampleCtrl');
+          $this->TabbedBlock->addItem('Index', 'blog/examplectrl/index');
+          $this->TabbedBlock->addItem('Post', 'blog/examplectrl/create');
+      }
+  
+      function index()
+      {
+          // ...
+      }
+  
+      function create()
+      {
+          // ...
+      }
+  }
+
+There is an optional attribute for "arag_tabbed_block" plugin called "template". With this attribute you can specify a custom template for your "TabbedBlock". following example shows you how to use this feature:
+
+  {arag_tabbed_block template="my_custom_template"}
+
+You should put your custom template file (in this case "my_custom_template.tpl") in your module "templates/" directory or in "components/tabbedblock/tempates" directory if you want it becomes accessible from everywhere.
+
+For more information about how to write a custom template for "TabbedBlock" you can checkout "TabbedBlock" default template file located at "components/tabbedblock/templates/arag_tabbed_block.tpl".
+
+If you are interested about callable methods of "TabbedBlock" component which you can use, please check out "components/tabbedblock/component/tabbedblock.php".
+
+Arag tabbedblock has also a feature wich lets you to add sub tabs to your top tabs. Imagine that you have TabbedBlock containing "List" and "Create". In "List" you have a list of your objects with actions of "Edit" and "Delete. Now you want to add sub tabs "Edit" and "Delete" every time user clicks on "List". For doing that you should use the following code:
+
+  $this->load->component('TabbedBlock', 'global_tabs');
+  $this->global_tabs->setTitle(_("StaticPages"));
+  $this->global_tabs->addItem(_("List"), 'staticpages/backend/index');
+  $this->global_tabs->addItem(_("Create"), 'staticpages/backend/create');
+  $this->global_tabs->addItem(_("Edit"), 'staticpages/backend/edit/%id%', 'staticpages/backend/index');
+  $this->global_tabs->addItem(_("Delete"), 'staticpages/backend/delete/%id%', 'staticpages/backend/index');
+
+As you see, "addItem" can take a third parameter in which you can define this item is the sub tab of the tab which its address is "staticpages/backend/index".

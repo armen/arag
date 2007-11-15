@@ -1,0 +1,56 @@
+﻿==== Form Validation ====
+
+This feature will help you to validate your forms according to your own rules definitions. Arag's "Form Validation" is based on Kohana form validator library, but it is much more comprehensive and easier to implement than the Kohana's form validator. It lets you to check filled forms for errors and repopulate them very easily. In Kohana, as you know, you had to set rules every time you called form validation library, but in Arag, every controller of a module has it's own global sets of rules located at "<module name>/validator/<controllerName>.php". This file consists of some arrays for setting rules and fields.\\
+Just like Kohana you have to set rules for every form you have, except that here you just set them in an array and pass them to your validator of the relative method. The array consists of HTML name of the field, desire name to be shown in the error messages and the rule for the related field, like the following example:
+
+  $validator['create']['write']['rules']= array(
+                                                'subject' => array(_("Subject"), 'trim|required|alpha_numeric'),
+                                                'page'    => array(_("Page"), 'required|xss_clean')
+                                               );
+
+And error messages that have to be shown in case of error occurring (according to your rules):
+
+  $validator['error_messages'] = Array (
+                                        'required'   => '%s is required.',
+                                       );
+
+For more informations about Kohana rules and their jobs take a look at Kohana official documentation.\\
+Now in you main controller you have to add a error method in which, if error occured it will let the job continues, else, it will do what you put in the method:
+
+    public function create_write_error()
+    {   
+        $this->create_read();
+    }
+
+Remember that the error functions should be public so that they will be available to the validator.
+
+What we have done until know was the backend of your form validation. But to make it enable in your Smarty template you have to change your template.\\ First you have to use a plugin for showing error messages:
+
+  {arag_validation_errors}
+
+And adding values to your form elements for enabling repopulating:
+
+  {arag_rte name="page" value=$page|smarty:nodefaults}
+
+  
+  <input type="text" name="subject" value="{$subject}" />
+
+And now it's done!!\\ \\ 
+Arag's form validation also supports validating of data passing through URL. In this case you can check if the correct data is passed or not. For example you want to pass a page's id for editing through address bar. So you use "<controller>/edit/<id>". Arag Form Validation, helps you to check the existence of the given id, take numeric ids and etc. It's almost same as post method, except that the array doesn't consist of the HTML field name:
+
+  $validator['edit']['read']['rules']  = array (array( 'ID' , "required"));
+
+and in your controller backend:
+
+  public function edit_read_error()
+  {
+    Statement;
+  }
+
+In the above example, "ID" is segment number one in the URL after "edit". Like "<controller>/edit/**23**".
+
+Thanks to Kohana you can use callback functions to have customized validations. like the following example:
+
+  $validator['user_profile']['read']['rules']  = Array(array(_("Username") => 'required|callback__check_user_name_profile'));
+
+In which the '_check_user_name_profile' is a function that returns either a 'True' or a 'False' value so the validation will be passed or throw and error.

@@ -1,0 +1,10 @@
+﻿==== Templates ====
+
+Don't worry, there is nothing new here except that in Arag, You can use smarty templates as your view.
+
+Lets have a closer look at it. For example you can have a file called "index.php" and another one "index.tpl" and simply load the view with following code:
+
+  $this->load->view('index'); 
+
+If Smarty integration is enabled in "arag_configs.php", loader will load "index.tpl" file otherwise it will load "index.php".
+In ".tpl" files you can use Smarty templates engine language, Smarty plugins and helpers.

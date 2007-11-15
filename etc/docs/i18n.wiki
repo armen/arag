@@ -1,0 +1,31 @@
+﻿==== I18N ====
+
+Internationalization is a method for supporting international languages in Arag. Actually it is a extended library depending on CI and PHP's "gettext". Using this library will let you have different linguistic versions of Arag. Adding this feature to your modules is very simple. You just have to add a new directory to your modules directory named "locale". In "locale" directory you have to add your desired language systems such as en_US.utf8, fa_IR.utf8 and ... and then in each of your language system's directories, a "LC_MESSAGES" directory for storing '.po' (Portable Object) and '.mo' (Machine Object) messages to include your translations. You can see the structure of a "locale" directory in the following diagram:
+
+  +-- (Module Name)
+      +-- config
+      +-- controllers
+      +-- locale
+          +-- fa_IR.utf8
+              +-- LC_MESSAGES
+      +-- models
+      +-- schemas
+      +-- templates
+
+After adding mentioned directories to your modules then you have to make a '.po' message from all of your strings, using a shield script called "extract_gettext.sh" located in "etc/scripts. But remember before doing that you have to put all of your strings (which you want to be translated), in your source, in a _(" "), so that the script would be able to recognize them. You can see some examples below:
+
+  $this->tabBock->addItem(_("List"));
+
+  {capture assign="msg"}_("Do you really want to delete '%s'?"){/capture}
+
+  <input type="submit" name="submit" value={quote}_("No"){/quote} />
+
+After running the script and generating ".po" files, you have to compile them to ".mo" files (readable by the application) using the "format_gettext.sh" script located in the same place.
+But lets take a closer look at this procedure. "extract_gettext.sh" actually fetch all the strings marked by _(" ") in your source code and add them to a ".po" file. ".po" extensions are very easy to modify, so even someone without any knowledge of programming can simply add translations of the extracted strings to the ".po" files. In the next step, "format_gettext.sh" will compile those ".po"s to ".mo" files. Notice that you have to recompile ".po" files every time that you modify them.
+
+There are some important notes about using the I18N:
+  * Before using I18N you have to reconfigure your locale with and add your desired language system like this:
+     #dpkg-reconfigure locales
+  * You also have to reconfigure the config file - "config/arag_config.php".
+  * If you can't see your translations, first check the code, then empty your cache in "cache/smart_compile/", restart your apache server and check again.
+  *  If there have been any problem with your coding or the language system you are using, or even if you don't use the I18N at all, the application will automatically use the pure strings in the _(" ") by the default language system configured at your config file.

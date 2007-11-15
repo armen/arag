@@ -1,0 +1,63 @@
+﻿==== Decoration and Decorators ====
+
+"Decoration and Decorators" is a new feature implemented in Arag project.
+
+By this feature, any method in controller might have a decorator template. Following code shows how to use a decorator template to decorate a controller:
+
+  // Controller
+  function index()
+  {
+      $this->load->decorator('decorator');            
+      $this->load->view('index');
+  }
+  
+  // index.tpl
+  <h3>This is index page</h3>
+  
+  // Decorator (decorate.tpl)
+  <html>
+  <head>
+      <title>Arag</title>
+      {arag_head}
+  </head>
+  <body>
+      {slot name="content"}
+  </body>
+  </html>
+
+With "slot", Smarty function plugin, you can fetch a specified slot's contents. For example in above example slot fetches a slot called "content", expected output of this line is "<h3>This is index page</h3>". 
+
+"content" slot is a general slot and it contains requested method's contents. For example if requested URI is "blog/backend/index", it contains the index method from "backend" controller output.
+
+To create a slot, you can simply call a method from controller as following example:
+
+  // Controller
+  function index()
+  {
+      $this->load->decorator('decorator');            
+      $this->load->view('index');
+      
+      $this->post();
+  }
+  
+  function post()
+  {
+      $this->load->view('post');
+  }
+  
+  // post.tpl
+  <h3>This is post page</h3>
+  
+  // Decorator (decorate.tpl)
+  <html>
+  <head>
+      <title>Arag</title>
+      {arag_head}
+  </head>
+  <body>
+      {slot name="post"}
+      {slot name="content"}
+  </body>
+  </html>
+
+If your decorator template file is not located at "templates" directory of module then loader will try to fetch it from global templates directory at "webapp/templates/". So you can have a global decorator which will be accessible in all Smarty templates.

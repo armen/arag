@@ -1,0 +1,176 @@
+﻿==== Global smarty plugins ====
+
+In Arag project there is several smarty plugins located at "webapp/templates/smarty_plugins/". These plugins are loaded by default and are accessible in all smarty template files.
+
+=== Blocks ===
+
+"arag_block" is just Smarty block plugin to wrap contents. Blocks make templates much readable and flexibly in case of designing.
+
+The following sample code shows how to use a block:
+
+  {arag_block title="This is a test!"}
+     {arag_block template="blank"}
+        This is a default block wrapped in a blank block.
+     {/arag_block}
+  {/arag_block}
+
+This code generates this XHTML: 
+
+   <div class="arag_block" dir="ltr">
+       <div class="arag_block_title">This is a test!</div>
+       <div class="arag_block_content arag_tags_ds">
+           <div class="arag_blank_block" dir="ltr">
+               <div class="arag_blank_block_content arag_tags_ds">This is a default block wrapped in a blank block.</div> 
+           </div>
+       </div>
+   </div>
+
+As you can see blocks are much cleaner and flexible than plain XHTML. When you are using blocks, there is no difficulty to validate the xhtml markup or taking care of padding, margin and in other general design concepts of blocks.
+
+Each block has two optional attribute. The first one is "title" which specifies title of block and "template" is the second one which specifies which template the block should use.
+
+Possible templates which you can use are:
+
+^ Template Name ^ Description ^
+| arag_block | When "template" attribute was not specified this template will be used as default template |
+| blank         | This templates create an blank block without any styles except that it taking care of padding |
+| default       | This is default template of the application, beware that, this is not the default template when "template" attribute was not specified  |
+| empty         | This is actually an empty block without any kind of style |
+| error         | This is template for error messages |
+| info          | This is template for info messages |
+| warning       | This is template for warning messages |
+
+
+You can find all the block templates at "webapp/templates/arag_blocks/<template_name>.tpl" and style sheet file of all blocks is located at "public_html/styles/styles.css".
+
+You can simply add custom template for "arag_block" if it's needed. For more information check out one of existing templates .
+If you are interested about arag_block plugin itself, it is accessible at "webapp/templates/smarty_plugins/block.arag_block.php"
+
+=== Directions and Alignments ===
+
+There are three plugins for working with direction and alignment of XHTML tags. These plugins return correct values depend on what language is selected and what its text direction is.
+
+Following code shows how to use these plugins:
+
+  <table border="0" dir="{dir}">
+  <tr>
+      <td align="{right}">_("Title"):</td>
+      <td align="{left}">
+          <input type="text" name="title" />
+      </td>
+  </tr>
+  <!-- ... -->
+  </table>
+
+In above example, {dir} returns exactly the current language direction (for example ltr, rtl, etc.) and {right} or {left} returns alignment depends on the current language text direction. For example in ltr(left to right) direction, {right} will return 'right' (without quotes) and {left} will return 'left'(without quotes) if it was rtl.
+
+Using these plugins, make templates flexible to different languages with different text directions.
+
+=== Escape ===
+
+"arag_escape" is a Smarty modifier and prefilter to convert all applicable characters to HTML entities; In general it escapes the output.
+
+So when you are using a Smarty variable it will be escaped automatically. Following example shows what we are talking about:
+
+  // Controller
+  $this->load->vars('my_html_code', '<script language="javascript">alert('XSS');</script>');
+  
+  // Template
+  {$my_html_code}
+  
+  // Expected output
+  <script language="javascript">alert('XSS');</script> 
+
+If you execute this example resulting in an unexpected output it shows that "arag_escape" modifier is not enabled. To solve the problem you should configure it in "arag_config.php" file.
+
+Sometimes you don't want to escape a variable by default, so you can use following code in such cases:
+
+ {$my_safe_html|smarty:nodefaults}
+
+Also in some cases you might have to use "smarty:nodefaults", otherwise Smarty will throw a strange error. For example when you are using "isset" function in "if" statements:
+
+  {if isset($my_var|smarty:nodefaults)}
+     My var is defined.
+  {/if}
+
+=== Head ===
+
+"arag_head" is also a Smarty function plugin which returns site's head contents.
+
+You can see how to use it between "head" XHTML tags in the below:
+
+  <html>
+  <head>
+       <title>Arag</title>
+       {arag_head}
+  </head>
+  <body>
+       <!-- ... -->
+  </body>
+  </html>
+
+This plugin simply includes a template file located at "webapp/templates/arag_templates/head.tpl".
+
+Following example is the default "head.tpl" file for Arag project:
+
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <link rel="icon" href="{$arag_base_url|smarty:nodefaults}/images/misc/favicon.ico" type="image/x-icon" />
+  <link rel="shortcut icon" href="{$arag_base_url|smarty:nodefaults}/images/misc/favicon.ico" type="image/x-icon" />
+  <link rel="stylesheet" media="all" type="text/css" title="Arag" 
+        href="{$arag_base_url|smarty:nodefaults}/styles/styles.css" />    
+
+=== Form ===
+
+This Smarty plugin will let you to put HTML forms into your Smarty templates:
+
+  {arag_form uri="staticpages/backend/create" method="post"}
+    HTML Form Elements
+  {/arag_form}
+
+The above code generates the following:
+
+  <form actin="staticpages/backend/create"  method="post">
+    HTML Form Elements
+  </form>
+
+If you don't send any method, by the default it will be post.
+
+=== WISIWIG Editor ===
+
+This is a functional Smarty plugin for adding a rich text editor - powered by FCKeditor - to your Smarty templates. You can use this plugin simply like the following example:
+
+  {arag_rte name="Arag"}
+
+This will give you an editor based on the default properties. But if you want to have a customized one you should use the attributes considered for this task as:
+
+  {arag_rte name="Arag" value="Default text value going to be edited" height="450" width="75%" toolbar_set="Default"}
+
+For more information about "toolbar_set" and other issues about editor, please refer to FCKeditor's official documentation.
+
+=== Arag Validation ===
+
+This plugin is for showing form validation error messages. It's almost like an Arag block:
+
+  {arag_validation_errors}
+
+For more information about the usage of this plugin and Arag's form validator refer to "[[#form_validation|Form Validation]]" section.
+
+=== Asterisk ===
+
+This plugin helps you to put a red asterisk into your templates (e.g. required fields in a from):
+
+  {asterisk}
+
+will generate:
+
+  <span class="asterisk">&nbsp;*&nbsp;</span>
+
+=== Quote ===
+
+Some times you need nested quotes in your template. This block will help you to do that:
+
+  <input type="submit" name="submit" value={quote}_("Yes"){/quote} />
+
+which generates:
+
+  <input type="submit" name="submit" value=\"_("yes")\" />

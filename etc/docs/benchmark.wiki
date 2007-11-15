@@ -1,0 +1,7 @@
+﻿==== Benchmark ====
+
+|               ^ RPS (Enabled caching) ^       RPS      ^
+^ Arag (ESI) |          77.56        |      26.93     |   
+^ Arag       |          78.02        |      39.58     |  
+^ CodeIgniter   |          84.17        |      47.52     |
+| ESI: Enabled Smarty integration |||
