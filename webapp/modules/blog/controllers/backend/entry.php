@@ -67,13 +67,10 @@ class Entry_Controller extends Backend_Controller
         $this->global_tabs->setParameter('id', $id);
 
         $entry = $this->Blog->getEntry($id);        
-        
-        $data = Array ('categories'  => $this->Blog->getCategories(), 
-                       'status_list' => $this->Blog->getStatusOptions());
+        $data  = Array ('categories'  => $this->Blog->getCategories(), 
+                        'status_list' => $this->Blog->getStatusOptions());
 
-        $this->load->vars($data);
-        $this->load->vars($entry);
-        $this->load->view('backend/edit');
+        $this->load->view('backend/edit', array_merge($data, $entry));
     }
     // }}}
     // {{{ edit_read_error
@@ -105,8 +102,7 @@ class Entry_Controller extends Backend_Controller
         $data = Array ('categories'  => $this->Blog->getCategories(), 
                        'status_list' => $this->Blog->getStatusOptions());
 
-        $this->load->vars($data);
-        $this->load->view('backend/edit');
+        $this->load->view('backend/edit', $data);
     }
     // }}}
     // {{{ delete_read
@@ -117,8 +113,7 @@ class Entry_Controller extends Backend_Controller
         $data = Array('id'      => $id, 
                       'subject' => $this->Blog->getEntrySubject($id));
 
-        $this->load->vars($data);
-        $this->load->view('backend/delete');
+        $this->load->view('backend/delete', $data);
     }
     // }}}
     // {{{ delete_read_error
@@ -155,8 +150,7 @@ class Entry_Controller extends Backend_Controller
         // $this->entry->addColumn('entry');
         // $this->entry->addColumn('extended_entry');
 
-        $this->load->vars(Array('extended'  => True, 'entry_uri' => '/blog/backend/entry/preview/#id#'));
-        $this->load->view('backend/preview');
+        $this->load->view('backend/preview', Array('extended'  => True, 'entry_uri' => '/blog/backend/entry/preview/#id#'));
     }
     // }}}
     // {{{ preview_error

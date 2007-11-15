@@ -31,8 +31,7 @@ class Frontend_Controller extends Controller
         $this->entry->setResource($this->Blog->getEntries(True));
         $this->entry->addColumn('Blog.getDate', Null, PList::VIRTUAL_COLUMN);
 
-        $this->load->vars(Array('entry_uri' => '/blog/frontend/view/#id#/extended'));
-        $this->load->view('frontend/view');    
+        $this->load->view('frontend/view', Array('entry_uri' => '/blog/frontend/view/#id#/extended'));    
     }
     // }}}
     // {{{ view
@@ -42,9 +41,10 @@ class Frontend_Controller extends Controller
         $this->entry->setResource(Array($this->Blog->getEntry($id, True)));
         $this->entry->addColumn('Blog.getDate', Null, PList::VIRTUAL_COLUMN);
 
-        $this->load->vars(Array('extended'  => $extended == 'extended', 
-                                'entry_uri' => '/blog/frontend/view/#id#/extended'));
-        $this->load->view('frontend/view');
+        $data = Array('extended'  => $extended == 'extended', 
+                      'entry_uri' => '/blog/frontend/view/#id#/extended');
+
+        $this->load->view('frontend/view', $data);
     }
     // }}}
     // {{{ view_error
