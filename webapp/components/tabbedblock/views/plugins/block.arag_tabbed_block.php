@@ -107,8 +107,8 @@ function smarty_block_arag_tabbed_block($params, $content, &$smarty, &$repeat)
             $smarty->assign('tabbedblock_selected_tab', $selectedItem);
             $smarty->assign('tabbedblock_module', Router::$module);
 
-            if (file_exists(APPPATH . 'components/tabbedblock/templates/' . $template . '.tpl')) {
-                $template = APPPATH . 'components/tabbedblock/templates/' . $template . '.tpl';
+            if (file_exists(APPPATH . 'components/tabbedblock/views/' . $template . '.tpl')) {
+                $template = APPPATH . 'components/tabbedblock/views/' . $template . '.tpl';
             } else {
                 $template = APPPATH . 'modules/' . Router::$module . '/views/' . $template . '.tpl';
             }

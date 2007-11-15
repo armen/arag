@@ -128,7 +128,7 @@ class Loader extends Loader_Core {
         $controller->$object_name = new $component($namespace);
 
         // Add component plugins directory to plugins_dir
-        $controller->Arag_Smarty->plugins_dir[] = APPPATH.'components/'.$component_lower.'/plugins';
+        $controller->Arag_Smarty->plugins_dir[] = APPPATH.'components/'.$component_lower.'/views/plugins';
         array_unique($controller->Arag_Smarty->plugins_dir);
 
         // Add template dir to secure_dir list

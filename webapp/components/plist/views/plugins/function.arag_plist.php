@@ -52,8 +52,8 @@ function smarty_function_arag_plist($params, &$smarty)
     // Get namespace
     $namespace = $smarty->get_template_vars($name.'_namespace');    
  
-    if (file_exists(APPPATH . 'components/plist/templates/' . $template . '.tpl')) {
-        $template = APPPATH . 'components/plist/templates/' . $template . '.tpl';
+    if (file_exists(APPPATH . 'components/plist/views/' . $template . '.tpl')) {
+        $template = APPPATH . 'components/plist/views/' . $template . '.tpl';
     } else {
         $template = APPPATH . 'modules/' . Router::$module . '/views/' . $template . '.tpl';
     }
@@ -62,7 +62,7 @@ function smarty_function_arag_plist($params, &$smarty)
 
         $smarty->assign('plist', $plist);
         $smarty->assign('namespace', $namespace);
-        $smarty->assign('plist_templates_path', APPPATH . 'components/plist/templates/');
+        $smarty->assign('plist_templates_path', APPPATH . 'components/plist/views/');
         
         return $smarty->fetch($template);
     }
