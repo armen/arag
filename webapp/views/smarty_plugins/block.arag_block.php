@@ -35,8 +35,8 @@ function smarty_block_arag_block($params, $content, &$smarty)
 
     // Find template location  
 
-    if (is_readable(Config::item('arag.templates_path') . 'arag_blocks/' . $template . '.tpl')) {
-        $template = Config::item('arag.templates_path') . 'arag_blocks/' . $template . '.tpl';
+    if (is_readable(Config::item('smarty.global_templates_path') . 'arag_blocks/' . $template . '.tpl')) {
+        $template = Config::item('smarty.global_templates_path') . 'arag_blocks/' . $template . '.tpl';
     
     } else {
         // I can't find it

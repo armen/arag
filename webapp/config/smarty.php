@@ -5,7 +5,7 @@ $config = Array
     'integration'           => True,        // Enable/Disable Smarty integration
     'templates_ext'         => '.tpl',
     'cache_path'            => Config::item('arag.cache_path'),
-    'public_templates_path' => APPPATH . 'templates/',
+    'global_templates_path' => APPPATH . 'views/',
     'debugging_ctrl'        => False,
     'debugging'             => True,
     'caching'               => False,
@@ -41,11 +41,11 @@ $config = Array
     // Do not escape these directories and files
     // Prototype:
     //          
-    //    Array ('|/templates/arag_templates/[a-zA-Z_0-9]+\.tpl$|',
+    //    Array ('|/views/arag_templates/[a-zA-Z_0-9]+\.tpl$|',
     //           '|/themes/[a-zA-Z_0-9]+/display_blocks\.tpl$|',
     //           '|/themes/[a-zA-Z_0-9]+/[a-zA-Z_0-9]+block\.tpl$|',                      
-    //           '|/templates/arag_block/[a-zA-Z_0-9]+\.tpl$|',
-    //           '|/templates/arag_tabbed_block/[a-zA-Z_0-9]+\.tpl$|'),
+    //           '|/views/arag_block/[a-zA-Z_0-9]+\.tpl$|',
+    //           '|/views/arag_tabbed_block/[a-zA-Z_0-9]+\.tpl$|'),
 
     'escape_exclude_list'   => Array
     (

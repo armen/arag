@@ -4,7 +4,6 @@ $config = Array
 (
     // {{{ Global paths
 
-    'templates_path' => APPPATH . 'templates/',
     'cache_path'     => APPPATH . 'cache/',
 
     // }}}

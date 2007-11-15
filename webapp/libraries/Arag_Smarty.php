@@ -18,9 +18,9 @@ class Arag_Smarty_Core extends Smarty {
         $this->template_dir   = APPPATH . 'modules/' . Router::$module . '/views';
         $this->cache_dir      = Config::item('smarty.cache_path') . 'smarty_cache/';
         $this->compile_dir    = Config::item('smarty.cache_path') . 'smarty_compile/';
-        $this->config_dir     = Config::item('smarty.public_templates_path') . 'smarty_configs/';
-        $this->plugins_dir[]  = Config::item('smarty.public_templates_path') . 'smarty_plugins/';
-        $this->debug_tpl      = Config::item('smarty.public_templates_path') . 'arag_debug.tpl';
+        $this->config_dir     = Config::item('smarty.global_templates_path') . 'smarty_configs/';
+        $this->plugins_dir[]  = Config::item('smarty.global_templates_path') . 'smarty_plugins/';
+        $this->debug_tpl      = Config::item('smarty.global_templates_path') . 'arag_debug.tpl';
         $this->debugging_ctrl = Config::item('smarty.debugging_ctrl');
         $this->debugging      = Config::item('smarty.debugging');
         $this->caching        = Config::item('smarty.caching');
@@ -39,7 +39,7 @@ class Arag_Smarty_Core extends Smarty {
         if ($this->security) {
             
             $configSecureDirectories = Config::item('smarty.secure_dirs');
-            $safeTemplates           = Array(Config::item('arag.templates_path'));
+            $safeTemplates           = Array(Config::item('smarty.global_templates_path'));
 
             $this->secure_dir                          = array_merge($configSecureDirectories, $safeTemplates);
             $this->security_settings['IF_FUNCS']       = Config::item('smarty.if_funcs');

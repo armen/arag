@@ -132,7 +132,7 @@ class Loader extends Loader_Core {
         array_unique($controller->Arag_Smarty->plugins_dir);
 
         // Add template dir to secure_dir list
-        $controller->Arag_Smarty->secure_dir[] = APPPATH.'components/'.$component_lower.'/templates/';
+        $controller->Arag_Smarty->secure_dir[] = APPPATH.'components/'.$component_lower.'/views/';
 
         // Send component to template
         if (isset($controller->$object_name)) {
