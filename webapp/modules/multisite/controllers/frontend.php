@@ -44,10 +44,10 @@ class Frontend_Controller extends Controller
             }
         }
 
-        $this->load->vars(array('error_message' => $error_message,
-                                'show_form'     => $show_form,
-                                'uri'           => $verify_uri));
-        $this->load->view('frontend/verify');
+        $data = array('error_message' => $error_message,
+                      'show_form'     => $show_form,
+                      'uri'           => $verify_uri);
+        $this->load->view('frontend/verify', $data);
     }
     // }}}
     // {{{ index_write

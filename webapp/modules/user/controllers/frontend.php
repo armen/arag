@@ -24,8 +24,7 @@ class Frontend_Controller extends Controller
     // {{{ login_read
     public function login_read()
     {
-        $this->load->vars(array('error_message' => false));
-        $this->load->view('frontend/login');
+        $this->load->view('frontend/login', array('error_message' => false));
     }
     // }}}
     // {{{ login_write
@@ -70,9 +69,7 @@ class Frontend_Controller extends Controller
 
             $error_message = implode("\n", $error_message);
 
-            $this->load->vars(array('status'        => $status,
-                                    'error_message' => $error_message));
-            $this->load->view('frontend/login');
+            $this->load->view('frontend/login', array('status' => $status, 'error_message' => $error_message));
         }
     }
     // }}}

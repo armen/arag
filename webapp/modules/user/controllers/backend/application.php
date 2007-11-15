@@ -65,9 +65,7 @@ class Application_Controller extends Backend_Controller
         $this->users->addAction("user/backend/application/delete/user", _("Delete"), 'delete_action', PList::GROUP_ACTION);
         $this->users->setGroupActionParameterName('username');
         
-        $this->load->vars(array("flagsearch" => false));        
-
-        $this->load->view('backend/users');
+        $this->load->view('backend/users', array("flagsearch" => false));
     }
     // }}}
     // {{{ users_read_error
@@ -150,13 +148,13 @@ class Application_Controller extends Backend_Controller
 
         $subjects = implode(",", $subjects);
 
-        $this->load->vars(array('objects'  => $objects,
-                                'subjects' => $subjects,
-                                'flag'     => $flag,
-                                'appname'  => $appname,
-                                'flagform' => false));
+        $data = array('objects'  => $objects,
+                      'subjects' => $subjects,
+                      'flag'     => $flag,
+                      'appname'  => $appname,
+                      'flagform' => false);
 
-        $this->load->view('backend/delete');
+        $this->load->view('backend/delete', $data);
     }
     // }}}
     // {{{ do_delete
@@ -221,13 +219,13 @@ class Application_Controller extends Backend_Controller
         $this->users->addAction("user/backend/application/delete/user", _("Delete"), 'delete_action', PList::GROUP_ACTION);
         $this->users->setGroupActionParameterName('username');
         
-        $this->load->vars(array("flagsearch" => true,
-                                "user"       => $user,
-                                "app_name"   => $this->appname,
-                                "group_name" => $group_name,
-                                "flagform"   => false));        
+        $data = array("flagsearch" => true,
+                      "user"       => $user,
+                      "app_name"   => $this->appname,
+                      "group_name" => $group_name,
+                      "flagform"   => false);
 
-        $this->load->view('backend/users');    
+        $this->load->view('backend/users', $data);    
     }
     // }}}
     // {{{ new_user_write

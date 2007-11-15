@@ -52,9 +52,7 @@ class Applications_Controller extends Backend_Controller
         $this->applications->addColumn('Applications.getDate', _("Create Date"), PList::VIRTUAL_COLUMN);
         $this->applications->addAction('user/backend/applications/groups/#name#', _("Edit"), 'edit_action');      
         
-        $this->load->vars(array("name" => $name,
-                                "flag" => false));
-        $this->load->view('backend/index'); 
+        $this->load->view('backend/index', array("name" => $name, "flag" => false)); 
     }
     // }}}
     // {{{ index_error
@@ -123,9 +121,7 @@ class Applications_Controller extends Backend_Controller
         $this->users->addAction("user/backend/applications/delete/user", _("Delete"), 'delete_action', PList::GROUP_ACTION);
         $this->users->setGroupActionParameterName('username');
         
-        $this->load->vars(array("flagsearch"  => false));        
-
-        $this->load->view('backend/users');
+        $this->load->view('backend/users', array("flagsearch"  => false));
     }
     // }}}
     // {{{ users_read_error
@@ -158,13 +154,13 @@ class Applications_Controller extends Backend_Controller
         $this->users->addAction("user/backend/applications/delete/user", _("Delete"), 'delete_action', PList::GROUP_ACTION);
         $this->users->setGroupActionParameterName('username');
         
-        $this->load->vars(array("flagsearch" => true,
-                                "user"       => $user,
-                                "app_name"   => $app_name,
-                                "group_name" => $group_name,
-                                "flagform"   => true));        
+        $data = array("flagsearch" => true,
+                      "user"       => $user,
+                      "app_name"   => $app_name,
+                      "group_name" => $group_name,
+                      "flagform"   => true);
 
-        $this->load->view('backend/users');    
+        $this->load->view('backend/users', $data);    
     }
     // }}}
     // {{{ new_user_read
@@ -247,13 +243,13 @@ class Applications_Controller extends Backend_Controller
 
         $subjects = implode(",", $subjects);
         
-        $this->load->vars(array('objects'  => $objects,
-                                'subjects' => $subjects,
-                                'flag'     => $flag,
-                                'appname'  => $appname,
-                                'flagform' => true));
+        $data = array('objects'  => $objects,
+                      'subjects' => $subjects,
+                      'flag'     => $flag,
+                      'appname'  => $appname,
+                      'flagform' => true);
 
-        $this->load->view('backend/delete');
+        $this->load->view('backend/delete', $data);
     }
     // }}}
     // {{{ do_delete
@@ -301,9 +297,7 @@ class Applications_Controller extends Backend_Controller
         $this->applications->addAction("user/backend/applications/app_filters_delete/", _("Delete"), 'delete_action', PList::GROUP_ACTION);
         $this->applications->setGroupActionParameterName('appname');
         
-        $this->load->vars(array("name" => $name,
-                                "flag" => true));
-        $this->load->view('backend/index');
+        $this->load->view('backend/index', array("name" => $name, "flag" => true));
     }
     //}}}
     //{{{ app_filters_read
@@ -363,10 +357,7 @@ class Applications_Controller extends Backend_Controller
         $this->filters->addAction("user/backend/applications/filters_delete/".$appname, _("Delete"), 'delete_action', PList::GROUP_ACTION);
         $this->filters->setGroupActionParameterName('id');
         
-        $this->load->vars(array('appname'   => $appname,
-                                'flagsaved' => $flagsaved));
-
-        $this->load->view('backend/filters');           
+        $this->load->view('backend/filters', array('appname' => $appname, 'flagsaved' => $flagsaved));
     }
     //}}}
     //{{{ _filters_read_error
@@ -384,12 +375,12 @@ class Applications_Controller extends Backend_Controller
         $this->global_tabs->setParameter('id', $id);
         $this->global_tabs->setParameter('name', $appname);
 
-        $this->load->vars(array('appname'   => $appname,
-                                'id'        => $id,
-                                'flagsaved' => $flagsaved,
-                                'filter'    => $filters[$id]['filter']));
+        $data = array('appname'   => $appname,
+                      'id'        => $id,
+                      'flagsaved' => $flagsaved,
+                      'filter'    => $filters[$id]['filter']);
 
-        $this->load->view('backend/edit_filters');
+        $this->load->view('backend/edit_filters', $data);
     }
     //}}}
     //{{{ filters_edit_write
@@ -457,12 +448,12 @@ class Applications_Controller extends Backend_Controller
         
         $subjects = implode(", ", $subjects);
         
-        $this->load->vars(array('objects'    => $objects,
-                                'subjects'   => $subjects,
-                                'objecttype' => $objecttype,
-                                'appname'    => $appname));
+        $data = array('objects'    => $objects,
+                      'subjects'   => $subjects,
+                      'objecttype' => $objecttype,
+                      'appname'    => $appname);
 
-        $this->load->view('backend/filters_delete');
+        $this->load->view('backend/filters_delete', $data);
     }
     // }}}
     // {{{ app_filters_delete
@@ -503,12 +494,12 @@ class Applications_Controller extends Backend_Controller
         
         $subjects = implode(", ", $subjects);
         
-        $this->load->vars(array('objects'    => $objects,
-                                'subjects'   => $subjects,
-                                'objecttype' => $objecttype,
-                                'appname'    => $key));
+        $data = array('objects'    => $objects,
+                      'subjects'   => $subjects,
+                      'objecttype' => $objecttype,
+                      'appname'    => $key);
 
-        $this->load->view('backend/filters_delete');
+        $this->load->view('backend/filters_delete', $data);
     }
     // }}} 
     // {{{ filters_do_delete
@@ -534,10 +525,7 @@ class Applications_Controller extends Backend_Controller
     // {{{ add_apps_filters_read
     public function add_apps_filters_read()
     {
-        $this->load->vars(array('flagsaved' => $this->session->get_once('app_add_filter_saved')));
-
-        $this->load->view('backend/add_app_filter');
-
+        $this->load->view('backend/add_app_filter', array('flagsaved' => $this->session->get_once('app_add_filter_saved')));
     }
     // }}}
     // {{{ add_apps_filters_write
@@ -624,13 +612,13 @@ class Applications_Controller extends Backend_Controller
         $this->global_tabs->addItem(_("Edit"), "user/backend/applications/privileges_edit/%id%", "user/backend/applications/privileges_parents");
         $this->global_tabs->setParameter('id', $id);
 
-        $this->load->vars(array('label'     => $label->label,
-                                'privilege' => $label->privilege,
-                                'id'        => $id,
-                                'parentid'  => $label->parent_id,
-                                'flagsaved' => $this->session->get_once('privilege_edited_saved')));
+        $data = array('label'     => $label->label,
+                      'privilege' => $label->privilege,
+                      'id'        => $id,
+                      'parentid'  => $label->parent_id,
+                      'flagsaved' => $this->session->get_once('privilege_edited_saved'));
 
-        $this->load->view('backend/privileges_edit');
+        $this->load->view('backend/privileges_edit', $data);
     }
     // }}}
     // {{{ privileges_edit_read_error
@@ -706,11 +694,11 @@ class Applications_Controller extends Backend_Controller
         
         $subjects = implode(", ", $subjects);
         
-        $this->load->vars(array('objects'     => $objects,
-                                'subjects'    => $subjects,
-                                'flagcaption' => $flagcaption));
+        $data = array('objects'     => $objects,
+                      'subjects'    => $subjects,
+                      'flagcaption' => $flagcaption);
 
-        $this->load->view('backend/privileges_delete');
+        $this->load->view('backend/privileges_delete', $data);
     }
     // }}}
     // {{{  privileges_do_delete

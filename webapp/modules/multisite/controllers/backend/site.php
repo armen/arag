@@ -36,12 +36,12 @@ class Site_Controller extends Backend_Controller
         
         $ids = $this->MultiSite->getIDs();
 
-        $this->load->vars(array("name" => $name,
-                                "flag" => false,
-                                "ids"  => $ids,
-                                "dbid" => $dbid));
+        $data = array("name" => $name,
+                      "flag" => false,
+                      "ids"  => $ids,
+                      "dbid" => $dbid);
 
-        $this->load->view('backend/site');
+        $this->load->view('backend/site', $data);
     }
     // }}}
     // {{{ index_error

@@ -65,9 +65,7 @@ class Backend_Controller extends Controller
         $data['saved'] = $this->session->get_once('settings_saved');
         $data['form']  = $flagform;
 
-        $this->load->vars($data);        
-        $this->load->view('backend/settings');
-
+        $this->load->view('backend/settings', $data);
     }
     // }}}
     // {{{ _create_privileges_list
@@ -90,10 +88,10 @@ class Backend_Controller extends Controller
         $this->privileges->addAction("user/backend/applications/privileges_delete", _("Delete"), 'delete_action', PList::GROUP_ACTION);
         $this->privileges->setGroupActionParameterName('id'); 
 
-        $this->load->vars(array("parentid"  => $parentid,
-                                "flagsaved" => $this->session->get_once('privileges_add_saved')));
+        $data = array("parentid"  => $parentid,
+                      "flagsaved" => $this->session->get_once('privileges_add_saved'));
 
-        $this->load->view('backend/privileges'); 
+        $this->load->view('backend/privileges', $data); 
     }
     // }}}
     // {{{ _create_groups_list
@@ -122,13 +120,13 @@ class Backend_Controller extends Controller
 
         $this->global_tabs->setParameter('name', $appname);
 
-        $this->load->vars(array("allgroups"    => $row,
-                                "defaultgroup" => $row2[0]['default_group'],
-                                "flagsaved"    => $this->session->get_once('default_group_saved'),
-                                "flagform"     => $flagform,
-                                "appname"      => $appname));
+        $data = array("allgroups"    => $row,
+                      "defaultgroup" => $row2[0]['default_group'],
+                      "flagsaved"    => $this->session->get_once('default_group_saved'),
+                      "flagform"     => $flagform,
+                      "appname"      => $appname);
 
-        $this->load->view('backend/default_group');
+        $this->load->view('backend/default_group', $data);
     }
     // }}}
     // {{{ _default_group_write
@@ -148,11 +146,11 @@ class Backend_Controller extends Controller
     {
         $this->global_tabs->setParameter('name', $appname); 
 
-        $this->load->vars(array("flagsaved"    => $this->session->get_once('new_group_saved'),
-                                "flagform"     => $flagform,
-                                "appname"      => $appname));
+        $data = array("flagsaved" => $this->session->get_once('new_group_saved'),
+                      "flagform"  => $flagform,
+                      "appname"   => $appname);
 
-        $this->load->view('backend/new_group');
+        $this->load->view('backend/new_group', $data);
     }
     // }}}
     // {{{ _new_group_write
@@ -175,13 +173,13 @@ class Backend_Controller extends Controller
         $row  = $this->Groups->getAllAppGroups($appname);
         $row2 = $this->Groups->getDefaultGroup($appname);
 
-        $this->load->vars(array("appname"      => $appname,
-                                "flagsaved"    => $this->session->get_once('new_user_saved'),
-                                "allgroups"    => $row,
-                                "defaultgroup" => $row2[0]['default_group'],
-                                "flagform"     => $flagform));
+        $data = array("appname"      => $appname,
+                      "flagsaved"    => $this->session->get_once('new_user_saved'),
+                      "allgroups"    => $row,
+                      "defaultgroup" => $row2[0]['default_group'],
+                      "flagform"     => $flagform);
 
-        $this->load->view('backend/new_user');       
+        $this->load->view('backend/new_user', $data);       
     }
     // }}}
     // {{{ _new_user_write
@@ -209,19 +207,19 @@ class Backend_Controller extends Controller
         $group       = $this->Groups->getGroup($userprofile['group_id']);
         $row         = $this->Groups->getAllAppGroups($group['appname']);
 
-        $this->load->vars(array("appname"      => $group['appname'],
-                                "flagsaved"    => $this->session->get_once('edit_user_saved'),
-                                "allgroups"    => $row,
-                                "defaultgroup" => $group['name'],
-                                "username"     => $userprofile['username'],
-                                "name"         => $userprofile['name'],
-                                "lastname"     => $userprofile['lastname'],
-                                "email"        => $userprofile['email'],
-                                "blocked"      => $userprofile['blocked'],
-                                "flagform"     => $flagform,
-                                "oldpassword"  => $oldpassword));
+        $data = array("appname"      => $group['appname'],
+                      "flagsaved"    => $this->session->get_once('edit_user_saved'),
+                      "allgroups"    => $row,
+                      "defaultgroup" => $group['name'],
+                      "username"     => $userprofile['username'],
+                      "name"         => $userprofile['name'],
+                      "lastname"     => $userprofile['lastname'],
+                      "email"        => $userprofile['email'],
+                      "blocked"      => $userprofile['blocked'],
+                      "flagform"     => $flagform,
+                      "oldpassword"  => $oldpassword);
 
-        $this->load->view('backend/user_profile');
+        $this->load->view('backend/user_profile', $data);
     }
     // }}}
     // {{{ _user_profile_write
@@ -258,14 +256,14 @@ class Backend_Controller extends Controller
         $selected        = $this->Privileges->getSelectedPrivileges($subpris, $allselected);
         $selectedparents = $this->Privileges->getSelectedParents($selected, $parents);
 
-        $this->load->vars(array('parent_privileges' => $selectedparents,
-                                'sub_privileges'    => $selected,
-                                'id'                => $id,
-                                'appname'           => $appname,
-                                'flagsaved'         => $this->session->get_once('group_privileges_edit_saved'),
-                                'flagform'          => $flagform));
+        $data = array('parent_privileges' => $selectedparents,
+                      'sub_privileges'    => $selected,
+                      'id'                => $id,
+                      'appname'           => $appname,
+                      'flagsaved'         => $this->session->get_once('group_privileges_edit_saved'),
+                      'flagform'          => $flagform);
 
-        $this->load->view('backend/group_privileges');
+        $this->load->view('backend/group_privileges', $data);
     }
     // }}}
     // {{{ _privileges_edit_write

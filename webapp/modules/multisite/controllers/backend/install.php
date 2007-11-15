@@ -33,11 +33,11 @@ class Install_Controller extends Backend_Controller
             $show_form  = false;
         }
 
-        $this->load->vars(array('modules'   => $this->MultiSite->getModules(),
-                                'messages'  => $messages,
-                                'show_form' => $show_form));
+        $data = array('modules'   => $this->MultiSite->getModules(),
+                      'messages'  => $messages,
+                      'show_form' => $show_form);
 
-        $this->load->view('backend/install');
+        $this->load->view('backend/install', $data);
     }
     // }}}
     // {{{ index_write

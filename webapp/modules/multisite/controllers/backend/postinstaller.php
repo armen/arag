@@ -14,12 +14,12 @@ class PostInstaller_Controller extends Backend_Controller
     // {{{ index_read
     public function index_read()
     {   
-        $this->load->vars(array(
-                                'email_is_sent' => $this->session->get_once('multisite_email_is_sent'),
-                                'installed'     => $this->session->get_once('multisite_installed')
-                               ));
+        $data = array(
+                       'email_is_sent' => $this->session->get_once('multisite_email_is_sent'),
+                       'installed'     => $this->session->get_once('multisite_installed')
+                     );
 
-        $this->load->view('backend/post_installer');
+        $this->load->view('backend/post_installer', $data);
     }
     // }}}
     // {{{ index_write
