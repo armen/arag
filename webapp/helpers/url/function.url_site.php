@@ -30,6 +30,10 @@ function smarty_function_url_site($params, &$smarty)
         }
     }
 
+    if (preg_match('|^http://|i', $uri)) {
+        return $uri;
+    }
+
     return url::site($uri, $protocol);
 }
 
