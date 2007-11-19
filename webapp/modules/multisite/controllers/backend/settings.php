@@ -146,15 +146,9 @@ class Settings_Controller extends Backend_Controller
                            'smtpserver' => $this->input->post('smtpserver'),
                            'sender'     => $this->input->post('sender'),
                            'subject'    => $this->input->post('subject'),
-                           'template'   => $this->input->post('template')
+                           'template'   => $this->input->post('template'),
+                           'smtpport'   => $this->input->post('smtpport')
                           );
-
-        $settings['smtpport'] = 25;
-
-        if ($this->input->post('smtpport')) {
-            $settings['settings'] = $this->input->post('smtpport');
-        }
-        
 
         if ($this->input->post('username')) {
             $settings = array_merge($settings, array(
