@@ -28,11 +28,8 @@ class Backend_Controller extends Controller
         // load global Tabs
         $this->load->component('TabbedBlock', 'global_tabs'); 
 
-        // Backend decorator
-        $this->load->decorator('backend/decorator');
-
         // Default page title
-        $this->decorator->page_title = 'User Management';
+        $this->layout->page_title = 'User Management';
 
         // Get the appname
         $this->appname = $this->session->get('appname');
@@ -65,7 +62,7 @@ class Backend_Controller extends Controller
         $data['saved'] = $this->session->get_once('settings_saved');
         $data['form']  = $flagform;
 
-        $this->load->view('backend/settings', $data);
+        $this->layout->content = new View('backend/settings', $data);
     }
     // }}}
     // {{{ _create_privileges_list
@@ -91,7 +88,7 @@ class Backend_Controller extends Controller
         $data = array("parentid"  => $parentid,
                       "flagsaved" => $this->session->get_once('privileges_add_saved'));
 
-        $this->load->view('backend/privileges', $data); 
+        $this->layout->content = new View('backend/privileges', $data); 
     }
     // }}}
     // {{{ _create_groups_list
@@ -126,7 +123,7 @@ class Backend_Controller extends Controller
                       "flagform"     => $flagform,
                       "appname"      => $appname);
 
-        $this->load->view('backend/default_group', $data);
+        $this->layout->content = new View('backend/default_group', $data);
     }
     // }}}
     // {{{ _default_group_write
@@ -150,7 +147,7 @@ class Backend_Controller extends Controller
                       "flagform"  => $flagform,
                       "appname"   => $appname);
 
-        $this->load->view('backend/new_group', $data);
+        $this->layout->content = new View('backend/new_group', $data);
     }
     // }}}
     // {{{ _new_group_write
@@ -179,7 +176,7 @@ class Backend_Controller extends Controller
                       "defaultgroup" => $row2[0]['default_group'],
                       "flagform"     => $flagform);
 
-        $this->load->view('backend/new_user', $data);       
+        $this->layout->content = new View('backend/new_user', $data);       
     }
     // }}}
     // {{{ _new_user_write
@@ -219,7 +216,7 @@ class Backend_Controller extends Controller
                       "flagform"     => $flagform,
                       "oldpassword"  => $oldpassword);
 
-        $this->load->view('backend/user_profile', $data);
+        $this->layout->content = new View('backend/user_profile', $data);
     }
     // }}}
     // {{{ _user_profile_write
@@ -263,7 +260,7 @@ class Backend_Controller extends Controller
                       'flagsaved'         => $this->session->get_once('group_privileges_edit_saved'),
                       'flagform'          => $flagform);
 
-        $this->load->view('backend/group_privileges', $data);
+        $this->layout->content = new View('backend/group_privileges', $data);
     }
     // }}}
     // {{{ _privileges_edit_write

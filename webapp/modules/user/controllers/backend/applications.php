@@ -52,7 +52,7 @@ class Applications_Controller extends Backend_Controller
         $this->applications->addColumn('Applications.getDate', _("Create Date"), PList::VIRTUAL_COLUMN);
         $this->applications->addAction('user/backend/applications/groups/#name#', _("Edit"), 'edit_action');      
         
-        $this->load->view('backend/index', array("name" => $name, "flag" => false)); 
+        $this->layout->content = new View('backend/index', array("name" => $name, "flag" => false)); 
     }
     // }}}
     // {{{ index_error
@@ -74,7 +74,7 @@ class Applications_Controller extends Backend_Controller
 
         $this->session->set('delete_appname', $appname);
 
-        $this->load->view('backend/groups'); 
+        $this->layout->content = new View('backend/groups'); 
     }
     // }}}
     // {{{ groups_read_error
@@ -121,7 +121,7 @@ class Applications_Controller extends Backend_Controller
         $this->users->addAction("user/backend/applications/delete/user", _("Delete"), 'delete_action', PList::GROUP_ACTION);
         $this->users->setGroupActionParameterName('username');
         
-        $this->load->view('backend/users', array("flagsearch"  => false));
+        $this->layout->content = new View('backend/users', array("flagsearch"  => false));
     }
     // }}}
     // {{{ users_read_error
@@ -160,7 +160,7 @@ class Applications_Controller extends Backend_Controller
                       "group_name" => $group_name,
                       "flagform"   => true);
 
-        $this->load->view('backend/users', $data);    
+        $this->layout->content = new View('backend/users', $data);    
     }
     // }}}
     // {{{ new_user_read
@@ -249,7 +249,7 @@ class Applications_Controller extends Backend_Controller
                       'appname'  => $appname,
                       'flagform' => true);
 
-        $this->load->view('backend/delete', $data);
+        $this->layout->content = new View('backend/delete', $data);
     }
     // }}}
     // {{{ do_delete
@@ -297,7 +297,7 @@ class Applications_Controller extends Backend_Controller
         $this->applications->addAction("user/backend/applications/app_filters_delete/", _("Delete"), 'delete_action', PList::GROUP_ACTION);
         $this->applications->setGroupActionParameterName('appname');
         
-        $this->load->view('backend/index', array("name" => $name, "flag" => true));
+        $this->layout->content = new View('backend/index', array("name" => $name, "flag" => true));
     }
     //}}}
     //{{{ app_filters_read
@@ -357,7 +357,7 @@ class Applications_Controller extends Backend_Controller
         $this->filters->addAction("user/backend/applications/filters_delete/".$appname, _("Delete"), 'delete_action', PList::GROUP_ACTION);
         $this->filters->setGroupActionParameterName('id');
         
-        $this->load->view('backend/filters', array('appname' => $appname, 'flagsaved' => $flagsaved));
+        $this->layout->content = new View('backend/filters', array('appname' => $appname, 'flagsaved' => $flagsaved));
     }
     //}}}
     //{{{ _filters_read_error
@@ -380,7 +380,7 @@ class Applications_Controller extends Backend_Controller
                       'flagsaved' => $flagsaved,
                       'filter'    => $filters[$id]['filter']);
 
-        $this->load->view('backend/edit_filters', $data);
+        $this->layout->content = new View('backend/edit_filters', $data);
     }
     //}}}
     //{{{ filters_edit_write
@@ -453,7 +453,7 @@ class Applications_Controller extends Backend_Controller
                       'objecttype' => $objecttype,
                       'appname'    => $appname);
 
-        $this->load->view('backend/filters_delete', $data);
+        $this->layout->content = new View('backend/filters_delete', $data);
     }
     // }}}
     // {{{ app_filters_delete
@@ -499,7 +499,7 @@ class Applications_Controller extends Backend_Controller
                       'objecttype' => $objecttype,
                       'appname'    => $key);
 
-        $this->load->view('backend/filters_delete', $data);
+        $this->layout->content = new View('backend/filters_delete', $data);
     }
     // }}} 
     // {{{ filters_do_delete
@@ -525,7 +525,7 @@ class Applications_Controller extends Backend_Controller
     // {{{ add_apps_filters_read
     public function add_apps_filters_read()
     {
-        $this->load->view('backend/add_app_filter', array('flagsaved' => $this->session->get_once('app_add_filter_saved')));
+        $this->layout->content = new View('backend/add_app_filter', array('flagsaved' => $this->session->get_once('app_add_filter_saved')));
     }
     // }}}
     // {{{ add_apps_filters_write
@@ -618,7 +618,7 @@ class Applications_Controller extends Backend_Controller
                       'parentid'  => $label->parent_id,
                       'flagsaved' => $this->session->get_once('privilege_edited_saved'));
 
-        $this->load->view('backend/privileges_edit', $data);
+        $this->layout->content = new View('backend/privileges_edit', $data);
     }
     // }}}
     // {{{ privileges_edit_read_error
@@ -698,7 +698,7 @@ class Applications_Controller extends Backend_Controller
                       'subjects'    => $subjects,
                       'flagcaption' => $flagcaption);
 
-        $this->load->view('backend/privileges_delete', $data);
+        $this->layout->content = new View('backend/privileges_delete', $data);
     }
     // }}}
     // {{{  privileges_do_delete

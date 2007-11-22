@@ -38,7 +38,7 @@ class Application_Controller extends Backend_Controller
 
         $this->session->set('delete_appname', $this->appname);
 
-        $this->load->view('backend/groups');
+        $this->layout->content = new View('backend/groups');
     }
     // }}}
     // {{{ default_group_read
@@ -65,7 +65,7 @@ class Application_Controller extends Backend_Controller
         $this->users->addAction("user/backend/application/delete/user", _("Delete"), 'delete_action', PList::GROUP_ACTION);
         $this->users->setGroupActionParameterName('username');
         
-        $this->load->view('backend/users', array("flagsearch" => false));
+        $this->layout->content = new View('backend/users', array("flagsearch" => false));
     }
     // }}}
     // {{{ users_read_error
@@ -154,7 +154,7 @@ class Application_Controller extends Backend_Controller
                       'appname'  => $appname,
                       'flagform' => false);
 
-        $this->load->view('backend/delete', $data);
+        $this->layout->content = new View('backend/delete', $data);
     }
     // }}}
     // {{{ do_delete
@@ -225,7 +225,7 @@ class Application_Controller extends Backend_Controller
                       "group_name" => $group_name,
                       "flagform"   => false);
 
-        $this->load->view('backend/users', $data);    
+        $this->layout->content = new View('backend/users', $data);    
     }
     // }}}
     // {{{ new_user_write

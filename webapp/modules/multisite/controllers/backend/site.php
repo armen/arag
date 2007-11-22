@@ -41,7 +41,7 @@ class Site_Controller extends Backend_Controller
                       "ids"  => $ids,
                       "dbid" => $dbid);
 
-        $this->load->view('backend/site', $data);
+        $this->layout->content = new View('backend/site', $data);
     }
     // }}}
     // {{{ index_error
@@ -50,6 +50,6 @@ class Site_Controller extends Backend_Controller
         $this->index();
     }
     // }}}
-
 }
+
 ?>

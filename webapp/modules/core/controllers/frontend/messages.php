@@ -8,28 +8,21 @@
 
 class Messages_Controller extends Controller
 {
-    // {{{ Constructor
-    function __construct()
-    {
-        parent::__construct();
-
-        // Replace current decorator with local decorator
-        $this->load->decorator('decorator');
-    }
-    // }}}
     // {{{ invalid_request
     public function invalid_request()
     {
-        $view = $this->load->view('messages/invalid_request');
-        $view->page_title = _("Invalid Request!");
-        $view->uri        = $this->session->get('_invalid_request_uri');
+        $this->layout->content = new View('messages/invalid_request');
+
+        $this->layout->content->page_title = _("Invalid Request!");
+        $this->layout->content->uri        = $this->session->get('_invalid_request_uri');
     }
     // }}}
     // {{{ not_authorized
     public function not_authorized()
     {
-        $view = $this->load->view('messages/not_authorized');
-        $view->page_title = _("Not Authorized!");
+        $this->layout->content = new View('messages/not_authorized');
+
+        $this->layout->content->page_title = _("Not Authorized!");
     }
     // }}}
 }

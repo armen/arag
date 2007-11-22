@@ -19,7 +19,7 @@ class PostInstaller_Controller extends Backend_Controller
                        'installed'     => $this->session->get_once('multisite_installed')
                      );
 
-        $this->load->view('backend/post_installer', $data);
+        $this->layout->content = new View('backend/post_installer', $data);
     }
     // }}}
     // {{{ index_write

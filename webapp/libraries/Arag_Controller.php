@@ -21,9 +21,7 @@ class Controller extends Controller_Core {
 
     // {{{ Properties
 
-    public $view      = Null;
-    public $decorator = Null;
-    public $slots     = Array();
+    public $layout    = Null;
     public $vars      = Array();
 
     // }}}
@@ -35,6 +33,16 @@ class Controller extends Controller_Core {
         if (Config::item('smarty.integration') == True) {
             $this->load->library('Arag_Smarty');
         }
+
+        $this->layout = ($this->layout == Null && (strpos(Router::$directory, 'backend') !== False || Router::$controller === 'backend')) 
+                      ? 'arag_templates/backend_layout' 
+                      : 'arag_templates/frontend_layout';
+        $this->layout = new View($this->layout);
+
+        // Set default page_title
+        $this->layout->page_title = 'Arag';
+        
+        Event::add('system.post_controller', array($this, '_display'));
     }
     // }}}
     // {{{ smarty_include_view
@@ -134,24 +142,6 @@ class Controller extends Controller_Core {
 
         // Call the requested method.
         call_user_func_array(Array($this, $method), $arguments);
-
-        // Render the decorator
-        if ($this->decorator instanceof View) {
-            
-            foreach ($this->slots as $slot => $view) {
-
-                // Set variables if is loaded
-                if (isset($this->vars[$slot]) && is_array($this->vars[$slot])) {
-                    foreach ($this->vars[$slot] as $var => $value) {
-                        $view->set($var, $value);
-                    }
-                }
-                
-                $this->decorator->set($slot, $view->render());
-            }
-
-            $this->decorator->render(True);
-        }
     }
     // }}}
     // {{{ _invalid_request
@@ -162,6 +152,14 @@ class Controller extends Controller_Core {
         url::redirect('invalid_request');
     }
     // }}}    
+    // {{{ _display
+    public function _display()
+    {
+        if ($this->layout instanceof View) {
+            $this->layout->render(True);
+        }
+    }
+    // }}}
 }
 
 ?>

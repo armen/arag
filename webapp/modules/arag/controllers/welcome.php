@@ -2,17 +2,13 @@
 
 class Welcome_Controller extends Controller 
 {
-    // {{{ constructor
-    function __construct()
-    {
-        parent::__construct();
-    }
-    // }}}
     // {{{ index
     public function index()
     {
-        $view = $this->load->view('index');
-        $view->render(True);
+        $this->layout->content = new View('index');      
+
+        // Set the appname
+        $this->layout->content->appname = ucfirst(APPNAME);
     }
     // }}}
 }

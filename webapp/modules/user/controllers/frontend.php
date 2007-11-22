@@ -14,17 +14,14 @@ class Frontend_Controller extends Controller
     {
         parent::__construct();
        
-        // Frontend decorator
-        $this->load->decorator('frontend/decorator');
-
         // Default page title
-        $this->decorator->page_title = 'User Management';
+        $this->layout->page_title = 'User Management';
     }
     // }}}
     // {{{ login_read
     public function login_read()
     {
-        $this->load->view('frontend/login', array('error_message' => false));
+        $this->layout->content = new View('frontend/login', array('error_message' => false));
     }
     // }}}
     // {{{ login_write
@@ -69,7 +66,7 @@ class Frontend_Controller extends Controller
 
             $error_message = implode("\n", $error_message);
 
-            $this->load->view('frontend/login', array('status' => $status, 'error_message' => $error_message));
+            $this->layout->content = new View('frontend/login', array('status' => $status, 'error_message' => $error_message));
         }
     }
     // }}}

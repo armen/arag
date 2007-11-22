@@ -16,11 +16,8 @@ class Backend_Controller extends Controller
         // Load the model and url helper
         $this->load->model('Blog');
 
-        // Backend decorator
-        $this->load->decorator('backend/decorator');
-
         // Default page title
-        $this->decorator->page_title = 'Blog';
+        $this->layout->page_title = 'Blog';
 
         // Global tabbedbock
         $this->load->component('TabbedBlock', 'global_tabs');

@@ -24,7 +24,7 @@ class Settings_Controller extends Backend_Controller
         $data['post_limit'] = Arag_Config::get('post_limit', 0);
         $data['saved']      = $this->session->get_once('configuration_saved');
 
-        $this->load->view('backend/settings', $data);
+        $this->layout->content = new View('backend/settings', $data);
     }
     // }}}    
     // {{{ index_write

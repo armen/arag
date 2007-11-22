@@ -17,11 +17,8 @@ class Frontend_Controller extends Controller
         $this->load->model('MultiSite');        
         $this->load->model('Users', NULL, 'user');
 
-        // Backend decorator
-        $this->load->decorator('frontend/decorator');
-
         // Default page title
-        $this->decorator->page_title = _("MultiSite");
+        $this->layout->page_title = _("MultiSite");
     }
     // }}}
     // {{{ index_read
@@ -47,7 +44,7 @@ class Frontend_Controller extends Controller
         $data = array('error_message' => $error_message,
                       'show_form'     => $show_form,
                       'uri'           => $verify_uri);
-        $this->load->view('frontend/verify', $data);
+        $this->layout->content = new View('frontend/verify', $data);
     }
     // }}}
     // {{{ index_write
@@ -59,7 +56,7 @@ class Frontend_Controller extends Controller
 
         if ($this->Users->checkVerify($username, $password, $verify_uri)) {
             $this->Users->verify($username, $password, $verify_uri);
-            $this->load->view('frontend/verified');
+            $this->layout->content = new View('frontend/verified');
                     
         } else {
             $this->session->set('multi_site_status', True);

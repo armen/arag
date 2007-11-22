@@ -17,7 +17,7 @@ class Settings_Controller extends Backend_Controller
         $data['limit'] = Arag_Config::get("limit");
         $data['saved'] = $this->session->get_once('multi_site_settings_limit_saved');
 
-        $this->load->view('backend/settings_limit', $data);
+        $this->layout->content = new View('backend/settings_limit', $data);
     }
     // }}}
     // {{{ index_write
@@ -45,7 +45,7 @@ class Settings_Controller extends Backend_Controller
         $data['expire'] = Arag_Config::get("expire");
         $data['saved']  = $this->session->get_once('multi_site_settings_expire_saved');
 
-        $this->load->view('backend/settings_expire', $data);
+        $this->layout->content = new View('backend/settings_expire', $data);
     }
     // }}}
     // {{{ expire_time_write
@@ -73,7 +73,7 @@ class Settings_Controller extends Backend_Controller
         $data['length'] = Arag_Config::get("passlength");
         $data['saved']  = $this->session->get_once('multi_site_settings_pass_length_saved');
 
-        $this->load->view('backend/settings_password', $data);
+        $this->layout->content = new View('backend/settings_password', $data);
     }
     // }}}
     // {{{ password_write
@@ -109,7 +109,7 @@ class Settings_Controller extends Backend_Controller
 
         $data['saved'] = $this->session->get_once('multi_site_settings_privileges_saved');
 
-        $this->load->view('backend/settings_privileges', $data);
+        $this->layout->content = new View('backend/settings_privileges', $data);
     }
     // }}}
     // {{{ privileges_write
@@ -136,7 +136,7 @@ class Settings_Controller extends Backend_Controller
 
         $data['saved'] = $this->session->get_once('multi_site_settings_email_saved');
 
-        $this->load->view('backend/settings_email', $data);
+        $this->layout->content = new View('backend/settings_email', $data);
     }
     // }}}
     // {{{ email_write

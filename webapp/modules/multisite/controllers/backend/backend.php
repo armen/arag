@@ -20,11 +20,8 @@ class Backend_Controller extends Controller
         $this->load->model('Groups', NULL, 'user');
         $this->load->model('Applications', NULL, 'user');
        
-        // Backend decorator
-        $this->load->decorator('backend/decorator');
-
         // Default page title
-        $this->decorator->page_title = _("MultiSite");
+        $this->layout->page_title = _("MultiSite");
 
         // Global tabbedbock
         $this->load->component('TabbedBlock', 'global_tabs');

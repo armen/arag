@@ -28,16 +28,16 @@ class Entry_Controller extends Backend_Controller
         // $this->entries->addAction('blog/backend/entry/delete', 'Delete', 'delete_action', PList::GROUP_ACTION);
         $this->entries->setEmptyListMessage(_("There is no entry!"));
 
-        $this->load->view('backend/index');
+        $this->layout->content = new View('backend/index');
     }
     // }}}
     // {{{ post_read
     public function post_read()
     {
-        $view = $this->load->view('backend/post');
+        $this->layout->content = new View('backend/post');
 
-        $view->categories  = $this->Blog->getCategories();
-        $view->status_list = $this->Blog->getStatusOptions();
+        $this->layout->content->categories  = $this->Blog->getCategories();
+        $this->layout->content->status_list = $this->Blog->getStatusOptions();
     }
     // }}}
     // {{{ post_write
@@ -70,7 +70,7 @@ class Entry_Controller extends Backend_Controller
         $data  = Array ('categories'  => $this->Blog->getCategories(), 
                         'status_list' => $this->Blog->getStatusOptions());
 
-        $this->load->view('backend/edit', array_merge($data, $entry));
+        $this->layout->content = new View('backend/edit', array_merge($data, $entry));
     }
     // }}}
     // {{{ edit_read_error
@@ -102,7 +102,7 @@ class Entry_Controller extends Backend_Controller
         $data = Array ('categories'  => $this->Blog->getCategories(), 
                        'status_list' => $this->Blog->getStatusOptions());
 
-        $this->load->view('backend/edit', $data);
+        $this->layout->content = new View('backend/edit', $data);
     }
     // }}}
     // {{{ delete_read
@@ -113,7 +113,7 @@ class Entry_Controller extends Backend_Controller
         $data = Array('id'      => $id, 
                       'subject' => $this->Blog->getEntrySubject($id));
 
-        $this->load->view('backend/delete', $data);
+        $this->layout->content = new View('backend/delete', $data);
     }
     // }}}
     // {{{ delete_read_error
@@ -150,7 +150,7 @@ class Entry_Controller extends Backend_Controller
         // $this->entry->addColumn('entry');
         // $this->entry->addColumn('extended_entry');
 
-        $this->load->view('backend/preview', Array('extended'  => True, 'entry_uri' => '/blog/backend/entry/preview/#id#'));
+        $this->layout->content = new View('backend/preview', Array('extended'  => True, 'entry_uri' => '/blog/backend/entry/preview/#id#'));
     }
     // }}}
     // {{{ preview_error

@@ -27,62 +27,6 @@ class Loader extends Loader_Core {
     private $components = Array();
 
     // }}}
-    // {{{ decorator
-    public function decorator($decorator)
-    {
-        return Kohana::instance()->decorator = parent::view($decorator);
-    }
-    // }}}
-    // {{{ view
-    public function view($name, $data = Array())
-    {
-        $controller       = Kohana::instance();
-        $controller->view = parent::view($name, $data);
-
-        if ($controller->decorator instanceof View) {        
-            // What is callig method name?
-            // Remove appended requested method from function name
-            $backtrace      = debug_backtrace();
-            $calling_method = substr($backtrace[1]['function'], 0, 1) != '_' ? $backtrace[1]['function'] : $backtrace[2]['function'];            
-            $calling_method = preg_replace('/_('.implode('|', Router::$request_methods).')(_error)?/', '', $calling_method);
-            $slot           = $calling_method;        
-
-            // Is calling method the requested method?
-            if (Router::$method == $calling_method || $calling_method == '_invalid_request') {
-                $slot = 'content';
-            }
-
-            $controller->slots[$slot] = $controller->view;
-        }
-
-        return $controller->view;
-    }
-    // }}}
-    // {{{ vars
-    public function vars($vars)
-    {
-        $controller = Kohana::instance();
-
-        if ($controller->decorator instanceof View) {
-
-            // What is callig method name?
-            // Remove appended requested method from function name
-            $backtrace      = debug_backtrace();
-            $calling_method = substr($backtrace[1]['function'], 0, 1) != '_' ? $backtrace[1]['function'] : $backtrace[2]['function'];           
-            $calling_method = preg_replace('/_('.implode('|', Router::$request_methods).')(_error)?/', '', $calling_method);
-            $slot           = $calling_method;        
-
-            // Is calling method the requested method?
-            if (Router::$method == $calling_method || $calling_method == '_invalid_request') {
-                $slot = 'content';
-            }
-
-            $controller->vars[$slot] = (isset($controller->vars[$slot]) && is_array($controller->vars[$slot])) ? 
-                                       array_merge($controller->vars[$slot], (array)$vars) :
-                                       (array)$vars;
-        }
-    }
-    // }}}
     // {{{ component
     public function component($component, $namespace = Null)
     {
