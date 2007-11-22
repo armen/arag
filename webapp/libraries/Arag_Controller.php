@@ -21,8 +21,7 @@ class Controller extends Controller_Core {
 
     // {{{ Properties
 
-    public $layout    = Null;
-    public $vars      = Array();
+    public $layout = Null;
 
     // }}}
     // {{{ Constructor
@@ -34,10 +33,16 @@ class Controller extends Controller_Core {
             $this->load->library('Arag_Smarty');
         }
 
-        $this->layout = ($this->layout == Null && (strpos(Router::$directory, 'backend') !== False || Router::$controller === 'backend')) 
-                      ? 'arag_templates/backend_layout' 
-                      : 'arag_templates/frontend_layout';
+        if ($this->layout == Null) {
+            $this->layout = (strpos(Router::$directory, 'backend') !== False || Router::$controller === 'backend') 
+                          ? 'arag_templates/backend_layout' 
+                          : 'arag_templates/frontend_layout';
+        }
+
         $this->layout = new View($this->layout);
+
+        $this->layout->name     = $this->session->get('name');
+        $this->layout->lastname = $this->session->get('lastname');
 
         // Set default page_title
         $this->layout->page_title = 'Arag';
