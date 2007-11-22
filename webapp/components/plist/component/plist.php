@@ -189,7 +189,7 @@ class PList extends Component implements IteratorAggregate, ArrayAccess
     }
     // }}}
     // {{{ addAction
-    public function addAction($uri, $label, $className = Null, $alternateCallback = False, $alternateUri = Null)
+    public function addAction($uri, $label, $className = Null, $alternateCallback = False, $alternateUri = Null, $target = FALSE)
     {
         $title = Null;
 
@@ -213,6 +213,7 @@ class PList extends Component implements IteratorAggregate, ArrayAccess
 
             $this->actions[] = Array('uri'                => $uri,
                                      'label'              => $label,
+                                     'target'             => ($target) ? '_blank' : '_self',
                                      'class_name'         => $className,
                                      'class_attribute'    => ($className != Null) ? 'class="'.$className.'"' : Null,
                                      'alternate_callback' => $alternateCallback,
