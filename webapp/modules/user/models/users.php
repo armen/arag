@@ -16,22 +16,16 @@ class Users_Model extends Model
     const USER_NOT_VERIFIED   = 2;
     const USER_BLOCKED        = 4;
 
-    private $tablePrefix;
-
     // }}}
     // {{{ Constructor
     function __construct()
     {
         parent::__construct('default');
 
-        // Set table prefix
-        $this->tablePrefix = $this->db->table_prefix();
-
         // Set table name
         $this->tableNameUsers  = "user_users";
         $this->tableNameGroups = "user_groups";
         $this->tableNameApps   = "user_applications";
-
     }
     // }}}
     // {{{ check
@@ -90,10 +84,10 @@ class Users_Model extends Model
     // {{{ & getUser
     public function & getUser($username)
     {
-        $this->db->select('appname, '.$this->tablePrefix.$this->tableNameGroups.'.name as group_name, username, privileges, redirect,'.
-                          $this->tablePrefix.$this->tableNameUsers.'.name as name, lastname, email, group_id');
+        $this->db->select('appname, '.$this->tableNameGroups.'.name as group_name, username, privileges, redirect,'.
+                          $this->tableNameUsers.'.name as name, lastname, email, group_id');
         $this->db->from($this->tableNameUsers);
-        $this->db->join($this->tableNameGroups, $this->tablePrefix.$this->tableNameGroups.'.id = '.$this->tablePrefix.$this->tableNameUsers.'.group_id');
+        $this->db->join($this->tableNameGroups, $this->tableNameGroups.'.id = '.$this->tableNameUsers.'.group_id');
         $this->db->where('username', $username);
         $this->db->where('verified', True);
         $this->db->where('blocked',  False);
@@ -140,45 +134,44 @@ class Users_Model extends Model
     public function & getUsers($groupID = NULL, $appName, $groupName, $user, $flagappname)
     {
         $this->db->select('username, lastname, email, appname, id');
-        $this->db->select($this->tablePrefix.$this->tableNameGroups.".name as group_name");
-        $this->db->select($this->tablePrefix.$this->tableNameUsers.".name as user_name");
-        $this->db->select($this->tablePrefix.$this->tableNameUsers.".modify_date");
-        $this->db->select($this->tablePrefix.$this->tableNameUsers.".create_date");
-        $this->db->select($this->tablePrefix.$this->tableNameUsers.".modified_by");
-        $this->db->select($this->tablePrefix.$this->tableNameUsers.".created_by");
-        $this->db->from($this->tableNameUsers);
-        $this->db->join($this->tableNameGroups, $this->tablePrefix.$this->tableNameGroups.".id = ".$this->tablePrefix.$this->tableNameUsers.".group_id");
+        $this->db->select($this->tableNameGroups.".name as group_name");
+        $this->db->select($this->tableNameUsers.".name as user_name");
+        $this->db->select($this->tableNameUsers.".modify_date");
+        $this->db->select($this->tableNameUsers.".create_date");
+        $this->db->select($this->tableNameUsers.".modified_by");
+        $this->db->select($this->tableNameUsers.".created_by");
+        $this->db->join($this->tableNameGroups, $this->tableNameGroups.".id = ".$this->tableNameUsers.".group_id");
 
         if ($groupID != NULL) {
             $this->db->where('group_id', $groupID);
         }
 
         if ($groupName != NULL) {
-            $this->db->like($this->tablePrefix.$this->tableNameGroups.".name", $groupName);
+            $this->db->like($this->tableNameGroups.".name", $groupName);
         }
         
-        if ($appName != NULL) {
-            if ($flagappname) {
-                $this->db->like('appname', $appName);
-            } else {
-                $this->db->where('appname', $appName);
-            }
-        }
-
         if ($user != NULL) {
             $row = explode(" ", $user);
             foreach ($row as $tag) {
                 $this->db->like('username', $tag);
-                $this->db->orlike($this->tablePrefix.$this->tableNameUsers.".name", $tag);
+                $this->db->orlike($this->tableNameUsers.".name", $tag);
                 $this->db->orlike('lastname', $tag);
+            }
+        }
+
+        if ($appName != NULL) {
+            if ($flagappname) {
+                $this->db->like('appname', $appName);
+            } else {
+                $this->db->where('appname', $appName);               
             }
         }
 
         $this->db->orderby('appname', 'ASC');
         $this->db->orderby('lastname', 'ASC');
         $this->db->orderby('group_name', 'ASC');
-
-        $retval = $this->db->get()->result(False);
+        
+        $retval = $this->db->get($this->tableNameUsers)->result(False);
 
         return $retval;
     }
@@ -250,8 +243,7 @@ class Users_Model extends Model
         } else {
             $this->db->select('username');
             $this->db->from($this->tableNameUsers);
-            $this->db->join($this->tableNameGroups, $this->tablePrefix.$this->tableNameGroups.".id = ".
-                            $this->tablePrefix.$this->tableNameUsers.".group_id");           
+            $this->db->join($this->tableNameGroups, $this->tableNameGroups.".id = ".$this->tableNameUsers.".group_id");           
             $this->db->where('username', $username);
             $this->db->where('appname', $appname);
             $query = $this->db->get();
