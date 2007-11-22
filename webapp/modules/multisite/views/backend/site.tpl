@@ -1,7 +1,7 @@
 {* Smarty *}
 {*  
     vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:             
-    File: $Id: decorator.tpl 41 2007-10-11 04:12:18Z sasan $
+    File: $Id$
 *}
 {arag_block}
     {arag_validation_errors}
