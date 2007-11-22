@@ -11,6 +11,10 @@
     {arag_head}
 </head>
 <body>
+    {arag_block align="right" template="blank"}        
+        {html_anchor uri="user/frontend/login" title="login"}
+    {/arag_block}
+
     {$content|smarty:nodefaults}
 </body>
 </html>

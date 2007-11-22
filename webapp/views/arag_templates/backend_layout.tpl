@@ -11,6 +11,12 @@
     {arag_head}
 </head>
 <body>
+    {arag_block align="right" template="blank"}
+        {capture assign="welcome"}_("Welcome %s %s"){/capture}
+        {$welcome|sprintf:$name:$lastname} | 
+        {html_anchor uri="user/frontend/logout" title="logout"}
+    {/arag_block}            
+
     {arag_tabbed_block name="global_tabs"}
         {$content|smarty:nodefaults}
     {/arag_tabbed_block}
