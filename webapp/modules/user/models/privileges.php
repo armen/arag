@@ -50,11 +50,15 @@ class Privileges_Model extends Model
                 // and othe sections are lower case cheractrer(s)
                 if ($filter === '*' || preg_match('/^([a-z_]+)((\/[a-z_]+){0,2}(\/\*))$/', $filter)) {
 
-                    $filter = '|^'.str_replace('*', '.*', $filter).'$|';
+                    $oldFilter = $filter;
+                    $filter    = '|^'.str_replace('*', '.*', $filter).'$|';
 
                     foreach ($privileges as $key => $row) {
 
-                        if (preg_match($filter, $row['privilege'])) {
+                        if ($row['privilege'] != Null && 
+                            (preg_match($filter, $row['privilege']) ||
+                             preg_match('|^'.str_replace('*', '.*', $row['privilege']).'$|', $oldFilter))) {
+                            
                             unset($privileges[$key]);
                         }
                     }                        
