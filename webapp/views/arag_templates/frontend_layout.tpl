@@ -16,5 +16,8 @@
     {/arag_block}
 
     {$content|smarty:nodefaults}
+    {literal}
+        Execution: {execution_time} Memory usage: {memory_usage}
+    {/literal}    
 </body>
 </html>
