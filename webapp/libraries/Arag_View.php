@@ -27,7 +27,7 @@ class View extends View_Core {
 
             if ($template) {
                 // There is a template file
-                $this->kohana_filename = Kohana::find_file('views', $name.$ext, True, True);
+                $this->kohana_filename = $template;
                 $this->kohana_filetype = $ext;
             
                 // Preload data
