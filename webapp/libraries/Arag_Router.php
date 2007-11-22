@@ -53,63 +53,10 @@ class Router extends Router_Core {
             throw new Kohana_Exception('core.no_default_route');
         }
 
-        // The follow block of if/else attempts to retrieve the URI segments automagically
-        // Supported request_methods: CLI, GET, PATH_INFO, ORIG_PATH_INFO, PHP_SELF
-        if (PHP_SAPI === 'cli') {
+        // Use the default route when no segments exist
+        if (self::$current_uri == '' OR self::$current_uri == '/') {
 
-            // Command line requires a bit of hacking
-            if (isset($_SERVER['argv'][1])) {
-                self::$segments = $_SERVER['argv'][1];
-
-                // Remove GET string from segments
-                if (($query = strrpos(self::$segments, '?')) !== FALSE) {
-
-                    list (self::$segments, $query) = explode('?', self::$segments);
-
-                    // Insert query into GET array
-                    foreach(explode('&', $query) as $pair) {
-                        list ($key, $val) = array_pad(explode('=', $pair), 1, '');
-
-                        $_GET[utf8::clean($key)] = utf8::clean($val);
-                    }
-                }
-            }
-        
-        } elseif (count($_GET) === 1 AND current($_GET) == '') {
-            self::$segments = current(array_keys($_GET));
-
-            // Fixes really stange handling of a suffix in a GET string
-            if ($suffix = Config::item('core.url_suffix') AND substr(self::$segments, -(strlen($suffix))) === '_'.substr($suffix, 1)) {
-                self::$segments = substr(self::$segments, 0, -(strlen($suffix)));
-            }
-
-            // Destroy GET
-            $_GET = array();
-
-        } elseif (isset($_SERVER['PATH_INFO']) AND $_SERVER['PATH_INFO']) {
-            self::$segments = $_SERVER['PATH_INFO'];
-
-        } elseif (isset($_SERVER['ORIG_PATH_INFO']) AND $_SERVER['ORIG_PATH_INFO']) {
-            self::$segments = $_SERVER['ORIG_PATH_INFO'];
-
-        } elseif (isset($_SERVER['PHP_SELF']) AND $_SERVER['PHP_SELF']) {
-            self::$segments = $_SERVER['PHP_SELF'];
-        }
-
-        // Find the URI string based on the location of the front controller
-        if (($offset = strpos(self::$segments, KOHANA)) !== FALSE) {
-
-            // Add the length of the index file to the offset
-            $offset += strlen(KOHANA);
-
-            // Get the segment part of the URL
-            self::$segments = substr(self::$segments, $offset);
-            self::$segments = trim(self::$segments, '/');
-        }
-
-        // Use the default route when no segments exist 
-        if (self::$segments == '' OR self::$segments == '/') {
-            self::$segments = self::$routes['_default'];
+            self::$current_uri = self::$routes['_default'];
             $default_route = TRUE;
         } else {
             $default_route = FALSE;
@@ -117,15 +64,15 @@ class Router extends Router_Core {
 
         // Remove the URL suffix
         if ($suffix = Config::item('core.url_suffix')) {
-            self::$segments = preg_replace('!'.preg_quote($suffix).'$!u', '', self::$segments);
+            self::$current_uri = preg_replace('!'.preg_quote($suffix).'$!u', '', self::$current_uri);
         }
 
         // Remove extra slashes from the segments that could cause fucked up routing
-        self::$segments = preg_replace('!//+!', '/', self::$segments);
+        self::$current_uri = preg_replace('!//+!', '/', self::$current_uri);
 
         // At this point, set the segments, rsegments, and current URI
         // In many cases, all of these variables will match
-        self::$segments = self::$rsegments = self::$current_uri = trim(self::$segments, '/');
+        self::$segments = self::$rsegments = self::$current_uri = trim(self::$current_uri, '/');
 
         // Custom routing
         if ($default_route == FALSE AND count(self::$routes) > 1) {
@@ -133,7 +80,7 @@ class Router extends Router_Core {
             if (isset(self::$routes[self::$current_uri])) {
                 // Literal match, no need for regex
                 self::$rsegments = self::$routes[self::$current_uri];
-            
+
             } else {
 
                 // Loop through the routes and see if anything matches
@@ -157,7 +104,6 @@ class Router extends Router_Core {
                         // If the regex contains a valid callback, we'll use it
                         if (strpos($val, '$') !== FALSE AND strpos($key, '(') !== FALSE) {
                             self::$rsegments = preg_replace('!^'.$key.'$!u', $val, self::$segments);
-
                         } else {
                             self::$rsegments = $val;
                         }
@@ -201,7 +147,7 @@ class Router extends Router_Core {
         list(self::$module) = array_splice($rsegments, 0, 1);
 
         Config::set('core.include_paths', Array(APPPATH.'modules/'.self::$module));
-
+        
         // Fetch the include paths
         $include_paths = Config::include_paths();
 
@@ -210,9 +156,8 @@ class Router extends Router_Core {
 
         // Use the rsegments to find the controller
         foreach($rsegments as $key => $segment) {
-            
-            foreach($include_paths as $path) {
 
+            foreach($include_paths as $path) {
                 // The controller has been found, all arguments can be set
                 if (strpos($path, 'modules/'.self::$module) !== False && is_file($path.$search.'/'.$segment.EXT)) {
 
