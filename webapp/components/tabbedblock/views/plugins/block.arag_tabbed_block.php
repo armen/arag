@@ -114,6 +114,11 @@ function smarty_block_arag_tabbed_block($params, $content, &$smarty, &$repeat)
             }
 
             return $smarty->fetch($template);
+            
+        } else {
+
+            // Do nothing just return the content
+            return $content;
         }
     }
 }
