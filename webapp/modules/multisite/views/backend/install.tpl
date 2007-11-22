@@ -47,7 +47,8 @@
                     </td>
                     <td align="{left}">
                         {foreach from=$modules item=module}                   
-                            <label><input type="checkbox" name="modules[]" value="{$module.module|smarty:nodefaults|default = null}" />&nbsp;{$module.name}</label><br />
+                            <label><input type="checkbox" name="modules[]" value="{$module.module|smarty:nodefaults|default = null}" />
+                                    &nbsp;{$module.name}</label><br />
                         {/foreach}               
                     </td>
                 </tr>
