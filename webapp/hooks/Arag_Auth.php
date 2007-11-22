@@ -1,6 +1,7 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
-Event::add('system.execute', array('Arag_Auth', 'check'));
+// Add the Arag_Auth::check at the begining
+Event::add_before('system.execute', current(Event::get('system.execute')), array('Arag_Auth', 'check'));
 
 /**
  * Arag
@@ -34,15 +35,7 @@ class Arag_Auth {
     public static function check()
     {
         $session = new Session();
-        $appname = $session->get('appname');
-
-        if (APPNAME !== $appname && $session->get('authenticated') && !defined('MASTERAPP')) {
-            
-            // Redirect to user's application
-            $multisite = Model::load('MultiSite', 'multisite');
-            url::redirect($multisite->getAppUrl($appname));
-            exit;
-        }
+        $appname = $session->get('appname', APPNAME);
 
         $directory         = substr(Router::$directory, strpos(Router::$directory, 'controllers/') + 12); // 12 is strlen('controllers/')
         self::$destination = Router::$module . '/' . $directory . Router::$controller . '/' . Router::$method;
