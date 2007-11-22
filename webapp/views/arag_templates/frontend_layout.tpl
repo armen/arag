@@ -11,8 +11,14 @@
     {arag_head}
 </head>
 <body>
-    {arag_block align="right" template="blank"}        
-        {html_anchor uri="user/frontend/login" title="login"}
+    {arag_block align="right" template="blank"}
+        {if $auth}
+            {capture assign="welcome"}_("Welcome %s %s"){/capture}
+            {$welcome|sprintf:$name:$lastname} | 
+            {html_anchor uri="user/frontend/logout" title="logout"}
+        {else}
+            {html_anchor uri="user/frontend/login" title="login"}
+        {/if}
     {/arag_block}
 
     {$content|smarty:nodefaults}
