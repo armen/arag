@@ -17,16 +17,11 @@ class MultiSite_Model extends Model
     private $tableNameUsers;
     private $tableNameDatabases;
 
-    private $tablePrefix;
-
     // }}}
     // {{{ Constructor
     public function __construct()
     {
         parent::__construct();
-
-        // Set table prefix
-        $this->tablePrefix = $this->db->table_prefix();
 
         // Set the table name
         $this->tableNameMultiSite = 'multisite_databases';
@@ -40,18 +35,17 @@ class MultiSite_Model extends Model
     public function getApps($name, $databaseID)
     {
         $this->db->select('default_group, create_date, database_id');
-        $this->db->select($this->tablePrefix.$this->tableNameApps.".name AS app_name");
-        $this->db->select($this->tablePrefix.$this->tableNameDatabases.".name as db_name");
+        $this->db->select($this->tableNameApps.".name AS app_name");
+        $this->db->select($this->tableNameDatabases.".name as db_name");
         $this->db->from($this->tableNameApps);
-        $this->db->join($this->tableNameDatabases, $this->tablePrefix.$this->tableNameApps.".database_id = ".
-                        $this->tablePrefix.$this->tableNameDatabases.".id");
+        $this->db->join($this->tableNameDatabases, $this->tableNameApps.".database_id = ".$this->tableNameDatabases.".id");
  
         if ($databaseID) {
             $this->db->where("database_id", $databaseID);
         }      
 
         if ($name != "") {
-            $this->db->like($this->tablePrefix.$this->tableNameApps.".name", $name);
+            $this->db->like($this->tableNameApps.".name", $name);
         }
         
         $retval = $this->db->orderby('app_name', 'ASC')->get()->result(False);
@@ -68,10 +62,9 @@ class MultiSite_Model extends Model
     public function getIDs()
     {
         $this->db->select('DISTINCT database_id');
-        $this->db->select($this->tablePrefix.$this->tableNameDatabases.".name");
+        $this->db->select($this->tableNameDatabases.".name");
         $this->db->from($this->tableNameApps);
-        $this->db->join($this->tableNameDatabases, $this->tablePrefix.$this->tableNameApps.".database_id = ".
-                        $this->tablePrefix.$this->tableNameDatabases.".id");      
+        $this->db->join($this->tableNameDatabases, $this->tableNameApps.".database_id = ".$this->tableNameDatabases.".id");      
 
         $retval = $this->db->get()->result_array(false);
         
@@ -79,10 +72,10 @@ class MultiSite_Model extends Model
     }
     // }}}
     // {{{ getModules
-    public function getModules()
+    public function getModules($excludeModules = Array())
     {
         $modules = Model::load('Modules', 'core');
-        return $modules->getModules();
+        return $modules->getModules($excludeModules);
     }
     // }}}
     // {{{ generateVerifyUri

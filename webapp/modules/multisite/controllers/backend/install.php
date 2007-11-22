@@ -18,26 +18,34 @@ class Install_Controller extends Backend_Controller
         $messages  = array();
         $settings  = Arag_Config::get('email_settings', False);
 
-        if (!$settings || !isset($settings['smtpserver']) || !isset($settings['sender'])) {
+        if (!$settings || !isset($settings['smtpserver']) || !isset($settings['sender']) || !isset($settings['smtpport'])) {
             $messages[] = _("You should first set your email's SMTP settings in the settings tab to continue.");
             $show_form  = false;
         }
 
-        if (!is_writeable(DOCROOT . 'sites') && !is_dir(DOCROOT . 'sites')) {
+        if (!is_writeable(DOCROOT . 'sites') || !is_dir(DOCROOT . 'sites')) {
             $messages[] = _("Your 'public_html/sites' directory doesn't exist or isn't writeable.");
             $show_form  = false;
         }
 
-        if (!is_writeable(APPPATH . 'config/sites') && !is_dir(APPPATH . 'config/sites')) {
+        if (!is_writeable(APPPATH . 'config/sites') || !is_dir(APPPATH . 'config/sites')) {
             $messages[] = _("Your 'config/sites' directory doesn't exist or isn't writeable.");
             $show_form  = false;
         }
 
-        $data = array('modules'   => $this->MultiSite->getModules(),
+        // We don't have to install these modules
+        $excludeModules = array
+        (
+            'user',
+            'multisite',
+            'ta_locator'
+        );        
+
+        $data = array('modules'   => $this->MultiSite->getModules($excludeModules),
                       'messages'  => $messages,
                       'show_form' => $show_form);
 
-        $this->load->view('backend/install', $data);
+        $this->layout->content = new View('backend/install', $data);
     }
     // }}}
     // {{{ index_write

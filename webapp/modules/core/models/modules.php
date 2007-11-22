@@ -23,10 +23,16 @@ class Modules_Model extends Model
     }
     // }}}
     // {{{ getModules
-    public function getModules()
+    public function getModules($excludeModules = Array())
     {
         $this->db->select('id, name, module');
         $this->db->where('state', 1);
+
+        // Excluse modules
+        foreach ($excludeModules as $module) {
+            $this->db->where('module !=', $module);
+        }
+
         return $this->db->get($this->tableNameCoreModules)->result(false);
     }
     // }}}
