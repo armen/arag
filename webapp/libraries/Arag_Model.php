@@ -23,11 +23,8 @@ class Model extends Model_Core {
     // {{{ Constructor
     public function __construct($config = Null)
     {
-        $session = new Session();
-        $appname = $session->get('appname', APPNAME);
-
         $config = defined('MASTERAPP') ? 'default' : $config;
-        $config = ($config == Null) ? Config::item('sites/'.$appname.'.database') : $config;
+        $config = ($config == Null) ? Config::item('sites/'.APPNAME.'.database') : $config;
 
         // Load the database into the model
         if (Event::has_run('system.pre_controller')) {
