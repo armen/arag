@@ -146,8 +146,34 @@ class Controller extends Controller_Core {
             Kohana::show_404();
         }
 
-        // Call the requested method.
-        call_user_func_array(Array($this, $method), $arguments);
+        if (empty($arguments)) {
+            // Call the controller method with no arguments
+            $this->$method();
+
+        } else {
+
+            // Manually call the request method for up to 4 arguments. Why? Because
+            // call_user_func_array is ~3 times slower than direct method calls.
+            switch(count($arguments))
+            {
+                case 1:
+                    $this->$method($arguments[0]);
+                break;
+                case 2:
+                    $this->$method($arguments[0], $arguments[1]);
+                break;
+                case 3:
+                    $this->$method($arguments[0], $arguments[1], $arguments[2]);
+                break;
+                case 4:
+                    $this->$method($arguments[0], $arguments[1], $arguments[2], $arguments[3]);
+                break;
+                default:
+                    // Resort to using call_user_func_array for many segments
+                    call_user_func_array(array($this, $method), $arguments);
+                break;
+            }
+        }
     }
     // }}}
     // {{{ _invalid_request
