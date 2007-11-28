@@ -151,4 +151,26 @@ $validator['users']['read']['rules'] = Array(
                                              array(_("ID") => 'required|numeric|callback__check_group'),
                                              array(_("Appname") => 'required|callback__check_app')
                                             );
+
+/*
+ * Validation of Password Settings
+ */
+
+$validator['password']['write']['rules'] = Array('length' => array(_("Password length"), 'trim|required|numeric'));
+
+
+/*
+ * Validation of URI expire time Settings
+ */
+
+$validator['expire_time']['write']['rules'] = Array('expire' => array(_("Expire time"), 'trim|required|numeric'));
+
+/*
+ * Validation of URI user blocking Settings
+ */
+
+$validator['user_blocking']['write']['rules'] = Array(
+                                                      'block_expire'  => array(_("Blocking expire time"), 'trim|required|numeric'),
+                                                      'block_counter' => array(_("Blocking attempts"), 'trim|required|numeric'),
+                                                     );
 ?>
