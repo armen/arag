@@ -45,6 +45,10 @@
                 <type>integer</type>
             </field>
             <field>
+                <name>expire_date</name>
+                <type>integer</type>
+            </field>
+            <field>
                 <name>modified_by</name>
                 <type>text</type>
                 <length>255</length>
@@ -72,6 +76,14 @@
                 <name>blocked</name>
                 <type>integer</type>
             </field>            
+            <field>
+                <name>block_counter</name>
+                <type>integer</type>
+            </field>            
+            <field>
+                <name>block_date</name>
+                <type>integer</type>
+            </field>
             <index>
                 <name>primary</name>
                 <primary>true</primary>
