@@ -35,6 +35,16 @@ class Backend_Controller extends Controller
         $this->appname = $this->session->get('appname');
     }
     // }}}
+    // {{{ index
+    public function index()
+    {
+        if (defined('MASTERAPP')) {
+            url::redirect("user/backend/applications");
+        } else {
+            url::redirect("user/backend/application");
+        }
+    }
+    // }}}
     // {{{ _create_users_plist
     protected function _create_users_plist($id, $appname = NULL, $groupname = NULL, $user = NULL, $flagappname = true)
     {
@@ -247,7 +257,7 @@ class Backend_Controller extends Controller
     // {{{ _privileges_edit_read
     protected function _privileges_edit_read($id, $appname, $flagform = true)
     {
-        $parents         = $this->Privileges->getFilteredPrivileges($appname, "0");
+        $parents         = $this->Privileges->getFilteredPrivileges($appname, 0);
         $subpris         = $this->Privileges->getAppPrivileges($appname);
         $allselected     = $this->Privileges->getPrivileges($id, true);
         $selected        = $this->Privileges->getSelectedPrivileges($subpris, $allselected);
