@@ -30,6 +30,10 @@ class Applications_Controller extends Backend_Controller
         $this->global_tabs->addItem(_("Parents"), 'user/backend/applications/privileges_parents', 'user/backend/applications/privileges_parents');
         $this->global_tabs->addItem(_("All"), 'user/backend/applications/privileges_all', 'user/backend/applications/privileges_parents');
         $this->global_tabs->addItem(_("Settings"), 'user/backend/applications/settings');
+        $this->global_tabs->addItem(_("Page Limit"), 'user/backend/applications/settings', 'user/backend/applications/settings');
+        $this->global_tabs->addItem(_("Password Settings"), 'user/backend/applications/password', 'user/backend/applications/settings');
+        $this->global_tabs->addItem(_("Expire Time"), 'user/backend/applications/expire_time', 'user/backend/applications/settings');
+        $this->global_tabs->addItem(_("User Blocking"), 'user/backend/applications/user_blocking', 'user/backend/applications/settings');
     }
     // }}}
     // {{{ index
@@ -787,6 +791,92 @@ class Applications_Controller extends Backend_Controller
     public function settings_write_error()
     {
         $this->settings_read();
+    }
+    // }}}
+    // {{{ password_read
+    public function password_read()
+    {   
+        $data           = Array();
+        $data['length'] = Arag_Config::get("passlength");
+        $data['saved']  = $this->session->get_once('user_settings_pass_length_saved');
+
+        $this->layout->content = new View('backend/settings_password', $data);
+    }
+    // }}}
+    // {{{ password_write
+    public function password_write()
+    {
+
+        Arag_Config::set('passlength', $this->input->post('length'));
+
+        $this->session->set('user_settings_pass_length_saved', true);
+
+        $this->password_read();
+
+    }
+    // }}}
+    // {{{ password_write_error
+    public function password_write_error()
+    {
+        $this->password_read();
+    }
+    // }}}
+    // {{{ expire_time_read
+    public function expire_time_read()
+    {   
+        $data           = Array();
+        $data['expire'] = Arag_Config::get("expire");
+        $data['saved']  = $this->session->get_once('user_settings_expire_saved');
+
+        $this->layout->content = new View('backend/settings_expire', $data);
+    }
+    // }}}
+    // {{{ expire_time_write
+    public function expire_time_write()
+    {
+
+        Arag_Config::set('expire', $this->input->post('expire'));
+
+        $this->session->set('user_settings_expire_saved', true);
+
+        $this->expire_time_read();
+
+    }
+    // }}}
+    // {{{ expire_time_write_error
+    public function expire_time_write_error()
+    {
+        $this->expire_time_read();
+    }
+    // }}}
+    // {{{ user_blocking_read
+    public function user_blocking_read()
+    {   
+        $data                  = Array();
+        $data['block_expire']  = Arag_Config::get("block_expire");
+        $data['block_counter'] = Arag_Config::get("block_counter");
+        $data['saved']         = $this->session->get_once('user_settings_user_blocking_saved');
+
+        $this->layout->content = new View('backend/settings_user_blocking', $data);
+    }
+    // }}}
+    // {{{ user_blocking_write
+    public function user_blocking_write()
+    {
+
+        Arag_Config::set('block_expire', $this->input->post('block_expire'));
+        Arag_Config::set('block_counter', $this->input->post('block_counter'));
+
+        $this->session->set('user_settings_user_blocking_saved', true);
+
+        $this->user_blocking_read();
+
+    }
+    // }}}
+    // {{{ user_blocking_write_error
+    public function user_blocking_write_error()
+    {
+        $this->user_blocking_read();
     }
     // }}}
 }
