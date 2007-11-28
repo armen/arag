@@ -16,10 +16,10 @@ class Install_Controller extends Backend_Controller
     {   
         $show_form = true;
         $messages  = array();
-        $settings  = Arag_Config::get('email_settings', False);
+        $settings  = Arag_Config::get('email_settings', False, 'core');
 
         if (!$settings || !isset($settings['smtpserver']) || !isset($settings['sender']) || !isset($settings['smtpport'])) {
-            $messages[] = _("You should first set your email's SMTP settings in the settings tab to continue.");
+            $messages[] = _("You should first set your email's SMTP settings in the core settings to continue.");
             $show_form  = false;
         }
 
@@ -61,7 +61,7 @@ class Install_Controller extends Backend_Controller
         $anonypri   = serialize(Arag_Config::get('anonypri', NULL));
         $adminpri   = serialize(Arag_Config::get('adminpri', NULL));
         $verify_uri = $this->MultiSite->generateVerifyUri(10);
-        $password   = strtolower(text::random('alnum', Arag_Config::get('passlength', 8)));
+        $password   = strtolower(text::random('alnum', Arag_Config::get('passlength', 8, 'user')));
         $username   = $appname.'_admin';
 
         // Get next database data source name and id
@@ -109,7 +109,7 @@ class Install_Controller extends Backend_Controller
         }
 
         // Send an email to verify the user
-        $settings = Arag_Config::get('email_settings', NULL);
+        $settings = Arag_Config::get('email_settings', NULL, 'core');
         $strings  = array ('appname'  => $appname,
                            'uri'      => html::anchor('multisite/frontend/index/' . $verify_uri),
                            'username' => $username,

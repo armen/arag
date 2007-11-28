@@ -10,6 +10,7 @@ require_once "backend.php";
 
 class Settings_Controller extends Backend_Controller 
 {
+
     // {{{ index_read
     public function index_read()
     {   
@@ -36,62 +37,6 @@ class Settings_Controller extends Backend_Controller
     public function index_write_error()
     {
         $this->index_read();
-    }
-    // }}}
-    // {{{ expire_time_read
-    public function expire_time_read()
-    {   
-        $data           = Array();
-        $data['expire'] = Arag_Config::get("expire");
-        $data['saved']  = $this->session->get_once('multi_site_settings_expire_saved');
-
-        $this->layout->content = new View('backend/settings_expire', $data);
-    }
-    // }}}
-    // {{{ expire_time_write
-    public function expire_time_write()
-    {
-
-        Arag_Config::set('expire', $this->input->post('expire'));
-
-        $this->session->set('multi_site_settings_expire_saved', true);
-
-        $this->expire_time_read();
-
-    }
-    // }}}
-    // {{{ expire_time_write_error
-    public function expire_time_write_error()
-    {
-        $this->expire_time_read();
-    }
-    // }}}
-    // {{{ password_read
-    public function password_read()
-    {   
-        $data           = Array();
-        $data['length'] = Arag_Config::get("passlength");
-        $data['saved']  = $this->session->get_once('multi_site_settings_pass_length_saved');
-
-        $this->layout->content = new View('backend/settings_password', $data);
-    }
-    // }}}
-    // {{{ password_write
-    public function password_write()
-    {
-
-        Arag_Config::set('passlength', $this->input->post('length'));
-
-        $this->session->set('multi_site_settings_pass_length_saved', true);
-
-        $this->password_read();
-
-    }
-    // }}}
-    // {{{ password_write_error
-    public function password_write_error()
-    {
-        $this->password_read();
     }
     // }}}
     // {{{ privileges_read
@@ -129,46 +74,50 @@ class Settings_Controller extends Backend_Controller
         $this->privileges_read();
     }
     // }}}
-    // {{{ email_read
-    public function email_read()
+    // {{{ user_blocking_read
+    public function user_blocking_read()
     {   
-        $data = Arag_Config::get("email_settings", array());
-
-        $data['saved'] = $this->session->get_once('multi_site_settings_email_saved');
-
-        $this->layout->content = new View('backend/settings_email', $data);
-    }
-    // }}}
-    // {{{ email_write
-    public function email_write()
-    {
-        $settings = array (
-                           'smtpserver' => $this->input->post('smtpserver'),
-                           'sender'     => $this->input->post('sender'),
-                           'subject'    => $this->input->post('subject'),
-                           'template'   => $this->input->post('template'),
-                           'smtpport'   => $this->input->post('smtpport')
-                          );
-
-        if ($this->input->post('username')) {
-            $settings = array_merge($settings, array(
-                                                     'username'       => $this->input->post('username'),
-                                                     'password'       => $this->input->post('password'),
-                                                     'authentication' => true
-                                                    ));
+        $data                  = Array();
+        $data['block_expire']  = Arag_Config::get("verify_block_expire");
+        $data['block_counter'] = Arag_Config::get("verify_block_counter");
+        $data['saved']         = $this->session->get_once('multisite_settings_user_blocking_saved');
+        $data['blockoptions']  = array(
+                                       MultiSite_Model::BLOCK_URI => "BLock user and remove URI",
+                                       MultiSite_Model::BLOCK     => "Just block user",
+                                       MultiSite_Model::URI       => "Just remove URI"
+                                      );
+        if (arag_config::get('verify_block_action', 6) & Multisite_Model::BLOCK) {
+            $data['blockselected'] = MultiSite_Model::BLOCK;
+        } else if (Arag_Config::get('verify_block_action', 6) & MultiSite_Model::URI) {
+            $data['blockselected'] = MultiSite_Model::URI;
         }
 
-        Arag_Config::set('email_settings', $settings);
+        if ((Arag_Config::get('verify_block_action', 6) & MultiSite_Model::BLOCK) &&
+            (Arag_Config::get('verify_block_action', 6) & MultiSite_Model::URI)) {
+            $data['blockselected'] = MultiSite_Model::BLOCK_URI;
+        }
 
-        $this->session->set('multi_site_settings_email_saved', true);
-
-        $this->email_read();
+        $this->layout->content = new View('backend/settings_user_blocking', $data);
     }
     // }}}
-    // {{{ email_write_error
-    public function email_write_error()
+    // {{{ user_blocking_write
+    public function user_blocking_write()
     {
-        $this->email_read();
+
+        Arag_Config::set('verify_block_expire', $this->input->post('block_expire'));
+        Arag_Config::set('verify_block_counter', $this->input->post('block_counter'));
+        Arag_Config::set('verify_block_action', $this->input->post('block_action'));
+
+        $this->session->set('multisite_settings_user_blocking_saved', true);
+
+        $this->user_blocking_read();
+
+    }
+    // }}}
+    // {{{ user_blocking_write_error
+    public function user_blocking_write_error()
+    {
+        $this->user_blocking_read();
     }
     // }}}
 }
