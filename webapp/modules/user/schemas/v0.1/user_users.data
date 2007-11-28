@@ -39,6 +39,10 @@
                      <value></value>
                 </field>                
                 <field>
+                     <name>expire_date</name>
+                     <value></value>
+                </field>
+                <field>
                      <name>modified_by</name>
                      <value></value>
                 </field>
@@ -61,6 +65,14 @@
                 <field>
                      <name>blocked</name>
                      <value>0</value>
+                </field>
+                <field>
+                     <name>block_counter</name>
+                     <value>0</value>
+                </field>
+                <field>
+                     <name>block_date</name>
+                     <value></value>
                 </field>
             </insert>
 
