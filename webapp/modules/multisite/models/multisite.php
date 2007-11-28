@@ -17,6 +17,9 @@ class MultiSite_Model extends Model
     private $tableNameUsers;
     private $tableNameDatabases;
 
+    const BLOCK     = 2;
+    const URI       = 4;
+    const BLOCK_URI = 6;
     // }}}
     // {{{ Constructor
     public function __construct()
