@@ -19,11 +19,12 @@
  */
 $config['default'] = array
 (
-	'show_errors'   => TRUE,
-	'benchmark'     => TRUE,
-	'persistent'    => FALSE,
-	'connection'    => 'mysql://root:root@localhost/arag',
-	'character_set' => 'utf8',
-	'table_prefix'  => 'arag_',
-	'object'        => TRUE
+    'show_errors'   => TRUE,
+    'benchmark'     => TRUE,
+    'persistent'    => FALSE,
+    'connection'    => 'mysql://root:root@localhost/arag',
+    'character_set' => 'utf8',
+    'table_prefix'  => 'arag_',
+    'object'        => TRUE,
+    'cache'         => FALSE    
 );
