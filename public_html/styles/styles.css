@@ -657,3 +657,73 @@ input, textarea, select {
     padding-left    : 20px;
 }
 /* }}} end of User Management */
+/* {{{ ControlPanel */
+.cp_items_box {
+    width           : auto;
+    margin          : 0 auto;
+    padding         : 0;
+}
+.cp_items_box .cp_centerer {
+    width           : 550px;
+    margin          : 0 auto;
+    padding         : 0;
+}
+.cp_items_box .cp_item {
+    float           : left;
+    margin          : 0px;
+    padding         : 5px;
+    max-width       : 65px;
+}
+.cp_items_box .cp_item img {
+    margin          : 0px;
+    padding         : 5px;
+}
+.cp_items_box .cp_item a {
+    text-decoration : none;
+    color           : #000000;
+    background-color: #ffffff;
+    border          : 1px solid #aaaaaa;
+    display         : block;
+    text-align      : center;
+}
+.cp_items_box .cp_item a:hover {
+    text-decoration : none;
+    color           : #000000;
+    background-color: #eeeeee;
+    border          : 1px solid #aaaaaa;
+    display         : block;
+    text-align      : center;
+}
+.cp_items_box .cp_link a, 
+.cp_items_box .cp_link a:hover {
+    color           : #000000;
+    background-color: #ffffff;
+    border          : 0px;
+}
+.cp_items_box .cp_item p {
+    color           : #000000;
+    text-align      : center;
+}
+.cp_items_box .cp_item_over {
+    float           : left;
+    margin          : 5px;
+    padding         : 5px;
+}
+.cp_items_box .cp_item_over img {
+    background-color: #ffffff;
+    margin          : 5px;
+    padding         : 5px;
+    border          : 1px solid #aaaaaa; 
+}
+.cp_items_box .cp_item_over a {
+    text-decoration : none;
+    color           : #000000;
+}
+.cp_items_box .cp_item_over p {
+    color           : #000000;
+    text-align      : center;
+}
+.cp_items_box .cp_spacer {
+    clear           : both;
+}
+/* end of ControlPanel }}} */
