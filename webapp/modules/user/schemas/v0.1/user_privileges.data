@@ -215,11 +215,47 @@
                 </field>            
                 <field>
                     <name>label</name>
-                    <value>User Login</value>
+                    <value>User Login and Logout</value>
                 </field>
                 <field>
                     <name>privilege</name>
-                    <value>user/frontend/login</value>
+                    <value>user/frontend/*</value>
+                </field>
+            </insert>
+            <insert>
+                <field>
+                    <name>id</name>
+                    <value>14</value>
+                </field>
+                <field>
+                    <name>parent_id</name>
+                    <value>4</value>
+                </field>            
+                <field>
+                    <name>label</name>
+                    <value>Core Frontend</value>
+                </field>
+                <field>
+                    <name>privilege</name>
+                    <value>core/frontend/*</value>
+                </field>
+            </insert>
+            <insert>
+                <field>
+                    <name>id</name>
+                    <value>15</value>
+                </field>
+                <field>
+                    <name>parent_id</name>
+                    <value>4</value>
+                </field>            
+                <field>
+                    <name>label</name>
+                    <value>Control Panel</value>
+                </field>
+                <field>
+                    <name>privilege</name>
+                    <value>controlpanel/*</value>
                 </field>
             </insert>
         </initialization>
