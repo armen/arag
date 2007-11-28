@@ -26,7 +26,7 @@ class Privileges_Model extends Model
     }
     // }}}
     // {{{ getFilteredPrivileges
-    public function getFilteredPrivileges($appname, $parentId)
+    public function getFilteredPrivileges($appname, $parentId = NULL)
     {
         $controller = Kohana::instance();
         $controller->load->model('Filters', 'Filters', 'user');
@@ -35,7 +35,7 @@ class Privileges_Model extends Model
         
         $this->db->select('id, parent_id, label, create_date, created_by, modify_date, modified_by, privilege')->from($this->tableNamePrivileges);
 
-        if ($parentId != NULL) {
+        if ($parentId !== NULL) {
             $this->db->where(array('parent_id' => $parentId));
         }
 
@@ -91,7 +91,7 @@ class Privileges_Model extends Model
         
         $this->db->insert($this->tableNamePrivileges, $rows);
 
-        if ($parentid != "0") {
+        if ($parentid != 0) {
             $this->db->where('id', $parentid);
             $this->db->update($this->tableNamePrivileges, array('modified_by' => $author, 'modify_date' => time()));
         }
@@ -100,7 +100,7 @@ class Privileges_Model extends Model
     // {{{ editLabel
     public function editLabel($label, $id, $privilege = NULL, $author)
     {
-        $row         = $this->getLabel($id);
+        $row  = $this->getLabel($id);
         
         $rows = array ('label'       => $label,
                        'privilege'   => trim(strtolower($privilege), '/'),
@@ -119,10 +119,7 @@ class Privileges_Model extends Model
     // {{{ isParent
     public function isParent($row)
     {
-        if ($row['parent_id'] === "0") {
-            return false;
-        }
-        return true;
+        return (boolean) $row['parent_id'];
     }
     // }}}
     // {{{ hasLabel
@@ -139,7 +136,7 @@ class Privileges_Model extends Model
         foreach ($objects as $object) {
             $label = $this->getLabel($object);    
 
-            if ($label->parent_id === "0") {
+            if ($label->parent_id == 0) {
                 $this->db->delete($this->tableNamePrivileges, array('parent_id' => $object));
             } else {
                 $row = array ('modified_by' => $author,
@@ -221,7 +218,8 @@ class Privileges_Model extends Model
             foreach ($privilege as $key => $subprivilege) {
                 if ($allselected != NULL) {
                     foreach ($allselected as $selected) {
-                        if ($subprivilege['privilege'] == $selected) {
+                        if (preg_match('|^'.str_replace('*', '',$subprivilege['privilege']).'$|', str_replace('*', '',$selected)) ||
+                            preg_match('|^'.str_replace('*', '',$selected).'|', str_replace('*', '',$subprivilege['privilege']))) {
                             $subpris[$id][$key]['selected'] = true;
                             break;
                         } else {
@@ -233,7 +231,6 @@ class Privileges_Model extends Model
                 }
             }
         }
-
         return $subpris;
     }
     // }}}
@@ -260,15 +257,17 @@ class Privileges_Model extends Model
     {
         $privileges = array();
         
-        foreach ($ids as $id) {
-            $label = $this->getLabel($id);
-            if ($label->parent_id === "0") {
-                $subpris = $this->getFilteredPrivileges($appname, $id);
-                foreach ($subpris as $subpri) {
-                    $privileges[] = $subpri['privilege'];
+        if (!empty($ids)) {
+            foreach ($ids as $id) {
+                $label = $this->getLabel($id);
+                if ($label->parent_id == 0) {
+                    $subpris = $this->getFilteredPrivileges($appname, $id);
+                    foreach ($subpris as $subpri) {
+                        $privileges[] = $subpri['privilege'];
+                    }
+                } else {
+                    $privileges[] = $label->privilege;
                 }
-            } else {
-                $privileges[] = $label->privilege;
             }
         }
 
