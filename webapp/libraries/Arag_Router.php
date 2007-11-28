@@ -62,14 +62,6 @@ class Router extends Router_Core {
             $default_route = FALSE;
         }
 
-        // Remove the URL suffix
-        if ($suffix = Config::item('core.url_suffix')) {
-            self::$current_uri = preg_replace('!'.preg_quote($suffix).'$!u', '', self::$current_uri);
-        }
-
-        // Remove extra slashes from the segments that could cause fucked up routing
-        self::$current_uri = preg_replace('!//+!', '/', self::$current_uri);
-
         // At this point, set the segments, rsegments, and current URI
         // In many cases, all of these variables will match
         self::$segments = self::$rsegments = self::$current_uri = trim(self::$current_uri, '/');
@@ -175,9 +167,8 @@ class Router extends Router_Core {
             $search .= '/'.$segment;
         }
 
-        if (empty(self::$controller)) {
-            Kohana::show_404();
-        }
+        // If the controller is empty, run the system.404 event
+        empty(self::$controller) and Event::run('system.404');        
     }
     // }}}
     // {{{ request_method
