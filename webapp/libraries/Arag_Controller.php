@@ -143,7 +143,7 @@ class Controller extends Controller_Core {
         $method = method_exists($this, $method) ? $method : (method_exists($this, $alt_method) ? $alt_method : False);
         
         if ($method == False) {
-            Kohana::show_404();
+            Event::run('system.404');
         }
 
         if (empty($arguments)) {
