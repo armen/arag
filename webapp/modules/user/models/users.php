@@ -15,6 +15,7 @@ class Users_Model extends Model
     const USER_OK             = 1;
     const USER_NOT_VERIFIED   = 2;
     const USER_BLOCKED        = 4;
+    const USER_INCORRECT_PASS = 8;
 
     // }}}
     // {{{ Constructor
@@ -29,30 +30,45 @@ class Users_Model extends Model
     }
     // }}}
     // {{{ check
-    public function check($username, $password, &$status = 0)
+    public function check($username, $password, &$status = 0, $expiretime)
     {
-        $this->db->select('username, password, verified, blocked');
+        $this->db->select('username');
         $this->db->where('username', $username);
-        $this->db->where('password', sha1($password));
 
         $query = $this->db->get($this->tableNameUsers);
         $user  = $query->current();
 
         // Don't believe the truth! double check it ;)
-        if ($query->num_rows() == 1 && $username === $user->username && sha1($password) === $user->password) {
-
-            $status = self::USER_OK;
-
-            // Check if user verified
-            if (!$user->verified) {
-                $status |= self::USER_NOT_VERIFIED;     // Add verfied to status
-                $status &= ~self::USER_OK;              // Remove the USER_OK flag
-            } 
+        if ($query->num_rows() == 1 && $username === $user->username) {
             
-            // Check if user blocked
-            if ($user->blocked) {
-                $status |= self::USER_BLOCKED;          // Add blocked to status
-                $status &= ~self::USER_OK;              // Remove the USER_OK flag
+            $this->db->select('username, password, verified, blocked, block_date');
+            $this->db->where('username', $username);           
+            $this->db->where('password', sha1($password));
+
+            $query = $this->db->get($this->tableNameUsers);           
+            $user  = $query->current();           
+
+            $status = self::USER_OK;           
+
+            if ($query->num_rows() != 1 || sha1($password) !== $user->password) {
+                $status |= self::USER_INCORRECT_PASS;
+                $status &= ~self::USER_OK;
+            } else {
+
+                // Check if user verified
+                if (!$user->verified) {
+                    $status |= self::USER_NOT_VERIFIED;     // Add verfied to status
+                    $status &= ~self::USER_OK;              // Remove the USER_OK flag
+                } 
+                
+                // Check if user blocked
+                if ($user->blocked) {
+                    if ($user->block_date == 0 || ($expiretime > (time()-$user->block_date))) {
+                        $status |= self::USER_BLOCKED;          // Add blocked to status
+                        $status &= ~self::USER_OK;              // Remove the USER_OK flag
+                    }
+                }
+
             }
  
             return (boolean)($status & self::USER_OK);  // Check if USER_OK flag is set
@@ -63,22 +79,45 @@ class Users_Model extends Model
     }
     // }}}
     // {{{ checkVerify
-    public function checkVerify($username, $password, $uri)
+    public function checkVerify($username, $password, $uri, &$status, $expiretime)
     {
-        $this->db->select('username, password, verify_string');
+        $this->db->select('username');
         $this->db->where('username', $username);
-        $this->db->where('password', sha1($password));
-        $this->db->where('verify_string', $uri);
 
         $query = $this->db->get($this->tableNameUsers); 
         $user  = $query->current();
 
-        if ($query->num_rows() == 1 && $username === $user->username && 
-            sha1($password) === $user->password && $uri === $user->verify_string) {
-            return True;
+        if ($query->num_rows() == 1 && $username === $user->username) {
+
+            $this->db->select('username, password, verify_string, blocked, block_date');
+            $this->db->where('username', $username);
+            $this->db->where('password', sha1($password));
+            $this->db->where('verify_string', $uri); 
+                    
+            if (Arag_Config::get('expire', 0) != 0) {
+                $this->db->where('expire_date >',  time()+Arag_Config::get('expire', 0));
+            }
+
+            $query = $this->db->get($this->tableNameUsers); 
+            $user  = $query->current();
+
+            $status = self::USER_OK;    
+
+            if ($query->num_rows() != 1 || sha1($password) !== $user->password || $uri !== $user->verify_string) {
+                $status |= self::USER_INCORRECT_PASS;
+                $status &= ~self::USER_OK;
+            } else if ($user->blocked) {
+                if ($user->block_date == 0 || ($expiretime > (time()-$user->block_date))) {
+                    $status |= self::USER_BLOCKED;          // Add blocked to status
+                    $status &= ~self::USER_OK;              // Remove the USER_OK flag
+                }
+            }
+
+            return (boolean)($status & self::USER_OK);  // Check if USER_OK flag is set
         }
 
-        return False;        
+        $status = self::USER_NOT_FOUND; // Status is 0
+        return (boolean)$status;      
     }
     // }}}   
     // {{{ & getUser
@@ -121,7 +160,7 @@ class Users_Model extends Model
     // {{{ & getUserProfile
     public function & getUserProfile($username)
     {
-        $this->db->select('username, name, lastname, password, create_date, created_by, modify_date, modified_by, blocked, profile_id, email, group_id');
+        $this->db->select('username, name, lastname, password, create_date, created_by, modify_date, modified_by, blocked, block_date, profile_id, email, group_id');
         $this->db->from($this->tableNameUsers);
         $this->db->where('username', $username);
 
@@ -153,9 +192,9 @@ class Users_Model extends Model
         if ($user != NULL) {
             $row = explode(" ", $user);
             foreach ($row as $tag) {
-                $this->db->like('username', $tag);
+                $this->db->like('(username', $tag);
                 $this->db->orlike($this->tableNameUsers.".name", $tag);
-                $this->db->orlike('lastname', $tag);
+                $this->db->orlike('lastname)', $tag);
             }
         }
 
@@ -187,6 +226,7 @@ class Users_Model extends Model
         $row = Array('username'      => $username, 
                      'create_date'   => time(),
                      'modify_date'   => time(),
+                     'expire_date'   => time(),
                      'modified_by'   => $author,
                      'created_by'    => $author,
                      'name'          => $name,
@@ -215,14 +255,15 @@ class Users_Model extends Model
             $blocked = 0;
         }
         
-        $row = Array('create_date' => time(),
-                     'modify_date' => time(),
-                     'modified_by' => $author,
-                     'name'        => $name,
-                     'lastname'    => $lastname,
-                     'group_id'    => $group['id'],
-                     'email'       => $email,
-                     'blocked'     => $blocked);
+        $row = Array(
+                     'modify_date'   => time(),
+                     'modified_by'   => $author,
+                     'name'          => $name,
+                     'lastname'      => $lastname,
+                     'group_id'      => $group['id'],
+                     'email'         => $email,
+                     'blocked'       => $blocked
+                    );
 
         if ($password != "") {
             $row['password'] = sha1($password);
@@ -273,11 +314,11 @@ class Users_Model extends Model
         return boolean($row['block']);
     }
     //}}}
-    // {{{ createDate
-    public function createDate($verify_string)
+    // {{{ expireDate
+    public function expireDate($verify_string)
     {
-        $this->db->select('create_date');
-        return $this->db->getwhere($this->tableNameUsers, array('verify_string' => $verify_string))->current()->create_date;
+        $this->db->select('expire_date');
+        return $this->db->getwhere($this->tableNameUsers, array('verify_string' => $verify_string))->current()->expire_date;
     }
     // }}}
     // {{{ verify
@@ -295,12 +336,81 @@ class Users_Model extends Model
         $this->db->update($this->tableNameUsers, $rows);
     }
     // }}}
+    // {{{ checkEmail
+    public function checkEmail($email, $username = NULL, $verify_string = NULL, $verified = 1)
+    {
+        $this->db->select('username, email');
+        $this->db->where('email', $email);
+        $this->db->where('verified', $verified);
+        $this->db->where('blocked', 0);
+
+        if ($username != NULL) {
+            $this->db->where('username', $username);
+        }
+
+        if ($verify_string != NULL) {
+            $this->db->where('verify_string', $verify_string);
+            if (Arag_Config::get('expire', 0) != 0) {
+                $this->db->where('expire_date >',  time()+Arag_Config::get('expire', 0));
+            }
+        }
+
+        $query = $this->db->get($this->tableNameUsers);
+        $user  = (array) $query->current();
+
+        $user['status'] = self::USER_OK;
+
+        // Don't believe the truth! double check it ;)
+        if ($query->num_rows() != 1 || $email !== $user['email']) {
+            $user['status'] = self::USER_NOT_FOUND;
+        }
+
+        return $user;
+    }
+    // }}}
     // {{{ hasUri
-    public function hasUri($verify_uri)
+    public function hasUri($verify_uri, $verified = 0)
     {
         $this->db->select('verify_string');
-        $query = $this->db->getwhere($this->tableNameUsers, Array('verify_string' => $verify_uri)); 
+        $query = $this->db->getwhere($this->tableNameUsers, Array(
+                                                                  'verify_string' => $verify_uri,
+                                                                  'verified'      => $verified
+                                                                 )); 
         return (boolean)$query->num_rows();
+    }
+    // }}}
+    // {{{ changePassword
+    public function changePassword($username, $verify_string = "", $password = NULL)
+    {
+        $this->db->where('username', $username);
+        if ($verify_string !== "") {
+            $this->db->update($this->tableNameUsers, array('verify_string' => $verify_string,
+                                                           'expire_date'   => time()));
+        }
+
+        if ($password != NULL) {
+            $this->db->update($this->tableNameUsers, array('password' => sha1($password)));
+        }
+    }
+    // }}}
+    // {{{ getBlockInfo
+    public function getBlockInfo ($username)
+    {
+        $this->db->select('block_date, block_counter');
+        return $this->db->getwhere($this->tableNameUsers, array('username' => $username))->current();       
+    }
+    // }}}
+    // {{{ blockUser
+    public function blockUser($username, $block = 0, $counter = 0, $block_date = 0)
+    {
+        $rows = array (
+                       'block_counter' => $counter,
+                       'blocked'       => $block,
+                       'block_date'    => $block_date
+                      );
+
+        $this->db->where('username', $username);
+        $this->db->update($this->tableNameUsers, $rows);
     }
     // }}}
 }
