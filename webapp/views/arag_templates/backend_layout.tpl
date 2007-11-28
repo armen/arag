@@ -13,8 +13,11 @@
 <body>
     {arag_block align="right" template="blank"}
         {capture assign="welcome"}_("Welcome %s %s"){/capture}
+        {capture assign="logout"}_("Logout"){/capture}
+        {capture assign="controlpanel"}_("Control Panel"){/capture}        
         {$welcome|sprintf:$name:$lastname} | 
-        {html_anchor uri="user/frontend/logout" title="logout"}
+        {html_anchor uri="user/frontend/logout" title="$logout"} | 
+        {html_anchor uri="controlpanel" title="$controlpanel"}
     {/arag_block}            
 
     {arag_tabbed_block name="global_tabs"}
