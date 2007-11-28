@@ -34,10 +34,8 @@ class Backend_Controller extends Controller
         $this->global_tabs->addItem(_("Preview Site"), 'multisite/backend/site/preview/%id%', 'multisite/backend/site');
         $this->global_tabs->addItem(_("Settings"), 'multisite/backend/settings/index');
         $this->global_tabs->addItem(_("Page Limits"), 'multisite/backend/settings/index', 'multisite/backend/settings/index');
-        $this->global_tabs->addItem(_("Email Settings"), 'multisite/backend/settings/email', 'multisite/backend/settings/index');
-        $this->global_tabs->addItem(_("Password Settings"), 'multisite/backend/settings/password', 'multisite/backend/settings/index');
-        $this->global_tabs->addItem(_("Expire Time"), 'multisite/backend/settings/expire_time', 'multisite/backend/settings/index');
         $this->global_tabs->addItem(_("Default Privileges"), 'multisite/backend/settings/privileges', 'multisite/backend/settings/index');
+        $this->global_tabs->addItem(_("User Blocking"), 'multisite/backend/settings/user_blocking', 'multisite/backend/settings/index');
     }
     // }}}
     // {{{ _check_app
