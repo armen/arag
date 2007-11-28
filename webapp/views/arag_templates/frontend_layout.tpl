@@ -14,10 +14,14 @@
     {arag_block align="right" template="blank"}
         {if $auth}
             {capture assign="welcome"}_("Welcome %s %s"){/capture}
+            {capture assign="logout"}_("Logout"){/capture}
+            {capture assign="controlpanel"}_("Control Panel"){/capture}        
             {$welcome|sprintf:$name:$lastname} | 
-            {html_anchor uri="user/frontend/logout" title="logout"}
+            {html_anchor uri="user/frontend/logout" title="$logout"} | 
+            {html_anchor uri="controlpanel" title="$controlpanel"}
         {else}
-            {html_anchor uri="user/frontend/login" title="login"}
+            {html_anchor uri="user/frontend/login" title="login"} |
+            {html_anchor uri="user/frontend/forget_password" title="Forget your password?"}
         {/if}
     {/arag_block}
 
