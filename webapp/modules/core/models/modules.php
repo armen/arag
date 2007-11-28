@@ -25,7 +25,7 @@ class Modules_Model extends Model
     // {{{ getModules
     public function getModules($excludeModules = Array())
     {
-        $this->db->select('id, name, module');
+        $this->db->select('id, name, module, description');
         $this->db->where('state', 1);
 
         // Excluse modules
