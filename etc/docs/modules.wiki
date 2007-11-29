@@ -1,9 +1,8 @@
 ﻿==== Modules ====
 
-In Kohana we don't have Modules. Modules are implemented for Arag project.
 Two major things you have to know about Arag modules: first there is an additional segment in URI that specified what modules should be executed and the second one is directory structure of modules.
 
-In Arag there is no application directory, instead we have modules directory contains modules. 
+In Arag there is no application directory, but we have just modules directory contains modules. 
 Directory structure of modules could be something like this:
 
   +-- webapp
@@ -29,19 +28,21 @@ Directory structure of modules could be something like this:
 
 For example the URI for first module specified in above structure, in the case of executing 'backend' controller and 'edit' method is: "/<module_name>/backend/edit"
 
-The Kohana routing system changed to handle the modules in URI. Also an additional route settings added to set default module.
+The Kohana routing system changed to handle the modules in URI.
+
+To set a default module you just have to set _default direction in "webapp/config/routes.php" file.
 
 For example this is the default "webapp/configs/routes.php" file of Arag project:
 
   $config = array
   (
-          '_allowed'       => 'a-z 0-9~%.:_-',
-	  '_default'       => 'arag/welcome',
-          'login'          => 'user/frontend/login',
-          'logout'         => 'user/frontend/logout'
+          '_allowed' => 'a-z 0-9~%.:_-',
+	  '_default' => 'arag/welcome',
   );
 
-There is also a private routing configuration file in each modules directory, which can contain each module's routing configurations. You can refer to the above diagram of modules structure, to see where you can find the private configuration files of each module. The below example is the user module's 'routes.php'
+There is also a private routing configuration file in each modules directory, which can contain each module's routing configurations. Modules routing configuration file exists to config directory of each module.
+
+The below example is the user module's 'routes.php'
 
   $config = array
   (
@@ -67,9 +68,9 @@ The other configuration file which each modules should have one, is a 'module.ph
       'description' => ''
   );
 
-One of the major features of Aticket is the ability of installing different applications which each has its own modules. For making this ability enable, you have to put an installation model in each modules models directory. This file is called "<modulename>installation.php". To see how to write an installation file take a look at an existent one.
+One of the major features of Arag is the ability of installing different applications which each has its own modules. For making this ability enable, you have to put an installation model in each modules models directory. This file is called "<modulename>installation.php". To see how to write an installation file take a look at an existent one.
 
-In Arag a new method of routing system is implemented, by which, you can have a bunch of controllers - in your "controllers" directory of each module - that extend the main controller of that module. In this way you can break your controller into new ones which inherit the main controller, so that you will have a neat and more flexible code.\\ Imagine these scenario. You have a "backend.php" controller in the root of your controller directory. In this backend controller you have bunch of methods, from index to settings, list, create, edit and etc. Whenever you want to call one of these controllers you have to for example use this address: "<modulename>/backend/edit". At first sight it seems that it's much easier and simple, but if you think more you will understand that you have a thousand lines source code just for your backend. Besides implementing special features, like authorization, on each of your controller's methods individually,  will be so difficult. But if you break it into new controllers, like "settings.php" or "edit.php" which has their own constructor, "index_read" and "index_write" methods, all of these problems will be solved automatically. In this way, you can create a "tabbedblock" in your main controller's constructor and then share it with other controllers by making them extend it. Our new controllers directory will be something like this: 
+In modules you can have a bunch of controllers - in your "controllers" directory of each module - that extend the main controller of that module. In this way you can break your controller into new ones which inherit the main controller, so that you will have a neat and more flexible code.\\ Imagine these scenario. You have a "backend.php" controller in the root of your controller directory. In this backend controller you have bunch of methods, from index to settings, list, create, edit and etc. Whenever you want to call one of these controllers you have to for example use this address: "<modulename>/backend/edit". At first sight it seems that it's much easier and simple, but if you think more you will understand that you have a thousand lines source code just for your backend. Besides implementing special features, like authorization, on each of your controller's methods individually,  will be so difficult. But if you break it into new controllers, like "settings.php" or "edit.php" which has their own constructor, "index_read" and "index_write" methods, all of these problems will be solved automatically. In this way, you can create a "tabbedblock" in your main controller's constructor and then share it with other controllers by making them extend it. Our new controllers directory will be something like this: 
 
 
   +-- webapp
@@ -88,6 +89,6 @@ In Arag a new method of routing system is implemented, by which, you can have a 
                    +-- locale
                    +-- models
                    +-- schemas
-                   +-- templates
+                   +-- views
             
-Just remember that doing this, you have to change your validation directory too. It means that every controller you have, should have it's own validation file in its associated directory. For more information about validations, refer to [[Form Validation]] section.----
+Just remember that doing this, you have to change your validation directory too. It means that every controller you have, should have it's own validation file in its associated directory. For more information about validations, refer to [[Form Validation]] section.
