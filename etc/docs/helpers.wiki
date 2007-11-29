@@ -2,12 +2,8 @@
 
 When Smarty integration is enabled, helpers are not accessible in Smarty templates. But we can implement some Smarty plugins as wrappers between Smarty and helper functions in "webapp/helpers/<helper_name>" directory. We implemented some helper wrappers for you, so if you load a helper and it was accessible in Smarty templates, it shows it is implemented before, otherwise you have to write it yourself. Writing a wrapper is very simple. You can checkout "webapp/helpers/url/function.anchore.php" or any existing wrapper source code available at "webapp/helpers/" folder to understand "How to write a wrapper yourself in 24 seconds" :P.
 
-Loading a wrapper is simply done when you load a helper as following:
+Each helper will be accessible in Smarty templates as simple as writing (in this case we are using html::anchor wrapper):
 
-  $this->load->helper('url');
-
-And it will be accessible in Smarty templates as simple as writing (in this case we are using anchor wrapper):
-
-  {anchor uri="example/test/sample_id"}
+  {html_anchor uri="example/test/sample_id"}
 
 If Smarty throws an error you have to handle it yourself as described :).
