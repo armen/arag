@@ -11,16 +11,16 @@ components are located at "webapp/components" directory and has a directory stru
             |      +-- component
             |      |      +-- <component_name>.php
             |      |
-            |      +-- plugins
-            |      +-- templates
+            |      +-- views
+            |            +-- plugins
             |
             +-- <component_name2>
                    +-- component
                    |      +-- <component_name2>.php
                    |
-                   +-- plugins
-                   +-- templates
-
+                   +-- views
+                         +-- plugins
+  
 At the moment components are just accessible in Smarty templates, so you don't have any chance to use components when Smarty integration is disabled.
 We don't have any plan to implement it for native template engine but it is not hard to do that.
 
@@ -122,15 +122,15 @@ There is an optional attribute for "arag_plist" plugin called "template". You ca
 
   {arag_plist template="my_custom_template"}
 
-You can put your custom template file (in this case "my_custom_template.tpl") in your module "templates/" directory or in "components/plist/templates" directory if you want it become accessible from everywhere.
+You can put your custom template file (in this case "my_custom_template.tpl") in your module "views/" directory or in "components/plist/views" directory if you want it become accessible from everywhere.
 
-For more information about how to write a custom template for "Plist" you can checkout "Plist" default template file located at "components/plist/templates/horizontal.tpl".
+For more information about how to write a custom template for "Plist" you can checkout "Plist" default template file located at "components/plist/views/horizontal.tpl".
 
 If you are interested about callable methods of "PList" component which you can use, please check out "components/plist/component/plist.php".
 
 With Arag "Plist", it is also possible to add group actions to your list. So that you give your list the ability of doing an action on more than one item of your list simultaneously. To add a group action to you list you should use the following syntax in which, the first parameter is the URL of the action, the second is the title and the third one specifies the icon which the action uses:
 
-  $this->staticpages->addAction('staticpages/backend/gdelete', 'Delete', 'delete_action', PList::GROUP_ACTION);
+  $this->blog->addAction('blog/backend/gdelete', 'Delete', 'delete_action', PList::GROUP_ACTION);
 
 === TabbedBlock Component ===
 
@@ -179,19 +179,19 @@ There is an optional attribute for "arag_tabbed_block" plugin called "template".
 
   {arag_tabbed_block template="my_custom_template"}
 
-You should put your custom template file (in this case "my_custom_template.tpl") in your module "templates/" directory or in "components/tabbedblock/tempates" directory if you want it becomes accessible from everywhere.
+You should put your custom template file (in this case "my_custom_template.tpl") in your module "views/" directory or in "components/tabbedblock/views" directory if you want it becomes accessible from everywhere.
 
-For more information about how to write a custom template for "TabbedBlock" you can checkout "TabbedBlock" default template file located at "components/tabbedblock/templates/arag_tabbed_block.tpl".
+For more information about how to write a custom template for "TabbedBlock" you can checkout "TabbedBlock" default template file located at "components/tabbedblock/views/arag_tabbed_block.tpl".
 
 If you are interested about callable methods of "TabbedBlock" component which you can use, please check out "components/tabbedblock/component/tabbedblock.php".
 
 Arag tabbedblock has also a feature wich lets you to add sub tabs to your top tabs. Imagine that you have TabbedBlock containing "List" and "Create". In "List" you have a list of your objects with actions of "Edit" and "Delete. Now you want to add sub tabs "Edit" and "Delete" every time user clicks on "List". For doing that you should use the following code:
 
   $this->load->component('TabbedBlock', 'global_tabs');
-  $this->global_tabs->setTitle(_("StaticPages"));
-  $this->global_tabs->addItem(_("List"), 'staticpages/backend/index');
-  $this->global_tabs->addItem(_("Create"), 'staticpages/backend/create');
-  $this->global_tabs->addItem(_("Edit"), 'staticpages/backend/edit/%id%', 'staticpages/backend/index');
-  $this->global_tabs->addItem(_("Delete"), 'staticpages/backend/delete/%id%', 'staticpages/backend/index');
+  $this->global_tabs->setTitle(_("Blog"));
+  $this->global_tabs->addItem(_("List"), 'blog/backend/index');
+  $this->global_tabs->addItem(_("Create"), 'blog/backend/create');
+  $this->global_tabs->addItem(_("Edit"), 'blog/backend/edit/%id%', 'staticpages/backend/index');
+  $this->global_tabs->addItem(_("Delete"), 'blog/backend/delete/%id%', 'staticpages/backend/index');
 
-As you see, "addItem" can take a third parameter in which you can define this item is the sub tab of the tab which its address is "staticpages/backend/index".
+As you see, "addItem" can take a third parameter in which you can define this item is the sub tab of the tab which its address is "blog/backend/index".
