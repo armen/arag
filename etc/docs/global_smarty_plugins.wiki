@@ -1,6 +1,6 @@
 ﻿==== Global smarty plugins ====
 
-In Arag project there is several smarty plugins located at "webapp/templates/smarty_plugins/". These plugins are loaded by default and are accessible in all smarty template files.
+In Arag project there is several smarty plugins located at "webapp/views/smarty_plugins/". These plugins are loaded by default and are accessible in all smarty template files.
 
 === Blocks ===
 
@@ -41,10 +41,10 @@ Possible templates which you can use are:
 | warning       | This is template for warning messages |
 
 
-You can find all the block templates at "webapp/templates/arag_blocks/<template_name>.tpl" and style sheet file of all blocks is located at "public_html/styles/styles.css".
+You can find all the block templates at "webapp/views/arag_blocks/<template_name>.tpl" and style sheet file of all blocks is located at "public_html/styles/styles.css".
 
 You can simply add custom template for "arag_block" if it's needed. For more information check out one of existing templates .
-If you are interested about arag_block plugin itself, it is accessible at "webapp/templates/smarty_plugins/block.arag_block.php"
+If you are interested about arag_block plugin itself, it is accessible at "webapp/views/smarty_plugins/block.arag_block.php"
 
 === Directions and Alignments ===
 
@@ -73,15 +73,16 @@ Using these plugins, make templates flexible to different languages with differe
 So when you are using a Smarty variable it will be escaped automatically. Following example shows what we are talking about:
 
   // Controller
-  $this->load->vars('my_html_code', '<script language="javascript">alert('XSS');</script>');
+  $data = array('my_html_code', '<script language="javascript">alert('XSS');</script>');
+  $view = new View('insecure', $data);
   
-  // Template
+  // Template (insecure.tpl)
   {$my_html_code}
   
-  // Expected output
+  // Expected output 
   <script language="javascript">alert('XSS');</script> 
 
-If you execute this example resulting in an unexpected output it shows that "arag_escape" modifier is not enabled. To solve the problem you should configure it in "arag_config.php" file.
+If you execute this example resulting in an unexpected output (I mean a popup window with 'XSS' message) it shows that "arag_escape" modifier is not enabled. To solve the problem you should configure it in "smarty.php" config file.
 
 Sometimes you don't want to escape a variable by default, so you can use following code in such cases:
 
@@ -109,7 +110,7 @@ You can see how to use it between "head" XHTML tags in the below:
   </body>
   </html>
 
-This plugin simply includes a template file located at "webapp/templates/arag_templates/head.tpl".
+This plugin simply includes a template file located at "webapp/views/arag_templates/head.tpl".
 
 Following example is the default "head.tpl" file for Arag project:
 
@@ -123,13 +124,13 @@ Following example is the default "head.tpl" file for Arag project:
 
 This Smarty plugin will let you to put HTML forms into your Smarty templates:
 
-  {arag_form uri="staticpages/backend/create" method="post"}
+  {arag_form uri="blog/backend/post" method="post"}
     HTML Form Elements
   {/arag_form}
 
 The above code generates the following:
 
-  <form actin="staticpages/backend/create"  method="post">
+  <form actin="blog/backend/post"  method="post">
     HTML Form Elements
   </form>
 
@@ -173,4 +174,6 @@ Some times you need nested quotes in your template. This block will help you to 
 
 which generates:
 
-  <input type="submit" name="submit" value=\"_("yes")\" />
+  <input type="submit" name="submit" value="_("yes")" />
+
+This will help when you are using xgettext command with _ keyword.
