@@ -1,0 +1,17 @@
+﻿==== Models ====
+
+Models are exactly same as what they are in Kohana, the only difference is the location of related files. In general, models are located at "webapp/modules/<module_name>/models/<model_name>.php".
+
+You can load models in same way you do in Kohana but it has an additional trick:
+
+  $this->load->model('ExampleModel');
+
+This will load a model called 'ExampleModel' in current module. But what if you want to specify a calling name too? Just send it as a parameter as following example:
+
+  $this->load->model('ModelName', 'CallingName');
+
+okay same as Kohana not? 
+
+You can also load models from other modules simply like this:
+
+  $this->load->model('ModelName', 'CallingName', 'ModuleName');
