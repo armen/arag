@@ -1,0 +1,36 @@
+﻿===== Getting Started =====
+
+[[Installation Instruction]]
+
+
+===== Arag Basics =====
+
+[[Directory Structure]]
+
+[[Execution flow]]
+
+[[Arag Configuration]]
+
+[[Arag Controllers]]
+
+[[Modules]]
+
+[[Database Schemes]]
+
+[[Models]]
+
+[[Templates|Templates (Views)]]
+
+[[Global smarty plugins]]
+
+[[Helpers]]
+
+[[Components]]
+
+[[I18N]]
+
+[[Form Validation]]
+
+[[Invalid Request Page]]
+
+[[Arag Libraries]]
