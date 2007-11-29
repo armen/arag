@@ -1,18 +1,17 @@
 ﻿==== Arag Libraries ====
 
-There are several libraries in Arag project which each of them extends some libraries from CodeIgniter. In the lake of API documentation of implemented features, this directory is a good place to start with.
+There are several libraries in Arag project which each of them extends some libraries from Kohana. In the lake of API documentation of implemented features, this directory is a good place to start with.
 
 Currently there are several libraries in Arags project listed below:
 
 ^ Library            ^ Extends      ^
 | Arag_Controller | Controller   |
 | Arag_Loader     | Loader       |
-| Arag_Output     | Output       |
+| Arag_Model      | Model        |
 | Arag_Router     | Router       |
+| Arag_Config     | Config model |
+| Arag_View       | View         |
 | Arag_Smarty     |      -       |
-| Components         |      -       |
-| Arag            |      -       |
+| Components      |      -       |
 
-Arag ("Arag.php") is what called "CodeIgniter.php" in CodeIgniter libraries directory.
-
-Components and "Arag_Smarty" are implemented for Arag project and those not have parent class in CodeIgniter.
+Components and "Arag_Smarty" are implemented for Arag project and those not have parent class in Kohana.
