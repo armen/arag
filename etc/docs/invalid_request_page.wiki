@@ -2,6 +2,6 @@
 
 This page contains an error block and a return link, for showing in cases in which user has an invalid request. Imagine these scenario that user pass an ID through URL. But the ID doesn't exist. So you can handle the error with Arag form validation and redirect user to the invalid request page using the following code:
 
-  $this->_invalid_request("staticpages/backend/index");
+  $this->_invalid_request("blog/backend/index");
 
 The parameter which we sent is the address of the return link.
