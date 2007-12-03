@@ -46,7 +46,7 @@ class Entry_Controller extends Backend_Controller
         $this->Blog->createEntry($this->input->post('subject'), 
                                       $this->input->post('entry'), 
                                       $this->input->post('extended_entry'),
-                                      'guest',
+                                      $this->session->get('username'),
                                       $this->input->post('status'),
                                       $this->input->post('allow_comments'),
                                       $this->input->post('requires_moderation'),
