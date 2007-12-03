@@ -63,7 +63,7 @@
                     {if is_array($row) && count($row) > 0}
                         {foreach from=$columnNames item=name}
                             {if count($columns) == 0 || (isset($columns.$name|smarty:nodefaults) && !$columns.$name.hidden && !$columns.$name.virtual)}
-                                <td {$onclick|smarty:nodefaults}>{$row.$name}</td>
+                                <td {$onclick|smarty:nodefaults}>{$row.$name|default:"&nbsp;"}</td>
                             {elseif isset($columns.$name|smarty:nodefaults) && $columns.$name.virtual}
                                 <td {$onclick|smarty:nodefaults}>{$plist->callCallback($name, $row)}</td>
                             {/if}
@@ -81,13 +81,15 @@
 
                                     {if $action.alternate_uri != null}
                                         {assign var=uri value=$plist->parseURI($action.alternate_uri, $row)}
-                                        <a href="{url_site uri=$uri}" title="{$action.title}" class="{$action.class_name}_alt" target="{$action.target}">{$action.label}</a>
+                                        <a href="{url_site uri=$uri}" title="{$action.title}" class="{$action.class_name}_alt" 
+                                           target="{$action.target}">{$action.label}</a>
                                     {else}
-                                        <div title="{$action.title}"  class="{$action.class_name}_alt">{$action.label}</div>
+                                        <div title="{$action.title}" class="{$action.class_name}_alt">{$action.label}</div>
                                     {/if}
                                 {else}
                                     {assign var=uri value=$plist->parseURI($action.uri, $row)}                                
-                                    <a href="{url_site uri=$uri}" title="{$action.title}" class="{$action.class_name}" target="{$action.target}">{$action.label}</a>
+                                    <a href="{url_site uri=$uri}" title="{$action.title}" class="{$action.class_name}" 
+                                       target="{$action.target}">{$action.label}</a>
                                 {/if}
                             </td>
                         {/foreach}
