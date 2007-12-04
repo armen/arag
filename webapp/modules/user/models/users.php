@@ -30,7 +30,7 @@ class Users_Model extends Model
     }
     // }}}
     // {{{ check
-    public function check($username, $password, &$status = 0, $expiretime)
+    public function check($username, $password, &$status = 0, $expiretime = 0)
     {
         $this->db->select('username');
         $this->db->where('username', $username);
