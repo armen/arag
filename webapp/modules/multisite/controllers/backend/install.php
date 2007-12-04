@@ -72,7 +72,7 @@ class Install_Controller extends Backend_Controller
         $this->CoreInstallation->setTablePrefix($tablePrefix);
         $this->CoreInstallation->setDSN($DSN);        
         
-        $this->Applications->addApp($appname, $author, NULL, $databaseID);      // Create the application
+        $this->Applications->addApp($appname, $author, 'anonymous', $databaseID);      // Create the application
         $this->Groups->newGroup($appname, 'admin', $author, $adminpri);         // Create admin group of this application
         $this->Groups->newGroup($appname, 'anonymous', $author, $anonypri);     // Create anonymous group of this application
         $this->Users->createUser($appname, $email, NULL, NULL, 'admin', $username, $password, $author, $verify_uri, 0);
