@@ -15,17 +15,20 @@
         {if $auth}
             {capture assign="welcome"}_("Welcome %s %s"){/capture}
             {capture assign="logout"}_("Logout"){/capture}
+            {capture assign="profile"}_("My Profile"){/capture}
             {capture assign="controlpanel"}_("Control Panel"){/capture}        
-            {$welcome|sprintf:$name:$lastname} | 
+            {$welcome|sprintf:$firstname:$surname} | 
+            {html_anchor uri="user_profile/backend/index" title="$profile"} | 
             {html_anchor uri="user/frontend/logout" title="$logout"} | 
             {html_anchor uri="controlpanel" title="$controlpanel"}
         {else}
             {html_anchor uri="user/frontend/login" title="login"} |
+            {html_anchor uri="user/frontend/registration" title="Register"} |
             {html_anchor uri="user/frontend/forget_password" title="Forget your password?"}
         {/if}
     {/arag_block}
 
-    {$content|smarty:nodefaults}
+    {$content|smarty:nodefaults|default:""}
     {literal}
         Execution: {execution_time} Memory usage: {memory_usage}
     {/literal}    
