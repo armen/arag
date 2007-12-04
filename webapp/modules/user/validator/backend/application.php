@@ -9,7 +9,7 @@ $validator['error_messages'] = Array (
                                        'required'          => _("%s is required"),
                                        '_check_group_name' => _("This %s is not available"),
                                        '_check_user_name'  => _("This %s is reserved or not available"),
-                                       'matches'           => _("%s do not match"),
+                                       'matches'           => _("%ss do not match"),
                                        'alpha_dash'        => _("%s can contain only alpha-numeric characters, underscores or dashes"),
                                        'alpha'             => _("%s can contain only alpha characters"),
                                        'valid_type'        => _("%s should be numeric"),
@@ -36,7 +36,8 @@ $validator['new_user']['write']['rules'] = Array (
                                                   'repassword' => array(_("Repassword"), 'trim|required'),
                                                   'name'       => array(_("Name"), 'trim|required|alpha'),
                                                   'lastname'   => array(_("Lastname"), 'trim|required|alpha'),
-                                                  'email'      => array(_("Email"), 'trim|required|valid_email')
+                                                  'email'      => array(_("Email"), 'trim|required|valid_email'),
+                                                  'group'      => array(_("Group"), 'trim|required')
                                                  );
 
 /*
@@ -49,7 +50,8 @@ $validator['user_profile']['write']['rules'] = Array (
                                                       'password'    => array(_("Password"), 'matches[repassword]|min_length[4]|callback__check_password'),
                                                       'name'        => array(_("Name"), 'trim|required|alpha'),
                                                       'lastname'    => array(_("Lastname"), 'trim|required|alpha'),
-                                                      'email'       => array(_("Email"), 'trim|required|valid_email')
+                                                      'email'       => array(_("Email"), 'trim|required|valid_email'),
+                                                      'group'      => array(_("Group"), 'trim|required')
                                                      );
 
 /*
