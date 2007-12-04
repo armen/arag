@@ -122,13 +122,13 @@ class Backend_Controller extends Controller
     // {{{ _default_group
     protected function _default_group($appname, $flagform = true)
     {
-        $row  = $this->Groups->getAllAppGroups($appname);
-        $row2 = $this->Groups->getDefaultGroup($appname);
+        $row     = $this->Groups->getAllAppGroups($appname);
+        $default = $this->Groups->getDefaultGroup($appname);
 
         $this->global_tabs->setParameter('name', $appname);
 
         $data = array("allgroups"    => $row,
-                      "defaultgroup" => $row2[0]['default_group'],
+                      "defaultgroup" => $default,
                       "flagsaved"    => $this->session->get_once('default_group_saved'),
                       "flagform"     => $flagform,
                       "appname"      => $appname);
@@ -177,13 +177,13 @@ class Backend_Controller extends Controller
     {
         $this->global_tabs->setParameter('name', $appname); 
         
-        $row  = $this->Groups->getAllAppGroups($appname);
-        $row2 = $this->Groups->getDefaultGroup($appname);
+        $row     = $this->Groups->getAllAppGroups($appname);
+        $default = $this->Groups->getDefaultGroup($appname);
 
         $data = array("appname"      => $appname,
                       "flagsaved"    => $this->session->get_once('new_user_saved'),
                       "allgroups"    => $row,
-                      "defaultgroup" => $row2[0]['default_group'],
+                      "defaultgroup" => $default,
                       "flagform"     => $flagform);
 
         $this->layout->content = new View('backend/new_user', $data);       
