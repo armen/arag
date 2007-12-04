@@ -5,6 +5,6 @@
 *}
 {arag_block}
     {arag_block template="info"}
-        Your account is now activated!
+        _("Your account is now activated! You can login now.")
     {/arag_block}
 {/arag_block}
