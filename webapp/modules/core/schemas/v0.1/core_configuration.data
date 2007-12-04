@@ -15,7 +15,7 @@
                 </field>
                 <field>
                     <name>value</name>
-                    <value>a:6:{i:0;s:26:"user/backend/application/*";i:1;s:6:"blog/*";i:2;s:6:"arag/*";i:3;s:15:"user/frontend/*";i:4;s:15:"core/frontend/*";i:5;s:14:"controlpanel/*";}</value>
+                    <value>a:8:{i:0;s:26:"user/backend/application/*";i:1;s:6:"blog/*";i:2;s:6:"arag/*";i:3;s:15:"user/frontend/*";i:4;s:15:"core/frontend/*";i:5;s:14:"controlpanel/*";i:6;s:26:"user/backend/backend/index";i:7;s:22:"user_profile/backend/*";}</value>
                 </field>
             </insert>
             <insert>
@@ -29,7 +29,7 @@
                 </field>
                 <field>
                     <name>value</name>
-                    <value>a:5:{i:0;s:6:"arag/*";i:1;s:15:"user/frontend/*";i:2;s:15:"blog/frontend/*";i:3;s:24:"multisite/frontend/index";i:4;s:15:"core/frontend/*";}</value>
+                    <value>a:6:{i:0;s:6:"arag/*";i:1;s:15:"user/frontend/*";i:2;s:15:"blog/frontend/*";i:3;s:24:"multisite/frontend/index";i:4;s:15:"core/frontend/*";i:5;s:22:"user_profile/backend/*";}</value>
                 </field>
             </insert>
             <insert>
