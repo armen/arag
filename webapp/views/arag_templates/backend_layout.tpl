@@ -14,14 +14,16 @@
     {arag_block align="right" template="blank"}
         {capture assign="welcome"}_("Welcome %s %s"){/capture}
         {capture assign="logout"}_("Logout"){/capture}
+        {capture assign="profile"}_("My Profile"){/capture}
         {capture assign="controlpanel"}_("Control Panel"){/capture}        
-        {$welcome|sprintf:$name:$lastname} | 
+        {$welcome|sprintf:$firstname:$surname} | 
+        {html_anchor uri="user_profile/backend/index" title="$profile"} | 
         {html_anchor uri="user/frontend/logout" title="$logout"} | 
         {html_anchor uri="controlpanel" title="$controlpanel"}
     {/arag_block}            
 
     {arag_tabbed_block name="global_tabs"}
-        {$content|smarty:nodefaults}
+        {$content|smarty:nodefaults|default:""}
     {/arag_tabbed_block}
     {literal}
         Execution: {execution_time} Memory usage: {memory_usage}
