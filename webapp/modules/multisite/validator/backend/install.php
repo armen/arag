@@ -7,7 +7,7 @@
 
 $validator['error_messages'] = Array (
                                        'required'          => _("%s is required"),
-                                       'matches'           => _("%s do not match"),
+                                       'matches'           => _("%ss do not match"),
                                        'alpha_dash'        => _("%s can contain only alpha-numeric characters, underscores or dashes"),
                                        'valid_email'       => _("Please enter a valid email address"),
                                        '_check_app'        => _("This application name is not available")
