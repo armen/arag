@@ -258,6 +258,42 @@
                     <value>controlpanel/*</value>
                 </field>
             </insert>
+            <insert>
+                <field>
+                    <name>id</name>
+                    <value>16</value>
+                </field>
+                <field>
+                    <name>parent_id</name>
+                    <value>2</value>
+                </field>            
+                <field>
+                    <name>label</name>
+                    <value>User Index</value>
+                </field>
+                <field>
+                    <name>privilege</name>
+                    <value>user/backend/backend/index</value>
+                </field>
+            </insert>
+            <insert>
+                <field>
+                    <name>id</name>
+                    <value>17</value>
+                </field>
+                <field>
+                    <name>parent_id</name>
+                    <value>4</value>
+                </field>            
+                <field>
+                    <name>label</name>
+                    <value>Profile</value>
+                </field>
+                <field>
+                    <name>privilege</name>
+                    <value>user_profile/backend/*</value>
+                </field>
+            </insert>
         </initialization>
     </table>
 </database>
