@@ -8,6 +8,9 @@
         _("Default group for '{$appname}' application, changed successfuly!")
     {/arag_block}
 {/if}
+{arag_block template="tips"}
+    _("Default group is the group which ordinary users will be registered into.")
+{/arag_block}
 {arag_block}
     {if $flagform}
         {assign var=uri value="user/backend/applications/default_group/$appname"}
