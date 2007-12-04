@@ -331,6 +331,135 @@ class Frontend_Controller extends Controller
         $this->remove_read($this->input->post('verify_uri'));
     }
     // }}}
+    // {{{ registration_read
+    public function registration_read()
+    {
+        $this->layout->content = new View('frontend/user_registration', array('flagsaved' => false));       
+    }
+    // }}}
+    // {{{ registration_write
+    public function registration_write()
+    {
+        $this->load->model('Users', 'Users');
+        $this->load->model('Groups', 'Groups');
+        $this->load->model('MultiSite', NULL, 'multisite');
+
+        $groupname  = $this->Groups->getDefaultGroup(APPNAME);
+        $email      = $this->input->post('email', true);
+        $name       = strtolower($this->input->post('name', true));
+        $lastname   = $this->input->post('lastname', true);
+        $username   = $this->input->post('username', true);
+        $password   = $this->input->post('password', true);
+        $verify_uri = $this->MultiSite->generateVerifyUri(10);
+        
+        $this->Users->createUser(APPNAME, $email, $name, $lastname, $groupname, $username, $password, 'Anonymous', $verify_uri , 0);
+
+        // Send an email to verify the user
+        $settings = Arag_Config::get('email_settings', NULL, 'core');
+        $settings['template'] = "Thank you for registering in %appname%. To complete you registration please visit the following link:\n\n%verifyuri%\n\nYour Username: %username%\nYour Password: %password%";
+        $strings  = array (
+                           'verifyuri' => html::anchor('user/frontend/verify/' . $verify_uri),
+                           'username'  => $username,
+                           'appname'   => APPNAME,
+                           'password'  => $password
+                          );
+
+        try {
+            $is_sent = $this->MultiSite->sendEmail($email, $strings, $settings);
+        } catch(Swift_Exception $e) {
+            // Shit, there was an error here!
+            $is_sent = False;
+        }
+        
+        $this->layout->content = new View('frontend/user_registration', array(
+                                                                              'flagsaved' => true,
+                                                                              'is_sent'   => $is_sent
+                                                                             ));
+    }
+    // }}}
+    // {{{ registration_write_error
+    public function registration_write_error()
+    {
+        $this->registration_read();
+    }
+    // }}}
+    // {{{ verify_read
+    public function verify_read($verify_uri = false)
+    {   
+        $this->load->model('Users', 'Users');
+        $show_form     = true;
+        $error_message = false;
+        
+        if (!$verify_uri || !$this->Users->hasUri($verify_uri)) {
+            $error_message = _("Please enter a valid uri!");
+            $show_form     = false;
+
+        } else if (Arag_Config::get('expire', 0, 'user') != 0) {
+            if ((time()-$this->Users->expireDate($verify_uri)) > (Arag_Config::get('expire', 0, 'user') * 3600)) {
+                $error_message = _("This uri is expired! Please contact site administrator for further information.");
+                $show_form     = false;            
+            }
+        }
+
+        $data = array('error_message' => $error_message,
+                      'show_form'     => $show_form,
+                      'uri'           => $verify_uri);
+        $this->layout->content = new View('frontend/verify', $data);
+    }
+    // }}}
+    // {{{ verify_write
+    public function verify_write()
+    {
+        $this->load->model('Users', 'Users');
+        $show_form  = true;
+        $verify_uri = $this->input->post('uri');
+        $username   = $this->input->post('username');
+        $password   = $this->input->post('password');
+
+        if ($this->Users->checkVerify($username, $password, $verify_uri, $status, Arag_Config::get('block_expire', 0.5) * 3600)) {
+            $this->Users->verify($username, $password, $verify_uri);
+            $this->Users->blockUser($username);
+            $this->layout->content = new View('frontend/verified');
+                    
+        } else {
+            
+            // Shit, you missed!
+            if ($status === Users_Model::USER_NOT_FOUND || Users_Model::USER_INCORRECT_PASS) {
+                $error_message[] = _("Wrong Username or Password.");
+            }
+
+            if ($status & Users_Model::USER_BLOCKED) {
+                $block_info      = $this->Users->getBlockInfo($username);
+                if ($block_info->block_date > 0) {
+                    $error           = _("This user name is blocked. Please contact site administrator for further information or wait for %h% hours and %m% minutes");
+                    $waiting_hours   = floor((((Arag_Config::get('block_expire', 0.5) * 3600) + $block_info->block_date) - time()) / 3600);
+                    $waiting_mins    = floor(((((Arag_Config::get('block_expire', 0.5) * 3600) + $block_info->block_date) - time()) % 3600) / 60);
+                    $error_message[] = str_replace(array('%h%', '%m%'), array($waiting_hours, $waiting_mins) , $error);                   
+
+                } else {
+                    $error_message[] = _("This user name is blocked. Please contact site administrator for further information."); 
+
+                }
+            }
+
+            $error_message = implode("\n", $error_message); 
+
+            $data = array('error_message' => $error_message,
+                          'show_form'     => $show_form,
+                          'uri'           => $verify_uri);
+
+            $this->layout->content = new View('frontend/verify', $data);
+        }
+    }
+    // }}}
+    // {{{ _check_user_name
+    public function _check_user_name($username)
+    {
+        $this->load->model('Users', 'Users');
+        return (!preg_match("/^[a-z0-9_.]+_admin$/", strtolower($username)) && 
+                !$this->Users->hasUserName($username) && preg_match("/^[a-z][a-z0-9_.]*$/", strtolower($username)));
+    }
+    // }}}
 }
 
 ?>
