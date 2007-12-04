@@ -119,10 +119,7 @@ class Groups_Model extends Model
         $this->db->from($this->tableNameApps);
         $this->db->where('name', $appName);
 
-        $query = $this->db->get();
-        $row   = $query->result(False);
-
-        return $row;        
+        return $this->db->get()->current()->default_group;
     }
     // }}}
     // {{{ getAllAppGroups
