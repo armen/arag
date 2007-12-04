@@ -30,7 +30,7 @@
                 <td>&nbsp;</td>
                 <td>
                     <input type="hidden" value="{$uri|smarty:nodefaults|default:null}" name="uri" />
-                    <input type="submit" value={quote}_("Login"){/quote} />
+                    <input type="submit" value={quote}_("Verify"){/quote} />
                 </td>
             </tr>
             </table>
