@@ -79,8 +79,14 @@ class Install_Controller extends Backend_Controller
 
         $base_tpl_path = APPPATH . 'modules/multisite/templates';
 
+        // Create symlink in to the /var/www, this is just for local testing
+        @symlink(DOCROOT . 'sites/'.$appname, '/var/www/'.$appname);
+
         // Create directory of application
         $this->CoreInstallation->createDirectory(DOCROOT . 'sites/'.$appname);
+
+        // Create scripts symbolic link
+        symlink(DOCROOT . '/scripts', DOCROOT . 'sites/'.$appname.'/scripts');
 
         // Create index file
         $this->CoreInstallation->createFromTemplate(DOCROOT . 'sites/'.$appname.'/index.php', 'index.php', Array(), $base_tpl_path);
@@ -88,23 +94,26 @@ class Install_Controller extends Backend_Controller
         // Create config file
         $parameters = Array('dsn' => $DSN, 'table_prefix' => $tablePrefix, 'parent_base_url' => url::base());
         $this->CoreInstallation->createFromTemplate(APPPATH . 'config/sites/'.$appname.'.php', 'config.php', $parameters, $base_tpl_path);
-        
-        if (!empty($modules) && is_array($modules)) {
-            foreach ($modules as $module) {
-                
-                $Installation = ucfirst($module) . 'Installation';
-                $Installation = Model::load($Installation, $module);
-                
-                if (is_callable(array($Installation, 'install'))) {
-                    
-                    // Change include_once to module path
-                    Config::set('core.include_paths', Array(APPPATH.'modules/'.$module));
-                    
-                    $Installation->install($this->CoreInstallation);
 
-                    // Reset the include_paths
-                    Config::set('core.include_paths', Array(APPPATH.'modules/'.Router::$module));                
-                }
+        // Core module is required
+        if (empty($modules) || !is_array($modules) || !in_array('core', $modules)) {
+            $modules[] = 'core';
+        }
+        
+        foreach ($modules as $module) {
+            
+            $Installation = ucfirst($module) . 'Installation';
+            $Installation = Model::load($Installation, $module);
+            
+            if (is_callable(array($Installation, 'install'))) {
+                
+                // Change include_once to module path
+                Config::set('core.include_paths', Array(APPPATH.'modules/'.$module));
+                
+                $Installation->install($this->CoreInstallation);
+
+                // Reset the include_paths
+                Config::set('core.include_paths', Array(APPPATH.'modules/'.Router::$module));                
             }
         }
 
