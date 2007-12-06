@@ -1,39 +1,80 @@
 <?php defined('SYSPATH') or die('No direct script access.');
-
 /*
- * File: config.php
- *  This configuration file is unique to every application.
- *
- * Options:
- *  site_domain          - domain and installation directory
- *  site_protocol        - protocol used to access the site, usually HTTP
- *  index_page           - name of the front controller, can be removed with URL rewriting
- *  output_compression   - enable or disable gzip output compression 
- *  url_suffix           - an extension that will be added to all generated URLs
- *  allow_config_set     - enable or disable setting of Config items
- *  global_xss_filtering - enable or disable XSS attack filtering on all user input
- *  extension_prefix     - filename prefix for library extensions
- *  include_paths        - extra Kohana resource paths, see <Kohana.find_file>
- *  autoload             - libraries and models to be loaded with the controller
+ * Domain name, with the installation directory. Default: localhost/kohana/
  */
+$config['site_domain'] = $_SERVER['SERVER_NAME'] . substr($_SERVER['SCRIPT_NAME'], 0, 
+                                                          strpos($_SERVER['SCRIPT_NAME'], 
+                                                          '/'.basename($_SERVER['SCRIPT_NAME'])));
 
-$config = Array
+/**
+ * Default protocol used to access the website. Default: http
+ */
+$config['site_protocol'] = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') ? 'https' : 'http';
+
+/**
+ * Name of the front controller for this application. Default: index.php
+ *
+ * This can be removed by using URL rewriting.
+ */
+$config['index_page'] = 'index.php';
+
+/**
+ * Fake file extension that will be added to all generated URLs. Example: .html
+ */
+$config['url_suffix'] = '';
+
+/**
+ * Enable or disable gzip output compression. This can dramatically decrease
+ * server bandwidth usage, at the cost of slightly higher CPU usage. Set to
+ * the compression level (1-9) that you want to use, or FALSE to disable.
+ *
+ * @note Do not enable this option if you are using output compression in php.ini!
+ */
+$config['output_compression'] = FALSE;
+
+/**
+ * Enable or disable global XSS filtering of GET, POST, and SERVER data. This
+ * option also accepts a string to specify a specific XSS filtering tool.
+ */
+$config['global_xss_filtering'] = FALSE;
+
+/**
+ * Enable or disable dynamic setting of configuration options. By default, all
+ * configuration options are read-only.
+ */
+$config['allow_config_set'] = TRUE;
+
+/**
+ * Enable or display displaying of Kohana error pages. This will not affect
+ * logging. Turning this off will disable ALL error pages.
+ */
+$config['display_errors'] = TRUE;
+
+/**
+ * Filename prefixed used to determine extensions. For example, an
+ * extension to the Controller class would be named MY_Controller.php.
+ */
+$config['extension_prefix'] = 'Arag_';
+
+/**
+ * Additional resource paths, or "modules". Each path can either be absolute
+ * or relative to the docroot. Modules can include any resource that can exist
+ * in your application directory, configuration files, controllers, views, etc.
+ */
+$config['include_paths'] = array
 (
-    'site_domain'          => $_SERVER['SERVER_NAME'] . 
-                              substr($_SERVER['SCRIPT_NAME'], 0, strpos($_SERVER['SCRIPT_NAME'], '/'.basename($_SERVER['SCRIPT_NAME']))),
-    'site_protocol'        => (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') ? 'https' : 'http',
-    'index_page'           => 'index.php',
-    'output_compression'   => TRUE,    
-    'url_suffix'           => '',
-    'allow_config_set'     => True,
-    'global_xss_filtering' => False,
-    'extension_prefix'     => 'Arag_',
-    'include_paths'        => Array
-    (
-    ),
-    'autoload'             => Array
-    (
-        'libraries' => 'session',
-        'models'    => '',
-    )
+	// To enable the demo module; uncomment the following line
+	// 'modules/demo',
+	// To enable local API documentation at /kodoc/, uncomment the following line
+	// 'modules/kodoc',
+);
+
+/**
+ * Libraries and models to be automatically loaded into every controller. Use
+ * a comma-separated list to set multiple items.
+ */
+$config['autoload'] = array
+(
+	'libraries' => 'session',
+	'models'    => '',
 );
