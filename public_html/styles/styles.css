@@ -450,10 +450,6 @@ input, textarea, select {
     font-weight     : bold;
     color           : #888888;
 }
-.tabbed_block_view {
-    position        : relative;
-    overflow        : hidden;
-}
 .tabbed_block_nav {
     float           : left;
     position        : relative;
