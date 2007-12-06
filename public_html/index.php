@@ -16,7 +16,7 @@
  *
  * This path can be absolute or relative to this file.
  */
-$kohana_application = '../webapp';
+$kohana_application = '../applications/core';
 
 // Libraries directory
 $arag_libraries = '../libs';
