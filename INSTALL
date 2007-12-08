@@ -7,8 +7,8 @@ Installing from SVN
 2) Download third party libraries
         ./arag/etc/scripts/get_third_party.sh
 
-3) Set webapp/cache directory to be writeable by your web server
-        chmod 777 arag/webapp/cache/
+3) Set applications/arag/cache directory to be writeable by your web server
+        chmod 777 arag/applications/arag/cache/
 
 Installation of Sample module
 -------------------------------------------------------------------------------
@@ -17,7 +17,7 @@ Installation of Sample module
 
 2) Create a database (currently only MySQL tested but feel free to use PostgreSQL and SQLite)
 
-3) Cahnge database configuration located at ./arag/webapp/config/database.php
+3) Cahnge database configuration located at ./arag/applications/arag/config/database.php
 
 4) Create necessary tables
         ./arag/etc/scripts/create_schema.php --dsn=<DBMS name>://<username>[:<password>]@<server>/<database_name> --all-modules
