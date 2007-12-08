@@ -1,25 +1,28 @@
 <?php
 
-error_reporting(E_ALL);
+$kohana_application = '../applications/core';
+$arag_libraries     = '../libs';
+$kohana_system      = $arag_libraries . '/kohana';
+
+error_reporting(E_ALL & ~E_STRICT);
 ini_set('display_errors', TRUE);
-
-$arag_application = '../../../webapp';
-$arag_libraries   = '../../../libs';
-$kohana_system       = $arag_libraries . '/kohana';
-$docroot             = pathinfo(str_replace('\\', '/', realpath(__FILE__)));
-
-define('APPNAME', ltrim(strrchr($docroot['dirname'], '/'), '/'));
 define('EXT', '.php');
+
+$docroot = pathinfo(str_replace('\\', '/', realpath(__FILE__)));
+
+define('MASTERAPP', TRUE);
+define('APPNAME',   'arag');
 
 define('KOHANA',  $docroot['basename']);
 define('DOCROOT', $docroot['dirname'].'/');
 
-define('APPPATH',  str_replace('\\', '/', realpath($arag_application)).'/');
+define('APPPATH', str_replace('\\', '/', realpath($kohana_application)).'/');
+define('SYSPATH', str_replace('\\', '/', realpath($kohana_system)).'/');
 define('LIBSPATH', str_replace('\\', '/', realpath($arag_libraries)).'/');
-define('SYSPATH',  str_replace('\\', '/', realpath($kohana_system)).'/');
+define('APPSPATH', str_replace('\\', '/', realpath('../applications')).'/');
 
 ini_set('include_path', LIBSPATH.PATH_SEPARATOR.ini_get('include_path'));
 
-unset($docroot, $arag_application, $arag_libraries, $kohana_system);
+unset($docroot, $kohana_application, $kohana_system, $arag_libraries);
 
-require_once SYSPATH.'core/Bootstrap'.EXT;
+require SYSPATH.'core/Bootstrap'.EXT;
