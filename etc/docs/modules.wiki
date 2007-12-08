@@ -5,7 +5,7 @@ Two major things you have to know about Arag modules: first there is an addition
 In Arag there is no application directory, but we have just modules directory contains modules. 
 Directory structure of modules could be something like this:
 
-  +-- webapp
+  +-- applications/arag
        ...
        +-- modules
             +-- <module_name>
@@ -30,9 +30,9 @@ For example the URI for first module specified in above structure, in the case o
 
 The Kohana routing system changed to handle the modules in URI.
 
-To set a default module you just have to set _default direction in "webapp/config/routes.php" file.
+To set a default module you just have to set _default direction in "applications/arag/config/routes.php" file.
 
-For example this is the default "webapp/configs/routes.php" file of Arag project:
+For example this is the default "applications/arag/configs/routes.php" file of Arag project:
 
   $config = array
   (
@@ -73,7 +73,7 @@ One of the major features of Arag is the ability of installing different applica
 In modules you can have a bunch of controllers - in your "controllers" directory of each module - that extend the main controller of that module. In this way you can break your controller into new ones which inherit the main controller, so that you will have a neat and more flexible code.\\ Imagine these scenario. You have a "backend.php" controller in the root of your controller directory. In this backend controller you have bunch of methods, from index to settings, list, create, edit and etc. Whenever you want to call one of these controllers you have to for example use this address: "<modulename>/backend/edit". At first sight it seems that it's much easier and simple, but if you think more you will understand that you have a thousand lines source code just for your backend. Besides implementing special features, like authorization, on each of your controller's methods individually,  will be so difficult. But if you break it into new controllers, like "settings.php" or "edit.php" which has their own constructor, "index_read" and "index_write" methods, all of these problems will be solved automatically. In this way, you can create a "tabbedblock" in your main controller's constructor and then share it with other controllers by making them extend it. Our new controllers directory will be something like this: 
 
 
-  +-- webapp
+  +-- applications/arag
        ...
        +-- modules
             +-- <module_name>

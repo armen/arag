@@ -10,5 +10,5 @@ or
 
   $view = new View('index');
 
-If Smarty integration is enabled in "webapp/config/smarty.php", loader will load "index.tpl" file otherwise it will load "index.php".
+If Smarty integration is enabled in "applications/arag/config/smarty.php", loader will load "index.tpl" file otherwise it will load "index.php".
 In ".tpl" files you can use Smarty templates engine language, Smarty plugins and helpers.

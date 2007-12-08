@@ -16,7 +16,7 @@ These are the directories found at the root of the Arag project:
   |    +-- sites
   |    +-- index.php
   |
-  +-- webapp
+  +-- applications/arag
        +-- cache
        +-- components  
        +-- config
@@ -29,12 +29,12 @@ These are the directories found at the root of the Arag project:
 
 In the following table you can find a brief introduction for some of these directories(for directories not listed below refer to the Kohana  documentation):
 
-^ Directory         ^ Description ^
-| etc/scripts       | Contains bash or PHP scripts called from a command line. |
-| libs              | Contains libraries which will be used in applications. At least it contains Smarty (/smarty) and Kohana (/kohana). |
-| public_html       | Contains front controller, styles and images. In general it contains everything we need to send to end user client. |
-| webapp/components | Contains Smarty components. |
-| webapp/helpers    | Contains Smarty helper wrappers. |
-| weabpp/libraries  | Contains Arag libraries which extends Kohana libraries. | 
-| webapp/modules    | Contains modules. |
-| webapp/views      | Contains global templates and Smarty plugins/configs. |
+^ Directory                    ^ Description ^
+| etc/scripts                  | Contains bash or PHP scripts called from a command line. |
+| libs                         | Contains libraries which will be used in applications. At least it contains Smarty (/smarty) and Kohana (/kohana). |
+| public_html                  | Contains front controller, styles and images. In general it contains everything we need to send to end user client. |
+| applications/arag/components | Contains Smarty components. |
+| applications/arag/helpers    | Contains Smarty helper wrappers. |
+| weabpp/libraries             | Contains Arag libraries which extends Kohana libraries. | 
+| applications/arag/modules    | Contains modules. |
+| applications/arag/views      | Contains global templates and Smarty plugins/configs. |
