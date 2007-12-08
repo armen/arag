@@ -189,21 +189,10 @@ class Installation_Model extends Model
     // {{{ executeSchemas
     public function executeSchemas($moduleName, $version, $dataSet = Null, $initializeData = True)
     {
-        $schemaPath = APPPATH . 'modules/' . $moduleName . '/schemas/v' . $version;
-        
-        if (is_dir($schemaPath)) {
+        $schemas = APPSPATH . '*/modules/' . $moduleName . '/schemas/v' . $version . '/*.schema';
 
-            if ($fh = opendir($schemaPath)) {
-                while (false !== ($schemaFile = readdir($fh))) {
-                    if (is_file($schemaPath . '/' . $schemaFile) && 
-                        !preg_match('/^[_A-Za-z0-9\.]+\.data$/', $schemaFile)) {
-
-                        $this->executeSchema($schemaPath . '/' . $schemaFile, $dataSet, $initializeData);
-                    }
-                }
-
-                closedir($fh);
-            }
+        foreach ($schemas as $schema) {
+            $this->executeSchema($schema, $dataSet, $initializeData);
         }
     }
     // }}}
