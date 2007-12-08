@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<database>
+    <name><variable>DATABASE_NAME</variable></name>
+    <table>
+        <name><variable>TABLES_PREFIX</variable>core_sessions</name>
+        <declaration>
+            <field>
+                <name>session_id</name>
+                <type>text</type>
+                <length>40</length>
+                <notnull>true</notnull>
+                <default>0</default>
+            </field>
+            <field>
+                <name>ip_address</name>
+                <type>text</type>
+                <length>16</length>
+                <notnull>true</notnull>
+                <default>0</default>
+            </field>
+            <field>
+                <name>user_agent</name>
+                <type>text</type>
+                <length>16</length>
+                <notnull>true</notnull>
+            </field>
+            <field>
+                <name>last_activity</name>
+                <type>integer</type>
+                <notnull>true</notnull>
+                <default>0</default>
+                <unsigned>1</unsigned>
+            </field>
+            <index>
+                <name>primary</name>
+                <primary>true</primary>
+                <field>
+                    <name>session_id</name>
+                </field>
+            </index>
+        </declaration>
+    </table>
+</database>

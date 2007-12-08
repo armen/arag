@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<database>
+    <name><variable>DATABASE_NAME</variable></name>
+    <table>
+        <name><variable>TABLES_PREFIX</variable>multisite_databases</name>
+        <initialization>
+            <insert>
+                <field>
+                    <name>id</name>
+                    <value>1</value>
+                </field>
+                <field>
+                    <name>name</name>
+                    <value>Default</value>
+                </field>
+            </insert>
+        </initialization>
+    </table>
+</database>
