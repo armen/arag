@@ -42,13 +42,13 @@ class Model extends Model_Core {
         }
 
         // Change include_once to module path
-        Config::set('core.include_paths', Array(APPPATH.'modules/'.$module));
+        Config::set('core.include_paths', glob(APPSPATH.'*/modules/'.$module, GLOB_ONLYDIR));
 
         $model = ucfirst(strtolower($model)).'_Model';
         $model = new $model();
 
         // Reset the include_paths
-        Config::set('core.include_paths', Array(APPPATH.'modules/'.Router::$module));
+        Config::set('core.include_paths', glob(APPSPATH.'*/modules/'.Router::$module, GLOB_ONLYDIR));
 
         return $model;
     }

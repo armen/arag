@@ -44,11 +44,8 @@ class Router extends Router_Core {
         self::request_method();
 
         // Set all modules in include_paths so we can fetch all routes
-        $include_paths = array_unique(array_merge(Config::include_paths(), glob(APPSPATH.'*/')));
-
-        foreach ($include_paths as $path) {
-            $include_paths = array_merge($include_paths, glob($path . 'modules/*', GLOB_ONLYDIR));
-        }
+        $old_include_paths = Config::include_paths();
+        $include_paths     = array_unique(array_merge($old_include_paths, glob(APPSPATH.'*/modules/*', GLOB_ONLYDIR)));
 
         Config::set('core.include_paths', $include_paths);
 
@@ -147,12 +144,14 @@ class Router extends Router_Core {
         // Path to be added to as we search deeper
         $search = '/controllers';
 
+        $include_paths = array_unique(array_merge($old_include_paths, glob(APPSPATH.'*/modules/'.self::$module, GLOB_ONLYDIR)));
+
         // Use the rsegments to find the controller
         foreach($rsegments as $key => $segment) {
 
             foreach($include_paths as $path) {
                 // The controller has been found, all arguments can be set
-                if (strpos($path, 'modules/'.self::$module) !== False && is_file($path.$search.'/'.$segment.EXT)) {
+                if (is_file($path.$search.'/'.$segment.EXT)) {
 
                     self::$directory  = $path.$search.'/';
                     self::$controller = $segment;
