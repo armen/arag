@@ -107,44 +107,26 @@ if (isset($allModules)) {
 
     // {{{ Fetch schema file names of all enabled modules
 
-    $modulesPath = dirname(__FILE__).'/../../webapp/modules';
+    $modulesPath = dirname(__FILE__).'/../../applications';
     $schemaFiles = Array();
 
-    if ($dh = opendir($modulesPath)) {
-        while (false !== ($moduleName = readdir($dh))) {
-            if ($moduleName != '.' && $moduleName != '..' && $moduleName != 'CVS' && 
-                $moduleName != '.svn' && is_dir($modulesPath . '/' . $moduleName)) {
+    foreach (glob($modulesPath . '/*/modules/*') as $path) {
+        
+        if (file_exists($path . '/config/module.php')) {
+            include_once($path . '/config/module.php');
 
-                if (file_exists($modulesPath . '/' . $moduleName . '/config/module.php')) {
-                    include_once($modulesPath . '/' . $moduleName . '/config/module.php');
-
-                    $schemaPath = $modulesPath . '/' . $moduleName . '/schemas/v' . $config['version'];
-                    
-                    // Is module enabled?
-                    if (strtolower($config['enabled']) && is_dir($schemaPath)) {
-
-                        if ($fh = opendir($schemaPath)) {
-                            while (false !== ($schemaFile = readdir($fh))) {
-                                if (is_file($schemaPath . '/' . $schemaFile) && 
-                                    !preg_match('/^[_A-Za-z0-9\.]+\.data$/', $schemaFile)) {
-
-                                    $schemaFiles[] = $schemaPath . '/' . $schemaFile;
-                                }
-                            }
-
-                            closedir($fh);
-                        }
-                    }
-
-                } else {
-                    echo "\nWARNING: module.php does not exists for '$moduleName' module: Skipped!";
-                }
+            $schemaPath = $path . '/schemas/v' . $config['version'];
+            
+            // Is module enabled?
+            if (strtolower($config['enabled']) && is_dir($schemaPath)) {
+                $schemaFiles = array_merge($schemaFiles, glob($schemaPath . '/*.schema'));
             }
+
+        } else {
+            $moduleName = substr(strrchr($path, '/'), 1);
+            echo "\nWARNING: module.php does not exists for '$moduleName' module: Skipped!";
         }
-
-        closedir($dh);
     }
-
     // }}}
     // {{{ Install modules schema files
 
