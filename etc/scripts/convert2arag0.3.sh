@@ -1,6 +1,6 @@
 find . | grep -v .svn | grep 'model.php' | sed -e 's/model.php//' | xargs -I{} svn mv {}model.php {}.php
 
-find . | grep -v .svn | grep -v 'webapp/templates' | grep -v 'webapp/components' | grep -e 'templates$' | xargs -I{} svn mv {} {}/../views
+find . | grep -v .svn | grep -v 'applications/arag/templates' | grep -v 'applications/arag/components' | grep -e 'templates$' | xargs -I{} svn mv {} {}/../views
 
 find . -type f | grep -v .svn | grep -v 'convert' | xargs grep -e "->item('Arag_" -l | xargs sed -i -e "s/->item('Arag_/->item('arag./"
 
@@ -72,11 +72,11 @@ find . -type f | grep -v .svn | grep -v 'convert' | grep -v docs.wiki | grep -e 
 
 find . -type f | grep -v .svn | grep -v 'convert' | grep -v docs.wiki | grep 'modules' | xargs grep -e '^\s*var $.*;' -l | xargs sed -i -e 's/^\(\s*\)var\( $.*;\)/\1public\2/g'
 
-find . -type f | grep -v .svn | grep -v 'convert' | grep -v docs.wiki | grep -v 'plugins' | grep 'webapp' | grep -v 'smarty' | grep -v 'helpers' | xargs grep -e '^\s*function' -l | xargs sed -i -e 's/^\(\s*\)\(function [a-zA-Z][a-z_A-Z0-9]*(\)/\1public \2/g'
+find . -type f | grep -v .svn | grep -v 'convert' | grep -v docs.wiki | grep -v 'plugins' | grep 'applications' | grep -v 'smarty' | grep -v 'helpers' | xargs grep -e '^\s*function' -l | xargs sed -i -e 's/^\(\s*\)\(function [a-zA-Z][a-z_A-Z0-9]*(\)/\1public \2/g'
 
 find . -type f | grep -v .svn | grep -v 'convert' | grep -v docs.wiki | grep 'modules' | xargs grep -e '^\s*function _' -l | xargs sed -i -e 's/^\(\s*\)\(function _[a-zA-Z][a-z_A-Z0-9]*(\)/\1protected \2/g'
 
-find . -type f | grep -v .svn | grep -v 'convert' | grep -v docs.wiki | grep -v 'plugins' | grep 'webapp' | grep -v 'smarty' | grep -v 'helpers' | xargs grep -e '^\s*function &' -l | xargs sed -i -e 's/^\(\s*\)\(function & [a-zA-Z][a-z_A-Z0-9]*(\)/\1public \2/g'
+find . -type f | grep -v .svn | grep -v 'convert' | grep -v docs.wiki | grep -v 'plugins' | grep 'applications' | grep -v 'smarty' | grep -v 'helpers' | xargs grep -e '^\s*function &' -l | xargs sed -i -e 's/^\(\s*\)\(function & [a-zA-Z][a-z_A-Z0-9]*(\)/\1public \2/g'
 
 # validators should be converted by hand
 # 'numeric' in validator shuold be changed to valid_type
