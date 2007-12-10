@@ -723,3 +723,77 @@ input, textarea, select {
     clear           : both;
 }
 /* end of ControlPanel }}} */
+/* {{{ Profiler */
+#kohana-profiler {
+	font-family     : Monaco, 'Courier New';
+	background-color: #F8FFF8;
+	margin-top      : 20px;
+	clear           : both;
+	padding         : 10px 10px 0;
+	border          : 1px solid #E5EFF8;
+}
+#kohana-profiler pre {
+	margin          : 0;
+	font            : inherit;
+}
+#kohana-profiler table {
+	font-size       : 1.0em;
+	color           : #4D6171;
+	width           : 100%;
+	border-collapse : collapse;
+	border-top      : 1px solid #E5EFF8;
+	border-right    : 1px solid #E5EFF8;
+	border-left     : 1px solid #E5EFF8;
+	margin-bottom   : 10px;
+}
+#kohana-profiler th {
+	text-align      : left;
+	border-bottom   : 1px solid #E5EFF8;
+	background-color: #F9FCFE;
+	padding         : 3px;
+	color           : #263038;
+}
+#kohana-profiler td {
+	background-color: #FFFFFF;
+	border-bottom   : 1px solid #E5EFF8;
+	padding         : 3px;
+}
+#kohana-profiler .kp-altrow td {
+	background-color: #F7FBFF;
+}
+#kohana-profiler .kp-totalrow td {
+	background-color: #FAFAFA;
+	border-top      : 1px solid #D2DCE5;
+	font-weight     : bold;
+}
+#kp-benchmarks th {
+	background-color: #FFE0E0;
+}
+#kp-queries th {
+	background-color: #E0FFE0;
+}
+#kp-postdata th {
+	background-color: #E0E0FF;
+}
+#kp-sessiondata th {
+	background-color: #CCE8FB;
+}
+#kohana-profiler .kp-column {
+	width           : 100px;
+	border-left     : 1px solid #E5EFF8;
+	text-align      : center;
+}
+#kohana-profiler .kp-data, 
+#kohana-profiler .kp-name {
+	background-color: #FAFAFB;
+	vertical-align  : top;
+}
+#kohana-profiler .kp-name {
+	width           : 200px;
+	border-right    : 1px solid #E5EFF8;
+}
+#kohana-profiler .kp-altrow .kp-data, 
+#kohana-profiler .kp-altrow .kp-name
+{
+	background-color: #F6F8FB;
+}
