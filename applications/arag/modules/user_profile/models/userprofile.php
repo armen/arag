@@ -27,10 +27,27 @@ class UserProfile_Model extends Model
                      'phone'       => $phone,
                      'cellphone'   => $cellphone,
                      'postal_code' => $postal_code,
-                     'username'    => $username
+                    );
+        $this->db->where('username', $username);
+        $this->db->where('master_profile', 1);
+        $this->db->update($this->tableNameProfiles, $row);
+    }
+    // }}}
+    // {{{ insertProfile
+    public function insertProfile($province, $city, $address, $phone, $cellphone, $postal_code, $username)
+    {
+        $row = Array(
+                     'province'       => $province,
+                     'city'           => $city,
+                     'address'        => $address,
+                     'phone'          => $phone,
+                     'cellphone'      => $cellphone,
+                     'postal_code'    => $postal_code,
+                     'username'       => $username,
+                     'master_profile' => 1
                     );
 
-        $this->db->merge($this->tableNameProfiles, $row);
+        $this->db->insert($this->tableNameProfiles, $row);
     }
     // }}}
     // {{{ hasUserName
@@ -41,7 +58,7 @@ class UserProfile_Model extends Model
         return (boolean)$query->num_rows();
     }
     // }}}
-    // {{[ getProfile
+    // {{{ getProfile
     public function getProfile($username)
     {
         $this->db->select('city, phone, pan, cellphone, province, address, postal_code');
