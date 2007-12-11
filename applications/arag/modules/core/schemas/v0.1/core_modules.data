@@ -6,10 +6,6 @@
         <initialization>
             <insert>
                 <field>
-                    <name>id</name>
-                    <value>1</value>
-                </field>
-                <field>
                     <name>name</name>
                     <value>User Management</value>
                 </field>
@@ -31,10 +27,6 @@
                 </field>
             </insert>
             <insert>
-                <field>
-                    <name>id</name>
-                    <value>2</value>
-                </field>
                 <field>
                     <name>name</name>
                     <value>Core</value>
@@ -58,10 +50,6 @@
             </insert>
             <insert>
                 <field>
-                    <name>id</name>
-                    <value>3</value>
-                </field>
-                <field>
                     <name>name</name>
                     <value>Blog</value>
                 </field>
@@ -83,10 +71,6 @@
                 </field>
             </insert>
             <insert>
-                <field>
-                    <name>id</name>
-                    <value>4</value>
-                </field>
                 <field>
                     <name>name</name>
                     <value>Multisite</value>
