@@ -17,6 +17,18 @@
                 <notnull>true</notnull>
             </field>
             <field>
+                <name>name</name>
+                <type>text</type>
+                <length>255</length>
+                <notnull>true</notnull>
+            </field>
+            <field>
+                <name>lastname</name>
+                <type>text</type>
+                <length>255</length>
+                <notnull>true</notnull>
+            </field>
+            <field>
                 <name>pan</name>
                 <type>text</type>
                 <length>16</length>

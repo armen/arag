@@ -74,11 +74,13 @@ class Backend_Controller extends Controller
         $phone       = $this->input->post('phone', true);
         $cellphone   = $this->input->post('cellphone', true);
         $postal_code = $this->input->post('postal_code', true);
+        $name        = $this->input->post('name', true);
+        $lastname    = $this->input->post('lastname', true);
         
         if ($this->UserProfile->hasUserName($this->username)) {
-            $this->UserProfile->editProfile($province, $city, $address, $phone, $cellphone, $postal_code, $this->username);
+            $this->UserProfile->editProfile($province, $city, $address, $phone, $cellphone, $postal_code, $this->username, $name, $lastname);
         } else {
-            $this->UserProfile->insertProfile($province, $city, $address, $phone, $cellphone, $postal_code, $this->username);
+            $this->UserProfile->insertProfile($province, $city, $address, $phone, $cellphone, $postal_code, $this->username, $name, $lastname);
         }
 
         $this->session->set('user_profile_profile_saved', true);

@@ -18,7 +18,7 @@ class UserProfile_Model extends Model
     }
     // }}}
     // {{{ editProfile
-    public function editProfile($province, $city, $address, $phone, $cellphone, $postal_code, $username)
+    public function editProfile($province, $city, $address, $phone, $cellphone, $postal_code, $username, $name, $lastname)
     {
         $row = Array(
                      'province'    => $province,
@@ -27,6 +27,8 @@ class UserProfile_Model extends Model
                      'phone'       => $phone,
                      'cellphone'   => $cellphone,
                      'postal_code' => $postal_code,
+                     'name'        => $name,
+                     'lastname'    => $lastname
                     );
         $this->db->where('username', $username);
         $this->db->where('master_profile', 1);
@@ -34,7 +36,7 @@ class UserProfile_Model extends Model
     }
     // }}}
     // {{{ insertProfile
-    public function insertProfile($province, $city, $address, $phone, $cellphone, $postal_code, $username)
+    public function insertProfile($province, $city, $address, $phone, $cellphone, $postal_code, $username, $name, $lastname)
     {
         $row = Array(
                      'province'       => $province,
@@ -44,7 +46,9 @@ class UserProfile_Model extends Model
                      'cellphone'      => $cellphone,
                      'postal_code'    => $postal_code,
                      'username'       => $username,
-                     'master_profile' => 1
+                     'master_profile' => 1,
+                     'name'           => $name,
+                     'lastname'       => $lastname
                     );
 
         $this->db->insert($this->tableNameProfiles, $row);
