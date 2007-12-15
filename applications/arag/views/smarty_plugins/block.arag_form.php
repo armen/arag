@@ -38,7 +38,12 @@ function smarty_block_arag_form($params, $content, &$smarty)
         }
     }
 
-    $action = url::site($uri);
+    if (preg_match('!^\w+://!i', $uri)) {
+        // there is \w:// at begining of uri            
+        $action = $uri;
+    } else {
+        $action = url::site($uri);
+    }
     
     return '<form action="'.$action.'" method="'. $method.'"' . $style . $id . $enctype .'>'.$content.'</form>';
 }
