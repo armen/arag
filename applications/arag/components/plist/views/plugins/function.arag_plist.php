@@ -43,7 +43,7 @@ function smarty_function_arag_plist($params, &$smarty)
         list($name) = $name;
     } else if (!is_string($name)) {
         // if name is string then it setted as parameter in plugin but if not we have to trigger error
-        $smarty->trigger_error('arag_list: can not find name parameter or it is invalid!', E_USER_ERROR);
+        $smarty->trigger_error('arag_plist: can not find name parameter or it is invalid!', E_USER_ERROR);
     }
 
     // Returned list is an array, we need first element
