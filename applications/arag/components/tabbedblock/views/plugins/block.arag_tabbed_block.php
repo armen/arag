@@ -3,10 +3,10 @@
 // +-------------------------------------------------------------------------+
 // | Author: Armen Baghumian <armen@OpenSourceClub.org>                      |
 // +-------------------------------------------------------------------------+
-// | Smarty {arag_tabbed_block}{/arag_tabbed_block} tabbed block plugin|
+// | Smarty {arag_tabbed_block}{/arag_tabbed_block} tabbed block plugin      |
 // |                                                                         |
 // | Type:    tabbed block function                                          |
-// | Name:    arag_tabbed_block                                           |
+// | Name:    arag_tabbed_block                                              |
 // | Purpose: Generating tabbed block                                        |
 // +-------------------------------------------------------------------------+
 // $Id$
