@@ -20,8 +20,8 @@ $validator['error_messages'] = Array (
 
 
 $validator['index']['write']['rules'] = Array(
-                                              'appname' => array(_("Application name"), 'trim|required|alpha_dash|callback__check_app'),
-                                              'email'   => array(_("Email"), 'trim|required|matches[reemail]|valid_email'),
-                                              'reemail' => array(_("Retype Email"), 'trim|required'),
+                                              'appname' => array(_("Application name"), '=trim|required|alpha_dash|callback__check_app'),
+                                              'email'   => array(_("Email"), '=trim|required|matches[reemail]|valid_email'),
+                                              'reemail' => array(_("Retype Email"), '=trim|required'),
                                              );
 ?>

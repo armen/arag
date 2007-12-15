@@ -18,8 +18,8 @@ $validator['error_messages'] = Array (
  */
 
 $validator['login']['write']['rules']  = array(
-                                               'username' => array(_("Username"), 'trim|required'),
-                                               'password' => array(_("Password"), 'trim|required'),
+                                               'username' => array(_("Username"), '=trim|required'),
+                                               'password' => array(_("Password"), '=trim|required'),
                                               );
 
 /*
@@ -27,16 +27,16 @@ $validator['login']['write']['rules']  = array(
  */
 
 $validator['forget_password']['write']['rules']  = array(
-                                                         'username' => array(_("Username"), 'trim|required'),
-                                                         'email'    => array(_("Email"), 'trim|required|valid_email')
+                                                         'username' => array(_("Username"), '=trim|required'),
+                                                         'email'    => array(_("Email"), '=trim|required|valid_email')
                                                         );
 /*
  * Validation of change_password method
  */
 
 $validator['change_password']['write']['rules']  = array(
-                                                         'username' => array(_("Username"), 'trim|required'),
-                                                         'email'    => array(_("Email"), 'trim|required|valid_email')
+                                                         'username' => array(_("Username"), '=trim|required'),
+                                                         'email'    => array(_("Email"), '=trim|required|valid_email')
                                                         );
 
 /*
@@ -44,8 +44,8 @@ $validator['change_password']['write']['rules']  = array(
  */
 
 $validator['remove']['write']['rules']  = array(
-                                                'username' => array(_("Username"), 'trim|required'),
-                                                'email'    => array(_("Email"), 'trim|required|valid_email')
+                                                'username' => array(_("Username"), '=trim|required'),
+                                                'email'    => array(_("Email"), '=trim|required|valid_email')
                                                );
 
 /*
@@ -53,12 +53,12 @@ $validator['remove']['write']['rules']  = array(
  */
 
 $validator['registration']['write']['rules'] = Array (
-                                                      'username'   => array(_("Username"), 'trim|required|alpha_dash|callback__check_user_name|min_length[4]'),
-                                                      'password'   => array(_("Password"), 'trim|required|matches[repassword]|min_length[4]'),
-                                                      'repassword' => array(_("Repassword"), 'trim|required'),
-                                                      'name'       => array(_("Name"), 'trim|required|alpha'),
-                                                      'lastname'   => array(_("Lastname"), 'trim|required|alpha'),
-                                                      'email'      => array(_("Email"), 'trim|required|valid_email|matches[reemail]'),
-                                                      'reemail'    => array(_("Remmail"), 'trim|required|valid_email')
+                                                      'username'   => array(_("Username"), '=trim|required|alpha_dash|callback__check_user_name|min_length[4]'),
+                                                      'password'   => array(_("Password"), '=trim|required|matches[repassword]|min_length[4]'),
+                                                      'repassword' => array(_("Repassword"), '=trim|required'),
+                                                      'name'       => array(_("Name"), '=trim|required|alpha'),
+                                                      'lastname'   => array(_("Lastname"), '=trim|required|alpha'),
+                                                      'email'      => array(_("Email"), '=trim|required|valid_email|matches[reemail]'),
+                                                      'reemail'    => array(_("Remmail"), '=trim|required|valid_email')
                                                      );
 ?>

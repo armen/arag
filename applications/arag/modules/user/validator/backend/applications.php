@@ -26,7 +26,7 @@ $validator['error_messages'] = Array (
  */
 
 
-$validator['index']['write']['rules'] = Array('name' => array(_("Name"), 'trim|required'));
+$validator['index']['write']['rules'] = Array('name' => array(_("Name"), '=trim|required'));
 
 
 /*
@@ -34,7 +34,7 @@ $validator['index']['write']['rules'] = Array('name' => array(_("Name"), 'trim|r
  */
 
 $validator['new_group']['read']['rules']  = Array(array(_("Name") => 'required|callback__check_app'));
-$validator['new_group']['write']['rules'] = Array ('newgroup' => array(_("Name for new group"), 'trim|required|callback__check_group_name'));
+$validator['new_group']['write']['rules'] = Array ('newgroup' => array(_("Name for new group"), '=trim|required|callback__check_group_name'));
 
 
 /*
@@ -42,7 +42,7 @@ $validator['new_group']['write']['rules'] = Array ('newgroup' => array(_("Name f
  */
 
 
-$validator['privileges_parents']['write']['rules'] = Array('newlabel'  => array(_("Name for new label"), 'trim|required'));
+$validator['privileges_parents']['write']['rules'] = Array('newlabel'  => array(_("Name for new label"), '=trim|required'));
 
 
 /*
@@ -51,8 +51,8 @@ $validator['privileges_parents']['write']['rules'] = Array('newlabel'  => array(
 
 
 $validator['privileges']['write']['rules'] = Array (
-                                                     'newlabel'  => array(_("Name for new label"), 'trim|required'),
-                                                     'privilege' => array(_("Privilege for new label"),'trim|required|callback__check_privilege')
+                                                     'newlabel'  => array(_("Name for new label"), '=trim|required'),
+                                                     'privilege' => array(_("Privilege for new label"),'=trim|required|callback__check_privilege')
                                                     );
 
 
@@ -62,8 +62,8 @@ $validator['privileges']['write']['rules'] = Array (
 
 $validator['privileges_edit']['read']['rules']  = Array(array(_("Label") => 'required|callback__check_label'));
 $validator['privileges_edit']['write']['rules'] = Array (
-                                                          'label'     => array(_("Label name"), 'trim|required'),
-                                                          'privilege' => array(_("Privilege"), 'trim|callback__check_privilege')
+                                                          'label'     => array(_("Label name"), '=trim|required'),
+                                                          'privilege' => array(_("Privilege"), '=trim|callback__check_privilege')
                                                          );
 
 
@@ -73,13 +73,13 @@ $validator['privileges_edit']['write']['rules'] = Array (
 
 $validator['new_user']['read']['rules']  = Array(array(_("Name") => 'required|callback__check_app'));
 $validator['new_user']['write']['rules'] = Array (
-                                                  'username'   => array(_("Username"), 'trim|required|alpha_dash|callback__check_user_name|min_length[4]'),
-                                                  'password'   => array(_("Password"), 'trim|required|matches[repassword]|min_length[4]'),
-                                                  'repassword' => array(_("Repassword"), 'trim|required'),
-                                                  'name'       => array(_("Name"), 'trim|required|alpha'),
-                                                  'lastname'   => array(_("Lastname"), 'trim|required|alpha'),
-                                                  'email'      => array(_("Email"), 'trim|required|valid_email'),
-                                                  'group'      => array(_("Group"), 'trim|required')
+                                                  'username'   => array(_("Username"), '=trim|required|alpha_dash|callback__check_user_name|min_length[4]'),
+                                                  'password'   => array(_("Password"), '=trim|required|matches[repassword]|min_length[4]'),
+                                                  'repassword' => array(_("Repassword"), '=trim|required'),
+                                                  'name'       => array(_("Name"), '=trim|required|alpha'),
+                                                  'lastname'   => array(_("Lastname"), '=trim|required|alpha'),
+                                                  'email'      => array(_("Email"), '=trim|required|valid_email'),
+                                                  'group'      => array(_("Group"), '=trim|required')
                                                  );
 
 /*
@@ -89,10 +89,10 @@ $validator['new_user']['write']['rules'] = Array (
 $validator['user_profile']['read']['rules']  = Array(array(_("Username") => 'required|callback__check_user_name_profile_master'));
 $validator['user_profile']['write']['rules'] = Array (
                                                       'password'   => array(_("Password"), 'matches[repassword]|min_length[4]'),
-                                                      'name'       => array(_("Name"), 'trim|required|alpha'),
-                                                      'lastname'   => array(_("Lastname"), 'trim|required|alpha'),
-                                                      'email'      => array(_("Email"), 'trim|required|valid_email'),
-                                                      'group'      => array(_("Group"), 'trim|required')
+                                                      'name'       => array(_("Name"), '=trim|required|alpha'),
+                                                      'lastname'   => array(_("Lastname"), '=trim|required|alpha'),
+                                                      'email'      => array(_("Email"), '=trim|required|valid_email'),
+                                                      'group'      => array(_("Group"), '=trim|required')
                                                      );
 
 /*
@@ -116,7 +116,7 @@ $validator['filters_edit']['write']['rules'] = array('filter' => array(_("Filter
  */
 
 
-$validator['settings']['write']['rules'] = Array('limit' => array(_("Limit"), 'trim|numeric'));
+$validator['settings']['write']['rules'] = Array('limit' => array(_("Limit"), '=trim|numeric'));
 
 
 /*
@@ -124,7 +124,7 @@ $validator['settings']['write']['rules'] = Array('limit' => array(_("Limit"), 't
  */
 
 
-$validator['add_apps_filters']['write']['rules'] = Array('appname'  => array(_("application Name"), 'trim|required|callback__check_app_filter'));
+$validator['add_apps_filters']['write']['rules'] = Array('appname'  => array(_("application Name"), '=trim|required|callback__check_app_filter'));
 
 
 
@@ -158,21 +158,21 @@ $validator['users']['read']['rules'] = Array(
  * Validation of Password Settings
  */
 
-$validator['password']['write']['rules'] = Array('length' => array(_("Password length"), 'trim|required|numeric'));
+$validator['password']['write']['rules'] = Array('length' => array(_("Password length"), '=trim|required|numeric'));
 
 
 /*
  * Validation of URI expire time Settings
  */
 
-$validator['expire_time']['write']['rules'] = Array('expire' => array(_("Expire time"), 'trim|required|numeric'));
+$validator['expire_time']['write']['rules'] = Array('expire' => array(_("Expire time"), '=trim|required|numeric'));
 
 /*
  * Validation of URI user blocking Settings
  */
 
 $validator['user_blocking']['write']['rules'] = Array(
-                                                      'block_expire'  => array(_("Blocking expire time"), 'trim|required|numeric'),
-                                                      'block_counter' => array(_("Blocking attempts"), 'trim|required|numeric'),
+                                                      'block_expire'  => array(_("Blocking expire time"), '=trim|required|numeric'),
+                                                      'block_counter' => array(_("Blocking attempts"), '=trim|required|numeric'),
                                                      );
 ?>

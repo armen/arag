@@ -5,7 +5,7 @@ $_fields = Array (
                  );
 
 $_rules = Array (
-                  'limit' => 'trim|numeric'
+                  'limit' => '=trim|numeric'
                 );
 
 /*

@@ -14,10 +14,10 @@ $validator['error_messages'] = Array (
  */
 
 $validator['email']['write']['rules'] = Array(
-                                              'smtpserver' => array(_("SMTP server"), 'trim|required'),
-                                              'sender'     => array(_("Sender's email"), 'trim|required|valid_email'),
-                                              'subject'    => array(_("Subject"), 'trim|required'),
-                                              'template'   => array(_("Email's template"), 'trim|required'),
-                                              'smtpport'   => array(_("SMTP Port"), 'trim|required|numeric')
+                                              'smtpserver' => array(_("SMTP server"), '=trim|required'),
+                                              'sender'     => array(_("Sender's email"), '=trim|required|valid_email'),
+                                              'subject'    => array(_("Subject"), '=trim|required'),
+                                              'template'   => array(_("Email's template"), '=trim|required'),
+                                              'smtpport'   => array(_("SMTP Port"), '=trim|required|numeric')
                                              );
 ?>

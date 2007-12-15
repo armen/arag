@@ -5,7 +5,7 @@ $_fields = Array (
                  );
 
 $_rules = Array (
-                  'name' => 'trim|required'
+                  'name' => '=trim|required'
                 );
 
 /*

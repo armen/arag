@@ -12,7 +12,7 @@ $_fields = Array (
                  );
 
 $_rules = Array (
-                  'subject'             => 'trim|required|alpha_numeric',
+                  'subject'             => '=trim|required|alpha_numeric',
                   'entry'               => 'required|xss_clean',
                   'extended_entry'      => 'xss_clean',
                   'status'              => 'numeric',

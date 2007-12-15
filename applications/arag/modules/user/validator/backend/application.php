@@ -23,7 +23,7 @@ $validator['error_messages'] = Array (
  * Validation of new_group method
  */
 
-$validator['new_group']['write']['rules'] = Array ('newgroup' => array(_("Name for new group"), 'trim|required|callback__check_group_name'));
+$validator['new_group']['write']['rules'] = Array ('newgroup' => array(_("Name for new group"), '=trim|required|callback__check_group_name'));
 
 
 /*
@@ -31,13 +31,13 @@ $validator['new_group']['write']['rules'] = Array ('newgroup' => array(_("Name f
  */
 
 $validator['new_user']['write']['rules'] = Array (
-                                                  'username'   => array(_("Username"), 'trim|required|alpha_dash|callback__check_user_name|min_length[4]'),
-                                                  'password'   => array(_("Password"), 'trim|required|matches[repassword]|min_length[4]'),
-                                                  'repassword' => array(_("Repassword"), 'trim|required'),
-                                                  'name'       => array(_("Name"), 'trim|required|alpha'),
-                                                  'lastname'   => array(_("Lastname"), 'trim|required|alpha'),
-                                                  'email'      => array(_("Email"), 'trim|required|valid_email'),
-                                                  'group'      => array(_("Group"), 'trim|required')
+                                                  'username'   => array(_("Username"), '=trim|required|alpha_dash|callback__check_user_name|min_length[4]'),
+                                                  'password'   => array(_("Password"), '=trim|required|matches[repassword]|min_length[4]'),
+                                                  'repassword' => array(_("Repassword"), '=trim|required'),
+                                                  'name'       => array(_("Name"), '=trim|required|alpha'),
+                                                  'lastname'   => array(_("Lastname"), '=trim|required|alpha'),
+                                                  'email'      => array(_("Email"), '=trim|required|valid_email'),
+                                                  'group'      => array(_("Group"), '=trim|required')
                                                  );
 
 /*
@@ -48,10 +48,10 @@ $validator['user_profile']['read']['rules']  = Array(array(_("Username") => 'req
 $validator['user_profile']['write']['rules'] = Array (
                                                       'username'    => array(_("Username"), 'callback__check_user_name_profile'),
                                                       'password'    => array(_("Password"), 'matches[repassword]|min_length[4]|callback__check_password'),
-                                                      'name'        => array(_("Name"), 'trim|required|alpha'),
-                                                      'lastname'    => array(_("Lastname"), 'trim|required|alpha'),
-                                                      'email'       => array(_("Email"), 'trim|required|valid_email'),
-                                                      'group'      => array(_("Group"), 'trim|required')
+                                                      'name'        => array(_("Name"), '=trim|required|alpha'),
+                                                      'lastname'    => array(_("Lastname"), '=trim|required|alpha'),
+                                                      'email'       => array(_("Email"), '=trim|required|valid_email'),
+                                                      'group'      => array(_("Group"), '=trim|required')
                                                      );
 
 /*
