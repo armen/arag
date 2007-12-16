@@ -8,7 +8,6 @@ $validator['error_messages'] = Array (
                                        'required'      => _("%s is required."), 
                                        'min_length'    => _("minimum length of %s is %d"),
                                        'valid_type'    => _("%s should be numeric"),
-                                       'alpha_numeric' => _("%s should be alpha numeric"),
                                        'unknown_error' => _("An unknown error occured!")
                                      );
 
@@ -17,7 +16,7 @@ $validator['error_messages'] = Array (
  */
 
 $validator['post']['write']['rules'] = Array (
-                                               'subject'             => Array(_("Subject"), '=trim|required|alpha_numeric'),
+                                               'subject'             => Array(_("Subject"), '=trim|required|regex[/^[-\pL\pN\pZs_]+$/uD]'),
                                                'entry'               => Array(_("Entry Body"), 'required|xss_clean'),
                                                'extended_entry'      => Array(_("Extended Body"), 'xss_clean'),
                                                'status'              => Array('', 'numeric'),
@@ -33,7 +32,7 @@ $validator['post']['write']['rules'] = Array (
 $validator['edit']['read']['rules']  = Array(Array(_("ID"), 'required|numeric|callback__check_entry'));
 $validator['edit']['write']['rules'] = Array ( 
                                                'id'                  => Array(_("ID"), 'required|numeric|callback__check_entry'),
-                                               'subject'             => Array(_("Subject"), '=trim|required|alpha_numeric'),
+                                               'subject'             => Array(_("Subject"), '=trim|required|regex[/^[-\pL\pN\pZs_]+$/uD]'),
                                                'entry'               => Array(_("Entry Body"), 'required|xss_clean'),
                                                'extended_entry'      => Array(_("Extended Body"), 'xss_clean'),
                                                'status'              => Array('', 'numeric'),
