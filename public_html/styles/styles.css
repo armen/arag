@@ -213,7 +213,7 @@ input, textarea, select {
 .plist caption {
     padding         : 0px;
     margin          : 0px;
-    border-bottom   : 2px solid #bbbbbb;
+    border-bottom   : 2px solid #bbb;
     color           : #000;
     font-size       : 12px;
 }
@@ -618,9 +618,11 @@ input, textarea, select {
 }
 /* end of Tabbed Block Simple }}} */
 /* {{{ Blog */
+.blog {
+    border-bottom     : 1px solid #ccc;
+}
 .blog_entry {
-    border-top        : 1px solid #888;
-    margin-bottom     : 10px;
+    border-top        : 1px solid #ccc;
     padding           : 10px;
 }
 .blog_subject {
