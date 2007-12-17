@@ -79,16 +79,18 @@ class Comment_Model extends Model
         return $retval;
     }
     // }}}
-    // {{{ & getComments
-    public function & getEntries($moduleName)
+    // {{{ getComments
+    public function getComments($moduleName, $referenceId = False)
     {
-        $this->db->select('id, comment, parent_id, author, homepage, name, email,'.
-                          'create_date, created_by, modify_date, modified_by');
-        $this->db->orderby('create_date', 'desc');
+        $query = $this->db->select('id, comment, parent_id, author, homepage, name, email,'.
+                                   'create_date, created_by, modify_date, modified_by');
         
-        $query = $this->db->getwhere($this->tableName, Array('module_name' => $moduleName));
+        if ($referenceId !== False) {
+            $query->where('reference_id', $referenceId);
+        }
+        
+        $retval = $query->where('module_name', $moduleName)->orderby('create_date', 'desc')->get($this->tableName)->result();
 
-        $retval = $query->result(False);
         return $retval;
     }
     // }}}

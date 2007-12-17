@@ -30,12 +30,6 @@
                 <notnull>true</notnull>
             </field>
             <field>
-                <name>author</name>
-                <type>text</type>
-                <length>255</length>
-                <notnull>true</notnull>
-            </field>
-            <field>
                 <name>name</name>
                 <type>text</type>
                 <length>255</length>
@@ -75,9 +69,6 @@
                 <type>text</type>
                 <length>255</length>
             </field> 
-                <type>text</type>
-                <length>40</length>
-            </field>
             <index>
                 <name>primary</name>
                 <primary>true</primary>

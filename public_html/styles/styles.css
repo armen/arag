@@ -635,6 +635,11 @@ input, textarea, select {
 }
 .blog_body {}
 .blog_extended_body {}
+.blog_comments h3 {
+    font-size         : 13px;
+    font-weight       : bold;
+    color             : #888;
+}
 /* }}} end of Blog */
 /* {{{ User Manegment */
 .prilist {

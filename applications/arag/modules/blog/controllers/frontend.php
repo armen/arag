@@ -18,6 +18,7 @@ class Frontend_Controller extends Controller
        
         // Default page title
         $this->layout->page_title = 'Blog';
+
     }
     // }}}
     // {{{ index
@@ -28,6 +29,9 @@ class Frontend_Controller extends Controller
         $this->entry->setResource($this->Blog->getEntries(True));
         $this->entry->addColumn('Blog.getDate', Null, PList::VIRTUAL_COLUMN);
 
+        // Load the Comment component, comment ain't used but just loaded
+        $this->load->component('Comment', 'comments');
+
         $this->layout->content = new View('frontend/view', Array('entry_uri' => '/blog/frontend/view/#id#/extended'));    
     }
     // }}}
@@ -37,6 +41,9 @@ class Frontend_Controller extends Controller
         $this->load->component('PList', 'entry');
         $this->entry->setResource(Array($this->Blog->getEntry($id, True)));
         $this->entry->addColumn('Blog.getDate', Null, PList::VIRTUAL_COLUMN);
+
+        $this->load->component('Comment', 'comments');
+        $this->comments->setReferenceId($id);
 
         $data = Array('extended'  => $extended == 'extended', 
                       'entry_uri' => '/blog/frontend/view/#id#/extended');

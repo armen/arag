@@ -4,6 +4,19 @@
     File: $Id$
 *}
 
+{assign var=comments value=$comment->getComments()}
+
+{if count($comments)}
+    <div class="blog_comments">
+        <h3>_("Comments")</h3>
+        {arag_block template="blank"}
+            {foreach from=$comments item=item key=key}
+                {$item->comment}
+            {/foreach}
+        {/arag_block}    
+    </div>
+{/if}
+
 {arag_block}
     {arag_block template="blank"}    
         {arag_validation_errors}
@@ -29,7 +42,7 @@
         </tr>
         <tr>
             <td align="{right}" width="100">{asterisk}_("Comment"):</td>
-            <td><textarea name="comment"></textarea></td>
+            <td><textarea name="comment" rows="7" cols="15"></textarea></td>
         </tr>        
         <tr>
             <td>&nbsp;</td>
