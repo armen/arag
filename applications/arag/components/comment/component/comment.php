@@ -15,6 +15,49 @@
 
 class Comment extends Component
 {
+    // {{{ Properties
+    
+    private $module;
+    private $referenceId;
+    private $comments = Null;
+
+    // {{{ setReferenceId
+    public function setReferenceId($referenceId)
+    {
+        $this->referenceId = $referenceId;
+    }
+    // }}}
+    // {{{ setModule
+    public function setModule($module = Null)
+    {
+        $this->module = empty($module) ? Router::$module : $module;
+    }
+    // }}}
+    // {{{ getReferenceId
+    public function getReferenceId()
+    {
+        return $this->referenceId;
+    }
+    // }}}
+    // {{{ getModule
+    public function getModule()
+    {
+        return $this->module;
+    }
+    // }}}
+    // {{{ getComments
+    public function getComments()
+    {
+        return $this->comments;
+    }
+    // }}}
+    // {{{ build
+    public function build()
+    {
+        $comment        = Model::load('Comment', 'comment');
+        $this->comments = $comment->getComments($this->module, $this->referenceId);
+    }
+    // }}}
 }
 
 ?>
