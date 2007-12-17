@@ -9,16 +9,16 @@ body {
     font-family     : Tahoma, Verdana, Arial, Helvetica, sans-serif;
     margin          : 0px;
     padding         : 50px;
-    color           : #000000;
-    background      : #ffffff url(../images/misc/background.png);
+    color           : #000;
+    background      : #fff url(../images/misc/background.png);
 }
 input, textarea, select {
     font-size       : 12px;
     font-family     : Tahoma, Verdana, Arial, Helvetica, sans-serif;
-    border          : 1px dotted #776655;
+    border          : 1px solid #ccc;
     padding         : 0px;
-    background-color: #eeeeee;
-    color           : #888888;
+    background-color: #eee;
+    color           : #888;
 }
 .asterisk {
     color           : red;
@@ -37,19 +37,19 @@ input, textarea, select {
     padding         : 0px 0px 0px 0px;
 }
 .arag_block_content {
-    background-color: #ffffff;
+    background-color: #fff;
     margin          : 0px 0px 10px 0px;
     padding         : 10px 10px 0px 10px;
-    border          : 1px dotted #776655;
+    border          : 1px solid #ccc;
 }
 .arag_block_title {
     margin          : 0px;
     padding         : 6px;
-    border-right    : 1px dashed #776655;
-    border-left     : 1px dashed #776655;
-    border-top      : 1px dashed #776655;
-    background-color: #eeeeee;
-    color           : #888888;    
+    border-right    : 1px solid #ccc;
+    border-left     : 1px solid #ccc;
+    border-top      : 1px solid #ccc;
+    background-color: #eee;
+    color           : #888;    
     text-align      : center;
     font-weight     : bold;
     font-size       : 10px;
@@ -63,7 +63,7 @@ input, textarea, select {
 }
 .arag_default_block a:link,
 .arag_default_block a:visited {
-    color           : #888888;
+    color           : #888;
     text-decoration : none;
 }
 .arag_default_block a:hover {
@@ -74,7 +74,7 @@ input, textarea, select {
     padding         : 0px;
     margin          : 0px 5px 0px 0px;  /* width of rounded_line_top_right corner */
     text-align      : center;
-    color           : #888888;
+    color           : #888;
     font-weight     : bold;
 }
 .arag_default_block_tr {     
@@ -91,8 +91,8 @@ input, textarea, select {
 .arag_default_block_body {
     margin          : 0px;
     padding         : 2px;
-    border-left     : 1px solid #776655;
-    border-right    : 1px solid #776655;
+    border-left     : 1px solid #ccc;
+    border-right    : 1px solid #ccc;
 }
 .arag_default_block_bl {
     background      : transparent url(../images/block/rounded_line_bottom_left.png) bottom left no-repeat;
@@ -165,11 +165,11 @@ input, textarea, select {
 .arag_tags_ds a:link, 
 .arag_tags_ds a:visited,
 .arag_tags_ds a:active {
-    color           : #888888;
+    color           : #888;
     text-decoration : none;
 }
 .arag_tags_ds a:hover {
-    color           : #bda68f;
+    color           : #444;
     text-decoration : none;
 }
 .arag_tags_ds img {
@@ -187,24 +187,24 @@ input, textarea, select {
     margin-bottom   : 0px;
 }
 .arag_tags_ds input, select {
-    border          : 1px dotted #776655;
-    background-color: #eeeeee;
-    color           : #888888;
+    border          : 1px solid #ccc;
+    background-color: #eee;
+    color           : #888;
 }
 .arag_tags_ds textarea {
     padding         : 1px;
     width           : 300px;
     height          : 100px;
     margin          : 3px;
-    border          : 1px dotted #776655;
-    background-color: #eeeeee;
-    color           : #888888;    
+    border          : 1px solid #ccc;
+    background-color: #eee;
+    color           : #888;    
 }
 /* arag_tags_ds }}} */
 /* end of Blocks }}} */
 /* {{{ PList */
 .plist {
-    border-left     : 1px dotted #776655;
+    border-left     : 1px solid #ccc;
     width           : 100%;
     width           : "91%"; /* IE5.5 hack */
     padding         : 0px;
@@ -213,22 +213,22 @@ input, textarea, select {
 .plist caption {
     padding         : 0px;
     margin          : 0px;
-    border-bottom   : 2px solid #776655;
-    color           : #000000;
+    border-bottom   : 2px solid #bbbbbb;
+    color           : #000;
     font-size       : 12px;
 }
 .plist th {
     padding         : 4px;
-    background-color: #eeeeee;
-    color           : #888888;
+    background-color: #eee;
+    color           : #888;
     text-align      : center;
     height          : 20px;
     font-size       : 12px;
-    border-right    : 1px dotted #776655;    
+    border-right    : 1px solid #ccc;    
 }
 .plist th a:visited,
 .plist th a:link {
-    color           : #888888;
+    color           : #888;
     font-weight     : bold;
 }
 .plist th a:hover {
@@ -239,41 +239,41 @@ input, textarea, select {
 }
 .plist a:visited,
 .plist a:link {
-    color           : #888888;
+    color           : #888;
     text-decoration : none;
 }
 .plist a:hover {
     color           : #5a5a5a;
 }
 .plist td {
-    border-right    : dotted 1px #aaaaaa;
-    border-top      : dotted 1px #aaaaaa; 
+    border-right    : solid 1px #ccc;
+    border-top      : solid 1px #ccc; 
     text-align      : center;
     height          : 24px;
 }
 .plist_odd td {
-    background      : #ffffff url(../images/misc/background.png);
+    background      : #fff url(../images/misc/background.png);
 }
 .plist_even td{
-    background-color: #ffffff;
+    background-color: #fff;
 }
 .plist_hilight {
-    background-color: #dddddd;
+    background-color: #ddd;
 }
 .plist_shilight {
-    background-color: #cdcdcd;
+    background-color: #eeeeee;
 }
 .plist_footer {
     padding         : 4px;
-    background-color: #eeeeee;
-    color           : #888888;
+    background-color: #eee;
+    color           : #888;
     text-align      : center;
     height          : 20px;
 }
 .plist_footer td {
-    border-right    : 1px dotted #776655;
-    border-top      : 1px dotted #776655;    
-    border-bottom   : 1px dotted #776655;
+    border-right    : 1px solid #ccc;
+    border-top      : 1px solid #ccc;    
+    border-bottom   : 1px solid #ccc;
 }
 .plist_group_actions_col {
     width           : 20px;
@@ -294,7 +294,7 @@ input, textarea, select {
 }
 .plist_group_actions a:visited,
 .plist_group_actions a:link {
-    color           : #888888;
+    color           : #888;
     text-decoration : none;
 }
 .plist_group_actions a:hover {
@@ -380,11 +380,11 @@ input, textarea, select {
 .plist_norecords {
     text-align      : center;
     padding         : 10px;
-    background-color: #eeeeee;        
-    border-top      : 2px solid #776655;
-    border-bottom   : 1px dotted #776655;    
-    border-right    : 1px dotted #776655;    
-    border-left     : 1px dotted #776655;    
+    background-color: #eee;        
+    border-top      : 2px solid #ccc;
+    border-bottom   : 1px solid #ccc;    
+    border-right    : 1px solid #ccc;    
+    border-left     : 1px solid #ccc;    
 }
 /* end of PList }}} */
 /* {{{ PList icons */
@@ -448,7 +448,7 @@ input, textarea, select {
     margin          : 0px 5px;
     font-size       : 12px;
     font-weight     : bold;
-    color           : #888888;
+    color           : #888;
 }
 .tabbed_block_nav {
     float           : left;
@@ -456,7 +456,7 @@ input, textarea, select {
     margin          : 0px;
     padding         : 0px;
     background      : transparent url("../images/tabbed_block/tb_line.png") repeat-x bottom;
-    color           : #888888;
+    color           : #888;
     font-size       : 10px;
     line-height     : normal;
     width           : 100%;
@@ -477,10 +477,10 @@ input, textarea, select {
     display         : block;
     margin          : 0px 1px 2px 0px;
     padding         : 5px 15px;
-    background-color: #eeeeee; /* background image? */
-    border-right    : dotted 1px #776655;
-    border-bottom   : dotted 1px #776655;
-    color           : #888888;
+    background-color: #eee; /* background image? */
+    border-right    : solid 1px #ccc;
+    border-bottom   : solid 1px #ccc;
+    color           : #888;
     text-decoration : none;
     font-weight     : bold;
     white-space     : nowrap;
@@ -488,54 +488,54 @@ input, textarea, select {
 .tabbed_block_nav a:link, 
 .tabbed_block_nav a:visited,
 .tabbed_block_nav a:active {
-    color           : #888888;
+    color           : #888;
 }
 .tabbed_block_nav a:hover {
     background      : none;
-    color           : #ffffff;
-    background-color: #aaaaaa; /* this is same as tabbed block background color! */
+    color           : #fff;
+    background-color: #aaa; /* this is same as tabbed block background color! */
 }
 .tabbed_block_nav .selected {
     margin          : 0px;
     padding         : 5px 15px 8px 10px;
-    color           : #888888;
+    color           : #888;
     /* tabbed block background */
-    background      : #ffffff url("../images/tabbed_block/tb_shadow.png") right bottom no-repeat;     
+    background      : #fff url("../images/tabbed_block/tb_shadow.png") right bottom no-repeat;     
     border-right    : 0px;
     border-top      : 0px;
     border-bottom   : 0px;
-    border-left     : 1px dotted #776655;
+    border-left     : 1px solid #ccc;
 }
 .tabbed_block_nav .selected a {
     margin          : 0px;
     padding         : 0px;
-    color           : #888888;
-    background-color: #ffffff;
+    color           : #888;
+    background-color: #fff;
     border          : 0px;
 }
 .tabbed_block_nav .deselected div {
     margin          : 0px;
     padding         : 5px 15px 5px 10px;
-    border-bottom   : 1px dotted #776655;    
+    border-bottom   : 1px solid #ccc;    
 }
 /* commented backslash hack hides rule from IE5-Mac \*/
 .tabbed_block_nav a { float   : none; }
 /* end IE5-Mac hack */
 .tabbed_block_content {
-    background-color: #ffffff; /* tabbed block background */
-    color           : #000000;
+    background-color: #fff; /* tabbed block background */
+    color           : #000;
     padding         : 10px 10px 0px 10px;
     margin          : 0px 0px 10px 0px;
-    border-bottom   : 1px dotted #776655;
-    border-left     : 1px dotted #776655;
-    border-right    : 1px dotted #776655;
+    border-bottom   : 1px solid #ccc;
+    border-left     : 1px solid #ccc;
+    border-right    : 1px solid #ccc;
 }
 /* Subtabs */
 .tabbed_block_subnav {
     margin          : 0px 0px 25px 0px;
     padding         : 0px;
-    background-color: #ffffff; /* same as background of selected tab */
-    color           : #888888;
+    background-color: #fff; /* same as background of selected tab */
+    color           : #888;
     font-size       : 10px;
 }
 .tabbed_block_subnav ul {
@@ -554,9 +554,9 @@ input, textarea, select {
     display         : block;
     margin          : 0px 1px 2px 0px;
     padding         : 2px 15px;
-    background-color: #ffffff;
-    border-right    : dotted 1px #776655;
-    color           : #888888;
+    background-color: #fff;
+    border-right    : solid 1px #ccc;
+    color           : #888;
     text-decoration : none;
     font-weight     : bold;
     white-space     : nowrap;
@@ -564,17 +564,17 @@ input, textarea, select {
 .tabbed_block_subnav a:link, 
 .tabbed_block_subnav a:visited,
 .tabbed_block_subnav a:active {
-    color           : #888888;
+    color           : #888;
 }
 .tabbed_block_subnav a:hover {
     background      : none;
-    background-color: #eeeeee;
+    background-color: #eee;
 }
 .tabbed_block_subnav .selected a {
     margin          : 0px;
     padding         : 2px 15px;    
-    color           : #888888;
-    background-color: #eeeeee;
+    color           : #888;
+    background-color: #eee;
 }
 .tabbed_block_subnav .deselected div {
     margin          : 0px 1px 2px 0px;
@@ -607,7 +607,7 @@ input, textarea, select {
     padding         : 0px 0px 4px 0px;
     text-decoration : none;
     font-weight     : bold;
-    color           : #888888;
+    color           : #888;
 }
 /* Commented Backslash Hack hides rule from IE5-Mac \*/
 .tabbed_block_simple a {float:none;}
@@ -619,7 +619,7 @@ input, textarea, select {
 /* end of Tabbed Block Simple }}} */
 /* {{{ Blog */
 .blog_entry {
-    border-top        : 1px dotted #888888;
+    border-top        : 1px solid #888;
     margin-bottom     : 10px;
     padding           : 10px;
 }
@@ -628,7 +628,7 @@ input, textarea, select {
     font-weight       : bold;
 }
 .blog_posted {
-    color             : #888888;
+    color             : #888;
     font-size         : 9px;
 }
 .blog_body {}
@@ -636,20 +636,20 @@ input, textarea, select {
 /* }}} end of Blog */
 /* {{{ User Manegment */
 .prilist {
-    border-left     : dotted 1px #aaaaaa;
-    border-bottom   : dotted 1px #aaaaaa;
+    border-left     : solid 1px #aaa;
+    border-bottom   : solid 1px #aaa;
 }
 .prilist td {
-    border-right    : dotted 1px #aaaaaa;
-    border-top      : dotted 1px #aaaaaa;
+    border-right    : solid 1px #aaa;
+    border-top      : solid 1px #aaa;
     height          : 24px;
 }
 .prilist_parent td {
-    background      : #ffffff url(../images/misc/background.png);
+    background      : #fff url(../images/misc/background.png);
     padding-left    : 5px;
 }
 .prilist_sub td {
-    background-color: #ffffff;
+    background-color: #fff;
     padding-left    : 20px;
 }
 /* }}} end of User Management */
@@ -676,28 +676,32 @@ input, textarea, select {
 }
 .cp_items_box .cp_item a {
     text-decoration : none;
-    color           : #000000;
-    background-color: #ffffff;
-    border          : 1px solid #aaaaaa;
+    color           : #000;
+    background-color: #fff;
+    border          : 1px solid #aaa;
     display         : block;
     text-align      : center;
 }
 .cp_items_box .cp_item a:hover {
     text-decoration : none;
-    color           : #000000;
-    background-color: #eeeeee;
-    border          : 1px solid #aaaaaa;
+    color           : #000;
+    background-color: #eee;
+    border          : 1px solid #aaa;
     display         : block;
     text-align      : center;
 }
-.cp_items_box .cp_link a, 
-.cp_items_box .cp_link a:hover {
-    color           : #000000;
-    background-color: #ffffff;
+.cp_items_box .cp_link a {
+    color           : #000;
+    background-color: #fff;
     border          : 0px;
 }
+.cp_items_box .cp_link a:hover {
+    color           : #aaa;
+    background-color: #fff;
+    border          : 0px;    
+}
 .cp_items_box .cp_item p {
-    color           : #000000;
+    color           : #000;
     text-align      : center;
 }
 .cp_items_box .cp_item_over {
@@ -706,17 +710,17 @@ input, textarea, select {
     padding         : 5px;
 }
 .cp_items_box .cp_item_over img {
-    background-color: #ffffff;
+    background-color: #fff;
     margin          : 5px;
     padding         : 5px;
-    border          : 1px solid #aaaaaa; 
+    border          : 1px solid #aaa; 
 }
 .cp_items_box .cp_item_over a {
     text-decoration : none;
-    color           : #000000;
+    color           : #000;
 }
 .cp_items_box .cp_item_over p {
-    color           : #000000;
+    color           : #000;
     text-align      : center;
 }
 .cp_items_box .cp_spacer {
