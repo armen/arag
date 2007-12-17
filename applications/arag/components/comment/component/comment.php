@@ -21,6 +21,14 @@ class Comment extends Component
     private $referenceId;
     private $comments = Null;
 
+    // {{{ Constructor 
+    public function __construct($namespace)
+    {
+        parent::__construct($namespace);
+
+        $this->setModule();
+    }
+    // }}}
     // {{{ setReferenceId
     public function setReferenceId($referenceId)
     {
