@@ -44,13 +44,13 @@ class Entry_Controller extends Backend_Controller
     public function post_write()
     {
         $this->Blog->createEntry($this->input->post('subject'), 
-                                      $this->input->post('entry'), 
-                                      $this->input->post('extended_entry'),
-                                      $this->session->get('username'),
-                                      $this->input->post('status'),
-                                      $this->input->post('allow_comments'),
-                                      $this->input->post('requires_moderation'),
-                                      $this->input->post('category'));
+                                 $this->input->post('entry'), 
+                                 $this->input->post('extended_entry'),
+                                 $this->session->get('username'),
+                                 $this->input->post('status'),
+                                 $this->input->post('allow_comments'),
+                                 $this->input->post('requires_moderation'),
+                                 $this->input->post('category'));
 
         url::redirect('blog/backend/entry');
     }
@@ -83,14 +83,14 @@ class Entry_Controller extends Backend_Controller
     public function edit_write()
     {
         $result = $this->Blog->editEntry($this->input->post('id'),
-                                              $this->input->post('subject'), 
-                                              $this->input->post('entry', True), 
-                                              $this->input->post('extended_entry', True),
-                                              $this->session->get('username'),                                              
-                                              $this->input->post('status'),
-                                              $this->input->post('allow_comments'),
-                                              $this->input->post('requires_moderation'),
-                                              $this->input->post('category'));
+                                         $this->input->post('subject'), 
+                                         $this->input->post('entry', True), 
+                                         $this->input->post('extended_entry', True),
+                                         $this->session->get('username'),                                              
+                                         $this->input->post('status'),
+                                         $this->input->post('allow_comments'),
+                                         $this->input->post('requires_moderation'),
+                                         $this->input->post('category'));
         url::redirect('blog/backend/entry');
     }
     // }}}
