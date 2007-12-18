@@ -37,6 +37,7 @@ class Category_Model extends Model
         }
 
         return $this->db->getwhere($this->tableName, array('parent_id' => $parent_id, 'module_name' => $module))->result(false);
+
     }
     // }}}
     // {{{ getCatNumbers

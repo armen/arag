@@ -18,13 +18,14 @@ class Category extends Component
     // {{{ Properties
     
     private $module;
-    private $categories = Null;
+    private $categories       = Null;
     private $category;
-    private $level      = 0;
-    private $baseURI    = array();
+    private $level            = 0;
+    private $baseURI          = array();
     private $parentURI;
     private $emptyListMessage = "List content is Empty!";
-    private $columns    = 3;
+    private $columns          = 3;
+    private $finalURI         = false;
 
     // }}}
     // {{{ construct
@@ -51,6 +52,9 @@ class Category extends Component
             $uri         = str_replace($matches[0], '', $uri);
         }
 
+        //var_dump($uri);
+        //exit;
+
         $this->parentURI  = 'parent'.$namespace.':';
 
         $this->setURI($uri);
@@ -75,12 +79,23 @@ class Category extends Component
     }
     // }}}
     // {{{ parseURI
-    public function parseURI($uri, $id = NULL)
+    public function parseURI($uri, $id = NULL, $row = NULL)
     {
-        //$pattern = '/#(.+?)#/';
+        $pattern = '/#(.+?)#/';
 
         if (is_array($uri)) {
             $uri = implode('/', $uri);
+        }
+        
+        if (preg_match($pattern, $uri, $matches)) {
+
+            // Checking for url Variables
+            //if (is_array($row) && array_key_exists($matches[1], $row)) {
+                $uri = str_replace("$matches[0]", $row, $uri);
+
+            //} else if (is_string($row) && preg_match('/([a-zA-z_][a-zA-Z_0-9]*)=([a-zA-Z_0-9:]+);/', $row, $matches)) {
+              //  $uri = str_replace("#{$matches[1]}#", $matches[2], $uri);
+           // }
         }
 
         if ($id != NULL) {
@@ -126,7 +141,7 @@ class Category extends Component
             $parent_id = $this->level;
         }
 
-        return $this->category->getCatNumbers($module, $parent_id);
+        return $this->category->getCatNumbers($module, (integer) $parent_id);
     }
     // }}}
     // {{{ getEmptyListMessage
@@ -151,6 +166,18 @@ class Category extends Component
     public function getColumns()
     {
         return $this->columns;
+    }
+    // }}}
+    // {{{ setFinalURI
+    public function setFinalURI($uri)
+    {
+        $this->finalURI = $uri;
+    }
+    // }}}
+    // {{{ getFinalURI
+    public function getFinalURI()
+    {
+        return $this->finalURI;
     }
     // }}}
 }

@@ -6,6 +6,7 @@
 {assign var=categories value=$category->build()}
 {assign var=baseURI value=$category->getURI()}
 {assign var=columns value=$category->getColumns()}
+{assign var=uri value=$category->getFinalURI()}
 {if $category->getSubCatCount() > 0}
     {arag_block}
         <table border="0" width="100%" dir="{dir}">
@@ -15,12 +16,17 @@
                     <tr>
                 {/if}
                     <td align="{left}">
-                        {assign var=count value=$category->getSubCatCount($cat.module_name, $cat.id)}
-                        {if $count > 0}
+                        {assign var=catcount value=$category->getSubCatCount($cat.module_name, $cat.id)}
+                        {if $catcount > 0}
                             {assign var=uri value=$category->parseURI($baseURI, $cat.id)}
-                            <a href="{url_site uri=$uri}" title="{$cat.name}">{$cat.name}</a>&nbsp;({$count})
+                            <a href="{url_site uri=$uri}" title="{$cat.name}">{$cat.name}</a>&nbsp;({$catcount})
                         {else}
-                            {$cat.name}
+                            {if $uri}
+                                {assign var=href value=$category->parseURI($uri, null, $cat.id)}
+                                <a href="{$href}">{$cat.name}</a>
+                            {else}
+                                {$cat.name}
+                            {/if}
                         {/if}
                         {counter}
                     </td>
@@ -28,10 +34,11 @@
                     </tr>
                 {/if}
             {/foreach}
+            </tr>
         </table>
     {/arag_block}
 {else}
-        <div class="plist_norecords">
-            {$category->getEmptyListMessage()}
-        </div>
+    <div class="plist_norecords">
+        {$category->getEmptyListMessage()}
+    </div>
 {/if}
