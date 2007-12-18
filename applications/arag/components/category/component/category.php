@@ -1,0 +1,157 @@
+<?php
+// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:             
+// +-------------------------------------------------------------------------+
+// | Author: Sasan Rose <sasan.rose@gmail.com>                               |
+// +-------------------------------------------------------------------------+
+// $Id: category.php 432 2007-12-08 07:56:37Z sasan $
+// ---------------------------------------------------------------------------
+
+/*
+ * Class for create categories
+ * 
+ * @author  Sasan Rose <sasan.rose@gmail.com>
+ * @since   PHP 5
+ */
+
+class Category extends Component
+{
+    // {{{ Properties
+    
+    private $module;
+    private $categories = Null;
+    private $category;
+    private $level      = 0;
+    private $baseURI    = array();
+    private $parentURI;
+    private $emptyListMessage = "List content is Empty!";
+    private $columns    = 3;
+
+    // }}}
+    // {{{ construct
+    function __construct($namespace)
+    {
+        parent::__construct($namespace);
+        $this->level    = 0;
+        $this->category = Model::load('Category', 'category');
+        $this->setModule();
+
+        $Controller = Kohana::instance();
+
+        // Set default URI
+        $directory = substr(Router::$directory, strpos(Router::$directory, 'controllers/') + 12); // 12 is strlen('controllers/')
+        $uri       = Router::$module . '/' . $directory . Router::$controller . '/' . Router::$method . '/' . implode('/', Router::$arguments);
+        $uri       = rtrim($uri, '/') . '/'; // Add trailing slash
+
+        // If namespace is not empty add an underscore at the begining
+        $namespace = ($namespace) ? '_'.$namespace : $namespace;
+
+        if (preg_match('/parent'.$namespace.':([0-9]+)*\//', $uri, $matches)) {
+            // Check if page parameter is already in uri
+            $this->level = $matches[1];
+            $uri         = str_replace($matches[0], '', $uri);
+        }
+
+        $this->parentURI  = 'parent'.$namespace.':';
+
+        $this->setURI($uri);
+    }
+    // }}}
+    // {{{ setURI
+    public function setURI($uri)
+    {
+        if (is_string($uri)) {
+            $uri = explode('/', $uri);
+        }
+
+        if (is_array($uri)) {
+            $this->baseURI = $uri;
+        }
+    }
+    // }}}
+    // {{{ getURI
+    public function getURI()
+    {
+        return $this->baseURI;
+    }
+    // }}}
+    // {{{ parseURI
+    public function parseURI($uri, $id = NULL)
+    {
+        //$pattern = '/#(.+?)#/';
+
+        if (is_array($uri)) {
+            $uri = implode('/', $uri);
+        }
+
+        if ($id != NULL) {
+            $uri = $uri.$this->parentURI.$id;
+        }
+        
+        return $uri;
+    }
+    // }}}
+    // {{{ setModule
+    public function setModule($module = Null)
+    {
+        $this->module = empty($module) ? Router::$module : $module;
+    }
+    // }}}
+    // {{{ getModule
+    public function getModule()
+    {
+        return $this->module;
+    }
+    // }}}
+    // {{{ build
+    public function build()
+    {
+        $this->categories = $this->category->getCategories($this->module, $this->level, 'name');
+        return $this->categories;
+    }
+    // }}}
+    // {{{ recursiveBuild
+    public function recursiveBuild()
+    {
+
+    }
+    // }}}
+    // {{{ getDirctoriesCount
+    public function getSubCatCount($module = NULL, $parent_id = NULL)
+    {
+        if ($module == NULL) {
+            $module = $this->module;
+        }
+
+        if ($parent_id == NULL) {
+            $parent_id = $this->level;
+        }
+
+        return $this->category->getCatNumbers($module, $parent_id);
+    }
+    // }}}
+    // {{{ getEmptyListMessage
+    public function getEmptyListMessage()
+    {
+        return $this->emptyListMessage;
+    }
+    // }}}
+    // {{{ setEmptyListMessage
+    public function setEmptyListMessage($message)
+    {
+        $this->emptyListMessage = $message;
+    }
+    // }}}
+    // {{{ setColumns
+    public function setColumns($columns)
+    {
+        $this->columns = $columns;
+    }
+    // }}}
+    // {{{ getColumns
+    public function getColumns()
+    {
+        return $this->columns;
+    }
+    // }}}
+}
+?>
