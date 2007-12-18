@@ -4,16 +4,28 @@
     File: $Id$
 *}
 
-{assign var=comments value=$comment->getComments()}
+{assign var=comments value=$component->getComments()}
 
 {if count($comments)}
-    <div class="blog_comments">
+    <div class="comments">
         <h3>_("Comments")</h3>
-        {arag_block template="blank"}
-            {foreach from=$comments item=item key=key}
-                {$item->comment}
-            {/foreach}
-        {/arag_block}    
+        {foreach from=$comments item=_comment key=key}
+            <div class="comment">
+                <div class="comment_posted">
+                    {capture assign="posted"}_("#%d. %s on %s"){/capture}
+                    {capture assign="date"}{$_comment->create_date|date_format:'%A, %B %e, %Y %H:%M:%S'}{/capture}
+                    {counter assign="counter"}
+                    {if empty($_comment->homepage|smarty:nodefaults)}
+                        {$posted|sprintf:$counter:$_comment->name:$date}
+                    {else}
+                        {html_anchor uri=$_comment->homepage title=$posted|sprintf:$counter:$_comment->name:$date}
+                    {/if}
+                </div>
+                <div class="comment_body">
+                    {$_comment->comment}
+                </div>
+            </div>
+        {/foreach}
     </div>
 {/if}
 
@@ -26,27 +38,35 @@
             {asterisk message=$info_msg}
         {/arag_block}
 
-        {arag_form uri="comment/frontend/post" method="post"}
+        {arag_form uri=$component->getPostUri() method="post"}
         <table border="0" dir="{dir}" width="100%">
-        <tr>
-            <td align="{right}" width="100">{asterisk}_("Name"):</td>
-            <td><input type="text" name="name" value="{$name|smarty:nodefaults|default:null}" /></td>
-        </tr>
-        <tr>
-            <td align="{right}" width="100">_("Email"):</td>
-            <td><input type="text" name="email" value="{$email|smarty:nodefaults|default:null}" /></td>
-        </tr>
-        <tr>
-            <td align="{right}" width="100">_("Homepage"):</td>
-            <td><input type="text" name="homepage" value="{$homepage|smarty:nodefaults|default:null}" /></td>
-        </tr>
+        {if !$component->onlyComment()}
+            <tr>
+                <td align="{right}" width="100">{asterisk}_("Name"):</td>
+                <td><input type="text" name="name" value="{$name|smarty:nodefaults|default:null}" /></td>
+            </tr>
+            <tr>
+                <td align="{right}" width="100">_("Email"):</td>
+                <td><input type="text" name="email" value="{$email|smarty:nodefaults|default:null}" /></td>
+            </tr>
+            <tr>
+                <td align="{right}" width="100">_("Home page"):</td>
+                <td><input type="text" name="homepage" value="{$homepage|smarty:nodefaults|default:null}" /></td>
+            </tr>
+        {/if}
         <tr>
             <td align="{right}" width="100">{asterisk}_("Comment"):</td>
-            <td><textarea name="comment" rows="7" cols="15"></textarea></td>
+            <td><textarea name="comment" rows="7" cols="15">{$comment|smarty:nodefaults|default:null}</textarea></td>
         </tr>        
         <tr>
             <td>&nbsp;</td>
             <td>
+                {if $component->onlyComment()}
+                    <input type="hidden" name="name" value="{$name|smarty:nodefaults|default:'Anonymous'}" />
+                    <input type="hidden" name="email" value="{$email|smarty:nodefaults|default:null}" />
+                {/if}            
+                <input type="hidden" name="module" value="{$component->getModule()}" />
+                <input type="hidden" name="reference_id" value="{$component->getReferenceId()}" />
                 <input type="submit" value={quote}_("Submit"){/quote} />
                 <input type="reset" value={quote}_("Reset"){/quote} />            
             </td>

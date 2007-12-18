@@ -39,17 +39,20 @@
                 <name>email</name>
                 <type>text</type>
                 <length>255</length>
-                <notnull>true</notnull>
             </field>
             <field>
                 <name>homepage</name>
                 <type>text</type>
                 <length>255</length>
-                <notnull>true</notnull>
             </field>
             <field>
                 <name>comment</name>
                 <type>clob</type>
+            </field>
+            <field>
+                <name>verified</name>
+                <type>integer</type>
+                <length>1</length>
             </field>
             <field>
                 <name>create_date</name>

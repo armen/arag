@@ -19,14 +19,19 @@ class Comment extends Component
     
     private $module;
     private $referenceId;
+    private $postUri;
+    private $onlyComment;
     private $comments = Null;
 
+    // }}}
     // {{{ Constructor 
     public function __construct($namespace)
     {
         parent::__construct($namespace);
 
         $this->setModule();
+        $this->setPostUri();
+        $this->onlyComment(False);
     }
     // }}}
     // {{{ setReferenceId
@@ -41,6 +46,12 @@ class Comment extends Component
         $this->module = empty($module) ? Router::$module : $module;
     }
     // }}}
+    // {{{ setPostUri
+    public function setPostUri($uri = Null)
+    {
+        $this->postUri = empty($uri) ? Router::$current_uri : $uri;
+    }
+    // }}}    
     // {{{ getReferenceId
     public function getReferenceId()
     {
@@ -53,10 +64,26 @@ class Comment extends Component
         return $this->module;
     }
     // }}}
+    // {{{ getPostUri
+    public function getPostUri()
+    {
+        return $this->postUri;
+    }
+    // }}}    
     // {{{ getComments
     public function getComments()
     {
         return $this->comments;
+    }
+    // }}}
+    // {{{ onlyComment
+    public function onlyComment($onlyComment = Null)
+    {
+        if (is_bool($onlyComment)) {
+            $this->onlyComment = $onlyComment;
+        }
+        
+        return $this->onlyComment;
     }
     // }}}
     // {{{ build

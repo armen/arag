@@ -618,20 +618,19 @@ input, textarea, select {
 }
 /* end of Tabbed Block Simple }}} */
 /* {{{ Blog */
-.blog {
-    border-bottom     : 1px solid #ccc;
-}
+.blog {}
 .blog_entry {
-    border-top        : 1px solid #ccc;
-    padding           : 10px;
+    padding           : 0px;
 }
 .blog_subject {
     font-size         : 13px;
     font-weight       : bold;
+    border-bottom     : 1px solid #ccc;    
 }
 .blog_posted {
     color             : #888;
     font-size         : 9px;
+    text-align        : right;
 }
 .blog_body {}
 .blog_extended_body {}
@@ -641,6 +640,36 @@ input, textarea, select {
     color             : #888;
 }
 /* }}} end of Blog */
+/* {{{ Comment */
+.comments {
+    margin            : 20px;
+}
+.comments h3 {
+    font-size         : 13px;
+    font-weight       : bold;
+    color             : #888;
+}
+.comment {
+    margin            : 0px 0px 10px 0px;
+}
+.comment_posted {
+    color             : #888;
+    font-size         : 12px;
+    border-bottom     : 1px solid #ccc;    
+    font-weight       : bold;    
+}
+.comment_posted a {
+    color             : #888;
+    font-size         : 12px;
+    border-bottom     : 1px solid #ccc;    
+    text-decoration   : none;
+    font-weight       : bold;
+}
+.comment_body {
+    padding           : 5px;
+    color             : #888;    
+}
+/* }}} end of Comment */
 /* {{{ User Manegment */
 .prilist {
     border-left     : solid 1px #aaa;
@@ -737,11 +766,11 @@ input, textarea, select {
 /* {{{ Profiler */
 #kohana-profiler {
 	font-family     : Monaco, 'Courier New';
-	background-color: #F8FFF8;
+	background-color: #f8fff8;
 	margin-top      : 20px;
 	clear           : both;
 	padding         : 10px 10px 0;
-	border          : 1px solid #E5EFF8;
+	border          : 1px solid #e5eff8;
 }
 #kohana-profiler pre {
 	margin          : 0;
@@ -749,62 +778,63 @@ input, textarea, select {
 }
 #kohana-profiler table {
 	font-size       : 1.0em;
-	color           : #4D6171;
+	color           : #4d6171;
 	width           : 100%;
 	border-collapse : collapse;
-	border-top      : 1px solid #E5EFF8;
-	border-right    : 1px solid #E5EFF8;
-	border-left     : 1px solid #E5EFF8;
+	border-top      : 1px solid #e5eff8;
+	border-right    : 1px solid #e5eff8;
+	border-left     : 1px solid #e5eff8;
 	margin-bottom   : 10px;
 }
 #kohana-profiler th {
 	text-align      : left;
-	border-bottom   : 1px solid #E5EFF8;
-	background-color: #F9FCFE;
+	border-bottom   : 1px solid #e5eff8;
+	background-color: #f9fcfe;
 	padding         : 3px;
 	color           : #263038;
 }
 #kohana-profiler td {
-	background-color: #FFFFFF;
-	border-bottom   : 1px solid #E5EFF8;
+	background-color: #ffffff;
+	border-bottom   : 1px solid #e5eff8;
 	padding         : 3px;
 }
 #kohana-profiler .kp-altrow td {
-	background-color: #F7FBFF;
+	background-color: #f7fbff;
 }
 #kohana-profiler .kp-totalrow td {
-	background-color: #FAFAFA;
-	border-top      : 1px solid #D2DCE5;
+	background-color: #fafafa;
+	border-top      : 1px solid #d2dce5;
 	font-weight     : bold;
 }
 #kp-benchmarks th {
-	background-color: #FFE0E0;
+	background-color: #ffe0e0;
 }
 #kp-queries th {
-	background-color: #E0FFE0;
+	background-color: #e0ffe0;
 }
 #kp-postdata th {
-	background-color: #E0E0FF;
+	background-color: #e0e0ff;
 }
 #kp-sessiondata th {
-	background-color: #CCE8FB;
+	background-color: #cce8fb;
 }
 #kohana-profiler .kp-column {
 	width           : 100px;
-	border-left     : 1px solid #E5EFF8;
+	border-left     : 1px solid #e5eff8;
 	text-align      : center;
 }
 #kohana-profiler .kp-data, 
 #kohana-profiler .kp-name {
-	background-color: #FAFAFB;
+	background-color: #fafafb;
 	vertical-align  : top;
 }
 #kohana-profiler .kp-name {
 	width           : 200px;
-	border-right    : 1px solid #E5EFF8;
+	border-right    : 1px solid #e5eff8;
 }
 #kohana-profiler .kp-altrow .kp-data, 
 #kohana-profiler .kp-altrow .kp-name
 {
-	background-color: #F6F8FB;
+	background-color: #f6f8fb;
 }
+/* end of Profiler }}} */
