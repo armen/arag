@@ -29,7 +29,8 @@ function smarty_function_left($params, &$smarty)
         }
     }
 
-    $align = (Config::item('arag.i18n_language_direction') == 'rtl')?'right':'left';
+    $lang  = Config::item('gettext.language');
+    $align = (Config::item('gettext.languages.'.$lang.'.direction') == 'rtl') ? 'right' : 'left';
 
     if ($assign) {
         $smarty->assign($assign, $align);

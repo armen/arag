@@ -25,10 +25,7 @@ function smarty_function_arag_rte($params, &$smarty)
     
     $pub_url = url::base();    
     
-    // Detecting language
-    switch (Config::item('arag.i18n_language_name')) {
-        case 'fa_IR.utf8': $language = 'fa'; break;
-    }
+    $language = Config::item('gettext.language');
 
     if (Config::item('arag.fckeditor_skin') != Null) {
         $skin = Config::item('arag.fckeditor_skin');
@@ -79,7 +76,7 @@ function smarty_function_arag_rte($params, &$smarty)
     $FCKeditor->Config['ToolbarStartExpanded']     = $toolbar_expanded;
     $FCKeditor->Config['AutoDetectLanguage']       = False ;
     $FCKeditor->Config['DefaultLanguage']          = $language;
-    $FCKeditor->Config['ContentLangDirection']     = Config::item('arag.i18n_language_direction');
+    $FCKeditor->Config['ContentLangDirection']     = Config::item('gettext.languages.'.$language.'.direction') ;
     $FCKeditor->Config['DocType']                  = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" '.
                                                      '"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">';
 

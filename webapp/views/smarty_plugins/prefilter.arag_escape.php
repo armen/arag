@@ -25,7 +25,7 @@ function smarty_prefilter_arag_escape($tpl, &$smarty)
     }
 
     if (!$matched) {
-        $smarty->default_modifiers = Array("arag_escape:'" . Config::item('arag.i18n_language_charset') . "'");
+        $smarty->default_modifiers = Array("arag_escape:'utf-8'");
     }
 
     return $tpl;

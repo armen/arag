@@ -47,6 +47,18 @@ class Controller extends Controller_Core {
 
         // Set default page_title
         $this->layout->page_title = 'Arag';
+
+        // Initialize gettext
+        bindtextdomain('messages', APPPATH . 'modules/' . Router::$module . '/locale/');
+        bind_textdomain_codeset('messages', 'utf8');
+        textdomain('messages');
+
+        $lang = Config::item('gettext.language');
+        $name = Config::item('gettext.languages.'.$lang.'.name');
+
+        putenv('LANG=' . $name);
+        putenv('LANGUAGE=' . $name);
+        setlocale(LC_ALL, $name);
         
         Event::add('system.post_controller', array($this, '_display'));
     }

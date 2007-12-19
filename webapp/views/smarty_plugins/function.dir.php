@@ -29,7 +29,8 @@ function smarty_function_dir($params, &$smarty)
         }
     }
 
-    $direction = (Config::item('arag.i18n_language_direction') == 'rtl')?'rtl':'ltr';
+    $lang      = Config::item('gettext.language');
+    $direction = (Config::item('gettext.languages.'.$lang.'.direction') == 'rtl') ? 'rtl' : 'ltr';
 
     if ($assign) {
         $smarty->assign($assign, $direction);
