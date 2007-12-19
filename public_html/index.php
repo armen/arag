@@ -16,7 +16,7 @@
  *
  * This path can be absolute or relative to this file.
  */
-$kohana_application = '../applications/arag';
+$kohana_application = '../webapp';
 
 // Libraries directory
 $arag_libraries = '../libs';
@@ -68,7 +68,6 @@ define('DOCROOT', $docroot['dirname'].'/');
 define('APPPATH', str_replace('\\', '/', realpath($kohana_application)).'/');
 define('SYSPATH', str_replace('\\', '/', realpath($kohana_system)).'/');
 define('LIBSPATH', str_replace('\\', '/', realpath($arag_libraries)).'/');
-define('APPSPATH', str_replace('\\', '/', realpath('../applications')).'/');
 
 // Add LIBSPATH to include_path
 ini_set('include_path', LIBSPATH.PATH_SEPARATOR.ini_get('include_path'));
