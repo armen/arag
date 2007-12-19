@@ -1,6 +1,6 @@
 ﻿==== Global smarty plugins ====
 
-In Arag project there is several smarty plugins located at "applications/arag/views/smarty_plugins/". These plugins are loaded by default and are accessible in all smarty template files.
+In Arag project there is several smarty plugins located at "webapp/views/smarty_plugins/". These plugins are loaded by default and are accessible in all smarty template files.
 
 === Blocks ===
 
@@ -41,10 +41,10 @@ Possible templates which you can use are:
 | warning       | This is template for warning messages |
 
 
-You can find all the block templates at "applications/arag/views/arag_blocks/<template_name>.tpl" and style sheet file of all blocks is located at "public_html/styles/styles.css".
+You can find all the block templates at "webapp/views/arag_blocks/<template_name>.tpl" and style sheet file of all blocks is located at "public_html/styles/styles.css".
 
 You can simply add custom template for "arag_block" if it's needed. For more information check out one of existing templates .
-If you are interested about arag_block plugin itself, it is accessible at "applications/arag/views/smarty_plugins/block.arag_block.php"
+If you are interested about arag_block plugin itself, it is accessible at "webapp/views/smarty_plugins/block.arag_block.php"
 
 === Directions and Alignments ===
 
@@ -110,7 +110,7 @@ You can see how to use it between "head" XHTML tags in the below:
   </body>
   </html>
 
-This plugin simply includes a template file located at "applications/arag/views/arag_templates/head.tpl".
+This plugin simply includes a template file located at "webapp/views/arag_templates/head.tpl".
 
 Following example is the default "head.tpl" file for Arag project:
 

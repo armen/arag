@@ -110,7 +110,7 @@ function smarty_block_arag_tabbed_block($params, $content, &$smarty, &$repeat)
             if (file_exists(APPPATH . 'components/tabbedblock/views/' . $template . '.tpl')) {
                 $template = APPPATH . 'components/tabbedblock/views/' . $template . '.tpl';
             } else {
-                $template = current(glob(APPSPATH . '*/modules/' . Router::$module . '/views/' . $template . '.tpl'));
+                $template = APPPATH . 'modules/' . Router::$module . '/views/' . $template . '.tpl';
             }
 
             return $smarty->fetch($template);

@@ -56,7 +56,7 @@ function smarty_function_arag_category($params, &$smarty)
     if (file_exists(APPPATH . 'components/category/views/' . $template . '.tpl')) {
         $template = APPPATH . 'components/category/views/' . $template . '.tpl';
     } else {
-        $template = current(glob(APPSPATH . '*/modules/' . Router::$module . '/views' . $template . '.tpl'));
+        $template = APPPATH . 'modules/' . Router::$module . '/views/' . $template . '.tpl';
     }
 
     if (isset($category)) {

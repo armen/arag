@@ -1,6 +1,6 @@
 <?php
 
-$kohana_application = '../applications/core';
+$kohana_application = '../webapp';
 $arag_libraries     = '../libs';
 $kohana_system      = $arag_libraries . '/kohana';
 
@@ -19,7 +19,6 @@ define('DOCROOT', $docroot['dirname'].'/');
 define('APPPATH', str_replace('\\', '/', realpath($kohana_application)).'/');
 define('SYSPATH', str_replace('\\', '/', realpath($kohana_system)).'/');
 define('LIBSPATH', str_replace('\\', '/', realpath($arag_libraries)).'/');
-define('APPSPATH', str_replace('\\', '/', realpath('../applications')).'/');
 
 ini_set('include_path', LIBSPATH.PATH_SEPARATOR.ini_get('include_path'));
 

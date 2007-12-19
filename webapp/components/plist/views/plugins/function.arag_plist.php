@@ -55,7 +55,7 @@ function smarty_function_arag_plist($params, &$smarty)
     if (file_exists(APPPATH . 'components/plist/views/' . $template . '.tpl')) {
         $template = APPPATH . 'components/plist/views/' . $template . '.tpl';
     } else {
-        $template = current(glob(APPSPATH . '*/modules/' . Router::$module . '/views/' . $template . '.tpl'));
+        $template = APPPATH . 'modules/' . Router::$module . '/views/' . $template . '.tpl';
     }
 
     if (isset($plist)) {

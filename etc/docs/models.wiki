@@ -1,6 +1,6 @@
 ﻿==== Models ====
 
-Models are exactly same as what they are in Kohana, the only difference is the location of related files. In general, models are located at "applications/arag/modules/<module_name>/models/<model_name>.php".
+Models are exactly same as what they are in Kohana, the only difference is the location of related files. In general, models are located at "webapp/modules/<module_name>/models/<model_name>.php".
 
 You can load models in same way you do in Kohana but it has an additional trick:
 

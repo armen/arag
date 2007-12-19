@@ -107,10 +107,10 @@ if (isset($allModules)) {
 
     // {{{ Fetch schema file names of all enabled modules
 
-    $modulesPath = dirname(__FILE__).'/../../applications';
+    $modulesPath = dirname(__FILE__).'/../../webapp';
     $schemaFiles = Array();
 
-    foreach (glob($modulesPath . '/*/modules/*') as $path) {
+    foreach (glob($modulesPath . '/modules/*') as $path) {
         
         if (file_exists($path . '/config/module.php')) {
             include_once($path . '/config/module.php');

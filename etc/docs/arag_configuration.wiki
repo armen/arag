@@ -1,6 +1,6 @@
 ﻿==== Arag configuration files ====
 
-Arag configuration file is located at "applications/arag/configs/arag.php" which you can configure global configuration of Arag. 
+Arag configuration file is located at "webapp/configs/arag.php" which you can configure global configuration of Arag. 
 
 The is another configuration file called smarty.php which is Smarty settings, you can enable or disable Smarty integration, change security settings add filters and etc.
 

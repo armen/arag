@@ -2,9 +2,9 @@
 
 Component is a new feature implemented in Arag project which probably you are not familiar with it.
 
-components are located at "applications/arag/components" directory and has a directory structure as following:
+components are located at "webapp/components" directory and has a directory structure as following:
 
-  +-- applications/arag
+  +-- webapp
        ...
        +-- components
             +-- <component_name>
