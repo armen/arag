@@ -2,5 +2,5 @@
 
 $config = array
 (
-    'multisite/backend' => 'multisite/backend/site'
+    '([a-zA-Z]{2}/)?multisite/backend' => 'multisite/backend/site'
 );

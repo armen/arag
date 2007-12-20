@@ -2,5 +2,5 @@
 
 $config = array
 (
-    'user_profile/backend'      => 'user_profile/backend/index',
+    '([a-zA-Z]{2}/)?user_profile/backend' => 'user_profile/backend/index',
 );

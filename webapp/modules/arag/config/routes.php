@@ -2,7 +2,7 @@
 
 $config = array
 (
-    'arag' => 'arag/welcome'
+    '([a-zA-Z]{2}/)?arag' => 'arag/welcome'
 );
 
 ?>

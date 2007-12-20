@@ -14,9 +14,9 @@
  */
 $config = array
 (
-    'invalid_request' => 'core/frontend/messages/invalid_request',
-    'not_authorized'  => 'core/frontend/messages/not_authorized',
-    'core/backend'    => 'core/backend/email'
+    '([a-zA-Z]{2}/)?invalid_request' => 'core/frontend/messages/invalid_request',
+    '([a-zA-Z]{2}/)?not_authorized'  => 'core/frontend/messages/not_authorized',
+    '([a-zA-Z]{2}/)?core/backend'    => 'core/backend/email'
 );
 
 ?>

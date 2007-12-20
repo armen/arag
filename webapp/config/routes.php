@@ -14,10 +14,12 @@
  */
 $config = array
 (
-	'_allowed'       => 'a-z 0-9~%.:_-',
-	'_default'       => 'arag/welcome',
-    'login'          => 'user/frontend/login',
-    'logout'         => 'user/frontend/logout'
+    '_allowed'              => 'a-z 0-9~%.:_-',
+    '_default'              => 'arag/welcome',
+    '[a-zA-Z]{2}'           => 'arag/welcome',
+    '[a-zA-Z]{2}/(.*)'      => '$1',
+    '([a-zA-Z]{2}/)?login'  => 'user/frontend/login',
+    '([a-zA-Z]{2}/)?logout' => 'user/frontend/logout'
 );
 
 ?>

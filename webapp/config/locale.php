@@ -3,8 +3,8 @@
  * Default language locale name.
  * @see http://php.net/locales
  */
-$config['language'] = 'fa_IR';
-$config['lang']     = 'fa';
+$config['language'] = 'en_US';
+$config['lang']     = 'en';
 
 /**
  * Locale timezone. Defaults to use the server timezone.
