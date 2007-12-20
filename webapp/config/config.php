@@ -63,10 +63,10 @@ $config['extension_prefix'] = 'Arag_';
  */
 $config['include_paths'] = array
 (
-	// To enable the demo module; uncomment the following line
-	// 'modules/demo',
-	// To enable local API documentation at /kodoc/, uncomment the following line
-	// 'modules/kodoc',
+    // To enable the demo module; uncomment the following line
+    // 'modules/demo',
+    // To enable local API documentation at /kodoc/, uncomment the following line
+    // 'modules/kodoc',
 );
 
 /**
@@ -75,6 +75,6 @@ $config['include_paths'] = array
  */
 $config['autoload'] = array
 (
-	'libraries' => 'session',
-	'models'    => '',
+    'libraries' => 'session',
+    'models'    => '',
 );
