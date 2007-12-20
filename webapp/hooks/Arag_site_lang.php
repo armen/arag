@@ -15,7 +15,7 @@ function site_lang()
         // Array of allowed languages
         $locales = Config::item('locale.allowed_locales');
 
-        $lang = (preg_match('|^[a-zA-Z]{2}/|', url::current())) ? strtolower(substr(url::current(), 0, 2)) : 'xx';
+        $lang = (preg_match('|^[a-zA-Z]{2}/|', url::current() . '/')) ? strtolower(substr(url::current(), 0, 2)) : 'xx';
 
         // Invalid language is given in the URL
         if ( ! array_key_exists($lang, $locales))
