@@ -24,7 +24,7 @@ function smarty_function_arag_comment($params, &$smarty)
 
             case 'template':
                 $template = $_val;
-                $template = str_replace(Config::item('smarty.templates_ext'), '', $template);
+                $template = str_replace('.'.Config::item('smarty.templates_ext'), '', $template);
 
                 break;
 

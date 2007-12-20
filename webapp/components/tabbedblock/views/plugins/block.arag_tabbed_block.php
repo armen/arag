@@ -32,7 +32,7 @@ function smarty_block_arag_tabbed_block($params, $content, &$smarty, &$repeat)
 
                 case 'template':
                     $template = $_val;
-                    $template = str_replace(Config::item('smarty.templates_ext'), '', $template);                    
+                    $template = str_replace('.'.Config::item('smarty.templates_ext'), '', $template);                    
                     break;
                     
                 default:
