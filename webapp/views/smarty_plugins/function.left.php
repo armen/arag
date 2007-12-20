@@ -29,8 +29,8 @@ function smarty_function_left($params, &$smarty)
         }
     }
 
-    $lang  = Config::item('gettext.language');
-    $align = (Config::item('gettext.languages.'.$lang.'.direction') == 'rtl') ? 'right' : 'left';
+    $lang  = Config::item('locale.lang');
+    $align = (Config::item('locale.languages_direction.'.$lang) == 'rtl') ? 'right' : 'left';
 
     if ($assign) {
         $smarty->assign($assign, $align);

@@ -3,7 +3,7 @@
 $config = Array
 (
     'integration'           => True,        // Enable/Disable Smarty integration
-    'templates_ext'         => '.tpl',
+    'templates_ext'         => 'tpl',
     'cache_path'            => Config::item('arag.cache_path'),
     'global_templates_path' => APPPATH . 'views/',
     'debugging_ctrl'        => False,

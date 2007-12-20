@@ -53,17 +53,16 @@ class Controller extends Controller_Core {
         bind_textdomain_codeset('messages', 'utf8');
         textdomain('messages');
 
-        $lang = Config::item('gettext.language');
-        $name = Config::item('gettext.languages.'.$lang.'.name');
+        $locale = Config::item('locale.language') . '.utf8';
 
-        putenv('LANG=' . $name);
-        putenv('LANGUAGE=' . $name);
-        setlocale(LC_ALL, $name);
+        putenv('LANG=' . $locale);
+        putenv('LANGUAGE=' . $locale);
+        setlocale(LC_ALL, $locale);
         
         Event::add('system.post_controller', array($this, '_display'));
     }
     // }}}
-    // {{{ smarty_include_view
+    // {{{ _kohana_load_view
     /**
      * Fetchs a smarty template within the controller scope
      *
@@ -72,28 +71,35 @@ class Controller extends Controller_Core {
      * @param  array
      * @return string
      */
-    public function smarty_include_view($template, $vars)
+    public function _kohana_load_view($template, $vars)
     {
         if ($template == '')
             return;
+
+        if (substr(strrchr($template, '.'), 1) === Config::item('smarty.templates_ext')) {
         
-        // Assign variables to the template
-        if (is_array($vars) && count($vars) > 0) {
-            foreach ($vars as $key => $val) {
-                $this->Arag_Smarty->assign($key, $val);
+            // Assign variables to the template
+            if (is_array($vars) && count($vars) > 0) {
+                foreach ($vars as $key => $val) {
+                    $this->Arag_Smarty->assign($key, $val);
+                }
             }
+
+            // Send Kohana::instance and base url to all templates
+            $this->Arag_Smarty->assign('this', $this);
+
+            $base_url = Config::item('sites/'.APPNAME.'.core.parent_base_url', False, False) ? 
+                        Config::item('sites/'.APPNAME.'.core.parent_base_url') : 
+                        url::base();
+            $this->Arag_Smarty->assign('arag_base_url', $base_url);
+
+            // Fetch the output
+            $output = $this->Arag_Smarty->fetch($template);
+            
+        } else {
+            $output = parent::_kohana_load_view($template, $vars);
         }
 
-        // Send Kohana::instance and base url to all templates
-        $this->Arag_Smarty->assign('this', $this);
-
-        $base_url = Config::item('sites/'.APPNAME.'.core.parent_base_url', False, False) ? 
-                    Config::item('sites/'.APPNAME.'.core.parent_base_url') : 
-                    url::base();
-        $this->Arag_Smarty->assign('arag_base_url', $base_url);
-
-        // Fetch the output
-        $output = $this->Arag_Smarty->fetch($template);
 
         return $output;
     }

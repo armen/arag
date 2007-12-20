@@ -29,8 +29,8 @@ function smarty_function_dir($params, &$smarty)
         }
     }
 
-    $lang      = Config::item('gettext.language');
-    $direction = (Config::item('gettext.languages.'.$lang.'.direction') == 'rtl') ? 'rtl' : 'ltr';
+    $lang      = Config::item('locale.lang');
+    $direction = Config::item('locale.languages_direction.'.$lang); 
 
     if ($assign) {
         $smarty->assign($assign, $direction);
