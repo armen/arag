@@ -50,11 +50,14 @@ class Frontend_Controller extends Controller
         } else {
 
             // Shit, you missed!
+            
             if ($status === Users_Model::USER_NOT_FOUND) {
+
                 $error_message[] = _("Wrong Username or Password.");
+
                 if (Arag_Config::get('block_counter', 3) != 0) {
-                    $error = _("Attention!! You will be blocked if you miss more than %s% times while login!");
-                    $error_message[] = str_replace('%s%', Arag_Config::get('block_counter', 3), $error);
+                    $error_message[] = sprintf(_("Attention!! You will be blocked if you miss more than %s times while login!"), 
+                                               Arag_Config::get('block_counter', 3));
                 }
             }
 
@@ -63,18 +66,18 @@ class Frontend_Controller extends Controller
                 $block_info = $this->Users->getBlockInfo($username);
 
                 if (Arag_Config::get('block_counter', 3) != 0 && $block_info->block_counter >= Arag_Config::get('block_counter', 3)) {
+                    
                     $this->Users->blockUser($username, 1, 0, time());
-
-                    $error           = _("Attention!! Your username got blocked for %s% hours!");
-                    $error_message[] = str_replace('%s%', Arag_Config::get('block_expire', 0.5), $error);
+                    $error_message[] = sprintf(_("Attention!! Your username got blocked for %s hours!"), Arag_Config::get('block_expire', 0.5));
 
                 } else {
+                    
                     $this->Users->blockUser($username, 0, ++$block_info->block_counter);
-                    if (Arag_Config::get('block_counter', 3) != 0) {
-                        $error = _("Attention!! You will be blocked if you miss more than %s% times while login!");
-                        $error_message[] = str_replace('%s%', Arag_Config::get('block_counter', 3), $error);
-                    }
 
+                    if (Arag_Config::get('block_counter', 3) != 0) {
+                        $error_message[] = sprintf(_("Attention!! You will be blocked if you miss more than %s times while login!"), 
+                                                   Arag_Config::get('block_counter', 3));
+                    }
                 }
             }
 
@@ -83,16 +86,19 @@ class Frontend_Controller extends Controller
             }
 
             if ($status & Users_Model::USER_BLOCKED) {
-                $block_info      = $this->Users->getBlockInfo($username);
+
+                $block_info = $this->Users->getBlockInfo($username);
+
                 if ($block_info->block_date > 0) {
-                    $error           = _("This user name is blocked. Please contact site administrator for further information or wait for %h% hours and %m% minutes");
+
+                    $error           = _("This user name is blocked. Please contact site administrator for further information or wait ".
+                                         "for %s hours and %s minutes");
                     $waiting_hours   = floor((((Arag_Config::get('block_expire', 0.5) * 3600) + $block_info->block_date) - time()) / 3600);
                     $waiting_mins    = floor(((((Arag_Config::get('block_expire', 0.5) * 3600) + $block_info->block_date) - time()) % 3600) / 60);
-                    $error_message[] = str_replace(array('%h%', '%m%'), array($waiting_hours, $waiting_mins) , $error);                   
+                    $error_message[] = sprintf($error, $waiting_hours, $waiting_mins);                   
 
                 } else {
                     $error_message[] = _("This user name is blocked. Please contact site administrator for further information."); 
-
                 }
             }
 
