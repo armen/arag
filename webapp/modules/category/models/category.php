@@ -48,5 +48,21 @@ class Category_Model extends Model
         return $query->num_rows();
     }
     // }}}
+    // {{{ hasCategory
+    public function hasCategory($id)
+    {
+        $this->db->select('id');
+        $query = $this->db->getwhere($this->tableName, Array('id' => $id));
+        return (boolean) $query->num_rows();
+    }
+    // }}}
+    // {{{ getCategory
+    public function getCategory($id)
+    {
+        $this->db->select('id, parent_id, name, module_name');
+
+        return (array) $this->db->getwhere($this->tableName, array('id' => $id))->current();
+    }
+    // }}}
 }
 ?>
