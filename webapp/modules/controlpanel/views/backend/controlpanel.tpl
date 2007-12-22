@@ -13,7 +13,7 @@
                 {/if}
                 <div class="cp_item">
                     <a href="{url_site uri="`$module.module`/backend"}">
-                    <img src="{$arag_base_url|smarty:nodefaults}/images/modules/{$module.module}.png" 
+                    <img src="{$arag_base_url|smarty:nodefaults}/modpub/{$module.module}/icon_48x48.png" 
                          width="48" height="48" alt="{$module.description}" />
                     </a>
                     <p class="cp_link">
