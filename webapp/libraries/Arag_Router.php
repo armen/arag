@@ -146,8 +146,8 @@ class Router extends Router_Core {
         self::$controller = '';
 
         // First segmen is module name so ignore it
-        $rsegments          = self::$rsegments;
-        list(self::$module) = array_splice($rsegments, 0, 1);
+        $rsegments    = self::$rsegments;
+        self::$module = current(array_splice($rsegments, 0, 1));
 
         // Path to be added to as we search deeper
         $search = '/controllers';
