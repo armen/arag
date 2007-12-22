@@ -33,8 +33,12 @@ input, textarea, select {
     margin          : 0px;
     padding         : 0px;
 }
-.arag_block form table {
-    padding         : 0px 0px 0px 0px;
+.arag_block form {
+    padding         : 0px;
+    margin          : 0px 0px 10px 0px;
+}
+.arag_block table {
+    padding         : 0px;
 }
 .arag_block_content {
     background-color: #fff;
@@ -209,6 +213,10 @@ input, textarea, select {
     width           : "91%"; /* IE5.5 hack */
     padding         : 0px;
     margin          : 0px 0px 10px 0px;
+}
+.plist_form {
+    padding         : 0px;
+    margin          : 0px;
 }
 .plist caption {
     padding         : 0px;

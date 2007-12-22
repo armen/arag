@@ -21,7 +21,7 @@
 
     {if $plist->getResourceCount() > 0}
 
-        {arag_form method="post" id="plist_$namespace"}
+        {arag_form method="post" id="plist_$namespace" class="plist_form"}
             <table border="0" cellpadding="0" cellspacing="0" dir="{dir}" width="100%" class="plist" >
                 <caption dir="{dir}">&nbsp;</caption>
                 {if $plist->hasHeader() && count($columns) > 0}
