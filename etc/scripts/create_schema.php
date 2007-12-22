@@ -38,7 +38,7 @@ $args           =& $consoleGetopt->readPHPArgv();
 array_shift($args);
 
 // Get options
-$options = $consoleGetopt->getopt2($args, 'p:d:', Array('dsn=', 'prefix=', 'data-set=', 'all-modules=='));
+$options = $consoleGetopt->getopt2($args, 'p:d:m:a::', Array('dsn=', 'prefix=', 'data-set=', 'all-modules==', 'module='));
 if (PEAR::isError($options)) {
     die ($options->getMessage() . "\n" . $options->getUserInfo() . "\n");
 }
@@ -65,17 +65,22 @@ foreach ($options[0] as $option) {
             $dsn = $option[1];
             break;
 
+        case 'a':
         case '--all-modules':
-            $allModules = True;
-            break;            
+            $module = '*';
+            break;
+
+        case 'm':
+        case '--module':
+            $module = $option[1];
+            break;
     }
 }
 
 // Check for empty options and missing required options
-if (!isset($dsn) || empty($options[0]) || (!isset($allModules) && empty($options[1]))) {
+if (!isset($dsn) || empty($options[0]) || (!isset($module) && empty($options[1]))) {
     echo "Usage: ./create_schema.php --dsn=... [-p|--prefix=...] [-d|--data-set=...] schema_file.schema [schema_file.schema]...\n".
-         "       ./create_schema.php --dsn=... [-p|--prefix=...] [-d|--data-set=...] --all-modules \n\n";
-         
+         "       ./create_schema.php --dsn=... [-p|--prefix=...] [-d|--data-set=...] [[-a|--all-modules] -m|--module=...] \n\n";
     exit;
 }
 
@@ -103,14 +108,14 @@ if (PEAR::isError($manager)) {
 // }}}
 // {{{ Install schema files
 
-if (isset($allModules)) {
+if (isset($module)) {
 
     // {{{ Fetch schema file names of all enabled modules
 
     $modulesPath = dirname(__FILE__).'/../../webapp';
     $schemaFiles = Array();
 
-    foreach (glob($modulesPath . '/modules/*') as $path) {
+    foreach (glob($modulesPath . '/modules/'.$module) as $path) {
         
         if (file_exists($path . '/config/module.php')) {
             include_once($path . '/config/module.php');
