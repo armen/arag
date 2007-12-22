@@ -32,7 +32,7 @@ class Arag_Config_Core
             $value = serialize(addslashes($value));
         }        
 
-        if ($query->num_rows() == 0){
+        if (count($query) == 0){
             $db->insert(self::$tableName, Array('name' => $name, 'namespace' => $namespace, 'value' => $value));
         } else {
             $db->update(self::$tableName, Array('name' => $name, 'namespace' => $namespace, 'value' => $value), 
@@ -53,7 +53,7 @@ class Arag_Config_Core
         $db->select('value');
         $query = $db->getwhere(self::$tableName, Array('name' => $name, 'namespace' => $namespace));
 
-        if ($query->num_rows() > 0) {
+        if (count($query) > 0) {
             if (get_magic_quotes_gpc() == True) {
                 $result = unserialize(stripslashes($query->current()->value));
             } else {
