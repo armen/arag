@@ -2,12 +2,12 @@
 
 $config = array
 (
-    '([a-zA-Z]{2}/)?blog'            => 'blog/frontend',
-    '([a-zA-Z]{2}/)?blog/backend'    => 'blog/backend/entry',
-    '([a-zA-Z]{2}/)?blog/admin'      => 'blog/backend/entry',
-    '([a-zA-Z]{2}/)?blog/post'       => 'blog/backend/entry/post',
-    '([a-zA-Z]{2}/)?blog/entries'    => 'blog/backend/entry',
-    '([a-zA-Z]{2}/)?blog/categories' => 'blog/backend/categories'
+    'blog'            => 'blog/frontend',
+    'blog/backend'    => 'blog/backend/entry',
+    'blog/admin'      => 'blog/backend/entry',
+    'blog/post'       => 'blog/backend/entry/post',
+    'blog/entries'    => 'blog/backend/entry',
+    'blog/categories' => 'blog/backend/categories'
 );
 
 ?>

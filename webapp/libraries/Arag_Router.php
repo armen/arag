@@ -108,6 +108,9 @@ class Router extends Router_Core {
                     }
                 }
             }
+
+            // Check it one more time for the magic
+            self::$rsegments = isset(self::$routes[self::$rsegments]) ? self::$routes[self::$rsegments] : self::$rsegments;        
         }
 
         // Explode the segments by slashes

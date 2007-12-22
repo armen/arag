@@ -2,8 +2,8 @@
 
 $config = array
 (
-    '([a-zA-Z]{2}/)?user'              => 'user/backend/applications',
-    '([a-zA-Z]{2}/)?user/backend'      => 'user/backend/backend',
-    '([a-zA-Z]{2}/)?user/applications' => 'user/backend/applications',
-    '([a-zA-Z]{2}/)?user/application'  => 'user/backend/application',    
+    'user'              => 'user/backend/applications',
+    'user/backend'      => 'user/backend/backend',
+    'user/applications' => 'user/backend/applications',
+    'user/application'  => 'user/backend/application',    
 );

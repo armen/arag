@@ -2,5 +2,5 @@
 
 $config = array
 (
-    '([a-zA-Z]{2}/)?controlpanel' => 'controlpanel/backend/index'
+    'controlpanel' => 'controlpanel/backend/index'
 );
