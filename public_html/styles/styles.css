@@ -387,6 +387,17 @@ input, textarea, select {
     border-left     : 1px solid #ccc;    
 }
 /* end of PList }}} */
+/* {{{ category */
+.category_norecords {
+    text-align      : center;
+    padding         : 10px;
+    background-color: #eee;        
+    border-top      : 2px solid #ccc;
+    border-bottom   : 1px solid #ccc;    
+    border-right    : 1px solid #ccc;    
+    border-left     : 1px solid #ccc;    
+}
+/* end of category }}} */
 /* {{{ PList icons */
 .plist_icon {
     width           : 24px;
