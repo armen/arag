@@ -86,7 +86,7 @@ class Category extends Component
         if (is_array($uri)) {
             $uri = implode('/', $uri);
         }
-        
+
         if (preg_match($pattern, $uri, $matches)) {
 
             // Checking for url Variables
@@ -100,6 +100,7 @@ class Category extends Component
 
         if ($id != NULL) {
             $uri = $uri.$this->parentURI.$id;
+
         }
         
         return $uri;
@@ -178,6 +179,26 @@ class Category extends Component
     public function getFinalURI()
     {
         return $this->finalURI;
+    }
+    // }}}
+    // {{{ getBreadCrumb
+    public function getBreadCrumb()
+    {
+        $category     = $this->category->getCategory($this->level);
+        $has_category = $this->category->hasCategory($this->level);
+        $bread_crumb  = array();
+
+            while ($has_category) {
+                $bread_crumb[$category['id']] = $category['name'];
+
+                $has_category  = $this->category->hasCategory($category['parent_id']);
+                $category      = $this->category->getCategory($category['parent_id']);
+
+            }
+
+        $bread_crumb[0] = 'top';
+
+        return (array_reverse($bread_crumb, true));
     }
     // }}}
 }
