@@ -14,7 +14,8 @@
 
 function smarty_function_arag_comment($params, &$smarty)
 {
-    $template = 'linear';
+    $ext      = '.'.Config::item('smarty.templates_ext');
+    $template = 'linear'.$ext;
 
     foreach ($params as $_key => $_val) {
         switch ($_key) {
@@ -23,9 +24,8 @@ function smarty_function_arag_comment($params, &$smarty)
                 break;
 
             case 'template':
-                $template = $_val;
-                $template = str_replace('.'.Config::item('smarty.templates_ext'), '', $template);
-
+                $template = $_val;                
+                $template = rtrim($template, $ext).$ext;
                 break;
 
             default:
@@ -50,16 +50,10 @@ function smarty_function_arag_comment($params, &$smarty)
     // Returned comment is an array, we need first element
     $comment = $smarty->get_template_vars($name);
 
-    // Get namespace
-    $namespace = $smarty->get_template_vars($name.'_namespace');    
- 
-    if (file_exists(APPPATH . 'components/comment/views/' . $template . '.tpl')) {
-        $template = APPPATH . 'components/comment/views/' . $template . '.tpl';
-    } else {
-        $template = APPPATH . 'modules/' . Router::$module . '/views/' . $template . '.tpl';
-    }
-
     if (isset($comment)) {
+
+        // Get namespace
+        $namespace = $smarty->get_template_vars($name.'_namespace');        
         
         if ($comment->getComments() == Null) {
             $comment->build();
@@ -69,11 +63,14 @@ function smarty_function_arag_comment($params, &$smarty)
 
         $smarty->assign('component', $comment);
         $smarty->assign('namespace', $namespace);
-        $smarty->assign('comment_templates_path', APPPATH . 'components/comment/views/');
+        $smarty->assign('comment_templates_path', APPPATH . 'modules/comment/views/');
         $smarty->assign('name', $session->get('name') . ' ' . $session->get('last_name'));
         $smarty->assign('email', $session->get('email')); 
-        
-        return $smarty->fetch($template);
+
+        // Change include_once to this component and current module path
+        Config::set('core.include_paths', Array(APPPATH.'modules/'.Router::$module, APPPATH.'modules/comment'));
+
+        return $smarty->fetch(Kohana::find_file('views', $template, False, True));
     }
 
     return Null;

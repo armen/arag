@@ -14,7 +14,8 @@
 
 function smarty_function_arag_plist($params, &$smarty)
 {
-    $template = 'horizontal';
+    $ext      = '.'.Config::item('smarty.templates_ext');
+    $template = 'horizontal'.$ext;
 
     foreach ($params as $_key => $_val) {
         switch ($_key) {
@@ -23,9 +24,8 @@ function smarty_function_arag_plist($params, &$smarty)
                 break;
 
             case 'template':
-                $template = $_val;
-                $template = str_replace('.'.Config::item('smarty.templates_ext'), '', $template);
-
+                $template = $_val;                
+                $template = rtrim($template, $ext).$ext;
                 break;
 
             default:
@@ -49,22 +49,19 @@ function smarty_function_arag_plist($params, &$smarty)
     // Returned list is an array, we need first element
     $plist = $smarty->get_template_vars($name);
 
-    // Get namespace
-    $namespace = $smarty->get_template_vars($name.'_namespace');    
- 
-    if (file_exists(APPPATH . 'components/plist/views/' . $template . '.tpl')) {
-        $template = APPPATH . 'components/plist/views/' . $template . '.tpl';
-    } else {
-        $template = APPPATH . 'modules/' . Router::$module . '/views/' . $template . '.tpl';
-    }
-
     if (isset($plist)) {
+
+        // Get namespace
+        $namespace = $smarty->get_template_vars($name.'_namespace');        
 
         $smarty->assign('plist', $plist);
         $smarty->assign('namespace', $namespace);
-        $smarty->assign('plist_templates_path', APPPATH . 'components/plist/views/');
+        $smarty->assign('plist_templates_path', APPPATH . 'modules/plist/views/');
+
+        // Change include_once to this component and current module path
+        Config::set('core.include_paths', Array(APPPATH.'modules/'.Router::$module, APPPATH.'modules/plist'));        
         
-        return $smarty->fetch($template);
+        return $smarty->fetch(Kohana::find_file('views', $template, False, True));
     }
 
     return Null;

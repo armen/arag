@@ -30,8 +30,6 @@ class Loader extends Loader_Core {
     // {{{ component
     public function component($component, $namespace = Null)
     {
-        $controller = Kohana::instance();
-    
         if ($component == '') {
             return;
         }
@@ -52,31 +50,28 @@ class Loader extends Loader_Core {
 
         if (in_array($object_name, $this->components, True)) {
             return;
-        }        
+        }
+
+        $controller = Kohana::instance();        
 
         if (isset($controller->$object_name)) {
-            Kohana::show_error('Resource already exists', 
-                               'The component name you are loading is the name of a resource that is already being used: '.$name);
-        }
-    
-        if (!file_exists(APPPATH.'components/'.$component_lower.'/component/'.$path.$component_lower.EXT)) {
-            Kohana::show_error('Component not found', 'Unable to locate the component you have specified: '.$component);
-        }
-                
-        if (!class_exists('Component')) {
-            include_once(APPPATH.'libraries/Component'.EXT);
+            Kohana::show_error('Resource already exists', 'The component name you are loading is the name of a resource that is already being used: '.
+                               $name);
         }
 
-        include_once(APPPATH.'components/'.$component_lower.'/component/'.$path.$component_lower.EXT);
+        // Change include_once to module path
+        Config::set('core.include_paths', Array(APPPATH.'modules/'.$component_lower));        
+
+        include_once Kohana::find_file('component', $component_lower, True);
 
         $controller->$object_name = new $component($namespace);
 
         // Add component plugins directory to plugins_dir
-        $controller->Arag_Smarty->plugins_dir[] = APPPATH.'components/'.$component_lower.'/views/plugins';
+        $controller->Arag_Smarty->plugins_dir[] = APPPATH.'modules/'.$component_lower.'/views/plugins';
         array_unique($controller->Arag_Smarty->plugins_dir);
 
         // Add template dir to secure_dir list
-        $controller->Arag_Smarty->secure_dir[] = APPPATH.'components/'.$component_lower.'/views/';
+        $controller->Arag_Smarty->secure_dir[] = APPPATH.'modules/'.$component_lower.'/views/';
 
         // Send component to template
         if (isset($controller->$object_name)) {
@@ -86,6 +81,9 @@ class Loader extends Loader_Core {
         }
 
         $this->components[] = $object_name;        
+
+        // Reset the include_paths
+        Config::set('core.include_paths', Array(APPPATH.'modules/'.Router::$module));
     }
     // }}}
     // {{{ model

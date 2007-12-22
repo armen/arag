@@ -19,10 +19,11 @@ function smarty_block_arag_tabbed_block($params, $content, &$smarty, &$repeat)
         require_once $smarty->_get_plugin_filepath('function', 'dir');
         require_once $smarty->_get_plugin_filepath('function', 'left');
 
+        $ext      = '.'.Config::item('smarty.templates_ext');
         $dir      = smarty_function_dir(Null, $smarty);
         $left     = smarty_function_left(Null, $smarty);
         $name     = $smarty->get_template_vars('_tabbedblock');
-        $template = 'arag_tabbed_block';        
+        $template = 'arag_tabbed_block'.$ext;        
 
         foreach ($params as $_key => $_val) {
             switch ($_key) {
@@ -31,8 +32,8 @@ function smarty_block_arag_tabbed_block($params, $content, &$smarty, &$repeat)
                     break;
 
                 case 'template':
-                    $template = $_val;
-                    $template = str_replace('.'.Config::item('smarty.templates_ext'), '', $template);                    
+                    $template = $_val;                
+                    $template = rtrim($template, $ext).$ext;
                     break;
                     
                 default:
@@ -107,13 +108,10 @@ function smarty_block_arag_tabbed_block($params, $content, &$smarty, &$repeat)
             $smarty->assign('tabbedblock_selected_tab', $selectedItem);
             $smarty->assign('tabbedblock_module', Router::$module);
 
-            if (file_exists(APPPATH . 'components/tabbedblock/views/' . $template . '.tpl')) {
-                $template = APPPATH . 'components/tabbedblock/views/' . $template . '.tpl';
-            } else {
-                $template = APPPATH . 'modules/' . Router::$module . '/views/' . $template . '.tpl';
-            }
+            // Change include_once to this component and current module path
+            Config::set('core.include_paths', Array(APPPATH.'modules/'.Router::$module, APPPATH.'modules/tabbedblock'));
 
-            return $smarty->fetch($template);
+            return $smarty->fetch(Kohana::find_file('views', $template, False, True));
             
         } else {
 

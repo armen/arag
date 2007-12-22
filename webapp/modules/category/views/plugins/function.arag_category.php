@@ -14,7 +14,8 @@
 
 function smarty_function_arag_category($params, &$smarty)
 {
-    $template = 'directory';
+    $ext      = '.'.Config::item('smarty.templates_ext');
+    $template = 'directory'.$ext;
 
     foreach ($params as $_key => $_val) {
         switch ($_key) {
@@ -23,9 +24,8 @@ function smarty_function_arag_category($params, &$smarty)
                 break;
 
             case 'template':
-                $template = $_val;
-                $template = str_replace('.'.Config::item('smarty.templates_ext'), '', $template);
-
+                $template = $_val;                
+                $template = rtrim($template, $ext).$ext;            
                 break;
 
             default:
@@ -50,22 +50,19 @@ function smarty_function_arag_category($params, &$smarty)
     // Returned category is an array, we need first element
     $category = $smarty->get_template_vars($name);
 
-    // Get namespace
-    $namespace = $smarty->get_template_vars($name.'_namespace');    
- 
-    if (file_exists(APPPATH . 'components/category/views/' . $template . '.tpl')) {
-        $template = APPPATH . 'components/category/views/' . $template . '.tpl';
-    } else {
-        $template = APPPATH . 'modules/' . Router::$module . '/views/' . $template . '.tpl';
-    }
-
     if (isset($category)) {
+
+        // Get namespace
+        $namespace = $smarty->get_template_vars($name.'_namespace');    
 
         $smarty->assign('category', $category);
         $smarty->assign('namespace', $namespace);
-        $smarty->assign('category_templates_path', APPPATH . 'components/category/views/');
-        
-        return $smarty->fetch($template);
+        $smarty->assign('category_templates_path', APPPATH . 'modules/category/views/');
+
+        // Change include_once to this component and current module path
+        Config::set('core.include_paths', Array(APPPATH.'modules/'.Router::$module, APPPATH.'modules/category'));
+
+        return $smarty->fetch(Kohana::find_file('views', $template, False, True));
     }
 
     return Null;
