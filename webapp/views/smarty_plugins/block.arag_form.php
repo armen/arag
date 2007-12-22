@@ -18,6 +18,7 @@ function smarty_block_arag_form($params, $content, &$smarty)
     $uri     = Null;
     $enctype = Null;
     $id      = Null;
+    $class   = Null;
     $style   = Null;
  
     foreach ($params as $_key => $_val) {
@@ -28,6 +29,7 @@ function smarty_block_arag_form($params, $content, &$smarty)
                 break;
 
             case 'id':
+            case 'class':
             case 'enctype':
             case 'style':
                 $$_key = " {$_key}=\"" . (string)$_val . "\" ";
@@ -50,7 +52,7 @@ function smarty_block_arag_form($params, $content, &$smarty)
         $content = '<input type="hidden" name="arag_token" value="'.$session->get('arag_token').'" />'.$content;
     }
     
-    return '<form action="'.$action.'" method="'. $method.'"' . $style . $id . $enctype .'>'.$content.'</form>';
+    return '<form action="'.$action.'" method="'. $method.'"' . $style . $id . $class . $enctype .'>'.$content.'</form>';
 }
 
 ?>
