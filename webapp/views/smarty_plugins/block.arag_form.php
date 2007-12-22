@@ -44,6 +44,11 @@ function smarty_block_arag_form($params, $content, &$smarty)
     } else {
         $action = url::site($uri);
     }
+
+    if (Config::item('token.enable') && Config::item('token.type') === 'form') {
+        $session = new Session();
+        $content = '<input type="hidden" name="arag_token" value="'.$session->get('arag_token').'" />'.$content;
+    }
     
     return '<form action="'.$action.'" method="'. $method.'"' . $style . $id . $enctype .'>'.$content.'</form>';
 }
