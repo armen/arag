@@ -92,6 +92,7 @@ class Controller extends Controller_Core {
                         Config::item('sites/'.APPNAME.'.core.parent_base_url') : 
                         url::base();
             $this->Arag_Smarty->assign('arag_base_url', $base_url);
+            $this->Arag_Smarty->assign('arag_current_module', Router::$module);
 
             // Fetch the output
             $output = $this->Arag_Smarty->fetch($template);
