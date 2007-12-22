@@ -636,29 +636,6 @@ input, textarea, select {
     text-decoration   : underline;
 }
 /* end of Tabbed Block Simple }}} */
-/* {{{ Blog */
-.blog {}
-.blog_entry {
-    padding           : 0px;
-}
-.blog_subject {
-    font-size         : 13px;
-    font-weight       : bold;
-    border-bottom     : 1px solid #ccc;    
-}
-.blog_posted {
-    color             : #888;
-    font-size         : 9px;
-    text-align        : right;
-}
-.blog_body {}
-.blog_extended_body {}
-.blog_comments h3 {
-    font-size         : 13px;
-    font-weight       : bold;
-    color             : #888;
-}
-/* }}} end of Blog */
 /* {{{ Comment */
 .comments {
     margin            : 20px;
@@ -689,99 +666,6 @@ input, textarea, select {
     color             : #888;    
 }
 /* }}} end of Comment */
-/* {{{ User Manegment */
-.prilist {
-    border-left     : solid 1px #aaa;
-    border-bottom   : solid 1px #aaa;
-}
-.prilist td {
-    border-right    : solid 1px #aaa;
-    border-top      : solid 1px #aaa;
-    height          : 24px;
-}
-.prilist_parent td {
-    background      : #fff url(../images/misc/background.png);
-    padding-left    : 5px;
-}
-.prilist_sub td {
-    background-color: #fff;
-    padding-left    : 20px;
-}
-/* }}} end of User Management */
-/* {{{ ControlPanel */
-.cp_items_box {
-    width           : auto;
-    margin          : 0 auto;
-    padding         : 0;
-}
-.cp_items_box .cp_centerer {
-    width           : 550px;
-    margin          : 0 auto;
-    padding         : 0;
-}
-.cp_items_box .cp_item {
-    float           : left;
-    margin          : 0px;
-    padding         : 5px;
-    max-width       : 65px;
-}
-.cp_items_box .cp_item img {
-    margin          : 0px;
-    padding         : 5px;
-}
-.cp_items_box .cp_item a {
-    text-decoration : none;
-    color           : #000;
-    background-color: #fff;
-    border          : 1px solid #aaa;
-    display         : block;
-    text-align      : center;
-}
-.cp_items_box .cp_item a:hover {
-    text-decoration : none;
-    color           : #000;
-    background-color: #eee;
-    border          : 1px solid #aaa;
-    display         : block;
-    text-align      : center;
-}
-.cp_items_box .cp_link a {
-    color           : #000;
-    background-color: #fff;
-    border          : 0px;
-}
-.cp_items_box .cp_link a:hover {
-    color           : #aaa;
-    background-color: #fff;
-    border          : 0px;    
-}
-.cp_items_box .cp_item p {
-    color           : #000;
-    text-align      : center;
-}
-.cp_items_box .cp_item_over {
-    float           : left;
-    margin          : 5px;
-    padding         : 5px;
-}
-.cp_items_box .cp_item_over img {
-    background-color: #fff;
-    margin          : 5px;
-    padding         : 5px;
-    border          : 1px solid #aaa; 
-}
-.cp_items_box .cp_item_over a {
-    text-decoration : none;
-    color           : #000;
-}
-.cp_items_box .cp_item_over p {
-    color           : #000;
-    text-align      : center;
-}
-.cp_items_box .cp_spacer {
-    clear           : both;
-}
-/* end of ControlPanel }}} */
 /* {{{ Profiler */
 #kohana-profiler {
 	font-family     : Monaco, 'Courier New';

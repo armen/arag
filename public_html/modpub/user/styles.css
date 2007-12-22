@@ -1,0 +1,22 @@
+/*  
+    vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:             
+    File: $Id$
+*/
+
+.prilist {
+    border-left     : solid 1px #aaa;
+    border-bottom   : solid 1px #aaa;
+}
+.prilist td {
+    border-right    : solid 1px #aaa;
+    border-top      : solid 1px #aaa;
+    height          : 24px;
+}
+.prilist_parent td {
+    background      : #fff url(../images/misc/background.png);
+    padding-left    : 5px;
+}
+.prilist_sub td {
+    background-color: #fff;
+    padding-left    : 20px;
+}

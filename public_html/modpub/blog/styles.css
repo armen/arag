@@ -1,0 +1,26 @@
+/*  
+    vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:             
+    File: $Id$
+*/
+
+.blog {}
+.blog_entry {
+    padding           : 0px;
+}
+.blog_subject {
+    font-size         : 13px;
+    font-weight       : bold;
+    border-bottom     : 1px solid #ccc;    
+}
+.blog_posted {
+    color             : #888;
+    font-size         : 9px;
+    text-align        : right;
+}
+.blog_body {}
+.blog_extended_body {}
+.blog_comments h3 {
+    font-size         : 13px;
+    font-weight       : bold;
+    color             : #888;
+}

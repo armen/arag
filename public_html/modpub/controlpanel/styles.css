@@ -1,0 +1,77 @@
+/*  
+    vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:             
+    File: $Id: styles.css 493 2007-12-22 11:05:54Z armen $
+*/
+
+.cp_items_box {
+    width           : auto;
+    margin          : 0 auto;
+    padding         : 0;
+}
+.cp_items_box .cp_centerer {
+    width           : 550px;
+    margin          : 0 auto;
+    padding         : 0;
+}
+.cp_items_box .cp_item {
+    float           : left;
+    margin          : 0px;
+    padding         : 5px;
+    max-width       : 65px;
+}
+.cp_items_box .cp_item img {
+    margin          : 0px;
+    padding         : 5px;
+}
+.cp_items_box .cp_item a {
+    text-decoration : none;
+    color           : #000;
+    background-color: #fff;
+    border          : 1px solid #aaa;
+    display         : block;
+    text-align      : center;
+}
+.cp_items_box .cp_item a:hover {
+    text-decoration : none;
+    color           : #000;
+    background-color: #eee;
+    border          : 1px solid #aaa;
+    display         : block;
+    text-align      : center;
+}
+.cp_items_box .cp_link a {
+    color           : #000;
+    background-color: #fff;
+    border          : 0px;
+}
+.cp_items_box .cp_link a:hover {
+    color           : #aaa;
+    background-color: #fff;
+    border          : 0px;    
+}
+.cp_items_box .cp_item p {
+    color           : #000;
+    text-align      : center;
+}
+.cp_items_box .cp_item_over {
+    float           : left;
+    margin          : 5px;
+    padding         : 5px;
+}
+.cp_items_box .cp_item_over img {
+    background-color: #fff;
+    margin          : 5px;
+    padding         : 5px;
+    border          : 1px solid #aaa; 
+}
+.cp_items_box .cp_item_over a {
+    text-decoration : none;
+    color           : #000;
+}
+.cp_items_box .cp_item_over p {
+    color           : #000;
+    text-align      : center;
+}
+.cp_items_box .cp_spacer {
+    clear           : both;
+}
