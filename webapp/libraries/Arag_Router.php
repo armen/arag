@@ -57,12 +57,17 @@ class Router extends Router_Core {
         }
 
         // Use the default route when no segments exist
+        $default_route = FALSE;
+
         if (self::$current_uri == '' OR self::$current_uri == '/') {
 
             self::$current_uri = self::$routes['_default'];
             $default_route = TRUE;
-        } else {
-            $default_route = FALSE;
+        }
+
+        if ( ! empty($_SERVER['QUERY_STRING'])) {
+            // Set the query string to the current query string
+            self::$query_string = '?'.trim($_SERVER['QUERY_STRING'], '&');
         }
 
         // At this point, set the segments, rsegments, and current URI
@@ -94,11 +99,11 @@ class Router extends Router_Core {
                     );
 
                     // Does this route match the current URI?
-                    if (preg_match('!^'.$key.'$!u', self::$segments)) {
+                    if (preg_match('#^'.$key.'$#u', self::$segments)) {
 
                         // If the regex contains a valid callback, we'll use it
                         if (strpos($val, '$') !== FALSE AND strpos($key, '(') !== FALSE) {
-                            self::$rsegments = preg_replace('!^'.$key.'$!u', $val, self::$segments);
+                            self::$rsegments = preg_replace('#^'.$key.'$#u', $val, self::$segments);
                         } else {
                             self::$rsegments = $val;
                         }
