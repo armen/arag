@@ -99,7 +99,7 @@ class Loader extends Loader_Core {
         }
 
         // Change include_once to module path
-        Config::set('core.include_paths', Array(APPPATH.'modules/'.$module));
+        Config::set('core.include_paths', array_unique(array_merge(Config::include_paths(), Array(APPPATH.'modules/'.$module))));
 
         if (strpos($name, '/') !== FALSE) {
             // Handle models in subdirectories
@@ -111,9 +111,6 @@ class Loader extends Loader_Core {
 
         // Load the model
         $model = new $class();
-
-        // Reset the include_paths
-        Config::set('core.include_paths', Array(APPPATH.'modules/'.Router::$module));
 
         if ($alias === TRUE)
             return $model;
