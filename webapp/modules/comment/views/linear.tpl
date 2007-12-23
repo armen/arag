@@ -55,7 +55,7 @@
             </tr>
         {/if}
         <tr>
-            <td align="{right}" width="100">{asterisk}_("Comment"):</td>
+            <td align="{right}" width="100">_("Comment"){asterisk}:</td>
             <td><textarea name="comment" rows="7" cols="15">{$comment|smarty:nodefaults|default:null}</textarea></td>
         </tr>        
         <tr>
