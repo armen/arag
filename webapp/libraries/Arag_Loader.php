@@ -60,7 +60,7 @@ class Loader extends Loader_Core {
         }
 
         // Change include_once to module path
-        Config::set('core.include_paths', Array(APPPATH.'modules/'.$component_lower));        
+        Config::set('core.include_paths', array_unique(array_merge(Config::include_paths(), Array(APPPATH.'modules/'.$component_lower))));
 
         include_once Kohana::find_file('component', $component_lower, True);
 
@@ -81,9 +81,6 @@ class Loader extends Loader_Core {
         }
 
         $this->components[] = $object_name;        
-
-        // Reset the include_paths
-        Config::set('core.include_paths', Array(APPPATH.'modules/'.Router::$module));
     }
     // }}}
     // {{{ model

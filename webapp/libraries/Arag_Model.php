@@ -41,14 +41,14 @@ class Model extends Model_Core {
             $module = Router::$module;
         }
 
+        // Save old include paths
+        $old_include_paths = Config::include_paths();
+
         // Change include_once to module path
-        Config::set('core.include_paths', Array(APPPATH.'modules/'.$module));
+        Config::set('core.include_paths', array_unique(array_merge($old_include_paths, Array(APPPATH.'modules/'.$module))));
 
         $model = ucfirst(strtolower($model)).'_Model';
         $model = new $model();
-
-        // Reset the include_paths
-        Config::set('core.include_paths', Array(APPPATH.'modules/'.Router::$module));
 
         return $model;
     }
