@@ -42,7 +42,7 @@
         <table border="0" dir="{dir}" width="100%">
         {if !$component->onlyComment()}
             <tr>
-                <td align="{right}" width="100">{asterisk}_("Name"):</td>
+                <td align="{right}" width="100">_("Name"):{asterisk}</td>
                 <td><input type="text" name="name" value="{$name|smarty:nodefaults|default:null}" /></td>
             </tr>
             <tr>
