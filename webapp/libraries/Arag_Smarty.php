@@ -19,7 +19,7 @@ class Arag_Smarty_Core extends Smarty {
         $this->cache_dir      = Config::item('smarty.cache_path') . 'smarty_cache/';
         $this->compile_dir    = Config::item('smarty.cache_path') . 'smarty_compile/';
         $this->config_dir     = Config::item('smarty.global_templates_path') . 'smarty_configs/';
-        $this->plugins_dir[]  = Config::item('smarty.global_templates_path') . 'smarty_plugins/';
+        $this->plugins_dir    = array_merge($this->plugins_dir, Config::item('smarty.plugins_paths'));
         $this->debug_tpl      = Config::item('smarty.global_templates_path') . 'arag_debug.tpl';
         $this->debugging_ctrl = Config::item('smarty.debugging_ctrl');
         $this->debugging      = Config::item('smarty.debugging');
@@ -50,13 +50,6 @@ class Arag_Smarty_Core extends Smarty {
         $this->autoload_filters = Array('pre'    => Config::item('smarty.pre_filters'),
                                         'post'   => Config::item('smarty.post_filters'),
                                         'output' => Config::item('smarty.output_filters'));
-
-        // Add all helpers to plugins_dir
-        $helpers = glob(APPPATH . 'helpers/*', GLOB_ONLYDIR | GLOB_MARK);
-
-        foreach ($helpers as $helper) {
-            $this->plugins_dir[] = $helper;
-        }
     }
     // }}}
     // {{{ checkDirectory

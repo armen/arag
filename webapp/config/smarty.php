@@ -50,4 +50,10 @@ $config = Array
     'escape_exclude_list'   => Array
     (
     ),
+    'plugins_paths'         => Array
+    (
+        APPPATH.'views/smarty_plugins/',
+        APPPATH.'helpers/html/',
+        APPPATH.'helpers/url/'
+    )
 );
