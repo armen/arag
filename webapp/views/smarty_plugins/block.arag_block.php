@@ -33,16 +33,9 @@ function smarty_block_arag_block($params, $content, &$smarty)
     if (!isset($title)) { $title = Null; }
     if (!isset($align)) { $align = ''; }
 
-    // Find template location  
+    // Find template location 
+    $template = Kohana::find_file('views', 'arag_blocks/' . $template . '.tpl', True, True);
 
-    if (is_readable(Config::item('smarty.global_templates_path') . 'arag_blocks/' . $template . '.tpl')) {
-        $template = Config::item('smarty.global_templates_path') . 'arag_blocks/' . $template . '.tpl';
-    
-    } else {
-        // I can't find it
-        $smarty->trigger_error("arag_block: unreachable template file '$template'");
-    }
-    
     // Set alignment
     if (($align == 'right' || $align == 'left') && !isset($dir)) {
         include_once $smarty->_get_plugin_filepath('function', $align);
