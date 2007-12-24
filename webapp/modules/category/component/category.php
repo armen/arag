@@ -52,9 +52,6 @@ class Category extends Component
             $uri         = str_replace($matches[0], '', $uri);
         }
 
-        //var_dump($uri);
-        //exit;
-
         $this->parentURI  = 'parent'.$namespace.':';
 
         $this->setURI($uri);
