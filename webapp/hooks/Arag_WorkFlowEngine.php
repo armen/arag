@@ -1,9 +1,9 @@
 <?php defined('SYSPATH') or die('No direct script access.');
 
-Event::add('workflow.initialize', array('WorkFlowEngine', 'initialize'));
-Event::add('workflow.route', array('WorkFlowEngine', 'route'));
-Event::add('workflow.resume', array('WorkFlowEngine', 'resume'));
-Event::add('workflow.finalize', array('WorkFlowEngine', 'finalize'));
+Event::add('workflow.initialize', array('Arag_WorkFlowEngine', 'initialize'));
+Event::add('workflow.route', array('Arag_WorkFlowEngine', 'route'));
+Event::add('workflow.resume', array('Arag_WorkFlowEngine', 'resume'));
+Event::add('workflow.finalize', array('Arag_WorkFlowEngine', 'finalize'));
 
 /**
  * Arag
@@ -21,12 +21,12 @@ Event::add('workflow.finalize', array('WorkFlowEngine', 'finalize'));
  *
  * Loads views and files
  *
- * @package     WorkFlowEngine
+ * @package     Arag_WorkFlowEngine
  * @subpackage  Hooks
  * @author      Armen Baghumian
  * @category    Hook
  */
-class WorkFlowEngine extends WorkFlow {
+class Arag_WorkFlowEngine extends WorkFlow {
 
     // {{{ initialize
     public static function initialize()
