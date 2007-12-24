@@ -125,9 +125,8 @@ class Privileges_Model extends Model
     // {{{ hasLabel
     public function hasLabel($id)
     {
-        $this->db->select('id');
-        $query = $this->db->getwhere($this->tableNamePrivileges, Array('id' => $id)); 
-        return (boolean)$query->num_rows();
+        $query = $this->db->select('count(id) as count')->getwhere($this->tableNamePrivileges, Array('id' => $id))->current(); 
+        return (boolean)$result->count;
     }
     // }}}
     // {{{ deletePrivileges
@@ -192,7 +191,7 @@ class Privileges_Model extends Model
     {
         $this->db->select('label');
         $query = $this->db->getwhere($this->tableNamePrivileges, array('privilege' => $privilege));
-        if ((boolean) $query->num_rows()) {
+        if ((boolean) count($query)) {
             return $query->result();
         }
     }

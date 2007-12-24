@@ -59,9 +59,8 @@ class Applications_Model extends Model
     // {{{ hasApp
     public function hasApp($name)
     {
-        $this->db->select('name');
-        $query = $this->db->getwhere($this->tableNameApps, Array('name' => $name)); 
-        return (boolean)$query->num_rows();
+        $result = $this->db->select('count(name) as count')->getwhere($this->tableNameApps, Array('name' => $name))->current(); 
+        return (boolean) $result->count;
     }
     // }}}
     // {{{ addApp

@@ -57,9 +57,8 @@ class UserProfile_Model extends Model
     // {{{ hasUserName
     public function hasUserName($username)
     {
-        $this->db->select('username');
-        $query = $this->db->getwhere($this->tableNameProfiles, Array('username' => $username)); 
-        return (boolean)$query->num_rows();
+        $result = $this->db->select('count(username) as count')->getwhere($this->tableNameProfiles, Array('username' => $username))->current(); 
+        return (boolean) $result->count;
     }
     // }}}
     // {{{ getProfile

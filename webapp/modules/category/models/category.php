@@ -43,17 +43,15 @@ class Category_Model extends Model
     // {{{ getCatNumbers
     public function getCatNumbers($module, $parent_id)
     {
-        $this->db->select('id');
-        $query = $this->db->getwhere($this->tableName, Array('parent_id' => $parent_id, 'module_name' => $module));
-        return $query->num_rows();
+        $result = $this->db->select('count(id) as count')->getwhere($this->tableName, Array('parent_id' => $parent_id, 'module_name' => $module))->current();
+        return $result->count;
     }
     // }}}
     // {{{ hasCategory
     public function hasCategory($id)
     {
-        $this->db->select('id');
-        $query = $this->db->getwhere($this->tableName, Array('id' => $id));
-        return (boolean) $query->num_rows();
+        $result = $this->db->select('count(id) as count')->getwhere($this->tableName, Array('id' => $id))->current();
+        return (boolean) $result->count;
     }
     // }}}
     // {{{ getCategory

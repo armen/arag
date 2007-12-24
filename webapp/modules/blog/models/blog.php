@@ -90,15 +90,13 @@ class Blog_Model extends Model
     // {{{ hasEntry
     public function hasEntry($id, $published = false)
     {
-        $this->db->select('id');
-
         if ($published) {
-            $query = $this->db->getwhere($this->tableName, Array('id' => $id, 'published' => '1'));
+            $result = $this->db->select('count(id) as count')->getwhere($this->tableName, Array('id' => $id, 'published' => '1'))->current();
         } else {
-            $query = $this->db->getwhere($this->tableName, Array('id' => $id));        
+            $result = $this->db->select('count(id) as count')->getwhere($this->tableName, Array('id' => $id))->current();        
         }
 
-        return (boolean)$query->num_rows();
+        return (boolean)$result->count;
     }
     // }}}
     // {{{ getEntrySubject

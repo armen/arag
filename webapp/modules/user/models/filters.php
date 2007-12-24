@@ -134,9 +134,8 @@ class Filters_Model extends Model
     // {{{ hasApp
     public function hasApp($appname)
     {
-        $this->db->select('appname');
-        $query = $this->db->getwhere($this->tableNameFilters, Array('appname' => $appname)); 
-        return (boolean)$query->num_rows();
+        $result = $this->db->select('count(appname) as count')->getwhere($this->tableNameFilters, Array('appname' => $appname))->current; 
+        return (boolean)$result->count;
     }
     // }}}
     // {{{ deleteFilters

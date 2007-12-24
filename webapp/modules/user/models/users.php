@@ -39,7 +39,7 @@ class Users_Model extends Model
         $user  = $query->current();
 
         // Don't believe the truth! double check it ;)
-        if ($query->num_rows() == 1 && $username === $user->username) {
+        if (count($query) == 1 && $username === $user->username) {
             
             $this->db->select('username, password, verified, blocked, block_date');
             $this->db->where('username', $username);           
@@ -50,7 +50,7 @@ class Users_Model extends Model
 
             $status = self::USER_OK;           
 
-            if ($query->num_rows() != 1 || sha1($password) !== $user->password) {
+            if (count($query) != 1 || sha1($password) !== $user->password) {
                 $status |= self::USER_INCORRECT_PASS;
                 $status &= ~self::USER_OK;
             } else {
@@ -87,7 +87,7 @@ class Users_Model extends Model
         $query = $this->db->get($this->tableNameUsers); 
         $user  = $query->current();
 
-        if ($query->num_rows() == 1 && $username === $user->username) {
+        if (count($query) == 1 && $username === $user->username) {
 
             $this->db->select('username, password, verify_string, blocked, block_date');
             $this->db->where('username', $username);
@@ -103,7 +103,7 @@ class Users_Model extends Model
 
             $status = self::USER_OK;    
 
-            if ($query->num_rows() != 1 || sha1($password) !== $user->password || $uri !== $user->verify_string) {
+            if (count($query) != 1 || sha1($password) !== $user->password || $uri !== $user->verify_string) {
                 $status |= self::USER_INCORRECT_PASS;
                 $status &= ~self::USER_OK;
             } else if ($user->blocked) {
@@ -278,17 +278,16 @@ class Users_Model extends Model
     public function hasUserName($username, $appname = NULL)
     {
         if ($appname == NULL) {
-            $this->db->select('username');
-            $query = $this->db->getwhere($this->tableNameUsers, Array('username' => $username)); 
-            return (boolean)$query->num_rows();
+            $result = $this->db->select('count(username) as count')->getwhere($this->tableNameUsers, Array('username' => $username))->current(); 
+            return (boolean)$result->count;
         } else {
-            $this->db->select('username');
+            $this->db->select('count(username) as count');
             $this->db->from($this->tableNameUsers);
             $this->db->join($this->tableNameGroups, $this->tableNameGroups.".id = ".$this->tableNameUsers.".group_id");           
             $this->db->where('username', $username);
             $this->db->where('appname', $appname);
-            $query = $this->db->get();
-            return (boolean)$query->num_rows();
+            $result = $this->db->get()->current();
+            return (boolean)$result->count;
         }
     }
     // }}}
@@ -361,7 +360,7 @@ class Users_Model extends Model
         $user['status'] = self::USER_OK;
 
         // Don't believe the truth! double check it ;)
-        if ($query->num_rows() != 1 || $email !== $user['email']) {
+        if (count($query) != 1 || $email !== $user['email']) {
             $user['status'] = self::USER_NOT_FOUND;
         }
 
@@ -371,12 +370,11 @@ class Users_Model extends Model
     // {{{ hasUri
     public function hasUri($verify_uri, $verified = 0)
     {
-        $this->db->select('verify_string');
-        $query = $this->db->getwhere($this->tableNameUsers, Array(
-                                                                  'verify_string' => $verify_uri,
-                                                                  'verified'      => $verified
-                                                                 )); 
-        return (boolean)$query->num_rows();
+        $result = $this->db->select('count(verify_string) as count')->getwhere($this->tableNameUsers, Array(
+                                                                                                            'verify_string' => $verify_uri,
+                                                                                                            'verified'      => $verified
+                                                                                                           ))->current(); 
+        return (boolean)$result->count;
     }
     // }}}
     // {{{ changePassword
