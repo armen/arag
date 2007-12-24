@@ -4,7 +4,7 @@ There are several libraries in Arag project which each of them extends some libr
 
 Currently there are several libraries in Arags project listed below:
 
-^ Library            ^ Extends      ^
+^ Library         ^ Extends      ^
 | Arag_Controller | Controller   |
 | Arag_Loader     | Loader       |
 | Arag_Model      | Model        |
