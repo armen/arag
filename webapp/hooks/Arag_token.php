@@ -14,7 +14,7 @@ function arag_token()
         $old_token  = $session->get_once('arag_token');
         $user_token = $input->post('arag_token');
 
-        if ($old_token !== $user_token && count($input->post())) {
+        if (!empty($old_token) && count($input->post()) && $old_token !== $user_token) {
             url::redirect('invalid_request');
         }
 
