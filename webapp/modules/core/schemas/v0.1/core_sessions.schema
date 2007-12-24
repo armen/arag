@@ -32,7 +32,7 @@
                 <unsigned>1</unsigned>
             </field>
             <index>
-                <name>primary</name>
+                <name>session_primary</name>
                 <primary>true</primary>
                 <field>
                     <name>session_id</name>

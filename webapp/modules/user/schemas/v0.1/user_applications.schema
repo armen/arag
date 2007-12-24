@@ -38,7 +38,7 @@
                 <length>255</length>                
             </field>
             <index>
-                <name>primary</name>
+                <name>user_application_primary</name>
                 <primary>true</primary>
                 <field>
                     <name>name</name>

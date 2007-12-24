@@ -33,7 +33,7 @@
                 <type>clob</type>
             </field>
             <index>
-                <name>primary</name>
+                <name>user_filters_primary</name>
                 <primary>true</primary>
                 <field>
                     <name>appname</name>

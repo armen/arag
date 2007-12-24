@@ -85,7 +85,7 @@
                 <type>integer</type>
             </field>
             <index>
-                <name>primary</name>
+                <name>user_users_primary</name>
                 <primary>true</primary>
                 <field>
                     <name>username</name>
