@@ -108,6 +108,11 @@ class Controller extends Controller_Core {
     // {{{ _remap
     function _remap($method, $arguments)
     {
+        if (substr($method, 0, 1) == '_') {
+            // The method is protected so just call 404
+            Event::run('system.404');
+        }
+
         // Set the method and arguments of Router
         Router::$method    = $method;
         Router::$arguments = $arguments;
@@ -160,9 +165,17 @@ class Controller extends Controller_Core {
 
         // Is method exists?
         $method = method_exists($this, $method) ? $method : (method_exists($this, $alt_method) ? $alt_method : False);
-        
-        if ($method == False) {
-            Event::run('system.404');
+
+        if ($method == False) {            
+            // Thene is no method try to find _default method
+            if (method_exists($this, '_default')) {
+                
+                $this->_default(Router::$method, Router::$arguments);
+                return;
+
+            } else {
+                Event::run('system.404');
+            }
         }
 
         if (empty($arguments)) {
