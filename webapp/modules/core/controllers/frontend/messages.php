@@ -25,6 +25,14 @@ class Messages_Controller extends Controller
         $this->layout->content->page_title = _("Not Authorized!");
     }
     // }}}
+    // {{{ page_not_found
+    public function page_not_found()
+    {
+        $this->layout->content = new View('messages/page_not_found');
+
+        $this->layout->content->page_title = _("Page Not Found!");        
+    }
+    // }}}
 }
 
 ?>
