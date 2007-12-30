@@ -59,7 +59,7 @@ function smarty_function_arag_plist($params, &$smarty)
         $smarty->assign('plist_templates_path', APPPATH . 'modules/plist/views/');
 
         // Change include_once to this component and current module path
-        Config::set('core.include_paths', array_unique(array_merge(Config::include_paths(), Array(APPPATH.'modules/plist'))));
+        Config::set('core.modules', array_unique(array_merge(Config::include_paths(), Array(APPPATH.'modules/plist'))));
         
         return $smarty->fetch(Kohana::find_file('views', $template, False, True));
     }

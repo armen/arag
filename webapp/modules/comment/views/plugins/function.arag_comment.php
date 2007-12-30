@@ -68,7 +68,7 @@ function smarty_function_arag_comment($params, &$smarty)
         $smarty->assign('email', $session->get('email')); 
 
         // Change include_once to this component and current module path
-        Config::set('core.include_paths', array_unique(array_merge(Config::include_paths(), Array(APPPATH.'modules/comment'))));
+        Config::set('core.modules', array_unique(array_merge(Config::include_paths(), Array(APPPATH.'modules/comment'))));
 
         return $smarty->fetch(Kohana::find_file('views', $template, False, True));
     }

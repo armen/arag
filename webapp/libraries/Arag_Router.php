@@ -47,7 +47,7 @@ class Router extends Router_Core {
         $old_include_paths = Config::include_paths();
         $include_paths     = array_unique(array_merge($old_include_paths, glob(APPPATH.'modules/*', GLOB_ONLYDIR)));
 
-        Config::set('core.include_paths', $include_paths);
+        Config::set('core.modules', $include_paths);
 
         self::$routes = Config::item('routes');
 
@@ -154,7 +154,7 @@ class Router extends Router_Core {
 
         $include_paths = array_unique(array_merge($old_include_paths, Array(APPPATH.'modules/'.self::$module)));
 
-        Config::set('core.include_paths', $include_paths);
+        Config::set('core.modules', $include_paths);
 
         // Use the rsegments to find the controller
         foreach($rsegments as $key => $segment) {

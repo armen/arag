@@ -60,7 +60,7 @@ class Loader extends Loader_Core {
         }
 
         // Change include_once to module path
-        Config::set('core.include_paths', array_unique(array_merge(Config::include_paths(), Array(APPPATH.'modules/'.$component_lower))));
+        Config::set('core.modules', array_unique(array_merge(Config::include_paths(), Array(APPPATH.'modules/'.$component_lower))));
 
         include_once Kohana::find_file('component', $component_lower, True);
 
@@ -99,7 +99,7 @@ class Loader extends Loader_Core {
         }
 
         // Change include_once to module path
-        Config::set('core.include_paths', array_unique(array_merge(Config::include_paths(), Array(APPPATH.'modules/'.$module))));
+        Config::set('core.modules', array_unique(array_merge(Config::include_paths(), Array(APPPATH.'modules/'.$module))));
 
         if (strpos($name, '/') !== FALSE) {
             // Handle models in subdirectories
