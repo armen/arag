@@ -33,7 +33,7 @@ class Backend_Controller extends Controller
         $this->layout->page_title = 'User Profile';
 
         // Get the appname
-        $this->username = $this->session->get('username');
+        $this->username = $this->session->get('user.username');
 
         // Global tabbedbock
         $this->load->component('TabbedBlock', 'global_tabs');

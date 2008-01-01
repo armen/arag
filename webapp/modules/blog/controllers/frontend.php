@@ -68,7 +68,7 @@ class Frontend_Controller extends Controller
 
         $this->Comment->createComment('blog', 
                                       $entryId,
-                                      $this->session->get('username'),
+                                      $this->session->get('user.username'),
                                       $this->input->post('comment'),
                                       0,
                                       0,

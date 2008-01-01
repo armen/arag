@@ -7,7 +7,7 @@ class Welcome_Controller extends Controller
     {
         $session = new Session;
 
-        if ($session->get('authenticated')) {
+        if ($session->get('user.authenticated')) {
             $this->layout = 'arag_templates/backend_layout';
         } else {
             $this->layout = 'arag_templates/frontend_layout';

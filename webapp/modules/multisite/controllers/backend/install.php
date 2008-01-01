@@ -57,7 +57,7 @@ class Install_Controller extends Backend_Controller
         $appname    = $this->input->post('appname', true);
         $email      = $this->input->post('email', true);
         $modules    = $this->input->post('modules', true);
-        $author     = $this->session->get('username');
+        $author     = $this->session->get('user.username');
         $anonypri   = serialize(Arag_Config::get('anonypri', NULL));
         $adminpri   = serialize(Arag_Config::get('adminpri', NULL));
         $verify_uri = $this->MultiSite->generateVerifyUri(10);

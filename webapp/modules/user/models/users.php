@@ -123,7 +123,7 @@ class Users_Model extends Model
     // {{{ & getUser
     public function & getUser($username)
     {
-        $this->db->select('appname, '.$this->tableNameGroups.'.name as group_name, username, privileges, redirect,'.
+        $this->db->select('appname, '.$this->tableNameGroups.'.name as groupname, username, privileges, redirect,'.
                           $this->tableNameUsers.'.name as name, lastname, email, group_id');
         $this->db->from($this->tableNameUsers);
         $this->db->join($this->tableNameGroups, $this->tableNameGroups.'.id = '.$this->tableNameUsers.'.group_id');
@@ -150,9 +150,9 @@ class Users_Model extends Model
         $groups    = Model::load('Groups', 'user');
         $anonymous = $groups->getAnonymousGroup($appname);
 
-        $anonymous['groupname']  = $anonymous['name'];
-        $anonymous['username']   = $anonymous['name'];
-        $anonymous['name']       = ucfirst($anonymous['name']);
+        $anonymous['groupname'] = $anonymous['name'];
+        $anonymous['username']  = $anonymous['name'];
+        $anonymous['name']      = ucfirst($anonymous['name']);
 
         return $anonymous;
     }

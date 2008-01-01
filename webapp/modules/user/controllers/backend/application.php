@@ -166,10 +166,10 @@ class Application_Controller extends Backend_Controller
         if ($this->input->post('submit')) {
             if ($flag) {
                 $application = $this->input->post('application');
-                $this->Groups->deleteGroups($objects, $this->session->get('username'));
+                $this->Groups->deleteGroups($objects, $this->session->get('user.username'));
                 url::redirect('user/backend/application/index/');
             } else {
-                $this->Users->deleteUsers($objects, NULL, $this->session->get('username'));
+                $this->Users->deleteUsers($objects, NULL, $this->session->get('user.username'));
                 url::redirect('user/backend/application/all_users');
             }
         } else {

@@ -64,8 +64,8 @@ function smarty_function_arag_comment($params, &$smarty)
         $smarty->assign('component', $comment);
         $smarty->assign('namespace', $namespace);
         $smarty->assign('comment_templates_path', APPPATH . 'modules/comment/views/');
-        $smarty->assign('name', $session->get('name') . ' ' . $session->get('last_name'));
-        $smarty->assign('email', $session->get('email')); 
+        $smarty->assign('name', $session->get('user.name') . ' ' . $session->get('user.last_name'));
+        $smarty->assign('email', $session->get('user.email')); 
 
         // Change include_once to this component and current module path
         Config::set('core.modules', array_unique(array_merge(Config::include_paths(), Array(APPPATH.'modules/comment'))));

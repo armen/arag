@@ -32,7 +32,7 @@ class Backend_Controller extends Controller
         $this->layout->page_title = 'User Management';
 
         // Get the appname
-        $this->appname = $this->session->get('appname');
+        $this->appname = $this->session->get('user.appname');
     }
     // }}}
     // {{{ index
@@ -165,7 +165,7 @@ class Backend_Controller extends Controller
     {
         $newgroup   = $this->input->post("newgroup", true);
             
-        $this->Groups->newGroup($appname, $newgroup, $this->session->get('username'));
+        $this->Groups->newGroup($appname, $newgroup, $this->session->get('user.username'));
 
         $this->session->set('new_group_saved', true);
 
@@ -199,7 +199,7 @@ class Backend_Controller extends Controller
         $username  = $this->input->post('username', true);
         $password  = $this->input->post('password', true);
         
-        $this->Users->createUser($appname, $email, $name, $lastname, $groupname, $username, $password, $this->session->get('username'));
+        $this->Users->createUser($appname, $email, $name, $lastname, $groupname, $username, $password, $this->session->get('user.username'));
 
         $this->session->set('new_user_saved', true);
 
@@ -240,7 +240,7 @@ class Backend_Controller extends Controller
         $password  = $this->input->post('password', true);
         $blocked   = $this->input->post('blocked', true);
 
-        $this->Users->editUser($appname, $email, $name, $lastname, $groupname, $username, $password, $blocked, $this->session->get('username'));
+        $this->Users->editUser($appname, $email, $name, $lastname, $groupname, $username, $password, $blocked, $this->session->get('user.username'));
 
         $this->session->set('edit_user_saved', true);
 

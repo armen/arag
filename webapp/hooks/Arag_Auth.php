@@ -35,16 +35,16 @@ class Arag_Auth {
     public static function check()
     {
         $session = new Session();
-        $appname = $session->get('appname', APPNAME);
+        $appname = $session->get('user.appname', APPNAME);
 
         $directory         = substr(Router::$directory, strpos(Router::$directory, 'controllers/') + 12); // 12 is strlen('controllers/')
         self::$destination = Router::$module . '/' . $directory . Router::$controller . '/' . Router::$method;
 
-        if (!$session->get('authenticated') && $session->get('username') != 'anonymous') {
+        if (!$session->get('user.authenticated') && $session->get('user.username') != 'anonymous') {
 
             // Fetch Anonymouse user information and store in session
             $users = Model::load('Users', 'user');            
-            $session->set($users->getAnonymouseUser($appname));
+            $session->set(Array('user' => $users->getAnonymouseUser($appname)));
         }
 
         // When user Logins privilege_filters unset by login method 
@@ -56,7 +56,7 @@ class Arag_Auth {
             $session->set('privilege_filters', $filters->getPrivilegeFilters($appname));
         }
 
-        $authorized = self::is_authorized($session->get('privileges'));
+        $authorized = self::is_authorized($session->get('user.privileges'));
 
         if ($authorized) {
             // The user is authorized so we will try to filter his/her privileges with a blacklist

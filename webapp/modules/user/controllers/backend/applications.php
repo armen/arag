@@ -265,10 +265,10 @@ class Applications_Controller extends Backend_Controller
         if ($this->input->post('submit')) {
             if ($flag) {
                 $application = $this->input->post('application');
-                $this->Groups->deleteGroups($objects, $this->session->get('username'));
+                $this->Groups->deleteGroups($objects, $this->session->get('user.username'));
                 url::redirect('user/backend/applications/groups/'.$application);
             } else {
-                $this->Users->deleteUsers($objects, NULL, $this->session->get('username'));
+                $this->Users->deleteUsers($objects, NULL, $this->session->get('user.username'));
                 url::redirect('user/backend/applications/all_users');
             }
         } else {
@@ -318,7 +318,7 @@ class Applications_Controller extends Backend_Controller
         $filter  = $this->input->post('filter');
         $appname = $this->input->post('application');
 
-        $this->Filters->addFilter($filter, $appname, $this->session->get('username'));
+        $this->Filters->addFilter($filter, $appname, $this->session->get('user.username'));
         
         $this->session->set('filter_saved', true);
 
@@ -394,7 +394,7 @@ class Applications_Controller extends Backend_Controller
         $appname = $this->input->post('application');
         $id      = $this->input->post('id');
 
-        $this->Filters->editFilter($filter, $id, $appname, $this->session->get('username'));
+        $this->Filters->editFilter($filter, $id, $appname, $this->session->get('user.username'));
 
         $this->filters_edit_read($appname, $id, true);
     }
@@ -536,7 +536,7 @@ class Applications_Controller extends Backend_Controller
     public function add_apps_filters_write()
     {
         $appname = $this->input->post('appname');
-        $this->Filters->addApp($appname, $this->session->get('username'));
+        $this->Filters->addApp($appname, $this->session->get('user.username'));
 
         $this->session->set('app_add_filter_saved', true);
         url::redirect('user/backend/applications/add_apps_filters');
@@ -559,7 +559,7 @@ class Applications_Controller extends Backend_Controller
     {
         $label     = $this->input->post('newlabel');
       
-        $this->Privileges->addLabel($label, 0, NULL, $this->session->get('username'));
+        $this->Privileges->addLabel($label, 0, NULL, $this->session->get('user.username'));
 
         $this->session->set('privileges_add_saved', true);
         
@@ -594,7 +594,7 @@ class Applications_Controller extends Backend_Controller
         $privilege = $this->input->post('privilege');
         $parentid  = $this->input->post('parentid');
 
-        $this->Privileges->addLabel($label, $parentid, $privilege, $this->session->get('username'));
+        $this->Privileges->addLabel($label, $parentid, $privilege, $this->session->get('user.username'));
 
         $this->session->set('privileges_add_saved', true);
         
@@ -638,7 +638,7 @@ class Applications_Controller extends Backend_Controller
         $id        = $this->input->post('id');
         $privilege = $this->input->post('privilege');
 
-        $this->Privileges->editLabel($label, $id, $privilege, $this->session->get('username'));
+        $this->Privileges->editLabel($label, $id, $privilege, $this->session->get('user.username'));
 
         $this->session->set('privilege_edited_saved', true);
 
@@ -710,7 +710,7 @@ class Applications_Controller extends Backend_Controller
     {
         $objects = $this->input->post('objects');
         
-        $this->Privileges->deletePrivileges($objects, $this->session->get('username'));
+        $this->Privileges->deletePrivileges($objects, $this->session->get('user.username'));
 
         url::redirect('user/backend/applications/privileges_parents');
     }

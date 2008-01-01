@@ -39,8 +39,7 @@ class Frontend_Controller extends Controller
             // filters of current application there.
             $this->session->del('privilege_filters');
 
-            $this->session->set('authenticated', True);
-            $this->session->set($this->Users->getUser($username));
+            $this->session->set(Array('user' => array_merge($this->Users->getUser($username), Array('authenticated' => True))));
 
             $this->Users->blockUser($username);
 

@@ -41,9 +41,9 @@ class Controller extends Controller_Core {
 
         $this->layout = new View($this->layout);
 
-        $this->layout->firstname = $this->session->get('name');
-        $this->layout->surname   = $this->session->get('lastname');
-        $this->layout->auth      = $this->session->get('authenticated');
+        $this->layout->firstname = $this->session->get('user.name');
+        $this->layout->surname   = $this->session->get('user.last_name');
+        $this->layout->auth      = $this->session->get('user.authenticated');
 
         // Set default page_title
         $this->layout->page_title = 'Arag';
