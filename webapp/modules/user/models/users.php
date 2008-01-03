@@ -278,15 +278,19 @@ class Users_Model extends Model
     public function hasUserName($username, $appname = NULL)
     {
         if ($appname == NULL) {
+            
             $result = $this->db->select('count(username) as count')->getwhere($this->tableNameUsers, Array('username' => $username))->current(); 
             return (boolean)$result->count;
+
         } else {
+
             $this->db->select('count(username) as count');
             $this->db->from($this->tableNameUsers);
             $this->db->join($this->tableNameGroups, $this->tableNameGroups.".id = ".$this->tableNameUsers.".group_id");           
             $this->db->where('username', $username);
             $this->db->where('appname', $appname);
             $result = $this->db->get()->current();
+
             return (boolean)$result->count;
         }
     }

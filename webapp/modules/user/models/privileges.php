@@ -125,7 +125,7 @@ class Privileges_Model extends Model
     // {{{ hasLabel
     public function hasLabel($id)
     {
-        $query = $this->db->select('count(id) as count')->getwhere($this->tableNamePrivileges, Array('id' => $id))->current(); 
+        $result = $this->db->select('count(id) as count')->getwhere($this->tableNamePrivileges, Array('id' => $id))->current(); 
         return (boolean)$result->count;
     }
     // }}}

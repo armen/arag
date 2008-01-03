@@ -43,7 +43,8 @@ class Category_Model extends Model
     // {{{ getCatNumbers
     public function getCatNumbers($module, $parent_id)
     {
-        $result = $this->db->select('count(id) as count')->getwhere($this->tableName, Array('parent_id' => $parent_id, 'module_name' => $module))->current();
+        $result = $this->db->select('count(id) as count')->getwhere($this->tableName, Array('parent_id' => $parent_id, 'module_name' => $module))
+                -> current();
         return $result->count;
     }
     // }}}
