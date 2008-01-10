@@ -1,4 +1,4 @@
-<?php
+<?php  defined('SYSPATH') or die('No direct script access.');
 
 Event::replace('system.404', array('Kohana', 'show_404'), 'arag_404');
 
