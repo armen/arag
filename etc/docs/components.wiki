@@ -2,11 +2,11 @@
 
 Component is a new feature implemented in Arag project which probably you are not familiar with it.
 
-components are located at "webapp/components" directory and has a directory structure as following:
+components are located at "webapp/modules" directory too, and has a directory structure as following:
 
   +-- webapp
        ...
-       +-- components
+       +-- modules
             +-- <component_name>
             |      +-- component
             |      |      +-- <component_name>.php
