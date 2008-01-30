@@ -126,7 +126,7 @@ class Users_Model extends Model
         $this->db->select('appname, '.$this->tableNameGroups.'.name as groupname, username, privileges, redirect,'.
                           $this->tableNameUsers.'.name as name, lastname, email, group_id');
         $this->db->from($this->tableNameUsers);
-        $this->db->join($this->tableNameGroups, $this->tableNameGroups.'.id = '.$this->tableNameUsers.'.group_id');
+        $this->db->join($this->tableNameGroups, $this->tableNameGroups.'.id', $this->tableNameUsers.'.group_id');
         $this->db->where('username', $username);
         $this->db->where('verified', True);
         $this->db->where('blocked',  False);
@@ -179,7 +179,7 @@ class Users_Model extends Model
         $this->db->select($this->tableNameUsers.".create_date");
         $this->db->select($this->tableNameUsers.".modified_by");
         $this->db->select($this->tableNameUsers.".created_by");
-        $this->db->join($this->tableNameGroups, $this->tableNameGroups.".id = ".$this->tableNameUsers.".group_id");
+        $this->db->join($this->tableNameGroups, $this->tableNameGroups.'.id', $this->tableNameUsers.'.group_id');
 
         if ($groupID != NULL) {
             $this->db->where('group_id', $groupID);
@@ -286,7 +286,7 @@ class Users_Model extends Model
 
             $this->db->select('count(username) as count');
             $this->db->from($this->tableNameUsers);
-            $this->db->join($this->tableNameGroups, $this->tableNameGroups.".id = ".$this->tableNameUsers.".group_id");           
+            $this->db->join($this->tableNameGroups, $this->tableNameGroups.'.id', $this->tableNameUsers.'.group_id');           
             $this->db->where('username', $username);
             $this->db->where('appname', $appname);
             $result = $this->db->get()->current();

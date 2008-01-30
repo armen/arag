@@ -41,7 +41,7 @@ class MultiSite_Model extends Model
         $this->db->select($this->tableNameApps.".name AS app_name");
         $this->db->select($this->tableNameDatabases.".name as db_name");
         $this->db->from($this->tableNameApps);
-        $this->db->join($this->tableNameDatabases, $this->tableNameApps.".database_id = ".$this->tableNameDatabases.".id");
+        $this->db->join($this->tableNameDatabases, $this->tableNameApps.'.database_id', $this->tableNameDatabases.'.id');
  
         if ($databaseID) {
             $this->db->where("database_id", $databaseID);
@@ -67,7 +67,7 @@ class MultiSite_Model extends Model
         $this->db->select('DISTINCT database_id');
         $this->db->select($this->tableNameDatabases.".name");
         $this->db->from($this->tableNameApps);
-        $this->db->join($this->tableNameDatabases, $this->tableNameApps.".database_id = ".$this->tableNameDatabases.".id");      
+        $this->db->join($this->tableNameDatabases, $this->tableNameApps.'.database_id', $this->tableNameDatabases.'.id');      
 
         $retval = $this->db->get()->result_array(false);
         
