@@ -77,7 +77,7 @@ class Install_Controller extends Backend_Controller
         $this->Groups->newGroup($appname, 'anonymous', $author, $anonypri);     // Create anonymous group of this application
         $this->Users->createUser($appname, $email, NULL, NULL, 'admin', $username, $password, $author, $verify_uri, 0);
 
-        $base_tpl_path = APPPATH . 'modules/multisite/templates';
+        $base_tpl_path = MODPATH . 'multisite/templates';
 
         // Create symlink in to the /var/www, this is just for local testing
         @symlink(DOCROOT . 'sites/'.$appname, '/var/www/'.$appname);

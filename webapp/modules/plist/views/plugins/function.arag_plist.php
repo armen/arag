@@ -56,7 +56,7 @@ function smarty_function_arag_plist($params, &$smarty)
 
         $smarty->assign('plist', $plist);
         $smarty->assign('namespace', $namespace);
-        $smarty->assign('plist_templates_path', APPPATH . 'modules/plist/views/');
+        $smarty->assign('plist_templates_path', MODPATH . 'plist/views/');
 
         return $smarty->fetch(Arag::find_file('plist', 'views', $template, False, True));
     }

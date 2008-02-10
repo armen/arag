@@ -189,7 +189,7 @@ class Installation_Model extends Model
     // {{{ executeSchemas
     public function executeSchemas($moduleName, $version, $dataSet = Null, $initializeData = True)
     {
-        $schemas = APPPATH . 'modules/' . $moduleName . '/schemas/v' . $version . '/*.schema';
+        $schemas = MODPATH . $moduleName . '/schemas/v' . $version . '/*.schema';
 
         foreach ($schemas as $schema) {
             $this->executeSchema($schema, $dataSet, $initializeData);

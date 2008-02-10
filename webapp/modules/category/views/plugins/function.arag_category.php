@@ -57,7 +57,7 @@ function smarty_function_arag_category($params, &$smarty)
 
         $smarty->assign('category', $category);
         $smarty->assign('namespace', $namespace);
-        $smarty->assign('category_templates_path', APPPATH . 'modules/category/views/');
+        $smarty->assign('category_templates_path', MODPATH . 'category/views/');
 
         return $smarty->fetch(Arag::find_file('category', 'views', $template, False, True));
     }

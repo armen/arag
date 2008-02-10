@@ -15,7 +15,7 @@ class Arag_Smarty_Core extends Smarty {
         // Okay, integration is enabled, so call the parent constructor
         parent::Smarty();
 
-        $this->template_dir   = APPPATH . 'modules/' . Router::$module . '/views';
+        $this->template_dir   = MODPATH . Router::$module . '/views';
         $this->cache_dir      = Config::item('smarty.cache_path') . 'smarty_cache/';
         $this->compile_dir    = Config::item('smarty.cache_path') . 'smarty_compile/';
         $this->config_dir     = Config::item('smarty.global_templates_path') . 'smarty_configs/';

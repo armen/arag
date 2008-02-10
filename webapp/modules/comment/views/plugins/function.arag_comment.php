@@ -63,7 +63,7 @@ function smarty_function_arag_comment($params, &$smarty)
 
         $smarty->assign('component', $comment);
         $smarty->assign('namespace', $namespace);
-        $smarty->assign('comment_templates_path', APPPATH . 'modules/comment/views/');
+        $smarty->assign('comment_templates_path', MODPATH . 'comment/views/');
         $smarty->assign('name', $session->get('user.name') . ' ' . $session->get('user.last_name'));
         $smarty->assign('email', $session->get('user.email')); 
 

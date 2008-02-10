@@ -51,7 +51,7 @@ class Controller extends Controller_Core {
         $this->layout->page_title = 'Arag';
 
         // Initialize gettext
-        bindtextdomain('messages', APPPATH . 'modules/' . Router::$module . '/locale/');
+        bindtextdomain('messages', MODPATH . Router::$module . '/locale/');
         bind_textdomain_codeset('messages', 'utf8');
         textdomain('messages');
 
