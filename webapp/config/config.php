@@ -1,22 +1,21 @@
 <?php defined('SYSPATH') or die('No direct script access.');
+/**
+ * Name of the front controller for this application. Default: index.php
+ *
+ * This can be removed by using URL rewriting.
+ */
+$config['index_page'] = basename($_SERVER['SCRIPT_NAME']);
+
 /*
  * Domain name, with the installation directory. Default: localhost/kohana/
  */
-$config['site_domain'] = $_SERVER['SERVER_NAME'] . substr($_SERVER['SCRIPT_NAME'], 0, 
-                                                          strpos($_SERVER['SCRIPT_NAME'], 
-                                                          '/'.basename($_SERVER['SCRIPT_NAME'])));
+$config['site_domain'] = $_SERVER['SERVER_NAME'].substr($_SERVER['SCRIPT_NAME'], 0, strpos($_SERVER['SCRIPT_NAME'], '/'.$config['index_page']));
 
 /**
  * Default protocol used to access the website. Default: http
  */
 $config['site_protocol'] = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') ? 'https' : 'http';
 
-/**
- * Name of the front controller for this application. Default: index.php
- *
- * This can be removed by using URL rewriting.
- */
-$config['index_page'] = 'index.php';
 
 /**
  * Fake file extension that will be added to all generated URLs. Example: .html
@@ -28,7 +27,7 @@ $config['url_suffix'] = '';
  * server bandwidth usage, at the cost of slightly higher CPU usage. Set to
  * the compression level (1-9) that you want to use, or FALSE to disable.
  *
- * @note Do not enable this option if you are using output compression in php.ini!
+ * Do not enable this option if you are using output compression in php.ini! 
  */
 $config['output_compression'] = FALSE;
 
@@ -36,7 +35,7 @@ $config['output_compression'] = FALSE;
  * Enable or disable global XSS filtering of GET, POST, and SERVER data. This
  * option also accepts a string to specify a specific XSS filtering tool.
  */
-$config['global_xss_filtering'] = FALSE;
+$config['global_xss_filtering'] = TRUE;
 
 /**
  * Enable or disable dynamic setting of configuration options. By default, all
@@ -63,18 +62,8 @@ $config['extension_prefix'] = 'Arag_';
  */
 $config['modules'] = array
 (
-    // To enable the demo module; uncomment the following line
-    // 'modules/demo',
-    // To enable local API documentation at /kodoc/, uncomment the following line
-    // 'modules/kodoc',
-);
-
-/**
- * Libraries and models to be automatically loaded into every controller. Use
- * a comma-separated list to set multiple items.
- */
-$config['preload'] = array
-(
-    'libraries' => 'session, profiler',
-    'models'    => '',
+	// MODPATH.'auth',   // Authentication
+	// MODPATH.'forge',  // Form generation
+	// MODPATH.'kodoc',  // Self-generating documentation
+	// MODPATH.'media',  // Media caching and compression
 );
