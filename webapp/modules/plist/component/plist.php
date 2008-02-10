@@ -175,17 +175,17 @@ class PList_Component extends Component implements IteratorAggregate, ArrayAcces
     }
     // }}}
     // {{{ addColumn
-    public function addColumn($name, $label = Null, $type = PList::NONE)
+    public function addColumn($name, $label = Null, $type = PList_Component::NONE)
     {
         $label = ($label == Null) ? $name : $label;
 
-        if ($type & PList::VIRTUAL_COLUMN) {
+        if ($type & PList_Component::VIRTUAL_COLUMN) {
             $this->virtualColumns[$name] = Array('label' => $label);
         }
 
         $this->columns[$name] = Array ('label'   => $label, 
-                                       'hidden'  => $type & PList::HIDDEN_COLUMN,
-                                       'virtual' => $type & PList::VIRTUAL_COLUMN);
+                                       'hidden'  => $type & PList_Component::HIDDEN_COLUMN,
+                                       'virtual' => $type & PList_Component::VIRTUAL_COLUMN);
     }
     // }}}
     // {{{ addAction

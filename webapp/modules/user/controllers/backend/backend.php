@@ -58,8 +58,8 @@ class Backend_Controller extends Controller
         $this->users->addColumn('user_name', _("Name"));
         $this->users->addColumn('username', _("Username"));
         $this->users->addColumn('email', _("Email"));
-        $this->users->addColumn('Applications.getDate', _("Create Date"), PList::VIRTUAL_COLUMN);
-        $this->users->addColumn('Applications.getModifyDate', _("Modify Date"), PList::VIRTUAL_COLUMN);
+        $this->users->addColumn('Applications.getDate', _("Create Date"), PList_Component::VIRTUAL_COLUMN);
+        $this->users->addColumn('Applications.getModifyDate', _("Modify Date"), PList_Component::VIRTUAL_COLUMN);
         $this->users->addColumn('modified_by', _("Modified By"));
         $this->users->addColumn('created_by', _("Created By"));
     }
@@ -82,17 +82,17 @@ class Backend_Controller extends Controller
 
         $this->privileges->setResource($this->Privileges->getFilteredPrivileges($appname, $parentid));
         $this->privileges->setLimit(Arag_Config::get('limit', 0));
-        $this->privileges->addColumn('id', _("ID"), PList::HIDDEN_COLUMN);        
+        $this->privileges->addColumn('id', _("ID"), PList_Component::HIDDEN_COLUMN);        
         $this->privileges->addColumn('label', _("Label"));
         $this->privileges->addColumn('modified_by', _("Modified By"));
         $this->privileges->addColumn('created_by', _("Created By"));
-        $this->privileges->addColumn('Applications.getDate', _("Create Date"), PList::VIRTUAL_COLUMN);
-        $this->privileges->addColumn('Applications.getModifyDate', _("Modify Date"), PList::VIRTUAL_COLUMN);
+        $this->privileges->addColumn('Applications.getDate', _("Create Date"), PList_Component::VIRTUAL_COLUMN);
+        $this->privileges->addColumn('Applications.getModifyDate', _("Modify Date"), PList_Component::VIRTUAL_COLUMN);
         $this->privileges->addColumn('privilege', _("Privilege"));
         $this->privileges->addAction('user/backend/applications/privileges_edit/#id#', _("Edit"), 'edit_action');
         $this->privileges->addAction('user/backend/applications/privileges/#id#', _("View"), 'view_action', 'Privileges.isParent');
         $this->privileges->addAction('user/backend/applications/privileges_delete/#id#', _("Delete"), 'delete_action');
-        $this->privileges->addAction("user/backend/applications/privileges_delete", _("Delete"), 'delete_action', PList::GROUP_ACTION);
+        $this->privileges->addAction("user/backend/applications/privileges_delete", _("Delete"), 'delete_action', PList_Component::GROUP_ACTION);
         $this->privileges->setGroupActionParameterName('id'); 
 
         $data = array("parentid"  => $parentid,
@@ -110,13 +110,13 @@ class Backend_Controller extends Controller
 
         $this->groups->setResource($this->Groups->getGroups($appname));
         $this->groups->setLimit(Arag_Config::get('limit', 0));
-        $this->groups->addColumn('id', Null, PList::HIDDEN_COLUMN);       
+        $this->groups->addColumn('id', Null, PList_Component::HIDDEN_COLUMN);       
         $this->groups->addColumn('name', _("Name"));
         $this->groups->addColumn('appname', _("Application"));
         $this->groups->addColumn('created_by', _("Created By"));
         $this->groups->addColumn('modified_by', _("Modified By"));
-        $this->groups->addColumn('Applications.getDate', _("Create Date"), PList::VIRTUAL_COLUMN);
-        $this->groups->addColumn('Applications.getModifyDate', _("Modify Date"), PList::VIRTUAL_COLUMN);
+        $this->groups->addColumn('Applications.getDate', _("Create Date"), PList_Component::VIRTUAL_COLUMN);
+        $this->groups->addColumn('Applications.getModifyDate', _("Modify Date"), PList_Component::VIRTUAL_COLUMN);
     }
     // }}}
     // {{{ _default_group

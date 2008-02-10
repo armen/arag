@@ -53,7 +53,7 @@ class Applications_Controller extends Backend_Controller
         $this->applications->setLimit(Arag_Config::get('limit', 0));
         $this->applications->addColumn('name', _("Name"));        
         $this->applications->addColumn('default_group', _("Default Group"));
-        $this->applications->addColumn('Applications.getDate', _("Create Date"), PList::VIRTUAL_COLUMN);
+        $this->applications->addColumn('Applications.getDate', _("Create Date"), PList_Component::VIRTUAL_COLUMN);
         $this->applications->addAction('user/backend/applications/groups/#name#', _("Edit"), 'edit_action');      
         
         $this->layout->content = new View('backend/index', array("name" => $name, "flag" => false)); 
@@ -73,7 +73,7 @@ class Applications_Controller extends Backend_Controller
         $this->groups->addAction('user/backend/applications/group_privileges_edit/#id#/'.$appname, _("Privileges"), 'privileges_action');
         $this->groups->addAction('user/backend/applications/users/#id#/'.$appname, _("View"), 'view_action'); 
         $this->groups->addAction('user/backend/applications/delete/group/#id#', _("Delete"), 'delete_action');
-        $this->groups->addAction("user/backend/applications/delete/group", _("Delete"), 'delete_action', PList::GROUP_ACTION);
+        $this->groups->addAction("user/backend/applications/delete/group", _("Delete"), 'delete_action', PList_Component::GROUP_ACTION);
         $this->groups->setGroupActionParameterName('id');
 
         $this->session->set('delete_appname', $appname);
@@ -122,7 +122,7 @@ class Applications_Controller extends Backend_Controller
 
         $this->users->addAction("user/backend/applications/user_profile/#username#", _("Edit"), 'edit_action');
         $this->users->addAction("user/backend/applications/delete/user/#username#", _("Delete"), 'delete_action');
-        $this->users->addAction("user/backend/applications/delete/user", _("Delete"), 'delete_action', PList::GROUP_ACTION);
+        $this->users->addAction("user/backend/applications/delete/user", _("Delete"), 'delete_action', PList_Component::GROUP_ACTION);
         $this->users->setGroupActionParameterName('username');
         
         $this->layout->content = new View('backend/users', array("flagsearch"  => false));
@@ -155,7 +155,7 @@ class Applications_Controller extends Backend_Controller
 
         $this->users->addAction("user/backend/applications/user_profile/#username#", _("Edit"), 'edit_action');
         $this->users->addAction("user/backend/applications/delete/user/#username#", _("Delete"), 'delete_action');
-        $this->users->addAction("user/backend/applications/delete/user", _("Delete"), 'delete_action', PList::GROUP_ACTION);
+        $this->users->addAction("user/backend/applications/delete/user", _("Delete"), 'delete_action', PList_Component::GROUP_ACTION);
         $this->users->setGroupActionParameterName('username');
         
         $data = array("flagsearch" => true,
@@ -294,11 +294,11 @@ class Applications_Controller extends Backend_Controller
         $this->applications->addColumn('appname', _("Name"));        
         $this->applications->addColumn('created_by', _("Created By"));
         $this->applications->addColumn('modified_by', _("Modified By"));
-        $this->applications->addColumn('Filters.getDate', _("Create Date"), PList::VIRTUAL_COLUMN);
-        $this->applications->addColumn('Filters.getModifyDate', _("Modify Date"), PList::VIRTUAL_COLUMN);      
+        $this->applications->addColumn('Filters.getDate', _("Create Date"), PList_Component::VIRTUAL_COLUMN);
+        $this->applications->addColumn('Filters.getModifyDate', _("Modify Date"), PList_Component::VIRTUAL_COLUMN);      
         $this->applications->addAction('user/backend/applications/app_filters/#appname#', _("Edit"), 'edit_action');
         $this->applications->addAction('user/backend/applications/app_filters_delete/#appname#', _("Delete"), 'delete_action', 'Filters.isDeletable');
-        $this->applications->addAction("user/backend/applications/app_filters_delete/", _("Delete"), 'delete_action', PList::GROUP_ACTION);
+        $this->applications->addAction("user/backend/applications/app_filters_delete/", _("Delete"), 'delete_action', PList_Component::GROUP_ACTION);
         $this->applications->setGroupActionParameterName('appname');
         
         $this->layout->content = new View('backend/index', array("name" => $name, "flag" => true));
@@ -347,18 +347,18 @@ class Applications_Controller extends Backend_Controller
         $this->filters_pro->addColumn('appname', _("Name"));        
         $this->filters_pro->addColumn('created_by', _("Created By"));
         $this->filters_pro->addColumn('modified_by', _("Modified By"));
-        $this->filters_pro->addColumn('Filters.getDate', _("Create Date"), PList::VIRTUAL_COLUMN);
-        $this->filters_pro->addColumn('Filters.getModifyDate', _("Modify Date"), PList::VIRTUAL_COLUMN);
+        $this->filters_pro->addColumn('Filters.getDate', _("Create Date"), PList_Component::VIRTUAL_COLUMN);
+        $this->filters_pro->addColumn('Filters.getModifyDate', _("Modify Date"), PList_Component::VIRTUAL_COLUMN);
 
         $this->load->component('PList', 'filters');
 
         $this->filters->setResource($this->Filters->getFilters($appname));
         $this->filters->setLimit(Arag_Config::get('limit', 0));
         $this->filters->addColumn('filter', _("Title"));        
-        $this->filters->addColumn('id', Null, PList::HIDDEN_COLUMN);
+        $this->filters->addColumn('id', Null, PList_Component::HIDDEN_COLUMN);
         $this->filters->addAction('user/backend/applications/filters_edit/'.$appname.'/#id#', _("Edit"), 'edit_action');
         $this->filters->addAction('user/backend/applications/filters_delete/'.$appname.'/#id#', _("delete"), 'delete_action');
-        $this->filters->addAction("user/backend/applications/filters_delete/".$appname, _("Delete"), 'delete_action', PList::GROUP_ACTION);
+        $this->filters->addAction("user/backend/applications/filters_delete/".$appname, _("Delete"), 'delete_action', PList_Component::GROUP_ACTION);
         $this->filters->setGroupActionParameterName('id');
         
         $this->layout->content = new View('backend/filters', array('appname' => $appname, 'flagsaved' => $flagsaved));

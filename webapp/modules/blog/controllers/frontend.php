@@ -28,7 +28,7 @@ class Frontend_Controller extends Controller
         $this->load->component('PList', 'entry');
         $this->entry->setLimit(Arag_Config::get('post_limit', 0));
         $this->entry->setResource($this->Blog->getEntries(True));
-        $this->entry->addColumn('Blog.getDate', Null, PList::VIRTUAL_COLUMN);
+        $this->entry->addColumn('Blog.getDate', Null, PList_Component::VIRTUAL_COLUMN);
 
         // Load the Comment component, comment ain't used but just loaded
         $this->load->component('Comment', 'comments');
@@ -41,7 +41,7 @@ class Frontend_Controller extends Controller
     {
         $this->load->component('PList', 'entry');
         $this->entry->setResource(Array($this->Blog->getEntry($id, True)));
-        $this->entry->addColumn('Blog.getDate', Null, PList::VIRTUAL_COLUMN);
+        $this->entry->addColumn('Blog.getDate', Null, PList_Component::VIRTUAL_COLUMN);
 
         $this->load->component('Comment', 'comments');
         $this->comments->setReferenceId($id);

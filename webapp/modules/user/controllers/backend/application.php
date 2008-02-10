@@ -33,7 +33,7 @@ class Application_Controller extends Backend_Controller
         $this->groups->addAction('user/backend/application/group_privileges_edit/#id#/', _("Privileges"), 'privileges_action');
         $this->groups->addAction('user/backend/application/users/#id#/', _("View"), 'view_action'); 
         $this->groups->addAction('user/backend/application/delete/group/#id#', _("Delete"), 'delete_action');
-        $this->groups->addAction("user/backend/application/delete/group", _("Delete"), 'delete_action', PList::GROUP_ACTION);
+        $this->groups->addAction("user/backend/application/delete/group", _("Delete"), 'delete_action', PList_Component::GROUP_ACTION);
         $this->groups->setGroupActionParameterName('id');
 
         $this->session->set('delete_appname', $this->appname);
@@ -62,7 +62,7 @@ class Application_Controller extends Backend_Controller
 
         $this->users->addAction("user/backend/application/user_profile/#username#", _("Edit"), 'edit_action');
         $this->users->addAction("user/backend/application/delete/user/#username#", _("Delete"), 'delete_action');
-        $this->users->addAction("user/backend/application/delete/user", _("Delete"), 'delete_action', PList::GROUP_ACTION);
+        $this->users->addAction("user/backend/application/delete/user", _("Delete"), 'delete_action', PList_Component::GROUP_ACTION);
         $this->users->setGroupActionParameterName('username');
         
         $this->layout->content = new View('backend/users', array("flagsearch" => false));
@@ -216,7 +216,7 @@ class Application_Controller extends Backend_Controller
 
         $this->users->addAction("user/backend/application/user_profile/#username#", _("Edit"), 'edit_action');
         $this->users->addAction("user/backend/application/delete/user/#username#", _("Delete"), 'delete_action');
-        $this->users->addAction("user/backend/application/delete/user", _("Delete"), 'delete_action', PList::GROUP_ACTION);
+        $this->users->addAction("user/backend/application/delete/user", _("Delete"), 'delete_action', PList_Component::GROUP_ACTION);
         $this->users->setGroupActionParameterName('username');
         
         $data = array("flagsearch" => true,
