@@ -108,10 +108,7 @@ function smarty_block_arag_tabbed_block($params, $content, &$smarty, &$repeat)
             $smarty->assign('tabbedblock_selected_tab', $selectedItem);
             $smarty->assign('tabbedblock_module', Router::$module);
 
-            // Change include_once to this component and current module path
-            Config::set('core.modules', array_unique(array_merge(Config::include_paths(), Array(MODPATH.'tabbedblock'))));
-
-            return $smarty->fetch(Kohana::find_file('views', $template, False, True));
+            return $smarty->fetch(Arag::find_file('tabbedblock', 'views', $template, False, True));
             
         } else {
 

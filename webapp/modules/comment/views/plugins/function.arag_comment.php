@@ -67,10 +67,7 @@ function smarty_function_arag_comment($params, &$smarty)
         $smarty->assign('name', $session->get('user.name') . ' ' . $session->get('user.last_name'));
         $smarty->assign('email', $session->get('user.email')); 
 
-        // Change include_once to this component and current module path
-        Config::set('core.modules', array_unique(array_merge(Config::include_paths(), Array(MODPATH.'comment'))));
-
-        return $smarty->fetch(Kohana::find_file('views', $template, False, True));
+        return $smarty->fetch(Arag::find_file('comment', 'views', $template, False, True));
     }
 
     return Null;

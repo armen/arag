@@ -108,12 +108,12 @@ class Install_Controller extends Backend_Controller
             if (is_callable(array($Installation, 'install'))) {
                 
                 // Change include_once to module path
-                Config::set('core.modules', Array(APPPATH . 'modules/' . $module));
+                Config::set('core.modules', Array(MODPATH.$module));
                 
                 $Installation->install($this->CoreInstallation);
 
                 // Reset the include_paths
-                Config::set('core.modules', Array(APPPATH . 'modules/' . Router::$module));
+                Config::set('core.modules', Array(MODPATH.Router::$module));
             }
         }
 

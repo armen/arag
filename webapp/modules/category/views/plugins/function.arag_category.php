@@ -59,10 +59,7 @@ function smarty_function_arag_category($params, &$smarty)
         $smarty->assign('namespace', $namespace);
         $smarty->assign('category_templates_path', APPPATH . 'modules/category/views/');
 
-        // Change include_once to this component and current module path
-        Config::set('core.modules', array_unique(array_merge(Config::include_paths(), Array(MODPATH.'category'))));
-
-        return $smarty->fetch(Kohana::find_file('views', $template, False, True));
+        return $smarty->fetch(Arag::find_file('category', 'views', $template, False, True));
     }
 
     return Null;
