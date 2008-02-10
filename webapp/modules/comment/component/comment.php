@@ -13,7 +13,7 @@
  * @since   PHP 5
  */
 
-class Comment extends Component
+class Comment_Component extends Component
 {
     // {{{ Properties
     
@@ -89,7 +89,7 @@ class Comment extends Component
     // {{{ build
     public function build()
     {
-        $comment        = Model::load('Comment', 'comment');
+        $comment        = new Comment_Model;
         $this->comments = $comment->getComments($this->module, $this->referenceId);
     }
     // }}}

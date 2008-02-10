@@ -13,7 +13,7 @@
  * @since   PHP 5
  */
 
-class Category extends Component
+class Category_Component extends Component
 {
     // {{{ Properties
     
@@ -33,7 +33,7 @@ class Category extends Component
     {
         parent::__construct($namespace);
         $this->level    = 0;
-        $this->category = Model::load('Category', 'category');
+        $this->category = new Category_Model;
         $this->setModule();
 
         $Controller = Kohana::instance();

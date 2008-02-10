@@ -13,7 +13,7 @@
  * @since   PHP 5
  */
 
-class PList extends Component implements IteratorAggregate, ArrayAccess
+class PList_Component extends Component implements IteratorAggregate, ArrayAccess
 {
     // {{{ properties
     
@@ -316,11 +316,10 @@ class PList extends Component implements IteratorAggregate, ArrayAccess
             // Model and function separated with a dot
             list($modelName, $functionName) = explode('.', $callback);
 
-            $Controller = Kohana::instance();
-            $Controller->load->model($modelName);
+            $modelName = new $modelName.'_Model';
             
-            if (method_exists($Controller->$modelName, $functionName)) {
-                return call_user_func_array(array($Controller->$modelName, $functionName), $arg);
+            if (method_exists($modelName, $functionName)) {
+                return call_user_func_array(array($modelName, $functionName), $arg);
             }
         
         } else if (strpos($callback, '::') !== false) {
