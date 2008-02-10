@@ -50,7 +50,7 @@ class PList_Component extends Component implements IteratorAggregate, ArrayAcces
 
     // }}}
     // {{{ Constructor
-    function __construct($namespace)
+    function __construct($namespace = Null)
     {
         parent::__construct($namespace);
 
