@@ -14,13 +14,13 @@ class Backend_Controller extends Controller
         parent::__construct();
 
         // Load the model and url helper
-        $this->load->model('Blog');
+        $this->Blog = new Blog_Model;
 
         // Default page title
         $this->layout->page_title = 'Blog';
 
         // Global tabbedbock
-        $this->load->component('TabbedBlock', 'global_tabs');
+        $this->global_tabs = new TabbedBlock_Component('global_tabs');
         $this->global_tabs->setTitle(_("Blog"));
         $this->global_tabs->addItem(_("Entries"), 'blog/backend/entry');
         $this->global_tabs->addItem(_("Edit Entry"), 'blog/backend/entry/edit/%id%', 'blog/backend/entry');

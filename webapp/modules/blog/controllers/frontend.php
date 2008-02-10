@@ -14,24 +14,22 @@ class Frontend_Controller extends Controller
         parent::__construct();
 
         // Load the model
-        $this->load->model('Blog');
+        $this->Blog = new Blog_Model;
        
         // Default page title
         $this->layout->page_title = 'Blog';
-
     }
     // }}}
     // {{{ index
     public function index()
     {
-    
-        $this->load->component('PList', 'entry');
-        $this->entry->setLimit(Arag_Config::get('post_limit', 0));
-        $this->entry->setResource($this->Blog->getEntries(True));
-        $this->entry->addColumn('Blog.getDate', Null, PList_Component::VIRTUAL_COLUMN);
+        $entry = new PList_Component;
+        $entry->setLimit(Arag_Config::get('post_limit', 0));
+        $entry->setResource($this->Blog->getEntries(True));
+        $entry->addColumn('Blog.getDate', Null, PList_Component::VIRTUAL_COLUMN);
 
         // Load the Comment component, comment ain't used but just loaded
-        $this->load->component('Comment', 'comments');
+        $comments = new Comment_Component;
 
         $this->layout->content = new View('frontend/view', Array('entry_uri' => '/blog/frontend/view/#id#/extended'));    
     }
@@ -39,13 +37,13 @@ class Frontend_Controller extends Controller
     // {{{ view
     public function view($id, $extended = False)
     {
-        $this->load->component('PList', 'entry');
-        $this->entry->setResource(Array($this->Blog->getEntry($id, True)));
-        $this->entry->addColumn('Blog.getDate', Null, PList_Component::VIRTUAL_COLUMN);
+        $entry = new PList_Component;
+        $entry->setResource(Array($this->Blog->getEntry($id, True)));
+        $entry->addColumn('Blog.getDate', Null, PList_Component::VIRTUAL_COLUMN);
 
-        $this->load->component('Comment', 'comments');
-        $this->comments->setReferenceId($id);
-        $this->comments->setPostUri('blog/frontend/post_comment');
+        $comments = new Comment_Component;
+        $comments->setReferenceId($id);
+        $comments->setPostUri('blog/frontend/post_comment');
 
         $data = Array('extended'  => $extended == 'extended', 
                       'entry_uri' => '/blog/frontend/view/#id#/extended');

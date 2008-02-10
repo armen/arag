@@ -13,20 +13,21 @@ class Entry_Controller extends Backend_Controller
     // {{{ index
     public function index()
     {
-        $this->load->component('PList', 'entries');
+        $entries = new PList_Component;
 
-        $this->entries->setResource($this->Blog->getEntries());
-        $this->entries->setLimit(Arag_Config::get('limit', 0));
-        $this->entries->addColumn('subject', _("Subject"));        
-        $this->entries->addColumn('author', _("Author"));
-        $this->entries->addColumn('Blog.getDate', _("Create Date"), PList_Component::VIRTUAL_COLUMN);
-        $this->entries->addColumn('Blog.getModifyDate', _("Modify Date"), PList_Component::VIRTUAL_COLUMN);        
-        $this->entries->addColumn('Blog.getModifiedBy', _("Modified By"), PList_Component::VIRTUAL_COLUMN);
-        $this->entries->addAction('blog/backend/entry/edit/#id#', 'Edit', 'edit_action');
-        $this->entries->addAction('blog/backend/entry/delete/#id#', 'Delete', 'delete_action');
-        $this->entries->addAction('blog/backend/entry/preview/#id#', 'Preview', 'view_action');        
+        $entries->setResource($this->Blog->getEntries());
+        $entries->setLimit(Arag_Config::get('limit', 0));
+        $entries->addColumn('subject', _("Subject"));        
+        $entries->addColumn('author', _("Author"));
+        $entries->addColumn('Blog.getDate', _("Create Date"), PList_Component::VIRTUAL_COLUMN);
+        $entries->addColumn('Blog.getModifyDate', _("Modify Date"), PList_Component::VIRTUAL_COLUMN);        
+        $entries->addColumn('Blog.getModifiedBy', _("Modified By"), PList_Component::VIRTUAL_COLUMN);
+        $entries->addAction('blog/backend/entry/edit/#id#', 'Edit', 'edit_action');
+        $entries->addAction('blog/backend/entry/delete/#id#', 'Delete', 'delete_action');
+        $entries->addAction('blog/backend/entry/preview/#id#', 'Preview', 'view_action');        
+        
         // $this->entries->addAction('blog/backend/entry/delete', 'Delete', 'delete_action', PList_Component::GROUP_ACTION);
-        $this->entries->setEmptyListMessage(_("There is no entry!"));
+        $entries->setEmptyListMessage(_("There is no entry!"));
 
         $this->layout->content = new View('backend/index');
     }
@@ -141,14 +142,14 @@ class Entry_Controller extends Backend_Controller
     {
         $this->global_tabs->setParameter('id', $id);        
         
-        $this->load->component('PList', 'entry');
+        $entry = new PList_Component;
 
-        $this->entry->setResource(Array($this->Blog->getEntry($id)));
-        $this->entry->addColumn('Blog.getDate', Null, PList_Component::VIRTUAL_COLUMN);        
-        // $this->entry->addColumn('subject');
-        // $this->entry->addColumn('author');
-        // $this->entry->addColumn('entry');
-        // $this->entry->addColumn('extended_entry');
+        $entry->setResource(Array($this->Blog->getEntry($id)));
+        $entry->addColumn('Blog.getDate', Null, PList_Component::VIRTUAL_COLUMN);        
+        // $entry->addColumn('subject');
+        // $entry->addColumn('author');
+        // $entry->addColumn('entry');
+        // $entry->addColumn('extended_entry');
 
         $this->layout->content = new View('backend/preview', Array('extended'  => True, 'entry_uri' => '/blog/backend/entry/preview/#id#'));
     }
