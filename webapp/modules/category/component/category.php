@@ -29,7 +29,7 @@ class Category_Component extends Component
 
     // }}}
     // {{{ construct
-    function __construct($namespace)
+    function __construct($namespace = Null)
     {
         parent::__construct($namespace);
         $this->level    = 0;

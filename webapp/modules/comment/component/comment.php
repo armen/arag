@@ -25,7 +25,7 @@ class Comment_Component extends Component
 
     // }}}
     // {{{ Constructor 
-    public function __construct($namespace)
+    public function __construct($namespace = Null)
     {
         parent::__construct($namespace);
 
