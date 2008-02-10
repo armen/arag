@@ -22,6 +22,7 @@ class Controller extends Controller_Core {
     // {{{ Properties
 
     public $layout = Null;
+    public $smarty;
 
     // }}}
     // {{{ Constructor
@@ -30,7 +31,7 @@ class Controller extends Controller_Core {
         parent::__construct();
     
         if (Config::item('smarty.integration') == True) {
-            $this->load->library('Arag_Smarty');
+            $this->smarty = new Arag_Smarty;
         }
 
         if ($this->layout == Null) {
@@ -39,7 +40,8 @@ class Controller extends Controller_Core {
                           : 'arag_templates/frontend_layout';
         }
 
-        $this->layout = new View($this->layout);
+        $this->session = Session::instance();
+        $this->layout  = new View($this->layout);
 
         $this->layout->firstname = $this->session->get('user.name');
         $this->layout->surname   = $this->session->get('user.last_name');
@@ -81,21 +83,21 @@ class Controller extends Controller_Core {
             // Assign variables to the template
             if (is_array($vars) && count($vars) > 0) {
                 foreach ($vars as $key => $val) {
-                    $this->Arag_Smarty->assign($key, $val);
+                    $this->smarty->assign($key, $val);
                 }
             }
 
             // Send Kohana::instance and base url to all templates
-            $this->Arag_Smarty->assign('this', $this);
+            $this->smarty->assign('this', $this);
 
             $base_url = Config::item('sites/'.APPNAME.'.core.parent_base_url', False, False) ? 
                         Config::item('sites/'.APPNAME.'.core.parent_base_url') : 
                         url::base();
-            $this->Arag_Smarty->assign('arag_base_url', $base_url);
-            $this->Arag_Smarty->assign('arag_current_module', Router::$module);
+            $this->smarty->assign('arag_base_url', $base_url);
+            $this->smarty->assign('arag_current_module', Router::$module);
 
             // Fetch the output
-            $output = $this->Arag_Smarty->fetch($template);
+            $output = $this->smarty->fetch($template);
             
         } else {
             $output = parent::_kohana_load_view($template, $vars);
@@ -129,13 +131,7 @@ class Controller extends Controller_Core {
             
             if (is_array($_validator)) {
 
-                if (Router::$request_method == 'read') {
-                    // GET/Segments validation
-                    $this->load->library('validation', $arguments);
-                } else {
-                    $this->load->library('validation');
-                }
-
+                $this->validation = (Router::$request_method == 'read') ? new Validation($arguments) : new Validation;
                 $this->validation->set_rules($_validator);
 
                 // XXX: this should be $validator not $_validator
@@ -149,7 +145,7 @@ class Controller extends Controller_Core {
                     // An error occured so repopulate it to smarty templates
                     $data = $this->validation->data_array;
                     foreach ($data as $field => $value) {
-                        $this->Arag_Smarty->assign($field, $value);
+                        $this->smarty->assign($field, $value);
                     }
                 }
             }

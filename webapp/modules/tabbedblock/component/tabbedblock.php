@@ -13,7 +13,7 @@
  * @since   PHP 5
  */
 
-class TabbedBlock extends Component
+class TabbedBlock_Component extends Component
 {
     // {{{ properties
     
@@ -23,9 +23,9 @@ class TabbedBlock extends Component
         
     // }}}
     // {{{ Constructor
-    function __construct()
+    function __construct($namespace = Null)
     {
-        parent::__construct();
+        parent::__construct($namespace);
     }
     // }}}
     // {{{ setTitle

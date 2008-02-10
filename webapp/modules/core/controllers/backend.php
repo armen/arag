@@ -17,7 +17,7 @@ class Backend_Controller extends Controller
         $this->layout->page_title = _("Core Settings");
 
         // Global tabbedbock
-        $this->load->component('TabbedBlock', 'global_tabs');
+        $this->global_tabs = new TabbedBlock_Component('global_tabs');
         $this->global_tabs->setTitle(_("Core Settings"));
         $this->global_tabs->addItem(_("Email Settings"), 'core/backend/email');
     }

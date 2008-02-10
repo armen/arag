@@ -17,7 +17,7 @@ class Backend_Controller extends Controller
         $this->layout->page_title = 'ControlPanel';
 
         // Load the empty tabbed block
-        $this->load->component('TabbedBlock', 'global_tabs');        
+        $this->global_tabs = new TabbedBlock_Component('global_tabs');
     }
     // }}}
     // {{{ index

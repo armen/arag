@@ -16,7 +16,7 @@ class Welcome_Controller extends Controller
         parent::__construct();
 
         // Load the empty tabbed block
-        $this->load->component('TabbedBlock', 'global_tabs');        
+        $this->global_tabs = new TabbedBlock_Component('global_tabs');
     }
     // }}}
     // {{{ index
