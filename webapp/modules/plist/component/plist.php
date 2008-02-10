@@ -52,7 +52,7 @@ class PList_Component extends Component implements IteratorAggregate, ArrayAcces
     // {{{ Constructor
     function __construct($namespace)
     {
-        parent::__construct();
+        parent::__construct($namespace);
 
         $this->setResource(Array());
         $this->setProperties(self::CAPTION | self::HEADER | self::FOOTER | self::SORTABLE);
