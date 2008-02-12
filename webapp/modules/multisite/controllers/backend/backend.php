@@ -13,18 +13,12 @@ class Backend_Controller extends Controller
     function __construct()
     {
         parent::__construct();
-
-        // Load the model
-        $this->load->model('MultiSite');        
-        $this->load->model('Users', NULL, 'user');
-        $this->load->model('Groups', NULL, 'user');
-        $this->load->model('Applications', NULL, 'user');
-       
+ 
         // Default page title
         $this->layout->page_title = _("MultiSite");
 
         // Global tabbedbock
-        $this->load->component('TabbedBlock', 'global_tabs');
+        $this->global_tabs = new TabbedBlock_Component('global_tabs');
         $this->global_tabs->setTitle(_("MultiSite"));
         $this->global_tabs->addItem(_("Sites"), 'multisite/backend/site');
         $this->global_tabs->addItem(_("Install"), 'multisite/backend/install/index');
@@ -41,7 +35,9 @@ class Backend_Controller extends Controller
     // {{{ _check_app
     public function _check_app($appname)
     {
-        return !$this->Applications->hasApp($appname);
+        $applications = Model::load('Applications', 'user');
+
+        return !$applications->hasApp($appname);
     }
     // }}}
 }

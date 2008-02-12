@@ -64,10 +64,10 @@ class MultiSite_Model extends Model
     // {{{ getIDs
     public function getIDs()
     {
-        $this->db->select('DISTINCT database_id');
+        $this->db->select('DISTINCT '.$this->tableNameApps.'.database_id');
         $this->db->select($this->tableNameDatabases.".name");
         $this->db->from($this->tableNameApps);
-        $this->db->join($this->tableNameDatabases, $this->tableNameApps.'.database_id', $this->tableNameDatabases.'.id');      
+        $this->db->join($this->tableNameDatabases, 'database_id', $this->tableNameDatabases.'.id');      
 
         $retval = $this->db->get()->result_array(false);
         

@@ -13,7 +13,9 @@ class Install_Controller extends Backend_Controller
 {
     // {{{ index_read
     public function index_read()
-    {   
+    {
+        $multiSite = new MultiSite_Model;
+
         $show_form = true;
         $messages  = array();
         $settings  = Arag_Config::get('email_settings', False, 'core');
@@ -41,7 +43,7 @@ class Install_Controller extends Backend_Controller
             'ta_locator'
         );        
 
-        $data = array('modules'   => $this->MultiSite->getModules($excludeModules),
+        $data = array('modules'   => $multiSite->getModules($excludeModules),
                       'messages'  => $messages,
                       'show_form' => $show_form);
 
@@ -51,8 +53,12 @@ class Install_Controller extends Backend_Controller
     // {{{ index_write
     public function index_write()
     {
-        // Load the installation model
-        $this->load->model('Installation', 'CoreInstallation', 'core');
+        // Load Models 
+        $multiSite        = new MultiSite_Model;
+        $coreInstallation = Model::load('Installation', 'core');
+        $groups           = Model::load('Groups', 'user');
+        $applications     = Model::load('Applications', 'user');
+        $users            = Model::load('Users', 'user');
 
         $appname    = $this->input->post('appname', true);
         $email      = $this->input->post('email', true);
@@ -60,22 +66,22 @@ class Install_Controller extends Backend_Controller
         $author     = $this->session->get('user.username');
         $anonypri   = serialize(Arag_Config::get('anonypri', NULL));
         $adminpri   = serialize(Arag_Config::get('adminpri', NULL));
-        $verify_uri = $this->MultiSite->generateVerifyUri(10);
+        $verify_uri = $multiSite->generateVerifyUri(10);
         $password   = strtolower(text::random('alnum', Arag_Config::get('passlength', 8, 'user')));
         $username   = $appname.'_admin';
 
         // Get next database data source name and id
-        $this->MultiSite->getNextDB($DSN, $databaseID);
+        $multiSite->getNextDB($DSN, $databaseID);
 
         // Set the DSN and tablePrefix
         $tablePrefix = str_replace('.', '_', $appname) . '_';
-        $this->CoreInstallation->setTablePrefix($tablePrefix);
-        $this->CoreInstallation->setDSN($DSN);        
+        $coreInstallation->setTablePrefix($tablePrefix);
+        $coreInstallation->setDSN($DSN);        
         
-        $this->Applications->addApp($appname, $author, 'anonymous', $databaseID);      // Create the application
-        $this->Groups->newGroup($appname, 'admin', $author, $adminpri);         // Create admin group of this application
-        $this->Groups->newGroup($appname, 'anonymous', $author, $anonypri);     // Create anonymous group of this application
-        $this->Users->createUser($appname, $email, NULL, NULL, 'admin', $username, $password, $author, $verify_uri, 0);
+        $applications->addApp($appname, $author, 'anonymous', $databaseID);      // Create the application
+        $groups->newGroup($appname, 'admin', $author, $adminpri);         // Create admin group of this application
+        $groups->newGroup($appname, 'anonymous', $author, $anonypri);     // Create anonymous group of this application
+        $users->createUser($appname, $email, NULL, NULL, 'admin', $username, $password, $author, $verify_uri, 0);
 
         $base_tpl_path = MODPATH . 'multisite/templates';
 
@@ -83,17 +89,17 @@ class Install_Controller extends Backend_Controller
         @symlink(DOCROOT . 'sites/'.$appname, '/var/www/'.$appname);
 
         // Create directory of application
-        $this->CoreInstallation->createDirectory(DOCROOT . 'sites/'.$appname);
+        $coreInstallation->createDirectory(DOCROOT . 'sites/'.$appname);
 
         // Create scripts symbolic link
         symlink(DOCROOT . '/scripts', DOCROOT . 'sites/'.$appname.'/scripts');
 
         // Create index file
-        $this->CoreInstallation->createFromTemplate(DOCROOT . 'sites/'.$appname.'/index.php', 'index.php', Array(), $base_tpl_path);
+        $coreInstallation->createFromTemplate(DOCROOT . 'sites/'.$appname.'/index.php', 'index.php', Array(), $base_tpl_path);
 
         // Create config file
         $parameters = Array('dsn' => $DSN, 'table_prefix' => $tablePrefix, 'parent_base_url' => url::base());
-        $this->CoreInstallation->createFromTemplate(APPPATH . 'config/sites/'.$appname.'.php', 'config.php', $parameters, $base_tpl_path);
+        $coreInstallation->createFromTemplate(APPPATH . 'config/sites/'.$appname.'.php', 'config.php', $parameters, $base_tpl_path);
 
         // Core module is required
         if (empty($modules) || !is_array($modules) || !in_array('core', $modules)) {
@@ -110,7 +116,7 @@ class Install_Controller extends Backend_Controller
                 // Change include_once to module path
                 Config::set('core.modules', Array(MODPATH.$module));
                 
-                $Installation->install($this->CoreInstallation);
+                $Installation->install($coreInstallation);
 
                 // Reset the include_paths
                 Config::set('core.modules', Array(MODPATH.Router::$module));
@@ -125,7 +131,7 @@ class Install_Controller extends Backend_Controller
                            'password' => $password);
         
         try {
-            $is_sent = $this->MultiSite->sendEmail($email, $strings, $settings);
+            $is_sent = $multiSite->sendEmail($email, $strings, $settings);
         } catch(Swift_Exception $e) {
             // Shit, there was an error here!
             $is_sent = False;
