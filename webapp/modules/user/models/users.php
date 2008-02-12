@@ -146,7 +146,7 @@ class Users_Model extends Model
     public function & getAnonymouseUser($appname)
     {
         // This will called from Arag_Auth so do not use
-        // Kohana::instance()->load->model(); here
+        // Model::load(...); here
         $groups    = Model::load('Groups', 'user');
         $anonymous = $groups->getAnonymousGroup($appname);
 
