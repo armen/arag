@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php
 
 include_once "smarty/Smarty.class.php";
 

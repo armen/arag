@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php
 
 // Add the Arag_Auth::check at the begining
 Event::add_before('system.execute', current(Event::get('system.execute')), array('Arag_Auth', 'check'));

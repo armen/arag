@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php
 /*
  * File: Database
  *  Database connection settings, defined as arrays, or "groups". If no group
@@ -23,6 +23,7 @@ $config['default'] = array
     'benchmark'     => TRUE,
     'persistent'    => FALSE,
     'connection'    => 'mysql://root:root@localhost/arag',
+    //'connection'    => 'pdosqlite:////home/armen/projects/arag/webapp/cache/arag.v3',
     'character_set' => 'utf8',
     'table_prefix'  => 'arag_',
     'object'        => TRUE,

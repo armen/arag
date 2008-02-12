@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') or die('No direct access allowed.');
+<?php
 /**
  * Default language locale name.
  * @see http://php.net/locales

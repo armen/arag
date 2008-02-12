@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php
 
 spl_autoload_register(array('Arag', 'auto_load'));
 

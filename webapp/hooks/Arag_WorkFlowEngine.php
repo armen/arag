@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php
 
 Event::add('workflow.initialize', array('Arag_WorkFlowEngine', 'initialize'));
 Event::add('workflow.route', array('Arag_WorkFlowEngine', 'route'));

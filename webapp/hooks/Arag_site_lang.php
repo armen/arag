@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php
 
 /**
  * @copyright  (c) 2007, Geert De Deckere

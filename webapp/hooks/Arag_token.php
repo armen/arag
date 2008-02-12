@@ -1,4 +1,4 @@
-<?php defined('SYSPATH') or die('No direct script access.');
+<?php
 
 if (Config::item('token.enable')) {
     Event::add('system.ready', 'arag_token');
