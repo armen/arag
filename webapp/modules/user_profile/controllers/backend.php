@@ -19,15 +19,15 @@ class Backend_Controller extends Controller
         parent::__construct();
 
         // Load the models
-        $this->load->model('UserProfile');   
-        //$this->load->model('Applications');        
-        //$this->load->model('Groups');        
-        $this->load->model('Users', NULL, 'user');        
-        //$this->load->model('Filters');
-        //$this->load->model('Privileges');
+        $this->UserProfile = new UserProfile_Model;   
+        //$this->Applications = new Applications_Model;        
+        //$this->Groups = new Groups_Model;        
+        $this->Users = Model::load('Users', 'user');        
+        //$this->Filters = new Filters_Model;
+        //$this->Privileges = new  Privileges_Model;
 
         // load global Tabs
-        $this->load->component('TabbedBlock', 'global_tabs'); 
+        $this->globals_tabs = new TabbedBlock_Component('global_tabs'); 
 
         // Default page title
         $this->layout->page_title = 'User Profile';
@@ -36,7 +36,7 @@ class Backend_Controller extends Controller
         $this->username = $this->session->get('user.username');
 
         // Global tabbedbock
-        $this->load->component('TabbedBlock', 'global_tabs');
+        $this->global_tabs = new TabbedBlock_Component('global_tabs');
         $this->global_tabs->setTitle(_("User Profile"));
         $this->global_tabs->addItem(_("Personal Information"), 'user_profile/backend/index'); 
         $this->global_tabs->addItem(_("Change Password"), 'user_profile/backend/password'); 
