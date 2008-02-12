@@ -28,10 +28,9 @@ class Privileges_Model extends Model
     // {{{ getFilteredPrivileges
     public function getFilteredPrivileges($appname, $parentId = NULL)
     {
-        $controller = Kohana::instance();
-        $controller->load->model('Filters', 'Filters', 'user');
+        $controller = new Filters_Model;
 
-        $filters = $controller->Filters->getPrivilegeFilters($appname);
+        $filters = $controller->getPrivilegeFilters($appname);
         
         $this->db->select('id, parent_id, label, create_date, created_by, modify_date, modified_by, privilege')->from($this->tableNamePrivileges);
 

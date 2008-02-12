@@ -39,7 +39,7 @@ class Applications_Controller extends Backend_Controller
     // {{{ index
     public function index($page = Null)
     {
-        $this->load->component('PList', 'applications');
+        $applications = new PList_Component('applications');
 
         if ($page != Null && preg_match('|page[a-z_]*:[0-9]*|', $page)) {        
             $name = $this->session->get('user_app_name');
@@ -49,12 +49,12 @@ class Applications_Controller extends Backend_Controller
 
         $this->session->set('user_app_name', $name);
 
-        $this->applications->setResource($this->Applications->getApps($name));
-        $this->applications->setLimit(Arag_Config::get('limit', 0));
-        $this->applications->addColumn('name', _("Name"));        
-        $this->applications->addColumn('default_group', _("Default Group"));
-        $this->applications->addColumn('Applications.getDate', _("Create Date"), PList_Component::VIRTUAL_COLUMN);
-        $this->applications->addAction('user/backend/applications/groups/#name#', _("Edit"), 'edit_action');      
+        $applications->setResource($this->Applications->getApps($name));
+        $applications->setLimit(Arag_Config::get('limit', 0));
+        $applications->addColumn('name', _("Name"));        
+        $applications->addColumn('default_group', _("Default Group"));
+        $applications->addColumn('Applications.getDate', _("Create Date"), PList_Component::VIRTUAL_COLUMN);
+        $applications->addAction('user/backend/applications/groups/#name#', _("Edit"), 'edit_action');      
         
         $this->layout->content = new View('backend/index', array("name" => $name, "flag" => false)); 
     }
@@ -279,7 +279,7 @@ class Applications_Controller extends Backend_Controller
     //{{{ apps_filters
     public function apps_filters($page = NULL)
     {
-        $this->load->component('PList', 'applications');
+        $applications = new PList_Component('applications');
 
         if ($page != Null && preg_match('|page[a-z_]*:[0-9]*|', $page)) {        
             $name = $this->session->get('user_app_name');
@@ -289,17 +289,17 @@ class Applications_Controller extends Backend_Controller
 
         $this->session->set('user_app_name', $name);
 
-        $this->applications->setResource($this->Filters->getFilterProperties($name, false));
-        $this->applications->setLimit(Arag_Config::get('limit', 0));
-        $this->applications->addColumn('appname', _("Name"));        
-        $this->applications->addColumn('created_by', _("Created By"));
-        $this->applications->addColumn('modified_by', _("Modified By"));
-        $this->applications->addColumn('Filters.getDate', _("Create Date"), PList_Component::VIRTUAL_COLUMN);
-        $this->applications->addColumn('Filters.getModifyDate', _("Modify Date"), PList_Component::VIRTUAL_COLUMN);      
-        $this->applications->addAction('user/backend/applications/app_filters/#appname#', _("Edit"), 'edit_action');
-        $this->applications->addAction('user/backend/applications/app_filters_delete/#appname#', _("Delete"), 'delete_action', 'Filters.isDeletable');
-        $this->applications->addAction("user/backend/applications/app_filters_delete/", _("Delete"), 'delete_action', PList_Component::GROUP_ACTION);
-        $this->applications->setGroupActionParameterName('appname');
+        $applications->setResource($this->Filters->getFilterProperties($name, false));
+        $applications->setLimit(Arag_Config::get('limit', 0));
+        $applications->addColumn('appname', _("Name"));        
+        $applications->addColumn('created_by', _("Created By"));
+        $applications->addColumn('modified_by', _("Modified By"));
+        $applications->addColumn('Filters.getDate', _("Create Date"), PList_Component::VIRTUAL_COLUMN);
+        $applications->addColumn('Filters.getModifyDate', _("Modify Date"), PList_Component::VIRTUAL_COLUMN);      
+        $applications->addAction('user/backend/applications/app_filters/#appname#', _("Edit"), 'edit_action');
+        $applications->addAction('user/backend/applications/app_filters_delete/#appname#', _("Delete"), 'delete_action', 'Filters.isDeletable');
+        $applications->addAction("user/backend/applications/app_filters_delete/", _("Delete"), 'delete_action', PList_Component::GROUP_ACTION);
+        $applications->setGroupActionParameterName('appname');
         
         $this->layout->content = new View('backend/index', array("name" => $name, "flag" => true));
     }
@@ -340,26 +340,26 @@ class Applications_Controller extends Backend_Controller
             $flagsaved = $this->session->get_once('filter_saved');
         }
 
-        $this->load->component('PList', 'filters_pro');
+        $filters_pro = new PList_Component('filters_pro');
 
-        $this->filters_pro->setResource($this->Filters->getFilterProperties($appname));
-        $this->filters_pro->setLimit(Arag_Config::get('limit', 0));
-        $this->filters_pro->addColumn('appname', _("Name"));        
-        $this->filters_pro->addColumn('created_by', _("Created By"));
-        $this->filters_pro->addColumn('modified_by', _("Modified By"));
-        $this->filters_pro->addColumn('Filters.getDate', _("Create Date"), PList_Component::VIRTUAL_COLUMN);
-        $this->filters_pro->addColumn('Filters.getModifyDate', _("Modify Date"), PList_Component::VIRTUAL_COLUMN);
+        $filters_pro->setResource($this->Filters->getFilterProperties($appname));
+        $filters_pro->setLimit(Arag_Config::get('limit', 0));
+        $filters_pro->addColumn('appname', _("Name"));        
+        $filters_pro->addColumn('created_by', _("Created By"));
+        $filters_pro->addColumn('modified_by', _("Modified By"));
+        $filters_pro->addColumn('Filters.getDate', _("Create Date"), PList_Component::VIRTUAL_COLUMN);
+        $filters_pro->addColumn('Filters.getModifyDate', _("Modify Date"), PList_Component::VIRTUAL_COLUMN);
 
-        $this->load->component('PList', 'filters');
+        $filters = new PList_Component('filters');
 
-        $this->filters->setResource($this->Filters->getFilters($appname));
-        $this->filters->setLimit(Arag_Config::get('limit', 0));
-        $this->filters->addColumn('filter', _("Title"));        
-        $this->filters->addColumn('id', Null, PList_Component::HIDDEN_COLUMN);
-        $this->filters->addAction('user/backend/applications/filters_edit/'.$appname.'/#id#', _("Edit"), 'edit_action');
-        $this->filters->addAction('user/backend/applications/filters_delete/'.$appname.'/#id#', _("delete"), 'delete_action');
-        $this->filters->addAction("user/backend/applications/filters_delete/".$appname, _("Delete"), 'delete_action', PList_Component::GROUP_ACTION);
-        $this->filters->setGroupActionParameterName('id');
+        $filters->setResource($this->Filters->getFilters($appname));
+        $filters->setLimit(Arag_Config::get('limit', 0));
+        $filters->addColumn('filter', _("Title"));        
+        $filters->addColumn('id', Null, PList_Component::HIDDEN_COLUMN);
+        $filters->addAction('user/backend/applications/filters_edit/'.$appname.'/#id#', _("Edit"), 'edit_action');
+        $filters->addAction('user/backend/applications/filters_delete/'.$appname.'/#id#', _("delete"), 'delete_action');
+        $filters->addAction("user/backend/applications/filters_delete/".$appname, _("Delete"), 'delete_action', PList_Component::GROUP_ACTION);
+        $filters->setGroupActionParameterName('id');
         
         $this->layout->content = new View('backend/filters', array('appname' => $appname, 'flagsaved' => $flagsaved));
     }

@@ -19,14 +19,14 @@ class Backend_Controller extends Controller
         parent::__construct();
 
         // Load the models
-        $this->load->model('Applications');        
-        $this->load->model('Groups');        
-        $this->load->model('Users');        
-        $this->load->model('Filters');
-        $this->load->model('Privileges');
+        $this->Applications = new Applications_Model;  
+        $this->Groups       = new Groups_Model;
+        $this->Users        = new Users_Model;
+        $this->Filters      = new Filters_Model;
+        $this->Privileges   = new Privileges_Model;
 
         // load global Tabs
-        $this->load->component('TabbedBlock', 'global_tabs'); 
+        $this->global_tabs  = new TabbedBlock_Component('global_tabs'); 
 
         // Default page title
         $this->layout->page_title = 'User Management';
@@ -48,7 +48,7 @@ class Backend_Controller extends Controller
     // {{{ _create_users_plist
     protected function _create_users_plist($id, $appname = NULL, $groupname = NULL, $user = NULL, $flagappname = true)
     {
-        $this->load->component('PList', 'users');
+        $this->users = new PList_Component('users');
  
         $this->users->setResource($this->Users->getUsers($id, $appname, $groupname, $user, $flagappname));
         $this->users->setLimit(Arag_Config::get('limit', 0));
@@ -78,22 +78,22 @@ class Backend_Controller extends Controller
     // {{{ _create_privileges_list
     protected function _create_privileges_list($appname, $parentid = NULL)
     {
-        $this->load->component('PList', 'privileges');
+        $privileges = new PList_Component('privileges');
 
-        $this->privileges->setResource($this->Privileges->getFilteredPrivileges($appname, $parentid));
-        $this->privileges->setLimit(Arag_Config::get('limit', 0));
-        $this->privileges->addColumn('id', _("ID"), PList_Component::HIDDEN_COLUMN);        
-        $this->privileges->addColumn('label', _("Label"));
-        $this->privileges->addColumn('modified_by', _("Modified By"));
-        $this->privileges->addColumn('created_by', _("Created By"));
-        $this->privileges->addColumn('Applications.getDate', _("Create Date"), PList_Component::VIRTUAL_COLUMN);
-        $this->privileges->addColumn('Applications.getModifyDate', _("Modify Date"), PList_Component::VIRTUAL_COLUMN);
-        $this->privileges->addColumn('privilege', _("Privilege"));
-        $this->privileges->addAction('user/backend/applications/privileges_edit/#id#', _("Edit"), 'edit_action');
-        $this->privileges->addAction('user/backend/applications/privileges/#id#', _("View"), 'view_action', 'Privileges.isParent');
-        $this->privileges->addAction('user/backend/applications/privileges_delete/#id#', _("Delete"), 'delete_action');
-        $this->privileges->addAction("user/backend/applications/privileges_delete", _("Delete"), 'delete_action', PList_Component::GROUP_ACTION);
-        $this->privileges->setGroupActionParameterName('id'); 
+        $privileges->setResource($this->Privileges->getFilteredPrivileges($appname, $parentid));
+        $privileges->setLimit(Arag_Config::get('limit', 0));
+        $privileges->addColumn('id', _("ID"), PList_Component::HIDDEN_COLUMN);        
+        $privileges->addColumn('label', _("Label"));
+        $privileges->addColumn('modified_by', _("Modified By"));
+        $privileges->addColumn('created_by', _("Created By"));
+        $privileges->addColumn('Applications.getDate', _("Create Date"), PList_Component::VIRTUAL_COLUMN);
+        $privileges->addColumn('Applications.getModifyDate', _("Modify Date"), PList_Component::VIRTUAL_COLUMN);
+        $privileges->addColumn('privilege', _("Privilege"));
+        $privileges->addAction('user/backend/applications/privileges_edit/#id#', _("Edit"), 'edit_action');
+        $privileges->addAction('user/backend/applications/privileges/#id#', _("View"), 'view_action', 'Privileges.isParent');
+        $privileges->addAction('user/backend/applications/privileges_delete/#id#', _("Delete"), 'delete_action');
+        $privileges->addAction("user/backend/applications/privileges_delete", _("Delete"), 'delete_action', PList_Component::GROUP_ACTION);
+        $privileges->setGroupActionParameterName('id'); 
 
         $data = array("parentid"  => $parentid,
                       "flagsaved" => $this->session->get_once('privileges_add_saved'));
@@ -104,7 +104,7 @@ class Backend_Controller extends Controller
     // {{{ _create_groups_list
     protected function _create_groups_list($appname)
     {
-        $this->load->component('PList', 'groups');
+        $this->groups = new PList_Component('groups');
 
         $this->global_tabs->setParameter('name', $appname);
 

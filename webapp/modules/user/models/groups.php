@@ -175,10 +175,9 @@ class Groups_Model extends Model
         foreach ($groups as $group) {
             $this->db->delete($this->tableNameGroups, Array('id' => $group));
             
-            $controller = Kohana::instance();
-            $controller->load->model('Users', 'Users', 'user');
+            $controller = new Users_Model;
 
-            $anonymous = $controller->Users->deleteUsers(NULL, $group, $author);
+            $anonymous = $controller->deleteUsers(NULL, $group, $author);
         }
     }
     // }}}

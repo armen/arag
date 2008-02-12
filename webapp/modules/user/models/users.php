@@ -218,10 +218,9 @@ class Users_Model extends Model
     // {{{ createUser
     public function createUser($appname, $email, $name, $lastname, $groupname, $username, $password, $author, $verify_string = NULL, $verified =  1)
     {
-        $controller = Kohana::instance();
-        $controller->load->model('Groups', 'Groups', 'user');
+        $controller = new Groups_Model;
 
-        $group = $controller->Groups->getGroup(NULL, $appname, $groupname);
+        $group = $controller->getGroup(NULL, $appname, $groupname);
         
         $row = Array('username'      => $username, 
                      'create_date'   => time(),
@@ -237,17 +236,16 @@ class Users_Model extends Model
                      'verified'      => $verified,
                      'verify_string' => $verify_string);
         
-        $controller->Groups->changeModifiers($group['id'], $author);
+        $controller->changeModifiers($group['id'], $author);
         $this->db->insert($this->tableNameUsers, $row);
     }
     // }}}
     // {{{ editUser
     public function editUser($appname, $email, $name, $lastname, $groupname, $username, $password = "", $blocked, $author)
     {
-        $controller = Kohana::instance();
-        $controller->load->model('Groups', 'Groups', 'user');
+        $controller = new Groups_Model;
 
-        $group = $controller->Groups->getGroup(NULL, $appname, $groupname);
+        $group = $controller->getGroup(NULL, $appname, $groupname);
 
         if ($blocked) {
             $blocked = 1;
@@ -269,7 +267,7 @@ class Users_Model extends Model
             $row['password'] = sha1($password);
         }
 
-        $controller->Groups->changeModifiers($group['id'], $author);
+        $controller->changeModifiers($group['id'], $author);
         $this->db->where('username', $username);
         $this->db->update($this->tableNameUsers, $row);
     }
@@ -299,11 +297,10 @@ class Users_Model extends Model
     public function deleteUsers($usernames = NULL, $groupid = NULL, $author)
     {   
         if ($groupid == NULL) {
-            $controller = Kohana::instance();
-            $controller->load->model('Groups', 'Groups', 'user');
+            $controller = new Groups_Model;
             foreach ($usernames as $username) {
                 $row = $this->getUserProfile($username);
-                $controller->Groups->changeModifiers($row['group_id'], $author);
+                $controller->changeModifiers($row['group_id'], $author);
                 $this->db->delete($this->tableNameUsers, Array('username' => $username));
             }
         } else {
