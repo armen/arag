@@ -13,7 +13,7 @@ class Entry_Controller extends Backend_Controller
     // {{{ index
     public function index()
     {
-        $entries = new PList_Component;
+        $entries = new PList_Component('entries');
 
         $entries->setResource($this->Blog->getEntries());
         $entries->setLimit(Arag_Config::get('limit', 0));
@@ -142,7 +142,7 @@ class Entry_Controller extends Backend_Controller
     {
         $this->global_tabs->setParameter('id', $id);        
         
-        $entry = new PList_Component;
+        $entry = new PList_Component('entry');
 
         $entry->setResource(Array($this->Blog->getEntry($id)));
         $entry->addColumn('Blog.getDate', Null, PList_Component::VIRTUAL_COLUMN);        

@@ -23,7 +23,7 @@ class Frontend_Controller extends Controller
     // {{{ index
     public function index()
     {
-        $entry = new PList_Component;
+        $entry = new PList_Component('entry');
         $entry->setLimit(Arag_Config::get('post_limit', 0));
         $entry->setResource($this->Blog->getEntries(True));
         $entry->addColumn('Blog.getDate', Null, PList_Component::VIRTUAL_COLUMN);
@@ -37,7 +37,7 @@ class Frontend_Controller extends Controller
     // {{{ view
     public function view($id, $extended = False)
     {
-        $entry = new PList_Component;
+        $entry = new PList_Component('entry');
         $entry->setResource(Array($this->Blog->getEntry($id, True)));
         $entry->addColumn('Blog.getDate', Null, PList_Component::VIRTUAL_COLUMN);
 
