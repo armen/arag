@@ -29,7 +29,7 @@ class Frontend_Controller extends Controller
         $entry->addColumn('Blog.getDate', Null, PList_Component::VIRTUAL_COLUMN);
 
         // Load the Comment component, comment ain't used but just loaded
-        $comments = new Comment_Component;
+        $comments = new Comment_Component('comments');
 
         $this->layout->content = new View('frontend/view', Array('entry_uri' => '/blog/frontend/view/#id#/extended'));    
     }
@@ -41,7 +41,7 @@ class Frontend_Controller extends Controller
         $entry->setResource(Array($this->Blog->getEntry($id, True)));
         $entry->addColumn('Blog.getDate', Null, PList_Component::VIRTUAL_COLUMN);
 
-        $comments = new Comment_Component;
+        $comments = new Comment_Component('comments');
         $comments->setReferenceId($id);
         $comments->setPostUri('blog/frontend/post_comment');
 
@@ -60,19 +60,19 @@ class Frontend_Controller extends Controller
     // {{{ post_comment_write
     public function post_comment_write()
     {
-        $this->load->model('Comment', Null, 'comment');
+        $Comment = Model::load('Comment', 'comment');
 
         $entryId = $this->input->post('reference_id');
 
-        $this->Comment->createComment('blog', 
-                                      $entryId,
-                                      $this->session->get('user.username'),
-                                      $this->input->post('comment'),
-                                      0,
-                                      0,
-                                      $this->input->post('name'),
-                                      $this->input->post('email'),
-                                      $this->input->post('homepage'));
+        $Comment->createComment('blog', 
+                                 $entryId,
+                                 $this->session->get('user.username'),
+                                 $this->input->post('comment'),
+                                 0,
+                                 0,
+                                 $this->input->post('name'),
+                                 $this->input->post('email'),
+                                 $this->input->post('homepage'));
 
         $this->view($entryId, 'extended');
     }
