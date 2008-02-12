@@ -1,5 +1,6 @@
 <?php
 
+spl_autoload_extensions(EXT);
 spl_autoload_register(array('Arag', 'auto_load'));
 
 class Arag {
