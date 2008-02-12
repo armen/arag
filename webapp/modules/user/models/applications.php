@@ -18,12 +18,12 @@ class Applications_Model extends Model
     // {{{ Constructor
     function __construct()
     {
-        parent::__construct('default');
+        parent::__construct(new Database('default'));
 
         // set tables' names
-        $this->tableNameApps   = "user_applications";
-        $this->tableNameGroups = "user_groups";
-        $this->tableNameUsers  = "user_users";
+        $this->tableNameApps   = 'user_applications';
+        $this->tableNameGroups = 'user_groups';
+        $this->tableNameUsers  = 'user_users';
     }
     // }}}
     // {{{ getApps

@@ -17,10 +17,10 @@ class Filters_Model extends Model
     // {{{ Constructor
     function __construct()
     {
-        parent::__construct('default');
+        parent::__construct(new Database('default'));
 
         // set tables' names
-        $this->tableNameFilters = "user_filters";
+        $this->tableNameFilters = 'user_filters';
     }
     // }}}
     // {{{ getFilters

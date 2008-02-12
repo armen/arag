@@ -17,12 +17,11 @@ class Privileges_Model extends Model
     // {{{ Constructor
     function __construct()
     {
-        parent::__construct('default');
+        parent::__construct(new Database('default'));
 
         // set tables' names
-        $this->tableNamePrivileges = "user_privileges";        
-        $this->tableNameGroups     = "user_groups";
-
+        $this->tableNamePrivileges = 'user_privileges';        
+        $this->tableNameGroups     = 'user_groups';
     }
     // }}}
     // {{{ getFilteredPrivileges

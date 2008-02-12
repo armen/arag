@@ -21,12 +21,12 @@ class Users_Model extends Model
     // {{{ Constructor
     function __construct()
     {
-        parent::__construct('default');
+        parent::__construct(new Database('default'));
 
         // Set table name
-        $this->tableNameUsers  = "user_users";
-        $this->tableNameGroups = "user_groups";
-        $this->tableNameApps   = "user_applications";
+        $this->tableNameUsers  = 'user_users';
+        $this->tableNameGroups = 'user_groups';
+        $this->tableNameApps   = 'user_applications';
     }
     // }}}
     // {{{ check

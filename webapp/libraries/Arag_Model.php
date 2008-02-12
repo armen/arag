@@ -21,16 +21,22 @@
 class Model extends Model_Core {
 
     // {{{ Constructor
-    public function __construct($config = Null)
+    public function __construct($database = Null)
     {
-        $config = defined('MASTERAPP') ? 'default' : $config;
-        $config = ($config == Null) ? Config::item('sites/'.APPNAME.'.database') : $config;
+        static $db;
 
-        // Load the database into the model
-        if (Event::has_run('system.pre_controller')) {
-            $this->db = isset(Kohana::instance()->db) ? Kohana::instance()->db : new Database($config);
+        if (is_object($database) AND ($database instanceof Database)) {
+            // Use the passed database instance
+            $this->db = $database;
         } else {
-            $this->db = new Database($config);
+
+            $config = defined('MASTERAPP') ? 'default' : Config::item('sites/'.APPNAME.'.database');
+        
+            // Load the default database if necessary
+            ($db === NULL) and $db = new Database($config);
+
+            // Use the static database
+            $this->db = $db;
         }
     }
     // }}}

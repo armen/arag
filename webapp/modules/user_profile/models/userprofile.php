@@ -11,10 +11,10 @@ class UserProfile_Model extends Model
     // {{{ Constructor
     function __construct()
     {
-        parent::__construct('default');
+        parent::__construct(new Database('default'));
 
         // Set table name
-        $this->tableNameProfiles  = "user_profiles";
+        $this->tableNameProfiles  = 'user_profiles';
     }
     // }}}
     // {{{ editProfile
