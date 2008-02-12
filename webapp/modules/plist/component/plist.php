@@ -315,9 +315,12 @@ class PList_Component extends Component implements IteratorAggregate, ArrayAcces
         if (strpos($callback, '.') !== false) {
             // Model and function separated with a dot
             list($modelName, $functionName) = explode('.', $callback);
-
-            if (method_exists($modelName.'_Model', $functionName)) {
-                return call_user_func_array(array($modelName.'_Model', $functionName), $arg);
+            
+            $modelName .= '_Model';
+            $modelName  = new $modelName;
+            
+            if (method_exists($modelName, $functionName)) {
+                return call_user_func_array(array($modelName, $functionName), $arg);
             }
         
         } else if (strpos($callback, '::') !== false) {
