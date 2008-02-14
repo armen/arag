@@ -665,6 +665,9 @@ input, textarea, select {
     padding           : 5px;
     color             : #888;    
 }
+.comment_body li {
+    list-style-type : disc; 
+}
 /* }}} end of Comment */
 /* {{{ Profiler */
 #kohana-profiler {
