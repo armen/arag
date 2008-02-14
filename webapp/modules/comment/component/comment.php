@@ -9,8 +9,9 @@
 /*
  * Class for create paginated list
  * 
- * @author  Armen Baghumian <armen@OpenSourceClub.org>
- * @since   PHP 5
+ * @author       Armen Baghumian <armen@OpenSourceClub.org>
+ * @modified by  Sasan Rose      <sasan.rose@gmail.com>
+ * @since        PHP 5
  */
 
 class Comment_Component extends Component
@@ -21,6 +22,7 @@ class Comment_Component extends Component
     private $referenceId;
     private $postUri;
     private $onlyComment;
+    private $title;
     private $comments = Null;
 
     // }}}
@@ -32,6 +34,7 @@ class Comment_Component extends Component
         $this->setModule();
         $this->setPostUri();
         $this->onlyComment(False);
+        $this->title = _("Comments");
     }
     // }}}
     // {{{ setReferenceId
@@ -52,6 +55,12 @@ class Comment_Component extends Component
         $this->postUri = empty($uri) ? Router::$current_uri : $uri;
     }
     // }}}    
+    // {{{ setTitle
+    public function setTitle ($title = Null)
+    {
+        $this->title = $title;
+    }
+    // }}}
     // {{{ getReferenceId
     public function getReferenceId()
     {
@@ -74,6 +83,12 @@ class Comment_Component extends Component
     public function getComments()
     {
         return $this->comments;
+    }
+    // }}}
+    // {{{ getTitle
+    public function getTitle ($title = Null)
+    {
+        return $this->title;
     }
     // }}}
     // {{{ onlyComment

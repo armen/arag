@@ -5,10 +5,11 @@
 *}
 
 {assign var=comments value=$component->getComments()}
+{assign var=title value=$component->getTitle()}
 
 {if count($comments)}
     <div class="comments">
-        <h3>_("Comments")</h3>
+        <h3>{$title}</h3>
         {foreach from=$comments item=_comment key=key}
             <div class="comment">
                 <div class="comment_posted">
