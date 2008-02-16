@@ -1,6 +1,6 @@
 ﻿==== Arag Controllers ====
 
-In Arag project has its own controller class which your controller should extends the parent controller class so that it can inherit all its functions.
+Arag project has its own controller class which your controller should extends the parent controller class so that it can inherit all its functions.
 
 For example:
 
