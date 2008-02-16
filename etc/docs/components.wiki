@@ -66,7 +66,7 @@ and another example
   $this->BlogList->setLimit(4);
   $this->BlogList->addColumn('subject', 'Subject');        
   $this->BlogList->addColumn('author', 'Author');
-  $this->BlogList->addColumn('BlogModel.getDate', 'Create Date', PList::VIRTUAL_COLUMN);
+  $this->BlogList->addColumn('BlogModel.getDate', 'Create Date', PList_Component::VIRTUAL_COLUMN);
   $this->BlogList->addAction('blog/backend/edit/#id#', 'Edit', 'edit_action', 'BlogModel.editIsDisble');
   $this->BlogList->addAction('blog/backend/delete/#id#', 'Delete');
   
@@ -109,9 +109,9 @@ Now lets create a directory listing from "/tmp" directory:
   $this->directory->setResource(new RecursiveDirectoryIterator('/tmp'));
   $this->directory->setLimit(4);
   $this->directory->addColumn('Directory');
-  $this->directory->addColumn('getOwner', 'Owner', PList::VIRTUAL_COLUMN);
-  $this->directory->addColumn('getGroup', 'Group', PList::VIRTUAL_COLUMN);
-  $this->directory->addColumn('getSize', 'Size', PList::VIRTUAL_COLUMN);
+  $this->directory->addColumn('getOwner', 'Owner', PList_Component::VIRTUAL_COLUMN);
+  $this->directory->addColumn('getGroup', 'Group', PList_Component::VIRTUAL_COLUMN);
+  $this->directory->addColumn('getSize', 'Size', PList_Component::VIRTUAL_COLUMN);
   
   // Template
   {arag_plist name="directory"}
@@ -130,7 +130,7 @@ If you are interested about callable methods of "PList" component which you can 
 
 With Arag "Plist", it is also possible to add group actions to your list. So that you give your list the ability of doing an action on more than one item of your list simultaneously. To add a group action to you list you should use the following syntax in which, the first parameter is the URL of the action, the second is the title and the third one specifies the icon which the action uses:
 
-  $this->blog->addAction('blog/backend/gdelete', 'Delete', 'delete_action', PList::GROUP_ACTION);
+  $this->blog->addAction('blog/backend/gdelete', 'Delete', 'delete_action', PList_Component::GROUP_ACTION);
 
 === TabbedBlock Component ===
 
