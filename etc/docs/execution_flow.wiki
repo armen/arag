@@ -1,47 +1,36 @@
-==== Execution flow ====
+﻿==== Execution flow ====
 
-Execution Flow is bihavior of Arag for calling methods in Controllers .
+Execution Flow is bihavior of Arag for calling methods in Controllers.
 
-== Hidden Functions ==
+=== GET and POST methods ===
 
-If controller's function starts with underline "_", that function will be hide from outside access.
-
-For example :
-
-  function _example
-  {
-    Statements
-  }
-
-in above example, If some one tries to call "example", system returns error 404 .
-
-== GET and POST method ==
-
-Arag implements new feature for calling controller's method more easy and understandable . When a function name calls within GET method, Arag calls "<functionname>_read" method in controller. Also if function name calls within POST methos, Arag calls "<functionname_write>" method in controller. If function calls within GET method and "<functionname>_read" does not exist , or function name calls within POST method and "<functionname>_write" does not exist, Arag automatically calls "<functionname>" function .
+Arag implements new feature for calling controller's method more easy and understandable. When a function name calls within GET method, Arag calls "<functionname>_read" method in controller. Also if function name calls within POST methos, Arag calls "<functionname_write>" method in controller. If function calls within GET method and "<functionname>_read" does not exist, or function name calls within POST method and "<functionname>_write" does not exist, Arag automatically calls "<functionname>" function.
 
 For example :
 
-  class MyController extends Controller
-  {
-    function example_read()
+    class MyController extends Controller
     {
-      Statements
+        public function example_read()
+        {
+            // Statements
+        }
+  
+        public function example_write()
+        {
+            // Statements
+        }
+  
+        public function exmaple()
+        {
+            // Statements
+        }
     }
-    function example_write()
-    {
-      Statements
-    }
-    function exmaple()
-    {
-      Statements
-    }
-  }
 
-If you load address "MyController/example", Arag calls "example_read()" because method is GET . But if you submit a form to "MyController/example" by POST method , Arag calls "example_write()".
-Although , Arag calls "example" function automatically, If could not find them .
+If you load address "MyController/example", Arag calls "example_read()" because method is GET. But if you submit a form to "MyController/example" by POST method, Arag calls "example_write()".
+Although, Arag calls "example" function automatically, If could not find none of them.
 
-== Validation and Error Handling ==
+=== Validation and Error Handling ===
 
-Arag automatically checks validator file , loads it's rules if file exists , then run validation . If error occurs, Arag calls "<function>_error" .
+Arag automatically checks validator file, loads it's rules if file exists, then run validation. If error occurs, Arag calls "<function>_error".
 
-For example if function is "example()", Arag calls "example_error()" if error occurs . If function is "example_read()", Arag calls "example_read_error()".
+For example if function is "example()", Arag calls "example_error()" if error occurs. If function is "example_read()", Arag calls "example_read_error()".
