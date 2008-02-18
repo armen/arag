@@ -23,7 +23,7 @@
                     {/if}
                 </div>
                 <div class="comment_body">
-                    {$_comment->comment|smarty:nodefaults}
+                    {$_comment->comment|nl2br|smarty:nodefaults}
                 </div>
             </div>
         {/foreach}
