@@ -15,6 +15,13 @@ class Frontend_Controller extends Controller
 
         // Load the model
         $this->Blog = new Blog_Model;
+
+        // Validation messages
+        $this->validation->message('required', _("%s is required."));
+        $this->validation->message('numeric', _("%s should be numeric."));
+        $this->validation->message('standard_text', _("%s should be ordinary text."));
+        $this->validation->message('email', _("%s should be a valid email."));
+        $this->validation->message('url', _("%s should be a valid url."));
        
         // Default page title
         $this->layout->page_title = 'Blog';
@@ -35,6 +42,7 @@ class Frontend_Controller extends Controller
     }
     // }}}
     // {{{ view
+    // {{{ view
     public function view($id, $extended = False)
     {
         $entry = new PList_Component('entry');
@@ -51,30 +59,59 @@ class Frontend_Controller extends Controller
         $this->layout->content = new View('frontend/view', $data);
     }
     // }}}
+    // {{{ view_validate
+    public function view_validate()
+    {
+        $this->validation->name(0, _("ID"))->add_rules(0, 'required', 'valid::numeric', array($this, '_check_entry'));
+        $this->validation->add_rules(1, 'required', 'valid::alpha');
+
+        return $this->validation->validate();        
+    }
+    // }}}
     // {{{ view_error
     public function view_error()
     {
         $this->_invalid_request('blog/frontend/index');
     }
     // }}}
+    // }}}
+    // {{{ post
     // {{{ post_comment_write
     public function post_comment_write()
     {
-        $Comment = Model::load('Comment', 'comment');
+        $comment = Model::load('Comment', 'comment');
 
         $entryId = $this->input->post('reference_id');
 
-        $Comment->createComment('blog', 
-                                 $entryId,
-                                 $this->session->get('user.username'),
-                                 $this->input->post('comment'),
-                                 0,
-                                 0,
-                                 $this->input->post('name'),
-                                 $this->input->post('email'),
-                                 $this->input->post('homepage'));
+        $comment->createComment('blog', 
+                                $entryId,
+                                $this->session->get('user.username'),
+                                $this->input->post('comment'),
+                                0,
+                                0,
+                                $this->input->post('name'),
+                                $this->input->post('email'),
+                                $this->input->post('homepage'));
 
         $this->view($entryId, 'extended');
+    }
+    // }}}
+    // {{{ post_comment_validate_write
+    public function post_comment_validate_write()
+    {
+        $this->validation->name('reference_id', _("Reference Id"))->add_rules('reference_id', 'required', 'valid::numeric', array($this, '_check_entry'));
+        $this->validation->name('name', _("Name"))->add_rules('name', 'required', 'valid::standard_text')->post_filter('trim', 'name');
+        $this->validation->name('email', _("Email"))->add_rules('email', 'valid::email_rfc')->post_filter('trim', 'name');
+        $this->validation->name('homepage', _("Homepage"))->add_rules('homepage', 'valid::url')->post_filter('trim', 'name');
+        $this->validation->name('comment', _("Comment"))->add_rules('comment', 'required')->post_filter('security::xss_clean', 'name');
+
+        return $this->validation->validate();
+    }
+    // }}}
+    // {{{ post_comment_write_error
+    public function post_comment_write_error()
+    {
+        $this->view($this->input->post('reference_id'), 'extended');
     }
     // }}}
     // {{{ post_comment_read
@@ -83,11 +120,6 @@ class Frontend_Controller extends Controller
         $this->_invalid_request('blog/frontend/index');    
     }
     // }}}    
-    // {{{ post_comment_write_error
-    public function post_comment_write_error()
-    {
-        $this->view($this->input->post('reference_id'), 'extended');
-    }
     // }}}
     // {{{ _check_entry
     public function _check_entry($id)

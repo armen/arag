@@ -32,6 +32,7 @@ class Entry_Controller extends Backend_Controller
         $this->layout->content = new View('backend/index');
     }
     // }}}
+    // {{{ post
     // {{{ post_read
     public function post_read()
     {
@@ -56,12 +57,25 @@ class Entry_Controller extends Backend_Controller
         url::redirect('blog/backend/entry');
     }
     // }}}
+    // {{{ post_validate_write
+    public function post_validate_write()
+    {
+        $this->validation->name('subject', _("Subject"))->add_rules('subject', 'required', 'valid::standard_text')->post_filter('trim', 'subject');
+        $this->validation->name('entry', _("Entry Body"))->add_rules('entry', 'required')->post_filter('security::xss_clean', 'entry');
+        $this->validation->name('extended_entry', _("Extended Entry"))->post_filter('security::xss_clean', 'extended_entry');
+        $this->validation->add_rules('status', 'valid::numeric');
+        
+        return $this->validation->validate();
+    }
+    // }}}
     // {{{ post_write_error
     public function post_write_error()
     {
         $this->post_read();
     }
     // }}}
+    // }}}
+    // {{{ edit
     // {{{ edit_read
     public function edit_read($id)
     {
@@ -72,6 +86,14 @@ class Entry_Controller extends Backend_Controller
                         'status_list' => $this->Blog->getStatusOptions());
 
         $this->layout->content = new View('backend/edit', array_merge($data, $entry));
+    }
+    // }}}
+    // {{{ edit_validate_read
+    public function edit_validate_read()
+    {
+        $this->validation->name(0, _("ID"))->add_rules(0, 'required', 'valid::numeric', array($this, '_check_entry'));
+
+        return $this->validation->validate();
     }
     // }}}
     // {{{ edit_read_error
@@ -95,6 +117,18 @@ class Entry_Controller extends Backend_Controller
         url::redirect('blog/backend/entry');
     }
     // }}}
+    // {{{ edit_validate_write
+    public function edit_validate_write()
+    {
+        $this->validation->name('id', _("ID"))->add_rules('id', 'required', 'valid::numeric', array($this, '_check_entry'));
+        $this->validation->name('subject', _("Subject"))->add_rules('id', 'required', 'valid::standard_text')->post_filter('trim', 'subject');
+        $this->validation->name('entry', _("Entry Body"))->add_rules('entry', 'required')->post_filter('security::xss_clean', 'entry');
+        $this->validation->name('extended_entry', _("Extended Entry"))->post_filter('security::xss_clean', 'extended_entry');
+        $this->validation->add_rules('status', 'valid::numeric');
+
+        return $this->validation->validate();
+    }
+    // }}}    
     // {{{ edit_write_error
     public function edit_write_error()
     {
@@ -106,6 +140,8 @@ class Entry_Controller extends Backend_Controller
         $this->layout->content = new View('backend/edit', $data);
     }
     // }}}
+    // }}}
+    // {{{ delete
     // {{{ delete_read
     public function delete_read($id)
     {
@@ -115,6 +151,14 @@ class Entry_Controller extends Backend_Controller
                       'subject' => $this->Blog->getEntrySubject($id));
 
         $this->layout->content = new View('backend/delete', $data);
+    }
+    // }}}
+    // {{{ delete_validate_read
+    public function delete_validate_read()
+    {
+        $this->validation->name(0, _("ID"))->add_rules(0, 'required', 'valid::numeric', array($this, '_check_entry'));
+
+        return $this->validation->validate();        
     }
     // }}}
     // {{{ delete_read_error
@@ -131,12 +175,22 @@ class Entry_Controller extends Backend_Controller
         url::redirect('blog/backend/entry');
     }
     // }}}    
+    // {{{ delete_validate_write
+    public function delete_validate_write()
+    {
+        $this->validation->name('id', _("ID"))->add_rules('id', 'required', 'valid::numeric', array($this, '_check_entry'));
+
+        return $this->validation->validate();        
+    }
+    // }}}    
     // {{{ delete_write_error
     public function delete_write_error()
     {
         $this->_invalid_request('blog/backend/entry');        
     }
     // }}}
+    // }}}
+    // {{{ preview
     // {{{ preview
     public function preview($id)
     {
@@ -154,11 +208,20 @@ class Entry_Controller extends Backend_Controller
         $this->layout->content = new View('backend/preview', Array('extended'  => True, 'entry_uri' => '/blog/backend/entry/preview/#id#'));
     }
     // }}}
+    // {{{ preview_validate
+    function preview_validate()
+    {
+        $this->validation->name(0, _("ID"))->add_rules(0, 'required', 'valid::numeric', array($this, '_check_entry'));
+
+        return $this->validation->validate();        
+    }
+    // }}}
     // {{{ preview_error
     public function preview_error()
     {
         $this->_invalid_request('blog/backend/entry');
     }
+    // }}}
     // }}}
     // {{{ _check_entry
     public function _check_entry($id)

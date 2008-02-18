@@ -38,6 +38,15 @@ class Settings_Controller extends Backend_Controller
         url::redirect('blog/backend/settings/index');
     }
     // }}}
+    // {{{ index_validate_write
+    public function index_validate_write()
+    {
+        $this->validation->name('limit', _("Limit"))->add_rules('limit', 'valid::numeric');
+        $this->validation->name('post_limit', _("Post Limit"))->add_rules('post_limit', 'valid::numeric');
+        
+        return $this->validation->validate();
+    }
+    // }}}
     // {{{ index_write_error
     public function index_write_error()
     {

@@ -23,6 +23,7 @@ class Controller extends Controller_Core {
 
     public $layout = Null;
     public $smarty;
+    public $validation;
 
     // }}}
     // {{{ Constructor
@@ -33,6 +34,8 @@ class Controller extends Controller_Core {
         if (Config::item('smarty.integration') == True) {
             $this->smarty = new Arag_Smarty;
         }
+
+        $this->validation = Validation::factory();        
 
         if ($this->layout == Null) {
             $this->layout = (strpos(Router::$directory, 'backend') !== False || Router::$controller === 'backend') 
@@ -119,40 +122,22 @@ class Controller extends Controller_Core {
         Router::$method    = $method;
         Router::$arguments = $arguments;
 
+        $alt_validator = $method . '_validate_' . Router::$request_method;
+        $validator     = $method . '_validate';
+        $validator     = method_exists($this, $validator) ? $validator : (method_exists($this, $alt_validator) ? $alt_validator : False);
+
         $validated = True;
 
-        if (file_exists($validator_file = str_replace('controllers', 'validator', Router::$directory.Router::$controller.EXT))) {
-            
-            include($validator_file);
+        if ($validator != False) {
+            $validated = $this->_call($validator, $arguments);
 
-            $_validator = isset($validator[$method][Router::$request_method]['rules']) ? 
-                          $validator[$method][Router::$request_method]['rules'] : 
-                          (isset($validator[$method]['rules']) ? $validator[$method]['rules'] : Null);
-            
-            if (is_array($_validator)) {
-
-                $this->validation = (Router::$request_method == 'read') ? new Validation($arguments) : new Validation;
-                $this->validation->set_rules($_validator);
-
-                // XXX: this should be $validator not $_validator
-                if (isset($validator['error_messages']) && is_array($validator['error_messages'])) {
-                    $this->validation->set_message($validator['error_messages']);
+            if (!$validated && Config::item('smarty.integration') == True) {
+                // An error occured so repopulate it to smarty templates
+                $data = $this->validation->as_array();
+                foreach ($data as $field => $value) {
+                    $this->smarty->assign($field, $value);
                 }
-
-                $validated = $this->validation->run();
-
-                if (!$validated && Config::item('smarty.integration') == True) {
-                    // An error occured so repopulate it to smarty templates
-                    $data = $this->validation->data_array;
-                    foreach ($data as $field => $value) {
-                        $this->smarty->assign($field, $value);
-                    }
-                }
-            }
-
-            // Cleanup
-            unset($validator);
-            unset($_validator);
+            }            
         }
 
         $alt_method = $method . '_' . Router::$request_method;
@@ -163,7 +148,7 @@ class Controller extends Controller_Core {
         $method = method_exists($this, $method) ? $method : (method_exists($this, $alt_method) ? $alt_method : False);
 
         if ($method == False) {            
-            // Thene is no method try to find _default method
+            // There is no method, try to find _default method
             if (method_exists($this, '_default')) {
                 
                 $this->_default(Router::$method, Router::$arguments);
@@ -174,9 +159,17 @@ class Controller extends Controller_Core {
             }
         }
 
+        $this->_call($method, $arguments);
+    }
+    // }}}
+    // {{{ _call
+    private function _call($method, $arguments)
+    {
+        $result = True;
+
         if (empty($arguments)) {
             // Call the controller method with no arguments
-            $this->$method();
+            $result = $this->$method();
 
         } else {
 
@@ -185,27 +178,29 @@ class Controller extends Controller_Core {
             switch(count($arguments))
             {
                 case 1:
-                    $this->$method($arguments[0]);
+                    $result = $this->$method($arguments[0]);
                 break;
                 case 2:
-                    $this->$method($arguments[0], $arguments[1]);
+                    $result = $this->$method($arguments[0], $arguments[1]);
                 break;
                 case 3:
-                    $this->$method($arguments[0], $arguments[1], $arguments[2]);
+                    $result = $this->$method($arguments[0], $arguments[1], $arguments[2]);
                 break;
                 case 4:
-                    $this->$method($arguments[0], $arguments[1], $arguments[2], $arguments[3]);
+                    $result = $this->$method($arguments[0], $arguments[1], $arguments[2], $arguments[3]);
                 break;
                 default:
                     // Resort to using call_user_func_array for many segments
-                    call_user_func_array(array($this, $method), $arguments);
+                    $result = call_user_func_array(array($this, $method), $arguments);
                 break;
             }
         }
+
+        return $result;
     }
     // }}}
     // {{{ _invalid_request
-    function _invalid_request($uri = Null)
+    public function _invalid_request($uri = Null)
     {
         $this->session->set('_invalid_request_uri', $uri);
 

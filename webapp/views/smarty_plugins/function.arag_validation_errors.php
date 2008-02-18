@@ -33,14 +33,22 @@ function smarty_function_arag_validation_errors($params, &$smarty)
 
     $controller = Kohana::instance();
 
-    if (isset($controller->validation) && $controller->validation->error_string != Null) {
+    if (isset($controller->validation) && count($errors = $controller->validation->errors())) {
 
-        $controller->validation->error_format($prefix."{message}".$suffix);
-        $error = $controller->validation->error_string ;
+        $controller->validation->message_format($prefix."{message}".$suffix);
+        
+        $names         = $controller->validation->names();
+        $error_message = Null;
+        
+        foreach ($errors as $field => $error) {
+            
+            $name           = (isset($names[$field]) && !empty($names[$field])) ? $names[$field] : $field;
+            $error_message .= sprintf($controller->validation->message($error), $name);
+        }
     
         if ($template) {
             include_once $smarty->_get_plugin_filepath('block', 'arag_block');
-            $error = smarty_block_arag_block(Array('template' => $template), $error, $smarty);
+            $error = smarty_block_arag_block(Array('template' => $template), $error_message, $smarty);
         }
 
         return $error;
