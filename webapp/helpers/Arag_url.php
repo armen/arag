@@ -1,10 +1,25 @@
 <?php
 /**
- * Class: url
- *  URL helper class.
+ * Arag
+ *
+ * @package      Arag
+ * @author       Armen Baghumian
+ * @since        Version 0.3
+ * $Id$
  */
+
+// ------------------------------------------------------------------------
+
+/**
+ * url Class
+ *
+ * @category    Helper
+ *
+ */
+
 class url extends url_Core {
 
+    // {{{ site
     /**
      * Method: site
      *  Fetches a site URL based on a URI segment.
@@ -22,5 +37,6 @@ class url extends url_Core {
 
         return parent::site($uri, $protocol);
     }
+    // }}}
 
 } // End url
