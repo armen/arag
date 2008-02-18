@@ -22,7 +22,7 @@
                     _("Username"):{asterisk}
                 </td>
                 <td align="{left}">
-                    {$username|smarty:nodefaults|default = null}
+                    {$username|smarty:nodefaults|default:null}
                     <input type="hidden" name="username" value="{$username}" />
                     <input type="hidden" value="{$appname}" name="application" />
                 </td>
@@ -94,7 +94,7 @@
                     _("Name"):{asterisk}
                 </td>
                 <td align="{left}">
-                    <input type="text" name="name" value="{$name|smarty:nodefaults|default = null}" />
+                    <input type="text" name="name" value="{$name|smarty:nodefaults|default:null}" />
                 </td>
             </tr>           
             <tr>
@@ -102,7 +102,7 @@
                     _("Last Name"):{asterisk}
                 </td>
                 <td align="{left}">
-                    <input type="text" name="lastname" value="{$lastname|smarty:nodefaults|default = null}" />
+                    <input type="text" name="lastname" value="{$lastname|smarty:nodefaults|default:null}" />
                 </td>
             </tr>
             <tr>
@@ -110,7 +110,7 @@
                     _("Email"):{asterisk}
                 </td>
                 <td align="{left}">
-                    <input type="text" name="email" value="{$email|smarty:nodefaults|default = null}" />
+                    <input type="text" name="email" value="{$email|smarty:nodefaults|default:null}" />
                 </td>
             </tr>
             <tr>

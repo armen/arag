@@ -22,8 +22,8 @@
                     _("Username"):
                 </td>
                 <td align="{left}">
-                    {$username|smarty:nodefaults|default = null}
-                    <input type="hidden" name="username" value="{$username|smarty:nodefaults|default = null}" />
+                    {$username|smarty:nodefaults|default:null}
+                    <input type="hidden" name="username" value="{$username|smarty:nodefaults|default:null}" />
                 </td>
             </tr>
             <tr>
@@ -31,8 +31,8 @@
                     _("Name"):
                 </td>
                 <td align="{left}">
-                    {$name|smarty:nodefaults|default = null}
-                    <input type="hidden" name="name" value="{$name|smarty:nodefaults|default = null}" />
+                    {$name|smarty:nodefaults|default:null}
+                    <input type="hidden" name="name" value="{$name|smarty:nodefaults|default:null}" />
                 </td>
             </tr>
             <tr>
@@ -40,8 +40,8 @@
                     _("Last Name"):
                 </td>
                 <td align="{left}">
-                    {$lastname|smarty:nodefaults|default = null}
-                    <input type="hidden" name="lastname" value="{$lastname|smarty:nodefaults|default = null}" />
+                    {$lastname|smarty:nodefaults|default:null}
+                    <input type="hidden" name="lastname" value="{$lastname|smarty:nodefaults|default:null}" />
                 </td>
             </tr>
             <tr>
@@ -49,8 +49,8 @@
                     _("Email"):
                 </td>
                 <td align="{left}">
-                    {$email|smarty:nodefaults|default = null}
-                    <input type="hidden" name="email" value="{$email|smarty:nodefaults|default = null}" />
+                    {$email|smarty:nodefaults|default:null}
+                    <input type="hidden" name="email" value="{$email|smarty:nodefaults|default:null}" />
                 </td>
             </tr>
             <tr>
@@ -63,7 +63,7 @@
                     _("Phone"):{asterisk}
                 </td>
                 <td align="{left}">
-                    <input type="text" name="phone" value="{$phone|smarty:nodefaults|default = null}" />
+                    <input type="text" name="phone" value="{$phone|smarty:nodefaults|default:null}" />
                 </td>
             </tr>
             <tr>
@@ -71,7 +71,7 @@
                     _("Cellphone"):
                 </td>
                 <td align="{left}">
-                    <input type="text" name="cellphone" value="{$cellphone|smarty:nodefaults|default = null}" />
+                    <input type="text" name="cellphone" value="{$cellphone|smarty:nodefaults|default:null}" />
                 </td>
             </tr>
             <tr>
@@ -84,7 +84,7 @@
                     _("Province"):{asterisk}
                 </td>
                 <td align="{left}">
-                    <input type="text" name="province" value="{$province|smarty:nodefaults|default = null}" />
+                    <input type="text" name="province" value="{$province|smarty:nodefaults|default:null}" />
                 </td>
             </tr>
             <tr>
@@ -92,7 +92,7 @@
                     _("City"):{asterisk}
                 </td>
                 <td align="{left}">
-                    <input type="text" name="city" value="{$city|smarty:nodefaults|default = null}" />
+                    <input type="text" name="city" value="{$city|smarty:nodefaults|default:null}" />
                 </td>
             </tr>
             <tr>
@@ -100,7 +100,7 @@
                     _("Address"):{asterisk}
                 </td>
                 <td align="{left}">
-                    <input type="text" name="address" value="{$address|smarty:nodefaults|default = null}" />
+                    <input type="text" name="address" value="{$address|smarty:nodefaults|default:null}" />
                 </td>
             </tr>
             <tr>
@@ -108,7 +108,7 @@
                     _("Postal Code"):
                 </td>
                 <td align="{left}">
-                    <input type="text" name="postal_code" value="{$postal_code|smarty:nodefaults|default = null}" />
+                    <input type="text" name="postal_code" value="{$postal_code|smarty:nodefaults|default:null}" />
                 </td>
             </tr>
             {*if $pan}

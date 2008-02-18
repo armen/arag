@@ -17,7 +17,7 @@
                     _("Application Name"):
                 </td>
                 <td align="{left}">
-                    <input type="text" name="appname" value="{$appname|smarty:nodefaults|default = null}" />
+                    <input type="text" name="appname" value="{$appname|smarty:nodefaults|default:null}" />
                 </td>
             </tr>
             <tr>

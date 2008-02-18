@@ -17,7 +17,7 @@
                     _("Add new filter to '{$appname}'"):{asterisk}
                 </td>
                 <td align="{left}">
-                    <input type="text" name="filter" value="{$filter|smarty:nodefaults|default = null}" />
+                    <input type="text" name="filter" value="{$filter|smarty:nodefaults|default:null}" />
                     <input type="hidden" value="{$appname}" name="application" />
                 </td>
             </tr> 

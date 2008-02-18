@@ -19,7 +19,7 @@
                             _("Application Name"):
                         </td>
                         <td align="{left}">
-                            <input type="text" name="app_name" value="{$app_name|smarty:nodefaults|default = Null}" />
+                            <input type="text" name="app_name" value="{$app_name|smarty:nodefaults|default:Null}" />
                         </td>
                     </tr>
                 {/if}
@@ -28,7 +28,7 @@
                         _("Group Name"):
                     </td>
                     <td align="{left}">
-                        <input type="text" name="group_name" value="{$group_name|smarty:nodefaults|default = Null}" />
+                        <input type="text" name="group_name" value="{$group_name|smarty:nodefaults|default:Null}" />
                     </td>
                 </tr>
                 <tr>
@@ -36,7 +36,7 @@
                         _("User"):
                     </td>
                     <td align="{left}">
-                        <input type="text" name="user" value="{$user|smarty:nodefaults|default = Null}" />
+                        <input type="text" name="user" value="{$user|smarty:nodefaults|default:Null}" />
                     </td>
                 </tr>
                 <tr>
