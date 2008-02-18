@@ -2,11 +2,6 @@
 /**
  * Class: url
  *  URL helper class.
- *
- * Kohana Source Code:
- *  author    - Kohana Team
- *  copyright - (c) 2007 Kohana Team
- *  license   - <http://kohanaphp.com/license.html>
  */
 class url extends url_Core {
 
