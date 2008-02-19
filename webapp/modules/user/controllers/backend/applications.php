@@ -197,7 +197,7 @@ class Applications_Controller extends Backend_Controller
     public function delete($type, $objects = NULL)
     {
         if ($objects != NULL) {
-            $this->global_tabs->addItem(_("Delete"), "user/backend/applications/delete/".$type."/".$objects);
+            $this->global_tabs->addItem(_("Delete"), "user/backend/applications/delete/".$type."/".$objects, "user/backend/applications");
             $flag = false;
             if (is_numeric($objects)) {
                 $flag = true;
