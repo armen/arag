@@ -17,11 +17,11 @@ class Validation extends Validation_Core {
     // {{{ factory
     public static function factory($array = NULL)
     {
-        if (Router::$request_method === 'read') {
-            return new Validation( ! is_array($array) ? Router::$arguments[1] : $array);
-        } else {
-            return new Validation( ! is_array($array) ? $_POST : $array);
-        }
+        $data = (Router::$request_method === 'read' && is_array(Router::$arguments[1])) 
+              ? Router::$arguments[1] 
+              : $_POST;
+
+        return new Validation( ! is_array($array) ? $data : $array);
     }
     // }}}
     // {{{ name
