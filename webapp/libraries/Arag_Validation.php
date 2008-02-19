@@ -17,9 +17,8 @@ class Validation extends Validation_Core {
     // {{{ factory
     public static function factory($array = NULL)
     {
-        $data = (Router::$request_method === 'read' && is_array(Router::$arguments[1])) 
-              ? Router::$arguments[1] 
-              : $_POST;
+        $data = array_slice(Router::$arguments, 1);
+        $data = (Router::$request_method === 'read' && is_array($data)) ? $data : $_POST;
 
         return new Validation( ! is_array($array) ? $data : $array);
     }

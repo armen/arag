@@ -118,9 +118,8 @@ class Controller extends Controller_Core {
             Event::run('system.404');
         }
 
-        // Set the method and arguments of Router
-        Router::$method    = $method;
-        Router::$arguments = $arguments;
+        // Set the method of Router
+        Router::$method = $method;
 
         $alt_validator = $method . '_validate_' . Router::$request_method;
         $validator     = $method . '_validate';
