@@ -21,7 +21,7 @@
                         _("Application name"):{asterisk}
                     </td>
                     <td align="{left}">
-                        <input type="text" name="appname" value="{$appname|smarty:nodefaults|default = null}" />
+                        <input type="text" name="appname" value="{$appname|smarty:nodefaults|default:null}" />
                     </td>
                 </tr>
                 <tr>
@@ -29,7 +29,7 @@
                         _("Email"):{asterisk}
                     </td>
                     <td align="{left}">
-                        <input type="text" name="email" value="{$email|smarty:nodefaults|default = null}" />
+                        <input type="text" name="email" value="{$email|smarty:nodefaults|default:null}" />
                     </td>
                 </tr>
                 <tr>
@@ -37,7 +37,7 @@
                         _("Retype Email"):{asterisk}
                     </td>
                     <td align="{left}">
-                        <input type="text" name="reemail" value="{$reemail|smarty:nodefaults|default = null}" />
+                        <input type="text" name="reemail" value="{$reemail|smarty:nodefaults|default:null}" />
                     </td>
                 </tr>
                 <tr><td colspan="2">&nbsp;</td></tr>
@@ -47,7 +47,7 @@
                     </td>
                     <td align="{left}">
                         {foreach from=$modules item=module}                   
-                            <label><input type="checkbox" name="modules[]" value="{$module.module|smarty:nodefaults|default = null}" />
+                            <label><input type="checkbox" name="modules[]" value="{$module.module|smarty:nodefaults|default:null}" />
                                     &nbsp;{$module.name}</label><br />
                         {/foreach}               
                     </td>
