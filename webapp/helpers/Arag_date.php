@@ -337,13 +337,31 @@ class date extends date_Core {
         return self::convert_to_jalali($n_days);
     }
     // }}}
-    // {{{ tiemstamp_to_jalali
+    // {{{ gregorian_to_jalali
     /**
-     * Converts unix timestamp to jalali date.
+     * Converts gregorian to jalali date.
      */
-    public static function tiemstamp_to_jalali($timestamp)
+    public static function gregorian_to_jalali($timestamp)
     {
+        /* 
+         * This section requires optimization since time-difference
+         * calculation is static at the moment.
+         * Assuming IRST +3:30.
+         */
+
+        $timestamp += (210 * 60);
+        $n_days     = (int) ($timestamp / self::JCAL_DAY_LEN); 
         
+        return self::convert_to_jalali($n_days);        
+    }
+    // }}}
+    // {{{ jalali_to_gregorian
+    /**
+     * Converts jalali to gregorian date.
+     */
+    public static function jalali_to_gregorian($year, $month, $day)
+    {
+        return (self::convert_to_days(1386, 12, 1) * self::JCAL_DAY_LEN);
     }
     // }}}
     // {{{ get_week_day
