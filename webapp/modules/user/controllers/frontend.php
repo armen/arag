@@ -140,7 +140,7 @@ class Frontend_Controller extends Controller
     public function forget_password_write()
     {
         $users     = new Users_Model; 
-        $multisite = new MultiSite_Model;
+        $multisite = Model::load('MultiSite', 'multisite');
 
         $is_sent = false;
 
@@ -222,7 +222,7 @@ class Frontend_Controller extends Controller
     public function change_password_write()
     {
         $users     = new Users_Model; 
-        $multisite = new MultiSite_Model;
+        $multisite = Model::load('MultiSite', 'multisite');
     
         $is_sent    = false;
         $email      = $this->input->post('email', true);
@@ -305,7 +305,7 @@ class Frontend_Controller extends Controller
     public function remove_write()
     {
         $users     = new Users_Model; 
-        $multisite = new MultiSite_Model;
+        $multisite = Model::load('MultiSite', 'multisite');
     
         $removed    = false;
         $show_form  = true;
@@ -351,7 +351,7 @@ class Frontend_Controller extends Controller
     {
         $users     = new Users_Model; 
         $groups    = new Groups_Model;         
-        $multisite = new MultiSite_Model;
+        $multisite = Model::load('MultiSite', 'multisite');
 
         $groupname  = $groups->getDefaultGroup(APPNAME);
         $email      = $this->input->post('email', true);
