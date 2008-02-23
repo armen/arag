@@ -14,7 +14,7 @@
 
 function smarty_function_arag_head($params, &$smarty)
 {
-    return $smarty->fetch(Kohana::find_file('views', 'arag_templates/head.tpl', True, True));
+    return $smarty->fetch(Kohana::find_file('views', 'arag_templates/head', True, 'tpl'));
 }
 
 ?>

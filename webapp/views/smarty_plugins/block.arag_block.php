@@ -34,7 +34,7 @@ function smarty_block_arag_block($params, $content, &$smarty)
     if (!isset($align)) { $align = ''; }
 
     // Find template location 
-    $template = Kohana::find_file('views', 'arag_blocks/' . $template . '.tpl', True, True);
+    $template = Kohana::find_file('views', 'arag_blocks/' . $template, True, 'tpl');
 
     // Set alignment
     if (($align == 'right' || $align == 'left') && !isset($dir)) {
