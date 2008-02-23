@@ -126,14 +126,6 @@ class Router extends Router_Core {
                 foreach(self::$routes as $key => $val) {
                     if ($key == '_default') continue;
 
-                    // Replace helper strings
-                    $key = str_replace
-                    (
-                        array(':any', ':num'),
-                        array('.+',   '[0-9]+'),
-                        $key
-                    );
-
                     // Does this route match the current URI?
                     if (preg_match('#^'.$key.'$#u', self::$segments)) {
                         // If the regex contains a valid callback, we'll use it
