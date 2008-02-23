@@ -14,8 +14,8 @@
 
 function smarty_function_arag_plist($params, &$smarty)
 {
-    $ext      = '.'.Config::item('smarty.templates_ext');
-    $template = 'horizontal'.$ext;
+    $ext      = Config::item('smarty.templates_ext');
+    $template = 'horizontal';
 
     foreach ($params as $_key => $_val) {
         switch ($_key) {
@@ -25,7 +25,7 @@ function smarty_function_arag_plist($params, &$smarty)
 
             case 'template':
                 $template = $_val;                
-                $template = rtrim($template, $ext).$ext;
+                $template = rtrim($template, '.'.$ext);
                 break;
 
             default:
@@ -58,7 +58,7 @@ function smarty_function_arag_plist($params, &$smarty)
         $smarty->assign('namespace', $namespace);
         $smarty->assign('plist_templates_path', MODPATH . 'plist/views/');
 
-        return $smarty->fetch(Arag::find_file('plist', 'views', $template, False, True));
+        return $smarty->fetch(Arag::find_file('plist', 'views', $template, False, $ext));
     }
 
     return Null;

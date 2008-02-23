@@ -19,11 +19,11 @@ function smarty_block_arag_tabbed_block($params, $content, &$smarty, &$repeat)
         require_once $smarty->_get_plugin_filepath('function', 'dir');
         require_once $smarty->_get_plugin_filepath('function', 'left');
 
-        $ext      = '.'.Config::item('smarty.templates_ext');
+        $ext      = Config::item('smarty.templates_ext');
         $dir      = smarty_function_dir(Null, $smarty);
         $left     = smarty_function_left(Null, $smarty);
         $name     = $smarty->get_template_vars('_tabbedblock');
-        $template = 'arag_tabbed_block'.$ext;        
+        $template = 'arag_tabbed_block';        
 
         foreach ($params as $_key => $_val) {
             switch ($_key) {
@@ -33,7 +33,7 @@ function smarty_block_arag_tabbed_block($params, $content, &$smarty, &$repeat)
 
                 case 'template':
                     $template = $_val;                
-                    $template = rtrim($template, $ext).$ext;
+                    $template = rtrim($template, '.'.$ext);
                     break;
                     
                 default:
@@ -108,7 +108,7 @@ function smarty_block_arag_tabbed_block($params, $content, &$smarty, &$repeat)
             $smarty->assign('tabbedblock_selected_tab', $selectedItem);
             $smarty->assign('tabbedblock_module', Router::$module);
 
-            return $smarty->fetch(Arag::find_file('tabbedblock', 'views', $template, False, True));
+            return $smarty->fetch(Arag::find_file('tabbedblock', 'views', $template, False, $ext));
             
         } else {
 

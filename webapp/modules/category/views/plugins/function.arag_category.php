@@ -14,8 +14,8 @@
 
 function smarty_function_arag_category($params, &$smarty)
 {
-    $ext      = '.'.Config::item('smarty.templates_ext');
-    $template = 'directory'.$ext;
+    $ext      = Config::item('smarty.templates_ext');
+    $template = 'directory';
 
     foreach ($params as $_key => $_val) {
         switch ($_key) {
@@ -25,7 +25,7 @@ function smarty_function_arag_category($params, &$smarty)
 
             case 'template':
                 $template = $_val;                
-                $template = rtrim($template, $ext).$ext;            
+                $template = rtrim($template, '.'.$ext);
                 break;
 
             default:
@@ -59,7 +59,7 @@ function smarty_function_arag_category($params, &$smarty)
         $smarty->assign('namespace', $namespace);
         $smarty->assign('category_templates_path', MODPATH . 'category/views/');
 
-        return $smarty->fetch(Arag::find_file('category', 'views', $template, False, True));
+        return $smarty->fetch(Arag::find_file('category', 'views', $template, False, $ext));
     }
 
     return Null;

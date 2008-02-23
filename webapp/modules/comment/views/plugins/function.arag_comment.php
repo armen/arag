@@ -14,8 +14,8 @@
 
 function smarty_function_arag_comment($params, &$smarty)
 {
-    $ext      = '.'.Config::item('smarty.templates_ext');
-    $template = 'linear'.$ext;
+    $ext      = Config::item('smarty.templates_ext');
+    $template = 'linear';
 
     foreach ($params as $_key => $_val) {
         switch ($_key) {
@@ -25,7 +25,7 @@ function smarty_function_arag_comment($params, &$smarty)
 
             case 'template':
                 $template = $_val;                
-                $template = rtrim($template, $ext).$ext;
+                $template = rtrim($template, '.'.$ext);
                 break;
 
             default:
@@ -67,7 +67,7 @@ function smarty_function_arag_comment($params, &$smarty)
         $smarty->assign('name', $session->get('user.name') . ' ' . $session->get('user.last_name'));
         $smarty->assign('email', $session->get('user.email')); 
 
-        return $smarty->fetch(Arag::find_file('comment', 'views', $template, False, True));
+        return $smarty->fetch(Arag::find_file('comment', 'views', $template, False, $ext));
     }
 
     return Null;
