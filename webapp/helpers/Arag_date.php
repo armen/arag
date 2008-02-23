@@ -361,7 +361,7 @@ class date extends date_Core {
      */
     public static function jalali_to_gregorian($year, $month, $day)
     {
-        return (self::convert_to_days(1386, 12, 1) * self::JCAL_DAY_LEN);
+        return (self::convert_to_days($year, $month, $day) * self::JCAL_DAY_LEN);
     }
     // }}}
     // {{{ get_week_day
