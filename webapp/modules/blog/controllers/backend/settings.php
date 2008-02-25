@@ -20,7 +20,7 @@ class Settings_Controller extends Blog_Backend
         $data               = Array();
         $data['limit']      = Arag_Config::get('limit', 0);
         $data['post_limit'] = Arag_Config::get('post_limit', 0);
-        $data['saved']      = $this->session->get_once('configuration_saved');
+        $data['saved']      = $this->session->get('configuration_saved');
 
         $this->layout->content = new View('backend/settings', $data);
     }
@@ -31,7 +31,7 @@ class Settings_Controller extends Blog_Backend
         Arag_Config::set('limit', $this->input->post('limit'));
         Arag_Config::set('post_limit', $this->input->post('post_limit'));
 
-        $this->session->set('configuration_saved', True);
+        $this->session->set_flash('configuration_saved', True);
 
         url::redirect('blog/backend/settings/index');
     }
