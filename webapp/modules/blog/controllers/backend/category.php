@@ -6,9 +6,7 @@
 // $Id$
 // ---------------------------------------------------------------------------
 
-require_once "backend.php";
-
-class Category_Controller extends Backend_Controller 
+class Category_Controller extends Blog_Backend
 {
     // {{{ index
     public function index()

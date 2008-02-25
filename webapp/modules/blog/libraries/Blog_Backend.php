@@ -6,7 +6,7 @@
 // $Id$
 // ---------------------------------------------------------------------------
 
-class Backend_Controller extends Controller 
+class Blog_Backend extends Controller 
 {
     // {{{ Constructor
     function __construct()

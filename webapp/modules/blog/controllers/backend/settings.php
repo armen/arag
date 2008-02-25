@@ -6,9 +6,7 @@
 // $Id$
 // ---------------------------------------------------------------------------
 
-require_once "backend.php";
-
-class Settings_Controller extends Backend_Controller 
+class Settings_Controller extends Blog_Backend
 {
     // {{{ Constructor
     function __construct()
