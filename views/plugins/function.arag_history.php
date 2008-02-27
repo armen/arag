@@ -56,8 +56,7 @@ function smarty_function_arag_history($params, &$smarty)
 
         $smarty->assign('history', $history);
         $smarty->assign('current_history', $history->get_history());
-        $smarty->assign('separator_rtl', Config::item('history.separator_rtl'));
-        $smarty->assign('separator_ltr', Config::item('history.separator_ltr'));        
+        $smarty->assign('separator', Config::item('history.separator'));
         $smarty->assign('namespace', $namespace);
         $smarty->assign('history_templates_path', MODPATH . 'history/views/');
 
