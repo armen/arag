@@ -43,7 +43,9 @@ function smarty_function_arag_validation_errors($params, &$smarty)
         foreach ($errors as $field => $error) {
             
             $name           = (isset($names[$field]) && !empty($names[$field])) ? $names[$field] : $field;
-            $error_message .= sprintf($controller->validation->message($error), $name);
+            $message        = $controller->validation->message($field.'_'.$error);
+            $message        = empty($message) ? $controller->validation->message($error) : $message;
+            $error_message .= sprintf($message, $name);
         }
     
         if ($template) {
