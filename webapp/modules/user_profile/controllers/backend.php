@@ -40,6 +40,18 @@ class Backend_Controller extends Controller
         $this->global_tabs->setTitle(_("User Profile"));
         $this->global_tabs->addItem(_("Personal Information"), 'user_profile/backend/index'); 
         $this->global_tabs->addItem(_("Change Password"), 'user_profile/backend/password'); 
+
+        // Validation Messages
+        $passwordLength = Arag_Config::get("passlength", 0, 'user');
+        $this->validation->message('required', _("%s is required"));
+        $this->validation->message('matches', _("%ss do not match"));
+        $this->validation->message('numeric', _("%s should be numeric"));
+        $this->validation->message('postal_code_length', _("%s should be between 5 to 10 digits"));
+        $this->validation->message('phone_length', _("%s should be 8 digits or shorter."));
+        $this->validation->message('cellphone_length', _("%s should be exactly 11 digits"));
+        $this->validation->message('_check_old_password', _("Please enter correct %s"));
+        $this->validation->message('oldpassword_length',sprintf(_("Password length should be at least %s characters "), $passwordLength));
+        $this->validation->message('newpassword_length',sprintf(_("New Password length should be at least %s characters "), $passwordLength));
     }
     // }}}
     // {{{ index_read
@@ -88,6 +100,24 @@ class Backend_Controller extends Controller
         $this->index_read();
     }
     // }}}
+    // {{{ index_validate_write
+    public function index_validate_write()
+    {
+        $this->validation->name('phone', _("Phone"))->add_rules('phone', 'required', 'valid::numeric', 'length[0, 8]');
+
+        $this->validation->name('cellphone', _("Cellphone"))->add_rules('cellphone', 'valid::numeric', 'length[11, 11]');
+
+        $this->validation->name('address', _("Address"))->add_rules('address', 'required');
+
+        $this->validation->name('city', _("City"))->add_rules('city', 'required');
+
+        $this->validation->name('province', _("Province"))->add_rules('province', 'required');
+
+        $this->validation->name('postal_code', _("Postal Code"))->add_rules('postal_code', 'valid::numeric', 'length[5, 10]');
+
+        return $this->validation->validate();
+    }
+    // }}}
     // {{{ index_write_error
     public function index_write_error()
     {
@@ -111,6 +141,20 @@ class Backend_Controller extends Controller
         $this->session->set('user_profile_password_saved', true);
 
         $this->password_read();
+    }
+    // }}}
+    // {{{ password_validate_write
+    public function password_validate_write()
+    {
+        $passwordLength = Arag_Config::get("passlength", 0, 'user');
+
+        $this->validation->name('oldpassword', _("Old Password"))->add_rules('oldpassword', 'required', array($this, '_check_old_password'), 'length['.$passwordLength.', 255]');
+
+        $this->validation->name('newpassword', _("Password"))->add_rules('newpassword', 'required', 'matches[renewpassword]', 'length['.$passwordLength.', 255]');
+
+        $this->validation->name('renewpassword', _("Re-Password"))->add_rules('renewpassword', 'required');
+
+        return $this->validation->validate();
     }
     // }}}
     // {{{ password_write_error
