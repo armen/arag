@@ -302,7 +302,7 @@ class Backend_Controller extends Controller
     // {{{ _check_group_name
     public function _check_group_name($name)
     {
-        $appname = $this->input->post('application'));
+        $appname = $this->input->post('application');
 
         return $this->Groups->hasGroup($name, $appname);
     }
