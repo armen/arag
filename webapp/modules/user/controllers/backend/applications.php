@@ -34,6 +34,24 @@ class Applications_Controller extends Backend_Controller
         $this->global_tabs->addItem(_("Password Settings"), 'user/backend/applications/password', 'user/backend/applications/settings');
         $this->global_tabs->addItem(_("Expire Time"), 'user/backend/applications/expire_time', 'user/backend/applications/settings');
         $this->global_tabs->addItem(_("User Blocking"), 'user/backend/applications/user_blocking', 'user/backend/applications/settings');
+
+        // Validation Messages
+        $passwordLength = Arag_Config::get("passlength");
+        $this->validation->message('numeric', _("%s should be numeric."));
+        $this->validation->message('required', _("%s is required"));
+        $this->validation->message('_check_group_name', _("This %s is not available"));
+        $this->validation->message('_check_group', _("This %s is not available"));
+        $this->validation->message('_check_user_name', _("This %s is reserved or not available"));
+        $this->validation->message('matches', _("%ss do not match"));
+        $this->validation->message('alpha_dash', _("%s can contain only alpha-numeric characters, underscores or dashes"));
+        $this->validation->message('alpha', _("%s can contain only alpha characters"));
+        $this->validation->message('type', _("%s should be numeric"));
+        $this->validation->message('email', _("Please enter a valid email address"));
+        $this->validation->message('length', _("%s should be at least 4 characters"));
+        $this->validation->message('_check_filter', _("Please enter a valid %s"));
+        $this->validation->message('_check_privilege', _("Please enter a valid %s"));
+        $this->validation->message('_check_app_filter', _("This application filter exists"));
+        $this->validation->message('password_length',sprintf(_("Password length should be at least %s characters "), $passwordLength));
     }
     // }}}
     // {{{ index
@@ -59,6 +77,15 @@ class Applications_Controller extends Backend_Controller
         $this->layout->content = new View('backend/index', array("name" => $name, "flag" => false)); 
     }
     // }}}
+    // {{{ index_validate
+    public function index_validate()
+    {
+        $this->validation->name('name', _("Name"))->pre_filter('trim', 'name')
+             ->add_rules('name', 'required');
+
+        return $this->validation->validate();
+    }
+    // }}}
     // {{{ index_error
     public function index_error()
     {
@@ -81,6 +108,14 @@ class Applications_Controller extends Backend_Controller
         $this->layout->content = new View('backend/groups'); 
     }
     // }}}
+    // {{{ groups_validate_read
+    public function groups_validate_read()
+    {
+        $this->validation->name(0, _("Name"))->add_rules(0, 'required', array($this, '_check_app'));
+
+        return $this->validation->validate();
+    }
+    // }}}
     // {{{ groups_read_error
     public function groups_read_error()
     {
@@ -93,6 +128,14 @@ class Applications_Controller extends Backend_Controller
         $this->_default_group($appname);
     }
     // }}}
+    // {{{ default_group_validate_read
+    public function default_group_validate_read()
+    {
+        $this->validation->name(0, _("Name"))->add_rules(0, 'required', array($this, '_check_app'));
+
+        return $this->validation->validate();
+    }
+    // }}}
     // {{{ default_group_read_error
     public function default_group_read_error()
     {
@@ -103,6 +146,14 @@ class Applications_Controller extends Backend_Controller
     public function new_group_read($appname)
     {
         $this->_new_group($appname);
+    }
+    // }}}
+    // {{{ new_group_validate_read
+    public function new_group_validate_read()
+    {
+        $this->validation->name(0, _("Name"))->add_rules(0, 'required', array($this, '_check_app'));
+
+        return $this->validation->validate();
     }
     // }}}
     // {{{ new_group_read_error
@@ -126,6 +177,15 @@ class Applications_Controller extends Backend_Controller
         $this->users->setGroupActionParameterName('username');
         
         $this->layout->content = new View('backend/users', array("flagsearch"  => false));
+    }
+    // }}}
+    // {{{ users_validate_read
+    public function users_validate_read()
+    {
+        $this->validation->name(0, _("ID"))->add_rules(0, 'required', 'valid::numeric', array($this, '_check_group'));
+        $this->validation->name(1, _("Appname"))->add_rules(1, 'required', array($this, '_check_app'));
+
+        return $this->validation->validate();
     }
     // }}}
     // {{{ users_read_error
@@ -173,6 +233,14 @@ class Applications_Controller extends Backend_Controller
         $this->_new_user($appname);      
     }
     // }}}
+    // {{{ new_user_validate_read
+    public function new_user_validate_read()
+    {
+        $this->validation->name(0, _("Name"))->add_rules(0, 'required', array($this, '_check_app'));
+
+        return $this->validation->validate();
+    }
+    // }}}
     // {{{ new_user_read_error
     public function new_user_read_error()
     {
@@ -185,6 +253,14 @@ class Applications_Controller extends Backend_Controller
         $this->global_tabs->addItem(_("User's Profile"), "user/backend/applications/user_profile/%username%"); 
         $this->global_tabs->setParameter('username', $username);
         $this->_user_profile($username);   
+    }
+    // }}}
+    // {{{ user_profile_validate_read
+    public function user_profile_validate_read()
+    {
+        $this->validation->name(0, _("Username"))->add_rules(0, 'required', array($this, '_check_user_name_profile_master'));
+
+        return $this->validation->validate();
     }
     // }}}
     // {{{ user_profile_read_error
@@ -312,7 +388,7 @@ class Applications_Controller extends Backend_Controller
         $this->_filters_read($appname);
     }
     //}}}
-    //{{{ app_filters_write
+    // {{{ app_filters_write
     public function app_filters_write()
     {
         $filter  = $this->input->post('filter');
@@ -325,6 +401,14 @@ class Applications_Controller extends Backend_Controller
         $this->app_filters_read($appname);
     }
     //}}}
+    // {{{ app_filters_validate_write
+    public function app_filters_validate_write()
+    {
+        $this->validation->name('filter', _("Filters"))->add_rules('filter', 'required', array($this, '_check_filter'));
+
+        return $this->validation->validate();
+    }
+    // }}}
     //{{{ app_filters_write_error
     public function app_filters_write_error()
     {
@@ -399,6 +483,14 @@ class Applications_Controller extends Backend_Controller
         $this->filters_edit_read($appname, $id, true);
     }
     //}}}
+    // {{{ filters_edit_validate_write
+    public function filters_edit_validate_write()
+    {
+        $this->validation->name('filter',_("Filters"))->add_rules('filter', 'required', array($this, '_check_filter'));
+
+        return $this->validation->validate();
+    }
+    // }}}
     //{{{ filters_edit_write_error
     public function filters_edit_write_error()
     {   
@@ -542,6 +634,15 @@ class Applications_Controller extends Backend_Controller
         url::redirect('user/backend/applications/add_apps_filters');
     }
     // }}}
+    // {{{ add_apps_filters_validate_write
+    public function add_apps_filters_validate_write()
+    {
+        $this->validation->name('appname', _("application Name"))->pre_filter('trim', 'appname')
+             ->add_rules('appname', 'required', array($this, '_check_app_filter'));
+
+        return $this->validation->validate();
+    }
+    // }}}
     // {{{ add_apps_filters_write_error
     public function add_apps_filters_write_error()
     {
@@ -564,6 +665,15 @@ class Applications_Controller extends Backend_Controller
         $this->session->set('privileges_add_saved', true);
         
         $this->privileges_parents_read();
+    }
+    // }}}
+    // {{{ privileges_parents_validate_write
+    public function privileges_parents_validate_write()
+    {
+        $this->validation->name('newlabel', _("Name for new lable"))->pre_filter('trim', 'newlabel')
+             ->add_rules('newlabel', 'required');
+
+        return $this->validation->validate();
     }
     // }}}
     // {{{ privileges_parents_write_error
@@ -601,6 +711,18 @@ class Applications_Controller extends Backend_Controller
         $this->privileges_read($parentid);
     }
     // }}}
+    // {{{ privileges_validate_write
+    public function privileges_validate_write()
+    {
+        $this->validation->name('newlabel', _("Name for new label"))->pre_filter('trim', 'newlabel')
+             ->add_rules('newlabel', 'required');
+
+        $this->validation->name('privilege', _("Privilege for new label"))->pre_filter('trim', 'privilege')
+             ->add_rules('privilege', 'required', array($this, '_check_privilege'));
+
+        return $this->validation->validate();
+    }
+    // }}}
     // {{{ privileges_write_error
     public function privileges_write_error()
     {   
@@ -625,6 +747,14 @@ class Applications_Controller extends Backend_Controller
         $this->layout->content = new View('backend/privileges_edit', $data);
     }
     // }}}
+    // {{{ privileges_edit_validate_read
+    public function  privileges_edit_validate_read()
+    {
+        $this->validation->name(0, _("Lable"))->add_rules(0, 'required', array($this, '_check_label'));
+
+        return $this->validation->validate();
+    }
+    // }}}
     // {{{ privileges_edit_read_error
     public function privileges_edit_read_error()
     {
@@ -643,6 +773,21 @@ class Applications_Controller extends Backend_Controller
         $this->session->set('privilege_edited_saved', true);
 
         $this->privileges_edit_read($id);
+    }
+    // }}}
+    // {{{ privileges_edit_validate_write
+    public function privileges_edit_validate_write()
+    {
+        $this->validation->name('label', _("Label name"))->pre_filter('trim', 'label')
+             ->add_rules('label', 'required');
+
+        $this->validation->name('privilege', _("Privilege"))->pre_filter('trim', 'privilege')
+             ->add_rules('privilege', array($this, '_check_privilege'));
+
+        $this->validation->name('id', _("id"))->pre_filter('trim', 'id')
+             ->add_rules('id', 'required', 'valid::numeric');
+
+        return $this->validation->validate();
     }
     // }}}
     // {{{ privileges_edit_write_error
@@ -739,6 +884,32 @@ class Applications_Controller extends Backend_Controller
         $this->_new_user_write($this->input->post('appname'));
     }
     // }}}
+    // {{{ new_user_validate_write
+    public function new_user_validate_write()
+    {
+        $passwordLength = Arag_Config::get("passlength", 0);
+
+        $this->validation->name('username', _("Username"))->pre_filter('trim', 'username')
+             ->add_rules('username', 'required', 'valid::alpha_dash', array($this, '_check_user_name'), 'length[4, 255]');
+
+        $this->validation->name('password', _("Password"))->pre_filter('trim', 'password')
+             ->add_rules('password', 'required', 'length['.$passwordLength.', 255]', 'matches[repassword]');
+
+        $this->validation->name('name', _("Name"))->pre_filter('trim', 'name')
+             ->add_rules('name', 'required', 'valid::alpha');
+
+        $this->validation->name('lastname', _("Last name"))->pre_filter('trim', 'lastame')
+             ->add_rules('lastname', 'required', 'valid::alpha');
+
+        $this->validation->name('email', _("Email"))->pre_filter('trim', 'email')
+             ->add_rules('email', 'required', 'valid::email');
+
+        $this->validation->name('group', _("Group"))->pre_filter('trim', 'group')
+             ->add_rules('group', 'required');
+
+        return $this->validation->validate();
+    }
+    // }}}
     // {{{ new_user_write_error
     public function new_user_write_error()
     {
@@ -751,10 +922,41 @@ class Applications_Controller extends Backend_Controller
         $this->_user_profile_write($this->input->post('application'));
     }
     // }}}
+    // {{{ user_profile_validate_write
+    public function user_profile_validate_write()
+    {
+        $passwordLength = Arag_Config::get("passlength", 0);
+
+        $this->validation->name('password', _("Password"))->add_rules('password', 'matches[repassword]', 'length['.$passwordLength.', 255]');
+
+        $this->validation->name('name', _("Name"))->pre_filter('trim', 'name')
+             ->add_rules('name', 'required', 'valid::alpha');
+
+        $this->validation->name('lastname', _("Last name"))->pre_filter('trim', 'lastname')
+             ->add_rules('lastname', 'required', 'valid::alpha');
+
+        $this->validation->name('email', _("Email"))->pre_filter('trim', 'email')
+             ->add_rules('email', 'required', 'valid::email');
+
+        $this->validation->name('group', _("Group"))->pre_filter('trim', 'group')
+             ->add_rules('group', 'required');
+
+        return $this->validation->validate();
+    }
+    // }}}
     // {{{ new_group_write
     public function new_group_write()
     {
          $this->_new_group_write($this->input->post('appname'));              
+    }
+    // }}}
+    // {{{ new_group_validate_write
+    public function new_group_validate_write()
+    {
+        $this->validation->name('newgroup', _("Name for new group"))->pre_filter('trim', 'newgroup')
+             ->add_rules('newgroup', 'required', array($this, '_check_group_name'));
+
+        return $this->validation->validate();
     }
     // }}}
     // {{{ new_group_write_error
@@ -787,6 +989,15 @@ class Applications_Controller extends Backend_Controller
         $this->settings_read();
     }
     // }}}
+    // {{{ settings_validate_write
+    public function settings_validate_write()
+    {
+        $this->validation->name('limit', _("Limit"))->pre_filter('trim', 'limit')
+             ->add_rules('limit', 'valid::numeric');
+
+        return $this->validation->validate();
+    }
+    // }}}
     // {{{ settings_write_error
     public function settings_write_error()
     {
@@ -813,6 +1024,15 @@ class Applications_Controller extends Backend_Controller
 
         $this->password_read();
 
+    }
+    // }}}
+    // {{{ password_validate_write
+    public function password_validate_write()
+    {
+        $this->validation->name('length', _("Password Length"))->pre_filter('trim', 'length')
+             ->add_rules('length', 'required', 'valid::numeric');
+
+        return $this->validation->validate();
     }
     // }}}
     // {{{ password_write_error
@@ -843,6 +1063,15 @@ class Applications_Controller extends Backend_Controller
 
     }
     // }}}
+    // {{{ expire_time_validate_write
+    public function expire_time_validate_write()
+    {
+        $this->validation->name('expire', _("Expire Time"))->pre_filter('trim', 'expire')
+             ->add_rules('expire', 'required', 'valid::numeric');
+
+        return $this->validation->validate();
+    }
+    // }}}
     // {{{ expire_time_write_error
     public function expire_time_write_error()
     {
@@ -871,6 +1100,18 @@ class Applications_Controller extends Backend_Controller
 
         $this->user_blocking_read();
 
+    }
+    // }}}
+    // {{{ user_blocking_validate_write
+    public function user_blocking_validate_write()
+    {
+        $this->validation->name('block_expire', _("Blocking expire time"))->pre_filter('trim', 'block_expire')
+             ->add_rules('block_expire', 'required', 'valid::numeric');
+
+        $this->validation->name('block_counter', _("Blocking attempts"))->pre_filter('trim','block_counter')
+             ->add_rules('block_counter', 'required', 'valid::numeric');
+
+        return $this->validation->validate();
     }
     // }}}
     // {{{ user_blocking_write_error

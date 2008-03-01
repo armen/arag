@@ -3,6 +3,7 @@
 // +-------------------------------------------------------------------------+
 // | Author: Armen Baghumian <armen@OpenSourceClub.org>                      |
 // |         Sasan Rose <sasan.rose@gmail.com>                               |
+// |         Roham Rafii Tehrani <roham.rafii@gmail.com>                     |
 // +-------------------------------------------------------------------------+
 // $Id$
 // ---------------------------------------------------------------------------
@@ -16,6 +17,16 @@ class Frontend_Controller extends Controller
        
         // Default page title
         $this->layout->page_title = 'User Management';
+
+        // Validation messages
+        $this->validation->message('required', _("%s is required"));
+        $this->validation->message('length', _("%s has not enough length"));
+        $this->validation->message('email', _("Please enter a valid email address"));
+        $this->validation->message('_check_user_name', _("This %s is reserved or not available"));
+        $this->validation->message('matches', _("%s does not match."));
+        $this->validation->message('alpha_dash', _("%s can contain only alpha-numeric characters, underscores or dashes"));
+        $this->validation->message('alpha', _("%s can contain only alpha characters"));
+
     }
     // }}}
     // {{{ login_read
@@ -111,6 +122,18 @@ class Frontend_Controller extends Controller
         }
     }
     // }}}
+    // {{{ login_validate_write
+    public function login_validate_write()
+    {
+        $this->validation->name('username', _("Username"))->pre_filter('trim', 'username')
+             ->add_rules('username', 'required', 'valid::alpha_dash');
+
+        $this->validation->name('password', _("Password"))->pre_filter('trim', 'password')
+             ->add_rules('password', 'required');
+
+        return $this->validation->validate();
+    }
+    // }}}
     // {{{ login_write_error
     public function login_write_error()
     {
@@ -182,6 +205,18 @@ class Frontend_Controller extends Controller
                                                                      'error_message' => $error_message,
                                                                      'is_sent'       => $is_sent
                                                                     ));
+    }
+    // }}}
+    // {{{ forget_password_validate_write
+    public function forget_password_validate_write()
+    {
+        $this->validation->name('username', _("Username"))->pre_filter('trim', 'username')
+              ->add_rules('username', 'required', 'valid::alpha_dash');
+
+        $this->validation->name('email', _("Email"))->pre_filter('trim', 'email')
+             ->add_rules('email', 'required', 'valid::email');
+
+        return $this->validation->validate();
     }
     // }}}
     // {{{ forget_password_write_error
@@ -267,6 +302,18 @@ class Frontend_Controller extends Controller
                                                                           ));
     }
     // }}}
+    // {{{ change_password_validate_write
+    public function change_password_validate_write()
+    {
+        $this->validation->name('username', _("Username"))->pre_filter('trim', 'username')
+              ->add_rules('username', 'required', 'valid::alpha_dash');
+
+        $this->validation->name('email', _("Email"))->pre_filter('trim', 'email')
+             ->add_rules('email', 'required', 'valid::email');
+
+        return $this->validation->validate();
+    }
+    // }}}
     // {{{ change_password_write_error
     public function change_password_write_error()
     {
@@ -334,6 +381,17 @@ class Frontend_Controller extends Controller
                                                                   ));
     }
     // }}}
+    // {{{ remove_validate_write
+    public function remove_validate_write()
+    {
+        $this->validation->name('username', _("Username"))->pre_filter('trim', 'username')
+              ->add_rules('username', 'required');
+
+        $this->validation->name('email', _("Email"))->pre_filter('trim', 'email')
+             ->add_rules('email', 'required', 'valid::email');
+
+        return $this->validation->validate();
+    }
     // {{{ remove_write_error
     public function remove_write_error()
     {
@@ -388,6 +446,33 @@ class Frontend_Controller extends Controller
                                                                               'flagsaved' => true,
                                                                               'is_sent'   => $is_sent
                                                                              ));
+    }
+    // }}}
+    // {{{ registration_validate_write
+    public function registration_validate_write()
+    {
+        $this->validation->name('username', _("Username"))->pre_filter('trim', 'username')
+              ->add_rules('username', 'required', 'length[4, 255]', 'valid::alpha_dash', array($this, '_check_user_name'));
+
+        $this->validation->name('password', _("Password"))->pre_filter('trim', 'password')
+             ->add_rules('password', 'required', 'matches[repassword]');
+
+        $this->validation->name('repassword', _("Repassword"))->pre_filter('trim', 'repassword')
+             ->add_rules('repassword', 'required');
+
+        $this->validation->name('name', _("Name"))->pre_filter('trim', 'name')
+             ->add_rules('name', 'required', 'valid::alpha');
+
+        $this->validation->name('lastname', _("Lastname"))->pre_filter('trim', 'lastname')
+             ->add_rules('lastname', 'required', 'valid::alpha');
+
+        $this->validation->name('email', _("Email"))->pre_filter('trim', 'email')
+             ->add_rules('email', 'required', 'valid::email', 'matches[reemail]');
+
+        $this->validation->name('reemail', _("Email"))->pre_filter('trim', 'reemail')
+             ->add_rules('reemail', 'required', 'valid::email');
+
+        return $this->validation->validate();
     }
     // }}}
     // {{{ registration_write_error
