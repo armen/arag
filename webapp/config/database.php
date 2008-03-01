@@ -23,7 +23,7 @@ $config['default'] = array
 (
     'benchmark'     => TRUE,
     'persistent'    => FALSE,
-    'connection'    => 'mysql://dbuser:secret@localhost/kohana',
+    'connection'    => 'mysql://root:root@localhost/arag',
     'character_set' => 'utf8',
     'table_prefix'  => '',
     'object'        => TRUE,
