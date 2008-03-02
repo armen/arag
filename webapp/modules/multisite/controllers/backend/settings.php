@@ -10,7 +10,16 @@ require_once "backend.php";
 
 class Settings_Controller extends Backend_Controller 
 {
+    // {{{ Constructor
+    public function __construct()
+    {
+        parent::__construct();
 
+        // Validation Messages
+        $this->validation->message('numeric', _("%s should be numeric"));
+        $this->validation->message('required', _("%s is required"));
+    }
+    // }}}
     // {{{ index_read
     public function index_read()
     {   
@@ -24,13 +33,21 @@ class Settings_Controller extends Backend_Controller
     // {{{ index_write
     public function index_write()
     {
-
         Arag_Config::set('limit', $this->input->post('limit'));
 
         $this->session->set('multi_site_settings_limit_saved', true);
 
         $this->index_read();
 
+    }
+    // }}}
+    // {{{ index_validate_write
+    public function index_validate_write()
+    {
+        $this->validation->name('limit', _("Limit"))->pre_filter('trim', 'limit')
+             ->add_rules('limit', 'required', 'valid::numeric');
+
+        return $this->validation->validate();
     }
     // }}}
     // {{{ index_write_error
@@ -112,6 +129,18 @@ class Settings_Controller extends Backend_Controller
 
         $this->user_blocking_read();
 
+    }
+    // }}}
+    // {{{ user_blocking_validate_write
+    public function user_blocking_validate_write()
+    {
+        $this->validation->name('block_expire', _("Blocking expire time"))->pre_filter('trim', 'block_expire')
+             ->add_rules('block_expire', 'required', 'valid::numeric');
+
+        $this->validation->name('block_counter', _("Blocking attempts"))->pre_filter('trim', 'block_counter')
+             ->add_rules('block_counter', 'required', 'valid::numeric');
+
+        return $this->validation->validate();
     }
     // }}}
     // {{{ user_blocking_write_error
