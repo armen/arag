@@ -11,6 +11,19 @@ require_once "backend.php";
 
 class Install_Controller extends Backend_Controller 
 {
+    // {{{ Construct
+    public function __construct()
+    {
+        parent::__construct();
+
+        // Validation Messages
+        $this->validation->message('required', _("%s is required"));
+        $this->validation->message('matches', _("%ss do not match"));
+        $this->validation->message('alpha_dash', _("%s can contain only alpha-numeric characters, underscores or dashes"));
+        $this->validation->message('email', _("Please enter a valid email address"));
+        $this->validation->message('_check_app', _("This application name is not available"));
+    }
+    // }}}
     // {{{ index_read
     public function index_read()
     {
@@ -142,6 +155,21 @@ class Install_Controller extends Backend_Controller
         
         // Okay, everything is done so redirect to post installer
         url::redirect('multisite/backend/postinstaller');
+    }
+    // }}}
+    // {{{ index_validate_write
+    public function index_validate_write()
+    {
+        $this->validation->name('appname', _("Application name"))->pre_filter('trim', 'appname')
+             ->add_rules('appname', 'required', 'valid::alpha_dash', array($this, '_check_app'));
+
+        $this->validation->name('email', _("Email"))->pre_filter('trim', 'email')
+             ->add_rules('email', 'required', 'matches[reemail]', 'valid::email');
+
+        $this->validation->name('reemail', _("Retype Email"))->pre_filter('trim', 'reemail')
+             ->add_rules('reemail', 'required');
+
+        return $this->validation->validate();
     }
     // }}}
     // {{{ index_write_error
