@@ -64,7 +64,7 @@ class UserProfile_Model extends Model
     // {{{ getProfile
     public function getProfile($username)
     {
-        $this->db->select('city, phone, pan, cellphone, province, address, postal_code');
+        $this->db->select('id, city, phone, pan, cellphone, province, address, postal_code');
 
         return (Array) $this->db->getwhere($this->tableNameProfiles, array('username' => $username))->current();     
     }
