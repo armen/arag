@@ -292,7 +292,7 @@ class PList_Component extends Component implements IteratorAggregate, ArrayAcces
             $uri = implode('/', $uri);
         }
 
-        if (preg_match($pattern, $uri, $matches)) {
+        while (preg_match($pattern, $uri, $matches)) {
 
             // Checking for url Variables
             if (is_array($row) && array_key_exists($matches[1], $row)) {
