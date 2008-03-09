@@ -11,6 +11,15 @@
  */
 
 /**
+ * Define the website environment status. When this flag is set to TRUE, some
+ * module demonstration controllers will result in 404 errors. For more information
+ * about this option, read the documentation about deploying Kohana.
+ *
+ * @see http://doc.kohanaphp.com/installation/deployment
+ */
+define('IN_PRODUCTION', FALSE);
+
+/**
  * Website application directory. This directory should contain your application
  * configuration, controllers, models, views, and other resources.
  *
@@ -71,7 +80,10 @@ define('APPNAME',   'arag');
 
 // Define the front controller name and docroot
 define('DOCROOT', getcwd().DIRECTORY_SEPARATOR);
-define('KOHANA',  substr(__FILE__, strlen(DOCROOT)));
+define('KOHANA',  basename(__FILE__));
+
+// If the front controller is a symlink, change to the real docroot
+is_link(KOHANA) and chdir(dirname(realpath(__FILE__)));
 
 // Define application and system paths
 define('APPPATH', str_replace('\\', '/', realpath($kohana_application)).'/');
