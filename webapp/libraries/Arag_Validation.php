@@ -45,21 +45,13 @@ class Validation extends Validation_Core {
     // {{{ min
     public function min($field, array $inputs)
     {
-        $result = False;
-        if ((int)$field >= (int)current($inputs)) {
-            $result = True;
-        }
-        return $result;
+        return ((int) $field >= (int) current($inputs));
     }
     // }}}
     // {{{ max
     public function max($field, array $inputs)
     {
-        $result = False;
-        if ((int)$field <= (int)current($inputs)) {
-            $result = True;
-        }
-        return $result;
+        return ((int) $field <= (int) current($inputs));
     }
     // }}}
 
