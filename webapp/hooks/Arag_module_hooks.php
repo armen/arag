@@ -6,8 +6,20 @@ if (Config::item('hooks.enable')) {
 
 function arag_module_hooks()
 {
-    // All of the hooks are enabled, so we use list_files
-    $hooks = array_unique(Kohana::list_files('modules/'.Router::$module.'/hooks', TRUE));
+    $hooks   = Array();
+    $modules = Config::item('config.hooks');
+    $modules = is_array($modules) ? array_merge($modules, Array(Router::$module)) : Array(Router::$module);
+
+    $modules_path = $include_paths = Config::item('core.modules');
+    foreach ($modules as $module) {
+        $modules_path[] = MODPATH.$module;
+    }
+
+    Config::set('core.modules', $modules_path);
+    
+    foreach ($modules as $module) {
+        $hooks = array_unique(array_merge($hooks, Kohana::list_files('modules/'.$module.'/hooks', TRUE)));
+    }
 
     // To validate the filename extension
     $ext = -(strlen(EXT));
@@ -23,4 +35,6 @@ function arag_module_hooks()
             Log::add('error', 'Hook not found: '.$hook);
         }
     }
+    
+    Config::set('core.modules', $include_paths);
 }
