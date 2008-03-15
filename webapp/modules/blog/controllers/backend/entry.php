@@ -119,7 +119,7 @@ class Entry_Controller extends Blog_Backend
     public function edit_validate_write()
     {
         $this->validation->name('id', _("ID"))->add_rules('id', 'required', 'valid::numeric', array($this, '_check_entry'));
-        $this->validation->name('subject', _("Subject"))->add_rules('id', 'required', 'valid::standard_text')->post_filter('trim', 'subject');
+        $this->validation->name('subject', _("Subject"))->add_rules('subject', 'required', 'valid::standard_text')->post_filter('trim', 'subject');
         $this->validation->name('entry', _("Entry Body"))->add_rules('entry', 'required')->post_filter('security::xss_clean', 'entry');
         $this->validation->name('extended_entry', _("Extended Entry"))->post_filter('security::xss_clean', 'extended_entry');
         $this->validation->add_rules('status', 'valid::numeric');
