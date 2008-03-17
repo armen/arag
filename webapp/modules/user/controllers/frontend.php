@@ -392,6 +392,7 @@ class Frontend_Controller extends Controller
 
         return $this->validation->validate();
     }
+    // }}}
     // {{{ remove_write_error
     public function remove_write_error()
     {
