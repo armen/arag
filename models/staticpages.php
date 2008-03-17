@@ -96,7 +96,7 @@ class StaticPages_Model extends Model
     {
         $this->db->select('id');
         $query = $this->db->getwhere($this->tableName, Array('id' => $id)); 
-        return (boolean)$query->num_rows();
+        return (boolean)count($query);
     }
     // }}}
 }
