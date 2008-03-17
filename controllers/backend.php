@@ -17,7 +17,7 @@ class Backend_Controller extends Controller
         $this->layout->page_title = _("Static Pages");
 
         // Global tabbedbock
-        $this->load->component('TabbedBlock', 'global_tabs');
+        $this->global_tabs = new TabbedBlock_Component('global_tabs');
         $this->global_tabs->setTitle(_("StaticPages"));
         $this->global_tabs->addItem(_("List"), 'staticpages/backend/index');
         $this->global_tabs->addItem(_("Create"), 'staticpages/backend/create');
@@ -25,26 +25,30 @@ class Backend_Controller extends Controller
         $this->global_tabs->addItem(_("Edit"), 'staticpages/backend/edit/%id%', 'staticpages/backend/index');
         $this->global_tabs->addItem(_("Preview"), 'staticpages/backend/preview/%id%', 'staticpages/backend/index');
         $this->global_tabs->addItem(_("Delete"), 'staticpages/backend/delete/%id%', 'staticpages/backend/index');
+
+        // Validation Messages
+        $this->validation->message('required', _("%s is required."));
+        $this->validation->message('numeric', _("%s should be numeric"));
     }
     // }}}
     // {{{ index
     public function index()
     {
-        $this->load->model('StaticPages');
+        $this->StaticPages = new StaticPages_Model;
 
-        $this->load->component('PList', 'staticpages');
+        $this->staticpages = new PList_Component('staticpages');
 
         $this->staticpages->setResource($this->StaticPages->getPages());
         $this->staticpages->setLimit(Arag_Config::get('limit', 0));
-        $this->staticpages->addColumn('id', Null, PList::HIDDEN_COLUMN);
+        $this->staticpages->addColumn('id', Null, PList_Component::HIDDEN_COLUMN);
         $this->staticpages->addColumn('subject', _("Subject"));        
         $this->staticpages->addColumn('author', _("Author"));
-        $this->staticpages->addColumn('StaticPages.getDate', _("Create Date"), PList::VIRTUAL_COLUMN);
-        $this->staticpages->addColumn('StaticPages.getModifyDate', _("Modify Date"), PList::VIRTUAL_COLUMN);
+        $this->staticpages->addColumn('StaticPages.getDate', _("Create Date"), PList_Component::VIRTUAL_COLUMN);
+        $this->staticpages->addColumn('StaticPages.getModifyDate', _("Modify Date"), PList_Component::VIRTUAL_COLUMN);
         $this->staticpages->addAction('staticpages/backend/edit/#id#', _("Edit"), 'edit_action');
         $this->staticpages->addAction('staticpages/backend/delete/#id#', _("Delete"), 'delete_action');
         $this->staticpages->addAction('staticpages/backend/preview/#id#', _("Preview"), 'view_action');
-        $this->staticpages->addAction('staticpages/backend/gdelete', _("Delete"), 'delete_action', PList::GROUP_ACTION);
+        $this->staticpages->addAction('staticpages/backend/gdelete', _("Delete"), 'delete_action', PList_Component::GROUP_ACTION);
         $this->staticpages->setGroupActionParameterName('id');        
         
         $this->layout->content = new View('backend/index');
@@ -59,7 +63,7 @@ class Backend_Controller extends Controller
     // {{{ edit_read
     public function edit_read($id = Null)
     {
-        $this->load->model('StaticPages');
+        $this->StaticPages = new StaticPages_Model;
         
         $exist = false;
 
@@ -84,11 +88,12 @@ class Backend_Controller extends Controller
     }
     // }}}
     // {{{ create_write
+    // {{{ create_write
     public function create_write()
     {
-       $this->load->model('StaticPages');
-      
-       if ($this->input->post('submit')){
+        $this->StaticPages = new StaticPages_Model;
+
+        if ($this->input->post('submit')){
 
             $page    = $this->input->post('page', True);
             $subject = $this->input->post('subject', True);
@@ -101,10 +106,30 @@ class Backend_Controller extends Controller
         }
     }
     // }}}
+    // {{{ create_validate_write
+    public function create_validate_write()
+    {
+        $this->validation->name('subject', _("Subject"))->pre_filter('trim', 'subject')
+             ->add_rules('subject', 'required', 'standard_text');
+
+        $this->validation->name('page', _("Page"))->add_rules('page', 'required')
+             ->post_filter('security::xss_clean', 'page');
+
+        return $this->validation->validate();
+    }
+    // }}}
+    // {{{ create_write_error
+    public function create_write_error()
+    {   
+        $this->create_read();
+    }
+    // }}}
+    // }}}
+    // {{{ edit_write
     // {{{ edit_write
     public function edit_write($id = Null)
     {
-        $this->load->model('StaticPages');
+        $this->StaticPages = new StaticPages_Model;
 
         $exist = false;        
 
@@ -124,6 +149,20 @@ class Backend_Controller extends Controller
         }
     }
     // }}}
+    // {{{ edit_validate_write
+    public function edit_validate_write()
+    {
+        $this->validation->name('id', _("id"))->add_rules('id', 'required', 'numeric');
+
+        $this->validation->name('subject', _("Subject"))->pre_filter('trim', 'subject')
+             ->add_rules('subject', 'required', 'standard_text');
+
+        $this->validation->name('page', _("Page"))->add_rules('page', 'required')
+             ->post_filter('security::xss_clean', 'page');
+
+        return $this->validation->validate();
+    }
+    // }}}
     // {{{ edit_write_error
     public function edit_write_error()
     {   
@@ -133,16 +172,11 @@ class Backend_Controller extends Controller
         $this->layout->content = new View('backend/edit', Array('id' => $id));
     }
     // }}}
-    // {{{ create_write_error
-    public function create_write_error()
-    {   
-        $this->create_read();
-    }
     // }}}
     // {{{ delete
     public function delete($id = Null)
     {
-        $this->load->model('StaticPages');
+        $this->StaticPages = new StaticPages_Model;
 
         $subjects = array();
         $exist    = false;
@@ -167,7 +201,7 @@ class Backend_Controller extends Controller
     // {{{ gdelete
     public function gdelete($id = Null)
     {
-        $this->load->model('StaticPages');
+        $this->StaticPages = new StaticPages_Model;
 
         if ($this->input->post('id')) {
 
@@ -206,13 +240,13 @@ class Backend_Controller extends Controller
     // {{{ do_delete
     public function do_delete()
     {
-        $this->load->model('StaticPages');
+        $this->StaticPages = new StaticPages_Model;
         
         if (isset($_POST['submit'])) {
             $ids = $this->input->post('id');
                         
             foreach ($ids as $key) {
-                $this->load->model('StaticPages');
+                $this->StaticPages = new StaticPages_Model;
                 $this->StaticPages->deletePage($key);
             }
 
@@ -226,7 +260,7 @@ class Backend_Controller extends Controller
     // {{{ preview
     public function preview($id = Null)
     {
-        $this->load->model('StaticPages');
+        $this->StaticPages = new StaticPages_Model;
         
         $exist = false;        
 
@@ -251,6 +285,7 @@ class Backend_Controller extends Controller
         }
     }
     // }}}
+    // {{{ settings
     // {{{ settings_read
     public function settings_read($saved = NULL)
     {
@@ -270,11 +305,21 @@ class Backend_Controller extends Controller
         url::redirect('staticpages/backend/settings');
     }
     // }}}
+    // {{{ settings_validate_write
+    public function settings_validate_write()
+    {
+        $this->validation->name('limit', _("Limit"))->pre_filter('trim', 'limit')
+             ->add_rules('limit', 'required', 'numeric');
+
+        return $this->validation->validate();       
+    }
+    // }}}
     // {{{ settings_write_error
     public function settings_write_error()
     {
         $this->settings_read();
     }
+    // }}}
     // }}}
 }
 ?>
