@@ -18,10 +18,9 @@ class Frontend_Controller extends Controller
     }
     // }}}
     // {{{ view
-    public function view($dummy, $id = '0')
+    public function view($id = 0)
     {
-        $this->load->model('StaticPages');
-// $this->load->helper('url');
+        $this->StaticPages = new StaticPages_Model;
         
         $exist = false;
         
@@ -31,7 +30,7 @@ class Frontend_Controller extends Controller
         
         if ($exist) {
 
-            $row = $this->StaticPages->getEntry($id);
+            $row = $this->StaticPages->getPage($id);
 
             $data = Array('id'      => $row['id'],
                           'subject' => $row['subject'],
