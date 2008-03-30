@@ -34,7 +34,7 @@ class Arag_Auth {
     // {{{ check
     public static function check()
     {
-        $session = new Session();
+        $session = Session::instance();
         $appname = $session->get('user.appname', APPNAME);
 
         $directory         = substr(Router::$directory, strpos(Router::$directory, 'controllers/') + 12); // 12 is strlen('controllers/')
@@ -64,6 +64,9 @@ class Arag_Auth {
         }
 
         if (!$authorized) {
+            if (!$session->get('user.authenticated')) {
+                $session->set_flash('not_authorized_redirect_url', self::$destination);
+            }
             url::redirect('not_authorized');        
             exit;
         }
