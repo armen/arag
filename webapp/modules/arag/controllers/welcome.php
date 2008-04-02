@@ -5,7 +5,7 @@ class Welcome_Controller extends Controller
     // {{{ Constructor
     public function __construct()
     {
-        $session = new Session;
+        $session = Session::instance();
 
         if ($session->get('user.authenticated')) {
             $this->layout = 'arag_templates/backend_layout';
