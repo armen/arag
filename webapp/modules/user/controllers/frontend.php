@@ -54,10 +54,12 @@ class Frontend_Controller extends Controller
 
             $users->blockUser($username);
 
-            // Redirect to front controller
-            url::redirect(Config::item('user.login_redirect', False, False));
-        
+            // Redirect to front controller or Redirect URL
+            $this->session->get('not_authorized_redirect_url') ? url::redirect($this->session->get_once('not_authorized_redirect_url')):
+                                                                 url::redirect(Config::item('user.login_redirect', False, False));
         } else {
+            
+            $this->session->keep_flash('not_authorized_redirect_url');
 
             // Shit, you missed!
             
