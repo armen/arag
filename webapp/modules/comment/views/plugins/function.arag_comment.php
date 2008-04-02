@@ -59,7 +59,7 @@ function smarty_function_arag_comment($params, &$smarty)
             $comment->build();
         }
 
-        $session = new Session();
+        $session = Session::instance();
 
         $smarty->assign('component', $comment);
         $smarty->assign('namespace', $namespace);
