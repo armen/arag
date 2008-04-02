@@ -48,7 +48,7 @@ function smarty_block_arag_form($params, $content, &$smarty)
     }
 
     if (Config::item('token.enable') && Config::item('token.type') === 'form') {
-        $session = new Session();
+        $session = Session::instance();
         $content = '<input type="hidden" name="arag_token" value="'.$session->get('arag_token').'" />'.$content;
     }
     
