@@ -33,7 +33,7 @@ function smarty_block_arag_tabbed_block($params, $content, &$smarty, &$repeat)
 
                 case 'template':
                     $template = $_val;                
-                    $template = rtrim($template, '.'.$ext);
+                    $template = text::strrtrim($template, '.'.$ext);
                     break;
                     
                 default:

@@ -25,7 +25,7 @@ function smarty_function_arag_comment($params, &$smarty)
 
             case 'template':
                 $template = $_val;                
-                $template = rtrim($template, '.'.$ext);
+                $template = text::strrtrim($template, '.'.$ext);                
                 break;
 
             default:

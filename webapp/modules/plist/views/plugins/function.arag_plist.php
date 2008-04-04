@@ -24,8 +24,8 @@ function smarty_function_arag_plist($params, &$smarty)
                 break;
 
             case 'template':
-                $template = $_val;                
-                $template = rtrim($template, '.'.$ext);
+                $template = $_val;
+                $template = text::strrtrim($template, '.'.$ext);
                 break;
 
             default:
