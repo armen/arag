@@ -37,7 +37,7 @@
                     {/foreach}
 
                     {if count($actions) > 0}
-                        <th colspan="{$plist->getActionsCount()}">Actions</th>
+                        <th colspan="{$plist->getActionsCount()}">_("Actions")</th>
                     {/if}
                 </tr>
                 {/if}
