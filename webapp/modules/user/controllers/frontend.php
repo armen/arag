@@ -48,7 +48,7 @@ class Frontend_Controller extends Controller
             // Set the privilege_filter to False, This is too 
             // important to Arag_Auth! we will fetch privilege 
             // filters of current application there.
-            $this->session->del('privilege_filters');
+            $this->session->delete('privilege_filters');
 
             $this->session->set(Array('user' => array_merge($users->getUser($username), Array('authenticated' => True))));
 
