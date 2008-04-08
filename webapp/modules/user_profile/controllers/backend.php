@@ -113,7 +113,7 @@ class Backend_Controller extends Controller
 
         $this->validation->name('province', _("Province"))->add_rules('province', 'required');
 
-        $this->validation->name('postal_code', _("Postal Code"))->add_rules('postal_code', 'valid::numeric', 'length[5, 10]');
+        $this->validation->name('postal_code', _("Postal Code"))->add_rules('postal_code', 'required', 'valid::numeric', 'length[5, 10]');
 
         return $this->validation->validate();
     }
