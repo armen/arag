@@ -460,6 +460,12 @@ input, textarea, select {
     width           : 16px;
     height          : 16px;
 }
+.resume_action {
+    background      : transparent url(../images/list/resume.png) no-repeat center;
+    font-size       : 0px;
+    width           : 16px;
+    height          : 16px;
+}
 /* }}} end of List actions */
 /* {{{ Tabbed Block */
 .tabbed_block_title {
