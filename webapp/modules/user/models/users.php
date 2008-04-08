@@ -160,7 +160,8 @@ class Users_Model extends Model
     // {{{ & getUserProfile
     public function & getUserProfile($username)
     {
-        $this->db->select('username, name, lastname, password, create_date, created_by, modify_date, modified_by, blocked, block_date, profile_id, email, group_id');
+        $this->db->select('username, name, lastname, password, create_date, created_by, modify_date, modified_by, blocked, block_date, profile_id,
+                           email, group_id');
         $this->db->from($this->tableNameUsers);
         $this->db->where('username', $username);
 
