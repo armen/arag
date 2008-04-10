@@ -15,11 +15,14 @@
         {capture assign="welcome"}_("Welcome %s %s"){/capture}
         {capture assign="logout"}_("Logout"){/capture}
         {capture assign="profile"}_("My Profile"){/capture}
-        {capture assign="controlpanel"}_("Control Panel"){/capture}        
+        {capture assign="controlpanel"}_("Control Panel"){/capture}
+        {capture assign="home"}_("Home"){/capture}
+        {capture assign="home_url_site"}{url_site}{/capture}
         {$welcome|sprintf:$firstname:$surname} | 
         {html_anchor uri="user_profile/backend/index" title="$profile"} | 
         {html_anchor uri="user/frontend/logout" title="$logout"} | 
-        {html_anchor uri="controlpanel" title="$controlpanel"}
+        {html_anchor uri="controlpanel" title="$controlpanel"} |
+        {html_anchor uri="$home_url_site" title="$home"}
     {/arag_block}            
 
     {arag_tabbed_block name="global_tabs"}
