@@ -179,7 +179,7 @@ class Frontend_Controller extends Controller
 
         } else {
             $error_message = false;
-            $verify_uri = $multisite->generateVerifyUri(10); 
+            $verify_uri    = $multisite->generateVerifyUri(10); 
 
             // Send an email to verify the user
             $settings = Arag_Config::get('email_settings', NULL, 'core');
