@@ -291,7 +291,7 @@
                 </field>
                 <field>
                     <name>privilege</name>
-                    <value>user_profile/backend/*</value>
+                    <value>user_profile/*</value>
                 </field>
             </insert>
         </initialization>
