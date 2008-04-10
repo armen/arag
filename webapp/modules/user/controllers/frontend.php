@@ -183,9 +183,9 @@ class Frontend_Controller extends Controller
 
             // Send an email to verify the user
             $settings = Arag_Config::get('email_settings', NULL, 'core');
-            $settings['template'] = "You asked to change your password, for '%username%'. So please follow the below link:\n\n%verifyuri%\n\n".
-                                    "And if you didn't ask to do so, please strongly visit:\n\n%removeuri%";
-            $settings['subject']  = "Change Password";
+            $settings['template'] = _("You asked to change your password, for '%username%'. So please follow the below link:\n\n%verifyuri%\n\n".
+                                      "And if you didn't ask to do so, please strongly visit:\n\n%removeuri%");
+            $settings['subject']  = _("Change Password");
 
             $strings  = array (
                                'verifyuri' => html::anchor('user/frontend/change_password/' . $verify_uri),
@@ -277,8 +277,8 @@ class Frontend_Controller extends Controller
 
             // Send an email to verify the user
             $settings = Arag_Config::get('email_settings', NULL, 'core');
-            $settings['template'] = "Your new password for %username%' is '%password%'";
-            $settings['subject']  = "Password Changed";
+            $settings['template'] = _("Your new password for %username%' is '%password%'");
+            $settings['subject']  = _("Password Changed");
             $strings  = array (
                                'username' => $user['username'],
                                'password' => $password
@@ -426,8 +426,8 @@ class Frontend_Controller extends Controller
 
         // Send an email to verify the user
         $settings = Arag_Config::get('email_settings', NULL, 'core');
-        $settings['template'] = "Thank you for registering in %appname%. To complete you registration please visit the following link".
-                                ":\n\n%verifyuri%\n\nYour Username: %username%\nYour Password: %password%";
+        $settings['template'] = _("Thank you for registering in %appname%. To complete you registration please visit the following link".
+                                  ":\n\n%verifyuri%\n\nYour Username: %username%\nYour Password: %password%");
         $strings  = array (
                            'verifyuri' => html::anchor('user/frontend/verify/' . $verify_uri),
                            'username'  => $username,
