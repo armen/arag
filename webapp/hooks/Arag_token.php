@@ -8,7 +8,7 @@ function arag_token()
 {
     if (Config::item('token.type') === 'form') {
 
-        $session = new Session();
+        $session = Session::instance();
         $input   = new Input();
     
         $old_token  = $session->get_once('arag_token');
