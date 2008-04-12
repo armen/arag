@@ -1,0 +1,156 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-04-13 09:36+0430\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: views/messages/not_authorized.tpl:9
+msgid "You are not authorized to access this section!"
+msgstr ""
+
+#: views/messages/not_authorized.tpl:10 views/messages/page_not_found.tpl:10
+#: views/messages/invalid_request.tpl:10
+msgid "Return to the Main Page"
+msgstr ""
+
+#: views/messages/not_authorized.tpl:16
+msgid "You must login to continue."
+msgstr ""
+
+#: views/messages/not_authorized.tpl:23 views/backend/settings_email.tpl:33
+#: controllers/backend.php:79
+msgid "Username"
+msgstr ""
+
+#: views/messages/not_authorized.tpl:27 views/backend/settings_email.tpl:37
+msgid "Password"
+msgstr ""
+
+#: views/messages/not_authorized.tpl:37
+msgid "Login"
+msgstr ""
+
+#: views/messages/page_not_found.tpl:9
+msgid "Page not found"
+msgstr ""
+
+#: views/messages/invalid_request.tpl:8
+msgid "Your request is invalid!"
+msgstr ""
+
+#: views/messages/invalid_request.tpl:9
+msgid ""
+"If your are sure that your request isn't invalid then contact your website "
+"administrator."
+msgstr ""
+
+#: views/backend/settings_email.tpl:9
+msgid ""
+"To have a dynamic template which has replaceable items, you should use %"
+"variableName% like the following example template in which %username% will "
+"be replaced by username variable in the application:"
+msgstr ""
+
+#: views/backend/settings_email.tpl:10
+msgid "Your username is %username%."
+msgstr ""
+
+#: views/backend/settings_email.tpl:11
+msgid "Avialable variables are %username%, %password%, %appname% and %uri%"
+msgstr ""
+
+#: views/backend/settings_email.tpl:18
+msgid "Settings are updated successfuly!"
+msgstr ""
+
+#: views/backend/settings_email.tpl:25
+msgid "SMTP Server"
+msgstr ""
+
+#: views/backend/settings_email.tpl:29 controllers/backend.php:73
+msgid "SMTP Port"
+msgstr ""
+
+#: views/backend/settings_email.tpl:41
+msgid "Sender's Email"
+msgstr ""
+
+#: views/backend/settings_email.tpl:46 controllers/backend.php:82
+msgid "Subject"
+msgstr ""
+
+#: views/backend/settings_email.tpl:50
+msgid "Email Template"
+msgstr ""
+
+#: views/backend/settings_email.tpl:56
+msgid "Save"
+msgstr ""
+
+#: views/backend/settings_email.tpl:57
+msgid "Reset"
+msgstr ""
+
+#: controllers/backend.php:17 controllers/backend.php:21
+msgid "Core Settings"
+msgstr ""
+
+#: controllers/backend.php:22
+msgid "Email Settings"
+msgstr ""
+
+#: controllers/backend.php:25
+#, php-format
+msgid "%s should be numeric"
+msgstr ""
+
+#: controllers/backend.php:26
+#, php-format
+msgid "%s is required"
+msgstr ""
+
+#: controllers/backend.php:27
+#, php-format
+msgid "%s must be a valid email address"
+msgstr ""
+
+#: controllers/backend.php:28
+#, php-format
+msgid "%s must be alph-numeric."
+msgstr ""
+
+#: controllers/backend.php:70
+msgid "SMTP server"
+msgstr ""
+
+#: controllers/backend.php:76
+msgid "Sender's email"
+msgstr ""
+
+#: controllers/backend.php:85
+msgid "Email's template"
+msgstr ""
+
+#: controllers/frontend/messages.php:16
+msgid "Invalid Request!"
+msgstr ""
+
+#: controllers/frontend/messages.php:27
+msgid "Not Authorized!"
+msgstr ""
+
+#: controllers/frontend/messages.php:35
+msgid "Page Not Found!"
+msgstr ""

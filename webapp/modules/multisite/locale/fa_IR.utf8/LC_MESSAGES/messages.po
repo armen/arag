@@ -1,0 +1,353 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-04-13 09:37+0430\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: views/frontend/verified.tpl:8
+msgid "Your account is now activated! You can login now."
+msgstr ""
+
+#: views/frontend/verify.tpl:13
+msgid "Please enter your username and password to activate your account"
+msgstr ""
+
+#: views/frontend/verify.tpl:22
+msgid "User Name"
+msgstr ""
+
+#: views/frontend/verify.tpl:26 views/backend/settings_email.tpl:37
+msgid "Password"
+msgstr ""
+
+#: views/frontend/verify.tpl:33
+msgid "Verify"
+msgstr ""
+
+#: views/backend/settings_limit.tpl:12
+#: views/backend/settings_privileges.tpl:12
+#: views/backend/settings_password.tpl:12 views/backend/settings_email.tpl:18
+#: views/backend/settings_user_blocking.tpl:17
+#: views/backend/settings_expire.tpl:16
+msgid "Settings are updated successfuly!"
+msgstr ""
+
+#: views/backend/settings_limit.tpl:19
+msgid "List items per page"
+msgstr ""
+
+#: views/backend/settings_limit.tpl:20 views/backend/settings_expire.tpl:9
+#: views/backend/settings_expire.tpl:24
+msgid "0 means Unlimited"
+msgstr ""
+
+#: views/backend/settings_limit.tpl:25
+#: views/backend/settings_privileges.tpl:30
+#: views/backend/settings_password.tpl:25 views/backend/settings_email.tpl:56
+#: views/backend/settings_user_blocking.tpl:38
+#: views/backend/settings_expire.tpl:29
+msgid "Save"
+msgstr ""
+
+#: views/backend/settings_limit.tpl:26
+#: views/backend/settings_privileges.tpl:31
+#: views/backend/settings_password.tpl:26 views/backend/settings_email.tpl:57
+#: views/backend/settings_user_blocking.tpl:39
+#: views/backend/settings_expire.tpl:30
+msgid "Reset"
+msgstr ""
+
+#: views/backend/post_installer.tpl:12 views/backend/post_installer.tpl:17
+msgid "New application added successfuly!"
+msgstr ""
+
+#: views/backend/post_installer.tpl:13
+msgid "An email sent successfuly to the admin of the new application!"
+msgstr ""
+
+#: views/backend/post_installer.tpl:20
+msgid ""
+"There was a problem in sending email to the admin of the new application!"
+msgstr ""
+
+#: views/backend/post_installer.tpl:27
+msgid "Please Implement Post Installer :)"
+msgstr ""
+
+#: views/backend/settings_privileges.tpl:19
+msgid "Set default privileges for Admin groups"
+msgstr ""
+
+#: views/backend/settings_privileges.tpl:24
+msgid "Set default privileges for Anonymous groups"
+msgstr ""
+
+#: views/backend/site.tpl:12
+msgid "Application Name"
+msgstr ""
+
+#: views/backend/site.tpl:20
+msgid "Database ID"
+msgstr ""
+
+#: views/backend/site.tpl:43
+msgid "Search"
+msgstr ""
+
+#: views/backend/install.tpl:21 controllers/backend/install.php:163
+msgid "Application name"
+msgstr ""
+
+#: views/backend/install.tpl:29 controllers/backend/install.php:166
+msgid "Email"
+msgstr ""
+
+#: views/backend/install.tpl:37 controllers/backend/install.php:169
+msgid "Retype Email"
+msgstr ""
+
+#: views/backend/install.tpl:46
+msgid "Modules"
+msgstr ""
+
+#: views/backend/install.tpl:59
+msgid "Submit"
+msgstr ""
+
+#: views/backend/settings_password.tpl:19
+msgid "Random Password's length"
+msgstr ""
+
+#: views/backend/settings_email.tpl:9
+msgid ""
+"To have a dynamic template which has replaceable items, you should use %"
+"variableName% like the following example template in which %username% will "
+"be replaced by username variable in the application:"
+msgstr ""
+
+#: views/backend/settings_email.tpl:10
+msgid "Your username is %username%."
+msgstr ""
+
+#: views/backend/settings_email.tpl:11
+msgid "Avialable variables are %username%, %password%, %appname% and %uri%"
+msgstr ""
+
+#: views/backend/settings_email.tpl:25
+msgid "SMTP Server"
+msgstr ""
+
+#: views/backend/settings_email.tpl:29
+msgid "SMTP Port"
+msgstr ""
+
+#: views/backend/settings_email.tpl:33
+msgid "Username"
+msgstr ""
+
+#: views/backend/settings_email.tpl:41
+msgid "Sender's Email"
+msgstr ""
+
+#: views/backend/settings_email.tpl:46
+msgid "Subject"
+msgstr ""
+
+#: views/backend/settings_email.tpl:50
+msgid "Email Template"
+msgstr ""
+
+#: views/backend/settings_user_blocking.tpl:9
+msgid "0 for expire time means unlimited"
+msgstr ""
+
+#: views/backend/settings_user_blocking.tpl:10
+msgid ""
+"Remember, blocking and uri removing will be disabled if you set blocking "
+"attempts to 0"
+msgstr ""
+
+#: views/backend/settings_user_blocking.tpl:24
+msgid "Number of verify attempts before blocking"
+msgstr ""
+
+#: views/backend/settings_user_blocking.tpl:28
+msgid "Blocking duration (hours)"
+msgstr ""
+
+#: views/backend/settings_user_blocking.tpl:32
+msgid "Block action"
+msgstr ""
+
+#: views/backend/settings_expire.tpl:23
+msgid "Expire time for verification url (hours)"
+msgstr ""
+
+#: controllers/backend/backend.php:18 controllers/backend/backend.php:22
+#: controllers/frontend.php:17
+msgid "MultiSite"
+msgstr ""
+
+#: controllers/backend/backend.php:23
+msgid "Sites"
+msgstr ""
+
+#: controllers/backend/backend.php:24
+msgid "Install"
+msgstr ""
+
+#: controllers/backend/backend.php:25
+msgid "Post Installer"
+msgstr ""
+
+#: controllers/backend/backend.php:26
+msgid "Delete Site"
+msgstr ""
+
+#: controllers/backend/backend.php:27
+msgid "Edit Site"
+msgstr ""
+
+#: controllers/backend/backend.php:28
+msgid "Preview Site"
+msgstr ""
+
+#: controllers/backend/backend.php:29
+msgid "Settings"
+msgstr ""
+
+#: controllers/backend/backend.php:30
+msgid "Page Limits"
+msgstr ""
+
+#: controllers/backend/backend.php:31
+msgid "Default Privileges"
+msgstr ""
+
+#: controllers/backend/backend.php:32
+msgid "User Blocking"
+msgstr ""
+
+#: controllers/backend/settings.php:19
+#, php-format
+msgid "%s should be numeric"
+msgstr ""
+
+#: controllers/backend/settings.php:20 controllers/backend/install.php:20
+#, php-format
+msgid "%s is required"
+msgstr ""
+
+#: controllers/backend/settings.php:47
+msgid "Limit"
+msgstr ""
+
+#: controllers/backend/settings.php:137
+msgid "Blocking expire time"
+msgstr ""
+
+#: controllers/backend/settings.php:140
+msgid "Blocking attempts"
+msgstr ""
+
+#: controllers/backend/install.php:21
+#, php-format
+msgid "%ss do not match"
+msgstr ""
+
+#: controllers/backend/install.php:22
+#, php-format
+msgid "%s can contain only alpha-numeric characters, underscores or dashes"
+msgstr ""
+
+#: controllers/backend/install.php:23
+msgid "Please enter a valid email address"
+msgstr ""
+
+#: controllers/backend/install.php:24
+msgid "This application name is not available"
+msgstr ""
+
+#: controllers/backend/install.php:37
+msgid ""
+"You should first set your email's SMTP settings in the core settings to "
+"continue."
+msgstr ""
+
+#: controllers/backend/install.php:42
+msgid "Your 'public_html/sites' directory doesn't exist or isn't writeable."
+msgstr ""
+
+#: controllers/backend/install.php:47
+msgid "Your 'config/sites' directory doesn't exist or isn't writeable."
+msgstr ""
+
+#: controllers/backend/site.php:32
+msgid "Name"
+msgstr ""
+
+#: controllers/backend/site.php:33
+msgid "Default Group"
+msgstr ""
+
+#: controllers/backend/site.php:34
+msgid "Create Date"
+msgstr ""
+
+#: controllers/backend/site.php:35
+msgid "Database Name"
+msgstr ""
+
+#: controllers/backend/site.php:36
+msgid "View"
+msgstr ""
+
+#: controllers/frontend.php:29
+msgid "Please enter a valid uri!"
+msgstr ""
+
+#: controllers/frontend.php:34
+msgid ""
+"This uri is expired! Please contact site administrator for further "
+"information."
+msgstr ""
+
+#: controllers/frontend.php:64 controllers/frontend.php:73
+msgid "Wrong Username or Password."
+msgstr ""
+
+#: controllers/frontend.php:66 controllers/frontend.php:92
+msgid ""
+"Attention!! Your url will be removed and your username will get blocked if "
+"you miss %s% times while verifying!"
+msgstr ""
+
+#: controllers/frontend.php:87
+msgid ""
+"Attention!! Your url removed and your username got blocked! Contact site "
+"administrator for further information"
+msgstr ""
+
+#: controllers/frontend.php:102
+msgid ""
+"This user name is blocked. Please contact site administrator for further "
+"information or wait for %h% hours and %m% minutes"
+msgstr ""
+
+#: controllers/frontend.php:108
+msgid ""
+"This user name is blocked. Please contact site administrator for further "
+"information."
+msgstr ""
