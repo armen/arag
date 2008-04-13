@@ -99,9 +99,9 @@ class Settings_Controller extends Backend_Controller
         $data['block_counter'] = Arag_Config::get("verify_block_counter");
         $data['saved']         = $this->session->get_once('multisite_settings_user_blocking_saved');
         $data['blockoptions']  = array(
-                                       MultiSite_Model::BLOCK_URI => "BLock user and remove URI",
-                                       MultiSite_Model::BLOCK     => "Just block user",
-                                       MultiSite_Model::URI       => "Just remove URI"
+                                       MultiSite_Model::BLOCK_URI => _("BLock user and remove URI"),
+                                       MultiSite_Model::BLOCK     => _("Just block user"),
+                                       MultiSite_Model::URI       => _("Just remove URI")
                                       );
         if (arag_config::get('verify_block_action', 6) & Multisite_Model::BLOCK) {
             $data['blockselected'] = MultiSite_Model::BLOCK;
