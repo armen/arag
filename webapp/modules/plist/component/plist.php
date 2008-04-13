@@ -32,7 +32,7 @@ class PList_Component extends Component implements IteratorAggregate, ArrayAcces
     private $page     = 1;   // The page to start listing
     private $maxpages = 10;  // How many pages to show (google style) --> set false to disable
 
-    private $emptyListMessage = "List content is Empty!";
+    private $emptyListMessage = Null;
 
     const NONE           = Null;
     const HIDDEN_COLUMN  = 1;
@@ -53,6 +53,8 @@ class PList_Component extends Component implements IteratorAggregate, ArrayAcces
     function __construct($namespace = Null)
     {
         parent::__construct($namespace);
+
+        $this->emptyListMessage = _("List content is Empty!");
 
         $this->setResource(Array());
         $this->setProperties(self::CAPTION | self::HEADER | self::FOOTER | self::SORTABLE);
