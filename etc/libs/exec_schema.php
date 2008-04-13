@@ -35,14 +35,16 @@ function execSchemaFiles(&$manager, $schemaFiles, $dataFiles, $data, $schemaVars
                 $output .= "Done!";
             }
 
-            $dataFile = str_replace('.schema', "{$data}.data", $schema);
-            $dataFile = (!empty($data) && is_readable($dataFile)) ? $dataFile : str_replace('.schema', '.data', $schema);
+            $dataFileName = str_replace('.schema', "{$data}.data", basename($schema));
+            $dataFileName = (!empty($data) && isset($dataFiles[$dataFileName])) ? $dataFileName : str_replace('.schema', '.data', basename($schema));
 
             // Insert data
-            if (in_array($dataFile, $dataFiles) && is_readable($dataFile)) {
+            if (isset($dataFiles[$dataFileName]) && is_readable($dataFiles[$dataFileName])) {
+                
+                $dataFile = $dataFiles[$dataFileName];
                 
                 $output .= "\n";
-                $output .= "executing '".basename($dataFile)."': ";        
+                $output .= "executing '".$dataFileName."': ";        
                 $result =& $manager->writeInitialization($dataFile, $schema, $schemaVars);
                 
                 if (PEAR::isError($result)) {
@@ -94,6 +96,12 @@ function getSchemaFilesList($module, $pattern)
         }
     }
 
-    return $files;
+    $result = array();
+
+    foreach ($files as $file) {
+        $result[basename($file)] = $file;
+    }
+
+    return $result;
 }
 // }}}
