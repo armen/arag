@@ -28,10 +28,21 @@ class Backend_Controller extends Controller
         $this->layout->content = new View('backend/controlpanel');
 
         if (defined('MASTERAPP')) {
-            $this->layout->content->modules = $modules->getModules();
+            $modules = $modules->getModules();
         } else {
-            $this->layout->content->modules = $modules->getModules(Array('multisite', 'ta_locator', 'core'));
+            $modules = $modules->getModules(Array('multisite', 'ta_locator', 'core'));
         }
+
+        $accessible_modules = Array();
+
+        foreach ($modules as $module) {
+            if (Arag_Auth::is_accessible($module['module'].'/backend')) {
+                $module['name']       = _($module['name']);
+                $accessible_modules[] = $module;
+            }
+        }
+
+        $this->layout->content->modules = $accessible_modules;        
     }
     // }}}
 }

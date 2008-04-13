@@ -26,19 +26,14 @@ Event::add_before('system.execute', current(Event::get('system.execute')), array
  */
 class Arag_Auth {
     
-    // {{{ Properties
-
-    private static $destination;
-
-    // }}}
     // {{{ check
     public static function check()
     {
         $session = Session::instance();
         $appname = $session->get('user.appname', APPNAME);
 
-        $directory         = substr(Router::$directory, strpos(Router::$directory, 'controllers/') + 12); // 12 is strlen('controllers/')
-        self::$destination = Router::$module . '/' . $directory . Router::$controller . '/' . Router::$method;
+        $directory   = substr(Router::$directory, strpos(Router::$directory, 'controllers/') + 12); // 12 is strlen('controllers/')
+        $destination = Router::$module . '/' . $directory . Router::$controller . '/' . Router::$method;
 
         if (!$session->get('user.authenticated') && $session->get('user.username') != 'anonymous') {
 
@@ -56,16 +51,9 @@ class Arag_Auth {
             $session->set('privilege_filters', $filters->getPrivilegeFilters($appname));
         }
 
-        $authorized = self::is_authorized($session->get('user.privileges'));
-
-        if ($authorized) {
-            // The user is authorized so we will try to filter his/her privileges with a blacklist
-            $authorized = self::is_authorized($session->get('privilege_filters'), False);
-        }
-
-        if (!$authorized) {
+        if (!self::is_accessible($destination, True)) {
             if (!$session->get('user.authenticated')) {
-                $session->set_flash('not_authorized_redirect_url', self::$destination);
+                $session->set_flash('not_authorized_redirect_url', $destination);
             }
             url::redirect('not_authorized');        
             exit;
@@ -73,10 +61,10 @@ class Arag_Auth {
     }
     // }}}
     // {{{ is_authorized
-    private static function is_authorized($privileges, $whiteList = True)
+    private static function is_authorized($destination, $privileges, $whiteList = True)
     {
         // XXX: We have to allow this destination otherwise it is possible to happen an infinity loop.
-        if (self::$destination === 'core/frontend/messages/not_authorized') {
+        if ($destination === 'core/frontend/messages/not_authorized') {
             return True;
         }
 
@@ -102,7 +90,7 @@ class Arag_Auth {
                     // Replace * with .*
                     $privilege = '|^'.str_replace('*', '.*', $privilege).'$|';
 
-                    if (preg_match($privilege, self::$destination)) {
+                    if (preg_match($privilege, $destination)) {
                         return (boolean) $whiteList;
                     }
 
@@ -120,6 +108,25 @@ class Arag_Auth {
 
         // The format is incorrect! sorry we can't let you in :)
         return False;
+    }
+    // }}}
+    // {{{ is_accessible
+    public static function is_accessible($uri, $routed_uri = False)
+    {
+        $session = Session::instance();
+
+        if (!$routed_uri) {
+            $uri = url::routed_uri($uri);
+        }
+
+        $authorized = self::is_authorized($uri, $session->get('user.privileges'));
+
+        if ($authorized) {
+            // The user is authorized so we will try to filter his/her privileges with a blacklist
+            $authorized = self::is_authorized($uri, $session->get('privilege_filters'), False);
+        }
+
+        return $authorized;
     }
     // }}}
 }
