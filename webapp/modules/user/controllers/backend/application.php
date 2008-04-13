@@ -46,7 +46,7 @@ class Application_Controller extends Backend_Controller
         $this->_create_groups_list($this->appname);
 
         $this->groups->addAction('user/backend/application/group_privileges_edit/#id#/', _("Privileges"), 'privileges_action');
-        $this->groups->addAction('user/backend/application/users/#id#/', _("View"), 'view_action'); 
+        $this->groups->addAction('user/backend/application/users/#id#/', _("Users List"), 'users_list'); 
         $this->groups->addAction('user/backend/application/delete/group/#id#', _("Delete"), 'delete_action');
         $this->groups->addAction("user/backend/application/delete/group", _("Delete"), 'delete_action', PList_Component::GROUP_ACTION);
         $this->groups->setGroupActionParameterName('id');
