@@ -116,7 +116,7 @@ class Arag_Auth {
         $session = Session::instance();
 
         if (!$routed_uri) {
-            $uri = url::routed_uri($uri);
+            $uri = Router::routed_uri($uri);
         }
 
         $authorized = self::is_authorized($uri, $session->get('user.privileges'));
