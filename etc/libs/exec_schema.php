@@ -8,61 +8,92 @@
 
 require_once 'MDB2/Schema.php';
 
-// {{{ execSchema
-function execSchema(&$manager, $schema, $data, $schemaVars = Array())
+// {{{ execSchemaFiles
+function execSchemaFiles(&$manager, $schemaFiles, $dataFiles, $data, $schemaVars = Array())
 {
-    $output = "\n";
+    $lastDirectory = Null;
+    echo "\n";
 
-    // don't any thing for .data files 
-    if (preg_match('/^[_A-Za-z0-9\.]+\.data$/', basename($schema))) {
-        return;
-    }
-    
-    $output  .= "executing '".basename($schema)."': ";
-    $hasData  = false;
+    // Foreach through files and execute schemas
+    foreach ($schemaFiles as $schema) {
 
-    if (is_readable($schema) && preg_match('/^[_A-Za-z0-9]+\.schema$/', basename($schema))) {
+        $output   = Null;
+        $output  .= "executing '".basename($schema)."': ";
+        $hasData  = false;
 
-        // Create schema
-        $result = $manager->updateDatabase($schema, Null, $schemaVars);
-        //$result = $manager->updateDatabase($schema, Null, $schemaVars);
-        //$result = $manager->updateDatabase($schema, "{$schema}.before", $schemaVars);
+        if (is_readable($schema) && preg_match('/^[_A-Za-z0-9]+\.schema$/', basename($schema))) {
 
-        if (PEAR::isError($result)) {
-            $output .= ("Failed! (" . $result->getMessage() . ")\n" . $result->getUserInfo());
-            return $output;
-        } else {
-            $output .= "Done!";
-        }
+            // Create schema
+            $result = $manager->updateDatabase($schema, Null, $schemaVars);
+            //$result = $manager->updateDatabase($schema, Null, $schemaVars);
+            //$result = $manager->updateDatabase($schema, "{$schema}.before", $schemaVars);
 
-        // Schema has data?    
-        if (isset($data) && is_readable(str_replace('.schema', ".{$data}.data", $schema))) {
-            $dataFile = str_replace('.schema', ".{$data}.data", $schema);
-            $hasData  = true;
-        } else if (is_readable(str_replace('.schema', '.data', $schema))) {
-            $dataFile = str_replace('.schema', '.data', $schema);
-            $hasData  = true;
-        }
-        
-        // Insert data
-        if ($hasData) {
-            
-            $output .= "\n";
-            $output .= "executing '".basename($dataFile)."': ";        
-            $result =& $manager->writeInitialization($dataFile, $schema, $schemaVars);
-            
             if (PEAR::isError($result)) {
                 $output .= ("Failed! (" . $result->getMessage() . ")\n" . $result->getUserInfo());
+                return $output;
             } else {
                 $output .= "Done!";
             }
-        }    
 
-    } else {
-        $output .= "Skiped! (I don't understand what's this!)";
+            $dataFile = str_replace('.schema', "{$data}.data", $schema);
+            $dataFile = (!empty($data) && is_readable($dataFile)) ? $dataFile : str_replace('.schema', '.data', $schema);
+
+            // Insert data
+            if (in_array($dataFile, $dataFiles) && is_readable($dataFile)) {
+                
+                $output .= "\n";
+                $output .= "executing '".basename($dataFile)."': ";        
+                $result =& $manager->writeInitialization($dataFile, $schema, $schemaVars);
+                
+                if (PEAR::isError($result)) {
+                    $output .= ("Failed! (" . $result->getMessage() . ")\n" . $result->getUserInfo());
+                } else {
+                    $output .= "Done!";
+                }
+            }
+
+        } else {
+            $output .= "Skiped! (I don't understand what's this!)";
+        }
+
+        $output .= "\n";
+        
+        if (dirname($schema) != $lastDirectory) {
+            $lastDirectory = dirname($schema);        
+            $output = "\n" . $output;
+        }
+        
+        // Show result
+        echo $output;
     }
 
-    return $output;
+    echo "\n";
 }
 // }}}
+// {{{ getSchameFilesList 
+function getSchemaFilesList($module, $pattern)
+{
+    $modulesPath = realpath(dirname(__FILE__).'/../../webapp');
+    $files       = Array();
 
+    foreach (glob($modulesPath . '/modules/'.$module) as $path) {
+
+        if (file_exists($path . '/config/module.php')) {
+            include($path . '/config/module.php');
+
+            $schemaPath = $path . '/schemas/v' . $config['version'];
+            
+            // Is module enabled?
+            if (strtolower($config['enabled']) && is_dir($schemaPath)) {
+                $files = array_merge($files, glob($schemaPath.'/'.$pattern));
+            }
+
+        } else {
+            $moduleName = substr(strrchr($path, '/'), 1);
+            echo "\nWARNING: module.php does not exists for '$moduleName' module: Skipped!";
+        }
+    }
+
+    return $files;
+}
+// }}}

@@ -45,7 +45,7 @@ if (PEAR::isError($options)) {
 
 // Optional options
 $prefix = 'arag_';
-$data   = 'test';
+$data   = '';
 
 // Extract options
 foreach ($options[0] as $option) {
@@ -53,7 +53,7 @@ foreach ($options[0] as $option) {
     switch ($option[0]) {
         case 'd':
         case '--data-set':
-            $data = $option[1];
+            $data = '.'.$option[1];
             break;
         
         case 'p':
@@ -109,65 +109,21 @@ if (PEAR::isError($manager)) {
 // {{{ Install schema files
 
 if (isset($module)) {
-
-    // {{{ Fetch schema file names of all enabled modules
-
-    $modulesPath = dirname(__FILE__).'/../../webapp';
-    $schemaFiles = Array();
-
-    foreach (glob($modulesPath . '/modules/'.$module) as $path) {
-        
-        if (file_exists($path . '/config/module.php')) {
-            include_once($path . '/config/module.php');
-
-            $schemaPath = $path . '/schemas/v' . $config['version'];
-            
-            // Is module enabled?
-            if (strtolower($config['enabled']) && is_dir($schemaPath)) {
-                $schemaFiles = array_merge($schemaFiles, glob($schemaPath . '/*.schema'));
-            }
-
-        } else {
-            $moduleName = substr(strrchr($path, '/'), 1);
-            echo "\nWARNING: module.php does not exists for '$moduleName' module: Skipped!";
-        }
-    }
-    // }}}
-    // {{{ Install modules schema files
-
-    $lastDirectory = Null;
-
-    // Foreach through files and execute schemas
-    foreach ($schemaFiles as $file) {
-
-        $output = execSchema($manager, $file, $data, Array('DATABASE_NAME' => $db, 'TABLES_PREFIX' => $prefix, 'NOW_TIMESTAMP' => time()));
-
-        if (dirname($file) != $lastDirectory) {
-            echo "\n";
-        }
-        
-        // Show result
-        echo $output;
-
-        // Get last dir
-        $lastDirectory = dirname($file);
-    }
-    echo "\n\n";
-    // }}}
+    $schemaFiles = getSchemaFilesList($module, '*.schema');
+    $dataFiles   = getSchemaFilesList($module, '*.data');
 
 } else {
-    
-    // {{{ Install given schema files
+    $schemaFiles = $options[1];
+    $dataFiles   = array();
 
-    // Foreach through files and execute schemas
     foreach ($options[1] as $file) {
-
-        echo execSchema($manager, $file, $data, Array('DATABASE_NAME' => $db, 'TABLES_PREFIX' => $prefix));
+         $dataFiles[] = str_replace('.schema', $data.'.data', $file);
+         $dataFiles[] = str_replace('.schema', '.data', $file);         
     }
-    echo "\n\n";
-
-    // }}}
 }
+
+execSchemaFiles($manager, $schemaFiles, $dataFiles, $data, Array('DATABASE_NAME' => $db, 'TABLES_PREFIX' => $prefix, 'NOW_TIMESTAMP' => time()));
+
 // }}}
 
 ?>
