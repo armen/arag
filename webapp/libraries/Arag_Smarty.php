@@ -26,6 +26,7 @@ class Arag_Smarty_Core extends Smarty {
         $this->caching        = Config::item('smarty.caching');
         $this->force_compile  = Config::item('smarty.force_compile');
         $this->security       = Config::item('smarty.security');
+        $this->compile_id     = sha1(APPNAME.Config::item('locale.lang'));
 
         // check if cache directory is exists
         $this->checkDirectory(Config::item('arag.cache_path'));
