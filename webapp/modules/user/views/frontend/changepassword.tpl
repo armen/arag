@@ -4,12 +4,17 @@
     File: $Id: edit.tpl 53 2007-10-11 18:38:57Z sasan $
 *}
 {arag_block}
-{if $show_form}
-    {arag_block template="tips"}
-        _("Please enter your username and your email address which you set in your profile to recieve your new password.")
-    {/arag_block}
-{/if}
-{arag_validation_errors}
+    {if $show_form}
+        {arag_block template="tips"}
+            _("Please enter your username and your email address which you set in your profile to recieve your new password.")
+        {/arag_block}
+    {/if}
+    {arag_validation_errors}
+    {if $message}
+        {arag_block template="error"}
+            {$message}
+        {/arag_block}
+    {/if}
     {if $error_message}
         {arag_block template="warning"}
             {$error_message}

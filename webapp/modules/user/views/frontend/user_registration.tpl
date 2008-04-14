@@ -5,6 +5,11 @@
 *}
 {arag_block}
     {arag_validation_errors}
+    {if $message}
+        {arag_block template="error"}
+            {$message}
+        {/arag_block}
+    {/if}
     {if $flagsaved}
         {if $is_sent}
             {arag_block align="left" template="info"}

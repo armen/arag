@@ -4,10 +4,15 @@
     File: $Id: edit.tpl 53 2007-10-11 18:38:57Z sasan $
 *}
 {arag_block}
-{arag_block template="tips"}
-    _("Please enter your username and your email address which you set in your profile to recieve instructions for changing password.")
-{/arag_block}
-{arag_validation_errors}
+    {arag_block template="tips"}
+        _("Please enter your username and your email address which you set in your profile to recieve instructions for changing password.")
+    {/arag_block}
+    {arag_validation_errors}
+    {if $message}
+        {arag_block template="error"}
+            {$message}
+        {/arag_block}
+    {/if}
     {if $error_message}
         {arag_block template="warning"}
             {$error_message}

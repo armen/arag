@@ -10,6 +10,9 @@
 
 class Frontend_Controller extends Controller 
 {
+    // {{{ properties
+    private $message;
+    // }}}
     // {{{ Constructor
     function __construct()
     {
@@ -26,6 +29,9 @@ class Frontend_Controller extends Controller
         $this->validation->message('matches', _("%s does not match."));
         $this->validation->message('alpha_dash', _("%s can contain only alpha-numeric characters, underscores or dashes"));
         $this->validation->message('alpha', _("%s can contain only alpha characters"));
+        $this->validation->message('smtp_error', _("SMTP settings are not set"));
+
+        $this->message = False;
 
     }
     // }}}
@@ -158,6 +164,7 @@ class Frontend_Controller extends Controller
         $this->layout->content = new View('frontend/password', array(
                                                                      'error_message' => false,
                                                                      'is_sent'       => false,
+                                                                     'message'       => $this->message
                                                                     ));
     }
     // }}}
@@ -205,13 +212,22 @@ class Frontend_Controller extends Controller
 
         $this->layout->content = new View('frontend/password', array(
                                                                      'error_message' => $error_message,
-                                                                     'is_sent'       => $is_sent
+                                                                     'is_sent'       => $is_sent,
+                                                                     'message'       => $this->message
                                                                     ));
     }
     // }}}
     // {{{ forget_password_validate_write
     public function forget_password_validate_write()
     {
+        $settings  = Arag_Config::get('email_settings', False, 'core');
+
+        if (!$settings || !isset($settings['smtpserver']) || !isset($settings['sender']) || !isset($settings['smtpport'])) {
+            $this->validation->name('smtp_settings', _("SMTP Settings"));
+            $this->message = _("SMTP settings are not set");
+            return false;
+        }
+
         $this->validation->name('username', _("Username"))->pre_filter('trim', 'username')
               ->add_rules('username', 'required', 'valid::alpha_dash');
 
@@ -251,7 +267,8 @@ class Frontend_Controller extends Controller
                                                                            'error_message' => $error_message,
                                                                            'is_sent'       => false,
                                                                            'verify_uri'    => $verify_uri,
-                                                                           'show_form'     => $show_form
+                                                                           'show_form'     => $show_form,
+                                                                           'message'       => $this->message
                                                                           ));
     }
     // }}}
@@ -300,13 +317,22 @@ class Frontend_Controller extends Controller
                                                                            'error_message' => $error_message,
                                                                            'is_sent'       => $is_sent,
                                                                            'verify_uri'    => $verify_uri,
-                                                                           'show_form'     => false
+                                                                           'show_form'     => false,
+                                                                           'message'       => $this->message
                                                                           ));
     }
     // }}}
     // {{{ change_password_validate_write
     public function change_password_validate_write()
     {
+        $settings  = Arag_Config::get('email_settings', False, 'core');
+
+        if (!$settings || !isset($settings['smtpserver']) || !isset($settings['sender']) || !isset($settings['smtpport'])) {
+            $this->validation->name('smtp_settings', _("SMTP Settings"));
+            $this->message = _("SMTP settings are not set");
+            return false;
+        }
+
         $this->validation->name('username', _("Username"))->pre_filter('trim', 'username')
               ->add_rules('username', 'required', 'valid::alpha_dash');
 
@@ -404,7 +430,10 @@ class Frontend_Controller extends Controller
     // {{{ registration_read
     public function registration_read()
     {
-        $this->layout->content = new View('frontend/user_registration', array('flagsaved' => false));       
+        $this->layout->content = new View('frontend/user_registration', array(
+                                                                              'flagsaved' => false,
+                                                                              'message'   => $this->message
+                                                                             ));       
     }
     // }}}
     // {{{ registration_write
@@ -454,6 +483,14 @@ class Frontend_Controller extends Controller
     // {{{ registration_validate_write
     public function registration_validate_write()
     {
+        $settings  = Arag_Config::get('email_settings', False, 'core');
+
+        if (!$settings || !isset($settings['smtpserver']) || !isset($settings['sender']) || !isset($settings['smtpport'])) {
+            $this->validation->name('smtp_settings', _("SMTP Settings"));
+            $this->message = _("SMTP settings are not set");
+            return false;
+        }
+
         $this->validation->name('username', _("Username"))->pre_filter('trim', 'username')
               ->add_rules('username', 'required', 'length[4, 255]', 'valid::alpha_dash', array($this, '_check_user_name'));
 
@@ -464,10 +501,10 @@ class Frontend_Controller extends Controller
              ->add_rules('repassword', 'required');
 
         $this->validation->name('name', _("Name"))->pre_filter('trim', 'name')
-             ->add_rules('name', 'required', 'valid::alpha');
+             ->add_rules('name', 'required', 'valid::standard_text');
 
         $this->validation->name('lastname', _("Lastname"))->pre_filter('trim', 'lastname')
-             ->add_rules('lastname', 'required', 'valid::alpha');
+             ->add_rules('lastname', 'required', 'valid::standard_text');
 
         $this->validation->name('email', _("Email"))->pre_filter('trim', 'email')
              ->add_rules('email', 'required', 'valid::email', 'matches[reemail]');
