@@ -3,83 +3,94 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2008-04-13 09:37+0430\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"PO-Revision-Date: 2008-04-14 02:07-0800\n"
+"Last-Translator: vafaei\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #: views/frontend/remove.tpl:9
-msgid ""
-"Please enter your username and your email address which you set in your "
-"profile to remove the unwanted change password uri."
-msgstr ""
+msgid "Please enter your username and your email address which you set in your profile to remove the unwanted change password uri."
+msgstr "لطفا نام کاربری و ایمیلی را که در فایل خود مشخص نموده اید، وارد نمایید تا تغییرات رمز عبور حذف گردد."
 
 #: views/frontend/remove.tpl:20
 msgid "The URI removed and is not valid anymore"
-msgstr ""
+msgstr "آدرس جابجا شده و دیگر معتبر نمی باشد."
 
-#: views/frontend/remove.tpl:29 views/frontend/user_registration.tpl:23
-#: views/frontend/password.tpl:26 views/frontend/login.tpl:18
-#: views/frontend/changepassword.tpl:29 views/frontend/verify.tpl:23
-#: views/backend/user_profile.tpl:22 views/backend/new_user.tpl:22
-#: controllers/backend/backend.php:59 controllers/backend/application.php:109
+#: views/frontend/remove.tpl:29
+#: views/frontend/user_registration.tpl:23
+#: views/frontend/password.tpl:26
+#: views/frontend/login.tpl:18
+#: views/frontend/changepassword.tpl:29
+#: views/frontend/verify.tpl:23
+#: views/backend/user_profile.tpl:22
+#: views/backend/new_user.tpl:22
+#: controllers/backend/backend.php:59
+#: controllers/backend/application.php:109
 #: controllers/backend/application.php:271
 #: controllers/backend/application.php:314
 #: controllers/backend/applications.php:261
-#: controllers/backend/applications.php:892 controllers/frontend.php:130
-#: controllers/frontend.php:215 controllers/frontend.php:310
-#: controllers/frontend.php:389 controllers/frontend.php:457
+#: controllers/backend/applications.php:892
+#: controllers/frontend.php:130
+#: controllers/frontend.php:215
+#: controllers/frontend.php:310
+#: controllers/frontend.php:389
+#: controllers/frontend.php:457
 msgid "Username"
-msgstr ""
+msgstr "نام "
 
-#: views/frontend/remove.tpl:33 views/frontend/password.tpl:30
+#: views/frontend/remove.tpl:33
+#: views/frontend/password.tpl:30
 #: views/frontend/changepassword.tpl:33
 msgid "Your Email Address"
-msgstr ""
+msgstr "آدرس پست الکترونیکی"
 
-#: views/frontend/remove.tpl:40 views/frontend/password.tpl:36
+#: views/frontend/remove.tpl:40
+#: views/frontend/password.tpl:36
 #: views/frontend/changepassword.tpl:40
 msgid "Send"
-msgstr ""
+msgstr "ارسال"
 
 #: views/frontend/user_registration.tpl:11
-msgid ""
-"Your username is now registered. An email sent to you containing an "
-"activation link."
-msgstr ""
+msgid "Your username is now registered. An email sent to you containing an activation link."
+msgstr "نام کاربری شما ثبت گردید. ایمیلی شامل لینک فعال سازی به آدرس الکترونیکی شما ارسال شده است."
 
 #: views/frontend/user_registration.tpl:15
-msgid ""
-"Your username is now registered. But there was a problem sending you an "
-"activation email."
-msgstr ""
+msgid "Your username is now registered. But there was a problem sending you an activation email."
+msgstr "نام کاربری شما ثبت گردید. اما اشکالی در ارسال ایمیل فعال سازی بوجود آمده است."
 
-#: views/frontend/user_registration.tpl:31 views/frontend/login.tpl:22
-#: views/frontend/verify.tpl:27 views/backend/user_profile.tpl:42
-#: views/backend/new_user.tpl:31 controllers/backend/application.php:275
+#: views/frontend/user_registration.tpl:31
+#: views/frontend/login.tpl:22
+#: views/frontend/verify.tpl:27
+#: views/backend/user_profile.tpl:42
+#: views/backend/new_user.tpl:31
+#: controllers/backend/application.php:275
 #: controllers/backend/application.php:321
 #: controllers/backend/applications.php:895
-#: controllers/backend/applications.php:930 controllers/frontend.php:133
+#: controllers/backend/applications.php:930
+#: controllers/frontend.php:133
 #: controllers/frontend.php:460
 msgid "Password"
-msgstr ""
+msgstr "رمز عبور"
 
-#: views/frontend/user_registration.tpl:39 views/backend/user_profile.tpl:50
+#: views/frontend/user_registration.tpl:39
+#: views/backend/user_profile.tpl:50
 #: views/backend/new_user.tpl:39
 msgid "Re-Password"
-msgstr ""
+msgstr "تایپ مجدد رمز عبور"
 
-#: views/frontend/user_registration.tpl:59 views/backend/user_profile.tpl:94
-#: views/backend/new_user.tpl:70 controllers/backend/backend.php:58
-#: controllers/backend/backend.php:114 controllers/backend/application.php:281
+#: views/frontend/user_registration.tpl:59
+#: views/backend/user_profile.tpl:94
+#: views/backend/new_user.tpl:70
+#: controllers/backend/backend.php:58
+#: controllers/backend/backend.php:114
+#: controllers/backend/application.php:281
 #: controllers/backend/application.php:324
 #: controllers/backend/applications.php:72
 #: controllers/backend/applications.php:83
@@ -90,314 +101,342 @@ msgstr ""
 #: controllers/backend/applications.php:370
 #: controllers/backend/applications.php:431
 #: controllers/backend/applications.php:898
-#: controllers/backend/applications.php:932 controllers/frontend.php:466
+#: controllers/backend/applications.php:932
+#: controllers/frontend.php:466
 msgid "Name"
-msgstr ""
+msgstr "نام "
 
-#: views/frontend/user_registration.tpl:67 views/backend/user_profile.tpl:102
+#: views/frontend/user_registration.tpl:67
+#: views/backend/user_profile.tpl:102
 #: views/backend/new_user.tpl:78
 msgid "Last Name"
-msgstr ""
+msgstr "نام خانوادگی"
 
-#: views/frontend/user_registration.tpl:75 views/backend/user_profile.tpl:110
-#: views/backend/new_user.tpl:86 controllers/backend/backend.php:60
+#: views/frontend/user_registration.tpl:75
+#: views/backend/user_profile.tpl:110
+#: views/backend/new_user.tpl:86
+#: controllers/backend/backend.php:60
 #: controllers/backend/application.php:287
 #: controllers/backend/application.php:330
 #: controllers/backend/applications.php:904
-#: controllers/backend/applications.php:938 controllers/frontend.php:218
-#: controllers/frontend.php:313 controllers/frontend.php:392
-#: controllers/frontend.php:472 controllers/frontend.php:475
+#: controllers/backend/applications.php:938
+#: controllers/frontend.php:218
+#: controllers/frontend.php:313
+#: controllers/frontend.php:392
+#: controllers/frontend.php:472
+#: controllers/frontend.php:475
 msgid "Email"
-msgstr ""
+msgstr "آدرس پست الکترونیکی"
 
 #: views/frontend/user_registration.tpl:83
 msgid "Re-Email"
-msgstr ""
+msgstr "آدرس پست الکترونیکی"
 
-#: views/frontend/user_registration.tpl:93 views/backend/user_profile.tpl:120
-#: views/backend/group_privileges.tpl:47 views/backend/privileges_edit.tpl:40
-#: views/backend/privileges.tpl:44 views/backend/new_group.tpl:33
-#: views/backend/new_user.tpl:96 views/backend/edit_filters.tpl:29
+#: views/frontend/user_registration.tpl:93
+#: views/backend/user_profile.tpl:120
+#: views/backend/group_privileges.tpl:47
+#: views/backend/privileges_edit.tpl:40
+#: views/backend/privileges.tpl:44
+#: views/backend/new_group.tpl:33
+#: views/backend/new_user.tpl:96
+#: views/backend/edit_filters.tpl:29
 msgid "Submit"
-msgstr ""
+msgstr "تایید"
 
 #: views/frontend/verified.tpl:8
 msgid "Your account is now activated! You can login now."
-msgstr ""
+msgstr "حساب دسترسی شما فعال شده است. اکنون می توانید وارد سایت شوید."
 
 #: views/frontend/password.tpl:8
-msgid ""
-"Please enter your username and your email address which you set in your "
-"profile to recieve instructions for changing password."
-msgstr ""
+msgid "Please enter your username and your email address which you set in your profile to recieve instructions for changing password."
+msgstr "لطفا نام و آدرس ایمیلی را که در فایل خود قرار داده اید، وارد نموده تا دستورالعملهای تغییر رمز برایتان ارسال گردد."
 
 #: views/frontend/password.tpl:18
-msgid ""
-"Please follow the instruction contained in an email sent to your email "
-"address, to complete the proccess."
-msgstr ""
+msgid "Please follow the instruction contained in an email sent to your email address, to complete the proccess."
+msgstr "به منظور تکمیل فرایند، مطابق دستورالعملهایی که به آدرس شما ایمیل شده است، عمل نمایید."
 
 #: views/frontend/login.tpl:32
 msgid "Login"
-msgstr ""
+msgstr "ورود"
 
 #: views/frontend/changepassword.tpl:9
-msgid ""
-"Please enter your username and your email address which you set in your "
-"profile to recieve your new password."
-msgstr ""
+msgid "Please enter your username and your email address which you set in your profile to recieve your new password."
+msgstr "لطفا نام و آدرس ایمیلی را که در فایل خود قرار داده اید، وارد نموده تا رمز جدید برایتان ارسال گردد."
 
 #: views/frontend/changepassword.tpl:20
 msgid "An email sent to you containing your new random password"
-msgstr ""
+msgstr "رمز جدید موقت ، به آدرس ایمیل شما ارسال شده است"
 
 #: views/frontend/verify.tpl:14
 msgid "Please enter your username and password to activate your account"
-msgstr ""
+msgstr "لطفا برای فعال سازی حساب کاربری خود نام و رمز عبور را وارد نمایید."
 
 #: views/frontend/verify.tpl:34
 msgid "Verify"
-msgstr ""
+msgstr "تایید"
 
-#: views/backend/settings.tpl:12 views/backend/settings_password.tpl:12
+#: views/backend/settings.tpl:12
+#: views/backend/settings_password.tpl:12
 #: views/backend/settings_user_blocking.tpl:17
 #: views/backend/settings_expire.tpl:16
 msgid "Settings are updated successfuly!"
-msgstr ""
+msgstr "تغییرات با موفقیت انجام شد!"
 
 #: views/backend/settings.tpl:25
 msgid "List items per page"
-msgstr ""
+msgstr "فهرست موضوعات هر صفحه"
 
 #: views/backend/settings.tpl:27
 msgid "0 means unlimited"
-msgstr ""
+msgstr "0 یعنی نامحدود"
 
-#: views/backend/settings.tpl:32 views/backend/settings_password.tpl:25
+#: views/backend/settings.tpl:32
+#: views/backend/settings_password.tpl:25
 #: views/backend/settings_user_blocking.tpl:34
 #: views/backend/settings_expire.tpl:29
 msgid "Save"
-msgstr ""
+msgstr "ذخیره"
 
-#: views/backend/settings.tpl:33 views/backend/settings_password.tpl:26
+#: views/backend/settings.tpl:33
+#: views/backend/settings_password.tpl:26
 #: views/backend/settings_user_blocking.tpl:35
 #: views/backend/settings_expire.tpl:30
 msgid "Reset"
-msgstr ""
+msgstr "بازنشانی"
 
-#: views/backend/filters_delete.tpl:11 views/backend/privileges_delete.tpl:11
+#: views/backend/filters_delete.tpl:11
+#: views/backend/privileges_delete.tpl:11
 #: views/backend/delete.tpl:11
 #, c-format
 msgid "Do you really want to delete '%s'?"
-msgstr ""
+msgstr "آیا از حذف '%s' اطمینان دارید؟"
 
-#: views/backend/filters_delete.tpl:23 views/backend/privileges_delete.tpl:19
+#: views/backend/filters_delete.tpl:23
+#: views/backend/privileges_delete.tpl:19
 #: views/backend/delete.tpl:28
 msgid "Yes"
-msgstr ""
+msgstr "بله"
 
-#: views/backend/filters_delete.tpl:29 views/backend/filters_delete.tpl:33
-#: views/backend/privileges_delete.tpl:24 views/backend/delete.tpl:39
+#: views/backend/filters_delete.tpl:29
+#: views/backend/filters_delete.tpl:33
+#: views/backend/privileges_delete.tpl:24
+#: views/backend/delete.tpl:39
 #: views/backend/delete.tpl:48
 msgid "No"
-msgstr ""
+msgstr "خیر"
 
 #: views/backend/filters_delete.tpl:40
-msgid ""
-"Notice that all the filters of this(these) application(s) will be deleted too"
-msgstr ""
+msgid "Notice that all the filters of this(these) application(s) will be deleted too"
+msgstr "توجه داشته باشید که تمامی فیلتر های این برنامه (ها) نیز حذف خواهند گردید"
 
 #: views/backend/add_app_filter.tpl:9
 msgid "New application added applications' filters!"
-msgstr ""
+msgstr "یک برنامه جدید ، برنامه فیلترها را اضافه کرد"
 
-#: views/backend/add_app_filter.tpl:17 views/backend/users.tpl:19
+#: views/backend/add_app_filter.tpl:17
+#: views/backend/users.tpl:19
 #: views/backend/index.tpl:17
 msgid "Application Name"
-msgstr ""
+msgstr "نام برنامه"
 
-#: views/backend/add_app_filter.tpl:27 views/backend/filters.tpl:28
+#: views/backend/add_app_filter.tpl:27
+#: views/backend/filters.tpl:28
 msgid "Add"
-msgstr ""
+msgstr "اضافه"
 
 #: views/backend/user_profile.tpl:9
 msgid "{$username} edited successfuly!"
-msgstr ""
+msgstr "{$ نام }با موفقیت اصلاح شد!"
 
-#: views/backend/user_profile.tpl:33 controllers/backend/application.php:318
+#: views/backend/user_profile.tpl:33
+#: controllers/backend/application.php:318
 msgid "Old Password"
-msgstr ""
+msgstr "رمز قبلی"
 
 #: views/backend/user_profile.tpl:70
 msgid "Blocked"
-msgstr ""
+msgstr "مسدود شده"
 
-#: views/backend/user_profile.tpl:82 views/backend/new_user.tpl:59
-#: controllers/backend/backend.php:56 controllers/backend/application.php:290
+#: views/backend/user_profile.tpl:82
+#: views/backend/new_user.tpl:59
+#: controllers/backend/backend.php:56
+#: controllers/backend/application.php:290
 #: controllers/backend/application.php:333
 #: controllers/backend/applications.php:907
 #: controllers/backend/applications.php:941
 msgid "Group"
-msgstr ""
+msgstr "گروه"
 
 #: views/backend/group_privileges.tpl:8
 msgid "Privileges edited successfully!"
-msgstr ""
+msgstr "سطوح دسترسی با موفقیت اصلاح شد1"
 
 #: views/backend/privileges_delete.tpl:30
-msgid ""
-"Notice that (all) the sub-privilege(s) of the parent privilege(s) will be "
-"deleted too"
-msgstr ""
+msgid "Notice that (all) the sub-privilege(s) of the parent privilege(s) will be deleted too"
+msgstr "توجه داشته باشید که تمامی سطوح دسترسی زیر مجموعه امتیاز اصلی نیز حذف خواهند گردید"
 
 #: views/backend/privileges_edit.tpl:9
 msgid "Label edited!"
-msgstr ""
+msgstr "برچسب اصلاح شد!"
 
-#: views/backend/privileges_edit.tpl:17 controllers/backend/backend.php:86
+#: views/backend/privileges_edit.tpl:17
+#: controllers/backend/backend.php:86
 msgid "Label"
-msgstr ""
+msgstr "برچسب"
 
-#: views/backend/privileges_edit.tpl:27 views/backend/privileges.tpl:33
-#: controllers/backend/backend.php:91 controllers/backend/applications.php:784
+#: views/backend/privileges_edit.tpl:27
+#: views/backend/privileges.tpl:33
+#: controllers/backend/backend.php:91
+#: controllers/backend/applications.php:784
 msgid "Privilege"
-msgstr ""
+msgstr "مجوز"
 
 #: views/backend/privileges.tpl:15
 msgid "New label added!"
-msgstr ""
+msgstr "برچسب جدید اضافه شد!"
 
 #: views/backend/privileges.tpl:23
 msgid "New Label"
-msgstr ""
+msgstr "برچسب جدید"
 
 #: views/backend/new_group.tpl:9
 msgid "New group added to '{$appname}' application!"
-msgstr ""
+msgstr "گروه جدید به برنامه '{$نام برنامه}' اضافه شد."
 
 #: views/backend/new_group.tpl:22
 msgid "New Group for '{$appname}'"
-msgstr ""
+msgstr "گروه جدید برای '{$نام برنامه}'"
 
 #: views/backend/users.tpl:28
 msgid "Group Name"
-msgstr ""
+msgstr "نام گروه"
 
 #: views/backend/users.tpl:36
 msgid "User"
-msgstr ""
+msgstr "کاربر"
 
-#: views/backend/users.tpl:46 views/backend/index.tpl:27
+#: views/backend/users.tpl:46
+#: views/backend/index.tpl:27
 msgid "Search"
-msgstr ""
+msgstr "جستجو"
 
 #: views/backend/new_user.tpl:9
 msgid "New user added to '{$appname}' application!"
-msgstr ""
+msgstr "کاربر جدید به برنامه '{$نام برنامه}' اضافه شد!"
 
 #: views/backend/delete.tpl:55
 msgid "Remember all the users of this group(s) will be deleted too"
-msgstr ""
+msgstr "به خاطر داشته باشید تمام کاربرهای این گروه(ها) نیز حذف خواهند گردید"
 
-#: views/backend/edit_filters.tpl:9 views/backend/filters.tpl:9
+#: views/backend/edit_filters.tpl:9
+#: views/backend/filters.tpl:9
 msgid "Filters for '{$appname}' application, changed successfuly!"
-msgstr ""
+msgstr "فیلترهای برنامه '{$ نام برنامه}' با موفقیت تغییر یافت!"
 
 #: views/backend/edit_filters.tpl:17
 msgid "Filter"
-msgstr ""
+msgstr "فیلتر"
 
 #: views/backend/default_group.tpl:8
 msgid "Default group for '{$appname}' application, changed successfuly!"
-msgstr ""
+msgstr "گروه پیش فرض برای برنامه '{$ نام برنامه}' با موفقیت تغییر یافت!"
 
 #: views/backend/default_group.tpl:12
-msgid ""
-"Default group is the group which ordinary users will be registered into."
-msgstr ""
+msgid "Default group is the group which ordinary users will be registered into."
+msgstr "گروه پیش فرض گروهی است که معمولا کاربران در آن ثبت نام  می شوند."
 
 #: views/backend/default_group.tpl:24
 msgid "Default Group for '{$appname}'"
-msgstr ""
+msgstr "گروه پیش فرض برای '{$ نام برنامه}' "
 
 #: views/backend/default_group.tpl:37
 msgid "Set"
-msgstr ""
+msgstr "تنظیم"
 
 #: views/backend/settings_password.tpl:19
 msgid "Random Password's length"
-msgstr ""
+msgstr "طول رمز عبور تصادفی"
 
 #: views/backend/settings_user_blocking.tpl:9
 msgid "0 for expire time means unlimited"
-msgstr ""
+msgstr "0 برای تاریخ انقضا به معنی نامحدود است"
 
 #: views/backend/settings_user_blocking.tpl:10
 msgid "Remember, blocking will be disabled if you set blocking attempts to 0"
-msgstr ""
+msgstr "به خاطر داشته باشید، چنانچه تنظیم مسدود کردن تلاش ها را 0 بگذارید، روند مسدود کردن غیر فعال میگردد"
 
 #: views/backend/settings_user_blocking.tpl:24
 msgid "Number of login attempts before blocking"
-msgstr ""
+msgstr "تعداد تلاش های مجاز پیش از مسدود شدن"
 
 #: views/backend/settings_user_blocking.tpl:28
 msgid "Blocking duration (hours)"
-msgstr ""
+msgstr "مدت بلاک بودن کاربر"
 
 #: views/backend/settings_expire.tpl:9
 msgid "0 means Unlimited"
-msgstr ""
+msgstr "0 به معنی نامحدود میباشد"
 
 #: views/backend/settings_expire.tpl:23
 msgid "Expire time for verification urls (hours)"
-msgstr ""
+msgstr "تاریخ انقضاء برای شناسایی آدرسهای Url(ساعت)"
 
 #: views/backend/filters.tpl:17
 msgid "Add new filter to '{$appname}'"
-msgstr ""
+msgstr "اضافه کردن فیلتر جدید به '{$ نام برنامه}'"
 
-#: controllers/backend/backend.php:55 controllers/backend/backend.php:115
+#: controllers/backend/backend.php:55
+#: controllers/backend/backend.php:115
 msgid "Application"
-msgstr ""
+msgstr "برنامه"
 
-#: controllers/backend/backend.php:57 controllers/backend/application.php:284
-#: controllers/backend/application.php:327 controllers/frontend.php:469
+#: controllers/backend/backend.php:57
+#: controllers/backend/application.php:284
+#: controllers/backend/application.php:327
+#: controllers/frontend.php:469
 msgid "Lastname"
-msgstr ""
+msgstr "نام خانوادگی"
 
-#: controllers/backend/backend.php:61 controllers/backend/backend.php:89
-#: controllers/backend/backend.php:118 controllers/backend/applications.php:74
+#: controllers/backend/backend.php:61
+#: controllers/backend/backend.php:89
+#: controllers/backend/backend.php:118
+#: controllers/backend/applications.php:74
 #: controllers/backend/applications.php:373
 #: controllers/backend/applications.php:434
 msgid "Create Date"
-msgstr ""
+msgstr "تاریخ ایجاد"
 
-#: controllers/backend/backend.php:62 controllers/backend/backend.php:90
+#: controllers/backend/backend.php:62
+#: controllers/backend/backend.php:90
 #: controllers/backend/backend.php:119
 #: controllers/backend/applications.php:374
 #: controllers/backend/applications.php:435
 msgid "Modify Date"
-msgstr ""
+msgstr "تاریخ تغییر"
 
-#: controllers/backend/backend.php:63 controllers/backend/backend.php:87
+#: controllers/backend/backend.php:63
+#: controllers/backend/backend.php:87
 #: controllers/backend/backend.php:117
 #: controllers/backend/applications.php:372
 #: controllers/backend/applications.php:433
 msgid "Modified By"
-msgstr ""
+msgstr "تغییر یافته توسط"
 
-#: controllers/backend/backend.php:64 controllers/backend/backend.php:88
+#: controllers/backend/backend.php:64
+#: controllers/backend/backend.php:88
 #: controllers/backend/backend.php:116
 #: controllers/backend/applications.php:371
 #: controllers/backend/applications.php:432
 msgid "Created By"
-msgstr ""
+msgstr "ایجاد شده توسط"
 
-#: controllers/backend/backend.php:85 controllers/backend/applications.php:185
+#: controllers/backend/backend.php:85
+#: controllers/backend/applications.php:185
 msgid "ID"
-msgstr ""
+msgstr "شناسه"
 
-#: controllers/backend/backend.php:92 controllers/backend/application.php:78
+#: controllers/backend/backend.php:92
+#: controllers/backend/application.php:78
 #: controllers/backend/application.php:248
 #: controllers/backend/applications.php:75
 #: controllers/backend/applications.php:174
@@ -406,14 +445,16 @@ msgstr ""
 #: controllers/backend/applications.php:443
 #: controllers/backend/applications.php:738
 msgid "Edit"
-msgstr ""
+msgstr "اصلاح"
 
-#: controllers/backend/backend.php:93 controllers/backend/application.php:49
+#: controllers/backend/backend.php:93
+#: controllers/backend/application.php:49
 #: controllers/backend/applications.php:101
 msgid "View"
-msgstr ""
+msgstr "مشاهده"
 
-#: controllers/backend/backend.php:94 controllers/backend/backend.php:95
+#: controllers/backend/backend.php:94
+#: controllers/backend/backend.php:95
 #: controllers/backend/application.php:50
 #: controllers/backend/application.php:51
 #: controllers/backend/application.php:79
@@ -440,341 +481,340 @@ msgstr ""
 #: controllers/backend/applications.php:811
 #: controllers/backend/applications.php:819
 msgid "Delete"
-msgstr ""
+msgstr "حذف"
 
 #: controllers/backend/application.php:19
 #: controllers/backend/applications.php:19
 msgid "User Management"
-msgstr ""
+msgstr "مدیریت کاربر"
 
 #: controllers/backend/application.php:20
 #: controllers/backend/applications.php:21
 msgid "Groups"
-msgstr ""
+msgstr "گروه ها"
 
 #: controllers/backend/application.php:21
 #: controllers/backend/application.php:74
 #: controllers/backend/applications.php:25
 #: controllers/backend/applications.php:170
 msgid "Users"
-msgstr ""
+msgstr "کاربران"
 
 #: controllers/backend/application.php:22
 #: controllers/backend/applications.php:22
 #: controllers/backend/applications.php:73
 msgid "Default Group"
-msgstr ""
+msgstr "گروه پیش فرض"
 
 #: controllers/backend/application.php:23
 #: controllers/backend/applications.php:23
 msgid "New Group"
-msgstr ""
+msgstr "گروه جدید"
 
 #: controllers/backend/application.php:24
 #: controllers/backend/applications.php:24
 msgid "New User"
-msgstr ""
+msgstr "کاربر جدید"
 
 #: controllers/backend/application.php:25
 #: controllers/backend/applications.php:32
 msgid "Settings"
-msgstr ""
+msgstr "تنظیمات"
 
 #: controllers/backend/application.php:29
 #, php-format
 msgid "%s is required."
-msgstr ""
+msgstr "%s% الزامی می باشد"
 
 #: controllers/backend/application.php:30
 #: controllers/backend/applications.php:42
 #: controllers/backend/applications.php:43
 #, php-format
 msgid "This %s is not available"
-msgstr ""
+msgstr "این %s وجود دارد"
 
 #: controllers/backend/application.php:31
-#: controllers/backend/applications.php:44 controllers/frontend.php:25
+#: controllers/backend/applications.php:44
+#: controllers/frontend.php:25
 #, php-format
 msgid "This %s is reserved or not available"
-msgstr ""
+msgstr "این%s تکراری بوده و یا مجاز نمی باشد."
 
 #: controllers/backend/application.php:32
 #: controllers/backend/applications.php:45
 #, php-format
 msgid "%ss do not match"
-msgstr ""
+msgstr "%ss  مطابقت ندارد."
 
 #: controllers/backend/application.php:33
-#: controllers/backend/applications.php:46 controllers/frontend.php:27
+#: controllers/backend/applications.php:46
+#: controllers/frontend.php:27
 #, php-format
 msgid "%s can contain only alpha-numeric characters, underscores or dashes"
-msgstr ""
+msgstr "%s تنها باید شامل کاراکترهای عددی، حروفی، خط فاصله ها و خطوط زیر کلمه باشد."
 
 #: controllers/backend/application.php:34
-#: controllers/backend/applications.php:47 controllers/frontend.php:28
+#: controllers/backend/applications.php:47
+#: controllers/frontend.php:28
 #, php-format
 msgid "%s can contain only alpha characters"
-msgstr ""
+msgstr "%s باید کاراکترهای حرفی باشد"
 
 #: controllers/backend/application.php:35
 #: controllers/backend/applications.php:48
 #, php-format
 msgid "%s should be numeric"
-msgstr ""
+msgstr "%s باید کاراکترهای عددی باشد."
 
 #: controllers/backend/application.php:36
-#: controllers/backend/applications.php:49 controllers/frontend.php:24
+#: controllers/backend/applications.php:49
+#: controllers/frontend.php:24
 msgid "Please enter a valid email address"
-msgstr ""
+msgstr "لطفا یک آدرس ایمیل معتبر وارد نمایید."
 
 #: controllers/backend/application.php:37
 #: controllers/backend/applications.php:50
 #, php-format
 msgid "%s should be at least 4 characters"
-msgstr ""
+msgstr "%s حداقل باید 4 کاراکتر باشد."
 
 #: controllers/backend/application.php:38
 #, php-format
 msgid "Please enter correct %s"
-msgstr ""
+msgstr "لطفا %s صحیح را وارد نمایید."
 
 #: controllers/backend/application.php:39
 #: controllers/backend/applications.php:40
 #, php-format
 msgid "%s should be numeric."
-msgstr ""
+msgstr "%s باید عددی باشد"
 
 #: controllers/backend/application.php:40
 #: controllers/backend/applications.php:54
 #, php-format
 msgid "Password length should be at least %s characters "
-msgstr ""
+msgstr "طول رمز عبور حداقل باید%s کاراکتر باشد"
 
 #: controllers/backend/application.php:48
 #: controllers/backend/applications.php:29
 #: controllers/backend/applications.php:100
 msgid "Privileges"
-msgstr ""
+msgstr "سطوح دسترسی"
 
 #: controllers/backend/application.php:101
 #: controllers/backend/applications.php:253
 msgid "User's Profile"
-msgstr ""
+msgstr "فایل کاربر"
 
 #: controllers/backend/application.php:206
 msgid "Objects"
-msgstr ""
+msgstr "موضوع"
 
-#: controllers/backend/application.php:278 controllers/frontend.php:463
+#: controllers/backend/application.php:278
+#: controllers/frontend.php:463
 msgid "Repassword"
-msgstr ""
+msgstr "تایپ مجد رمز عبور"
 
 #: controllers/backend/application.php:354
 #: controllers/backend/applications.php:956
 msgid "Name for new group"
-msgstr ""
+msgstr "نام گروه جدید"
 
 #: controllers/backend/application.php:387
 #: controllers/backend/applications.php:995
 msgid "Limit"
-msgstr ""
+msgstr "محدودیت"
 
 #: controllers/backend/applications.php:20
 msgid "Apllications"
-msgstr ""
+msgstr "برنامه ها"
 
 #: controllers/backend/applications.php:26
 #: controllers/backend/applications.php:27
 #: controllers/backend/applications.php:407
 #: controllers/backend/applications.php:489
 msgid "Filters"
-msgstr ""
+msgstr "فیلترها"
 
 #: controllers/backend/applications.php:28
 msgid "Add Application"
-msgstr ""
+msgstr "اضافه کردن برنامه"
 
 #: controllers/backend/applications.php:30
 msgid "Parents"
-msgstr ""
+msgstr "ریشه"
 
 #: controllers/backend/applications.php:31
 msgid "All"
-msgstr ""
+msgstr "همه"
 
 #: controllers/backend/applications.php:33
 msgid "Page Limit"
-msgstr ""
+msgstr "محدودیت صفحه"
 
 #: controllers/backend/applications.php:34
 msgid "Password Settings"
-msgstr ""
+msgstr "تنظیمات رمز عبور"
 
 #: controllers/backend/applications.php:35
 #: controllers/backend/applications.php:1069
 msgid "Expire Time"
-msgstr ""
+msgstr "تاریخ انقضاء"
 
 #: controllers/backend/applications.php:36
 msgid "User Blocking"
-msgstr ""
+msgstr "مسدود کردن کاربر"
 
-#: controllers/backend/applications.php:41 controllers/frontend.php:22
+#: controllers/backend/applications.php:41
+#: controllers/frontend.php:22
 #, php-format
 msgid "%s is required"
-msgstr ""
+msgstr "%s% الزامی می باشد"
 
 #: controllers/backend/applications.php:51
 #: controllers/backend/applications.php:52
 #, php-format
 msgid "Please enter a valid %s"
-msgstr ""
+msgstr "لطفا %s% معتبر را وارد نمایید."
 
 #: controllers/backend/applications.php:53
 msgid "This application filter exists"
-msgstr ""
+msgstr "این فیلتر برنامه وجود دارد"
 
 #: controllers/backend/applications.php:186
 msgid "Appname"
-msgstr ""
+msgstr "نام برنامه"
 
 #: controllers/backend/applications.php:441
 msgid "Title"
-msgstr ""
+msgstr "عنوان"
 
 #: controllers/backend/applications.php:444
 msgid "delete"
-msgstr ""
+msgstr "حذف"
 
 #: controllers/backend/applications.php:462
 msgid "Edit Filters"
-msgstr ""
+msgstr "اصلاح فیلترها"
 
 #: controllers/backend/applications.php:640
 msgid "application Name"
-msgstr ""
+msgstr "نام برنامه"
 
 #: controllers/backend/applications.php:673
 msgid "Name for new lable"
-msgstr ""
+msgstr "نام برچست جدید"
 
 #: controllers/backend/applications.php:717
 msgid "Name for new label"
-msgstr ""
+msgstr "نام برچست جدید"
 
 #: controllers/backend/applications.php:720
 msgid "Privilege for new label"
-msgstr ""
+msgstr "مجوزهای برچسب جدید"
 
 #: controllers/backend/applications.php:753
 msgid "Lable"
-msgstr ""
+msgstr "برچسب"
 
 #: controllers/backend/applications.php:781
 msgid "Label name"
-msgstr ""
+msgstr "نام برچسب "
 
 #: controllers/backend/applications.php:787
 msgid "id"
-msgstr ""
+msgstr "شناسه"
 
 #: controllers/backend/applications.php:901
 #: controllers/backend/applications.php:935
 msgid "Last name"
-msgstr ""
+msgstr "نام خانوادگی"
 
 #: controllers/backend/applications.php:1032
 msgid "Password Length"
-msgstr ""
+msgstr "طول رمز عبور"
 
 #: controllers/backend/applications.php:1108
 msgid "Blocking expire time"
-msgstr ""
+msgstr "مسدود کردن تاریخ انقضاء"
 
 #: controllers/backend/applications.php:1111
 msgid "Blocking attempts"
-msgstr ""
+msgstr "مسدود کردن تلاش ها"
 
 #: controllers/frontend.php:23
 #, php-format
 msgid "%s has not enough length"
-msgstr ""
+msgstr "طول %s% کافی نمی باشد."
 
 #: controllers/frontend.php:26
 #, php-format
 msgid "%s does not match."
-msgstr ""
+msgstr "%s% تطبیق ندارد."
 
-#: controllers/frontend.php:68 controllers/frontend.php:77
+#: controllers/frontend.php:68
+#: controllers/frontend.php:77
 #: controllers/frontend.php:531
 msgid "Wrong Username or Password."
-msgstr ""
+msgstr "نام کاربری و یا کلمه عبور اشتباه می باشد."
 
-#: controllers/frontend.php:71 controllers/frontend.php:90
+#: controllers/frontend.php:71
+#: controllers/frontend.php:90
 #, php-format
-msgid ""
-"Attention!! You will be blocked if you miss more than %s times while login!"
-msgstr ""
+msgid "Attention!! You will be blocked if you miss more than %s times while login!"
+msgstr "توجه داشته باشید که چنانچه بیش از %s بار رمز خود را اشتباه وارد نمایید، دسترسی شما مسدود میگردد."
 
 #: controllers/frontend.php:83
 #, php-format
 msgid "Attention!! Your username got blocked for %s hours!"
-msgstr ""
+msgstr "توجه! نام کاربری شما تا %s ساعت دیگر مسدود خواهدبود."
 
 #: controllers/frontend.php:97
 msgid "You are not a verified user."
-msgstr ""
+msgstr "نام کاربری شما معتبر نمی باشد"
 
 #: controllers/frontend.php:106
 #, php-format
-msgid ""
-"This user name is blocked. Please contact site administrator for further "
-"information or wait for %s hours and %s minutes"
-msgstr ""
+msgid "This user name is blocked. Please contact site administrator for further information or wait for %s hours and %s minutes"
+msgstr "نام کاربری شما مسدود شده است. لطفا  برای اطلاعات بیشتر با بخش پشتیبانی تماس گرفته و یا به مدت %s  ساعت و %s  دقیقه صبر نمایید. "
 
-#: controllers/frontend.php:113 controllers/frontend.php:544
-msgid ""
-"This user name is blocked. Please contact site administrator for further "
-"information."
-msgstr ""
+#: controllers/frontend.php:113
+#: controllers/frontend.php:544
+msgid "This user name is blocked. Please contact site administrator for further information."
+msgstr "این نام کاربری مسدود شده است. لطفا برای اطلاعات بیشتر با بخش پشتیبانی تماس بگیرید."
 
 #: controllers/frontend.php:118
 msgid "Unknown error"
-msgstr ""
+msgstr "خطای نا شناخته"
 
-#: controllers/frontend.php:177 controllers/frontend.php:271
+#: controllers/frontend.php:177
+#: controllers/frontend.php:271
 #: controllers/frontend.php:367
-msgid ""
-"The entered information is not available in database. Please enter the "
-"correct username and email address or contact the site administrator."
-msgstr ""
+msgid "The entered information is not available in database. Please enter the correct username and email address or contact the site administrator."
+msgstr "اطلاعات وارد شده ، در پایگاه داده ، قابل دسترس نمی باشند. لطفا نام کاربری و ایمیل را تصحیح نموده و یا با مدیر سایت تماس بگیرید."
 
 #: controllers/frontend.php:240
 msgid "Please enter a valid uri to change your password"
-msgstr ""
+msgstr "لطفا به منظور تغییر کلمه عبور ، آدرس اینترنی معتبر وارد نمایید."
 
-#: controllers/frontend.php:245 controllers/frontend.php:340
-msgid ""
-"This uri is expired! Please contact site administrator for further "
-"information or make a new request."
-msgstr ""
+#: controllers/frontend.php:245
+#: controllers/frontend.php:340
+msgid "This uri is expired! Please contact site administrator for further information or make a new request."
+msgstr "اعتبار این آدرس منقضی شده است. لطفا  برای اطلاعات بیشتر با مدیر بخش تماس گرفته و یا درخواست جدید قرار دهید. "
 
 #: controllers/frontend.php:335
 msgid "Please enter a valid uri"
-msgstr ""
+msgstr "لطفا یک آدرس "
 
 #: controllers/frontend.php:496
 msgid "Please enter a valid uri!"
-msgstr ""
+msgstr "لطفا یک آدرس "
 
 #: controllers/frontend.php:501
-msgid ""
-"This uri is expired! Please contact site administrator for further "
-"information."
-msgstr ""
+msgid "This uri is expired! Please contact site administrator for further information."
+msgstr "اعتبار این آدرس منقضی شده است. لطفا برای اطلاعات بیشتر با مدیر سایت تماس بگیرید."
 
 #: controllers/frontend.php:537
-msgid ""
-"This user name is blocked. Please contact site administrator for further "
-"information or wait for %h% hours and %m% minutes"
-msgstr ""
+msgid "This user name is blocked. Please contact site administrator for further information or wait for %h% hours and %m% minutes"
+msgstr "این نام کاربری مسدود شده است.لطفا برای اطلاعات بیشتر با مدیر سایت تماس گرفته و یا به مدت %h ساعت و %m دقیقه صبر نمایید."
+
