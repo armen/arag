@@ -214,7 +214,7 @@ msgstr "%ss صحیح نمی باشد"
 #, php-format
 msgid "%s can contain only alpha-numeric characters, underscores or dashes"
 msgstr ""
-"تنها کاراکترهای عددی و الفبا، خط فاصه و خط زیر کلمات  برای %s%مجاز می باشد.  "
+"تنها کاراکترهای عددی و الفبا، خط فاصه و خط زیر کلمات  برای %s مجاز می باشد.  "
 
 #: controllers/backend/install.php:23
 msgid "Please enter a valid email address"
