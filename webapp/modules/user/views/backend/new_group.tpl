@@ -22,7 +22,7 @@
                     _("New Group for '{$appname}'"):
                 </td>
                 <td align="{left}">
-                    <input type="text" name="newgroup" />
+                    <input type="text" name="newgroup" dir="ltr"/>
                 </td>
             </tr>
             <tr>

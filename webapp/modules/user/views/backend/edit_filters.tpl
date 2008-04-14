@@ -17,7 +17,7 @@
                     _("Filter"):{asterisk}
                 </td>
                 <td align="{left}">
-                    <input type="text" name="filter" value="{$filter|smarty:nodefaults|default:null}" />
+                    <input type="text" name="filter" value="{$filter|smarty:nodefaults|default:null}" dir="ltr"/>
                     <input type="hidden" value="{$appname}" name="application" />
                     <input type="hidden" value="{$id}" name="id" />
                 </td>

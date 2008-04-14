@@ -32,11 +32,11 @@
             <table border="0" dir="{dir}" width="100%">
             <tr>
                 <td align="{right}" width="150">_("Username"):</td>
-                <td><input type="text" name="username" value="{$username|smarty:nodefaults|default:null}" /></td>
+                <td><input type="text" name="username" value="{$username|smarty:nodefaults|default:null}" dir="ltr" /></td>
             </tr>
             <tr>
                 <td align="{right}" width="150">_("Your Email Address"):</td>
-                <td><input type="text" name="email" value="{$email|smarty:nodefaults|default:null}" /></td>
+                <td><input type="text" name="email" value="{$email|smarty:nodefaults|default:null}" dir="ltr"/></td>
             </tr>
             <tr>
                 <td>&nbsp;</td>

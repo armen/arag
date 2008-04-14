@@ -33,7 +33,7 @@
                         _("Old Password"):
                     </td>
                     <td align="{left}">
-                        <input type="password" name="oldpassword" />
+                        <input type="password" name="oldpassword" dir="ltr" />
                     </td>
                 </tr>               
             {/if}
@@ -42,7 +42,7 @@
                     _("Password"):
                 </td>
                 <td align="{left}">
-                    <input type="password" name="password" />
+                    <input type="password" name="password" dir="ltr" />
                 </td>
             </tr>
             <tr>
@@ -50,7 +50,7 @@
                     _("Re-Password"):
                 </td>
                 <td align="{left}">
-                    <input type="password" name="repassword" />
+                    <input type="password" name="repassword" dir="ltr" />
                 </td>
             </tr>
             <tr>
@@ -110,7 +110,7 @@
                     _("Email"):{asterisk}
                 </td>
                 <td align="{left}">
-                    <input type="text" name="email" value="{$email|smarty:nodefaults|default:null}" />
+                    <input type="text" name="email" value="{$email|smarty:nodefaults|default:null}" dir="ltr" />
                 </td>
             </tr>
             <tr>

@@ -21,9 +21,9 @@
                     <td align="{left}">
                         <label>
                         {if $object.selected}
-                            <input type="checkbox" name="privileges[]" value="{$object.id}" checked="checked" />&nbsp;<b>{$object.label}</b>
+                            <input type="checkbox" name="privileges[]" value="{$object.id}" checked="checked" />&nbsp;<b dir="ltr">{$object.label}</b>
                         {else}
-                            <input type="checkbox" name="privileges[]" value="{$object.id}" />&nbsp;<b>{$object.label}</b>
+                            <input type="checkbox" name="privileges[]" value="{$object.id}" />&nbsp;<b dir="ltr">{$object.label}</b>
                         {/if}
                         </label>
                     </td>
@@ -33,9 +33,9 @@
                         <td align="{left}">
                             <label>
                             {if $item.selected}
-                                <input type="checkbox" name="privileges[]" value="{$item.id}" checked="checked" />&nbsp;{$item.label}&nbsp;({$item.privilege})
+                                <input type="checkbox" name="privileges[]" value="{$item.id}" checked="checked" />&nbsp;<span dir="ltr">{$item.label}&nbsp;({$item.privilege})</span>
                             {else}
-                                <input type="checkbox" name="privileges[]" value="{$item.id}" />&nbsp;{$item.label}&nbsp;({$item.privilege})
+                                <input type="checkbox" name="privileges[]" value="{$item.id}" />&nbsp;<span dir="ltr">{$item.label}&nbsp;({$item.privilege})</span>
                             {/if}
                             </label>
                         </td>

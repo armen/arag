@@ -23,7 +23,7 @@
                     _("New Label"):{asterisk}
                 </td>
                 <td align="{left}">
-                    <input type="text" name="newlabel" value="{$newlabel|smarty:nodefaults|default:null}" />
+                    <input type="text" name="newlabel" value="{$newlabel|smarty:nodefaults|default:null}" dir="ltr" />
                     <input type="hidden" value="{$parentid}" name="parentid" />
                 </td>
             </tr>
@@ -33,7 +33,7 @@
                         _("Privilege"):{asterisk}
                     </td>
                     <td align="{left}">
-                        <input type="text" name="privilege" value="{$privilege|smarty:nodefaults|default:null}" />
+                        <input type="text" name="privilege" value="{$privilege|smarty:nodefaults|default:null}" dir="ltr" />
                     </td>
                 </tr>
             {/if}

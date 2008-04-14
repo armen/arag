@@ -17,7 +17,7 @@
     <table border="0" dir="{dir}" width="100%">
     <tr>
         <td align="{right}" width="200">_("Random Password's length"):</td>
-        <td><input type="text" name="length" value="{$length|smarty:nodefaults|default:null}" /></td>
+        <td><input type="text" name="length" value="{$length|smarty:nodefaults|default:null}" dir="ltr" /></td>
     </tr>
     <tr>
         <td>&nbsp;</td>

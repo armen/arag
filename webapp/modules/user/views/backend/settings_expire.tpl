@@ -21,7 +21,7 @@
     <table border="0" dir="{dir}" width="100%">
     <tr>
         <td align="{right}" width="250">_("Expire time for verification urls (hours)"):</td>
-        <td><input type="text" name="expire" value="{$expire|smarty:nodefaults|default:null}" /></td>
+        <td><input type="text" name="expire" value="{$expire|smarty:nodefaults|default:null}" dir="ltr" /></td>
     </tr>
     <tr>
         <td>&nbsp;</td>

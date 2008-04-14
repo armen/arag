@@ -22,11 +22,11 @@
     <table border="0" dir="{dir}" width="100%">
     <tr>
         <td align="{right}" width="250">_("Number of login attempts before blocking"):</td>
-        <td><input type="text" name="block_counter" value="{$block_counter|smarty:nodefaults|default:null}" /></td>
+        <td><input type="text" name="block_counter" value="{$block_counter|smarty:nodefaults|default:null}" dir="ltr" /></td>
     </tr>
     <tr>
         <td align="{right}" width="250">_("Blocking duration (hours)"):</td>
-        <td><input type="text" name="block_expire" value="{$block_expire|smarty:nodefaults|default:null}" /></td>
+        <td><input type="text" name="block_expire" value="{$block_expire|smarty:nodefaults|default:null}" dir="ltr" /></td>
     </tr>
     <tr>
         <td>&nbsp;</td>
