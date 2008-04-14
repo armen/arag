@@ -3,132 +3,82 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-04-13 09:37+0430\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"POT-Creation-Date: 2008-04-14 22:06+0430\n"
+"PO-Revision-Date: 2008-04-13 23:58-0800\n"
+"Last-Translator: vafaei\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-
-#: views/frontend/verified.tpl:8
-msgid "Your account is now activated! You can login now."
-msgstr ""
-
-#: views/frontend/verify.tpl:13
-msgid "Please enter your username and password to activate your account"
-msgstr ""
-
-#: views/frontend/verify.tpl:22
-msgid "User Name"
-msgstr ""
-
-#: views/frontend/verify.tpl:26 views/backend/settings_email.tpl:37
-msgid "Password"
-msgstr ""
-
-#: views/frontend/verify.tpl:33
-msgid "Verify"
-msgstr ""
-
-#: views/backend/settings_limit.tpl:12
-#: views/backend/settings_privileges.tpl:12
-#: views/backend/settings_password.tpl:12 views/backend/settings_email.tpl:18
-#: views/backend/settings_user_blocking.tpl:17
-#: views/backend/settings_expire.tpl:16
-msgid "Settings are updated successfuly!"
-msgstr ""
-
-#: views/backend/settings_limit.tpl:19
-msgid "List items per page"
-msgstr ""
-
-#: views/backend/settings_limit.tpl:20 views/backend/settings_expire.tpl:9
-#: views/backend/settings_expire.tpl:24
-msgid "0 means Unlimited"
-msgstr ""
-
-#: views/backend/settings_limit.tpl:25
-#: views/backend/settings_privileges.tpl:30
-#: views/backend/settings_password.tpl:25 views/backend/settings_email.tpl:56
-#: views/backend/settings_user_blocking.tpl:38
-#: views/backend/settings_expire.tpl:29
-msgid "Save"
-msgstr ""
-
-#: views/backend/settings_limit.tpl:26
-#: views/backend/settings_privileges.tpl:31
-#: views/backend/settings_password.tpl:26 views/backend/settings_email.tpl:57
-#: views/backend/settings_user_blocking.tpl:39
-#: views/backend/settings_expire.tpl:30
-msgid "Reset"
-msgstr ""
-
-#: views/backend/post_installer.tpl:12 views/backend/post_installer.tpl:17
-msgid "New application added successfuly!"
-msgstr ""
-
-#: views/backend/post_installer.tpl:13
-msgid "An email sent successfuly to the admin of the new application!"
-msgstr ""
-
-#: views/backend/post_installer.tpl:20
-msgid ""
-"There was a problem in sending email to the admin of the new application!"
-msgstr ""
-
-#: views/backend/post_installer.tpl:27
-msgid "Please Implement Post Installer :)"
-msgstr ""
-
-#: views/backend/settings_privileges.tpl:19
-msgid "Set default privileges for Admin groups"
-msgstr ""
-
-#: views/backend/settings_privileges.tpl:24
-msgid "Set default privileges for Anonymous groups"
-msgstr ""
-
-#: views/backend/site.tpl:12
-msgid "Application Name"
-msgstr ""
-
-#: views/backend/site.tpl:20
-msgid "Database ID"
-msgstr ""
-
-#: views/backend/site.tpl:43
-msgid "Search"
-msgstr ""
 
 #: views/backend/install.tpl:21 controllers/backend/install.php:163
 msgid "Application name"
-msgstr ""
+msgstr "نام برنامه"
 
 #: views/backend/install.tpl:29 controllers/backend/install.php:166
 msgid "Email"
-msgstr ""
+msgstr "پست الکترونیکی"
 
 #: views/backend/install.tpl:37 controllers/backend/install.php:169
 msgid "Retype Email"
-msgstr ""
+msgstr "مجددا پست الکترونیکی خود را وارد نمایید"
 
 #: views/backend/install.tpl:46
 msgid "Modules"
-msgstr ""
+msgstr "ماژول ها"
 
 #: views/backend/install.tpl:59
 msgid "Submit"
-msgstr ""
+msgstr "تایید"
 
-#: views/backend/settings_password.tpl:19
-msgid "Random Password's length"
-msgstr ""
+#: views/backend/settings_expire.tpl:9 views/backend/settings_expire.tpl:24
+#: views/backend/settings_limit.tpl:20
+msgid "0 means Unlimited"
+msgstr "0 به معنی نامحدود میباشد"
+
+#: views/backend/settings_expire.tpl:16 views/backend/settings_email.tpl:18
+#: views/backend/settings_password.tpl:12
+#: views/backend/settings_user_blocking.tpl:17
+#: views/backend/settings_limit.tpl:12
+#: views/backend/settings_privileges.tpl:12
+msgid "Settings are updated successfuly!"
+msgstr "!تنظیمات با موفقیت به روز شد"
+
+#: views/backend/settings_expire.tpl:23
+msgid "Expire time for verification url (hours)"
+msgstr "اتمام زمان برای شناسایی آدرس "
+
+#: views/backend/settings_expire.tpl:29 views/backend/settings_email.tpl:56
+#: views/backend/settings_password.tpl:25
+#: views/backend/settings_user_blocking.tpl:38
+#: views/backend/settings_limit.tpl:25
+#: views/backend/settings_privileges.tpl:30
+msgid "Save"
+msgstr "ذخیره"
+
+#: views/backend/settings_expire.tpl:30 views/backend/settings_email.tpl:57
+#: views/backend/settings_password.tpl:26
+#: views/backend/settings_user_blocking.tpl:39
+#: views/backend/settings_limit.tpl:26
+#: views/backend/settings_privileges.tpl:31
+msgid "Reset"
+msgstr "بازنشانی"
+
+#: views/backend/site.tpl:12
+msgid "Application Name"
+msgstr "نام برنامه"
+
+#: views/backend/site.tpl:20
+msgid "Database ID"
+msgstr "شناسه پایگاه داده"
+
+#: views/backend/site.tpl:43
+msgid "Search"
+msgstr "جستجو"
 
 #: views/backend/settings_email.tpl:9
 msgid ""
@@ -136,77 +86,220 @@ msgid ""
 "variableName% like the following example template in which %username% will "
 "be replaced by username variable in the application:"
 msgstr ""
+"برای داشتن قالبی پویا که امکان تغییر موضوعات را داشته باشد، باید از یک % نام "
+"متغیر%  مطابق مثال استفاده نمایید."
 
 #: views/backend/settings_email.tpl:10
 msgid "Your username is %username%."
-msgstr ""
+msgstr " می باشد%s  نام کاربری شما"
 
 #: views/backend/settings_email.tpl:11
 msgid "Avialable variables are %username%, %password%, %appname% and %uri%"
-msgstr ""
+msgstr "متغیرهای مجاز عبارتند از %نام کاربری%,%رمز%,%نام برنامه% و% آدرس%"
 
 #: views/backend/settings_email.tpl:25
 msgid "SMTP Server"
-msgstr ""
+msgstr "STMP سرور"
 
 #: views/backend/settings_email.tpl:29
 msgid "SMTP Port"
-msgstr ""
+msgstr "SMTP درگاه"
 
 #: views/backend/settings_email.tpl:33
 msgid "Username"
-msgstr ""
+msgstr "نام کاربری"
+
+#: views/backend/settings_email.tpl:37 views/frontend/verify.tpl:26
+msgid "Password"
+msgstr "کلمه عبور "
 
 #: views/backend/settings_email.tpl:41
 msgid "Sender's Email"
-msgstr ""
+msgstr "ایمیل فرستنده "
 
 #: views/backend/settings_email.tpl:46
 msgid "Subject"
-msgstr ""
+msgstr "موضوع"
 
 #: views/backend/settings_email.tpl:50
 msgid "Email Template"
-msgstr ""
+msgstr "قالب ایمیل"
+
+#: views/backend/settings_password.tpl:19
+msgid "Random Password's length"
+msgstr "طول رمز تصادفی"
 
 #: views/backend/settings_user_blocking.tpl:9
 msgid "0 for expire time means unlimited"
-msgstr ""
+msgstr "عدد 0 برای تاریخ انقضاء به معنای نامحدود می باشد"
 
 #: views/backend/settings_user_blocking.tpl:10
 msgid ""
 "Remember, blocking and uri removing will be disabled if you set blocking "
 "attempts to 0"
 msgstr ""
+"توجه داشته باشید که چنانچه تعداد دفعات غیر مجاز صفر گذاشته شود، مسدود شدن "
+"آدرس غیر فعال میگردد."
 
 #: views/backend/settings_user_blocking.tpl:24
 msgid "Number of verify attempts before blocking"
-msgstr ""
+msgstr "تعداد دفعات مجاز پیش از مسدود شدن"
 
 #: views/backend/settings_user_blocking.tpl:28
 msgid "Blocking duration (hours)"
-msgstr ""
+msgstr "طول مدت مسدود بودن کاربر"
 
 #: views/backend/settings_user_blocking.tpl:32
 msgid "Block action"
+msgstr "فعالیت غیر مجاز"
+
+#: views/backend/settings_limit.tpl:19
+msgid "List items per page"
+msgstr "فهرست موارد هر صفحه"
+
+#: views/backend/post_installer.tpl:12 views/backend/post_installer.tpl:17
+msgid "New application added successfuly!"
+msgstr "درخواست جدید با موفقیت اضافه شد!"
+
+#: views/backend/post_installer.tpl:13
+msgid "An email sent successfuly to the admin of the new application!"
+msgstr "!ایمیلی برای مسئول مربوطه فرستاده شد"
+
+#: views/backend/post_installer.tpl:20
+msgid ""
+"There was a problem in sending email to the admin of the new application!"
+msgstr "!در ارسال ایمیل مشکلی بوجود  آمده است"
+
+#: views/backend/post_installer.tpl:27
+msgid "Please Implement Post Installer :)"
 msgstr ""
 
-#: views/backend/settings_expire.tpl:23
-msgid "Expire time for verification url (hours)"
+#: views/backend/settings_privileges.tpl:19
+msgid "Set default privileges for Admin groups"
+msgstr "سطوح دسترسی پیش فرض را برای گروه Admin"
+
+#: views/backend/settings_privileges.tpl:24
+msgid "Set default privileges for Anonymous groups"
+msgstr "سطوح دسترسی پیش فرض را برای گروه Anonymous"
+
+#: views/frontend/verify.tpl:13
+msgid "Please enter your username and password to activate your account"
 msgstr ""
+".لطفا برای فعال کردن اطلاعات دسترسی خود، کلمه کاربری و رمز عبور را وارد "
+"نمایید"
+
+#: views/frontend/verify.tpl:22
+msgid "User Name"
+msgstr "نام کاربری"
+
+#: views/frontend/verify.tpl:33
+msgid "Verify"
+msgstr "شناسایی شد"
+
+#: views/frontend/verified.tpl:8
+msgid "Your account is now activated! You can login now."
+msgstr ".دسترسی شما فعال شده است. می توانید وراد سایت شوید"
+
+#: controllers/backend/install.php:20 controllers/backend/settings.php:20
+#, php-format
+msgid "%s is required"
+msgstr "%s الزامی می باشد."
+
+#: controllers/backend/install.php:21
+#, php-format
+msgid "%ss do not match"
+msgstr "%ss صحیح نمی باشد"
+
+#: controllers/backend/install.php:22
+#, php-format
+msgid "%s can contain only alpha-numeric characters, underscores or dashes"
+msgstr ""
+"تنها کاراکترهای عددی و الفبا، خط فاصه و خط زیر کلمات  برای %s%مجاز می باشد.  "
+
+#: controllers/backend/install.php:23
+msgid "Please enter a valid email address"
+msgstr "لطفا یک آدرس پست الکترونیک معتبر وارد نمایید"
+
+#: controllers/backend/install.php:24
+msgid "This application name is not available"
+msgstr "نام برنامه صحیح نمیباشد"
+
+#: controllers/backend/install.php:37
+msgid ""
+"You should first set your email's SMTP settings in the core settings to "
+"continue."
+msgstr ""
+"برای ادامه باید تنظیمات ایمیل SMTP را در قسمت تنظیمات هسته وارد نمایید."
+
+#: controllers/backend/install.php:42
+msgid "Your 'public_html/sites' directory doesn't exist or isn't writeable."
+msgstr "دایرکتوری 'public_html/sites' وجود ندارد و یا فاقد دسترسی نوشتن می باشد."
+
+#: controllers/backend/install.php:47
+msgid "Your 'config/sites' directory doesn't exist or isn't writeable."
+msgstr "دایرکتوری 'config/sites' وجود ندارد و یا فاقد دسترسی نوشتن می باشد."
+
+#: controllers/backend/site.php:32
+msgid "Name"
+msgstr "نام"
+
+#: controllers/backend/site.php:33
+msgid "Default Group"
+msgstr "گروه پیش فرض "
+
+#: controllers/backend/site.php:34
+msgid "Create Date"
+msgstr "تاریخ ایجاد"
+
+#: controllers/backend/site.php:35
+msgid "Database Name"
+msgstr "نام پایگاه داده"
+
+#: controllers/backend/site.php:36
+msgid "View"
+msgstr "مشاهده"
+
+#: controllers/backend/settings.php:19
+#, php-format
+msgid "%s should be numeric"
+msgstr "%s باید عدد باشد"
+
+#: controllers/backend/settings.php:47
+msgid "Limit"
+msgstr "محدودیت"
+
+#: controllers/backend/settings.php:102
+msgid "BLock user and remove URI"
+msgstr "مسدود کردن کاربر و از بین بردن url"
+
+#: controllers/backend/settings.php:103
+msgid "Just block user"
+msgstr "فقط مسدود کردن کاربر"
+
+#: controllers/backend/settings.php:104
+msgid "Just remove URI"
+msgstr "فقط از بین بردن uri"
+
+#: controllers/backend/settings.php:137
+msgid "Blocking expire time"
+msgstr "تاریخ انقضای مسدود بودن"
+
+#: controllers/backend/settings.php:140
+msgid "Blocking attempts"
+msgstr "تعداد مرتبه ی تلاش قبل از مسدود شدن"
 
 #: controllers/backend/backend.php:18 controllers/backend/backend.php:22
 #: controllers/frontend.php:17
 msgid "MultiSite"
-msgstr ""
+msgstr "چند بخش"
 
 #: controllers/backend/backend.php:23
 msgid "Sites"
-msgstr ""
+msgstr "بخش ها"
 
 #: controllers/backend/backend.php:24
 msgid "Install"
-msgstr ""
+msgstr "نصب"
 
 #: controllers/backend/backend.php:25
 msgid "Post Installer"
@@ -214,140 +307,74 @@ msgstr ""
 
 #: controllers/backend/backend.php:26
 msgid "Delete Site"
-msgstr ""
+msgstr "پاک کردن سایت(بخش)"
 
 #: controllers/backend/backend.php:27
 msgid "Edit Site"
-msgstr ""
+msgstr "ویرایش سایت(بخش)"
 
 #: controllers/backend/backend.php:28
 msgid "Preview Site"
-msgstr ""
+msgstr "مشاهده سایت(بخش)"
 
 #: controllers/backend/backend.php:29
 msgid "Settings"
-msgstr ""
+msgstr "تنظیمات"
 
 #: controllers/backend/backend.php:30
 msgid "Page Limits"
-msgstr ""
+msgstr "محدودیت صفحه"
 
 #: controllers/backend/backend.php:31
 msgid "Default Privileges"
-msgstr ""
+msgstr "سطوح دسترسی پیش فرض"
 
 #: controllers/backend/backend.php:32
 msgid "User Blocking"
-msgstr ""
-
-#: controllers/backend/settings.php:19
-#, php-format
-msgid "%s should be numeric"
-msgstr ""
-
-#: controllers/backend/settings.php:20 controllers/backend/install.php:20
-#, php-format
-msgid "%s is required"
-msgstr ""
-
-#: controllers/backend/settings.php:47
-msgid "Limit"
-msgstr ""
-
-#: controllers/backend/settings.php:137
-msgid "Blocking expire time"
-msgstr ""
-
-#: controllers/backend/settings.php:140
-msgid "Blocking attempts"
-msgstr ""
-
-#: controllers/backend/install.php:21
-#, php-format
-msgid "%ss do not match"
-msgstr ""
-
-#: controllers/backend/install.php:22
-#, php-format
-msgid "%s can contain only alpha-numeric characters, underscores or dashes"
-msgstr ""
-
-#: controllers/backend/install.php:23
-msgid "Please enter a valid email address"
-msgstr ""
-
-#: controllers/backend/install.php:24
-msgid "This application name is not available"
-msgstr ""
-
-#: controllers/backend/install.php:37
-msgid ""
-"You should first set your email's SMTP settings in the core settings to "
-"continue."
-msgstr ""
-
-#: controllers/backend/install.php:42
-msgid "Your 'public_html/sites' directory doesn't exist or isn't writeable."
-msgstr ""
-
-#: controllers/backend/install.php:47
-msgid "Your 'config/sites' directory doesn't exist or isn't writeable."
-msgstr ""
-
-#: controllers/backend/site.php:32
-msgid "Name"
-msgstr ""
-
-#: controllers/backend/site.php:33
-msgid "Default Group"
-msgstr ""
-
-#: controllers/backend/site.php:34
-msgid "Create Date"
-msgstr ""
-
-#: controllers/backend/site.php:35
-msgid "Database Name"
-msgstr ""
-
-#: controllers/backend/site.php:36
-msgid "View"
-msgstr ""
+msgstr "مسدود شدن کاربر"
 
 #: controllers/frontend.php:29
 msgid "Please enter a valid uri!"
-msgstr ""
+msgstr "لطفا آدرس URL صحیح را وارد نماید."
 
 #: controllers/frontend.php:34
 msgid ""
 "This uri is expired! Please contact site administrator for further "
 "information."
 msgstr ""
+"آدرس معتبر نمیباشد. لطفا برای اطلاعات بیشتر با بخش پشتیبانی تماس بگیرید."
 
 #: controllers/frontend.php:64 controllers/frontend.php:73
 msgid "Wrong Username or Password."
-msgstr ""
+msgstr "نام "
 
 #: controllers/frontend.php:66 controllers/frontend.php:92
 msgid ""
 "Attention!! Your url will be removed and your username will get blocked if "
 "you miss %s% times while verifying!"
 msgstr ""
+"توجه!!چنانچه %s% بار رمز خودرا اشتباه وارد نمایید، کلمه کاربری شما مسدود "
+"میگردد."
 
 #: controllers/frontend.php:87
 msgid ""
 "Attention!! Your url removed and your username got blocked! Contact site "
 "administrator for further information"
 msgstr ""
+"توجه!! کلمه کاربری شما مسدود شده است. لطفا برای اطلاعات بیشتر با بخش "
+"پشتیبانی تماس بگیرید"
 
 #: controllers/frontend.php:102
 msgid ""
 "This user name is blocked. Please contact site administrator for further "
 "information or wait for %h% hours and %m% minutes"
 msgstr ""
+" %h% ساعت و %m%کلمه کاریری شما مسدود شده است لطفا برای اطلاعات بیشتر با "
+"پشتیبانی تماس گرفته و یا به مدت صبر نماید"
 
 #: controllers/frontend.php:108
 msgid ""
 "This user name is blocked. Please contact site administrator for further "
 "information."
 msgstr ""
+"کلمه کاربری مسدود شده است.لطفا برای اطلاعات بیشتر با پشتیبانی تماس بگیرید"
