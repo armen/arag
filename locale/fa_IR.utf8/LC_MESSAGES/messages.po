@@ -3,29 +3,31 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2007-10-18 09:51+0330\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"PO-Revision-Date: 2008-04-14 02:27-0800\n"
+"Last-Translator: vafaei\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: validator/backend.php:4 controllers/backend.php:45
-#: templates/backend/edit.tpl:12 templates/backend/create.tpl:12
+#: validator/backend.php:4
+#: controllers/backend.php:45
+#: templates/backend/edit.tpl:12
+#: templates/backend/create.tpl:12
 msgid "Subject"
 msgstr "موضوع"
 
 #: validator/backend.php:5
 msgid "Page"
-msgstr ""
+msgstr "صفحه"
 
-#: validator/backend.php:14 templates/backend/settings.tpl:19
+#: validator/backend.php:14
+#: templates/backend/settings.tpl:19
 #, fuzzy
 msgid "Limit"
 msgstr "لیست"
@@ -33,20 +35,20 @@ msgstr "لیست"
 #: validator/backend.php:27
 #, php-format
 msgid "%s is required."
-msgstr ""
+msgstr "%s الزامی می باشد."
 
 #: validator/backend.php:28
 #, php-format
 msgid "%s should be numeric"
-msgstr ""
+msgstr "%s باید عددی باشد."
 
 #: controllers/backend.php:20
 msgid "Static Pages"
-msgstr ""
+msgstr "صفحه ثابت"
 
 #: controllers/backend.php:24
 msgid "StaticPages"
-msgstr ""
+msgstr "صفحات ثابت"
 
 #: controllers/backend.php:25
 msgid "List"
@@ -58,24 +60,27 @@ msgstr "جدید"
 
 #: controllers/backend.php:27
 msgid "Settings"
-msgstr ""
+msgstr "تنظیمات"
 
-#: controllers/backend.php:28 controllers/backend.php:49
+#: controllers/backend.php:28
+#: controllers/backend.php:49
 msgid "Edit"
 msgstr "ویرایش"
 
-#: controllers/backend.php:29 controllers/backend.php:51
+#: controllers/backend.php:29
+#: controllers/backend.php:51
 msgid "Preview"
 msgstr "نمایش"
 
-#: controllers/backend.php:30 controllers/backend.php:50
+#: controllers/backend.php:30
+#: controllers/backend.php:50
 #: controllers/backend.php:52
 msgid "Delete"
 msgstr "حذف"
 
 #: controllers/backend.php:46
 msgid "Author"
-msgstr ""
+msgstr "نویسنده"
 
 #: controllers/backend.php:47
 #, fuzzy
@@ -84,23 +89,24 @@ msgstr "جدید"
 
 #: controllers/backend.php:48
 msgid "Modify Date"
-msgstr ""
+msgstr "تاریخ اصلاح"
 
-#: templates/backend/edit.tpl:23 templates/backend/create.tpl:22
+#: templates/backend/edit.tpl:23
+#: templates/backend/create.tpl:22
 msgid "Submit"
 msgstr "ارسال"
 
 #: templates/backend/settings.tpl:12
 msgid "Settings are updated successfuly!"
-msgstr ""
+msgstr "تنظیمات با موفقیت به روز شد!"
 
 #: templates/backend/settings.tpl:25
 msgid "Save"
-msgstr ""
+msgstr "ذخیره"
 
 #: templates/backend/settings.tpl:26
 msgid "Reset"
-msgstr ""
+msgstr "بازنشانی"
 
 #: templates/backend/delete.tpl:11
 #, c-format
@@ -114,3 +120,4 @@ msgstr "بله"
 #: templates/backend/delete.tpl:24
 msgid "No"
 msgstr "خیر"
+
