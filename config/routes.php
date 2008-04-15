@@ -6,5 +6,6 @@ $config = array
     'staticpages/frontend/carts'   => 'staticpages/frontend/view/3',
     'staticpages/frontend/compare' => 'staticpages/frontend/view/4',
     'staticpages/frontend/sanjesh' => 'staticpages/frontend/view/5',
+    'staticpages/frontend/aboutus' => 'staticpages/frontend/view/6',
     'staticpages/frontend/guide'   => 'staticpages/frontend/view/7',
 );
