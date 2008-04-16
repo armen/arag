@@ -37,7 +37,7 @@ msgstr "تایید"
 
 #: views/backend/edit_filters.tpl:9 views/backend/filters.tpl:9
 msgid "Filters for '{$appname}' application, changed successfuly!"
-msgstr "فیلترهای برنامه '{$ نام برنامه}' با موفقیت تغییر یافت!"
+msgstr "فیلترهای برنامه '{$appname}' با موفقیت تغییر یافت!"
 
 #: views/backend/edit_filters.tpl:17
 msgid "Filter"
@@ -80,7 +80,7 @@ msgstr "سطوح دسترسی با موفقیت اصلاح شد1"
 
 #: views/backend/new_user.tpl:9
 msgid "New user added to '{$appname}' application!"
-msgstr "کاربر جدید به برنامه '{$نام برنامه}' اضافه شد!"
+msgstr "کاربر جدید به برنامه '{$appname}' اضافه شد!"
 
 #: views/backend/new_user.tpl:22 views/backend/user_profile.tpl:22
 #: views/frontend/password.tpl:31 views/frontend/login.tpl:18
@@ -159,7 +159,7 @@ msgstr "آدرس پست الکترونیکی"
 
 #: views/backend/filters.tpl:17
 msgid "Add new filter to '{$appname}'"
-msgstr "اضافه کردن فیلتر جدید به '{$ نام برنامه}'"
+msgstr "اضافه کردن فیلتر جدید به '{$appname}'"
 
 #: views/backend/filters.tpl:28 views/backend/add_app_filter.tpl:27
 msgid "Add"
@@ -194,7 +194,7 @@ msgstr "طول رمز عبور تصادفی"
 
 #: views/backend/default_group.tpl:8
 msgid "Default group for '{$appname}' application, changed successfuly!"
-msgstr "گروه پیش فرض برای برنامه '{$ نام برنامه}' با موفقیت تغییر یافت!"
+msgstr "گروه پیش فرض برای برنامه '{$appname}' با موفقیت تغییر یافت!"
 
 #: views/backend/default_group.tpl:12
 msgid ""
@@ -203,7 +203,7 @@ msgstr "گروه پیش فرض گروهی است که معمولا کاربرا�
 
 #: views/backend/default_group.tpl:24
 msgid "Default Group for '{$appname}'"
-msgstr "گروه پیش فرض برای '{$ نام برنامه}' "
+msgstr "گروه پیش فرض برای '{$appname}' "
 
 #: views/backend/default_group.tpl:37
 msgid "Set"
@@ -211,11 +211,11 @@ msgstr "تنظیم"
 
 #: views/backend/new_group.tpl:9
 msgid "New group added to '{$appname}' application!"
-msgstr "گروه جدید به برنامه '{$نام برنامه}' اضافه شد."
+msgstr "گروه جدید به برنامه '{$appname}' اضافه شد."
 
 #: views/backend/new_group.tpl:22
 msgid "New Group for '{$appname}'"
-msgstr "گروه جدید برای '{$نام برنامه}'"
+msgstr "گروه جدید برای '{$appname}'"
 
 #: views/backend/user_profile.tpl:9
 msgid "{$username} edited successfuly!"
@@ -490,9 +490,8 @@ msgstr "سطوح دسترسی"
 
 #: controllers/backend/application.php:49
 #: controllers/backend/applications.php:101
-#, fuzzy
 msgid "Users List"
-msgstr "کاربران"
+msgstr "لیست کاربران"
 
 #: controllers/backend/application.php:50
 #: controllers/backend/application.php:51
@@ -796,15 +795,13 @@ msgid ""
 msgstr ""
 
 #: controllers/frontend.php:195
-#, fuzzy
 msgid "Change Password"
-msgstr "رمز عبور"
+msgstr "تغییر کلمه ی عبور"
 
 #: controllers/frontend.php:226 controllers/frontend.php:331
 #: controllers/frontend.php:489
-#, fuzzy
 msgid "SMTP Settings"
-msgstr "تنظیمات"
+msgstr "تنظیمات SMTP"
 
 #: controllers/frontend.php:256
 msgid "Please enter a valid uri to change your password"
@@ -823,13 +820,12 @@ msgid "Your new password for %username%' is '%password%'"
 msgstr ""
 
 #: controllers/frontend.php:298
-#, fuzzy
 msgid "Password Changed"
-msgstr "طول رمز عبور"
+msgstr "کلمه ی عبور تغییر کرد"
 
 #: controllers/frontend.php:361
 msgid "Please enter a valid uri"
-msgstr "لطفا یک آدرس "
+msgstr "لطفا یک آدرس معتبر وارد نمایید"
 
 #: controllers/frontend.php:458
 msgid ""
@@ -844,7 +840,7 @@ msgstr ""
 
 #: controllers/frontend.php:533
 msgid "Please enter a valid uri!"
-msgstr "لطفا یک آدرس "
+msgstr "لطفا یک آدرس معتبر وارد نمایید"
 
 #: controllers/frontend.php:538
 msgid ""
