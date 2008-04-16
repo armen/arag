@@ -476,7 +476,8 @@ class Frontend_Controller extends Controller
         
         $this->layout->content = new View('frontend/user_registration', array(
                                                                               'flagsaved' => true,
-                                                                              'is_sent'   => $is_sent
+                                                                              'is_sent'   => $is_sent,
+                                                                              'message'   => $this->message
                                                                              ));
     }
     // }}}
