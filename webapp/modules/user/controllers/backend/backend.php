@@ -305,7 +305,7 @@ class Backend_Controller extends Controller
         $appname = $this->input->post('appname');
 
 
-        return $this->Groups->hasGroup($name, $appname);
+        return !$this->Groups->hasGroup($name, $appname);
     }
     // }}}
     // {{{ _check_user_name
