@@ -76,8 +76,7 @@ class Backend_Controller extends Controller
         $this->validation->name('sender', _("Sender's email"))->pre_filter('trim', 'sender')
              ->add_rules('sender', 'required', 'valid::email');
 
-        $this->validation->name('username', _("Username"))->pre_filter('trim', 'username')
-             ->add_rules('username', 'valid::alpha_numeric');
+        $this->validation->name('username', _("Username"))->pre_filter('trim', 'username');
 
         $this->validation->name('subject', _("Subject"))->pre_filter('trim', 'subject')
              ->add_rules('subject', 'required');
