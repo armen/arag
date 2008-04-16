@@ -157,15 +157,22 @@ class Groups_Model extends Model
     // {{{ hasGroup
     public function hasGroup($name = NULL, $appname = NULL, $id = NULL)
     {
-        if ($id == NULL) {
-            $result = $this->db->select('count(id) as count')->getwhere($this->tableNameGroups, Array('name'    => $name,
-                                                                                                      'appname' => $appname))->current(); 
-        } else if ($appname == NULL) {
-            $result = $this->db->select('count(id) as count')->getwhere($this->tableNameGroups, Array('id' => $id))->current();
-        } else {
-            $result = $this->db->select('count(id) as count')->getwhere($this->tableNameGroups, Array('id'      => $id,
-                                                                                                      'appname' => $appname))->current();
+        $this->db->select('count(id) as count')->from($this->tableNameGroups);
+
+        if ($id != NULL) {
+            $this->db->where('id', $id);
         }
+
+        if ($appname != NULL) {
+            $this->db->where('appname', $appname);
+        }
+
+        if ($name != Null) {
+            $this->db->where('name', $name);
+        }
+
+        $result = $this->db->get()->current();
+
         return (boolean) $result->count;
     }
     // }}}
