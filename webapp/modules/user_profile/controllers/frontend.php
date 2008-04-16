@@ -8,6 +8,11 @@
 
 include "backend.php";
 
-class Frontend_Controller extends Backend_Controller { }
+class Frontend_Controller extends Backend_Controller 
+{ 
+    // {{{ properties
+    protected $section = 'frontend';
+    // }}}
+}
 
 ?>

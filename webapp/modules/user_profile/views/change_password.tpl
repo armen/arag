@@ -3,6 +3,7 @@
     vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:             
     File: $Id: index.tpl 53 2007-10-11 18:38:57Z sasan $
 *}
+{assign var=uri value="change_password/%section%/index"}
 {arag_validation_errors}
 {if $flagsaved}
     {arag_block align="left" template="info"}
@@ -10,7 +11,7 @@
     {/arag_block}
 {/if}
 {arag_block}
-    {arag_form uri="user_profile/backend/password"}
+    {arag_form uri=$uri|replace:"%section%":$section}
         <table border="0" dir="{dir}">
             <tr>
                 <td align="{right}">

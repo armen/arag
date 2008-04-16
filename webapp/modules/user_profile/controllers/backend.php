@@ -11,6 +11,7 @@ class Backend_Controller extends Controller
     // {{{ Properties
     
     protected $username = Null;
+    protected $section  = 'backend';
 
     // }}}
     // {{{ Constructor
@@ -38,8 +39,8 @@ class Backend_Controller extends Controller
         // Global tabbedbock
         $this->global_tabs = new TabbedBlock_Component('global_tabs');
         $this->global_tabs->setTitle(_("User Profile"));
-        $this->global_tabs->addItem(_("Personal Information"), 'user_profile/backend/index'); 
-        $this->global_tabs->addItem(_("Change Password"), 'user_profile/backend/password'); 
+        $this->global_tabs->addItem(_("Personal Information"), 'user_profile/'.$this->section.'/index'); 
+        $this->global_tabs->addItem(_("Change Password"), 'user_profile/'.$this->section.'/password'); 
 
         // Validation Messages
         $passwordLength = Arag_Config::get("passlength", 0, 'user');
@@ -72,9 +73,10 @@ class Backend_Controller extends Controller
                                           'flagsaved'     => $this->session->get_once('user_profile_profile_saved'),
                                           'isset_profile' => $isset_profile,
                                           'username'      => $this->username,
+                                          'section'       => $this->section
                                          ));
 
-        $this->layout->content = new View('user_profile', $data);
+        $this->layout->content = new View($this->section.'_user_profile', $data);
     }
     // }}}
     // {{{ index_write
@@ -127,7 +129,10 @@ class Backend_Controller extends Controller
     // {{{ password_read
     public function password_read()
     {
-        $this->layout->content = new View('change_password', array('flagsaved' => $this->session->get_once('user_profile_password_saved')));
+        $this->layout->content = new View($this->section.'_change_password', array(
+                                                                                   'flagsaved' => $this->session->get_once('user_profile_password_saved'),
+                                                                                   'section'   => $this->section
+                                                                                  ));
     }
     // }}}
     // {{{ password_write
@@ -185,6 +190,5 @@ class Backend_Controller extends Controller
         return true;
     }
     // }}}
-
 }
 ?>
