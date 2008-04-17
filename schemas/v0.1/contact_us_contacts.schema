@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<database>
+    <name><variable>DATABASE_NAME</variable></name>
+    <table>
+        <name><variable>TABLES_PREFIX</variable>contact_us_contacts</name>
+        <declaration>
+            <field>
+                <name>id</name>
+                <type>integer</type>
+                <autoincrement>true</autoincrement>
+                <notnull>true</notnull>
+            </field>
+            <field>
+                <name>name</name>
+                <type>text</type>
+                <length>255</length>
+            </field>
+            <field>
+                <name>tel</name>
+                <type>text</type>
+                <length>8</length>
+            </field>
+            <field>
+                <name>email</name>
+                <type>text</type>
+                <length>255</length>
+            </field>
+            <field>
+                <name>title</name>
+                <type>text</type>
+                <length>255</length>
+                <notnull>true</notnull>
+            </field>
+            <field>
+                <name>content</name>
+                <type>clob</type>
+                <notnull>true</notnull>
+            </field>
+            <field>
+                <name>create_date</name>
+                <type>integer</type>
+                <notnull>true</notnull>
+            </field>
+        </declaration>
+    </table>
+</database>
