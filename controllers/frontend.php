@@ -13,9 +13,9 @@ class Frontend_Controller extends Controller
     {
         parent::__construct();
 
-        $this->validation->message('standard_text', _("%s in not standard text."));
+        $this->validation->message('standard_text', _("%s is not standard text."));
         $this->validation->message('email', _("%s has not right format."));
-        $this->validation->message('numeric', _("%s in not numeric"));
+        $this->validation->message('numeric', _("%s is not numeric"));
         $this->validation->message('required', _("%s is required."));
     }
     // }}}
