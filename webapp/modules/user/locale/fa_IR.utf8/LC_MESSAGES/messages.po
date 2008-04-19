@@ -371,7 +371,7 @@ msgstr ""
 
 #: views/frontend/user_registration.tpl:88
 msgid "Re-Email"
-msgstr "آدرس پست الکترونیکی"
+msgstr "تکرار آدرس پست الکترونیکی"
 
 #: controllers/backend/application.php:19
 #: controllers/backend/applications.php:19
