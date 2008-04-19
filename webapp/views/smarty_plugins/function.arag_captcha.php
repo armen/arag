@@ -14,8 +14,8 @@
 
 function smarty_function_arag_captcha($params, &$smarty)
 {
-    $width    = Config::item('captcha.width', '150');
-    $height   = Config::item('captcha.hight', '50');
+    $width    = Config::item('captcha.width');
+    $height   = Config::item('captcha.hight');
     $language = config::item('locale.lang');
     
     foreach ($params as $_key => $_val) {
