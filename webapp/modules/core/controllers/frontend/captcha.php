@@ -9,7 +9,7 @@
 class Captcha_Controller extends Controller
 {
     // {{{ Constructor
-    public function _construct()
+    public function __construct()
     {
         // Dummy, we don't want to render the frontend layout.
     }
@@ -17,13 +17,12 @@ class Captcha_Controller extends Controller
     // {{{ render
     public function render($timestamp)
     {
-        $captcha_bg   = file_exists(DOCROOT.'images/misc/captcha.jpg') ? DOCROOT.'images/misc/captcha.jpg' : '';
-        $captcha_code = $this->_generate_captcha_code(6);
-
-        $captcha_config = array('background_image' => $captcha_bg);
-
-        $captcha = new Captcha_Core($captcha_config);
-        $captcha->set_code($captcha_code);
+        ob_end_clean();
+        Event::clear('system.shutdown');
+        Event::clear('system.display');                
+    
+        $captcha = new Captcha_Core();
+        $captcha->set_code($this->_generate_captcha_code(6));
         $captcha->render();
     }
     // }}}
