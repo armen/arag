@@ -7,7 +7,7 @@
 {arag_block}
     <table border="0" dir="{dir}">
         <tr>
-            <td align="{right}">_("First name and Last name"):</td>
+            <td align="{right}">_("Full name"):</td>
             <td align="{left}">{$contact_info.name}</td>
         </tr>
         <tr>
