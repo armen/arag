@@ -14,22 +14,12 @@
 
 function smarty_function_arag_captcha($params, &$smarty)
 {
-    $width    = '150';
-    $height   = '50';
-    $value    = '';
+    $width    = Config::item('captcha.width', '150');
+    $height   = Config::item('captcha.hight', '50');
     $language = config::item('locale.lang');
     
-    if (Config::item('captcha.width') != Null) {
-        $width = Config::item('captcha.width');
-    }
-
-    if (Config::item('captcha.height') != Null) {
-        $height = Config::item('captcha.height');
-    }
-
     foreach ($params as $_key => $_val) {
         switch ($_key) {
-            case 'value':
             case 'width':
             case 'height':
                 $$_key = $_val;
@@ -40,11 +30,10 @@ function smarty_function_arag_captcha($params, &$smarty)
         }
     }
 
-    $time = time();
-    $captcha_source = url::base().$language.'/core/frontend/captcha/render/'.$time;
+    $captcha_source = url::base().$language.'/core/frontend/captcha/render/'.time();
 
-    $content = '<div><img src="'.$captcha_source.'" alt="captcha" width="'.$width.'" height="'.$height.'" /><div>';
-    $content .= '<div><input name="captcha" value="" type="text" /></div>';
+    $content  = '<div><img src="'.$captcha_source.'" alt="captcha" width="'.$width.'" height="'.$height.'" /><div>'.
+                '<div><input name="captcha" value="" type="text" /></div>';
 
     return $content;
 }
