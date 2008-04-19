@@ -15,7 +15,7 @@ class Backend_Controller extends Controller
 
         // load global Tabs
         $this->global_tabs = new TabbedBlock_Component('global_tabs'); 
-        $this->global_tabs->setTitle(_("Contact Management"));
+        $this->global_tabs->setTitle(_("Contacts Management"));
 
         $this->global_tabs->addItem(_("Contacts"), 'contact_us/backend/contacts');
         $this->global_tabs->addItem(_("List"), 'contact_us/backend/contacts', 'contact_us/backend/contacts');
