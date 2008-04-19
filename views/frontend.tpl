@@ -14,7 +14,7 @@
     {arag_form uri=$uri}
         <table border="0" dir="{dir}">
             <tr>
-                <td align="{right}">_("First name and Last name"):</td>
+                <td align="{right}">_("Full name"):</td>
                 <td align="{left}">
                     <input name="contact_name" value="{$contact_name|smarty:nodefaults|default:null}" type="text" />
                 </td>
@@ -32,13 +32,13 @@
                 </td>
             </tr>
             <tr>
-                <td align="{right}">{asterisk}_("Message Title"):</td>
+                <td align="{right}">_("Message Title"):{asterisk}</td>
                 <td align="{left}">
                     <input type="text" name="contact_title" value="{$contact_title|smarty:nodefaults|default:null}" />
                 </td>
             </tr>
             <tr>
-                <td align="{right}">{asterisk}_("Message Content"):</td>
+                <td align="{right}">_("Message Content"):{asterisk}</td>
                 <td align="{left}">
                     <textarea rows="6" cols="" name="contact_content">{$contact_content|smarty:nodefaults|default:null}</textarea>
                 </td>
@@ -46,7 +46,7 @@
             <tr>
                 <td></td>
                 <td>
-                    <input type="submit" name="submit" value="_("Submit")" />
+                    <input type="submit" name="submit" value={quote}_("Submit"){/quote} />
                 </td>
             </tr>
         </table>
