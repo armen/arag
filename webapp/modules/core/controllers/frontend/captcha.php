@@ -17,26 +17,16 @@ class Captcha_Controller extends Controller
     // {{{ render
     public function render($timestamp)
     {
+        $session = Session::instance();
+        $code    = $session->get('captcha_code');
+
         ob_end_clean();
         Event::clear('system.shutdown');
         Event::clear('system.display');                
-    
+
         $captcha = new Captcha_Core();
-        $captcha->set_code($this->_generate_captcha_code(6));
+        $captcha->set_code($code);
         $captcha->render();
-    }
-    // }}}
-    // {{{ _generate_captcha_code
-    public function _generate_captcha_code($len)
-    {
-        $chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-        $string = '';
-        for ($i = 0; $i < $len; $i++)
-        {
-            $pos = rand(0, strlen($chars)-1);
-            $string .= $chars{$pos};
-        }
-        return $string;
     }
     // }}}
 }
