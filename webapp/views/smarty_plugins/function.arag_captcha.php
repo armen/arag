@@ -14,14 +14,19 @@
 
 function smarty_function_arag_captcha($params, &$smarty)
 {
-    $width    = Config::item('captcha.width');
-    $height   = Config::item('captcha.hight');
-    $language = config::item('locale.lang');
+    $width  = Config::item('captcha.width');
+    $height = Config::item('captcha.height');
+    $style  = Config::item('captcha.style');
+    $length = Config::item('captcha.num_chars');
+    $code   = Null;
     
     foreach ($params as $_key => $_val) {
         switch ($_key) {
             case 'width':
             case 'height':
+            case 'style':
+            case 'length':
+            case 'code':
                 $$_key = $_val;
                 break;
                 
@@ -30,12 +35,25 @@ function smarty_function_arag_captcha($params, &$smarty)
         }
     }
 
-    $captcha_source = url::base().$language.'/core/frontend/captcha/render/'.time();
+    $session = Session::instance();
+    $session->set('captcha_code', ($code == Null ? generate_captcha_code(Config::item('captcha.num_chars')) : Null));
 
-    $content  = '<div><img src="'.$captcha_source.'" alt="captcha" width="'.$width.'" height="'.$height.'" /><div>'.
-                '<div><input name="captcha" value="" type="text" /></div>';
+    $captcha_source = url::site('/core/frontend/captcha/render/'.time());
+    $content        = '<div><img src="'.$captcha_source.'" alt="captcha" width="'.$width.'" height="'.$height.'" /></div>'.
+                      '<div><input name="captcha" value="" type="text" /></div>';
 
     return $content;
+}
+
+function generate_captcha_code($len)
+{
+    $chars = 'ABCEFGHJKLMNPRSTUVWXYZ2356789';
+    $string = '';
+    for ($i = 0; $i < $len; $i++) {
+        $pos = rand(0, strlen($chars)-1);
+        $string .= $chars{$pos};
+    }
+    return $string;
 }
 
 ?>
