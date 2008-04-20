@@ -44,6 +44,12 @@
                 </td>
             </tr>
             <tr>
+                <td align="{right}">{asterisk}_("Type the text you see in image"):</td>
+                <td align="{left}">
+                    {arag_captcha}
+                </td>
+            </tr>
+            <tr>
                 <td></td>
                 <td>
                     <input type="submit" name="submit" value={quote}_("Submit"){/quote} />
