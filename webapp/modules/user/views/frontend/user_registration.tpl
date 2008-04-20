@@ -92,6 +92,12 @@
                 </td>
             </tr>
             <tr>
+                <td align="{right}">_("Type the text you see in image"):{asterisk}</td>
+                <td align="{left}">
+                    {arag_captcha}
+                </td>
+            </tr>
+            <tr>
                 <td align="{right}">
                 </td>
                 <td align="{left}">

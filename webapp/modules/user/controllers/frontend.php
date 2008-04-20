@@ -30,6 +30,7 @@ class Frontend_Controller extends Controller
         $this->validation->message('alpha_dash', _("%s can contain only alpha-numeric characters, underscores or dashes"));
         $this->validation->message('alpha', _("%s can contain only alpha characters"));
         $this->validation->message('smtp_error', _("SMTP settings are not set"));
+        $this->validation->message('valid_captcha', _("Image's text does not match !"));
 
         $this->message = False;
 
@@ -233,6 +234,8 @@ class Frontend_Controller extends Controller
 
         $this->validation->name('email', _("Email"))->pre_filter('trim', 'email')
              ->add_rules('email', 'required', 'valid::email');
+
+        $this->validation->name('captcha', _("Image's Text"))->add_rules('captcha', 'Captcha_Core::valid_captcha', 'required');
 
         return $this->validation->validate();
     }
@@ -512,6 +515,8 @@ class Frontend_Controller extends Controller
 
         $this->validation->name('reemail', _("Email"))->pre_filter('trim', 'reemail')
              ->add_rules('reemail', 'required', 'valid::email');
+
+        $this->validation->name('captcha', _("Image's Text"))->add_rules('captcha', 'Captcha_Core::valid_captcha', 'required');
 
         return $this->validation->validate();
     }

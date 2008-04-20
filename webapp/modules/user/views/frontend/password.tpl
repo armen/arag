@@ -36,6 +36,10 @@
             <td><input type="text" name="email" value="{$email|smarty:nodefaults|default:null}" dir="ltr" /></td>
         </tr>
         <tr>
+            <td align="{right}">_("Enter the text of image in text box.")</td>
+            <td align="{left}">{arag_captcha}</td>
+        </tr>
+        <tr>
             <td>&nbsp;</td>
             <td>
                 <input type="submit" value={quote}_("Send"){/quote} />
