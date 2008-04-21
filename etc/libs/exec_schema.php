@@ -30,7 +30,6 @@ function execSchemaFiles(&$manager, $schemaFiles, $dataFiles, $data, $schemaVars
 
             if (PEAR::isError($result)) {
                 $output .= ("Failed! (" . $result->getMessage() . ")\n" . $result->getUserInfo());
-                return $output;
             } else {
                 $output .= "Done!";
             }
