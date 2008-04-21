@@ -40,6 +40,7 @@ class Frontend_Controller extends Controller
     public function login_read()
     {
         $this->layout->content = new View('frontend/login', array('error_message' => false));
+        $this->layout->content->display_captcha = $this->_check_display_captcha();
     }
     // }}}
     // {{{ login_write
@@ -58,6 +59,7 @@ class Frontend_Controller extends Controller
             $this->session->delete('privilege_filters');
 
             $this->session->set(Array('user' => array_merge($users->getUser($username), Array('authenticated' => True))));
+            $this->_reset_login_hit();
 
             $users->blockUser($username);
 
@@ -139,6 +141,12 @@ class Frontend_Controller extends Controller
 
         $this->validation->name('password', _("Password"))->pre_filter('trim', 'password')
              ->add_rules('password', 'required');
+
+        if ($this->_check_display_captcha()) {
+            $this->validation->name('captcha', _("Image's Text"))->add_rules('captcha', 'Captcha_Core::valid_captcha', 'required');
+        }
+
+        $this->_increase_login_hit();
 
         return $this->validation->validate();
     }
@@ -607,6 +615,31 @@ class Frontend_Controller extends Controller
         return (!preg_match("/^[a-z0-9_.]+_admin$/", strtolower($username)) && 
                 !$users->hasUserName($username) && preg_match("/^[a-z][a-z0-9_.]*$/", strtolower($username)));
     }
+    // }}}
+    // {{{ display_captcha
+    // {{{ _check_display_captcha
+    public function _check_display_captcha()
+    {
+        $tryNumber = (int)$this->session->get('login.hit');
+        $hitNumber = (int)Arag_Config::get('login.hit', 3);
+        $displayCaptcha = $hitNumber <= $tryNumber ? True : False;
+
+        return $displayCaptcha;
+    }
+    // }}}
+    // {{{ _reset_login_hit
+    public function _reset_login_hit()
+    {
+        $this->session->set('login.hit', 0);
+    }
+    // }}}
+    // {{{ _increase_login_hit
+    public function _increase_login_hit()
+    {
+         $tryNumber = (int)$this->session->get('login.hit');       
+         $this->session->set('login.hit', ++$tryNumber);
+    }
+    // }}}
     // }}}
 }
 
