@@ -930,10 +930,10 @@ class Applications_Controller extends Backend_Controller
         $this->validation->name('password', _("Password"))->add_rules('password', 'matches[repassword]', 'length['.$passwordLength.', 255]');
 
         $this->validation->name('name', _("Name"))->pre_filter('trim', 'name')
-             ->add_rules('name', 'required', 'valid::alpha');
+             ->add_rules('name', 'required', 'standard_text');
 
         $this->validation->name('lastname', _("Last name"))->pre_filter('trim', 'lastname')
-             ->add_rules('lastname', 'required', 'valid::alpha');
+             ->add_rules('lastname', 'required', 'standard_text');
 
         $this->validation->name('email', _("Email"))->pre_filter('trim', 'email')
              ->add_rules('email', 'required', 'valid::email');
