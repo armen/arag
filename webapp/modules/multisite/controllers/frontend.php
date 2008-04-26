@@ -15,6 +15,8 @@ class Frontend_Controller extends Controller
 
         // Default page title
         $this->layout->page_title = _("MultiSite");
+
+        $this->validation->message('valid_captcha', _("Image's text does not match !"));
     }
     // }}}
     // {{{ index_read
@@ -25,7 +27,7 @@ class Frontend_Controller extends Controller
         $show_form     = true;
         $error_message = false;
         
-        if (!$verify_uri || !$users->hasUri($verify_uri)) {
+        if (!$verify_uri || $users->hasUri($verify_uri)) {
             $error_message = _("Please enter a valid uri!");
             $show_form     = false;
 
@@ -118,6 +120,20 @@ class Frontend_Controller extends Controller
 
             $this->layout->content = new View('frontend/verify', $data);
         }
+    }
+    // }}}
+    // {{{ index_validate_write
+    public function index_validate_write()
+    {
+        $this->validation->name('captcha', _("Image's Text"))->add_rules('captcha', 'Captcha_Core::valid_captcha', 'required');
+        
+        return $this->validation->validate();
+    }
+    // }}}
+    // {{{ index_write_error
+    public function index_write_error()
+    {
+        $this->index_write();
     }
     // }}}
 }

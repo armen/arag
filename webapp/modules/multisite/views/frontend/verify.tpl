@@ -4,6 +4,7 @@
     File: $Id: edit.tpl 53 2007-10-11 18:38:57Z sasan $
 *}
 {arag_block}
+{arag_validation_errors}
     {if $error_message}
         {arag_block template="warning"}
             {$error_message|nl2br}
@@ -26,6 +27,10 @@
                 <td align="{right}" width="100">_("Password"):</td>
                 <td><input type="password" name="password" value="{$post_limit|smarty:nodefaults|default:null}" /></td>
             </tr>    
+            <tr>
+                <td align="{right}" width="100">_("Enter text in image"):</td>
+                <td>{arag_captcha}</td>
+            </tr>
             <tr>
                 <td>&nbsp;</td>
                 <td>
