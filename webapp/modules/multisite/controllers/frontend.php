@@ -17,6 +17,7 @@ class Frontend_Controller extends Controller
         $this->layout->page_title = _("MultiSite");
 
         $this->validation->message('valid_captcha', _("Image's text does not match !"));
+        $this->validation->message('required', _("%s is required!"));
     }
     // }}}
     // {{{ index_read
