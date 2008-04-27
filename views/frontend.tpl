@@ -22,13 +22,13 @@
             <tr>
                 <td align="{right}">_("Phone Number"):</td>
                 <td align="{left}">
-                    <input name="contact_number" value="{$contact_number|smarty:nodefaults|default:null}" type="text" />
+                    <input name="contact_number" value="{$contact_number|smarty:nodefaults|default:null}" type="text" dir="ltr" />
                 </td>
             </tr>
             <tr>
                 <td align="{right}">_("Email Address"):</td>
                 <td align="{left}">
-                    <input type="text" name="contact_email" value="{$contact_email|smarty:nodefaults|default:null}" />
+                    <input type="text" name="contact_email" value="{$contact_email|smarty:nodefaults|default:null}" dir="ltr" />
                 </td>
             </tr>
             <tr>
