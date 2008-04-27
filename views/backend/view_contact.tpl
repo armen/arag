@@ -33,7 +33,7 @@
         <tr>
             <td></td>
             <td align="{left}">
-                <input type="button" name="delete" value="Delete" onclick="document.location.href='{url_site}/contact_us/backend/contacts/delete/{$contact_info.id}'" />
+                <input type="button" name="delete" value="Delete" onclick="document.location.href='{kohana_helper function="url::site"}/contact_us/backend/contacts/delete/{$contact_info.id}'" />
             </td>
         </tr>
     </table>
