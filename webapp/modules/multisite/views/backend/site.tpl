@@ -12,7 +12,7 @@
                     _("Application Name"):
                 </td>
                 <td align="{left}">
-                    <input type="text" name="name" value="{$name|smarty:nodefaults}" />
+                    <input type="text" name="name" value="{$name|smarty:nodefaults}" dir="ltr" />
                 </td>
             </tr>
             <tr>

@@ -21,7 +21,7 @@
                         _("Application name"):{asterisk}
                     </td>
                     <td align="{left}">
-                        <input type="text" name="appname" value="{$appname|smarty:nodefaults|default:null}" />
+                        <input type="text" name="appname" value="{$appname|smarty:nodefaults|default:null}" dir="ltr" />
                     </td>
                 </tr>
                 <tr>
@@ -29,7 +29,7 @@
                         _("Email"):{asterisk}
                     </td>
                     <td align="{left}">
-                        <input type="text" name="email" value="{$email|smarty:nodefaults|default:null}" />
+                        <input type="text" name="email" value="{$email|smarty:nodefaults|default:null}" dir="ltr" />
                     </td>
                 </tr>
                 <tr>
@@ -37,7 +37,7 @@
                         _("Retype Email"):{asterisk}
                     </td>
                     <td align="{left}">
-                        <input type="text" name="reemail" value="{$reemail|smarty:nodefaults|default:null}" />
+                        <input type="text" name="reemail" value="{$reemail|smarty:nodefaults|default:null}" dir="ltr" />
                     </td>
                 </tr>
                 <tr><td colspan="2">&nbsp;</td></tr>

@@ -17,7 +17,7 @@
     <table border="0" dir="{dir}" width="100%">
     <tr>
         <td align="{right}" width="150">_("List items per page"):</td>
-        <td><input type="text" name="limit" value="{$limit|smarty:nodefaults|default:null}" />&nbsp;<span class='smallfont'>_("0 means Unlimited")</span></td>
+        <td><input type="text" name="limit" value="{$limit|smarty:nodefaults|default:null}" dir="ltr" />&nbsp;<span class='smallfont'>_("0 means Unlimited")</span></td>
     </tr>
     <tr>
         <td>&nbsp;</td>
