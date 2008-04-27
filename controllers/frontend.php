@@ -17,6 +17,7 @@ class Frontend_Controller extends Controller
         $this->validation->message('email', _("%s has not right format."));
         $this->validation->message('numeric', _("%s is not numeric"));
         $this->validation->message('required', _("%s is required."));
+        $this->validation->message('valid_captcha', _("%s mismatches by text that you typed!"));
     }
     // }}}
     // {{{ index
@@ -83,6 +84,8 @@ class Frontend_Controller extends Controller
 
         $this->validation->name('contact_content', _("Message content"))->pre_filter('trim', 'contact_content')
              ->add_rules('contact_content', 'required', 'security::xss_clean');
+
+        $this->validation->name('captcha', _("Image's Text"))->add_rules('captcha', 'Captcha_Core::valid_captcha', 'required');
 
         return $this->validation->validate();
     }
