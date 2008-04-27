@@ -27,7 +27,7 @@ $config['url_suffix'] = '';
  * server bandwidth usage, at the cost of slightly higher CPU usage. Set to
  * the compression level (1-9) that you want to use, or FALSE to disable.
  *
- * Do not enable this option if you are using output compression in php.ini! 
+ * Do not enable this option if you are using output compression in php.ini!
  */
 $config['output_compression'] = FALSE;
 
@@ -50,6 +50,14 @@ $config['allow_config_set'] = TRUE;
 $config['display_errors'] = TRUE;
 
 /**
+ * Enable or display statistics in the final output. Stats are replaced via
+ * specific strings, such as {execution_time}.
+ *
+ * @see http://doc.kohanaphp.com/general/configuration/config
+ */
+$config['render_stats'] = TRUE;
+
+/**
  * Filename prefixed used to determine extensions. For example, an
  * extension to the Controller class would be named MY_Controller.php.
  */
@@ -66,4 +74,5 @@ $config['modules'] = array
 	// MODPATH.'forge',  // Form generation
 	// MODPATH.'kodoc',  // Self-generating documentation
 	// MODPATH.'media',  // Media caching and compression
+	// MODPATH.'gmaps',  // Google Maps integration
 );

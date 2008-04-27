@@ -30,7 +30,7 @@
 
     {$content|smarty:nodefaults|default:""}
     {literal}
-        Execution: {execution_time} Memory usage: {memory_usage}
+        Execution: <b>{execution_time}</b> Memory usage: <b>{memory_usage}</b> Included files: <b>{included_files}</b>
     {/literal}    
 </body>
 </html>

@@ -26,7 +26,7 @@
         {$content|smarty:nodefaults|default:""}
     {/arag_tabbed_block}
     {literal}
-        Execution: {execution_time} Memory usage: {memory_usage}
+        Execution: <b>{execution_time}</b> Memory usage: <b>{memory_usage}</b> Included files: <b>{included_files}</b>    
     {/literal}
 </body>
 </html>
