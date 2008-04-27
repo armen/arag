@@ -48,11 +48,11 @@
             </tr>
             <tr>
                 <td align="{right}" width="100">_("Email"):</td>
-                <td><input type="text" name="email" value="{$email|smarty:nodefaults|default:null}" /></td>
+                <td><input type="text" name="email" value="{$email|smarty:nodefaults|default:null}" dir="ltr" /></td>
             </tr>
             <tr>
                 <td align="{right}" width="100">_("Home page"):</td>
-                <td><input type="text" name="homepage" value="{$homepage|smarty:nodefaults|default:null}" /></td>
+                <td><input type="text" name="homepage" value="{$homepage|smarty:nodefaults|default:null}" dir="ltr" /></td>
             </tr>
         {/if}
         <tr>
