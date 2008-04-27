@@ -14,7 +14,6 @@
  */
 $config = array
 (
-    '_allowed'         => 'a-z 0-9~%.:_-',
     '_default'         => 'arag/welcome',
     '[a-zA-Z]{2}'      => 'arag/welcome',
     '[a-zA-Z]{2}/(.*)' => '$1'

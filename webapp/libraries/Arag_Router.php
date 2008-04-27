@@ -40,6 +40,11 @@ class Router extends Router_Core {
      */
     public static function setup()
     {
+        if ( ! empty($_SERVER['QUERY_STRING'])) {
+            // Set the query string to the current query string
+            self::$query_string = '?'.trim($_SERVER['QUERY_STRING'], '&');
+        }
+    
         // Aet the request method
         self::request_method();
 
@@ -50,8 +55,37 @@ class Router extends Router_Core {
         // Fetch all routers and save it
         self::$routes = Config::item('routes');
 
-        // Generate segments
-        self::generate_segments();
+        // Default route status
+        $default_route = FALSE;        
+
+        if (self::$current_uri === '') {
+            // Make sure the default route is set
+            if ( ! isset(self::$routes['_default']))
+                throw new Kohana_Exception('core.no_default_route');
+
+            // Use the default route when no segments exist
+            self::$current_uri = self::$routes['_default'];
+
+            // Default route is in use
+            $default_route = TRUE;
+        }
+
+        // Make sure the URL is not tainted with HTML characters
+        self::$current_uri = html::specialchars(self::$current_uri, FALSE);
+
+        // At this point segments, rsegments, and current URI are all the same
+        self::$segments = self::$rsegments = self::$current_uri = trim(self::$current_uri, '/');
+
+        // Explode the segments by slashes
+        self::$segments = (self::$segments === '') ? array() : explode('/', self::$segments);
+
+        if ($default_route === FALSE AND count(self::$routes) > 1) {
+            // Custom routing
+            self::$rsegments = self::routed_uri(self::$current_uri);
+        }
+
+        // Routed segments will never be empty
+        self::$rsegments = explode('/', self::$rsegments); 
         
         // Find requested module
         $rsegments    = self::$rsegments;
@@ -68,15 +102,19 @@ class Router extends Router_Core {
         // Path to be added to as we search deeper
         $search = '/controllers';
 
+        // controller path to be added to as we search deeper
+        $controller_path = '';
+
         // Use the rsegments to find the controller
         foreach($rsegments as $key => $segment) {
             foreach($include_paths as $path) {
                 // The controller has been found, all arguments can be set
                 if (is_file($path.$search.'/'.$segment.EXT)) {
-                    self::$directory  = $path.$search.'/';
-                    self::$controller = $segment;
-                    self::$method     = isset($rsegments[$key + 1]) ? $rsegments[$key + 1] : 'index';
-                    self::$arguments  = isset($rsegments[$key + 2]) ? array_slice($rsegments, $key + 2) : array();
+                    self::$directory       = $path.$search.'/';
+                    self::$controller      = $segment;
+                    self::$controller_path = $controller_path;
+                    self::$method          = isset($rsegments[$key + 1]) ? $rsegments[$key + 1] : 'index';
+                    self::$arguments       = isset($rsegments[$key + 2]) ? array_slice($rsegments, $key + 2) : array();
 
                     // Stop searching, two levels for foreach
                     break 2;
@@ -84,85 +122,17 @@ class Router extends Router_Core {
             }
 
             // Add the segment to the search
-            $search .= '/'.$segment;
+            $search          .= '/'.$segment;
+            $controller_path .= $segment.'/';            
         }
 
-        // If the controller is empty, run the system.404 event
-        empty(self::$controller) and Event::run('system.404');
-    }
-    // }}}
-    // {{{ generate_segments
-    public static function generate_segments()
-    {
-        // Make sure the default route is set
-        if ( ! isset(self::$routes['_default'])) {
-            throw new Kohana_Exception('core.no_default_route');
-        }
+        // Last chance to set routing before a 404 is triggered
+        Event::run('system.post_routing');
 
-        // Use the default route when no segments exist
-        if (self::$current_uri == '' OR self::$current_uri == '/') {
-            self::$current_uri = self::$routes['_default'];
-            $default_route = TRUE;
-        } else {
-            $default_route = FALSE;
-        }
-
-        if ( ! empty($_SERVER['QUERY_STRING'])) {
-            // Set the query string to the current query string
-            self::$query_string = '?'.trim($_SERVER['QUERY_STRING'], '&');
-        }
-
-        // At this point, set the segments, rsegments, and current URI
-        // In many cases, all of these variables will match
-        self::$segments = self::$rsegments = self::$current_uri = trim(self::$current_uri, '/');
-
-        // Custom routing
-        if ($default_route == FALSE AND count(self::$routes) > 1) {
-            if (isset(self::$routes[self::$current_uri])) {
-                // Literal match, no need for regex
-                self::$rsegments = self::$routes[self::$current_uri];
-            } else {
-                // Loop through the routes and see if anything matches
-                foreach(self::$routes as $key => $val) {
-                    if ($key == '_default') continue;
-
-                    // Does this route match the current URI?
-                    if (preg_match('#^'.$key.'$#u', self::$segments)) {
-                        // If the regex contains a valid callback, we'll use it
-                        if (strpos($val, '$') !== FALSE AND strpos($key, '(') !== FALSE) {
-                            self::$rsegments = preg_replace('#^'.$key.'$#u', $val, self::$segments);
-                        } else {
-                            self::$rsegments = $val;
-                        }
-
-                        // A valid route was found, stop parsing other routes
-                        break;
-                    }
-                }
-            }
-
-            // Check router one more time to do some magic
-            self::$rsegments = isset(self::$routes[self::$rsegments]) ? self::$routes[self::$rsegments] : self::$rsegments;
-        }
-
-        // Explode the segments by slashes
-        if ($default_route == TRUE OR self::$segments == '') {
-            self::$segments = array();
-        } else {
-            self::$segments = explode('/', self::$segments);
-        }
-        // Routed segments will never be blank
-        self::$rsegments = explode('/', self::$rsegments);
-
-        // Validate segments to prevent malicious characters
-        foreach(self::$segments as $key => $segment) {
-            self::$segments[$key] = self::filter_uri($segment);
-        }
-
-        // Yah, routed segments too, even though it should never happen
-        foreach(self::$rsegments as $key => $segment) {
-            self::$rsegments[$key] = self::filter_uri($segment);
-        }    
+        if (empty(self::$controller)) {
+            // No controller was found, so no page can be rendered
+            Event::run('system.404');
+        }   
     }
     // }}}
     // {{{ request_method
