@@ -10,7 +10,7 @@
                 {if $key!= 0}
                     >
                 {/if}
-                &nbsp;<a href="{helper function="url::site" uri=$uri}" title="{$bread}">{$bread}</a>
+                &nbsp;<a href="{kohana_helper function="url::site" uri=$uri}" title="{$bread}">{$bread}</a>
         {/foreach}
     {/arag_block}
 {/arag_block}

@@ -12,12 +12,12 @@
                     <div class="cp_spacer">&nbsp;</div>
                 {/if}
                 <div class="cp_item">
-                    <a href="{helper function="url::site" uri="`$module.module`/backend"}">
+                    <a href="{kohana_helper function="url::site" uri="`$module.module`/backend"}">
                     <img src="{$arag_base_url|smarty:nodefaults}/modpub/{$module.module}/icon_48x48.png" 
                          width="48" height="48" alt="{$module.description}" />
                     </a>
                     <p class="cp_link">
-                        <a href="{helper function="url::site" uri="`$module.module`/backend"}">
+                        <a href="{kohana_helper function="url::site" uri="`$module.module`/backend"}">
                             {$module.name}
                         </a>    
                     </p>

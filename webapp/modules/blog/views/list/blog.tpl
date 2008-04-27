@@ -12,7 +12,7 @@
         <div class="blog">
             {foreach name=list from=$plist item=row key=key}
                 <div class="blog_entry">
-                    <div class="blog_subject">{helper function="html::anchor" uri=$entry_uri|replace:'#id#':$row.id title=$row.subject}</div>
+                    <div class="blog_subject">{kohana_helper function="html::anchor" uri=$entry_uri|replace:'#id#':$row.id title=$row.subject}</div>
                     <div class="blog_posted">
                         {capture assign="posted"}_("Posted by %s at %s"){/capture}
                         {$posted|sprintf:$row.author:$plist->callCallback('Blog.getDate', $row)}

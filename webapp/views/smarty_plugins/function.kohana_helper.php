@@ -2,15 +2,15 @@
 /*
  * Smarty plugin
  * -------------------------------------------------------------
- * File:     function.helper.php
+ * File:     function.kohana_helper.php
  * Type:     function
- * Name:     helper
+ * Name:     kohana_helper
  * Author:   Stefan Verstege
  * Purpose:  makes it possible to use the helper functions from
  *           kohanaPHP within smarty templates
  * -------------------------------------------------------------
  */
-function smarty_function_helper($params, &$smarty)
+function smarty_function_kohana_helper($params, &$smarty)
 {
     if (empty($params['function'])) {
         $smarty->trigger_error("assign: missing 'function' parameter");

@@ -18,13 +18,13 @@
             {capture assign="profile"}_("My Profile"){/capture}
             {capture assign="controlpanel"}_("Control Panel"){/capture}        
             {$welcome|sprintf:$firstname:$surname} | 
-            {helper function="html::anchor" uri="user_profile/backend/index" title=$profile} | 
-            {helper function="html::anchor" uri="user/frontend/logout" title=$logout} | 
-            {helper function="html::anchor" uri="controlpanel" title=$controlpanel}
+            {kohana_helper function="html::anchor" uri="user_profile/backend/index" title=$profile} | 
+            {kohana_helper function="html::anchor" uri="user/frontend/logout" title=$logout} | 
+            {kohana_helper function="html::anchor" uri="controlpanel" title=$controlpanel}
         {else}
-            {helper function="html::anchor" uri="user/frontend/login" title="login"} |
-            {helper function="html::anchor" uri="user/frontend/registration" title="Register"} |
-            {helper function="html::anchor" uri="user/frontend/forget_password" title="Forget your password?"}
+            {kohana_helper function="html::anchor" uri="user/frontend/login" title="login"} |
+            {kohana_helper function="html::anchor" uri="user/frontend/registration" title="Register"} |
+            {kohana_helper function="html::anchor" uri="user/frontend/forget_password" title="Forget your password?"}
         {/if}
     {/arag_block}
 

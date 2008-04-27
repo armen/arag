@@ -7,7 +7,7 @@
 {arag_block}
     {arag_block align="left" template="error"}
         <div><h3>_("You are not authorized to access this section!")</h3></div>
-        <div><a href="{helper function="url::site"}">_("Return to the Main Page")</a></div>
+        <div><a href="{kohana_helper function="url::site"}">_("Return to the Main Page")</a></div>
     {/arag_block}
 {/arag_block}
 {if $show_login}
@@ -29,7 +29,7 @@
             </tr>
             <tr>
                 <td>&nbsp;</td>
-                <td>{helper function="html::anchor" uri="user/frontend/forget_password" title="Forget your Password?"}</td>
+                <td>{kohana_helper function="html::anchor" uri="user/frontend/forget_password" title="Forget your Password?"}</td>
             </tr>
             <tr>
                 <td>&nbsp;</td>
