@@ -10,7 +10,7 @@
         {if $smarty.foreach.history.last}
             <li style="float:{left};">{$current_history.titles.$index}</li>
         {else}
-            <li style="float:{left};">{html_anchor uri=$uri title=`$current_history.titles.$index`}{$separator|smarty:nodefaults}</li>
+            <li style="float:{left};">{kohana_helper function="html::anchor" uri=$uri title=`$current_history.titles.$index`}{$separator|smarty:nodefaults}</li>
         {/if}
     {/foreach}
     </ul>
