@@ -19,7 +19,7 @@
                     {if empty($_comment->homepage|smarty:nodefaults)}
                         {$posted|sprintf:$counter:$_comment->name:$date}
                     {else}
-                        {html_anchor uri=$_comment->homepage title=$posted|sprintf:$counter:$_comment->name:$date}
+                        {helper function="html::anchor" uri=$_comment->homepage title=$posted|sprintf:$counter:$_comment->name:$date}
                     {/if}
                 </div>
                 <div class="comment_body">

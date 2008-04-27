@@ -81,14 +81,14 @@
 
                                     {if $action.alternate_uri != null}
                                         {assign var=uri value=$plist->parseURI($action.alternate_uri, $row)}
-                                        <a href="{url_site uri=$uri}" title="{$action.title}" class="{$action.class_name}_alt" 
+                                        <a href="{helper function="url::site" uri=$uri}" title="{$action.title}" class="{$action.class_name}_alt" 
                                            target="{$action.target}">{$action.label}</a>
                                     {else}
                                         <div title="{$action.title}" class="{$action.class_name}_alt">{$action.label}</div>
                                     {/if}
                                 {else}
                                     {assign var=uri value=$plist->parseURI($action.uri, $row)}                                
-                                    <a href="{url_site uri=$uri}" title="{$action.title}" class="{$action.class_name}" 
+                                    <a href="{helper function="url::site" uri=$uri}" title="{$action.title}" class="{$action.class_name}" 
                                        target="{$action.target}">{$action.label}</a>
                                 {/if}
                             </td>
@@ -124,7 +124,7 @@
                         <select onchange="listForward(this, '{$namespace}')">
                         <option value="">- Select an action -</option>
                         {foreach from=$group_actions item=action}
-                            <option value="{url_site uri=$action.uri}" title="{$action.title}">{$action.label}</option>
+                            <option value="{helper function="url::site" uri=$action.uri}" title="{$action.title}">{$action.label}</option>
                         {/foreach}
                         </select>
 
@@ -134,7 +134,7 @@
                         <tr>
                         {foreach from=$group_actions item=action}
                             <td class="plist_icon">
-                                <a href="{url_site uri=$action.uri}" title="{$action.title}" class="{$action.class_name}"
+                                <a href="{helper function="url::site" uri=$action.uri}" title="{$action.title}" class="{$action.class_name}"
                                    onclick="listForward(this, '{$namespace}')">{$action.label}</a>
                             </td>
                         {/foreach}

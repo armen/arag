@@ -16,10 +16,10 @@
             {* Creating << & < *}
             {if $pager.firstpage != $pager.current}
                 <td class="pager_ltlt">
-                    {html_anchor uri=$plist->parseURI($uri, "page=page`$namespace`:`$pager.firstpage`;") title='&nbsp;&lt;&lt;&nbsp;'}
+                    {helper function="html::anchor" uri=$plist->parseURI($uri, "page=page`$namespace`:`$pager.firstpage`;") title='&nbsp;&lt;&lt;&nbsp;'}
                 </td>
                 <td class="pager_lt">
-                    {html_anchor uri=$plist->parseURI($uri, "page=page`$namespace`:`$pager.prevpage`;") title='&nbsp;&lt;&nbsp;'}
+                    {helper function="html::anchor" uri=$plist->parseURI($uri, "page=page`$namespace`:`$pager.prevpage`;") title='&nbsp;&lt;&nbsp;'}
                 </td>
             {else}
                 <td class="pager_disabled_ltlt">&nbsp;&lt;&lt;&nbsp;</td><td class="pager_disabled_lt">&nbsp;&lt;&nbsp;</td>
@@ -35,7 +35,7 @@
                 <td class="pager_number">
                 {if $pager.current != $pagenum}
                     {* Generating URL for pages *}
-                    &nbsp;{html_anchor uri=$plist->parseURI($uri, "page=page`$namespace`:`$pagenum`;") title=$pagenum}&nbsp;
+                    &nbsp;{helper function="html::anchor" uri=$plist->parseURI($uri, "page=page`$namespace`:`$pagenum`;") title=$pagenum}&nbsp;
                 {else}
                     &nbsp;{$pagenum}&nbsp;
                 {/if}
@@ -51,10 +51,10 @@
             {if $pager.lastpage != $pager.current}
                 {* Generating URL for >> *}
                 <td class="pager_gt">
-                    {html_anchor uri=$plist->parseURI($uri, "page=page`$namespace`:`$pager.nextpage`;") title='&nbsp;&gt;&nbsp;'}
+                    {helper function="html::anchor" uri=$plist->parseURI($uri, "page=page`$namespace`:`$pager.nextpage`;") title='&nbsp;&gt;&nbsp;'}
                 </td>
                 <td class="pager_gtgt">
-                    {html_anchor uri=$plist->parseURI($uri, "page=page`$namespace`:`$pager.lastpage`;") title='&nbsp;&gt;&gt;&nbsp;'}
+                    {helper function="html::anchor" uri=$plist->parseURI($uri, "page=page`$namespace`:`$pager.lastpage`;") title='&nbsp;&gt;&gt;&nbsp;'}
                 </td>
             {else}
                 <td class="pager_disabled_gt">&nbsp;&gt;&nbsp;</td><td class="pager_disabled_gtgt">&nbsp;&gt;&gt;&nbsp;</td>        

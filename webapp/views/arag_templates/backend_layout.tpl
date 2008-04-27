@@ -17,9 +17,9 @@
         {capture assign="profile"}_("My Profile"){/capture}
         {capture assign="controlpanel"}_("Control Panel"){/capture}
         {$welcome|sprintf:$firstname:$surname} | 
-        {html_anchor uri="user_profile/backend/index" title="$profile"} | 
-        {html_anchor uri="user/frontend/logout" title="$logout"} | 
-        {html_anchor uri="controlpanel" title="$controlpanel"}
+        {helper function="html::anchor" uri="user_profile/backend/index" title="$profile"} | 
+        {helper function="html::anchor" uri="user/frontend/logout" title="$logout"} | 
+        {helper function="html::anchor" uri="controlpanel" title="$controlpanel"}
     {/arag_block}            
 
     {arag_tabbed_block name="global_tabs"}

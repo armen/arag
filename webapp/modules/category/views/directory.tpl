@@ -22,11 +22,11 @@
                             {assign var=catcount value=$category->getSubCatCount($cat.module_name, $cat.id)}
                             {if $catcount > 0}
                                 {assign var=uri value=$category->parseURI($baseURI, $cat.id)}
-                                <a href="{url_site uri=$uri}" title="{$cat.name}">{$cat.name}</a>&nbsp;({$catcount})
+                                <a href="{helper function="url::site" uri=$uri}" title="{$cat.name}">{$cat.name}</a>&nbsp;({$catcount})
                             {else}
                                 {if $finalURI}
                                     {assign var=href value=$category->parseURI($finalURI, null, $cat.id)}
-                                    <a href="{url_site uri=$href}">{$cat.name}</a>
+                                    <a href="{helper function="url::site" uri=$href}">{$cat.name}</a>
                                 {else}
                                     {$cat.name}
                                 {/if}
