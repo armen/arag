@@ -22,7 +22,7 @@
                     _("Username"):{asterisk}
                 </td>
                 <td align="{left}">
-                    <input type="text" name="username" value="{$username|smarty:nodefaults|default:null}" />
+                    <input type="text" name="username" value="{$username|smarty:nodefaults|default:null}" dir="ltr" />
                     <input type="hidden" value="{$appname}" name="appname" />
                 </td>
             </tr>
@@ -31,7 +31,7 @@
                     _("Password"):{asterisk}
                 </td>
                 <td align="{left}">
-                    <input type="password" name="password" />
+                    <input type="password" name="password" dir="ltr" />
                 </td>
             </tr>
             <tr>
@@ -39,7 +39,7 @@
                     _("Re-Password"):{asterisk}
                 </td>
                 <td align="{left}">
-                    <input type="password" name="repassword" />
+                    <input type="password" name="repassword" dir="ltr" />
                 </td>
             </tr>
             <tr>
@@ -86,7 +86,7 @@
                     _("Email"):{asterisk}
                 </td>
                 <td align="{left}">
-                    <input type="text" name="email" value="{$email|smarty:nodefaults|default:null}" />
+                    <input type="text" name="email" value="{$email|smarty:nodefaults|default:null}" dir="ltr" />
                 </td>
             </tr>
             <tr>
