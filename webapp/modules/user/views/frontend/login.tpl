@@ -16,11 +16,11 @@
         <table border="0" dir="{dir}" width="100%">
         <tr>
             <td align="{right}" width="100">_("Username"):</td>
-            <td><input type="text" name="username" value="{$username|smarty:nodefaults|default:null}" /></td>
+            <td><input type="text" name="username" value="{$username|smarty:nodefaults|default:null}" dir="ltr" /></td>
         </tr>
         <tr>
             <td align="{right}" width="100">_("Password"):</td>
-            <td><input type="password" name="password" /></td>
+            <td><input type="password" name="password" dir="ltr" /></td>
         </tr>
         <tr>
             <td>&nbsp;</td>
