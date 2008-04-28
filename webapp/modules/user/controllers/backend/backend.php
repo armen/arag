@@ -330,7 +330,7 @@ class Backend_Controller extends Controller
     // {{{ _check_filter
     public function _check_filter($filter)
     {
-        return ($filter === '*') || preg_match('/^([a-z_]+)((\/[a-z_]+){0,2}(\/\*))$/', $filter);
+        return ($filter === '*') || preg_match('/^[a-z_]+(\/[a-z_]+){0,2}\/\*$/', $filter);
     }
     // }}}
     // {{{ _check_privilege
@@ -339,7 +339,7 @@ class Backend_Controller extends Controller
         if ($this->input->post('parentid') === "0") {
             return true;
         }
-        return (boolean) preg_match('/^([a-z_]+)((\/[a-z_]+){0,2}(\/\*))|((\/[a-z_]+){2,3})$/', strtolower(trim($privilege, '/')));
+        return (boolean) preg_match('/^(([a-z_]+(((\/[a-z_]+){0,2}\/\*)|((\/[a-z_]+){2,3})))|(@[a-z_]+\/(([a-z_]+)|(\*))))$/', strtolower(trim($privilege, '/')));
     }
     // }}}
     // {{{ _check_label
