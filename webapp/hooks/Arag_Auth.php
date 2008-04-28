@@ -78,13 +78,18 @@ class Arag_Auth {
                     //     It contains four section which every section separated with a /.
                     //     It should contain at least two sections. last section allways is *
                     //     and othe sections are lower case cheractrer(s)
-                    ((boolean) $whiteList == False && preg_match('/^([a-z_]+)((\/[a-z_]+){0,2}(\/\*))$/', $privilege)) ||
+                    ((boolean) $whiteList == False && preg_match('/^[a-z_]+(\/[a-z_]+){0,2}\/\*$/', $privilege)) ||
                     // WHITELIST:
-                    //     It contains four section which every section separated with a /.
-                    //     It should contain at least two sections. Each section contains * 
-                    //     (except first section and last when we have 4 or 3 sections) or 
-                    //     lower case character(s)
-                    ((boolean) $whiteList == True && preg_match('/^([a-z_]+)((\/[a-z_]+){0,2}(\/\*))|((\/[a-z_]+){2,3})$/', $privilege))) {
+                    //     Which can include urls and rules. URL contains four section which every section 
+                    //     separated with a /. It should contain at least two
+                    //     sections. Each section can contain * 
+                    //     (except first and last section when we have 4 or 3 sections) or 
+                    //     lower case character(s). At the other hand, a rule
+                    //     should be initialized with a @ at the beggining and
+                    //     contain two sections. in which the second one can
+                    //     contain * too.
+                    ((boolean) $whiteList == True && 
+                     preg_match('/^(([a-z_]+(((\/[a-z_]+){0,2}\/\*)|((\/[a-z_]+){2,3})))|(@[a-z_]+\/(([a-z_]+)|(\*))))$/', $privilege))) {
                     
                     // Replace * with .*
                     $privilege = '|^'.str_replace('*', '.*', $privilege).'$|';
