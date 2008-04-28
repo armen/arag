@@ -18,7 +18,7 @@
                     _("Old Password"):
                 </td>
                 <td align="{left}">
-                    <input type="password" name="oldpassword" />
+                    <input type="password" name="oldpassword" dir="ltr" />
                 </td>
             </tr>
             <tr>
@@ -26,7 +26,7 @@
                     _("New Password"):
                 </td>
                 <td align="{left}">
-                    <input type="password" name="newpassword" />
+                    <input type="password" name="newpassword" dir="ltr" />
                 </td>
             </tr>
             <tr>
@@ -34,7 +34,7 @@
                     _("Re-New Password"):
                 </td>
                 <td align="{left}">
-                    <input type="password" name="renewpassword" />
+                    <input type="password" name="renewpassword" dir="ltr" />
                 </td>
             </tr>
             <tr>

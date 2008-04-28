@@ -24,7 +24,7 @@
                 </td>
                 <td align="{left}">
                     {$username|smarty:nodefaults|default:null}
-                    <input type="hidden" name="username" value="{$username|smarty:nodefaults|default:null}" />
+                    <input type="hidden" name="username" value="{$username|smarty:nodefaults|default:null}" dir="ltr" />
                 </td>
             </tr>
             <tr>
@@ -51,7 +51,7 @@
                 </td>
                 <td align="{left}">
                     {$email|smarty:nodefaults|default:null}
-                    <input type="hidden" name="email" value="{$email|smarty:nodefaults|default:null}" />
+                    <input type="hidden" name="email" value="{$email|smarty:nodefaults|default:null}" dir="ltr" />
                 </td>
             </tr>
             <tr>
@@ -64,7 +64,7 @@
                     _("Phone"):{asterisk}
                 </td>
                 <td align="{left}">
-                    <input type="text" name="phone" value="{$phone|smarty:nodefaults|default:null}" />
+                    <input type="text" name="phone" value="{$phone|smarty:nodefaults|default:null}" dir="ltr" />
                 </td>
             </tr>
             <tr>
@@ -72,7 +72,7 @@
                     _("Cellphone"):
                 </td>
                 <td align="{left}">
-                    <input type="text" name="cellphone" value="{$cellphone|smarty:nodefaults|default:null}" />
+                    <input type="text" name="cellphone" value="{$cellphone|smarty:nodefaults|default:null}" dir="ltr" />
                 </td>
             </tr>
             <tr>
@@ -109,7 +109,7 @@
                     _("Postal Code"):{asterisk}
                 </td>
                 <td align="{left}">
-                    <input type="text" name="postal_code" value="{$postal_code|smarty:nodefaults|default:null}" />
+                    <input type="text" name="postal_code" value="{$postal_code|smarty:nodefaults|default:null}" dir="ltr" />
                 </td>
             </tr>
             {*if $pan}
