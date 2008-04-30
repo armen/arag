@@ -25,6 +25,10 @@ class format_Core {
     {
         $lang = Config::item('locale.lang');
 
+        if (!$timestamp) {
+            return "-";
+        }
+
         if ($lang === 'en') {
             $date = date('Y-m-d H:i:s', $timestamp);
         } else {
