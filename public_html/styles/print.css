@@ -1,0 +1,11 @@
+/*
+    vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:             
+    File: $Id: styles.css 495 2007-12-22 13:09:36Z armen $
+*/
+
+/* {{{ Global */
+body {
+    padding         : 0px;
+    margin          : 0px;
+}
+/* end of Global }}} */
