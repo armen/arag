@@ -58,7 +58,7 @@ class MultiSite_Model extends Model
     // {{{ getDate
     public function getDate($row)
     {
-        return date('Y-m-d H:i:s', $row['create_date']);
+        return format::date($row['create_date']);
     }
     // }}} 
     // {{{ getIDs
