@@ -137,19 +137,19 @@ class Blog_Model extends Model
     // {{{ getDate
     public function getDate($row)
     {
-        return ($row['create_date']) ? date('Y-m-d H:i:s', $row['create_date']) : '-';        
+        return format::date($row['create_date']);
     }
     // }}}
     // {{{ getModifyDate
     public function getModifyDate($row)
     {
-        return ($row['modify_date']) ? date('Y-m-d H:i:s', $row['modify_date']) : '-';
+        return format::date($row['modify_date']);
     }
     // }}}
     // {{{ getModifiedBy
     public function getModifiedBy($row)
     {
-        return ($row['modified_by']) ? $row['modified_by'] : '-';
+        return format::date($row['modified_by']);    
     }
     // }}}
     // }}}
