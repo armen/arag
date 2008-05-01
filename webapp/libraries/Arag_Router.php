@@ -151,21 +151,24 @@ class Router extends Router_Core {
                 $REQUEST_METHOD = $_ENV['REQUEST_METHOD'];
             }
 
-            switch($REQUEST_METHOD) {
-                case 'POST':
-                    self::request_method(self::$request_methods['POST']);
-                    break;
+            if (isset($REQUEST_METHOD)) {
 
-                case 'PUT':
-                    self::request_method(self::$request_methods['PUT']);
-                    break;
+                switch($REQUEST_METHOD) {
+                    case 'POST':
+                        self::request_method(self::$request_methods['POST']);
+                        break;
 
-                case 'DELETE':
-                    self::request_method(self::$request_methods['DELETE']);
-                    break;
+                    case 'PUT':
+                        self::request_method(self::$request_methods['PUT']);
+                        break;
 
-                default:
-                    self::request_method(self::$request_methods['GET']);
+                    case 'DELETE':
+                        self::request_method(self::$request_methods['DELETE']);
+                        break;
+
+                    default:
+                        self::request_method(self::$request_methods['GET']);
+                }
             }
         }
 
