@@ -84,6 +84,7 @@ class Backend_Controller extends Controller
     {
         $province    = $this->input->post('province', true);
         $city        = $this->input->post('city', true);
+        $country     = $this->input->post('country', true);
         $address     = $this->input->post('address', true);
         $phone       = $this->input->post('phone', true);
         $cellphone   = $this->input->post('cellphone', true);
