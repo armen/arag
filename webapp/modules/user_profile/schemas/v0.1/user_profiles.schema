@@ -44,6 +44,12 @@
                 <length>11</length>
             </field>
             <field>
+                <name>country</name>
+                <type>text</type>
+                <length>255</length>
+                <notnull>true</notnull>
+            </field>
+            <field>
                 <name>city</name>
                 <type>text</type>
                 <length>255</length>

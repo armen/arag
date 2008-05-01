@@ -92,9 +92,9 @@ class Backend_Controller extends Controller
         $lastname    = $this->input->post('lastname', true);
         
         if ($this->UserProfile->hasUserName($this->username)) {
-            $this->UserProfile->editProfile($province, $city, $address, $phone, $cellphone, $postal_code, $this->username, $name, $lastname);
+            $this->UserProfile->editProfile($province, $city, $address, $phone, $cellphone, $postal_code, $this->username, $name, $lastname, $country);
         } else {
-            $this->UserProfile->insertProfile($province, $city, $address, $phone, $cellphone, $postal_code, $this->username, $name, $lastname);
+            $this->UserProfile->insertProfile($province, $city, $address, $phone, $cellphone, $postal_code, $this->username, $name, $lastname, $country);
         }
 
         $this->session->set('user_profile_profile_saved', true);
@@ -112,6 +112,8 @@ class Backend_Controller extends Controller
         $this->validation->name('address', _("Address"))->add_rules('address', 'required');
 
         $this->validation->name('city', _("City"))->add_rules('city', 'required');
+
+        $this->validation->name('country', _("Country"))->add_rules('country', 'required');
 
         $this->validation->name('province', _("Province"))->add_rules('province', 'required');
 

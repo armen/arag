@@ -82,6 +82,14 @@
             </tr>
             <tr>
                 <td align="{right}">
+                    _("Country"):{asterisk}
+                </td>
+                <td align="{left}">
+                    <input type="text" name="country" value="{$country|smarty:nodefaults|default:null}" />
+                </td>
+            </tr>
+            <tr>
+                <td align="{right}">
                     _("Province"):{asterisk}
                 </td>
                 <td align="{left}">
