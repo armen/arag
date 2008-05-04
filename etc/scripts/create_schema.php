@@ -110,7 +110,7 @@ if (PEAR::isError($manager)) {
 
 if (isset($module)) {
     $schemaFiles = getSchemaFilesList($module, '*.schema');
-    $dataFiles   = getSchemaFilesList($module, '*.data');
+    $dataFiles   = getSchemaFilesList($module, '*'.$data.'.data');
 
 } else {
     $schemaFiles = $options[1];
