@@ -219,7 +219,7 @@ msgstr "گروه جدید برای '{$appname}'"
 
 #: views/backend/user_profile.tpl:9
 msgid "{$username} edited successfuly!"
-msgstr "{$ نام }با موفقیت اصلاح شد!"
+msgstr "{$name} با موفقیت اصلاح شد!"
 
 #: views/backend/user_profile.tpl:33 controllers/backend/application.php:318
 msgid "Old Password"
