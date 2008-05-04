@@ -109,6 +109,7 @@ class Arag_Auth {
     public static function is_accessible($uri, $routed_uri = False)
     {
         $session = Session::instance();
+        $appname = $session->get('user.appname', APPNAME);
 
         // When user Logins privilege_filters unset by login method 
         // then we fetch current application privilege filters here
