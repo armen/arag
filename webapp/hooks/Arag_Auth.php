@@ -41,15 +41,6 @@ class Arag_Auth {
             $session->set(Array('user' => $users->getAnonymouseUser($appname)));
         }
 
-        // When user Logins privilege_filters unset by login method 
-        // then we fetch current application privilege filters here
-        if ($session->get('privilege_filters') === False) {
-
-            // Fetch privilege filters for current application
-            $filters = Model::load('Filters', 'user');                        
-            $session->set('privilege_filters', $filters->getPrivilegeFilters($appname));
-        }
-
         if (!self::is_accessible($destination, True)) {
             if (!$session->get('user.authenticated')) {
                 $session->set_flash('not_authorized_redirect_url', $destination);
@@ -118,6 +109,15 @@ class Arag_Auth {
     public static function is_accessible($uri, $routed_uri = False)
     {
         $session = Session::instance();
+
+        // When user Logins privilege_filters unset by login method 
+        // then we fetch current application privilege filters here
+        if ($session->get('privilege_filters') === False) {
+
+            // Fetch privilege filters for current application
+            $filters = Model::load('Filters', 'user');                        
+            $session->set('privilege_filters', $filters->getPrivilegeFilters($appname));
+        }        
 
         if (!$routed_uri) {
             $uri = Router::routed_uri($uri);
