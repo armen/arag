@@ -12,27 +12,19 @@
                 <default>0</default>
             </field>
             <field>
-                <name>ip_address</name>
-                <type>text</type>
-                <length>16</length>
-                <notnull>true</notnull>
-                <default>0</default>
-            </field>
-            <field>
-                <name>user_agent</name>
-                <type>text</type>
-                <length>16</length>
-                <notnull>true</notnull>
-            </field>
-            <field>
                 <name>last_activity</name>
                 <type>integer</type>
                 <notnull>true</notnull>
                 <default>0</default>
                 <unsigned>1</unsigned>
             </field>
+            <field>
+                <name>data</name>
+                <type>blob</type>
+                <notnull>true</notnull>
+            </field>            
             <index>
-                <name>session_primary</name>
+                <name>primary</name>
                 <primary>true</primary>
                 <field>
                     <name>session_id</name>
