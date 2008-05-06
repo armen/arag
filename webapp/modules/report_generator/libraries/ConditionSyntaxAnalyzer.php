@@ -41,14 +41,14 @@ class ConditionSyntaxAnalyzer extends SyntaxAnalyzer
         parent::analyze(trim(preg_replace('/\s+/', ' ', $input)));
 
         // Call the grammer
-        $this->_conditions();
+        $this->conditions();
     }
     // }}}
     // {{{ _match
     protected function match($token)
     {
         // DEBUGGING:
-        // echo $this->_tokenToString($token , $token) . ' ';
+        // echo $this->tokenToString($token , $token) . ' ';
 
         if ($token == RG_T_ID) {
             if ($this->symbolTable->search($this->lexer->getPrevTokenVal()) == Null) {
@@ -74,8 +74,8 @@ class ConditionSyntaxAnalyzer extends SyntaxAnalyzer
             // Push error to error stack
             $input  = $this->lexer->getInput();
             $offset = $this->lexer->getInputOffset();
-            $match  = $this->_tokenToString($token, $this->lexer->getTokenVal());
-            $tToken = $this->_tokenToString($this->lexer->prevToken(),$this->lexer->getPrevTokenVal());
+            $match  = $this->tokenToString($token, $this->lexer->getTokenVal());
+            $tToken = $this->tokenToString($this->lexer->prevToken(),$this->lexer->getPrevTokenVal());
             $splitedInput = Array ('first_part'   => substr($input, 0, $offset-strlen($tToken)), 
                                    'unknown_part' => substr($input, $offset-strlen($tToken), strlen($tToken)),
                                    'last_part'    => substr($input, $offset, strlen($input)));
@@ -119,8 +119,8 @@ class ConditionSyntaxAnalyzer extends SyntaxAnalyzer
     // {{{ Grammer
     protected function conditions() 
     {        
-        $this->_condition();
-        $this->_match(RG_T_EOI);
+        $this->condition();
+        $this->match(RG_T_EOI);
     }
     protected function condition() 
     {
@@ -129,12 +129,12 @@ class ConditionSyntaxAnalyzer extends SyntaxAnalyzer
         if ($this->getLookAhead() == RG_T_ID || $this->getLookAhead() == RG_T_NUMBER ||
             $this->getLookAhead() == RG_T_VALUE) {
 
-            $this->_match($this->getLookAhead());
-            $this->_conditionPart();
+            $this->match($this->getLookAhead());
+            $this->conditionPart();
 
         } else if ($this->getLookAhead() == '(') {
         
-            $this->_match('('); $this->_condition(); $this->_match(')'); $this->_conditionPart();
+            $this->match('('); $this->condition(); $this->match(')'); $this->conditionPart();
         }        
     }
     protected function conditionPart()
@@ -147,23 +147,23 @@ class ConditionSyntaxAnalyzer extends SyntaxAnalyzer
             $this->getLookAhead() == RG_T_RELOP_GE || $this->getLookAhead() == RG_T_RELOP_LE ||
             $this->getLookAhead() == RG_T_OPERATOR) {
         
-            $this->_match($this->getLookAhead());
+            $this->match($this->getLookAhead());
             
             if ($this->getLookAhead() == RG_T_ID || $this->getLookAhead() == RG_T_NUMBER ||
                 $this->getLookAhead() == RG_T_VALUE) {
                 
-                $this->_match($this->getLookAhead());
+                $this->match($this->getLookAhead());
 
             } else if ($this->getLookAhead() == '(') {
                 
-                $this->_condition();
+                $this->condition();
             } else {
                 // _conditionParts matchs a ID, NUMBER, VALUE or ( but not matchs a RELOP
                 // after that. we can't match a ID, NUMBER, VALUE or (
                 // Push error to error stack
                 $input        = $this->lexer->getInput();
                 $offset       = $this->lexer->getInputOffset();
-                $tToken       = $this->_tokenToString($this->getLookAhead(), $this->lexer->getTokenVal());
+                $tToken       = $this->tokenToString($this->getLookAhead(), $this->lexer->getTokenVal());
                 $splitedInput = Array ('first_part'   => substr($input, 0, $offset-strlen($tToken)), 
                                        'unknown_part' => substr($input, $offset-strlen($tToken), strlen($tToken)),
                                        'last_part'    => substr($input, $offset, strlen($input)));
@@ -174,7 +174,7 @@ class ConditionSyntaxAnalyzer extends SyntaxAnalyzer
                 $this->stack->push(SA_ERROR_SYNTAX_ERROR, 'error', $params, 'Syntax Error');
             }
 
-            $this->_conditionPart();
+            $this->conditionPart();
         }            
     }
     // }}}

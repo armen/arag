@@ -48,14 +48,14 @@ class ColumnSyntaxAnalyzer extends SyntaxAnalyzer
         parent::analyze(trim(preg_replace('/\s+/', ' ', $input)));
 
         // Call the grammer
-        $this->_stmt();
+        $this->stmt();
     }
     // }}}
     // {{{ _match
     protected function match($token)
     {
         // DEBUGGING:
-        // echo $this->_tokenToString($token , $token) . ' ';
+        // echo $this->tokenToString($token , $token) . ' ';
 
         if ($token == RG_T_ID) {
             if ($this->symbolTable->search($this->lexer->getPrevTokenVal()) == Null) {
@@ -81,8 +81,8 @@ class ColumnSyntaxAnalyzer extends SyntaxAnalyzer
             // Push error to error stack
             $input  = $this->lexer->getInput();
             $offset = $this->lexer->getInputOffset();
-            $match  = $this->_tokenToString($token, $this->lexer->getTokenVal());
-            $tToken = $this->_tokenToString($this->lexer->prevToken(),$this->lexer->getPrevTokenVal());
+            $match  = $this->tokenToString($token, $this->lexer->getTokenVal());
+            $tToken = $this->tokenToString($this->lexer->prevToken(),$this->lexer->getPrevTokenVal());
             $splitedInput = Array ('first_part'   => substr($input, 0, $offset-strlen($tToken)), 
                                    'unknown_part' => substr($input, $offset-strlen($tToken), strlen($tToken)),
                                    'last_part'    => substr($input, $offset, strlen($input)));
@@ -112,27 +112,27 @@ class ColumnSyntaxAnalyzer extends SyntaxAnalyzer
     }
     // }}}
     // {{{ Grammer
-    protected function stmt() { $this->_mathStmt(); $this->_match(RG_T_EOI); }
+    protected function stmt() { $this->mathStmt(); $this->match(RG_T_EOI); }
     protected function mathStmt()
     {
         if ($this->getLookAhead() == RG_T_ID || $this->getLookAhead() == RG_T_NUMBER) {
         
-            $this->_match($this->getLookAhead());
+            $this->match($this->getLookAhead());
         
         } else if ($this->getLookAhead() == '(') {
             
-            $this->_match('('); $this->_mathStmt(); $this->_match(')');
+            $this->match('('); $this->mathStmt(); $this->match(')');
         
         } else if ($this->getLookAhead() == RG_T_FUNCTION) {
             
-            $this->_match(RG_T_FUNCTION); $this->_match('('); $this->_match(RG_T_ID); $this->_match(')'); 
+            $this->match(RG_T_FUNCTION); $this->match('('); $this->match(RG_T_ID); $this->match(')'); 
         
         } else {
 
             // Push error to error stack
             $input        = $this->lexer->getInput();
             $offset       = $this->lexer->getInputOffset();
-            $tToken       = $this->_tokenToString($this->lookAhead, $this->lexer->getTokenVal());
+            $tToken       = $this->tokenToString($this->lookAhead, $this->lexer->getTokenVal());
             $splitedInput = Array ('first_part'   => substr($input, 0, $offset-strlen($tToken)), 
                                    'unknown_part' => substr($input, $offset-strlen($tToken), strlen($tToken)),
                                    'last_part'    => substr($input, $offset, strlen($input)));
@@ -144,7 +144,7 @@ class ColumnSyntaxAnalyzer extends SyntaxAnalyzer
         }
 
         // After every _mathStmt we should have _mathStmtSecPart
-        $this->_mathStmtSecPart();
+        $this->mathStmtSecPart();
     }
     protected function mathStmtSecPart()
     {
@@ -152,7 +152,7 @@ class ColumnSyntaxAnalyzer extends SyntaxAnalyzer
             $this->getLookAhead() == '*' || $this->getLookAhead() == '/' || 
             $this->getLookAhead() == '%') {
             
-            $this->_match($this->getLookAhead()); $this->_mathStmt();
+            $this->match($this->getLookAhead()); $this->mathStmt();
         }
     }
     // }}}
