@@ -4,16 +4,16 @@ class LexicalAnalyzer
 {
     // {{{ properties
     
-    var $tokens       = Array();
-    var $currentToken = Null;
-    var $prevToken    = Null;
-    var $inputLength  = 0;
-    var $inputOffset  = 0;
-    var $symbolTable  = Null;
+    protected $tokens       = Array();
+    protected $currentToken = Null;
+    protected $prevToken    = Null;
+    protected $inputLength  = 0;
+    protected $inputOffset  = 0;
+    protected $symbolTable  = Null;
     
-    var $patterns     = Array();
-    var $skipTokens   = Array();
-    var $EOIToken     = Null;
+    protected $patterns     = Array();
+    protected $skipTokens   = Array();
+    protected $EOIToken     = Null;
 
     // }}}
     // {{{ constructor
