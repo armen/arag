@@ -17,7 +17,7 @@ class SyntaxAnalyzer
 
     // }}}
     // {{{ Constructor
-    function __cosntruct($lexer, $stack)
+    public function __cosntruct($lexer, $stack)
     {
         // Set lexical analyzer object
         $this->lexer = $lexer;
@@ -27,50 +27,48 @@ class SyntaxAnalyzer
     }
     // }}}
     // {{{ analyze
-    function analyze($input)
+    public function analyze($input)
     {
         // Initializing
-        $this->lexer->init($input, $this->_symbolTable);
+        $this->lexer->init($input, $this->symbolTable);
 
         // Set look ahead
         $this->lookAhead = $this->lexer->nextToken();
     }
     // }}}
     // {{{ getLookAhead
-    function getLookAhead()
+    public function getLookAhead()
     {
         return $this->lookAhead;
     }
     // }}}
     // {{{ getLookAheadVal
-    function getLookAheadVal()
+    public function getLookAheadVal()
     {
         return $this->lexer->getTokenVal();
     }
     // }}}
-    // {{{ _match
-    function _match($token)
+    // {{{ match
+    protected function match($token)
     {
     }
     // }}}
-    // {{{ _tokenToString
-    function _tokenToString($token , $tokenVal)
+    // {{{ tokenToString
+    protected function tokenToString($token , $tokenVal)
     {
         return $token;
     }
     // }}}
     // {{{ hasErrors
-    function hasErrors()
+    public function hasErrors()
     {
         return $this->stack->hasErrors();
     }
     // }}}
-    // {{{ & getErrors
-    function & getErrors()
+    // {{{ getErrors
+    public function getErrors()
     {
-        // XXX: Use additional variable to prevent 'Only variables should be assigned by reference' notice
-        $errors = $this->stack->getErrors();
-        return $errors;
+        return $this->stack->getErrors();
     }
     // }}}
 }

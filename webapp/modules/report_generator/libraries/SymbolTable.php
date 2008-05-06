@@ -15,7 +15,7 @@ class SymbolTable
     
     // }}}
     // {{{ insert
-    function insert($lexeme, $token)
+    public function insert($lexeme, $token)
     {
         if (!$this->_caseSensitiveCheck) {
             // Change lexeme to lower case to test in case insesitive mode
@@ -26,7 +26,7 @@ class SymbolTable
     }
     // }}}
     // {{{ search
-    function search($lexeme)
+    public function search($lexeme)
     {
         if (!$this->_caseSensitiveCheck) {
             // Change lexeme to lower case to test in case insesitive mode        
@@ -41,7 +41,7 @@ class SymbolTable
     }
     // }}}
     // {{{ setCaseSensitiveCheck
-    function setCaseSensitiveCheck($caseSensitiveCheck)
+    public function setCaseSensitiveCheck($caseSensitiveCheck)
     {
         $this->_caseSensitiveCheck = $caseSensitiveCheck;
     }

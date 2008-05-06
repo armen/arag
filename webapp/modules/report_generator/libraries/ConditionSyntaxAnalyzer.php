@@ -17,33 +17,26 @@ define ('SA_ERROR_UNDEFINED_ID', 101);
 
 class ConditionSyntaxAnalyzer extends SyntaxAnalyzer
 {
-    // {{{ properties
-    
-    var $lookAhead    = Null;
-    var $_symbolTable  = Null;
-
-    // }}}
     // {{{ Constructor
-    function ConditionSyntaxAnalyzer()
+    public function __construct()
     {
         $controller =& Controller::getInstance();
         $lexer      =& $controller->getModel('ConditionLexicalAnalyzer', 'RG');
 
         // Set symbol table
-        $this->_symbolTable = $lexer->getSymbolTable();
+        $this->symbolTable = $lexer->getSymbolTable();
 
         // Create error stack
         $stack =& OSC_ErrorStack::singleton('ConditionSyntaxAnalyzer');
 
-        // Call parent constructor
-        parent::SyntaxAnalyzer($lexer, $stack);
+        parent::__construct($lexer, $stack);
 
         // Set Error messages
         $this->setErrorMessages();
     }
     // }}}
     // {{{ analyze
-    function analyze($input)
+    public function analyze($input)
     {
         parent::analyze(trim(preg_replace('/\s+/', ' ', $input)));
 
@@ -52,13 +45,13 @@ class ConditionSyntaxAnalyzer extends SyntaxAnalyzer
     }
     // }}}
     // {{{ _match
-    function _match($token)
+    protected function match($token)
     {
         // DEBUGGING:
         // echo $this->_tokenToString($token , $token) . ' ';
 
         if ($token == RG_T_ID) {
-            if ($this->_symbolTable->search($this->lexer->getPrevTokenVal()) == Null) {
+            if ($this->symbolTable->search($this->lexer->getPrevTokenVal()) == Null) {
                 
                 // Push error to error stack
                 $input  = $this->lexer->getInput();
@@ -69,7 +62,7 @@ class ConditionSyntaxAnalyzer extends SyntaxAnalyzer
                                        'unknown_part' => substr($input, $offset, strlen($id)), 
                                        'last_part'    => substr($input, $offset+strlen($id)));
 
-                $params = Array('id' => $id, 'splited_input' => $splitedInput); 
+                $params = Array('id' => $id, 'splitedinput' => $splitedInput); 
                 $this->stack->push(SA_ERROR_UNDEFINED_ID, 'error', $params, 'Undifined ID');
             }
         }
@@ -87,14 +80,14 @@ class ConditionSyntaxAnalyzer extends SyntaxAnalyzer
                                    'unknown_part' => substr($input, $offset-strlen($tToken), strlen($tToken)),
                                    'last_part'    => substr($input, $offset, strlen($input)));
 
-            $params = Array ('token' => $tToken, 'match' => $match, 'offset'=> $offset, 'splited_input' => $splitedInput);
+            $params = Array ('token' => $tToken, 'match' => $match, 'offset'=> $offset, 'splitedinput' => $splitedInput);
 
             $this->stack->push(SA_ERROR_SYNTAX_ERROR, 'error', $params, 'Syntax Error');
         }
     }
     // }}}
     // {{{ _tokenToString
-    function _tokenToString($token , $tokenVal)
+    protected function tokenToString($token , $tokenVal)
     {
         switch ($token) {
             case RG_T_ID:       $stredToken = (trim($tokenVal))?$tokenVal:'ID'; break;
@@ -124,12 +117,12 @@ class ConditionSyntaxAnalyzer extends SyntaxAnalyzer
     }
     // }}}
     // {{{ Grammer
-    function _conditions() 
+    protected function conditions() 
     {        
         $this->_condition();
         $this->_match(RG_T_EOI);
     }
-    function _condition() 
+    protected function condition() 
     {
         // XXX: every condition starts with NUMBER,ID,VALUE or ( and continues with _conditionPart()
         
@@ -144,7 +137,7 @@ class ConditionSyntaxAnalyzer extends SyntaxAnalyzer
             $this->_match('('); $this->_condition(); $this->_match(')'); $this->_conditionPart();
         }        
     }
-    function _conditionPart()
+    protected function conditionPart()
     {
         // XXX: This function matchs:
         //      
@@ -176,7 +169,7 @@ class ConditionSyntaxAnalyzer extends SyntaxAnalyzer
                                        'last_part'    => substr($input, $offset, strlen($input)));
             
                 $params = Array ('token' => $tToken, 'match' => "ID, NUMBER, VALUE or (", 'offset' => $offset,
-                                 'splited_input' => $splitedInput);
+                                 'splitedinput' => $splitedInput);
 
                 $this->stack->push(SA_ERROR_SYNTAX_ERROR, 'error', $params, 'Syntax Error');
             }
@@ -186,7 +179,7 @@ class ConditionSyntaxAnalyzer extends SyntaxAnalyzer
     }
     // }}}
     // {{{ setErrorMessages
-    function setErrorMessages()
+    public function setErrorMessages()
     {
         $messages = Array(
             SA_ERROR_SYNTAX_ERROR => "Syntax error near `%token%' token. I can't match `%match%' in offset: %offset%",

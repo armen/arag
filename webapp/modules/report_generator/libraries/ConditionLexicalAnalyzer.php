@@ -29,10 +29,10 @@ define ('RG_T_EOI',       1000);
 class ConditionLexicalAnalyzer extends LexicalAnalyzer
 {
     // {{{ constructor
-    function ConditionLexicalAnalyzer()
+    public function ConditionLexicalAnalyzer()
     {
         $controller         =& Controller::getInstance();
-        $this->_symbolTable =& $controller->getModel('SymbolTable', 'RG');
+        $this->symbolTable =& $controller->getModel('SymbolTable', 'RG');
 
         $this->addTokenPatterns(RG_T_ID,        "[a-zA-z][0-9a-zA-Z_]+");  // functions and columns id
         $this->addTokenPatterns(RG_T_NUMBER,    "[0-9]\.?[0-9]*");         // numbers decimal or float numbers
@@ -49,22 +49,22 @@ class ConditionLexicalAnalyzer extends LexicalAnalyzer
         $this->setEOIToken(RG_T_EOI);
 
         // Set case insensitive check for symboltable
-        $this->_symbolTable->setCaseSensitiveCheck(False);
+        $this->symbolTable->setCaseSensitiveCheck(False);
         
         // Add pre defined id to symbol table and it's token
-        $this->_symbolTable->insert('and', RG_T_OPERATOR);
-        $this->_symbolTable->insert('or', RG_T_OPERATOR);
-        // $this->_symbolTable->insert('not', RG_T_OPERATOR);
+        $this->symbolTable->insert('and', RG_T_OPERATOR);
+        $this->symbolTable->insert('or', RG_T_OPERATOR);
+        // $this->symbolTable->insert('not', RG_T_OPERATOR);
     }
     // }}}
     // {{{ & nextToken
-    function & nextToken()
+    public function & nextToken()
     {
         $token = parent::nextToken();
 
         // If token was a ID then it could be a column name, function or a operator
         if ($token == RG_T_ID) {
-            if (($sToken = $this->_symbolTable->search($this->getPrevTokenVal())) != Null) {
+            if (($sToken = $this->symbolTable->search($this->getPrevTokenVal())) != Null) {
                 $token = $sToken;
             }
         } else if ($token == RG_T_PARENTHES) {
@@ -75,9 +75,9 @@ class ConditionLexicalAnalyzer extends LexicalAnalyzer
     }
     // }}}
     // {{{ & getSymbolTable
-    function & getSymbolTable()
+    public function & getSymbolTable()
     {
-        return $this->_symbolTable;
+        return $this->symbolTable;
     }
     // }}}
 }

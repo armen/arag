@@ -17,13 +17,13 @@ define ('RG_T_EOI',       1000);
 class ColumnLexicalAnalyzer extends LexicalAnalyzer
 {
     // {{{ constructor
-    function __construct()
+    public function __construct()
     {
         $controller  =& Controller::getInstance();
         $symbolTable =& $controller->getModel('SymbolTable', 'RG');
 
         // Set symbol table
-        $this->_symbolTable =& $symbolTable;
+        $this->symbolTable =& $symbolTable;
        
         // Add patterns for matching 
         $this->addTokenPatterns(RG_T_ID,        "[a-zA-z][0-9a-zA-Z_]+");  // functions and columns id
@@ -36,21 +36,21 @@ class ColumnLexicalAnalyzer extends LexicalAnalyzer
         $this->setEOIToken(RG_T_EOI);
 
         // Set case insensitive check for symboltable
-        $this->_symbolTable->setCaseSensitiveCheck(False);
+        $this->symbolTable->setCaseSensitiveCheck(False);
 
         // Add pre defined id to symbol table and it's token
-        //$this->_symbolTable->insert('count', RG_T_FUNCTION);
-        //$this->_symbolTable->insert('sum', RG_T_FUNCTION);
+        //$this->symbolTable->insert('count', RG_T_FUNCTION);
+        //$this->symbolTable->insert('sum', RG_T_FUNCTION);
     }
     // }}}
     // {{{ & nextToken
-    function & nextToken()
+    public function & nextToken()
     {
         $token = parent::nextToken();
 
         // If token was a ID then it could be a column name or a function
         if ($token == RG_T_ID) {
-            if (($sToken = $this->_symbolTable->search($this->getPrevTokenVal())) != Null) {
+            if (($sToken = $this->symbolTable->search($this->getPrevTokenVal())) != Null) {
                 $token = $sToken;
             }
         } else if ($token == RG_T_OPERATOR) {
@@ -61,9 +61,9 @@ class ColumnLexicalAnalyzer extends LexicalAnalyzer
     }
     // }}}
     // {{{ & getSymbolTable
-    function & getSymbolTable()
+    public function & getSymbolTable()
     {
-        return $this->_symbolTable;
+        return $this->symbolTable;
     }
     // }}}
 }

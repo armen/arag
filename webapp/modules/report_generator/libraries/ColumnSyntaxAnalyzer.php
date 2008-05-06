@@ -20,17 +20,17 @@ class ColumnSyntaxAnalyzer extends SyntaxAnalyzer
     // {{{ properties
     
     var $lookAhead    = Null;
-    var $_symbolTable  = Null;
+    var $symbolTable  = Null;
 
     // }}}
     // {{{ Constructor
-    function ColumnSyntaxAnalyzer()
+    public function ColumnSyntaxAnalyzer()
     {
         $controller =& Controller::getInstance();
         $lexer      =& $controller->getModel('ColumnLexicalAnalyzer', 'RG');
 
         // Set symbol table
-        $this->_symbolTable = $lexer->getSymbolTable();
+        $this->symbolTable = $lexer->getSymbolTable();
 
         // Create error stack
         $stack =& OSC_ErrorStack::singleton('ColumnSyntaxAnalyzer');
@@ -43,7 +43,7 @@ class ColumnSyntaxAnalyzer extends SyntaxAnalyzer
     }
     // }}}
     // {{{ analyze
-    function analyze($input)
+    public function analyze($input)
     {
         parent::analyze(trim(preg_replace('/\s+/', ' ', $input)));
 
@@ -52,13 +52,13 @@ class ColumnSyntaxAnalyzer extends SyntaxAnalyzer
     }
     // }}}
     // {{{ _match
-    function _match($token)
+    protected function match($token)
     {
         // DEBUGGING:
         // echo $this->_tokenToString($token , $token) . ' ';
 
         if ($token == RG_T_ID) {
-            if ($this->_symbolTable->search($this->lexer->getPrevTokenVal()) == Null) {
+            if ($this->symbolTable->search($this->lexer->getPrevTokenVal()) == Null) {
 
                 // Push error to error stack
                 $input  = $this->lexer->getInput();
@@ -69,7 +69,7 @@ class ColumnSyntaxAnalyzer extends SyntaxAnalyzer
                                        'unknown_part' => substr($input, $offset, strlen($id)), 
                                        'last_part'    => substr($input, $offset+strlen($id)));
 
-                $params = Array('id' => $id, 'splited_input' => $splitedInput); 
+                $params = Array('id' => $id, 'splitedinput' => $splitedInput); 
                 $this->stack->push(SA_ERROR_UNDEFINED_ID, 'error', $params, 'Undifined ID');
             }
         }
@@ -87,14 +87,14 @@ class ColumnSyntaxAnalyzer extends SyntaxAnalyzer
                                    'unknown_part' => substr($input, $offset-strlen($tToken), strlen($tToken)),
                                    'last_part'    => substr($input, $offset, strlen($input)));
             
-            $params = Array ('token' => $tToken, 'match' => $match, 'offset'=> $offset, 'splited_input' => $splitedInput);
+            $params = Array ('token' => $tToken, 'match' => $match, 'offset'=> $offset, 'splitedinput' => $splitedInput);
 
             $this->stack->push(SA_ERROR_SYNTAX_ERROR, 'error', $params, 'Syntax Error');
         }
     }
     // }}}
     // {{{ _tokenToString
-    function _tokenToString($token , $tokenVal)
+    protected function tokenToString($token , $tokenVal)
     {
         switch ($token) {
             case RG_T_ID:       $stredToken = (trim($tokenVal))?$tokenVal:'ID'; break;
@@ -112,8 +112,8 @@ class ColumnSyntaxAnalyzer extends SyntaxAnalyzer
     }
     // }}}
     // {{{ Grammer
-    function _stmt() { $this->_mathStmt(); $this->_match(RG_T_EOI); }
-    function _mathStmt()
+    protected function stmt() { $this->_mathStmt(); $this->_match(RG_T_EOI); }
+    protected function mathStmt()
     {
         if ($this->getLookAhead() == RG_T_ID || $this->getLookAhead() == RG_T_NUMBER) {
         
@@ -138,7 +138,7 @@ class ColumnSyntaxAnalyzer extends SyntaxAnalyzer
                                    'last_part'    => substr($input, $offset, strlen($input)));
             
             $params = Array ('token' => $tToken, 'match' => "(', `ID' or `NUMBER", 'offset' => $offset,
-                             'splited_input' => $splitedInput);
+                             'splitedinput' => $splitedInput);
 
             $this->stack->push(SA_ERROR_SYNTAX_ERROR, 'error', $params, 'Syntax Error');
         }
@@ -146,7 +146,7 @@ class ColumnSyntaxAnalyzer extends SyntaxAnalyzer
         // After every _mathStmt we should have _mathStmtSecPart
         $this->_mathStmtSecPart();
     }
-    function _mathStmtSecPart()
+    protected function mathStmtSecPart()
     {
         if ($this->getLookAhead() == '+' || $this->getLookAhead() == '-' || 
             $this->getLookAhead() == '*' || $this->getLookAhead() == '/' || 
@@ -157,7 +157,7 @@ class ColumnSyntaxAnalyzer extends SyntaxAnalyzer
     }
     // }}}
     // {{{ setErrorMessages
-    function setErrorMessages()
+    public function setErrorMessages()
     {
         $messages = Array(
             SA_ERROR_SYNTAX_ERROR => "Syntax error near `%token%' token. I can't match `%match%' in offset: %offset%",
