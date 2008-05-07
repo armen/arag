@@ -24,7 +24,7 @@
         </tr>
         <tr>
             <td>&nbsp;</td>
-            <td>{kohana_helper function="html::anchor" uri="user/frontend/forget_password" title="Forget your Password?"}</td>
+            <td>{kohana_helper function="html::anchor" uri="user/frontend/forget_password" title="Forget your Password?" attributes='tabindex="-1"'}</td>
         </tr>
         <tr>
             <td>&nbsp;</td>
