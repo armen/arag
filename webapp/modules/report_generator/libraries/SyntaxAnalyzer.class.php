@@ -15,6 +15,9 @@ class SyntaxAnalyzer
     protected $symbolTable  = Null;
     protected $stack        = Null;   // Error stack
 
+    const SYNTAX_ERROR       = 100;
+    const UNDEFINED_ID_ERROR = 101;
+
     // }}}
     // {{{ Constructor
     public function __cosntruct($lexer, $stack)

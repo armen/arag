@@ -8,13 +8,6 @@
 
 require_once OSC_WEBAPP_PATH . '/engine/core/OSC_ErrorStack.class.php';
 
-// {{{ Error codes
-
-define ('SA_ERROR_SYNTAX_ERROR', 100);
-define ('SA_ERROR_UNDEFINED_ID', 101);
-
-// }}}
-
 class ColumnSyntaxAnalyzer extends SyntaxAnalyzer
 {
     // {{{ properties
@@ -70,7 +63,7 @@ class ColumnSyntaxAnalyzer extends SyntaxAnalyzer
                                        'last_part'    => substr($input, $offset+strlen($id)));
 
                 $params = Array('id' => $id, 'splitedinput' => $splitedInput); 
-                $this->stack->push(SA_ERROR_UNDEFINED_ID, 'error', $params, 'Undifined ID');
+                $this->stack->push(SyntaxAnalyzer::UNDEFINED_ID_ERROR, 'error', $params, 'Undifined ID');
             }
         }
         
@@ -89,7 +82,7 @@ class ColumnSyntaxAnalyzer extends SyntaxAnalyzer
             
             $params = Array ('token' => $tToken, 'match' => $match, 'offset'=> $offset, 'splitedinput' => $splitedInput);
 
-            $this->stack->push(SA_ERROR_SYNTAX_ERROR, 'error', $params, 'Syntax Error');
+            $this->stack->push(SyntaxAnalyzer::SYNTAX_ERROR, 'error', $params, 'Syntax Error');
         }
     }
     // }}}
@@ -140,7 +133,7 @@ class ColumnSyntaxAnalyzer extends SyntaxAnalyzer
             $params = Array ('token' => $tToken, 'match' => "(', `ID' or `NUMBER", 'offset' => $offset,
                              'splitedinput' => $splitedInput);
 
-            $this->stack->push(SA_ERROR_SYNTAX_ERROR, 'error', $params, 'Syntax Error');
+            $this->stack->push(SyntaxAnalyzer::SYNTAX_ERROR, 'error', $params, 'Syntax Error');
         }
 
         // After every _mathStmt we should have _mathStmtSecPart
@@ -160,8 +153,8 @@ class ColumnSyntaxAnalyzer extends SyntaxAnalyzer
     public function setErrorMessages()
     {
         $messages = Array(
-            SA_ERROR_SYNTAX_ERROR => "Syntax error near `%token%' token. I can't match `%match%' in offset: %offset%",
-            SA_ERROR_UNDEFINED_ID => "Undefined ID '%id%'"
+            SyntaxAnalyzer::SYNTAX_ERROR       => "Syntax error near `%token%' token. I can't match `%match%' in offset: %offset%",
+            SyntaxAnalyzer::UNDEFINED_ID_ERROR => "Undefined ID '%id%'"
         );
                           
         $this->stack->setErrorMessageTemplate($messages);
