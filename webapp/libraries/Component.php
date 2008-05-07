@@ -23,7 +23,7 @@
 class Component_Core {
     
     // {{{ Constructor
-    function __construct($namespace = Null)
+    public function __construct($namespace = Null)
     {
         $classname  = str_replace('_component', '', strtolower(get_class($this)));
         $name       = empty($namespace) ? $classname . Router::$module : $namespace;        

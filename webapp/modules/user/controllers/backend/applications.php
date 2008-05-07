@@ -11,7 +11,7 @@ require_once "backend.php";
 class Applications_Controller extends Backend_Controller 
 {   
     // {{{ Constructor
-    function __construct()
+    public function __construct()
     {   
         parent::__construct();
 

@@ -207,7 +207,7 @@ class Entry_Controller extends Blog_Backend
     }
     // }}}
     // {{{ preview_validate
-    function preview_validate()
+    public function preview_validate()
     {
         $this->validation->name(0, _("ID"))->add_rules(0, 'required', 'valid::numeric', array($this, '_check_entry'));
 

@@ -5,7 +5,7 @@ include_once "smarty/Smarty.class.php";
 class Arag_Smarty_Core extends Smarty {
 
     // {{{ Constructor
-    function __construct()
+    public function __construct()
     {
         // Check if we should use smarty or not
         if (Config::item('smarty.integration') == False) {

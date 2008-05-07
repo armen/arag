@@ -9,7 +9,7 @@
 class Settings_Controller extends Blog_Backend
 {
     // {{{ Constructor
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
     }

@@ -19,7 +19,7 @@ class Users_Model extends Model
 
     // }}}
     // {{{ Constructor
-    function __construct()
+    public function __construct()
     {
         parent::__construct(new Database('default'));
 

@@ -23,7 +23,7 @@ class TabbedBlock_Component extends Component
         
     // }}}
     // {{{ Constructor
-    function __construct($namespace = Null)
+    public function __construct($namespace = Null)
     {
         parent::__construct($namespace);
     }

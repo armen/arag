@@ -27,7 +27,7 @@ class Controller extends Controller_Core {
 
     // }}}
     // {{{ Constructor
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
     
@@ -111,7 +111,7 @@ class Controller extends Controller_Core {
     }
     // }}}
     // {{{ _remap
-    function _remap($method, $arguments)
+    public function _remap($method, $arguments)
     {
         if (substr($method, 0, 1) == '_') {
             // The method is protected so just call 404

@@ -14,7 +14,7 @@ class Frontend_Controller extends Controller
     private $message;
     // }}}
     // {{{ Constructor
-    function __construct()
+    public function __construct()
     {
         parent::__construct();
        
