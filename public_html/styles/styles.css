@@ -16,9 +16,25 @@ input, textarea, select {
     font-size       : 12px;
     font-family     : Tahoma, Verdana, Arial, Helvetica, sans-serif;
     border          : 1px solid #ccc;
-    padding         : 0px;
     background-color: #eee;
     color           : #888;
+    padding         : .1em .0em;    
+}
+input[type=button], input[type=submit], input[type=reset] {
+    background      : #eee;
+    color           : #222;
+    border          : 1px outset #ccc;
+    padding         : .1em .5em;
+}
+input[type=button]:hover, input[type=submit]:hover, input[type=reset]:hover {
+    background      : #aaa;
+    color           : #fff;
+}
+input[type=button][disabled], input[type=submit][disabled],
+input[type=reset][disabled] {
+    background      : #f6f6f6;
+    border-style    : solid;
+    color           : #999;
 }
 .asterisk {
     color           : red;
@@ -190,10 +206,33 @@ input, textarea, select {
     margin-top      : 0px;
     margin-bottom   : 0px;
 }
-.arag_tags_ds input, select {
+.arag_tags_ds input, 
+.arag_tags_ds select {
     border          : 1px solid #ccc;
     background-color: #eee;
     color           : #888;
+    padding         : .1em .0em;    
+}
+.arag_tags_ds input[type=button], 
+.arag_tags_ds input[type=submit], 
+.arag_tags_ds input[type=reset] {
+    background      : #eee;
+    color           : #222;
+    border          : 1px outset #ccc;
+    padding         : .1em .5em;
+}
+.arag_tags_ds input[type=button]:hover, 
+.arag_tags_ds input[type=submit]:hover, 
+.arag_tags_ds input[type=reset]:hover {
+    background      : #aaa;
+    color           : #fff;    
+}
+.arag_tags_ds input[type=button][disabled],
+.arag_tags_ds input[type=submit][disabled],
+.arag_tags_ds input[type=reset][disabled] {
+    background      : #f6f6f6;
+    border-style    : solid;
+    color           : #999;
 }
 .arag_tags_ds textarea {
     padding         : 1px;
