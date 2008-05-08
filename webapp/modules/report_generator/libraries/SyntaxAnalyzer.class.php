@@ -20,13 +20,13 @@ class SyntaxAnalyzer
 
     // }}}
     // {{{ Constructor
-    public function __cosntruct($lexer, $stack)
+    public function __cosntruct($lexer)
     {
         // Set lexical analyzer object
         $this->lexer = $lexer;
 
         // Set error stack
-        $this->stack = $stack;
+        $this->stack = ErrorStack::instance();
     }
     // }}}
     // {{{ analyze

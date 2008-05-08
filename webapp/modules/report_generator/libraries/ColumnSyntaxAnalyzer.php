@@ -6,30 +6,21 @@
 // $Id$
 // ---------------------------------------------------------------------------
 
-require_once OSC_WEBAPP_PATH . '/engine/core/OSC_ErrorStack.class.php';
-
 class ColumnSyntaxAnalyzer extends SyntaxAnalyzer
 {
     // {{{ properties
     
-    var $lookAhead    = Null;
-    var $symbolTable  = Null;
+    var $lookAhead   = Null;
+    var $symbolTable = Null;
 
     // }}}
     // {{{ Constructor
     public function ColumnSyntaxAnalyzer()
     {
-        $controller =& Controller::getInstance();
-        $lexer      =& $controller->getModel('ColumnLexicalAnalyzer', 'RG');
-
         // Set symbol table
         $this->symbolTable = $lexer->getSymbolTable();
 
-        // Create error stack
-        $stack =& OSC_ErrorStack::singleton('ColumnSyntaxAnalyzer');
-
-        // Call parent constructor
-        parent::SyntaxAnalyzer($lexer, $stack);
+        parent::__construct(new ColumnLexicalAnalyzer);
 
         // Set Error messages
         $this->setErrorMessages();
@@ -44,13 +35,13 @@ class ColumnSyntaxAnalyzer extends SyntaxAnalyzer
         $this->stmt();
     }
     // }}}
-    // {{{ _match
+    // {{{ match
     protected function match($token)
     {
         // DEBUGGING:
         // echo $this->tokenToString($token , $token) . ' ';
 
-        if ($token == RG_T_ID) {
+        if ($token == ColumnLexicalAnalyzer::T_ID) {
             if ($this->symbolTable->search($this->lexer->getPrevTokenVal()) == Null) {
 
                 // Push error to error stack
@@ -86,14 +77,14 @@ class ColumnSyntaxAnalyzer extends SyntaxAnalyzer
         }
     }
     // }}}
-    // {{{ _tokenToString
+    // {{{ tokenToString
     protected function tokenToString($token , $tokenVal)
     {
         switch ($token) {
-            case RG_T_ID:       $stredToken = (trim($tokenVal))?$tokenVal:'ID'; break;
-            case RG_T_NUMBER:   $stredToken = (trim($tokenVal))?$tokenVal:'NUMBER'; break;
-            case RG_T_FUNCTION: $stredToken = (trim($tokenVal))?$tokenVal:'FUNCTION'; break;
-            case RG_T_EOI:      $stredToken = 'EOI'; break;
+            case ColumnLexicalAnalyzer::T_ID:       $stredToken = (trim($tokenVal))?$tokenVal:'ID'; break;
+            case ColumnLexicalAnalyzer::T_NUMBER:   $stredToken = (trim($tokenVal))?$tokenVal:'NUMBER'; break;
+            case ColumnLexicalAnalyzer::T_FUNCTION: $stredToken = (trim($tokenVal))?$tokenVal:'FUNCTION'; break;
+            case ColumnLexicalAnalyzer::T_EOI:      $stredToken = 'EOI'; break;
             case '-': case '+': case '*':
             case '/': case '%': case '(': case ')':
                 $stredToken = $token; break;
@@ -105,10 +96,10 @@ class ColumnSyntaxAnalyzer extends SyntaxAnalyzer
     }
     // }}}
     // {{{ Grammer
-    protected function stmt() { $this->mathStmt(); $this->match(RG_T_EOI); }
+    protected function stmt() { $this->mathStmt(); $this->match(ColumnLexicalAnalyzer::T_EOI); }
     protected function mathStmt()
     {
-        if ($this->getLookAhead() == RG_T_ID || $this->getLookAhead() == RG_T_NUMBER) {
+        if ($this->getLookAhead() == ColumnLexicalAnalyzer::T_ID || $this->getLookAhead() == ColumnLexicalAnalyzer::T_NUMBER) {
         
             $this->match($this->getLookAhead());
         
@@ -116,9 +107,9 @@ class ColumnSyntaxAnalyzer extends SyntaxAnalyzer
             
             $this->match('('); $this->mathStmt(); $this->match(')');
         
-        } else if ($this->getLookAhead() == RG_T_FUNCTION) {
+        } else if ($this->getLookAhead() == ColumnLexicalAnalyzer::T_FUNCTION) {
             
-            $this->match(RG_T_FUNCTION); $this->match('('); $this->match(RG_T_ID); $this->match(')'); 
+            $this->match(ColumnLexicalAnalyzer::T_FUNCTION); $this->match('('); $this->match(ColumnLexicalAnalyzer::T_ID); $this->match(')'); 
         
         } else {
 

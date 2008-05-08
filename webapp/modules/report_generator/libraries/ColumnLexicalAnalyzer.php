@@ -6,16 +6,19 @@
 // $Id$
 // ---------------------------------------------------------------------------
 
-define ('RG_T_ID',        1);
-define ('RG_T_NUMBER',    2);
-define ('RG_T_OPERATOR',  3);
-define ('RG_T_WITESPACE', 4); 
-define ('RG_T_INVALID',   5);
-define ('RG_T_FUNCTION',  999);
-define ('RG_T_EOI',       1000);
-
 class ColumnLexicalAnalyzer extends LexicalAnalyzer
 {
+    // {{{ properties
+
+    const ColumnLexicalAnalyzer::T_ID        = 1;
+    const ColumnLexicalAnalyzer::T_NUMBER    = 2;
+    const ColumnLexicalAnalyzer::T_OPERATOR  = 3;
+    const ColumnLexicalAnalyzer::T_WITESPACE = 4; 
+    const ColumnLexicalAnalyzer::T_INVALID   = 5;
+    const ColumnLexicalAnalyzer::T_FUNCTION  = 999;
+    const ColumnLexicalAnalyzer::T_EOI       = 1000;
+
+    // }}}
     // {{{ constructor
     public function __construct()
     {
@@ -26,42 +29,42 @@ class ColumnLexicalAnalyzer extends LexicalAnalyzer
         $this->symbolTable =& $symbolTable;
        
         // Add patterns for matching 
-        $this->addTokenPatterns(RG_T_ID,        "[a-zA-z][0-9a-zA-Z_]+");  // functions and columns id
-        $this->addTokenPatterns(RG_T_NUMBER,    "[0-9]\.?[0-9]*");         // numbers
-        $this->addTokenPatterns(RG_T_OPERATOR,  "[*\/\%\-+\(\)]");         // *, /, %, -, +, ( and )
-        $this->addTokenPatterns(RG_T_WITESPACE, "\s\s*");
-        $this->addTokenPatterns(RG_T_INVALID,   "[^\s]");
+        $this->addTokenPatterns(ColumnLexicalAnalyzer::T_ID,        "[a-zA-z][0-9a-zA-Z_]+");  // functions and columns id
+        $this->addTokenPatterns(ColumnLexicalAnalyzer::T_NUMBER,    "[0-9]\.?[0-9]*");         // numbers
+        $this->addTokenPatterns(ColumnLexicalAnalyzer::T_OPERATOR,  "[*\/\%\-+\(\)]");         // *, /, %, -, +, ( and )
+        $this->addTokenPatterns(ColumnLexicalAnalyzer::T_WITESPACE, "\s\s*");
+        $this->addTokenPatterns(ColumnLexicalAnalyzer::T_INVALID,   "[^\s]");
 
-        $this->addSkipToken(RG_T_WITESPACE);
-        $this->setEOIToken(RG_T_EOI);
+        $this->addSkipToken(ColumnLexicalAnalyzer::T_WITESPACE);
+        $this->setEOIToken(ColumnLexicalAnalyzer::T_EOI);
 
         // Set case insensitive check for symboltable
         $this->symbolTable->setCaseSensitiveCheck(False);
 
         // Add pre defined id to symbol table and it's token
-        //$this->symbolTable->insert('count', RG_T_FUNCTION);
-        //$this->symbolTable->insert('sum', RG_T_FUNCTION);
+        //$this->symbolTable->insert('count', ColumnLexicalAnalyzer::T_FUNCTION);
+        //$this->symbolTable->insert('sum', ColumnLexicalAnalyzer::T_FUNCTION);
     }
     // }}}
-    // {{{ & nextToken
-    public function & nextToken()
+    // {{{ nextToken
+    public function nextToken()
     {
         $token = parent::nextToken();
 
         // If token was a ID then it could be a column name or a function
-        if ($token == RG_T_ID) {
+        if ($token == ColumnLexicalAnalyzer::T_ID) {
             if (($sToken = $this->symbolTable->search($this->getPrevTokenVal())) != Null) {
                 $token = $sToken;
             }
-        } else if ($token == RG_T_OPERATOR) {
+        } else if ($token == ColumnLexicalAnalyzer::T_OPERATOR) {
             $token = $this->getPrevTokenVal();
         }
 
         return $token;
     }
     // }}}
-    // {{{ & getSymbolTable
-    public function & getSymbolTable()
+    // {{{ getSymbolTable
+    public function getSymbolTable()
     {
         return $this->symbolTable;
     }
