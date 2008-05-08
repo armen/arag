@@ -20,8 +20,8 @@ class Site_Controller extends Backend_Controller
             $name = $this->session->get('user_app_name');
             $dbid = $this->session->get('user_app_dbid');
         } else {
-            $name = $this->input->post('name', True);
-            $dbid = $this->input->post('dbid', True);
+            $name = $this->input->post('name', Null, True);
+            $dbid = $this->input->post('dbid', Null, True);
         }
 
         $this->session->set('user_app_name', $name);

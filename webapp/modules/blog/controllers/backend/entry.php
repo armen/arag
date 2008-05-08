@@ -105,8 +105,8 @@ class Entry_Controller extends Blog_Backend
     {
         $result = $this->Blog->editEntry($this->input->post('id'),
                                          $this->input->post('subject'), 
-                                         $this->input->post('entry', True), 
-                                         $this->input->post('extended_entry', True),
+                                         $this->input->post('entry', Null, True), 
+                                         $this->input->post('extended_entry', Null, True),
                                          $this->session->get('user.username'),                                              
                                          $this->input->post('status'),
                                          $this->input->post('allow_comments'),

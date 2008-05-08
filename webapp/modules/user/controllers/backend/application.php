@@ -236,8 +236,8 @@ class Application_Controller extends Backend_Controller
             $user       = $this->session->get('user_user_user');
             $group_name = $this->session->get('user_user_group');
         } else {
-            $user       = $this->input->post('user', True);
-            $group_name = $this->input->post('group_name', True);
+            $user       = $this->input->post('user', Null, True);
+            $group_name = $this->input->post('group_name', Null, True);
         }
 
         $this->session->set('user_user_user', $user);

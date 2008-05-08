@@ -77,8 +77,8 @@ class Settings_Controller extends Backend_Controller
     // {{{ privileges_write
     public function privileges_write()
     {
-        Arag_Config::set('adminpri', array_unique(explode(" ", preg_replace('/\s+/', ' ', trim($this->input->post('adminpri', true))))));
-        Arag_Config::set('anonypri', array_unique(explode(" ", preg_replace('/\s+/', ' ', trim($this->input->post('anonypri', true))))));
+        Arag_Config::set('adminpri', array_unique(explode(" ", preg_replace('/\s+/', ' ', trim($this->input->post('adminpri', Null, true))))));
+        Arag_Config::set('anonypri', array_unique(explode(" ", preg_replace('/\s+/', ' ', trim($this->input->post('anonypri', Null, true))))));
 
         $this->session->set('multi_site_settings_privileges_saved', true);
 

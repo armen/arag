@@ -82,15 +82,15 @@ class Backend_Controller extends Controller
     // {{{ index_write
     public function index_write()
     {
-        $province    = $this->input->post('province', true);
-        $city        = $this->input->post('city', true);
-        $country     = $this->input->post('country', true);
-        $address     = $this->input->post('address', true);
-        $phone       = $this->input->post('phone', true);
-        $cellphone   = $this->input->post('cellphone', true);
-        $postal_code = $this->input->post('postal_code', true);
-        $name        = $this->input->post('name', true);
-        $lastname    = $this->input->post('lastname', true);
+        $province    = $this->input->post('province', Null, true);
+        $city        = $this->input->post('city', Null, true);
+        $country     = $this->input->post('country', Null, true);
+        $address     = $this->input->post('address', Null, true);
+        $phone       = $this->input->post('phone', Null, true);
+        $cellphone   = $this->input->post('cellphone', Null, true);
+        $postal_code = $this->input->post('postal_code', Null, true);
+        $name        = $this->input->post('name', Null, true);
+        $lastname    = $this->input->post('lastname', Null, true);
         
         if ($this->UserProfile->hasUserName($this->username)) {
             $this->UserProfile->editProfile($province, $city, $address, $phone, $cellphone, $postal_code, $this->username, $name, $lastname, $country);

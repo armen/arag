@@ -163,7 +163,7 @@ class Backend_Controller extends Controller
     // {{{ _new_group_write
     protected function _new_group_write($appname)
     {
-        $newgroup   = $this->input->post("newgroup", true);
+        $newgroup   = $this->input->post("newgroup", Null, true);
             
         $this->Groups->newGroup($appname, $newgroup, $this->session->get('user.username'));
 
@@ -192,12 +192,12 @@ class Backend_Controller extends Controller
     // {{{ _new_user_write
     protected function _new_user_write($appname)
     {
-        $email     = $this->input->post('email', true);
-        $name      = strtolower($this->input->post('name', true));
-        $lastname  = $this->input->post('lastname', true);
-        $groupname = $this->input->post('group', true);
-        $username  = $this->input->post('username', true);
-        $password  = $this->input->post('password', true);
+        $email     = $this->input->post('email', Null, true);
+        $name      = strtolower($this->input->post('name', Null, true));
+        $lastname  = $this->input->post('lastname', Null, true);
+        $groupname = $this->input->post('group', Null, true);
+        $username  = $this->input->post('username', Null, true);
+        $password  = $this->input->post('password', Null, true);
         
         $this->Users->createUser($appname, $email, $name, $lastname, $groupname, $username, $password, $this->session->get('user.username'));
 
@@ -232,13 +232,13 @@ class Backend_Controller extends Controller
     // {{{ _user_profile_write
     protected function _user_profile_write($appname)
     {
-        $email     = $this->input->post('email', true);
-        $name      = $this->input->post('name', true);
-        $lastname  = $this->input->post('lastname', true);
-        $groupname = $this->input->post('group', true);
-        $username  = $this->input->post('username', true);
-        $password  = $this->input->post('password', true);
-        $blocked   = $this->input->post('blocked', true);
+        $email     = $this->input->post('email', Null, true);
+        $name      = $this->input->post('name', Null, true);
+        $lastname  = $this->input->post('lastname', Null, true);
+        $groupname = $this->input->post('group', Null, true);
+        $username  = $this->input->post('username', Null, true);
+        $password  = $this->input->post('password', Null, true);
+        $blocked   = $this->input->post('blocked', Null, true);
 
         $this->Users->editUser($appname, $email, $name, $lastname, $groupname, $username, $password, $blocked, $this->session->get('user.username'));
 

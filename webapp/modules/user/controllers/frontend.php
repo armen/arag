@@ -190,8 +190,8 @@ class Frontend_Controller extends Controller
 
         $is_sent = false;
 
-        $email    = $this->input->post('email', true);
-        $username = $this->input->post('username', true);
+        $email    = $this->input->post('email', Null, true);
+        $username = $this->input->post('username', Null, true);
         $user     = $users->checkEmail($email, $username);
 
         if ($user['status'] === Users_Model::USER_NOT_FOUND) {
@@ -295,9 +295,9 @@ class Frontend_Controller extends Controller
         $multisite = Model::load('MultiSite', 'multisite');
     
         $is_sent    = false;
-        $email      = $this->input->post('email', true);
-        $username   = $this->input->post('username', true);
-        $verify_uri = $this->input->post('verify_uri', true);
+        $email      = $this->input->post('email', Null, true);
+        $username   = $this->input->post('username', Null, true);
+        $verify_uri = $this->input->post('verify_uri', Null, true);
         $user       = $users->checkEmail($email, $username, $verify_uri);
 
         if ($user['status'] === Users_Model::USER_NOT_FOUND) {
@@ -400,9 +400,9 @@ class Frontend_Controller extends Controller
     
         $removed    = false;
         $show_form  = true;
-        $email      = $this->input->post('email', true);
-        $username   = $this->input->post('username', true);
-        $verify_uri = $this->input->post('verify_uri', true);
+        $email      = $this->input->post('email', Null, true);
+        $username   = $this->input->post('username', Null, true);
+        $verify_uri = $this->input->post('verify_uri', Null, true);
         $user       = $users->checkEmail($email, $username, $verify_uri);
 
         if ($user['status'] === Users_Model::USER_NOT_FOUND) {
@@ -460,11 +460,11 @@ class Frontend_Controller extends Controller
         $multisite = Model::load('MultiSite', 'multisite');
 
         $groupname  = $groups->getDefaultGroup(APPNAME);
-        $email      = $this->input->post('email', true);
-        $name       = strtolower($this->input->post('name', true));
-        $lastname   = $this->input->post('lastname', true);
-        $username   = $this->input->post('username', true);
-        $password   = $this->input->post('password', true);
+        $email      = $this->input->post('email', Null, true);
+        $name       = strtolower($this->input->post('name', Null, true));
+        $lastname   = $this->input->post('lastname', Null, true);
+        $username   = $this->input->post('username', Null, true);
+        $password   = $this->input->post('password', Null, true);
         $verify_uri = $multisite->generateVerifyUri(10);
         
         $users->createUser(APPNAME, $email, $name, $lastname, $groupname, $username, $password, 'Anonymous', $verify_uri , 0);

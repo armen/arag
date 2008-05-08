@@ -111,7 +111,7 @@ class Frontend_Controller extends Controller
     // {{{ post_comment_write_error
     public function post_comment_write_error()
     {
-        $this->view($this->input->post('reference_id'), 'extended');
+        $this->view($this->input->post('reference_id'), Null, 'extended');
     }
     // }}}
     // {{{ post_comment_read

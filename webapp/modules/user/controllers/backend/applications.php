@@ -62,7 +62,7 @@ class Applications_Controller extends Backend_Controller
         if ($page != Null && preg_match('|page[a-z_]*:[0-9]*|', $page)) {        
             $name = $this->session->get('user_app_name');
         } else {
-            $name = $this->input->post('name', True);
+            $name = $this->input->post('name', Null, True);
         }
 
         $this->session->set('user_app_name', $name);
@@ -202,9 +202,9 @@ class Applications_Controller extends Backend_Controller
             $app_name   = $this->session->get('user_user_app');
             $group_name = $this->session->get('user_user_group');
         } else {
-            $user       = $this->input->post('user', True);
-            $app_name   = $this->input->post('app_name', True);
-            $group_name = $this->input->post('group_name', True);
+            $user       = $this->input->post('user', Null, True);
+            $app_name   = $this->input->post('app_name', Null, True);
+            $group_name = $this->input->post('group_name', Null, True);
         }
 
         $this->session->set('user_user_user', $user);
@@ -360,7 +360,7 @@ class Applications_Controller extends Backend_Controller
         if ($page != Null && preg_match('|page[a-z_]*:[0-9]*|', $page)) {        
             $name = $this->session->get('user_app_name');
         } else {
-            $name = $this->input->post('name', True);
+            $name = $this->input->post('name', Null, True);
         }
 
         $this->session->set('user_app_name', $name);

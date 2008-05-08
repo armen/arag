@@ -73,9 +73,9 @@ class Install_Controller extends Backend_Controller
         $applications     = Model::load('Applications', 'user');
         $users            = Model::load('Users', 'user');
 
-        $appname    = $this->input->post('appname', true);
-        $email      = $this->input->post('email', true);
-        $modules    = $this->input->post('modules', true);
+        $appname    = $this->input->post('appname', Null, true);
+        $email      = $this->input->post('email', Null, true);
+        $modules    = $this->input->post('modules', Null, true);
         $author     = $this->session->get('user.username');
         $anonypri   = serialize(Arag_Config::get('anonypri', NULL));
         $adminpri   = serialize(Arag_Config::get('adminpri', NULL));
