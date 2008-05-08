@@ -16,6 +16,7 @@ class Backend_Controller extends ReportGenerator_Backend
     // {{{ generate_report
     public function generate_report()
     {
+        $this->layout->content = new View('backend/generate_report');
     }
     // }}}
 }
