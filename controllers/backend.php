@@ -95,8 +95,8 @@ class Backend_Controller extends Controller
 
         if ($this->input->post('submit')){
 
-            $page    = $this->input->post('page', True);
-            $subject = $this->input->post('subject', True);
+            $page    = $this->input->post('page', Null, True);
+            $subject = $this->input->post('subject', Null, True);
 
             $this->StaticPages->createPage($this->session->get('username'), $subject, $page);
             
@@ -138,8 +138,8 @@ class Backend_Controller extends Controller
         }
         
         if ($exist) { 
-            $page    = $this->input->post('page', True);
-            $subject = $this->input->post('subject', True);
+            $page    = $this->input->post('page', Null, True);
+            $subject = $this->input->post('subject', Null, True);
 
             $this->StaticPages->editPage($id, $subject, $page);
         
