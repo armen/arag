@@ -181,6 +181,32 @@ input[type=reset][disabled] {
     padding         : 0px;
 }
 /* end of arag_blank_block }}} */
+/* {{{ arag_collapsible_block */
+.arag_collapsible_block .expanded {
+    border          : 1px solid #aaa;
+    margin-bottom   : 10px;    
+}
+.arag_collapsible_block .expanded legend { 
+    background      : url(../images/misc/expanded.png) 0 50% no-repeat;
+    color           : #666;
+    font-size       : 110%;
+    padding-left    : 16px;
+    cursor          : hand;
+    cursor          : pointer;
+}
+.arag_collapsible_block .collapsed { 
+    border-width    : 0;
+    border-top      : 1px solid #aaa;
+    padding         : 0px 0px 0px 10px;
+}
+.arag_collapsible_block .collapsed legend { 
+    background      : url(../images/misc/collapsed.png) 0 50% no-repeat;
+    padding-left    : 16px;    
+}
+.arag_collapsible_block .collapsed div {
+    display         : none;
+}
+/* }}} end of arag_collapsible_block */ 
 /* {{{ arag_tags_ds */
 .arag_tags_ds a:link, 
 .arag_tags_ds a:visited,
