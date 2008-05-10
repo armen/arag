@@ -12,47 +12,50 @@
 // $Id$
 // ---------------------------------------------------------------------------
 
-function smarty_block_arag_form($params, $content, &$smarty)
+function smarty_block_arag_form($params, $content, &$smarty, &$repeat)
 {
-    $method  = 'post';
-    $uri     = Null;
-    $enctype = Null;
-    $id      = Null;
-    $class   = Null;
-    $style   = Null;
- 
-    foreach ($params as $_key => $_val) {
-        switch ($_key) {
-            case 'uri':
-            case 'method':
-                $$_key = (string)$_val;
-                break;
+    if (!$repeat) {
+        
+        $method  = 'post';
+        $uri     = Null;
+        $enctype = Null;
+        $id      = Null;
+        $class   = Null;
+        $style   = Null;
+     
+        foreach ($params as $_key => $_val) {
+            switch ($_key) {
+                case 'uri':
+                case 'method':
+                    $$_key = (string)$_val;
+                    break;
 
-            case 'id':
-            case 'class':
-            case 'enctype':
-            case 'style':
-                $$_key = " {$_key}=\"" . (string)$_val . "\" ";
-                break;
-            
-            default:
-                $smarty->trigger_error("arag_form: unknown attribute '$_key'");
+                case 'id':
+                case 'class':
+                case 'enctype':
+                case 'style':
+                    $$_key = " {$_key}=\"" . (string)$_val . "\" ";
+                    break;
+                
+                default:
+                    $smarty->trigger_error("arag_form: unknown attribute '$_key'");
+            }
         }
-    }
 
-    if (preg_match('!^\w+://!i', $uri)) {
-        // there is \w:// at begining of uri            
-        $action = $uri;
-    } else {
-        $action = url::site($uri);
-    }
+        if (preg_match('!^\w+://!i', $uri)) {
+            // there is \w:// at begining of uri            
+            $action = $uri;
+        } else {
+            $action = url::site($uri);
+        }
 
-    if (Config::item('token.enable') && Config::item('token.type') === 'form') {
-        $session = Session::instance();
-        $content = '<input type="hidden" name="arag_token" value="'.$session->get('arag_token').'" />'.$content;
+        if (Config::item('token.enable') && Config::item('token.type') === 'form') {
+            $session = Session::instance();
+            $content = '<input type="hidden" name="arag_token" value="'.$session->get('arag_token').'" />'.$content;
+        }
+        
+        return '<form action="'.$action.'" method="'. $method.'"' . $style . $id . $class . $enctype .'>'.$content.'</form>';
     }
-    
-    return '<form action="'.$action.'" method="'. $method.'"' . $style . $id . $class . $enctype .'>'.$content.'</form>';
 }
 
 ?>

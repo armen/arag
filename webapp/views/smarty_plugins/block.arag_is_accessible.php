@@ -12,28 +12,31 @@
 // $Id$
 // ---------------------------------------------------------------------------
 
-function smarty_block_arag_is_accessible($params, $content, &$smarty)
+function smarty_block_arag_is_accessible($params, $content, &$smarty, &$repeat)
 {
-    $uri = Null;
- 
-    foreach ($params as $_key => $_val) {
-        switch ($_key) {
-            case 'uri':
-                $$_key = (string)$_val;
-                break;
+    if (!$repeat) {
 
-            default:
-                $smarty->trigger_error("arag_accessible: unknown attribute '$_key'");
+        $uri = Null;
+     
+        foreach ($params as $_key => $_val) {
+            switch ($_key) {
+                case 'uri':
+                    $$_key = (string)$_val;
+                    break;
+
+                default:
+                    $smarty->trigger_error("arag_accessible: unknown attribute '$_key'");
+            }
         }
+
+        empty($uri) AND $smarty->trigger_error("arag_accessible: uri parameter should be set.");
+
+        if (Arag_Auth::is_accessible($uri)) {
+            return $content;
+        }
+
+        return Null;
     }
-
-    empty($uri) AND $smarty->trigger_error("arag_accessible: uri parameter should be set.");
-
-    if (Arag_Auth::is_accessible($uri)) {
-        return $content;
-    }
-
-    return Null;
 }
 
 ?>
