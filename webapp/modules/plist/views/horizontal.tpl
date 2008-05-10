@@ -4,11 +4,8 @@
     File: $Id$
 *}
 
-{if !isset($_loaded|smarty:nodefaults)}
-    {assign var=_loaded value=True}
-    <script type="text/javascript" src="{$arag_base_url|smarty:nodefaults}scripts/mootools.js"></script>    
-    <script type="text/javascript" src="{$arag_base_url|smarty:nodefaults}scripts/plist.js"></script>
-{/if}
+{arag_load_script src="scripts/mootools.js"}
+{arag_load_script src="scripts/plist.js"}
 
 {assign var=columns value=$plist->getColumns()}
 {assign var=columnNames value=$plist->getColumnNames()}
