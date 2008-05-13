@@ -11,6 +11,8 @@ class ConditionSyntaxAnalyzer extends SyntaxAnalyzer
     // {{{ Constructor
     public function __construct()
     {
+        $lexer = new ConditionLexicalAnalyzer;
+    
         // Set symbol table
         $this->symbolTable = $lexer->getSymbolTable();
 

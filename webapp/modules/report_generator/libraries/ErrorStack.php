@@ -10,7 +10,8 @@ class ErrorStack
 {
     // {{{ properties
 
-    private $stack = Array();
+    private $stack                = Array();
+    private $errorMessageTemplate = Array();
 
     // }}}
     // {{{ instance
@@ -25,8 +26,18 @@ class ErrorStack
     }
     // }}}
     // {{{ push
-    public function push($code, $level = 'error', $params = array(), $message = false);
+    public function push($code, $level = 'error', $params = array(), $message = false)
     {
+        if (is_array($params) && !empty($params) && isset($this->errorMessageTemplate[$code])) {
+            $message = $this->errorMessageTemplate[$code];
+
+            foreach ($params as $name => $value) {
+                if (strpos($message, $name) !== False) {
+                    $message = str_replace('%'.$name.'%', $value, $message);
+                }
+            }
+        }
+
         // Save error
         $time  = explode(' ', microtime());
         $error = Array
@@ -50,7 +61,7 @@ class ErrorStack
     // {{{ hasErrors
     public function hasErrors()
     {
-        return (bool) count($this->stack[$level]);
+        return (bool) count($this->stack);
     }
     // }}}
     // {{{ setErrorMessageTemplate

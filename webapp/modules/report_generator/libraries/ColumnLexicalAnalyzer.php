@@ -10,23 +10,20 @@ class ColumnLexicalAnalyzer extends LexicalAnalyzer
 {
     // {{{ properties
 
-    const ColumnLexicalAnalyzer::T_ID        = 1;
-    const ColumnLexicalAnalyzer::T_NUMBER    = 2;
-    const ColumnLexicalAnalyzer::T_OPERATOR  = 3;
-    const ColumnLexicalAnalyzer::T_WITESPACE = 4; 
-    const ColumnLexicalAnalyzer::T_INVALID   = 5;
-    const ColumnLexicalAnalyzer::T_FUNCTION  = 999;
-    const ColumnLexicalAnalyzer::T_EOI       = 1000;
+    const T_ID        = 1;
+    const T_NUMBER    = 2;
+    const T_OPERATOR  = 3;
+    const T_WITESPACE = 4; 
+    const T_INVALID   = 5;
+    const T_FUNCTION  = 999;
+    const T_EOI       = 1000;
 
     // }}}
     // {{{ constructor
     public function __construct()
     {
-        $controller  =& Controller::getInstance();
-        $symbolTable =& $controller->getModel('SymbolTable', 'RG');
-
         // Set symbol table
-        $this->symbolTable =& $symbolTable;
+        $this->symbolTable = new SymbolTable;
        
         // Add patterns for matching 
         $this->addTokenPatterns(ColumnLexicalAnalyzer::T_ID,        "[a-zA-z][0-9a-zA-Z_]+");  // functions and columns id

@@ -95,8 +95,8 @@ class LexicalAnalyzer
         return $pattern;
     }
     // }}}
-    // {{{ & nextToken
-    public function & nextToken()
+    // {{{ nextToken
+    public function nextToken()
     {
         if ($this->currentToken === Null && !count($this->tokens)) {
             // Error: please call init first

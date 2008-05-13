@@ -19,8 +19,8 @@ class SyntaxAnalyzer
     const UNDEFINED_ID_ERROR = 101;
 
     // }}}
-    // {{{ Constructor
-    public function __cosntruct($lexer)
+    // {{{ constructor
+    public function __construct($lexer)
     {
         // Set lexical analyzer object
         $this->lexer = $lexer;

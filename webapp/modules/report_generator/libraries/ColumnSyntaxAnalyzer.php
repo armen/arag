@@ -14,9 +14,11 @@ class ColumnSyntaxAnalyzer extends SyntaxAnalyzer
     var $symbolTable = Null;
 
     // }}}
-    // {{{ Constructor
-    public function ColumnSyntaxAnalyzer()
+    // {{{ constructor
+    public function __construct()
     {
+        $lexer = new ColumnLexicalAnalyzer;
+
         // Set symbol table
         $this->symbolTable = $lexer->getSymbolTable();
 
