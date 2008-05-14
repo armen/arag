@@ -48,7 +48,8 @@ function smarty_function_arag_validation_errors($params, &$smarty)
     
         if ($template) {
             include_once $smarty->_get_plugin_filepath('block', 'arag_block');
-            $error = smarty_block_arag_block(Array('template' => $template), $error_message, $smarty);
+            $repeat = False;
+            $error  = smarty_block_arag_block(Array('template' => $template), $error_message, $smarty, $repeat);
         }
 
         return $error;
