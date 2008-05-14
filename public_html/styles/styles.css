@@ -183,7 +183,7 @@ input[type=reset][disabled] {
 /* end of arag_blank_block }}} */
 /* {{{ arag_collapsible_block */
 .arag_collapsible_block .expanded {
-    border          : 1px solid #aaa;
+    border          : 1px solid #ccc;
     margin-bottom   : 10px;    
 }
 .arag_collapsible_block .expanded legend { 
@@ -196,7 +196,7 @@ input[type=reset][disabled] {
 }
 .arag_collapsible_block .collapsed { 
     border-width    : 0;
-    border-top      : 1px solid #aaa;
+    border-top      : 1px solid #ccc;
     padding         : 0px 0px 0px 10px;
 }
 .arag_collapsible_block .collapsed legend { 
