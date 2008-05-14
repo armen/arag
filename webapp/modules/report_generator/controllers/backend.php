@@ -8,15 +8,312 @@
 
 class Backend_Controller extends ReportGenerator_Backend
 {
+    // {{{ properties
+    
+    private $additional_columns = Array();
+    private $filters            = Array();
+
+    // }}}
     // {{{ reports
     public function reports()
     {
+        $rg      = new ReportGenerator_Model;
+        $reports = new PList_Component('reports');
+
+        $reports->setResource($rg->getReports());
+        $reports->setLimit(Arag_Config::get('limit', 0));
+        $reports->setEmptyListMessage(_("There is no report!"));
+        $reports->addColumn('report_name', _("Name"));
+        $reports->addColumn('report_desc', _("Description"));        
+        $reports->addColumn('table_name', _("Table Name"));        
+        $reports->addColumn('ReportGenerator.getCreateDate', _("Create Date"), PList_Component::VIRTUAL_COLUMN);
+        $reports->addColumn('ReportGenerator.getModifyDate', _("Modify Date"), PList_Component::VIRTUAL_COLUMN);        
+        $reports->addAction('report_generator/backend/delete_report/#id#', 'Delete Report', 'delete_action');
+        // $reports->addAction('report_generator/backend/edit_report/#id#', 'Edit Report', 'edit_action');
+        $reports->addAction('report_generator/backend/execute_report/#id#', 'Execute Report', 'view_action');        
+
+        $this->layout->content = new View('backend/reports');
     }
     // }}}
     // {{{ generate_report
-    public function generate_report()
+    // {{{ generate_report_read
+    public function generate_report_read()
     {
+        $this->layout->allowed_tables = array_combine(Config::item('config.allowed_tables'), Config::item('config.allowed_tables'));
+        $this->layout->content = new View('backend/get_table'); 
+    }
+    // }}}
+    // {{{ generate_report_write
+    public function generate_report_write()
+    {
+        $rg         = new ReportGenerator_Model;
+        $columns    = $this->input->post('columns', Array());
+        $table_name = $this->input->post('table_name', Null);
+        $table      = $rg->describe($table_name);
+
+        $this->layout->table              = $table;
+        $this->layout->columns            = !empty($table) ? array_combine(array_keys($table), array_keys($table)) : Array();
+        $this->layout->selected_columns   = $columns;
+        $this->layout->table_name         = $table_name;
+        $this->layout->report_name        = $this->input->post('report_name', Null);
+        $this->layout->report_description = $this->input->post('report_description', Null);
+        $this->layout->additional_columns = $this->additional_columns;
+        $this->layout->filters            = $this->filters;
+
+        // Generate report's list
+        $report = new PList_Component('report');
+        $report->setResource($rg->executeReport($table_name, $columns, $this->additional_columns, $this->filters));
+        $report->setLimit(Arag_Config::get('limit', 0));
+        $report->setEmptyListMessage(_("There is no record!"));
+
+        foreach ($columns as $column) {
+            $report->addColumn($column);
+        }
+
+        foreach ($this->additional_columns as $label => $column) {
+            $report->addColumn($label);
+        }
+
         $this->layout->content = new View('backend/generate_report');
+    }
+    // }}}
+    // {{{ generate_report_validate_write
+    public function generate_report_validate_write()
+    {
+        $filters         = $this->input->post('filters', Array());
+        $filter          = $this->input->post('filter');
+        $filters_combine = $this->input->post('filters_combine', Array());
+        $filter_combine  = $this->input->post('filter_combine');
+        $formulas        = $this->input->post('formulas', Array());
+        $formula         = $this->input->post('formula');
+        $columns_label   = $this->input->post('columns_label', Array());
+        $column_label    = $this->input->post('column_label');
+        $result          = True;
+
+        $rg      = new ReportGenerator_Model;
+        $table   = $rg->describe($this->input->post('table_name'));
+        $columns = !empty($table) ? array_combine(array_keys($table), array_keys($table)) : Array();
+
+        // {{{ validate additional column
+
+        if (!empty($formula)) {
+
+            $sa = new ColumnSyntaxAnalyzer;
+
+            // Add this form columns id as valid(defined) columns
+            foreach ($columns as $column) {
+                $sa->symbolTable->insert($column, ColumnLexicalAnalyzer::T_ID);
+            }
+
+            // Analyze input
+            $sa->analyze($formula);
+
+            // Check for errors
+            if ($sa->hasErrors()) {
+
+                // Fetch last error
+                $errors     = $sa->getErrors();
+                $last_error = end($errors);
+
+                $this->layout->formula_splited_input = $last_error['params']['splitedinput'];
+                $this->validation->add_error('formula', 'formula_error');
+                $this->validation->message('formula_error', $last_error['message']);
+                $result = False;
+
+            } else {
+
+                $formulas = array_merge($formulas, Array($formula));
+                !empty($column_label) AND $columns_label = array_merge($columns_label, Array($column_label));
+            }
+        }
+
+        (!empty($columns_label) AND !empty($formulas)) AND  $this->additional_columns = array_combine($columns_label, $formulas);        
+        
+        // }}}
+
+        // {{{ validate filter
+
+        if (!empty($filter)) {
+
+            $sa = new FilterSyntaxAnalyzer;
+
+            // Add this form columns id as valid(defined) columns
+            foreach ($columns as $column) {
+                $sa->symbolTable->insert($column, FilterLexicalAnalyzer::T_ID);
+            }
+
+            // Analyze input
+            $sa->analyze($filter);
+
+            // Check for errors
+            if ($sa->hasErrors()) {
+
+                // Fetch last error
+                $errors     = $sa->getErrors();
+                $last_error = end($errors);
+
+                $this->layout->formula_splited_input = $last_error['params']['splitedinput'];
+                $this->validation->add_error('formula', 'formula_error');
+                $this->validation->message('formula_error', $last_error['message']);
+                $result = False;
+
+            } else {
+
+                $filters = array_merge($filters, Array($filter));
+                !empty($filter_combine) AND $filters_combine = array_merge($filters_combine, Array($filter_combine));
+            }
+        }
+
+        (!empty($filters_combine) AND !empty($filters)) AND $this->filters = array_combine($filters, $filters_combine);
+
+        // }}}
+
+        $this->validation->name('column_label', _("Column Label"))->add_rules('column_label', 'valid::id')->post_filter('trim', 'column_label');
+        $result = $this->validation->validate();
+
+        return $result;
+    }
+    // }}}
+    // {{{ generate_report_validate_write_error
+    public function generate_report_write_error()
+    {
+        $this->generate_report_write();
+    }
+    // }}}
+    // }}}
+    // {{{ save_report
+    public function save_report()
+    {
+        $filters            = $this->input->post('filters', Array());
+        $filters_combine    = $this->input->post('filters_combine', Array());
+        $additional_columns = $this->input->post('formulas', Array());
+        $columns_label      = $this->input->post('columns_label', Array());
+
+        (!empty($filters_combine) AND !empty($filters)) AND $filters = array_combine($filters, $filters_combine);
+        (!empty($columns_label) AND !empty($additional_columns)) AND  $additional_columns = array_combine($columns_label, $additional_columns);
+
+        $rg = new ReportGenerator_Model;
+        $rg->saveReport($this->input->post('table_name'), 
+                        $this->input->post('report_name'), 
+                        $this->input->post('report_description'), 
+                        $this->input->post('columns'),
+                        $additional_columns,
+                        $filters);
+
+        url::redirect('report_generator/backend/reports');
+    }
+    // }}}
+    // {{{ delete_report
+    // {{{ delete_report_read
+    public function delete_report_read($id)
+    {
+        $rg = new ReportGenerator_Model;    
+        $this->global_tabs->setParameter('id', $id);
+
+        $this->layout->content = new View('backend/delete_report', Array('id' => $id, 'name' => $rg->getReportName($id)));
+    }
+    // }}}
+    // {{{ delete_report_validate_read
+    public function delete_report_validate_read()
+    {
+        $this->validation->name(0, _("ID"))->add_rules(0, 'required', 'valid::numeric', array($this, '_check_report'));
+
+        return $this->validation->validate();
+    }
+    // }}}
+    // {{{ delete_report_read_error
+    public function delete_report_read_error()
+    {
+        $this->_invalid_request('report_generator/backend/reports');
+    }
+    // }}}
+    // {{{ delete_report_write
+    public function delete_report_write()
+    {
+        $rg = new ReportGenerator_Model;
+
+        $rg->deleteReport($this->input->post('id'));
+
+        url::redirect('report_generator/backend/reports');
+    }
+    // }}}    
+    // {{{ delete_report_validate_write
+    public function delete_report_validate_write()
+    {
+        $this->validation->name('id', _("ID"))->add_rules('id', 'required', 'valid::numeric', array($this, '_check_report'));
+
+        return $this->validation->validate();        
+    }
+    // }}}    
+    // {{{ delete_report_write_error
+    public function delete_write_error()
+    {
+        $this->_invalid_request('report_generator/backend/reports');        
+    }
+    // }}}
+    // }}}
+    // {{{ execute_report
+    // {{{ execute_report
+    public function execute_report($id = False)
+    {
+        ($id === False) AND $id = $this->input->post('id');
+        $this->global_tabs->setParameter('id', $id);
+
+        $rg          = new ReportGenerator_Model;
+        $report_list = new PList_Component('report');
+        $report      = $rg->getReport($id);
+        $table       = $rg->describe($report['table_name']);
+        $where       = $rg->constructWhere($this->input->post('fields', Array()), $this->input->post('operators', Array()));
+
+        $report_list->setResource($rg->executeReport($report['table_name'], $report['columns'], $report['additional_columns'], $report['filters'], $where));
+        $report_list->setLimit(Arag_Config::get('limit', 0));
+        $report_list->setEmptyListMessage(_("There is no record!"));
+
+        foreach ($report['columns'] as $column) {
+            $report_list->addColumn($column);
+        }
+
+        foreach ($report['additional_columns'] as $label => $column) {
+            $report_list->addColumn($label);
+        }
+
+        $this->layout->table_desc = json_encode($table);
+        $this->layout->fields     = json_encode($this->input->post('fields'));
+        $this->layout->operators  = json_encode($this->input->post('operators'));
+        $this->layout->table      = $table;
+        $this->layout->id         = $id;
+        $this->layout->content    = new View('backend/execute_report');
+    }
+    // }}}
+    // {{{ execute_report_validate_read
+    public function execute_report_validate_read()
+    {
+        $this->validation->name(0, _("ID"))->add_rules(0, 'required', 'valid::numeric', array($this, '_check_report'));
+
+        return $this->validation->validate();
+    }
+    // }}}
+    // {{{ execute_report_validate_write
+    public function execute_report_validate_write()
+    {
+        $this->validation->name('id', _("ID"))->add_rules('id', 'required', 'valid::numeric', array($this, '_check_report'));
+
+        return $this->validation->validate();
+    }
+    // }}}    
+    // {{{ execute_report_error
+    public function execute_report_error()
+    {
+        $this->_invalid_request('report_generator/backend/reports');
+    }
+    // }}}
+    // }}}
+    // {{{ _check_report
+    public function _check_report($id)
+    {
+        $rg = new ReportGenerator_Model;
+
+        return $rg->hasReport($id);
     }
     // }}}
 }

@@ -1,0 +1,38 @@
+/*  
+    vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:             
+    File: $Id$
+*/
+
+input[type=button] {
+    width           : 24px;
+    height          : 24px;
+}
+.filter_operator {
+    height          : 24px;
+}
+#filters td {
+    padding         : 3px;
+}
+#filters .label {
+    width           : 110px;
+    text-align      : right;
+}
+#filters .operator {
+    width           : 110px;
+}
+#filters .remove {
+    width           : 20px;
+}
+#add_filter {
+    margin          : 3px;
+}
+.report_table td {
+    padding         : 2px;
+    border          : solid 1px #fff;
+}
+.virtual_input {
+    border          : 1px solid #e3e3e3;
+    background-color: #f6f6f6;
+    padding         : 2px;
+    height          : 14px;
+}

@@ -462,6 +462,231 @@ Class.Merge = function(previous, current){
 };
 
 /*
+Script: Class.Extras.js
+	Contains common implementations for custom classes. In Mootools is implemented in <Ajax>, <XHR> and <Fx.Base> and many more.
+
+License:
+	MIT-style license.
+*/
+
+/*
+Class: Chain
+	An "Utility" Class. Its methods can be implemented with <Class.implement> into any <Class>.
+	Currently implemented in <Fx.Base>, <XHR> and <Ajax>. In <Fx.Base> for example, is used to execute a list of function, one after another, once the effect is completed.
+	The functions will not be fired all togheter, but one every completion, to create custom complex animations.
+
+Example:
+	(start code)
+	var myFx = new Fx.Style('element', 'opacity');
+
+	myFx.start(1,0).chain(function(){
+		myFx.start(0,1);
+	}).chain(function(){
+		myFx.start(1,0);
+	}).chain(function(){
+		myFx.start(0,1);
+	});
+	//the element will appear and disappear three times
+	(end)
+*/
+
+var Chain = new Class({
+
+	/*
+	Property: chain
+		adds a function to the Chain instance stack.
+
+	Arguments:
+		fn - the function to append.
+	*/
+
+	chain: function(fn){
+		this.chains = this.chains || [];
+		this.chains.push(fn);
+		return this;
+	},
+
+	/*
+	Property: callChain
+		Executes the first function of the Chain instance stack, then removes it. The first function will then become the second.
+	*/
+
+	callChain: function(){
+		if (this.chains && this.chains.length) this.chains.shift().delay(10, this);
+	},
+
+	/*
+	Property: clearChain
+		Clears the stack of a Chain instance.
+	*/
+
+	clearChain: function(){
+		this.chains = [];
+	}
+
+});
+
+/*
+Class: Events
+	An "Utility" Class. Its methods can be implemented with <Class.implement> into any <Class>.
+	In <Fx.Base> Class, for example, is used to give the possibility add any number of functions to the Effects events, like onComplete, onStart, onCancel.
+	Events in a Class that implements <Events> can be either added as an option, or with addEvent. Never with .options.onEventName.
+
+Example:
+	(start code)
+	var myFx = new Fx.Style('element', 'opacity').addEvent('onComplete', function(){
+		alert('the effect is completed');
+	}).addEvent('onComplete', function(){
+		alert('I told you the effect is completed');
+	});
+
+	myFx.start(0,1);
+	//upon completion it will display the 2 alerts, in order.
+	(end)
+
+Implementing:
+	This class can be implemented into other classes to add the functionality to them.
+	Goes well with the <Options> class.
+
+Example:
+	(start code)
+	var Widget = new Class({
+		initialize: function(){},
+		finish: function(){
+			this.fireEvent('onComplete');
+		}
+	});
+	Widget.implement(new Events);
+	//later...
+	var myWidget = new Widget();
+	myWidget.addEvent('onComplete', myfunction);
+	(end)
+*/
+
+var Events = new Class({
+
+	/*
+	Property: addEvent
+		adds an event to the stack of events of the Class instance.
+
+	Arguments:
+		type - string; the event name (e.g. 'onComplete')
+		fn - function to execute
+	*/
+
+	addEvent: function(type, fn){
+		if (fn != Class.empty){
+			this.$events = this.$events || {};
+			this.$events[type] = this.$events[type] || [];
+			this.$events[type].include(fn);
+		}
+		return this;
+	},
+
+	/*
+	Property: fireEvent
+		fires all events of the specified type in the Class instance.
+
+	Arguments:
+		type - string; the event name (e.g. 'onComplete')
+		args - array or single object; arguments to pass to the function; if more than one argument, must be an array
+		delay - (integer) delay (in ms) to wait to execute the event
+
+	Example:
+	(start code)
+	var Widget = new Class({
+		initialize: function(arg1, arg2){
+			...
+			this.fireEvent("onInitialize", [arg1, arg2], 50);
+		}
+	});
+	Widget.implement(new Events);
+	(end)
+	*/
+
+	fireEvent: function(type, args, delay){
+		if (this.$events && this.$events[type]){
+			this.$events[type].each(function(fn){
+				fn.create({'bind': this, 'delay': delay, 'arguments': args})();
+			}, this);
+		}
+		return this;
+	},
+
+	/*
+	Property: removeEvent
+		removes an event from the stack of events of the Class instance.
+
+	Arguments:
+		type - string; the event name (e.g. 'onComplete')
+		fn - function that was added
+	*/
+
+	removeEvent: function(type, fn){
+		if (this.$events && this.$events[type]) this.$events[type].remove(fn);
+		return this;
+	}
+
+});
+
+/*
+Class: Options
+	An "Utility" Class. Its methods can be implemented with <Class.implement> into any <Class>.
+	Used to automate the options settings, also adding Class <Events> when the option begins with on.
+
+	Example:
+		(start code)
+		var Widget = new Class({
+			options: {
+				color: '#fff',
+				size: {
+					width: 100
+					height: 100
+				}
+			},
+			initialize: function(options){
+				this.setOptions(options);
+			}
+		});
+		Widget.implement(new Options);
+		//later...
+		var myWidget = new Widget({
+			color: '#f00',
+			size: {
+				width: 200
+			}
+		});
+		//myWidget.options = {color: #f00, size: {width: 200, height: 100}}
+		(end)
+*/
+
+var Options = new Class({
+
+	/*
+	Property: setOptions
+		sets this.options
+
+	Arguments:
+		defaults - object; the default set of options
+		options - object; the user entered options. can be empty too.
+
+	Note:
+		if your Class has <Events> implemented, every option beginning with on, followed by a capital letter (onComplete) becomes an Class instance event.
+	*/
+
+	setOptions: function(){
+		this.options = $merge.apply(null, [this.options].extend(arguments));
+		if (this.addEvent){
+			for (var option in this.options){
+				if ($type(this.options[option] == 'function') && (/^on[A-Z]/).test(option)) this.addEvent(option, this.options[option]);
+			}
+		}
+		return this;
+	}
+
+});
+
+/*
 Script: Array.js
 	Contains Array prototypes, <$A>, <$each>
 
@@ -2409,6 +2634,389 @@ window.addListener('beforeunload', function(){
 });
 
 /*
+Script: Element.Event.js
+	Contains the Event Class, Element methods to deal with Element events, custom Events, and the Function prototype bindWithEvent.
+
+License:
+	MIT-style license.
+*/
+
+/*
+Class: Event
+	Cross browser methods to manage events.
+
+Arguments:
+	event - the event
+
+Properties:
+	shift - true if the user pressed the shift
+	control - true if the user pressed the control
+	alt - true if the user pressed the alt
+	meta - true if the user pressed the meta key
+	wheel - the amount of third button scrolling
+	code - the keycode of the key pressed
+	page.x - the x position of the mouse, relative to the full window
+	page.y - the y position of the mouse, relative to the full window
+	client.x - the x position of the mouse, relative to the viewport
+	client.y - the y position of the mouse, relative to the viewport
+	key - the key pressed as a lowercase string. key also returns 'enter', 'up', 'down', 'left', 'right', 'space', 'backspace', 'delete', 'esc'. Handy for these special keys.
+	target - the event target
+	relatedTarget - the event related target
+
+Example:
+	(start code)
+	$('myLink').onkeydown = function(event){
+		var event = new Event(event);
+		//event is now the Event class.
+		alert(event.key); //returns the lowercase letter pressed
+		alert(event.shift); //returns true if the key pressed is shift
+		if (event.key == 's' && event.control) alert('document saved');
+	};
+	(end)
+*/
+
+var Event = new Class({
+
+	initialize: function(event){
+		if (event && event.$extended) return event;
+		this.$extended = true;
+		event = event || window.event;
+		this.event = event;
+		this.type = event.type;
+		this.target = event.target || event.srcElement;
+		if (this.target.nodeType == 3) this.target = this.target.parentNode;
+		this.shift = event.shiftKey;
+		this.control = event.ctrlKey;
+		this.alt = event.altKey;
+		this.meta = event.metaKey;
+		if (['DOMMouseScroll', 'mousewheel'].contains(this.type)){
+			this.wheel = (event.wheelDelta) ? event.wheelDelta / 120 : -(event.detail || 0) / 3;
+		} else if (this.type.contains('key')){
+			this.code = event.which || event.keyCode;
+			for (var name in Event.keys){
+				if (Event.keys[name] == this.code){
+					this.key = name;
+					break;
+				}
+			}
+			if (this.type == 'keydown'){
+				var fKey = this.code - 111;
+				if (fKey > 0 && fKey < 13) this.key = 'f' + fKey;
+			}
+			this.key = this.key || String.fromCharCode(this.code).toLowerCase();
+		} else if (this.type.test(/(click|mouse|menu)/)){
+			this.page = {
+				'x': event.pageX || event.clientX + document.documentElement.scrollLeft,
+				'y': event.pageY || event.clientY + document.documentElement.scrollTop
+			};
+			this.client = {
+				'x': event.pageX ? event.pageX - window.pageXOffset : event.clientX,
+				'y': event.pageY ? event.pageY - window.pageYOffset : event.clientY
+			};
+			this.rightClick = (event.which == 3) || (event.button == 2);
+			switch(this.type){
+				case 'mouseover': this.relatedTarget = event.relatedTarget || event.fromElement; break;
+				case 'mouseout': this.relatedTarget = event.relatedTarget || event.toElement;
+			}
+			this.fixRelatedTarget();
+		}
+		return this;
+	},
+
+	/*
+	Property: stop
+		cross browser method to stop an event
+	*/
+
+	stop: function(){
+		return this.stopPropagation().preventDefault();
+	},
+
+	/*
+	Property: stopPropagation
+		cross browser method to stop the propagation of an event
+	*/
+
+	stopPropagation: function(){
+		if (this.event.stopPropagation) this.event.stopPropagation();
+		else this.event.cancelBubble = true;
+		return this;
+	},
+
+	/*
+	Property: preventDefault
+		cross browser method to prevent the default action of the event
+	*/
+
+	preventDefault: function(){
+		if (this.event.preventDefault) this.event.preventDefault();
+		else this.event.returnValue = false;
+		return this;
+	}
+
+});
+
+Event.fix = {
+
+	relatedTarget: function(){
+		if (this.relatedTarget && this.relatedTarget.nodeType == 3) this.relatedTarget = this.relatedTarget.parentNode;
+	},
+
+	relatedTargetGecko: function(){
+		try {Event.fix.relatedTarget.call(this);} catch(e){this.relatedTarget = this.target;}
+	}
+
+};
+
+Event.prototype.fixRelatedTarget = (window.gecko) ? Event.fix.relatedTargetGecko : Event.fix.relatedTarget;
+
+/*
+Property: keys
+	you can add additional Event keys codes this way:
+
+Example:
+	(start code)
+	Event.keys.whatever = 80;
+	$(myelement).addEvent(keydown, function(event){
+		event = new Event(event);
+		if (event.key == 'whatever') console.log(whatever key clicked).
+	});
+	(end)
+*/
+
+Event.keys = new Abstract({
+	'enter': 13,
+	'up': 38,
+	'down': 40,
+	'left': 37,
+	'right': 39,
+	'esc': 27,
+	'space': 32,
+	'backspace': 8,
+	'tab': 9,
+	'delete': 46
+});
+
+/*
+Class: Element
+	Custom class to allow all of its methods to be used with any DOM element via the dollar function <$>.
+*/
+
+Element.Methods.Events = {
+
+	/*
+	Property: addEvent
+		Attaches an event listener to a DOM element.
+
+	Arguments:
+		type - the event to monitor ('click', 'load', etc) without the prefix 'on'.
+		fn - the function to execute
+
+	Example:
+		>$('myElement').addEvent('click', function(){alert('clicked!')});
+	*/
+
+	addEvent: function(type, fn){
+		this.$events = this.$events || {};
+		this.$events[type] = this.$events[type] || {'keys': [], 'values': []};
+		if (this.$events[type].keys.contains(fn)) return this;
+		this.$events[type].keys.push(fn);
+		var realType = type;
+		var custom = Element.Events[type];
+		if (custom){
+			if (custom.add) custom.add.call(this, fn);
+			if (custom.map) fn = custom.map;
+			if (custom.type) realType = custom.type;
+		}
+		if (!this.addEventListener) fn = fn.create({'bind': this, 'event': true});
+		this.$events[type].values.push(fn);
+		return (Element.NativeEvents.contains(realType)) ? this.addListener(realType, fn) : this;
+	},
+
+	/*
+	Property: removeEvent
+		Works as Element.addEvent, but instead removes the previously added event listener.
+	*/
+
+	removeEvent: function(type, fn){
+		if (!this.$events || !this.$events[type]) return this;
+		var pos = this.$events[type].keys.indexOf(fn);
+		if (pos == -1) return this;
+		var key = this.$events[type].keys.splice(pos,1)[0];
+		var value = this.$events[type].values.splice(pos,1)[0];
+		var custom = Element.Events[type];
+		if (custom){
+			if (custom.remove) custom.remove.call(this, fn);
+			if (custom.type) type = custom.type;
+		}
+		return (Element.NativeEvents.contains(type)) ? this.removeListener(type, value) : this;
+	},
+
+	/*
+	Property: addEvents
+		As <addEvent>, but accepts an object and add multiple events at once.
+	*/
+
+	addEvents: function(source){
+		return Element.setMany(this, 'addEvent', source);
+	},
+
+	/*
+	Property: removeEvents
+		removes all events of a certain type from an element. if no argument is passed in, removes all events.
+
+	Arguments:
+		type - string; the event name (e.g. 'click')
+	*/
+
+	removeEvents: function(type){
+		if (!this.$events) return this;
+		if (!type){
+			for (var evType in this.$events) this.removeEvents(evType);
+			this.$events = null;
+		} else if (this.$events[type]){
+			this.$events[type].keys.each(function(fn){
+				this.removeEvent(type, fn);
+			}, this);
+			this.$events[type] = null;
+		}
+		return this;
+	},
+
+	/*
+	Property: fireEvent
+		executes all events of the specified type present in the element.
+
+	Arguments:
+		type - string; the event name (e.g. 'click')
+		args - array or single object; arguments to pass to the function; if more than one argument, must be an array
+		delay - (integer) delay (in ms) to wait to execute the event
+	*/
+
+	fireEvent: function(type, args, delay){
+		if (this.$events && this.$events[type]){
+			this.$events[type].keys.each(function(fn){
+				fn.create({'bind': this, 'delay': delay, 'arguments': args})();
+			}, this);
+		}
+		return this;
+	},
+
+	/*
+	Property: cloneEvents
+		Clones all events from an element to this element.
+
+	Arguments:
+		from - element, copy all events from this element
+		type - optional, copies only events of this type
+	*/
+
+	cloneEvents: function(from, type){
+		if (!from.$events) return this;
+		if (!type){
+			for (var evType in from.$events) this.cloneEvents(from, evType);
+		} else if (from.$events[type]){
+			from.$events[type].keys.each(function(fn){
+				this.addEvent(type, fn);
+			}, this);
+		}
+		return this;
+	}
+
+};
+
+window.extend(Element.Methods.Events);
+document.extend(Element.Methods.Events);
+Element.extend(Element.Methods.Events);
+
+/* Section: Custom Events */
+
+Element.Events = new Abstract({
+
+	/*
+	Event: mouseenter
+		In addition to the standard javascript events (load, mouseover, mouseout, click, etc.) <Event.js> contains two custom events
+		this event fires when the mouse enters the area of the dom element; will not be fired again if the mouse crosses over children of the element (unlike mouseover)
+
+
+	Example:
+		>$(myElement).addEvent('mouseenter', myFunction);
+	*/
+
+	'mouseenter': {
+		type: 'mouseover',
+		map: function(event){
+			event = new Event(event);
+			if (event.relatedTarget != this && !this.hasChild(event.relatedTarget)) this.fireEvent('mouseenter', event);
+		}
+	},
+
+	/*
+	Event: mouseleave
+		this event fires when the mouse exits the area of the dom element; will not be fired again if the mouse crosses over children of the element (unlike mouseout)
+
+
+	Example:
+		>$(myElement).addEvent('mouseleave', myFunction);
+	*/
+
+	'mouseleave': {
+		type: 'mouseout',
+		map: function(event){
+			event = new Event(event);
+			if (event.relatedTarget != this && !this.hasChild(event.relatedTarget)) this.fireEvent('mouseleave', event);
+		}
+	},
+
+	'mousewheel': {
+		type: (window.gecko) ? 'DOMMouseScroll' : 'mousewheel'
+	}
+
+});
+
+Element.NativeEvents = [
+	'click', 'dblclick', 'mouseup', 'mousedown', //mouse buttons
+	'mousewheel', 'DOMMouseScroll', //mouse wheel
+	'mouseover', 'mouseout', 'mousemove', //mouse movement
+	'keydown', 'keypress', 'keyup', //keys
+	'load', 'unload', 'beforeunload', 'resize', 'move', //window
+	'focus', 'blur', 'change', 'submit', 'reset', 'select', //forms elements
+	'error', 'abort', 'contextmenu', 'scroll' //misc
+];
+
+/*
+Class: Function
+	A collection of The Function Object prototype methods.
+*/
+
+Function.extend({
+
+	/*
+	Property: bindWithEvent
+		automatically passes MooTools Event Class.
+
+	Arguments:
+		bind - optional, the object that the "this" of the function will refer to.
+		args - optional, an argument to pass to the function; if more than one argument, it must be an array of arguments.
+
+	Returns:
+		a function with the parameter bind as its "this" and as a pre-passed argument event or window.event, depending on the browser.
+
+	Example:
+		>function myFunction(event){
+		>	alert(event.client.x) //returns the coordinates of the mouse..
+		>};
+		>myElement.addEvent('click', myFunction.bindWithEvent(myElement));
+	*/
+
+	bindWithEvent: function(bind, args){
+		return this.create({'bind': bind, 'arguments': args, 'event': Event});
+	}
+
+});
+
+
+/*
 Script: Element.Filters.js
 	add Filters capability to <Elements>.
 
@@ -2726,3 +3334,703 @@ Element.extend({
 
 document.extend(Element.Methods.Dom);
 Element.extend(Element.Methods.Dom);
+
+/*
+Script: Element.Form.js
+	Contains Element prototypes to deal with Forms and their elements.
+
+License:
+	MIT-style license.
+*/
+
+/*
+Class: Element
+	Custom class to allow all of its methods to be used with any DOM element via the dollar function <$>.
+*/
+
+Element.extend({
+
+	/*
+	Property: getValue
+		Returns the value of the Element, if its tag is textarea, select or input. getValue called on a multiple select will return an array.
+	*/
+
+	getValue: function(){
+		switch(this.getTag()){
+			case 'select':
+				var values = [];
+				$each(this.options, function(option){
+					if (option.selected) values.push($pick(option.value, option.text));
+				});
+				return (this.multiple) ? values : values[0];
+			case 'input': if (!(this.checked && ['checkbox', 'radio'].contains(this.type)) && !['hidden', 'text', 'password'].contains(this.type)) break;
+			case 'textarea': return this.value;
+		}
+		return false;
+	},
+
+	getFormElements: function(){
+		return $$(this.getElementsByTagName('input'), this.getElementsByTagName('select'), this.getElementsByTagName('textarea'));
+	},
+
+	/*
+	Property: toQueryString
+		Reads the children inputs of the Element and generates a query string, based on their values. Used internally in <Ajax>
+
+	Example:
+		(start code)
+		<form id="myForm" action="submit.php">
+		<input name="email" value="bob@bob.com">
+		<input name="zipCode" value="90210">
+		</form>
+
+		<script>
+		 $('myForm').toQueryString()
+		</script>
+		(end)
+
+		Returns:
+			email=bob@bob.com&zipCode=90210
+	*/
+
+	toQueryString: function(){
+		var queryString = [];
+		this.getFormElements().each(function(el){
+			var name = el.name;
+			var value = el.getValue();
+			if (value === false || !name || el.disabled) return;
+			var qs = function(val){
+				queryString.push(name + '=' + encodeURIComponent(val));
+			};
+			if ($type(value) == 'array') value.each(qs);
+			else qs(value);
+		});
+		return queryString.join('&');
+	}
+
+});
+
+/*
+Script: Window.DomReady.js
+	Contains the custom event domready, for window.
+
+License:
+	MIT-style license.
+*/
+
+/* Section: Custom Events */
+
+/*
+Event: domready
+	executes a function when the dom tree is loaded, without waiting for images. Only works when called from window.
+
+Credits:
+	(c) Dean Edwards/Matthias Miller/John Resig, remastered for MooTools.
+
+Arguments:
+	fn - the function to execute when the DOM is ready
+
+Example:
+	> window.addEvent('domready', function(){
+	>	alert('the dom is ready');
+	> });
+*/
+
+Element.Events.domready = {
+
+	add: function(fn){
+		if (window.loaded){
+			fn.call(this);
+			return;
+		}
+		var domReady = function(){
+			if (window.loaded) return;
+			window.loaded = true;
+			window.timer = $clear(window.timer);
+			this.fireEvent('domready');
+		}.bind(this);
+		if (document.readyState && window.webkit){
+			window.timer = function(){
+				if (['loaded','complete'].contains(document.readyState)) domReady();
+			}.periodical(50);
+		} else if (document.readyState && window.ie){
+			if (!$('ie_ready')){
+				var src = (window.location.protocol == 'https:') ? '://0' : 'javascript:void(0)';
+				document.write('<script id="ie_ready" defer src="' + src + '"><\/script>');
+				$('ie_ready').onreadystatechange = function(){
+					if (this.readyState == 'complete') domReady();
+				};
+			}
+		} else {
+			window.addListener("load", domReady);
+			document.addListener("DOMContentLoaded", domReady);
+		}
+	}
+
+};
+
+/*compatibility*/
+
+window.onDomReady = function(fn){ 
+	return this.addEvent('domready', fn); 
+};
+
+/*end compatibility*/
+
+/*
+Script: Fx.Base.js
+	Contains <Fx.Base>, the foundamentals of the MooTools Effects.
+
+License:
+	MIT-style license.
+*/
+
+var Fx = {};
+
+/*
+Class: Fx.Base
+	Base class for the Effects.
+
+Options:
+	transition - the equation to use for the effect see <Fx.Transitions>; default is <Fx.Transitions.Sine.easeInOut>
+	duration - the duration of the effect in ms; 500 is the default.
+	unit - the unit is 'px' by default (other values include things like 'em' for fonts or '%').
+	wait - boolean: to wait or not to wait for a current transition to end before running another of the same instance. defaults to true.
+	fps - the frames per second for the transition; default is 50
+	
+Events:
+	onStart - the function to execute as the effect begins; nothing (<Class.empty>) by default.
+	onComplete - the function to execute after the effect has processed; nothing (<Class.empty>) by default.
+	onCancel - the function to execute when you manually stop the effect.
+*/
+
+Fx.Base = new Class({
+
+	options: {
+		onStart: Class.empty,
+		onComplete: Class.empty,
+		onCancel: Class.empty,
+		transition: function(p){
+			return -(Math.cos(Math.PI * p) - 1) / 2;
+		},
+		duration: 500,
+		unit: 'px',
+		wait: true,
+		fps: 50
+	},
+
+	initialize: function(options){
+		this.element = this.element || null;
+		this.setOptions(options);
+		if (this.options.initialize) this.options.initialize.call(this);
+	},
+
+	step: function(){
+		var time = $time();
+		if (time < this.time + this.options.duration){
+			this.delta = this.options.transition((time - this.time) / this.options.duration);
+			this.setNow();
+			this.increase();
+		} else {
+			this.stop(true);
+			this.set(this.to);
+			this.fireEvent('onComplete', this.element, 10);
+			this.callChain();
+		}
+	},
+
+	/*
+	Property: set
+		Immediately sets the value with no transition.
+
+	Arguments:
+		to - the point to jump to
+
+	Example:
+		>var myFx = new Fx.Style('myElement', 'opacity').set(0); //will make it immediately transparent
+	*/
+
+	set: function(to){
+		this.now = to;
+		this.increase();
+		return this;
+	},
+
+	setNow: function(){
+		this.now = this.compute(this.from, this.to);
+	},
+
+	compute: function(from, to){
+		return (to - from) * this.delta + from;
+	},
+
+	/*
+	Property: start
+		Executes an effect from one position to the other.
+
+	Arguments:
+		from - integer: staring value
+		to - integer: the ending value
+
+	Examples:
+		>var myFx = new Fx.Style('myElement', 'opacity').start(0,1); //display a transition from transparent to opaque.
+	*/
+
+	start: function(from, to){
+		if (!this.options.wait) this.stop();
+		else if (this.timer) return this;
+		this.from = from;
+		this.to = to;
+		this.change = this.to - this.from;
+		this.time = $time();
+		this.timer = this.step.periodical(Math.round(1000 / this.options.fps), this);
+		this.fireEvent('onStart', this.element);
+		return this;
+	},
+
+	/*
+	Property: stop
+		Stops the transition.
+	*/
+
+	stop: function(end){
+		if (!this.timer) return this;
+		this.timer = $clear(this.timer);
+		if (!end) this.fireEvent('onCancel', this.element);
+		return this;
+	}/*compatibility*/,
+	
+	custom: function(from, to){
+		return this.start(from, to);
+	},
+
+	clearTimer: function(end){
+		return this.stop(end);
+	}
+
+	/*end compatibility*/
+
+});
+
+Fx.Base.implement(new Chain, new Events, new Options);
+
+/*
+Script: Fx.CSS.js
+	Css parsing class for effects. Required by <Fx.Style>, <Fx.Styles>, <Fx.Elements>. No documentation needed, as its used internally.
+
+License:
+	MIT-style license.
+*/
+
+Fx.CSS = {
+
+	select: function(property, to){
+		if (property.test(/color/i)) return this.Color;
+		var type = $type(to);
+		if ((type == 'array') || (type == 'string' && to.contains(' '))) return this.Multi;
+		return this.Single;
+	},
+
+	parse: function(el, property, fromTo){
+		if (!fromTo.push) fromTo = [fromTo];
+		var from = fromTo[0], to = fromTo[1];
+		if (!$chk(to)){
+			to = from;
+			from = el.getStyle(property);
+		}
+		var css = this.select(property, to);
+		return {'from': css.parse(from), 'to': css.parse(to), 'css': css};
+	}
+
+};
+
+Fx.CSS.Single = {
+
+	parse: function(value){
+		return parseFloat(value);
+	},
+
+	getNow: function(from, to, fx){
+		return fx.compute(from, to);
+	},
+
+	getValue: function(value, unit, property){
+		if (unit == 'px' && property != 'opacity') value = Math.round(value);
+		return value + unit;
+	}
+
+};
+
+Fx.CSS.Multi = {
+
+	parse: function(value){
+		return value.push ? value : value.split(' ').map(function(v){
+			return parseFloat(v);
+		});
+	},
+
+	getNow: function(from, to, fx){
+		var now = [];
+		for (var i = 0; i < from.length; i++) now[i] = fx.compute(from[i], to[i]);
+		return now;
+	},
+
+	getValue: function(value, unit, property){
+		if (unit == 'px' && property != 'opacity') value = value.map(Math.round);
+		return value.join(unit + ' ') + unit;
+	}
+
+};
+
+Fx.CSS.Color = {
+
+	parse: function(value){
+		return value.push ? value : value.hexToRgb(true);
+	},
+
+	getNow: function(from, to, fx){
+		var now = [];
+		for (var i = 0; i < from.length; i++) now[i] = Math.round(fx.compute(from[i], to[i]));
+		return now;
+	},
+
+	getValue: function(value){
+		return 'rgb(' + value.join(',') + ')';
+	}
+
+};
+
+/*
+Script: Fx.Styles.js
+	Contains <Fx.Styles>
+
+License:
+	MIT-style license.
+*/
+
+/*
+Class: Fx.Styles
+	Allows you to animate multiple css properties at once;
+	Colors must be in hex format.
+	Inherits methods, properties, options and events from <Fx.Base>.
+
+Arguments:
+	el - the $(element) to apply the styles transition to
+	options - the fx options (see: <Fx.Base>)
+
+Example:
+	(start code)
+	var myEffects = new Fx.Styles('myElement', {duration: 1000, transition: Fx.Transitions.linear});
+
+	//height from 10 to 100 and width from 900 to 300
+	myEffects.start({
+		'height': [10, 100],
+		'width': [900, 300]
+	});
+
+	//or height from current height to 100 and width from current width to 300
+	myEffects.start({
+		'height': 100,
+		'width': 300
+	});
+	(end)
+*/
+
+Fx.Styles = Fx.Base.extend({
+
+	initialize: function(el, options){
+		this.element = $(el);
+		this.parent(options);
+	},
+
+	setNow: function(){
+		for (var p in this.from) this.now[p] = this.css[p].getNow(this.from[p], this.to[p], this);
+	},
+
+	set: function(to){
+		var parsed = {};
+		this.css = {};
+		for (var p in to){
+			this.css[p] = Fx.CSS.select(p, to[p]);
+			parsed[p] = this.css[p].parse(to[p]);
+		}
+		return this.parent(parsed);
+	},
+
+	/*
+	Property: start
+		Executes a transition for any number of css properties in tandem.
+
+	Arguments:
+		obj - an object containing keys that specify css properties to alter and values that specify either the from/to values (as an array) or just the end value (an integer).
+
+	Example:
+		see <Fx.Styles>
+	*/
+
+	start: function(obj){
+		if (this.timer && this.options.wait) return this;
+		this.now = {};
+		this.css = {};
+		var from = {}, to = {};
+		for (var p in obj){
+			var parsed = Fx.CSS.parse(this.element, p, obj[p]);
+			from[p] = parsed.from;
+			to[p] = parsed.to;
+			this.css[p] = parsed.css;
+		}
+		return this.parent(from, to);
+	},
+
+	increase: function(){
+		for (var p in this.now) this.element.setStyle(p, this.css[p].getValue(this.now[p], this.options.unit, p));
+	}
+
+});
+
+/*
+Class: Element
+	Custom class to allow all of its methods to be used with any DOM element via the dollar function <$>.
+*/
+
+Element.extend({
+
+	/*
+	Property: effects
+		Applies an <Fx.Styles> to the Element; This a shortcut for <Fx.Styles>.
+
+	Example:
+		>var myEffects = $(myElement).effects({duration: 1000, transition: Fx.Transitions.Sine.easeInOut});
+ 		>myEffects.start({'height': [10, 100], 'width': [900, 300]});
+	*/
+
+	effects: function(options){
+		return new Fx.Styles(this, options);
+	}
+
+});
+
+/*
+Script: Fx.Transitions.js
+	Effects transitions, to be used with all the effects.
+
+License:
+	MIT-style license.
+
+Credits:
+	Easing Equations by Robert Penner, <http://www.robertpenner.com/easing/>, modified & optimized to be used with mootools.
+*/
+
+/*
+Class: Fx.Transitions
+	A collection of tweening transitions for use with the <Fx.Base> classes.
+
+Example:
+	>//Elastic.easeOut with default values:
+	>new Fx.Style('margin', {transition: Fx.Transitions.Elastic.easeOut});
+	>//Elastic.easeOut with user-defined value for elasticity.
+	> var myTransition = new Fx.Transition(Fx.Transitions.Elastic, 3);
+	>new Fx.Style('margin', {transition: myTransition.easeOut});
+
+See also:
+	http://www.robertpenner.com/easing/
+*/
+
+Fx.Transition = function(transition, params){
+	params = params || [];
+	if ($type(params) != 'array') params = [params];
+	return $extend(transition, {
+		easeIn: function(pos){
+			return transition(pos, params);
+		},
+		easeOut: function(pos){
+			return 1 - transition(1 - pos, params);
+		},
+		easeInOut: function(pos){
+			return (pos <= 0.5) ? transition(2 * pos, params) / 2 : (2 - transition(2 * (1 - pos), params)) / 2;
+		}
+	});
+};
+
+Fx.Transitions = new Abstract({
+
+	/*
+	Property: linear
+		displays a linear transition.
+
+	Graph:
+		(see Linear.png)
+	*/
+
+	linear: function(p){
+		return p;
+	}
+
+});
+
+Fx.Transitions.extend = function(transitions){
+	for (var transition in transitions){
+		Fx.Transitions[transition] = new Fx.Transition(transitions[transition]);
+		/*compatibility*/
+		Fx.Transitions.compat(transition);
+		/*end compatibility*/
+	}
+};
+
+/*compatibility*/
+
+Fx.Transitions.compat = function(transition){
+	['In', 'Out', 'InOut'].each(function(easeType){
+		Fx.Transitions[transition.toLowerCase() + easeType] = Fx.Transitions[transition]['ease' + easeType];
+	});
+};
+
+/*end compatibility*/
+
+Fx.Transitions.extend({
+
+	/*
+	Property: Quad
+		displays a quadratic transition. Must be used as Quad.easeIn or Quad.easeOut or Quad.easeInOut
+
+	Graph:
+		(see Quad.png)
+	*/
+
+	//auto generated
+
+	/*
+	Property: Cubic
+		displays a cubicular transition. Must be used as Cubic.easeIn or Cubic.easeOut or Cubic.easeInOut
+
+	Graph:
+		(see Cubic.png)
+	*/
+
+	//auto generated
+
+	/*
+	Property: Quart
+		displays a quartetic transition. Must be used as Quart.easeIn or Quart.easeOut or Quart.easeInOut
+
+	Graph:
+		(see Quart.png)
+	*/
+
+	//auto generated
+
+	/*
+	Property: Quint
+		displays a quintic transition. Must be used as Quint.easeIn or Quint.easeOut or Quint.easeInOut
+
+	Graph:
+		(see Quint.png)
+	*/
+
+	//auto generated
+
+	/*
+	Property: Pow
+		Used to generate Quad, Cubic, Quart and Quint.
+		By default is p^6.
+
+	Graph:
+		(see Pow.png)
+	*/
+
+	Pow: function(p, x){
+		return Math.pow(p, x[0] || 6);
+	},
+
+	/*
+	Property: Expo
+		displays a exponential transition. Must be used as Expo.easeIn or Expo.easeOut or Expo.easeInOut
+
+	Graph:
+		(see Expo.png)
+	*/
+
+	Expo: function(p){
+		return Math.pow(2, 8 * (p - 1));
+	},
+
+	/*
+	Property: Circ
+		displays a circular transition. Must be used as Circ.easeIn or Circ.easeOut or Circ.easeInOut
+
+	Graph:
+		(see Circ.png)
+	*/
+
+	Circ: function(p){
+		return 1 - Math.sin(Math.acos(p));
+	},
+
+
+	/*
+	Property: Sine
+		displays a sineousidal transition. Must be used as Sine.easeIn or Sine.easeOut or Sine.easeInOut
+
+	Graph:
+		(see Sine.png)
+	*/
+
+	Sine: function(p){
+		return 1 - Math.sin((1 - p) * Math.PI / 2);
+	},
+
+	/*
+	Property: Back
+		makes the transition go back, then all forth. Must be used as Back.easeIn or Back.easeOut or Back.easeInOut
+
+	Graph:
+		(see Back.png)
+	*/
+
+	Back: function(p, x){
+		x = x[0] || 1.618;
+		return Math.pow(p, 2) * ((x + 1) * p - x);
+	},
+
+	/*
+	Property: Bounce
+		makes the transition bouncy. Must be used as Bounce.easeIn or Bounce.easeOut or Bounce.easeInOut
+
+	Graph:
+		(see Bounce.png)
+	*/
+
+	Bounce: function(p){
+		var value;
+		for (var a = 0, b = 1; 1; a += b, b /= 2){
+			if (p >= (7 - 4 * a) / 11){
+				value = - Math.pow((11 - 6 * a - 11 * p) / 4, 2) + b * b;
+				break;
+			}
+		}
+		return value;
+	},
+
+	/*
+	Property: Elastic
+		Elastic curve. Must be used as Elastic.easeIn or Elastic.easeOut or Elastic.easeInOut
+
+	Graph:
+		(see Elastic.png)
+	*/
+
+	Elastic: function(p, x){
+		return Math.pow(2, 10 * --p) * Math.cos(20 * p * Math.PI * (x[0] || 1) / 3);
+	}
+
+});
+
+['Quad', 'Cubic', 'Quart', 'Quint'].each(function(transition, i){
+	Fx.Transitions[transition] = new Fx.Transition(function(p){
+		return Math.pow(p, [i + 2]);
+	});
+	
+	/*compatibility*/
+	Fx.Transitions.compat(transition);
+	/*end compatibility*/
+});

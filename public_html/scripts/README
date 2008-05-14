@@ -1,1 +1,9 @@
 Javascripts are compressed with javascript packer of Deam Edwards at http://dean.edwards.name/packer/
+
+Used packages in mootools distribution
+--------------------------------------
+Element.Form
+Element.Selectors
+Fx.Transitions
+Fx.Styles
+Window.DomReady
