@@ -257,13 +257,18 @@ class Backend_Controller extends ReportGenerator_Backend
     public function execute_report($id = False)
     {
         ($id === False) AND $id = $this->input->post('id');
+
         $this->global_tabs->setParameter('id', $id);
 
         $rg          = new ReportGenerator_Model;
         $report_list = new PList_Component('report');
-        $report      = $rg->getReport($id);
-        $table       = $rg->describe($report['table_name']);
-        $where       = $rg->constructWhere($this->input->post('fields', Array()), $this->input->post('operators', Array()));
+
+        $fields    = $this->input->post('fields');
+        $operators = $this->input->post('operators');
+        $combines  = $this->input->post('combines');
+        $report    = $rg->getReport($id);
+        $table     = $rg->describe($report['table_name']);
+        $where     = $rg->constructWhere($fields, $operators, $combines);
 
         $report_list->setResource($rg->executeReport($report['table_name'], $report['columns'], $report['additional_columns'], $report['filters'], $where));
         $report_list->setLimit(Arag_Config::get('limit', 0));
@@ -278,8 +283,9 @@ class Backend_Controller extends ReportGenerator_Backend
         }
 
         $this->layout->table_desc = json_encode($table);
-        $this->layout->fields     = json_encode($this->input->post('fields'));
-        $this->layout->operators  = json_encode($this->input->post('operators'));
+        $this->layout->fields     = json_encode($fields);
+        $this->layout->operators  = json_encode($operators);
+        $this->layout->combines   = json_encode($combines);        
         $this->layout->table      = $table;
         $this->layout->id         = $id;
         $this->layout->content    = new View('backend/execute_report');

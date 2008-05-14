@@ -8,6 +8,7 @@
     var table_desc       = {$table_desc|smarty:nodefaults};
     var fields           = {$fields|smarty:nodefaults};
     var fields_operators = {$operators|smarty:nodefaults};
+    var fields_combines  = {$combines|smarty:nodefaults};    
     var right_align      = '{right}';
 </script>
 {arag_load_script src="scripts/mootools.js"}

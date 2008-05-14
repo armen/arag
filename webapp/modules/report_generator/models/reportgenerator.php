@@ -77,7 +77,7 @@ class ReportGenerator_Model extends Model
     }
     // }}}
     // {{{ executeReport
-    public function executeReport($table_name, $columns, $additionalColumns, $filters, $where = Array())
+    public function executeReport($table_name, $columns, $additionalColumns, $filters, $where = Null)
     {
         $resource = $this->db->select(implode(',', $columns))->from($table_name);
 
@@ -114,7 +114,7 @@ class ReportGenerator_Model extends Model
         }
 
         // Add optional conditions
-        !empty($where) AND $resource->where('('.implode(' AND ', $where).')');
+        !empty($where) AND $resource->where('('.$where.')');
 
         try {
             $resource = $resource->get()->result(False);
@@ -128,15 +128,17 @@ class ReportGenerator_Model extends Model
     }
     // }}}
     // {{{ constructWhere
-    public function constructWhere($fields, $operators)
+    public function constructWhere($fields, $operators, $combines)
     {
-        $where = Array();
+        $where = Null;
 
         foreach ($fields as $field => $values) {
             
             $escaped_field = $this->db->escape_table($field);
 
             foreach ($values as $index => $value) {
+
+                $where .= ' '.$combines[$field][$index].' '.$escaped_field.' ';
                 
                 switch ($operators[$field][$index]) {
                     case '<':
@@ -146,23 +148,23 @@ class ReportGenerator_Model extends Model
                     case '<=':
                     case '>=':
                         !is_numeric($value) AND $value = $this->db->escape($value);
-                        $where[] = $escaped_field.' '.$operators[$field][$index].' '.$value;
+                        $where .= $operators[$field][$index].' '.$value;
                         break;
 
                     case '$':
-                        $where[] = $escaped_field.' LIKE '.$this->db->escape('%'.$value);
+                        $where .= 'LIKE '.$this->db->escape('%'.$value);
                         break;
 
                     case '^':
-                        $where[] = $escaped_field.' LIKE '.$this->db->escape($value.'%');
+                        $where .= 'LIKE '.$this->db->escape($value.'%');
                         break;
 
                     case '~':
-                        $where[] = $escaped_field.' LIKE '.$this->db->escape('%'.$value.'%');;
+                        $where .= 'LIKE '.$this->db->escape('%'.$value.'%');
                         break;
 
                     case '!~':
-                        $where[] = $escaped_field.' NOT LIKE '.$this->db->escape('%'.$value.'%');;
+                        $where .= 'NOT LIKE '.$this->db->escape('%'.$value.'%');
                         break;
                 }
             }
