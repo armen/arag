@@ -8,12 +8,6 @@
 
 class ColumnSyntaxAnalyzer extends SyntaxAnalyzer
 {
-    // {{{ properties
-    
-    var $lookAhead   = Null;
-    var $symbolTable = Null;
-
-    // }}}
     // {{{ constructor
     public function __construct()
     {

@@ -12,8 +12,8 @@ class SyntaxAnalyzer
     
     protected $lexer        = Null;
     protected $lookAhead    = Null;
-    protected $symbolTable  = Null;
     protected $stack        = Null;   // Error stack
+    public    $symbolTable  = Null;
 
     const SYNTAX_ERROR       = 100;
     const UNDEFINED_ID_ERROR = 101;
@@ -26,7 +26,7 @@ class SyntaxAnalyzer
         $this->lexer = $lexer;
 
         // Set error stack
-        $this->stack = ErrorStack::instance();
+        $this->stack = new ErrorStack;
     }
     // }}}
     // {{{ analyze

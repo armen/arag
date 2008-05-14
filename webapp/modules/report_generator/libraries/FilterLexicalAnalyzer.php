@@ -6,7 +6,7 @@
 // $Id$
 // ---------------------------------------------------------------------------
 
-class ConditionLexicalAnalyzer extends LexicalAnalyzer
+class FilterLexicalAnalyzer extends LexicalAnalyzer
 {
     // {{{ properties
 
@@ -18,7 +18,7 @@ class ConditionLexicalAnalyzer extends LexicalAnalyzer
     const T_RELOP_GE  = 6;     // >=
     const T_RELOP_LE  = 7;     // <=
     const T_RELOP     = 8;     // <, =, >  
-                               // XXX: ConditionLexicalAnalyzer::T_RELOP must be after _NE,_GE,
+                               // XXX: FilterLexicalAnalyzer::T_RELOP must be after _NE,_GE,
                                //      _LE because those contain <,=,>
     const T_WITESPACE = 9; 
     const T_INVALID   = 10;
@@ -28,32 +28,32 @@ class ConditionLexicalAnalyzer extends LexicalAnalyzer
     
     // }}}
     // {{{ constructor
-    public function __contsruct()
+    public function __construct()
     {
         // Set symbol table
         $this->symbolTable = new SymbolTable;        
 
-        $this->addTokenPatterns(ConditionLexicalAnalyzer::T_ID,        "[a-zA-z][0-9a-zA-Z_]+");  // functions and columns id
-        $this->addTokenPatterns(ConditionLexicalAnalyzer::T_NUMBER,    "[0-9]\.?[0-9]*");         // numbers decimal or float numbers
-        $this->addTokenPatterns(ConditionLexicalAnalyzer::T_VALUE,     "'[^']*'");                // values XXX: this is very MySQL specific :(
-        $this->addTokenPatterns(ConditionLexicalAnalyzer::T_PARENTHES, "[\(\)]");
-        $this->addTokenPatterns(ConditionLexicalAnalyzer::T_RELOP_LE,  "<=");
-        $this->addTokenPatterns(ConditionLexicalAnalyzer::T_RELOP_GE,  ">=");
-        $this->addTokenPatterns(ConditionLexicalAnalyzer::T_RELOP_NE,  "!=");
-        $this->addTokenPatterns(ConditionLexicalAnalyzer::T_RELOP,     "[<>=]");
-        $this->addTokenPatterns(ConditionLexicalAnalyzer::T_WITESPACE, "\s\s*");
-        $this->addTokenPatterns(ConditionLexicalAnalyzer::T_INVALID,   "[^\s]");
+        $this->addTokenPatterns(FilterLexicalAnalyzer::T_ID,        "[a-zA-z][0-9a-zA-Z_]+");  // functions and columns id
+        $this->addTokenPatterns(FilterLexicalAnalyzer::T_NUMBER,    "[0-9]\.?[0-9]*");         // numbers decimal or float numbers
+        $this->addTokenPatterns(FilterLexicalAnalyzer::T_VALUE,     "'[^']*'");                // values XXX: this is very MySQL specific :(
+        $this->addTokenPatterns(FilterLexicalAnalyzer::T_PARENTHES, "[\(\)]");
+        $this->addTokenPatterns(FilterLexicalAnalyzer::T_RELOP_LE,  "<=");
+        $this->addTokenPatterns(FilterLexicalAnalyzer::T_RELOP_GE,  ">=");
+        $this->addTokenPatterns(FilterLexicalAnalyzer::T_RELOP_NE,  "!=");
+        $this->addTokenPatterns(FilterLexicalAnalyzer::T_RELOP,     "[<>=]");
+        $this->addTokenPatterns(FilterLexicalAnalyzer::T_WITESPACE, "\s\s*");
+        $this->addTokenPatterns(FilterLexicalAnalyzer::T_INVALID,   "[^\s]");
 
-        $this->addSkipToken(ConditionLexicalAnalyzer::T_WITESPACE);
-        $this->setEOIToken(ConditionLexicalAnalyzer::T_EOI);
+        $this->addSkipToken(FilterLexicalAnalyzer::T_WITESPACE);
+        $this->setEOIToken(FilterLexicalAnalyzer::T_EOI);
 
         // Set case insensitive check for symboltable
         $this->symbolTable->setCaseSensitiveCheck(False);
         
         // Add pre defined id to symbol table and it's token
-        $this->symbolTable->insert('and', ConditionLexicalAnalyzer::T_OPERATOR);
-        $this->symbolTable->insert('or', ConditionLexicalAnalyzer::T_OPERATOR);
-        // $this->symbolTable->insert('not', ConditionLexicalAnalyzer::T_OPERATOR);
+        $this->symbolTable->insert('and', FilterLexicalAnalyzer::T_OPERATOR);
+        $this->symbolTable->insert('or', FilterLexicalAnalyzer::T_OPERATOR);
+        // $this->symbolTable->insert('not', FilterLexicalAnalyzer::T_OPERATOR);
     }
     // }}}
     // {{{ & nextToken
@@ -62,11 +62,11 @@ class ConditionLexicalAnalyzer extends LexicalAnalyzer
         $token = parent::nextToken();
 
         // If token was a ID then it could be a column name, function or a operator
-        if ($token == ConditionLexicalAnalyzer::T_ID) {
+        if ($token == FilterLexicalAnalyzer::T_ID) {
             if (($sToken = $this->symbolTable->search($this->getPrevTokenVal())) != Null) {
                 $token = $sToken;
             }
-        } else if ($token == ConditionLexicalAnalyzer::T_PARENTHES) {
+        } else if ($token == FilterLexicalAnalyzer::T_PARENTHES) {
             $token = $this->getPrevTokenVal();
         }        
 

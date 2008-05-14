@@ -6,17 +6,17 @@
 // $Id$
 // ---------------------------------------------------------------------------
 
-class ConditionSyntaxAnalyzer extends SyntaxAnalyzer
+class FilterSyntaxAnalyzer extends SyntaxAnalyzer
 {
     // {{{ Constructor
     public function __construct()
     {
-        $lexer = new ConditionLexicalAnalyzer;
-    
+        $lexer = new FilterLexicalAnalyzer;
+
         // Set symbol table
         $this->symbolTable = $lexer->getSymbolTable();
 
-        parent::__construct(new ConditionLexicalAnalyzer);
+        parent::__construct(new FilterLexicalAnalyzer);
 
         // Set Error messages
         $this->setErrorMessages();
@@ -37,7 +37,7 @@ class ConditionSyntaxAnalyzer extends SyntaxAnalyzer
         // DEBUGGING:
         // echo $this->tokenToString($token , $token) . ' ';
 
-        if ($token == ConditionLexicalAnalyzer::T_ID) {
+        if ($token == FilterLexicalAnalyzer::T_ID) {
             if ($this->symbolTable->search($this->lexer->getPrevTokenVal()) == Null) {
                 
                 // Push error to error stack
@@ -77,22 +77,22 @@ class ConditionSyntaxAnalyzer extends SyntaxAnalyzer
     protected function tokenToString($token , $tokenVal)
     {
         switch ($token) {
-            case ConditionLexicalAnalyzer::T_ID:       $stredToken = (trim($tokenVal))?$tokenVal:'ID'; break;
-            case ConditionLexicalAnalyzer::T_NUMBER:   $stredToken = (trim($tokenVal))?$tokenVal:'NUMBER'; break;
-            case ConditionLexicalAnalyzer::T_FUNCTION: $stredToken = (trim($tokenVal))?$tokenVal:'FUNCTION'; break;
-            case ConditionLexicalAnalyzer::T_OPERATOR: $stredToken = (trim($tokenVal))?$tokenVal:'OPERATOR'; break;
-            case ConditionLexicalAnalyzer::T_VALUE:    $stredToken = (trim($tokenVal))?$tokenVal:'VALUE'; break;
-            case ConditionLexicalAnalyzer::T_EOI:      $stredToken = 'EOI'; break;
+            case FilterLexicalAnalyzer::T_ID:       $stredToken = (trim($tokenVal))?$tokenVal:'ID'; break;
+            case FilterLexicalAnalyzer::T_NUMBER:   $stredToken = (trim($tokenVal))?$tokenVal:'NUMBER'; break;
+            case FilterLexicalAnalyzer::T_FUNCTION: $stredToken = (trim($tokenVal))?$tokenVal:'FUNCTION'; break;
+            case FilterLexicalAnalyzer::T_OPERATOR: $stredToken = (trim($tokenVal))?$tokenVal:'OPERATOR'; break;
+            case FilterLexicalAnalyzer::T_VALUE:    $stredToken = (trim($tokenVal))?$tokenVal:'VALUE'; break;
+            case FilterLexicalAnalyzer::T_EOI:      $stredToken = 'EOI'; break;
             
             case '(':
             case ')':
                 $stredToken = $token;
                 break;
 
-            case ConditionLexicalAnalyzer::T_RELOP: 
-            case ConditionLexicalAnalyzer::T_RELOP_NE: 
-            case ConditionLexicalAnalyzer::T_RELOP_GE: 
-            case ConditionLexicalAnalyzer::T_RELOP_LE:
+            case FilterLexicalAnalyzer::T_RELOP: 
+            case FilterLexicalAnalyzer::T_RELOP_NE: 
+            case FilterLexicalAnalyzer::T_RELOP_GE: 
+            case FilterLexicalAnalyzer::T_RELOP_LE:
                 $stredToken = (trim($tokenVal))?$tokenVal:'RELOP'; 
                 break;
 
@@ -107,14 +107,14 @@ class ConditionSyntaxAnalyzer extends SyntaxAnalyzer
     protected function conditions() 
     {        
         $this->condition();
-        $this->match(ConditionLexicalAnalyzer::T_EOI);
+        $this->match(FilterLexicalAnalyzer::T_EOI);
     }
     protected function condition() 
     {
         // XXX: every condition starts with NUMBER,ID,VALUE or ( and continues with _conditionPart()
         
-        if ($this->getLookAhead() == ConditionLexicalAnalyzer::T_ID || $this->getLookAhead() == ConditionLexicalAnalyzer::T_NUMBER ||
-            $this->getLookAhead() == ConditionLexicalAnalyzer::T_VALUE) {
+        if ($this->getLookAhead() == FilterLexicalAnalyzer::T_ID || $this->getLookAhead() == FilterLexicalAnalyzer::T_NUMBER ||
+            $this->getLookAhead() == FilterLexicalAnalyzer::T_VALUE) {
 
             $this->match($this->getLookAhead());
             $this->conditionPart();
@@ -128,16 +128,16 @@ class ConditionSyntaxAnalyzer extends SyntaxAnalyzer
     {
         // XXX: This function matchs:
         //      
-        //      (ConditionLexicalAnalyzer::T_RELOP* | ConditionLexicalAnalyzer::T_OPERATOR) ConditionLexicalAnalyzer::T_ID etc,...
+        //      (FilterLexicalAnalyzer::T_RELOP* | FilterLexicalAnalyzer::T_OPERATOR) FilterLexicalAnalyzer::T_ID etc,...
         
-        if ($this->getLookAhead() == ConditionLexicalAnalyzer::T_RELOP || $this->getLookAhead() == ConditionLexicalAnalyzer::T_RELOP_NE || 
-            $this->getLookAhead() == ConditionLexicalAnalyzer::T_RELOP_GE || $this->getLookAhead() == ConditionLexicalAnalyzer::T_RELOP_LE ||
-            $this->getLookAhead() == ConditionLexicalAnalyzer::T_OPERATOR) {
+        if ($this->getLookAhead() == FilterLexicalAnalyzer::T_RELOP || $this->getLookAhead() == FilterLexicalAnalyzer::T_RELOP_NE || 
+            $this->getLookAhead() == FilterLexicalAnalyzer::T_RELOP_GE || $this->getLookAhead() == FilterLexicalAnalyzer::T_RELOP_LE ||
+            $this->getLookAhead() == FilterLexicalAnalyzer::T_OPERATOR) {
         
             $this->match($this->getLookAhead());
             
-            if ($this->getLookAhead() == ConditionLexicalAnalyzer::T_ID || $this->getLookAhead() == ConditionLexicalAnalyzer::T_NUMBER ||
-                $this->getLookAhead() == ConditionLexicalAnalyzer::T_VALUE) {
+            if ($this->getLookAhead() == FilterLexicalAnalyzer::T_ID || $this->getLookAhead() == FilterLexicalAnalyzer::T_NUMBER ||
+                $this->getLookAhead() == FilterLexicalAnalyzer::T_VALUE) {
                 
                 $this->match($this->getLookAhead());
 
