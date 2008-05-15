@@ -62,20 +62,19 @@ class PList_Component extends Component implements IteratorAggregate, ArrayAcces
         $Controller = Kohana::instance();
 
         // Set default URI
-        $directory = substr(Router::$directory, strpos(Router::$directory, 'controllers/') + 12); // 12 is strlen('controllers/')
-        $uri       = Router::$module . '/' . $directory . Router::$controller . '/' . Router::$method . '/' . implode('/', Router::$arguments);
-        $uri       = rtrim($uri, '/') . '/'; // Add trailing slash
+        $uri = Router::$module . '/' . Router::$controller_path . Router::$controller . '/' . implode('/', Router::$arguments);
+        $uri = rtrim($uri, '/') . '/'; // Add trailing slash
 
         // If namespace is not empty add an underscore at the begining
         $namespace = ($namespace) ? '_'.$namespace : $namespace;
 
-        if (preg_match('/page'.$namespace.':([0-9]+)*\//', $uri, $matches)) {
+        if (preg_match('/page'.$namespace.'\/([0-9]+)*\//', $uri, $matches)) {
             // Check if page parameter is already in uri
             $this->page = $matches[1];
-            $uri        = str_replace($matches[0], '#page#/', $uri);
+            $uri        = str_replace($matches[0], '#_page#/', $uri);
         } else {
-            // Okey uri is clean so append #page# to uri
-            $uri .= '#page#';
+            // Okey uri is clean so append #_page# to uri
+            $uri .= '#_page#';
         }
 
         $this->setURI($uri);
@@ -294,13 +293,13 @@ class PList_Component extends Component implements IteratorAggregate, ArrayAcces
             $uri = implode('/', $uri);
         }
 
-        while (preg_match($pattern, $uri, $matches)) {
+        while (preg_match($pattern, $uri, $params)) {
 
             // Checking for url Variables
-            if (is_array($row) && array_key_exists($matches[1], $row)) {
-                $uri = str_replace("#{$matches[1]}#", $row[$matches[1]], $uri);
+            if (is_array($row) && array_key_exists($params[1], $row)) {
+                $uri = str_replace("#{$params[1]}#", $row[$params[1]], $uri);
             
-            } else if (is_string($row) && preg_match('/([a-zA-z_][a-zA-Z_0-9]*)=([a-zA-Z_0-9:]+);/', $row, $matches)) {
+            } else if (is_string($row) && preg_match('/([a-zA-z_][a-zA-Z_0-9]*)=([a-zA-Z_0-9\/]+);/', $row, $matches)) {
                 $uri = str_replace("#{$matches[1]}#", $matches[2], $uri);
             }
         }
