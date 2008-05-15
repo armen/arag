@@ -46,10 +46,12 @@ class Backend_Controller extends ReportGenerator_Backend
     // {{{ generate_report_write
     public function generate_report_write()
     {
-        $rg         = new ReportGenerator_Model;
-        $columns    = $this->input->post('columns', Array());
-        $table_name = $this->input->post('table_name', Null);
-        $table      = $rg->describe($table_name);
+        $rg             = new ReportGenerator_Model;
+        $actions        = $this->input->post('actions', Array());
+        $parameter_name = $this->input->post('parameter_name', Null);
+        $columns        = $this->input->post('columns', Array());
+        $table_name     = $this->input->post('table_name', Null);
+        $table          = $rg->describe($table_name);
 
         $this->layout->table              = $table;
         $this->layout->columns            = !empty($table) ? array_combine(array_keys($table), array_keys($table)) : Array();
@@ -59,6 +61,8 @@ class Backend_Controller extends ReportGenerator_Backend
         $this->layout->report_description = $this->input->post('report_description', Null);
         $this->layout->additional_columns = $this->additional_columns;
         $this->layout->filters            = $this->filters;
+        $this->layout->actions            = $actions;
+        $this->layout->parameter_name     = $parameter_name;
 
         // Generate report's list
         $report = new PList_Component('report');
@@ -74,12 +78,28 @@ class Backend_Controller extends ReportGenerator_Backend
             $report->addColumn($label);
         }
 
+        // Add report actions
+        foreach ($actions as $action) {
+            if (!empty($action['uri'])) {
+                $group_action = (isset($action['group_action']) && $action['group_action'] == 'on') 
+                              ? PList_Component::GROUP_ACTION 
+                              : False;
+                $report->addAction($action['uri'], $action['tooltip'], $action['class_name'], $group_action);
+            }
+        }
+
+        if (!empty($parameter_name)) {
+            $report->setGroupActionParameterName($parameter_name);
+        }
+
         $this->layout->content = new View('backend/generate_report');
     }
     // }}}
     // {{{ generate_report_validate_write
     public function generate_report_validate_write()
     {
+        // TODO: validate actions
+
         $filters         = $this->input->post('filters', Array());
         $filter          = $this->input->post('filter');
         $filters_combine = $this->input->post('filters_combine', Array());
@@ -198,7 +218,9 @@ class Backend_Controller extends ReportGenerator_Backend
                         $this->input->post('report_description'), 
                         $this->input->post('columns'),
                         $additional_columns,
-                        $filters);
+                        $filters,
+                        $this->input->post('actions'),
+                        $this->input->post('parameter_name'));
 
         url::redirect('report_generator/backend/reports');
     }
@@ -281,6 +303,20 @@ class Backend_Controller extends ReportGenerator_Backend
         foreach ($report['additional_columns'] as $label => $column) {
             $report_list->addColumn($label);
         }
+
+        // Add report actions
+        foreach ($report['actions'] as $action) {
+            if (is_array($action) && !empty($action['uri'])) {
+                $group_action = (isset($action['group_action']) && $action['group_action'] == 'on') 
+                              ? PList_Component::GROUP_ACTION 
+                              : False;
+                $report_list->addAction($action['uri'], $action['tooltip'], $action['class_name'], $group_action);
+            }
+        }
+
+        if (isset($report['actions']['parameter_name']) && !empty($report['actions']['parameter_name'])) {
+            $report_list->setGroupActionParameterName($report['actions']['parameter_name']);
+        }        
 
         $this->layout->table_desc = json_encode($table);
         $this->layout->fields     = json_encode($fields);

@@ -185,8 +185,17 @@
         {/arag_block}
 
         {arag_block template="blank" align="right"}
-            <input type="hidden" name="report_name" value="{$report_name|smarty:nodefaults|default:null}" />
-            <input type="hidden" name="report_description" value="{$report_description|smarty:nodefaults|default:null}" />
+            {foreach from=$actions key=index item=action}
+                <input type="hidden" name="actions[{$index}][uri]" value="{$action.uri|smarty:nodefaults|default:""}" />
+                <input type="hidden" name="actions[{$index}][class_name]" value="{$action.class_name|smarty:nodefaults|default:""}" />
+                <input type="hidden" name="actions[{$index}][tooltip]" value="{$action.tooltip|smarty:nodefaults|default:""}" />
+                {if isset($action.group_action|smarty:nodefaults)}
+                <input type="hidden" name="actions[{$index}][group_action]" value="{$action.group_action}" />
+                {/if}
+            {/foreach}
+            <input type="hidden" name="parameter_name" value="{$parameter_name}" />
+            <input type="hidden" name="report_name" value="{$report_name}" />
+            <input type="hidden" name="report_description" value="{$report_description}" />
             <input type="hidden" name="table_name" value="{$table_name}" />
             <input type="submit" style="width:70px;height:20px;" value={quote}_("Preview"){/quote} />
             <input type="button" style="width:50px;height:20px;" id="save" value={quote}_("Save"){/quote} />            

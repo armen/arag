@@ -38,10 +38,6 @@ class ReportGenerator_Model extends Model
         foreach ($table as $key => $column) {
             preg_match('/([a-z]+)(?:\(([0-9]+)\))?/', $column['Type'], $matches);
 
-            if (!isset($matches[1])) {
-                var_dump($column);exit;
-            }
-
             $type  = $matches[1];
             $field = $column['Field'];
            
@@ -79,6 +75,8 @@ class ReportGenerator_Model extends Model
     // {{{ executeReport
     public function executeReport($table_name, $columns, $additionalColumns, $filters, $where = Null)
     {
+        empty($columns) AND $columns = Array();
+
         $resource = $this->db->select(implode(',', $columns))->from($table_name);
 
         foreach ($additionalColumns as $label => $column) {
@@ -132,6 +130,10 @@ class ReportGenerator_Model extends Model
     {
         $where = Null;
 
+        if (empty($fields)) {
+            return $fields;
+        }
+
         foreach ($fields as $field => $values) {
             
             $escaped_field = $this->db->escape_table($field);
@@ -174,8 +176,10 @@ class ReportGenerator_Model extends Model
     }
     // }}}
     // {{{ saveReport
-    public function saveReport($tableName, $reportName, $reportDesc, $columns, $additionalColumns, $filters)
+    public function saveReport($tableName, $reportName, $reportDesc, $columns, $additionalColumns, $filters, $actions, $parameter_name)
     {
+        $actions['parameter_name'] = $parameter_name;
+
         $row = Array(
                       'table_name'         => $tableName, 
                       'report_name'        => $reportName, 
@@ -183,6 +187,7 @@ class ReportGenerator_Model extends Model
                       'columns'            => serialize($columns),
                       'additional_columns' => serialize($additionalColumns),
                       'filters'            => serialize($filters),
+                      'actions'            => serialize($actions),
                       'create_date'        => time(),
                       'modify_date'        => 0
                     );
@@ -193,7 +198,7 @@ class ReportGenerator_Model extends Model
     // {{{ getReports
     public function getReports()
     {
-        return $this->db->select('id, table_name, report_name, report_desc, columns, additional_columns, filters, create_date, modify_date')
+        return $this->db->select('id, table_name, report_name, report_desc, columns, additional_columns, filters, actions, create_date, modify_date')
                         ->from($this->tableName)
                         ->get()->result(False);
     }
@@ -222,12 +227,18 @@ class ReportGenerator_Model extends Model
     // {{{ getReport
     public function getReport($id)
     {
-        $result = $this->db->select('id, table_name, report_name, report_desc, columns, additional_columns, filters, create_date, modify_date')
+        $result = $this->db->select('id, table_name, report_name, report_desc, columns, additional_columns, filters, actions, create_date, modify_date')
                            ->getwhere($this->tableName, Array('id' => $id))->current();
 
         $result['columns']            = unserialize($result['columns']);
-        $result['additional_columns'] = unserialize($result['additional_columns']);
         $result['filters']            = unserialize($result['filters']);
+        $result['actions']            = unserialize($result['actions']);
+        $result['additional_columns'] = unserialize($result['additional_columns']);
+
+        empty($result['columns']) AND $result['columns'] = Array();
+        empty($result['filters']) AND $result['filters'] = Array();
+        empty($result['actions']) AND $result['actions'] = Array();
+        empty($result['additional_columns']) AND $result['additional_columns'] = Array();
 
         return $result;
     }

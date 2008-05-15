@@ -38,6 +38,10 @@
                 <type>clob</type>
             </field>
             <field>
+                <name>actions</name>
+                <type>clob</type>
+            </field>            
+            <field>
                 <name>create_date</name>
                 <type>integer</type>
             </field>
