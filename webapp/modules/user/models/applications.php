@@ -47,13 +47,13 @@ class Applications_Model extends Model
     // {{{ getDate
     public function getDate($row)
     {
-        return date('Y-m-d H:i:s', $row['create_date']);
+        return format::date($row['create_date']);    
     }
     // }}}
     // {{{ getModifyDate
     public function getModifyDate($row)
     {
-        return date('Y-m-d H:i:s', $row['modify_date']);
+        return format::date($row['modify_date']);    
     }
     // }}}
     // {{{ hasApp

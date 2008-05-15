@@ -6,7 +6,7 @@
 
 {assign var=comments value=$component->getComments()}
 {assign var=title value=$component->getTitle()}
-
+sffdfsdfsdfsdfsdfsdf
 {if count($comments)}
     <div class="comments">
         <h3>{$title}</h3>
@@ -14,7 +14,7 @@
             <div class="comment">
                 <div class="comment_posted">
                     {capture assign="posted"}_("#%d. %s on %s"){/capture}
-                    {capture assign="date"}{$_comment->create_date|date_format:'%A, %B %e, %Y %H:%M:%S'}{/capture}
+                    {capture assign="date"}{kohana_helper function="format::date" date=$_comment->create_date}{/capture}
                     {counter assign="counter"}
                     {if empty($_comment->homepage|smarty:nodefaults)}
                         {$posted|sprintf:$counter:$_comment->name:$date}
