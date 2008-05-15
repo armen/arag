@@ -211,7 +211,7 @@ class Users_Model extends Model
         $this->db->orderby('lastname', 'ASC');
         $this->db->orderby('group_name', 'ASC');
         
-        $retval = $this->db->get($this->tableNameUsers)->result(False);
+        $retval = $this->db->get($this->tableNameUsers)->result_array(False);
 
         return $retval;
     }
