@@ -20,7 +20,7 @@
     </tr>
     <tr>
         <td align="{right}">_("Description"):</td>
-        <td><textarea name="report_description">{$report_description|smarty:nodefaults|default:null}</textarea></td>
+        <td><textarea name="report_description" rows="10" cols="20">{$report_description|smarty:nodefaults|default:null}</textarea></td>
     </tr>
     <tr>
         <td>&nbsp;</td>
