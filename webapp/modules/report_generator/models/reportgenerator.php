@@ -242,6 +242,25 @@ class ReportGenerator_Model extends Model
 
         return $result;
     }
+    // }}}
+    // {{{ getReportByName
+    public function getReportByName($name)
+    {
+        $result = $this->db->select('id, table_name, report_name, report_desc, columns, additional_columns, filters, actions, create_date, modify_date')
+                           ->getwhere($this->tableName, Array('report_name' => $name))->current();
+
+        $result['columns']            = unserialize($result['columns']);
+        $result['filters']            = unserialize($result['filters']);
+        $result['actions']            = unserialize($result['actions']);
+        $result['additional_columns'] = unserialize($result['additional_columns']);
+
+        empty($result['columns']) AND $result['columns'] = Array();
+        empty($result['filters']) AND $result['filters'] = Array();
+        empty($result['actions']) AND $result['actions'] = Array();
+        empty($result['additional_columns']) AND $result['additional_columns'] = Array();
+
+        return $result;
+    }
     // }}}    
     // {{{ List callbacks
     // {{{ getCreateDate

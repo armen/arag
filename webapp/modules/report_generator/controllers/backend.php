@@ -284,49 +284,10 @@ class Backend_Controller extends ReportGenerator_Backend
 
         $this->global_tabs->setParameter('id', $id);
 
-        $rg          = new ReportGenerator_Model;
-        $report_list = new PList_Component('report');
+        $report = new ReportGenerator_Component('report');
+        $report->generateById($id);
 
-        $fields    = $this->input->post('fields');
-        $operators = $this->input->post('operators');
-        $combines  = $this->input->post('combines');
-        $report    = $rg->getReport($id);
-        $table     = $rg->describe($report['table_name']);
-        $where     = $rg->constructWhere($fields, $operators, $combines);
-
-        $report_list->setResource($rg->executeReport($report['table_name'], $report['columns'], $report['additional_columns'], $report['filters'], $where));
-        $report_list->setLimit(Arag_Config::get('limit', 0));
-        $report_list->setEmptyListMessage(_("There is no record!"));
-
-        foreach ($report['columns'] as $column) {
-            $report_list->addColumn($column);
-        }
-
-        foreach ($report['additional_columns'] as $label => $column) {
-            $report_list->addColumn($label);
-        }
-
-        // Add report actions
-        foreach ($report['actions'] as $action) {
-            if (is_array($action) && !empty($action['uri'])) {
-                $group_action = (isset($action['group_action']) && $action['group_action'] == 'on') 
-                              ? PList_Component::GROUP_ACTION 
-                              : False;
-                $report_list->addAction($action['uri'], $action['tooltip'], $action['class_name'], $group_action);
-            }
-        }
-
-        if (isset($report['actions']['parameter_name']) && !empty($report['actions']['parameter_name'])) {
-            $report_list->setGroupActionParameterName($report['actions']['parameter_name']);
-        }        
-
-        $this->layout->table_desc = json_encode($table);
-        $this->layout->fields     = json_encode($fields);
-        $this->layout->operators  = json_encode($operators);
-        $this->layout->combines   = json_encode($combines);        
-        $this->layout->table      = $table;
-        $this->layout->id         = $id;
-        $this->layout->content    = new View('backend/execute_report');
+        $this->layout->content = new View('backend/execute_report');
     }
     // }}}
     // {{{ execute_report_validate_read
