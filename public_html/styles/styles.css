@@ -191,7 +191,6 @@ input[type=reset][disabled] {
     color           : #666;
     font-size       : 110%;
     padding-left    : 16px;
-    cursor          : hand;
     cursor          : pointer;
 }
 .arag_collapsible_block .collapsed { 
@@ -201,7 +200,10 @@ input[type=reset][disabled] {
 }
 .arag_collapsible_block .collapsed legend { 
     background      : url(../images/misc/collapsed.png) 0 50% no-repeat;
-    padding-left    : 16px;    
+    color           : #666;
+    font-size       : 110%;
+    padding-left    : 16px;
+    cursor          : pointer;
 }
 .arag_collapsible_block .collapsed div {
     display         : none;

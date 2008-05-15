@@ -4,6 +4,24 @@
     File: $Id$
 *}
 
+{if empty($selected_columns|smarty:nodefaults)}
+    {assign var="columns_block_status" value="collapsed"}
+{else}
+    {assign var="columns_block_status" value="expanded"}
+{/if}
+
+{if empty($additional_columns|smarty:nodefaults)}
+    {assign var="additional_columns_block_status" value="collapsed"}
+{else}
+    {assign var="additional_columns_block_status" value="expanded"}
+{/if}
+
+{if empty($filters|smarty:nodefaults)}
+    {assign var="filters_block_status" value="collapsed"}
+{else}
+    {assign var="filters_block_status" value="expanded"}
+{/if}
+
 {arag_load_script src="scripts/mootools.js"}
 {arag_load_script src="modpub/report_generator/complex_filters.js"}
 {arag_load_script src="modpub/report_generator/additional_columns.js"}
@@ -24,11 +42,11 @@
 {arag_block template="blank"}
     {arag_form uri="report_generator/backend/generate_report" id="form"}
 
-        {arag_block template="collapsible" title="Columns"}
+        {arag_block template="collapsible" title="Columns" status=$columns_block_status}
             {html_checkboxes name="columns" options=$columns selected=$selected_columns}
         {/arag_block}
 
-        {arag_block template="collapsible" title="Additional columns"}
+        {arag_block template="collapsible" title="Additional columns" status=$additional_columns_block_status}
 
             {arag_validation_errors}
 
@@ -90,7 +108,7 @@
 
         {/arag_block}
 
-        {arag_block template="collapsible" title="Complex Filter"}
+        {arag_block template="collapsible" title="Complex Filter" status=$filters_block_status}
 
             {if isset($filter_error|smarty:nodefaults)}
                 {arag_block align="left" dir="ltr" template="info"}
@@ -170,8 +188,8 @@
             <input type="hidden" name="report_name" value="{$report_name|smarty:nodefaults|default:null}" />
             <input type="hidden" name="report_description" value="{$report_description|smarty:nodefaults|default:null}" />
             <input type="hidden" name="table_name" value="{$table_name}" />
-            <input type="submit" value={quote}_("Preview"){/quote} />
-            <input type="button" style="width:50px;height:21px;" id="save" value={quote}_("Save"){/quote} />            
+            <input type="submit" style="width:70px;height:20px;" value={quote}_("Preview"){/quote} />
+            <input type="button" style="width:50px;height:20px;" id="save" value={quote}_("Save"){/quote} />            
         {/arag_block}
 
     {/arag_form}
