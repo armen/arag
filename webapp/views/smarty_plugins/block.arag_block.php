@@ -25,7 +25,11 @@ function smarty_block_arag_block($params, $content, &$smarty, &$repeat)
                     break;
 
                 default:
-                    $smarty->trigger_error("arag_block: unknown attribute '$_key'");
+                    if (valid::id($_key)) {
+                       $smarty->assign($_key, security::xss_clean($_val));
+                    } else {
+                        $smarty->trigger_error("arag_block: unknown attribute '$_key'");
+                    }
             }
         }
         
