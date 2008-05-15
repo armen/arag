@@ -13,6 +13,7 @@ $config = array
         'core_modules',
         'core_sessions',
         'deliver_methods',
+        'fc_payment_reports',
         'multisite_databases',
         'order_manager_orders',
         'order_manager_orders_and_products',
