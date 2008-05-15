@@ -188,7 +188,9 @@ class Backend_Controller extends ReportGenerator_Backend
 
         // }}}
 
-        $this->validation->name('column_label', _("Column Label"))->add_rules('column_label', 'valid::id')->post_filter('trim', 'column_label');
+        $this->validation->name('column_label', _("Column Label"))->add_rules('column_label', 'valid::id', 'depends_on[formula]')
+                         ->post_filter('trim', 'column_label');
+        $this->validation->name('formula', _("Formula"))->add_rules('formula', 'depends_on[column_label]');
         $result = $this->validation->validate();
 
         return $result;

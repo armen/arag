@@ -19,6 +19,7 @@ class ReportGenerator_Backend extends Controller
         // Validation messages
         $this->validation->message('required', _("%s is required."));
         $this->validation->message('id', _("%s should be valid id."));
+        $this->validation->message('depends_on', _("Please fill all fields, fields are depend on each other."));
         
         // Global tabbedbock
         $this->global_tabs = new TabbedBlock_Component('global_tabs');
