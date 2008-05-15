@@ -31,8 +31,8 @@ function smarty_function_arag_load_script($params, &$smarty)
         $smarty->trigger_error("arag_function_arag_load_script: You have to set 'src' attribute.");
     }
 
-    if (!isset($smarty->_tpl_vars['username']['_loaded'][sha1($src)])) {
-        $smarty->_tpl_vars['username']['_loaded'][sha1($src)] = True;
+    if (!isset($smarty->_tpl_vars['_loaded'][sha1($src)])) {
+        $smarty->_tpl_vars['_loaded'][sha1($src)] = True;
         return html::script($src);    
     }
     
