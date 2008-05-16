@@ -294,6 +294,24 @@
                     <value>user_profile/*</value>
                 </field>
             </insert>
+            <insert>
+                <field>
+                    <name>id</name>
+                    <value>18</value>
+                </field>
+                <field>
+                    <name>parent_id</name>
+                    <value>1</value>
+                </field>            
+                <field>
+                    <name>label</name>
+                    <value>Report Generator</value>
+                </field>
+                <field>
+                    <name>privilege</name>
+                    <value>report_generator/*</value>
+                </field>
+            </insert>
         </initialization>
     </table>
 </database>
