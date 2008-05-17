@@ -152,8 +152,10 @@ class ReportGenerator_Model extends Model
                     case '>=':
                         if (in_array($field, $date_fields_name)) {
                             $value = strtotime($value);
-                        } else { 
-                            !is_numeric($value) AND $value = $this->db->escape($value);
+                        }
+                        
+                        if (!is_numeric($value)) { 
+                            $value = $this->db->escape($value);
                         }
 
                         $where .= $operators[$field][$index].' '.$value;
