@@ -311,7 +311,17 @@ class PList_Component extends Component implements IteratorAggregate, ArrayAcces
     public function callCallback($callback, $row = Array())
     {
         // There is an array argument to pass to the callback
-        $arg = Array($row);
+        $args = Array($row);
+
+        if (preg_match('/^([^\[]++)\[(.+)\]$/', $callback, $matches)) {
+            // Split the rule into the function and args
+            $callback = $matches[1];
+            $_args    = preg_split('/(?<!\\\\),\s*/', $matches[2]);
+
+            // Replace escaped comma with comma
+            $_args  = str_replace('\,', ',', $_args);
+            $args   = array_merge($args, $_args);
+        }  
 
         if (strpos($callback, '.') !== false) {
             // Model and function separated with a dot
@@ -321,7 +331,7 @@ class PList_Component extends Component implements IteratorAggregate, ArrayAcces
             $modelName  = new $modelName;
             
             if (method_exists($modelName, $functionName)) {
-                return call_user_func_array(array($modelName, $functionName), $arg);
+                return call_user_func_array(array($modelName, $functionName), $args);
             }
         
         } else if (strpos($callback, '::') !== false) {
@@ -330,13 +340,13 @@ class PList_Component extends Component implements IteratorAggregate, ArrayAcces
             list($className, $functionName) = explode('::', $callback);
 
             if (method_exists($className, $functionName)) {
-                return call_user_func_array(array($className, $functionName), $arg);
+                return call_user_func_array(array($className, $functionName), $args);
             }
 
         } else {
             // The function is in resource
             if (method_exists($this->resource, $callback)) {
-                return call_user_func_array(array($this->resource, $callback), $arg);
+                return call_user_func_array(array($this->resource, $callback), $args);
             }            
         }
 
