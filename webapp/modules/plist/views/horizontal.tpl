@@ -13,6 +13,7 @@
 {assign var=group_actions value=$plist->getGroupActions()}
 {assign var=virtualColumns value=$plist->getVirtualColumns()}
 {assign var=pager value=$plist->getPager()}
+{assign var=sums value=$plist->getSums()}
 
 {arag_block template="blank"}
 
@@ -30,6 +31,9 @@
                     {foreach from=$columnNames item=name}
                         {if isset($columns.$name|smarty:nodefaults) && !$columns.$name.hidden}
                             <th>{$columns.$name.label}</th>
+                            {if !$columns.$name.virtual && in_array($name, $sums)}
+                                {assign var=_$name value=0}
+                            {/if}
                         {/if}
                     {/foreach}
 
@@ -60,6 +64,11 @@
                     {if is_array($row) && count($row) > 0}
                         {foreach from=$columnNames item=name}
                             {if count($columns) == 0 || (isset($columns.$name|smarty:nodefaults) && !$columns.$name.hidden && !$columns.$name.virtual)}
+                                {if !$columns.$name.virtual && in_array($name, $sums)}
+                                    {assign var="temp" value=$row.$name|default:0}
+                                    {arag_get_var assign="item" var=_$name}
+                                    {assign var=_$name value="`$item+$temp`"}
+                                {/if}
                                 <td {$onclick|smarty:nodefaults}>{$row.$name|default:"&nbsp;"}</td>
                             {elseif isset($columns.$name|smarty:nodefaults) && $columns.$name.virtual}
                                 <td {$onclick|smarty:nodefaults}>{$plist->callCallback($name, $row)}</td>
@@ -103,7 +112,11 @@
                 
                     {foreach from=$columnNames item=name}
                         {if isset($columns.$name|smarty:nodefaults) && !$columns.$name.hidden}
-                            <td>-</td>
+                            {if !$columns.$name.virtual && in_array($name, $sums)}
+                                <td>{arag_get_var var=_$name}</td>
+                            {else}
+                                <td>-</td>
+                            {/if}
                         {/if}
                     {/foreach}
 

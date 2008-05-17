@@ -22,6 +22,7 @@ class PList_Component extends Component implements IteratorAggregate, ArrayAcces
     private $virtualColumns = Array();
     private $actions        = Array();
     private $baseURI        = Array();
+    private $sums           = Array();
 
     private $groupActions             = Array();
     private $groupActionType          = 'button';
@@ -223,6 +224,12 @@ class PList_Component extends Component implements IteratorAggregate, ArrayAcces
         }
     }
     // }}}
+    // {{{ calculateSum
+    public function calculateSum($name)
+    {
+        $this->sums[] = $name;
+    }
+    // }}}
     // {{{ & getVirtualColumns
     public function & getVirtualColumns()
     {
@@ -282,6 +289,12 @@ class PList_Component extends Component implements IteratorAggregate, ArrayAcces
     {
         $columnNames = array_keys($this->columns);
         return $columnNames;
+    }
+    // }}}
+    // {{{ getSums
+    public function & getSums()
+    {
+        return $this->sums;
     }
     // }}}
     // {{{ parseURI
