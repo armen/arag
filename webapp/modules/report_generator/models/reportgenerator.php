@@ -57,6 +57,8 @@ class ReportGenerator_Model extends Model
                 case 'int':
                 case 'tinyint':
                 case 'bigint':
+                case 'double':
+                case 'float':
                     $type = in_array($field, $date_fields_name) ? 'date' : 'numeric';
                     break;
 
