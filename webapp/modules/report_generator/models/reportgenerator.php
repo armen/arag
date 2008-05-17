@@ -128,7 +128,8 @@ class ReportGenerator_Model extends Model
     // {{{ constructWhere
     public function constructWhere($fields, $operators, $combines)
     {
-        $where = Null;
+        $where            = Null;
+        $date_fields_name = Config::item('config.date_field_names');         
 
         if (empty($fields)) {
             return $fields;
@@ -149,7 +150,12 @@ class ReportGenerator_Model extends Model
                     case '!=':
                     case '<=':
                     case '>=':
-                        !is_numeric($value) AND $value = $this->db->escape($value);
+                        if (in_array($field, $date_fields_name)) {
+                            $value = strtotime($value);
+                        } else { 
+                            !is_numeric($value) AND $value = $this->db->escape($value);
+                        }
+
                         $where .= $operators[$field][$index].' '.$value;
                         break;
 
@@ -263,6 +269,12 @@ class ReportGenerator_Model extends Model
     }
     // }}}    
     // {{{ List callbacks
+    // {{{ getDate
+    public function getDate($row, $name)
+    {
+        return format::date($row[$name]);
+    }
+    // }}}    
     // {{{ getCreateDate
     public function getCreateDate($row)
     {

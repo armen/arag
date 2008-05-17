@@ -55,8 +55,10 @@ class ReportGenerator_Component extends Component
         $this->table     = $this->rg->describe($this->report['table_name']);
         $where           = $this->rg->constructWhere($this->fields, $this->operators, $this->combines);
         $result          = $this->rg->executeReport($this->report['table_name'], $this->report['columns'], 
-                                              $this->report['additional_columns'], $this->report['filters'], 
-                                              $where);
+                                                    $this->report['additional_columns'], $this->report['filters'], 
+                                                    $where);
+
+        $date_fields_name = Config::item('config.date_field_names');
 
         $list = new PList_Component('report');
         $list->setResource($result);
@@ -64,8 +66,12 @@ class ReportGenerator_Component extends Component
         $list->setEmptyListMessage(_("There is no record!"));
 
         foreach ($this->report['columns'] as $column) {
-            $list->addColumn($column);
-        }
+            if (in_array($column, $date_fields_name)) {
+                $list->addColumn('ReportGenerator.getDate['.$column.']', $column, PList_Component::VIRTUAL_COLUMN);
+            } else {
+                $list->addColumn($column);
+            }
+        }        
 
         foreach ($this->report['additional_columns'] as $label => $column) {
             $list->addColumn($label);

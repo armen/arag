@@ -63,6 +63,7 @@ class Backend_Controller extends ReportGenerator_Backend
         $this->layout->filters            = $this->filters;
         $this->layout->actions            = $actions;
         $this->layout->parameter_name     = $parameter_name;
+        $date_fields_name                 = Config::item('config.date_field_names');        
 
         // Generate report's list
         $report = new PList_Component('report');
@@ -71,7 +72,11 @@ class Backend_Controller extends ReportGenerator_Backend
         $report->setEmptyListMessage(_("There is no record!"));
 
         foreach ($columns as $column) {
-            $report->addColumn($column);
+            if (in_array($column, $date_fields_name)) {
+                $report->addColumn('ReportGenerator.getDate['.$column.']', $column, PList_Component::VIRTUAL_COLUMN);
+            } else {
+                $report->addColumn($column);
+            }            
         }
 
         foreach ($this->additional_columns as $label => $column) {
