@@ -110,5 +110,14 @@ class ReportGenerator_Component extends Component
         return $jason ? json_encode($this->fields) : $this->fields;
     }
     // }}}
-    
+    // {{{ getReportId
+    public function getReportId()
+    {
+        if (isset($this->report['id'])) {
+            return $this->report['id'];
+        }
+
+        return False;
+    }
+    // }}}
 }

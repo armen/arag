@@ -15,7 +15,7 @@
 function smarty_function_rg_generate_report($params, &$smarty)
 {
     $ext      = Config::item('smarty.templates_ext');
-    $template = 'generate_report';
+    $template = '/component/generate_report';
 
     foreach ($params as $_key => $_val) {
         switch ($_key) {
@@ -54,17 +54,18 @@ function smarty_function_rg_generate_report($params, &$smarty)
         $rg->generateReport();    
 
         // Get namespace
-        $namespace = $smarty->get_template_vars($name.'_namespace');        
+        $namespace = $smarty->get_template_vars($name.'_namespace');
 
         $smarty->assign('table', $rg->getTable());
         $smarty->assign('table_desc', $rg->getTable(True));
         $smarty->assign('fields', $rg->getFields(True));
         $smarty->assign('operators', $rg->getOperators(True));
         $smarty->assign('combines', $rg->getCombines(True));
+        $smarty->assign('id', $rg->getReportId());
         $smarty->assign('uri', url::current());
         $smarty->assign('namespace', $namespace);        
 
-        return $smarty->fetch(Arag::find_file('report_generator', 'views/component', $template, False, $ext));
+        return $smarty->fetch(Arag::find_file('report_generator', 'views', $template, False, $ext));
     }
 
     return Null;

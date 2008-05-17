@@ -30,6 +30,7 @@
     {/arag_block}
 
     {arag_block template="blank" align="right"}
+        <input type="hidden" name="id" value="{$id}" />    
         <input type="submit" value={quote}_("Update"){/quote} />
     {/arag_block}
 
