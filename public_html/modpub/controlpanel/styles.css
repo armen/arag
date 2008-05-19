@@ -9,15 +9,15 @@
     padding         : 0;
 }
 .cp_items_box .cp_centerer {
-    width           : 550px;
+    width           : 600px;
     margin          : 0 auto;
     padding         : 0;
 }
 .cp_items_box .cp_item {
     float           : left;
     margin          : 0px;
-    padding         : 5px;
-    max-width       : 65px;
+    padding         : 0px;
+    width           : 85px;
 }
 .cp_items_box .cp_item img {
     margin          : 0px;
@@ -30,6 +30,7 @@
     border          : 1px solid #aaa;
     display         : block;
     text-align      : center;
+    width           : 60px;
 }
 .cp_items_box .cp_item a:hover {
     text-decoration : none;
@@ -38,6 +39,12 @@
     border          : 1px solid #aaa;
     display         : block;
     text-align      : center;
+}
+.cp_items_box .cp_link {
+    width           : 60px;
+    color           : #000;
+    text-align      : center;
+    padding         : 10px 0px 0px 0px;
 }
 .cp_items_box .cp_link a {
     color           : #000;
@@ -48,10 +55,6 @@
     color           : #aaa;
     background-color: #fff;
     border          : 0px;    
-}
-.cp_items_box .cp_item p {
-    color           : #000;
-    text-align      : center;
 }
 .cp_items_box .cp_item_over {
     float           : left;

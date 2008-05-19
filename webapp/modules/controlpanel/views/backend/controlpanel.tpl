@@ -16,11 +16,11 @@
                     <img src="{$arag_base_url|smarty:nodefaults}/modpub/{$module.module}/icon_48x48.png" 
                          width="48" height="48" alt="{$module.description}" />
                     </a>
-                    <p class="cp_link">
+                    <div class="cp_link">
                         <a href="{kohana_helper function="url::site" uri="`$module.module`/backend"}">
                             {$module.name}
                         </a>    
-                    </p>
+                    </div>
                 </div>
             {/foreach}
             <div class="cp_spacer">&nbsp;</div>
