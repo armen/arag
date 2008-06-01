@@ -563,6 +563,12 @@ input[type=reset][disabled] {
     width           : 16px;
     height          : 16px;
 }
+.assign_action {
+    background      : transparent url(../images/list/assign.png) no-repeat center;
+    font-size       : 0px;
+    width           : 16px;
+    height          : 16px;
+}
 .apply_cancel_action {
     background      : transparent url(../images/list/apply.png) no-repeat center;
     font-size       : 0px;
