@@ -14,7 +14,7 @@ The following sample code shows how to use a block:
      {/arag_block}
   {/arag_block}
 
-This code generates this XHTML: 
+Above code generates this XHTML: 
 
    <div class="arag_block" dir="ltr">
        <div class="arag_block_title">This is a test!</div>

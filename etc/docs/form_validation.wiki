@@ -1,4 +1,6 @@
-﻿==== Form Validation ====
+﻿**Deprecated**
+
+==== Form Validation ====
 
 This feature will help you to validate your forms according to your own rules definitions. Arag's "Form Validation" is based on Kohana form validator library, but it is much more comprehensive and easier to implement than the Kohana's form validator. It lets you to check filled forms for errors and repopulate them very easily. In Kohana, as you know, you had to set rules every time you called form validation library, but in Arag, every controller of a module has it's own global sets of rules located at "<module name>/validator/<controllerName>.php". This file consists of some arrays for setting rules and fields.\\
 Just like Kohana you have to set rules for every form you have, except that here you just set them in an array and pass them to your validator of the relative method. The array consists of HTML name of the field, desire name to be shown in the error messages and the rule for the related field, like the following example:
