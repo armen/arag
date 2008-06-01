@@ -90,7 +90,7 @@ class Backend_Controller extends Controller
         $privileges->addColumn('Applications.getModifyDate', _("Modify Date"), PList_Component::VIRTUAL_COLUMN);
         $privileges->addColumn('privilege', _("Privilege"));
         $privileges->addAction('user/backend/applications/privileges_edit/#id#', _("Edit"), 'edit_action');
-        $privileges->addAction('user/backend/applications/privileges/#id#', _("View"), 'view_action', 'Privileges.isParent');
+        $privileges->addAction('user/backend/applications/privileges/#id#', _("View"), 'view_tree', 'Privileges.isParent');
         $privileges->addAction('user/backend/applications/privileges_delete/#id#', _("Delete"), 'delete_action');
         $privileges->addAction("user/backend/applications/privileges_delete", _("Delete"), 'delete_action', PList_Component::GROUP_ACTION);
         $privileges->setGroupActionParameterName('id'); 
