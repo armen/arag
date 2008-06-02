@@ -7,21 +7,20 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-04-13 09:36+0430\n"
+"POT-Creation-Date: 2008-06-02 15:18+0430\n"
 "PO-Revision-Date: 2008-04-12 23:47-0800\n"
 "Last-Translator: vafaei\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #: views/messages/not_authorized.tpl:9
 msgid "You are not authorized to access this section!"
 msgstr "شما اجازه مشاهده این بخش را ندارید"
 
-#: views/messages/not_authorized.tpl:10
+#: views/messages/not_authorized.tpl:10 views/messages/invalid_request.tpl:10
 #: views/messages/page_not_found.tpl:10
-#: views/messages/invalid_request.tpl:10
 msgid "Return to the Main Page"
 msgstr "بازگشت به صفحه اصلی"
 
@@ -29,14 +28,12 @@ msgstr "بازگشت به صفحه اصلی"
 msgid "You must login to continue."
 msgstr "برای ادامه، باید وارد شوید"
 
-#: views/messages/not_authorized.tpl:23
-#: views/backend/settings_email.tpl:33
+#: views/messages/not_authorized.tpl:23 views/backend/settings_email.tpl:33
 #: controllers/backend.php:79
 msgid "Username"
 msgstr "کلمه کاربری"
 
-#: views/messages/not_authorized.tpl:27
-#: views/backend/settings_email.tpl:37
+#: views/messages/not_authorized.tpl:27 views/backend/settings_email.tpl:37
 msgid "Password"
 msgstr "رمز عبور"
 
@@ -44,21 +41,30 @@ msgstr "رمز عبور"
 msgid "Login"
 msgstr "ورود به سیستم"
 
-#: views/messages/page_not_found.tpl:9
-msgid "Page not found"
-msgstr "صفحه مورد نظر، پیدا نشد"
-
 #: views/messages/invalid_request.tpl:8
 msgid "Your request is invalid!"
 msgstr "درخواست شما معتبر نمیباشد"
 
 #: views/messages/invalid_request.tpl:9
-msgid "If your are sure that your request isn't invalid then contact your website administrator."
-msgstr "چنانچه از صحت درخواست خود اطمینان دارید، با مدیر سایت(پشتیبانی) تماس بگیرید."
+msgid ""
+"If your are sure that your request isn't invalid then contact your website "
+"administrator."
+msgstr ""
+"چنانچه از صحت درخواست خود اطمینان دارید، با مدیر سایت(پشتیبانی) تماس بگیرید."
+
+#: views/messages/page_not_found.tpl:9
+msgid "Page not found"
+msgstr "صفحه مورد نظر، پیدا نشد"
 
 #: views/backend/settings_email.tpl:9
-msgid "To have a dynamic template which has replaceable items, you should use %variableName% like the following example template in which %username% will be replaced by username variable in the application:"
-msgstr "برای داشتن قالبی پویا که امکان تغییر ورودیها را داشته باشد، شما باید از یک %نام متغیر% استفاده کنید، مانند مثال زیر که در آن %username%  با نام کاربری موجود در برنامه جایگزین می شود:"
+msgid ""
+"To have a dynamic template which has replaceable items, you should use %"
+"variableName% like the following example template in which %username% will "
+"be replaced by username variable in the application:"
+msgstr ""
+"برای داشتن قالبی پویا که امکان تغییر ورودیها را داشته باشد، شما باید از یک %"
+"نام متغیر% استفاده کنید، مانند مثال زیر که در آن %username%  با نام کاربری "
+"موجود در برنامه جایگزین می شود:"
 
 #: views/backend/settings_email.tpl:10
 msgid "Your username is %username%."
@@ -76,8 +82,7 @@ msgstr "تنظیمات با موفقیت به روز شد!"
 msgid "SMTP Server"
 msgstr "سرور SMTP"
 
-#: views/backend/settings_email.tpl:29
-#: controllers/backend.php:73
+#: views/backend/settings_email.tpl:29 controllers/backend.php:73
 msgid "SMTP Port"
 msgstr "پورت SMTP"
 
@@ -85,8 +90,7 @@ msgstr "پورت SMTP"
 msgid "Sender's Email"
 msgstr "ایمیل فرستنده"
 
-#: views/backend/settings_email.tpl:46
-#: controllers/backend.php:82
+#: views/backend/settings_email.tpl:46 controllers/backend.php:81
 msgid "Subject"
 msgstr "موضوع"
 
@@ -102,8 +106,7 @@ msgstr "ذخیره"
 msgid "Reset"
 msgstr "فرم جدید"
 
-#: controllers/backend.php:17
-#: controllers/backend.php:21
+#: controllers/backend.php:17 controllers/backend.php:21
 msgid "Core Settings"
 msgstr "تنظیمات هسته"
 
@@ -139,7 +142,7 @@ msgstr "SMTP سرور"
 msgid "Sender's email"
 msgstr "ایمیل فرستنده"
 
-#: controllers/backend.php:85
+#: controllers/backend.php:84
 msgid "Email's template"
 msgstr "قالب ایمیل"
 
@@ -154,4 +157,3 @@ msgstr "مجاز نمی باشد!"
 #: controllers/frontend/messages.php:35
 msgid "Page Not Found!"
 msgstr "صفحه مورد نظر پیدا نشد !"
-
