@@ -45,9 +45,9 @@ class Backend_Controller extends Controller
         $this->staticpages->addColumn('author', _("Author"));
         $this->staticpages->addColumn('StaticPages.getDate', _("Create Date"), PList_Component::VIRTUAL_COLUMN);
         $this->staticpages->addColumn('StaticPages.getModifyDate', _("Modify Date"), PList_Component::VIRTUAL_COLUMN);
+        $this->staticpages->addAction('staticpages/backend/preview/#id#', _("Preview"), 'view_action');
         $this->staticpages->addAction('staticpages/backend/edit/#id#', _("Edit"), 'edit_action');
         $this->staticpages->addAction('staticpages/backend/delete/#id#', _("Delete"), 'delete_action');
-        $this->staticpages->addAction('staticpages/backend/preview/#id#', _("Preview"), 'view_action');
         $this->staticpages->addAction('staticpages/backend/gdelete', _("Delete"), 'delete_action', PList_Component::GROUP_ACTION);
         $this->staticpages->setGroupActionParameterName('id');        
         
