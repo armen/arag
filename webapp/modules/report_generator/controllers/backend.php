@@ -28,9 +28,8 @@ class Backend_Controller extends ReportGenerator_Backend
         $reports->addColumn('table_name', _("Table Name"));        
         $reports->addColumn('ReportGenerator.getCreateDate', _("Create Date"), PList_Component::VIRTUAL_COLUMN);
         $reports->addColumn('ReportGenerator.getModifyDate', _("Modify Date"), PList_Component::VIRTUAL_COLUMN);        
-        $reports->addAction('report_generator/backend/delete_report/#id#', 'Delete Report', 'delete_action');
-        // $reports->addAction('report_generator/backend/edit_report/#id#', 'Edit Report', 'edit_action');
         $reports->addAction('report_generator/backend/execute_report/#id#', 'Execute Report', 'view_action');        
+        $reports->addAction('report_generator/backend/delete_report/#id#', 'Delete Report', 'delete_action');
 
         $this->layout->content = new View('backend/reports');
     }
