@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-04-19 09:07+0430\n"
+"POT-Creation-Date: 2008-06-02 15:14+0430\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -58,7 +58,11 @@ msgstr "موضوع متن"
 msgid "Message Content"
 msgstr "متن پیغام"
 
-#: views/frontend.tpl:49
+#: views/frontend.tpl:47
+msgid "Type the text you see in image"
+msgstr "متن داخل تصویر را وارد نمایید"
+
+#: views/frontend.tpl:55
 msgid "Submit"
 msgstr "ارسال"
 
@@ -137,25 +141,34 @@ msgstr "فرمت %s یک فرمت استاندارد نیست"
 msgid "%s is not numeric"
 msgstr "%s باید یک عدد باشد"
 
-#: controllers/frontend.php:72
+#: controllers/frontend.php:20
+#, php-format
+msgid "%s mismatches by text that you typed!"
+msgstr "%s با متن ورودی شما یکسان نیست."
+
+#: controllers/frontend.php:73
 msgid "Contact name"
 msgstr "نام تماس"
 
-#: controllers/frontend.php:75
+#: controllers/frontend.php:76
 msgid "Contact number"
 msgstr "شماره ی تماس"
 
-#: controllers/frontend.php:78
+#: controllers/frontend.php:79
 msgid "Contact email"
 msgstr "ایمیل تماس"
 
-#: controllers/frontend.php:81
+#: controllers/frontend.php:82
 msgid "Message title"
 msgstr "عنوان پیغام"
 
-#: controllers/frontend.php:84
+#: controllers/frontend.php:85
 msgid "Message content"
 msgstr "متن پیغام"
+
+#: controllers/frontend.php:88
+msgid "Image's Text"
+msgstr "متن داخل تصویر"
 
 #~ msgid "Contact Management"
 #~ msgstr "مدیریت تماس ها"
