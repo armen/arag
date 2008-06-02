@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-04-14 22:06+0430\n"
+"POT-Creation-Date: 2008-06-02 15:24+0430\n"
 "PO-Revision-Date: 2008-04-13 23:58-0800\n"
 "Last-Translator: vafaei\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -109,7 +109,7 @@ msgstr "SMTP درگاه"
 msgid "Username"
 msgstr "نام کاربری"
 
-#: views/backend/settings_email.tpl:37 views/frontend/verify.tpl:26
+#: views/backend/settings_email.tpl:37 views/frontend/verify.tpl:27
 msgid "Password"
 msgstr "کلمه عبور "
 
@@ -182,17 +182,21 @@ msgstr "سطوح دسترسی پیش فرض را برای گروه Admin"
 msgid "Set default privileges for Anonymous groups"
 msgstr "سطوح دسترسی پیش فرض را برای گروه Anonymous"
 
-#: views/frontend/verify.tpl:13
+#: views/frontend/verify.tpl:14
 msgid "Please enter your username and password to activate your account"
 msgstr ""
 ".لطفا برای فعال کردن اطلاعات دسترسی خود، کلمه کاربری و رمز عبور را وارد "
 "نمایید"
 
-#: views/frontend/verify.tpl:22
+#: views/frontend/verify.tpl:23
 msgid "User Name"
 msgstr "نام کاربری"
 
-#: views/frontend/verify.tpl:33
+#: views/frontend/verify.tpl:31
+msgid "Enter text in image"
+msgstr "لطفا متن داخل تصویر را وارد نمایید"
+
+#: views/frontend/verify.tpl:38
 msgid "Verify"
 msgstr "شناسایی شد"
 
@@ -213,7 +217,7 @@ msgstr "%ss صحیح نمی باشد"
 #: controllers/backend/install.php:22
 #, php-format
 msgid "%s can contain only alpha-numeric characters, underscores or dashes"
-msgstr ""
+msgstr "%s تنها می تواند شامل حروف الفبای انگلیسی، خط فاصله و Underscore باشد."
 "تنها کاراکترهای عددی و الفبا، خط فاصه و خط زیر کلمات  برای %s مجاز می باشد.  "
 
 #: controllers/backend/install.php:23
@@ -233,7 +237,8 @@ msgstr ""
 
 #: controllers/backend/install.php:42
 msgid "Your 'public_html/sites' directory doesn't exist or isn't writeable."
-msgstr "دایرکتوری 'public_html/sites' وجود ندارد و یا فاقد دسترسی نوشتن می باشد."
+msgstr ""
+"دایرکتوری 'public_html/sites' وجود ندارد و یا فاقد دسترسی نوشتن می باشد."
 
 #: controllers/backend/install.php:47
 msgid "Your 'config/sites' directory doesn't exist or isn't writeable."
@@ -333,22 +338,30 @@ msgstr "سطوح دسترسی پیش فرض"
 msgid "User Blocking"
 msgstr "مسدود شدن کاربر"
 
-#: controllers/frontend.php:29
+#: controllers/frontend.php:19
+msgid "Image's text does not match !"
+msgstr "متن ورودی با متن داخل تصویر یکسان نمی باشد."
+
+#: controllers/frontend.php:20
+msgid "%s is required!"
+msgstr "%s الزامی می باشد."
+
+#: controllers/frontend.php:32
 msgid "Please enter a valid uri!"
 msgstr "لطفا آدرس URL صحیح را وارد نماید."
 
-#: controllers/frontend.php:34
+#: controllers/frontend.php:37
 msgid ""
 "This uri is expired! Please contact site administrator for further "
 "information."
 msgstr ""
 "آدرس معتبر نمیباشد. لطفا برای اطلاعات بیشتر با بخش پشتیبانی تماس بگیرید."
 
-#: controllers/frontend.php:64 controllers/frontend.php:73
+#: controllers/frontend.php:67 controllers/frontend.php:76
 msgid "Wrong Username or Password."
 msgstr "نام "
 
-#: controllers/frontend.php:66 controllers/frontend.php:92
+#: controllers/frontend.php:69 controllers/frontend.php:95
 msgid ""
 "Attention!! Your url will be removed and your username will get blocked if "
 "you miss %s% times while verifying!"
@@ -356,7 +369,7 @@ msgstr ""
 "توجه!!چنانچه %s% بار رمز خودرا اشتباه وارد نمایید، کلمه کاربری شما مسدود "
 "میگردد."
 
-#: controllers/frontend.php:87
+#: controllers/frontend.php:90
 msgid ""
 "Attention!! Your url removed and your username got blocked! Contact site "
 "administrator for further information"
@@ -364,7 +377,7 @@ msgstr ""
 "توجه!! کلمه کاربری شما مسدود شده است. لطفا برای اطلاعات بیشتر با بخش "
 "پشتیبانی تماس بگیرید"
 
-#: controllers/frontend.php:102
+#: controllers/frontend.php:105
 msgid ""
 "This user name is blocked. Please contact site administrator for further "
 "information or wait for %h% hours and %m% minutes"
@@ -372,9 +385,13 @@ msgstr ""
 " %h% ساعت و %m%کلمه کاریری شما مسدود شده است لطفا برای اطلاعات بیشتر با "
 "پشتیبانی تماس گرفته و یا به مدت صبر نماید"
 
-#: controllers/frontend.php:108
+#: controllers/frontend.php:111
 msgid ""
 "This user name is blocked. Please contact site administrator for further "
 "information."
 msgstr ""
 "کلمه کاربری مسدود شده است.لطفا برای اطلاعات بیشتر با پشتیبانی تماس بگیرید"
+
+#: controllers/frontend.php:129
+msgid "Image's Text"
+msgstr "متن داخل تصویر"
