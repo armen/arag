@@ -1,0 +1,170 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-06-02 15:39+0430\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: views/component/generate_report.tpl:22
+msgid "Add filter"
+msgstr "اضافه کردن فیلتر"
+
+#: views/component/generate_report.tpl:34
+msgid "Update"
+msgstr "جدید کردن"
+
+#: views/backend/generate_report.tpl:75 views/backend/generate_report.tpl:94
+msgid "Label"
+msgstr "بر چسب"
+
+#: views/backend/generate_report.tpl:77 views/backend/generate_report.tpl:96
+#: controllers/backend.php:197
+msgid "Formula"
+msgstr "فرمول"
+
+#: views/backend/generate_report.tpl:82 views/backend/generate_report.tpl:149
+msgid "Insert column"
+msgstr "درج ستون"
+
+#: views/backend/generate_report.tpl:141 views/backend/generate_report.tpl:161
+msgid "Filter"
+msgstr "فیلتر"
+
+#: views/backend/generate_report.tpl:164
+msgid "Combine"
+msgstr "ترکیب کردن"
+
+#: views/backend/generate_report.tpl:167
+msgid "OR"
+msgstr "یا"
+
+#: views/backend/generate_report.tpl:169
+msgid "AND"
+msgstr "و"
+
+#: views/backend/generate_report.tpl:200
+msgid "Preview"
+msgstr "پیش نمایش"
+
+#: views/backend/generate_report.tpl:201
+msgid "Save"
+msgstr "ذخیره"
+
+#: views/backend/delete_report.tpl:12
+#, c-format
+msgid "Do you really want to delete the '%s' Report?"
+msgstr "آیا از خذف گزارش %s مطئن هستید"
+
+#: views/backend/delete_report.tpl:18
+msgid "Yes"
+msgstr "بلی"
+
+#: views/backend/delete_report.tpl:23
+msgid "No"
+msgstr "خیر"
+
+#: views/backend/get_table.tpl:14 controllers/backend.php:28
+msgid "Table Name"
+msgstr "نام جدول"
+
+#: views/backend/get_table.tpl:18 controllers/backend.php:26
+msgid "Name"
+msgstr "نام"
+
+#: views/backend/get_table.tpl:22 controllers/backend.php:27
+msgid "Description"
+msgstr "توضیح"
+
+#: views/backend/get_table.tpl:32
+msgid "URI"
+msgstr ""
+
+#: views/backend/get_table.tpl:34
+msgid "Class Name"
+msgstr "نام کلاس"
+
+#: views/backend/get_table.tpl:36
+msgid "Tool Tip"
+msgstr "جعبه ابزار"
+
+#: views/backend/get_table.tpl:39
+msgid "Group Action"
+msgstr ""
+
+#: views/backend/get_table.tpl:44
+msgid "Parameter Name of Group Action"
+msgstr "اسم پارامتر برای Group Action"
+
+#: views/backend/get_table.tpl:52
+msgid "Next"
+msgstr "مرحله ی بعد"
+
+#: libraries/ReportGenerator_Backend.php:20
+#, php-format
+msgid "%s is required."
+msgstr "%s الزامی می باشد"
+
+#: libraries/ReportGenerator_Backend.php:21
+#, php-format
+msgid "%s should be valid id."
+msgstr "%s باید یک شناسه ی معتبر باشد."
+
+#: libraries/ReportGenerator_Backend.php:22
+msgid "Please fill all fields, fields are depend on each other."
+msgstr "لطفا تمام فیلد ها را پر کنید. فیلد ها به یکدیگر وابسته می باشند."
+
+#: libraries/ReportGenerator_Backend.php:26
+msgid "Report Generator"
+msgstr "مولد گزارش"
+
+#: libraries/ReportGenerator_Backend.php:27
+msgid "Reports List"
+msgstr "لیست گزارش ها"
+
+#: libraries/ReportGenerator_Backend.php:28
+msgid "Generate Report"
+msgstr "ایجاد گزارش"
+
+#: libraries/ReportGenerator_Backend.php:29
+msgid "Delete Report"
+msgstr "حذف گزارش گزارش"
+
+#: libraries/ReportGenerator_Backend.php:31
+msgid "Execute Report"
+msgstr "اجرای گزارش"
+
+#: component/reportgenerator.php:66 controllers/backend.php:71
+msgid "There is no record!"
+msgstr "هیچ رکوردی وجود ندارد!"
+
+#: controllers/backend.php:25
+msgid "There is no report!"
+msgstr "هیچ گزارشی وجود ندارد!"
+
+#: controllers/backend.php:29
+msgid "Create Date"
+msgstr "تاریخ ایجاد"
+
+#: controllers/backend.php:30
+msgid "Modify Date"
+msgstr "تاریخ ویرایش"
+
+#: controllers/backend.php:195
+msgid "Column Label"
+msgstr "برچسب ستون"
+
+#: controllers/backend.php:247 controllers/backend.php:271
+#: controllers/backend.php:300 controllers/backend.php:308
+msgid "ID"
+msgstr "شناسه"
