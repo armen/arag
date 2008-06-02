@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-06-02 11:39+0430\n"
+"POT-Creation-Date: 2008-06-02 14:58+0430\n"
 "PO-Revision-Date: 2008-04-14 02:27-0800\n"
 "Last-Translator: vafaei\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15,7 +15,50 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: controllers/frontend.php:17 controllers/backend.php:17
+#: views/backend/edit.tpl:12 views/backend/create.tpl:12
+#: controllers/backend.php:44 controllers/backend.php:112
+#: controllers/backend.php:157
+msgid "Subject"
+msgstr "موضوع"
+
+#: views/backend/edit.tpl:23 views/backend/create.tpl:22
+msgid "Submit"
+msgstr "ارسال"
+
+#: views/backend/settings.tpl:12
+msgid "Settings are updated successfuly!"
+msgstr "تنظیمات با موفقیت به روز شد!"
+
+#: views/backend/settings.tpl:19
+msgid "List items per page"
+msgstr "تعداد آیتم ها در صفحه"
+
+#: views/backend/settings.tpl:20
+msgid "0 means Unlimited"
+msgstr "صفر به معنی نامحدود است"
+
+#: views/backend/settings.tpl:25
+msgid "Save"
+msgstr "ذخیره"
+
+#: views/backend/settings.tpl:26
+msgid "Reset"
+msgstr "فرم جدید"
+
+#: views/backend/delete.tpl:11
+#, c-format
+msgid "Do you really want to delete '%s'?"
+msgstr "آیا واقعا مایل به حذف '%s' هستید؟"
+
+#: views/backend/delete.tpl:19
+msgid "Yes"
+msgstr "بله"
+
+#: views/backend/delete.tpl:24
+msgid "No"
+msgstr "خیر"
+
+#: controllers/backend.php:17 controllers/frontend.php:17
 msgid "Static Pages"
 msgstr "صفحه ثابت"
 
@@ -58,20 +101,13 @@ msgstr "%s الزامی می باشد."
 msgid "%s should be numeric"
 msgstr "%s باید عددی باشد."
 
-#: controllers/backend.php:44 controllers/backend.php:112
-#: controllers/backend.php:157 views/backend/edit.tpl:12
-#: views/backend/create.tpl:12
-msgid "Subject"
-msgstr "موضوع"
-
 #: controllers/backend.php:45
 msgid "Author"
 msgstr "نویسنده"
 
 #: controllers/backend.php:46
-#, fuzzy
 msgid "Create Date"
-msgstr "جدید"
+msgstr "تاریخ ایجاد"
 
 #: controllers/backend.php:47
 msgid "Modify Date"
@@ -86,43 +122,5 @@ msgid "id"
 msgstr "شناسه"
 
 #: controllers/backend.php:311
-#, fuzzy
 msgid "Limit"
-msgstr "لیست"
-
-#: views/backend/delete.tpl:11
-#, c-format
-msgid "Do you really want to delete '%s'?"
-msgstr "آیا واقعا مایل به حذف '%s' هستید؟"
-
-#: views/backend/delete.tpl:19
-msgid "Yes"
-msgstr "بله"
-
-#: views/backend/delete.tpl:24
-msgid "No"
-msgstr "خیر"
-
-#: views/backend/edit.tpl:23 views/backend/create.tpl:22
-msgid "Submit"
-msgstr "ارسال"
-
-#: views/backend/settings.tpl:12
-msgid "Settings are updated successfuly!"
-msgstr "تنظیمات با موفقیت به روز شد!"
-
-#: views/backend/settings.tpl:19
-msgid "List items per page"
-msgstr "تعداد آیتم ها در صفحه"
-
-#: views/backend/settings.tpl:20
-msgid "0 means Unlimited"
-msgstr "صفر به معنی نامحدود است"
-
-#: views/backend/settings.tpl:25
-msgid "Save"
-msgstr "ذخیره"
-
-#: views/backend/settings.tpl:26
-msgid "Reset"
-msgstr "بازنشانی"
+msgstr "محدودیت"
