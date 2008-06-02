@@ -186,7 +186,7 @@ msgstr "ذخیره"
 #: views/backend/settings_expire.tpl:30 views/backend/settings_password.tpl:26
 #: views/backend/settings_user_blocking.tpl:35 views/backend/settings.tpl:33
 msgid "Reset"
-msgstr "بازنشانی"
+msgstr "فرم جدید"
 
 #: views/backend/settings_password.tpl:19
 msgid "Random Password's length"
