@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-04-15 13:14+0430\n"
+"POT-Creation-Date: 2008-06-02 15:59+0430\n"
 "PO-Revision-Date: 2008-04-14 02:07-0800\n"
 "Last-Translator: vafaei\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -31,7 +31,7 @@ msgstr "مجوز"
 #: views/backend/privileges_edit.tpl:40 views/backend/edit_filters.tpl:29
 #: views/backend/group_privileges.tpl:47 views/backend/new_user.tpl:96
 #: views/backend/new_group.tpl:33 views/backend/user_profile.tpl:120
-#: views/backend/privileges.tpl:44 views/frontend/user_registration.tpl:98
+#: views/backend/privileges.tpl:44 views/frontend/user_registration.tpl:104
 msgid "Submit"
 msgstr "تایید"
 
@@ -92,9 +92,9 @@ msgstr "کاربر جدید به برنامه '{$appname}' اضافه شد!"
 #: controllers/backend/application.php:314
 #: controllers/backend/applications.php:261
 #: controllers/backend/applications.php:892 controllers/backend/backend.php:59
-#: controllers/frontend.php:136 controllers/frontend.php:231
-#: controllers/frontend.php:336 controllers/frontend.php:415
-#: controllers/frontend.php:494
+#: controllers/frontend.php:144 controllers/frontend.php:245
+#: controllers/frontend.php:352 controllers/frontend.php:431
+#: controllers/frontend.php:511
 msgid "Username"
 msgstr "نام "
 
@@ -104,8 +104,8 @@ msgstr "نام "
 #: controllers/backend/application.php:275
 #: controllers/backend/application.php:321
 #: controllers/backend/applications.php:895
-#: controllers/backend/applications.php:930 controllers/frontend.php:139
-#: controllers/frontend.php:497
+#: controllers/backend/applications.php:930 controllers/frontend.php:147
+#: controllers/frontend.php:514
 msgid "Password"
 msgstr "رمز عبور"
 
@@ -136,7 +136,7 @@ msgstr "گروه"
 #: controllers/backend/applications.php:431
 #: controllers/backend/applications.php:898
 #: controllers/backend/applications.php:932 controllers/backend/backend.php:58
-#: controllers/backend/backend.php:114 controllers/frontend.php:503
+#: controllers/backend/backend.php:114 controllers/frontend.php:520
 msgid "Name"
 msgstr "نام "
 
@@ -151,9 +151,9 @@ msgstr "نام خانوادگی"
 #: controllers/backend/application.php:330
 #: controllers/backend/applications.php:904
 #: controllers/backend/applications.php:938 controllers/backend/backend.php:60
-#: controllers/frontend.php:234 controllers/frontend.php:339
-#: controllers/frontend.php:418 controllers/frontend.php:509
-#: controllers/frontend.php:512
+#: controllers/frontend.php:248 controllers/frontend.php:355
+#: controllers/frontend.php:434 controllers/frontend.php:526
+#: controllers/frontend.php:529
 msgid "Email"
 msgstr "آدرس پست الکترونیکی"
 
@@ -309,7 +309,11 @@ msgstr ""
 msgid "Your Email Address"
 msgstr "آدرس پست الکترونیکی"
 
-#: views/frontend/password.tpl:41 views/frontend/remove.tpl:40
+#: views/frontend/password.tpl:39
+msgid "Enter the text of image in text box."
+msgstr ""
+
+#: views/frontend/password.tpl:45 views/frontend/remove.tpl:40
 #: views/frontend/changepassword.tpl:45
 msgid "Send"
 msgstr "ارسال"
@@ -372,6 +376,10 @@ msgstr ""
 #: views/frontend/user_registration.tpl:88
 msgid "Re-Email"
 msgstr "تکرار آدرس پست الکترونیکی"
+
+#: views/frontend/user_registration.tpl:95
+msgid "Type the text you see in image"
+msgstr ""
 
 #: controllers/backend/application.php:19
 #: controllers/backend/applications.php:19
@@ -542,13 +550,13 @@ msgstr "فایل کاربر"
 msgid "Objects"
 msgstr "موضوع"
 
-#: controllers/backend/application.php:278 controllers/frontend.php:500
+#: controllers/backend/application.php:278 controllers/frontend.php:517
 msgid "Repassword"
 msgstr "تایپ مجد رمز عبور"
 
 #: controllers/backend/application.php:284
 #: controllers/backend/application.php:327 controllers/backend/backend.php:57
-#: controllers/frontend.php:506
+#: controllers/frontend.php:523
 msgid "Lastname"
 msgstr "نام خانوادگی"
 
@@ -725,17 +733,21 @@ msgstr "طول %s کافی نمی باشد."
 msgid "%s does not match."
 msgstr "%s تطبیق ندارد."
 
-#: controllers/frontend.php:32 controllers/frontend.php:227
-#: controllers/frontend.php:332 controllers/frontend.php:490
+#: controllers/frontend.php:32 controllers/frontend.php:241
+#: controllers/frontend.php:348 controllers/frontend.php:507
 msgid "SMTP settings are not set"
 msgstr "تنظیمات سرور SMTP انجام نشده است"
 
-#: controllers/frontend.php:74 controllers/frontend.php:83
-#: controllers/frontend.php:568
+#: controllers/frontend.php:33
+msgid "Image's text does not match !"
+msgstr "متن با تصویر تطابق ندارد!"
+
+#: controllers/frontend.php:82 controllers/frontend.php:91
+#: controllers/frontend.php:587
 msgid "Wrong Username or Password."
 msgstr "نام کاربری و یا کلمه عبور اشتباه می باشد."
 
-#: controllers/frontend.php:77 controllers/frontend.php:96
+#: controllers/frontend.php:85 controllers/frontend.php:104
 #, php-format
 msgid ""
 "Attention!! You will be blocked if you miss more than %s times while login!"
@@ -743,16 +755,16 @@ msgstr ""
 "توجه داشته باشید که چنانچه بیش از %s بار رمز خود را اشتباه وارد نمایید، "
 "دسترسی شما مسدود میگردد."
 
-#: controllers/frontend.php:89
+#: controllers/frontend.php:97
 #, php-format
 msgid "Attention!! Your username got blocked for %s hours!"
 msgstr "توجه! نام کاربری شما تا %s ساعت دیگر مسدود خواهدبود."
 
-#: controllers/frontend.php:103
+#: controllers/frontend.php:111
 msgid "You are not a verified user."
 msgstr "نام کاربری شما معتبر نمی باشد"
 
-#: controllers/frontend.php:112
+#: controllers/frontend.php:120
 #, php-format
 msgid ""
 "This user name is blocked. Please contact site administrator for further "
@@ -761,7 +773,7 @@ msgstr ""
 "نام کاربری شما مسدود شده است. لطفا  برای اطلاعات بیشتر با بخش پشتیبانی تماس "
 "گرفته و یا به مدت %s  ساعت و %s  دقیقه صبر نمایید. "
 
-#: controllers/frontend.php:119 controllers/frontend.php:581
+#: controllers/frontend.php:127 controllers/frontend.php:600
 msgid ""
 "This user name is blocked. Please contact site administrator for further "
 "information."
@@ -769,12 +781,17 @@ msgstr ""
 "این نام کاربری مسدود شده است. لطفا برای اطلاعات بیشتر با بخش پشتیبانی تماس "
 "بگیرید."
 
-#: controllers/frontend.php:124
+#: controllers/frontend.php:132
 msgid "Unknown error"
 msgstr "خطای نا شناخته"
 
-#: controllers/frontend.php:184 controllers/frontend.php:288
-#: controllers/frontend.php:393
+#: controllers/frontend.php:151 controllers/frontend.php:251
+#: controllers/frontend.php:532
+msgid "Image's Text"
+msgstr "متن داخل تصویر"
+
+#: controllers/frontend.php:198 controllers/frontend.php:304
+#: controllers/frontend.php:409
 msgid ""
 "The entered information is not available in database. Please enter the "
 "correct username and email address or contact the site administrator."
@@ -782,7 +799,7 @@ msgstr ""
 "اطلاعات وارد شده ، در پایگاه داده ، قابل دسترس نمی باشند. لطفا نام کاربری و "
 "ایمیل را تصحیح نموده و یا با مدیر سایت تماس بگیرید."
 
-#: controllers/frontend.php:193
+#: controllers/frontend.php:207
 msgid ""
 "You asked to change your password, for '%username%'. So please follow the "
 "below link:\n"
@@ -794,20 +811,20 @@ msgid ""
 "%removeuri%"
 msgstr ""
 
-#: controllers/frontend.php:195
+#: controllers/frontend.php:209
 msgid "Change Password"
 msgstr "تغییر کلمه ی عبور"
 
-#: controllers/frontend.php:226 controllers/frontend.php:331
-#: controllers/frontend.php:489
+#: controllers/frontend.php:240 controllers/frontend.php:347
+#: controllers/frontend.php:506
 msgid "SMTP Settings"
 msgstr "تنظیمات SMTP"
 
-#: controllers/frontend.php:256
+#: controllers/frontend.php:272
 msgid "Please enter a valid uri to change your password"
 msgstr "لطفا به منظور تغییر کلمه عبور ، آدرس اینترنی معتبر وارد نمایید."
 
-#: controllers/frontend.php:261 controllers/frontend.php:366
+#: controllers/frontend.php:277 controllers/frontend.php:382
 msgid ""
 "This uri is expired! Please contact site administrator for further "
 "information or make a new request."
@@ -815,19 +832,19 @@ msgstr ""
 "اعتبار این آدرس منقضی شده است. لطفا  برای اطلاعات بیشتر با مدیر بخش تماس "
 "گرفته و یا درخواست جدید قرار دهید. "
 
-#: controllers/frontend.php:297
+#: controllers/frontend.php:313
 msgid "Your new password for %username%' is '%password%'"
-msgstr ""
+msgstr "کلمهی عبور جدید شما برای %username%، %password% است."
 
-#: controllers/frontend.php:298
+#: controllers/frontend.php:314
 msgid "Password Changed"
 msgstr "کلمه ی عبور تغییر کرد"
 
-#: controllers/frontend.php:361
+#: controllers/frontend.php:377
 msgid "Please enter a valid uri"
 msgstr "لطفا یک آدرس معتبر وارد نمایید"
 
-#: controllers/frontend.php:458
+#: controllers/frontend.php:474
 msgid ""
 "Thank you for registering in %appname%. To complete you registration please "
 "visit the following link:\n"
@@ -838,11 +855,11 @@ msgid ""
 "Your Password: %password%"
 msgstr ""
 
-#: controllers/frontend.php:533
+#: controllers/frontend.php:552
 msgid "Please enter a valid uri!"
 msgstr "لطفا یک آدرس معتبر وارد نمایید"
 
-#: controllers/frontend.php:538
+#: controllers/frontend.php:557
 msgid ""
 "This uri is expired! Please contact site administrator for further "
 "information."
@@ -850,7 +867,7 @@ msgstr ""
 "اعتبار این آدرس منقضی شده است. لطفا برای اطلاعات بیشتر با مدیر سایت تماس "
 "بگیرید."
 
-#: controllers/frontend.php:574
+#: controllers/frontend.php:593
 msgid ""
 "This user name is blocked. Please contact site administrator for further "
 "information or wait for %h% hours and %m% minutes"
