@@ -8,147 +8,151 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-04-15 12:07+0430\n"
+"POT-Creation-Date: 2008-06-02 16:04+0430\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: views/change_password.tpl:9
+#: views/change_password.tpl:10
 msgid "Password changed successfuly!"
 msgstr "کلمه ی عبور با موفقیت تغییر یافت!"
 
-#: views/change_password.tpl:17 controllers/backend.php:151
+#: views/change_password.tpl:18 controllers/backend.php:159
 msgid "Old Password"
 msgstr "کلمه ی عبور قدیمی"
 
-#: views/change_password.tpl:25
+#: views/change_password.tpl:26
 msgid "New Password"
 msgstr "کلمه ی عبور جدید"
 
-#: views/change_password.tpl:33
+#: views/change_password.tpl:34
 msgid "Re-New Password"
 msgstr "تکرار کلمه ی عبور جدید"
 
-#: views/change_password.tpl:44 views/user_profile.tpl:137
+#: views/change_password.tpl:45 views/user_profile.tpl:146
 msgid "Submit"
 msgstr "ارسال"
 
-#: views/user_profile.tpl:9
+#: views/user_profile.tpl:10
 msgid "You hadn't enter your personal information yet"
 msgstr "شما باید اطلاعات فردی خود را کامل کنید"
 
-#: views/user_profile.tpl:14
+#: views/user_profile.tpl:15
 msgid "Profile edited successfuly!"
 msgstr "اطلاعات فردی شما با موفقیت تغییر یافت!"
 
-#: views/user_profile.tpl:22
+#: views/user_profile.tpl:23
 msgid "Username"
 msgstr "نام کاربری"
 
-#: views/user_profile.tpl:31
+#: views/user_profile.tpl:32
 msgid "Name"
 msgstr "نام"
 
-#: views/user_profile.tpl:40
+#: views/user_profile.tpl:41
 msgid "Last Name"
 msgstr "نام خانوادگی"
 
-#: views/user_profile.tpl:49
+#: views/user_profile.tpl:50
 msgid "Email"
 msgstr "ایمیل"
 
-#: views/user_profile.tpl:63 controllers/backend.php:106
+#: views/user_profile.tpl:64 controllers/backend.php:109
 msgid "Phone"
 msgstr "تلفن"
 
-#: views/user_profile.tpl:71 controllers/backend.php:108
+#: views/user_profile.tpl:72 controllers/backend.php:111
 msgid "Cellphone"
 msgstr "تلفن همراه"
 
-#: views/user_profile.tpl:84 controllers/backend.php:114
+#: views/user_profile.tpl:85 controllers/backend.php:117
+msgid "Country"
+msgstr "کشور"
+
+#: views/user_profile.tpl:93 controllers/backend.php:119
 msgid "Province"
 msgstr "استان"
 
-#: views/user_profile.tpl:92 controllers/backend.php:112
+#: views/user_profile.tpl:101 controllers/backend.php:115
 msgid "City"
 msgstr "شهر"
 
-#: views/user_profile.tpl:100 controllers/backend.php:110
+#: views/user_profile.tpl:109 controllers/backend.php:113
 msgid "Address"
 msgstr "آدرس"
 
-#: views/user_profile.tpl:108 controllers/backend.php:116
+#: views/user_profile.tpl:117 controllers/backend.php:121
 msgid "Postal Code"
 msgstr "کد پستی"
 
-#: views/user_profile.tpl:122
+#: views/user_profile.tpl:131
 msgid "PAN Number"
 msgstr "شماره ی PAN"
 
-#: controllers/backend.php:40
+#: controllers/backend.php:41
 msgid "User Profile"
 msgstr "اطلاعات فردی کاربر"
 
-#: controllers/backend.php:41
+#: controllers/backend.php:42
 msgid "Personal Information"
 msgstr "اطلاعات شخصی"
 
-#: controllers/backend.php:42
+#: controllers/backend.php:43
 msgid "Change Password"
 msgstr "تغییر کلمه عبور"
 
-#: controllers/backend.php:46
+#: controllers/backend.php:47
 #, php-format
 msgid "%s is required"
 msgstr "%s لازم است"
 
-#: controllers/backend.php:47
+#: controllers/backend.php:48
 #, php-format
 msgid "%ss do not match"
 msgstr "%s ها با هم تطابق ندارند"
 
-#: controllers/backend.php:48
+#: controllers/backend.php:49
 #, php-format
 msgid "%s should be numeric"
 msgstr "%s باید یک عدد باشد"
 
-#: controllers/backend.php:49
+#: controllers/backend.php:50
 #, php-format
 msgid "%s should be between 5 to 10 digits"
 msgstr "%s باید ۵ تا ۱۰ رقم باشد"
 
-#: controllers/backend.php:50
+#: controllers/backend.php:51
 #, php-format
 msgid "%s should be 8 digits or shorter."
 msgstr "%s باید ۸ رقم و یا کمتر باشد"
 
-#: controllers/backend.php:51
+#: controllers/backend.php:52
 #, php-format
 msgid "%s should be exactly 11 digits"
 msgstr "%s باید دقیقا ۱۱ رقم باشد"
 
-#: controllers/backend.php:52
+#: controllers/backend.php:53
 #, php-format
 msgid "Please enter correct %s"
 msgstr "لطفا %s صحیح را وارد نمایید"
 
-#: controllers/backend.php:53
+#: controllers/backend.php:54
 #, php-format
 msgid "Password length should be at least %s characters "
 msgstr "طول کلمه ی عبور باید حداقل %s حرف باشد"
 
-#: controllers/backend.php:54
+#: controllers/backend.php:55
 #, php-format
 msgid "New Password length should be at least %s characters "
 msgstr "طول کلمه ی عبور جدید باید حداقل %s حرف باشد"
 
-#: controllers/backend.php:153
+#: controllers/backend.php:161
 msgid "Password"
 msgstr "کلمه ی عبور"
 
-#: controllers/backend.php:155
+#: controllers/backend.php:163
 msgid "Re-Password"
 msgstr "تکرار کلمه ی عبور"
