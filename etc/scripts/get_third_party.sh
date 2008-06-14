@@ -16,6 +16,15 @@ for CMD in wget tar unzip; do
 
 done
 
+# Checkout kohana
+
+if [ -d $LIBS_PATH/kohana ]; then
+    svn update ${LIBS_PATH}/kohana
+else
+    mkdir -p ${LIBS_PATH}/kohana
+    svn co http://svn.kohanaphp.com/trunk/system ${LIBS_PATH}/kohana
+fi
+
 # Download smarty
 
 if [ -d $LIBS_PATH/smarty ]; then
