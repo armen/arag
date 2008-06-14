@@ -4,7 +4,7 @@
 
 1) Checkout a copy from SVN:
 <code bash>
-  svn checkout http://svn.berlios.de/svnroot/repos/arag/trunk arag
+  git clone git://vardump.org/arag.git
 </code>
 2) Download third party libraries:
 <code bash>
