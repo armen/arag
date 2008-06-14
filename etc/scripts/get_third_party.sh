@@ -31,7 +31,7 @@ if [ -d $LIBS_PATH/pear ]; then
     rm -rf "${LIBS_PATH}/pear"
 fi
 
-wget -c -P /tmp http://arag.berlios.de/pub/pear-1.6.2.tar.bz2
+wget -c -P /tmp http://pub.vardump.org/pear-1.6.2.tar.bz2
 tar xvfj /tmp/pear-1.6.2.tar.bz2
 mv ./pear $LIBS_PATH
 
