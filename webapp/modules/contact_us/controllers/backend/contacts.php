@@ -32,7 +32,7 @@ class Contacts_Controller extends Backend_Controller
         $contact     = new Contact_Model;
         $contactInfo = (Array) $contact->getInfo($contact_id);
 
-        $this->layout->content = new View('backend/delete_confirm');
+        $this->layout->content                = new View('backend/delete_confirm');
         $this->layout->content->contact_id    = $contact_id;
         $this->layout->content->contact_title = $contactInfo['title'];
     }
@@ -106,10 +106,10 @@ class Contacts_Controller extends Backend_Controller
         $this->global_tabs->addItem(_("View"), 'contact_us/backend/contacts/view/%contact_id%' ,'contact_us/backend/contacts');
         $this->global_tabs->setParameter('contact_id' ,$contact_id);
 
-        $contact = new Contact_Model;
+        $contact     = new Contact_Model;
         $contactInfo = (Array) $contact->getInfo($contact_id);
 
-        $this->layout->content = new View('backend/view_contact');
+        $this->layout->content               = new View('backend/view_contact');
         $this->layout->content->contact_info = $contactInfo;
         $this->layout->content->uri          = 'contact_us/backend/contacts/delete/'.$contact_id;
     }
@@ -140,4 +140,3 @@ class Contacts_Controller extends Backend_Controller
     // }}}
     // }}}
 }
-?>
