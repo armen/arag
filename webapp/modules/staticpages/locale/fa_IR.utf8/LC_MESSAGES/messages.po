@@ -1,0 +1,126 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-06-02 14:58+0430\n"
+"PO-Revision-Date: 2008-04-14 02:27-0800\n"
+"Last-Translator: vafaei\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: views/backend/edit.tpl:12 views/backend/create.tpl:12
+#: controllers/backend.php:44 controllers/backend.php:112
+#: controllers/backend.php:157
+msgid "Subject"
+msgstr "موضوع"
+
+#: views/backend/edit.tpl:23 views/backend/create.tpl:22
+msgid "Submit"
+msgstr "ارسال"
+
+#: views/backend/settings.tpl:12
+msgid "Settings are updated successfuly!"
+msgstr "تنظیمات با موفقیت به روز شد!"
+
+#: views/backend/settings.tpl:19
+msgid "List items per page"
+msgstr "تعداد آیتم ها در صفحه"
+
+#: views/backend/settings.tpl:20
+msgid "0 means Unlimited"
+msgstr "صفر به معنی نامحدود است"
+
+#: views/backend/settings.tpl:25
+msgid "Save"
+msgstr "ذخیره"
+
+#: views/backend/settings.tpl:26
+msgid "Reset"
+msgstr "فرم جدید"
+
+#: views/backend/delete.tpl:11
+#, c-format
+msgid "Do you really want to delete '%s'?"
+msgstr "آیا واقعا مایل به حذف '%s' هستید؟"
+
+#: views/backend/delete.tpl:19
+msgid "Yes"
+msgstr "بله"
+
+#: views/backend/delete.tpl:24
+msgid "No"
+msgstr "خیر"
+
+#: controllers/backend.php:17 controllers/frontend.php:17
+msgid "Static Pages"
+msgstr "صفحه ثابت"
+
+#: controllers/backend.php:21
+msgid "StaticPages"
+msgstr "صفحات ثابت"
+
+#: controllers/backend.php:22
+msgid "List"
+msgstr "لیست"
+
+#: controllers/backend.php:23
+msgid "Create"
+msgstr "جدید"
+
+#: controllers/backend.php:24
+msgid "Settings"
+msgstr "تنظیمات"
+
+#: controllers/backend.php:25 controllers/backend.php:48
+msgid "Edit"
+msgstr "ویرایش"
+
+#: controllers/backend.php:26 controllers/backend.php:50
+msgid "Preview"
+msgstr "نمایش"
+
+#: controllers/backend.php:27 controllers/backend.php:49
+#: controllers/backend.php:51
+msgid "Delete"
+msgstr "حذف"
+
+#: controllers/backend.php:30
+#, php-format
+msgid "%s is required."
+msgstr "%s الزامی می باشد."
+
+#: controllers/backend.php:31
+#, php-format
+msgid "%s should be numeric"
+msgstr "%s باید عددی باشد."
+
+#: controllers/backend.php:45
+msgid "Author"
+msgstr "نویسنده"
+
+#: controllers/backend.php:46
+msgid "Create Date"
+msgstr "تاریخ ایجاد"
+
+#: controllers/backend.php:47
+msgid "Modify Date"
+msgstr "تاریخ اصلاح"
+
+#: controllers/backend.php:115 controllers/backend.php:160
+msgid "Page"
+msgstr "صفحه"
+
+#: controllers/backend.php:155
+msgid "id"
+msgstr "شناسه"
+
+#: controllers/backend.php:311
+msgid "Limit"
+msgstr "محدودیت"
