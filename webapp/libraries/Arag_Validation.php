@@ -26,7 +26,7 @@ class Validation extends Validation_Core {
             return new Validation($data);
         }
 
-        return $_POST = new Validation(array_merge($_POST, $_FILES));
+        return $_POST = new Validation(array_merge($_POST, arr::standardize_files_array($_FILES)));
     }
     // }}}
     // {{{ name
