@@ -5,4 +5,6 @@ public_html/scripts/FCKeditor/
 webapp/cache/kohana_configuration
 webapp/cache/kohana_file_paths
 webapp/cache/smarty_compile/
-*.log.php
+webapp/logs/*.log.php
+webapp/logs/*.log
+messages.mo
