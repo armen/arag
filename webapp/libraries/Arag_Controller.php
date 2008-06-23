@@ -51,7 +51,7 @@ class Controller extends Controller_Core {
         $this->layout->auth      = $this->session->get('user.authenticated');
 
         // Set default page_title
-        $this->layout->page_title = 'Arag';
+        $this->layout->page_title = ucwords(APPNAME);
 
         // Initialize gettext
         bindtextdomain('messages', MODPATH . Router::$module . '/locale/');
