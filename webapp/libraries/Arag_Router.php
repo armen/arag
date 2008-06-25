@@ -52,8 +52,10 @@ class Router extends Router_Core {
         $old_include_paths = Config::include_paths();
         Config::set('core.modules', array_unique(array_merge($old_include_paths, glob(MODPATH.'*', GLOB_ONLYDIR))));
 
-        // Fetch all routers and save it
-        self::$routes = Config::item('routes');
+        if (self::$routes === NULL) {
+            // Load routes
+            self::$routes = Config::item('routes');
+        }
 
         // Default route status
         $default_route = FALSE;        
@@ -76,8 +78,11 @@ class Router extends Router_Core {
         // At this point segments, rsegments, and current URI are all the same
         self::$segments = self::$rsegments = self::$current_uri = trim(self::$current_uri, '/');
 
+        // Set the complete URI
+        self::$complete_uri = self::$query_string.self::$current_uri;
+
         // Explode the segments by slashes
-        self::$segments = (self::$segments === '') ? array() : explode('/', self::$segments);
+        self::$segments = ($default_route === TRUE OR self::$segments === '') ? array() : explode('/', self::$segments);
 
         if ($default_route === FALSE AND count(self::$routes) > 1) {
             // Custom routing
@@ -95,44 +100,65 @@ class Router extends Router_Core {
         $include_paths = array_unique(array_merge($old_include_paths, Array(MODPATH.self::$module)));
         Config::set('core.modules', $include_paths);
 
-        // Prepare for Controller search
-        self::$directory  = '';
-        self::$controller = '';
-
-        // Path to be added to as we search deeper
-        $search = '/controllers';
-
-        // controller path to be added to as we search deeper
+        // Prepare to find the controller
         $controller_path = '';
+        $method_segment  = NULL;
 
-        // Use the rsegments to find the controller
-        foreach($rsegments as $key => $segment) {
-            foreach($include_paths as $path) {
-                // The controller has been found, all arguments can be set
-                if (is_file($path.$search.'/'.$segment.EXT)) {
-                    self::$directory       = $path.$search.'/';
-                    self::$controller      = $segment;
-                    self::$controller_path = $controller_path;
-                    self::$method          = isset($rsegments[$key + 1]) ? $rsegments[$key + 1] : 'index';
-                    self::$arguments       = isset($rsegments[$key + 2]) ? array_slice($rsegments, $key + 2) : array();
+        foreach ($rsegments as $key => $segment) {
+            // Add the segment to the search path
+            $controller_path .= $segment;
 
-                    // Stop searching, two levels for foreach
-                    break 2;
+            $found = FALSE;
+            foreach (Config::include_paths() as $dir) {
+                // Search within controllers only
+                $dir .= 'controllers/';
+
+                if (file_exists($dir.$controller_path) OR file_exists($dir.$controller_path.EXT)) {
+                    // Valid path
+                    $found = TRUE;
+
+                    if (is_file($dir.$controller_path.EXT)) {
+                        // Set controller name
+                        self::$controller = $segment;
+
+                        // Change controller path
+                        self::$controller_path = $dir.$controller_path.EXT;
+
+                        // Set the method segment
+                        $method_segment = $key + 1;
+                    }
                 }
             }
 
-            // Add the segment to the search
-            $search          .= '/'.$segment;
-            $controller_path .= $segment.'/';            
+            if ($found === FALSE) {
+                // Maximum depth has been reached, stop searching
+                break;
+            }
+
+            // Add another slash
+            $controller_path .= '/';
         }
 
+        if ($method_segment !== NULL AND isset($rsegments[$method_segment])) {
+            // Set method
+            self::$method = $rsegments[$method_segment];
+
+            if (isset($rsegments[$method_segment + 1])) {
+                // Set arguments
+                self::$arguments = array_slice($rsegments, $method_segment + 1);
+            }
+        } else  {
+            // Append default method
+            self::$rsegments[] = self::$method;
+        }
+        
         // Last chance to set routing before a 404 is triggered
         Event::run('system.post_routing');
 
-        if (empty(self::$controller)) {
+        if (self::$controller === NULL) {
             // No controller was found, so no page can be rendered
             Event::run('system.404');
-        }   
+        }
     }
     // }}}
     // {{{ request_method
@@ -176,6 +202,3 @@ class Router extends Router_Core {
     }
     // }}}    
 }
-
-?>
-

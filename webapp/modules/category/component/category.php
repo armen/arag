@@ -39,9 +39,7 @@ class Category_Component extends Component
         $Controller = Kohana::instance();
 
         // Set default URI
-        $directory = substr(Router::$directory, strpos(Router::$directory, 'controllers/') + 12); // 12 is strlen('controllers/')
-        $uri       = Router::$module . '/' . $directory . Router::$controller . '/' . Router::$method . '/' . implode('/', Router::$arguments);
-        $uri       = rtrim($uri, '/') . '/'; // Add trailing slash
+        $uri = implode('/', Router::$rsegments).'/'; // Add trailing slash
 
         // If namespace is not empty add an underscore at the begining
         $namespace = ($namespace) ? '_'.$namespace : $namespace;
@@ -199,4 +197,3 @@ class Category_Component extends Component
     }
     // }}}
 }
-?>

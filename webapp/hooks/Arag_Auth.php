@@ -32,7 +32,7 @@ class Arag_Auth {
         $session = Session::instance();
         $appname = $session->get('user.appname', APPNAME);
 
-        $destination = Router::$module . '/' . Router::$controller_path . Router::$controller . '/' . Router::$method;
+        $destination = implode('/', Router::$rsegments);
 
         if (!$session->get('user.authenticated') && $session->get('user.username') != 'anonymous') {
 
@@ -135,5 +135,3 @@ class Arag_Auth {
     }
     // }}}
 }
-
-?>
