@@ -13,8 +13,6 @@ PYTHON="python2.5"
 TRAC_POST_COMMIT_HOOK="/path/to/trac-post-commit-hook"
 TRAC_ENV="/path/to/project/trac/env"
 
-read oldrev newrev refname
-
 ticket_manager()
 {
     oldrev=$(git rev-parse $1)
@@ -38,3 +36,8 @@ ticket_manager()
         fi
     fi
 }
+
+while read oldrev newrev refname
+do
+    ticket_manager $oldrev $newrev
+done
