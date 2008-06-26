@@ -42,11 +42,12 @@ class Backend_Controller extends Controller
     public function email_write()
     {
         $settings = array (
-                           'smtpserver' => $this->input->post('smtpserver'),
-                           'sender'     => $this->input->post('sender'),
-                           'subject'    => $this->input->post('subject'),
-                           'template'   => $this->input->post('template'),
-                           'smtpport'   => $this->input->post('smtpport')
+                           'smtpserver'     => $this->input->post('smtpserver'),
+                           'sender'         => $this->input->post('sender'),
+                           'subject'        => $this->input->post('subject'),
+                           'template'       => $this->input->post('template'),
+                           'smtpport'       => $this->input->post('smtpport'),
+                           'authentication' => false
                           );
 
         if ($this->input->post('username')) {
