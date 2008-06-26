@@ -31,7 +31,7 @@ class Model extends Model_Core {
         } else {
 
             $config = defined('MASTERAPP') ? 'default' : Config::item('sites/'.APPNAME.'.database');
-        
+
             // Load the default database if necessary
             ($db === NULL) and $db = new Database($config);
 
@@ -58,7 +58,5 @@ class Model extends Model_Core {
 
         return $model;
     }
-    // }}}    
+    // }}}
 }
-
-?>
