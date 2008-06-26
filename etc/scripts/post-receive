@@ -15,23 +15,26 @@ TRAC_ENV="/path/to/project/trac/env"
 
 read oldrev newrev refname
 
-oldrev=$(git rev-parse $oldrev)
-newrev=$(git rev-parse $newrev)
+ticket_manager()
+{
+    oldrev=$(git rev-parse $1)
+    newrev=$(git rev-parse $2)
 
-if expr "$oldrev" : '0*$' >/dev/null
-then
-    # 0000->1234 (create)
-    $PYTHON $TRAC_POST_COMMIT_HOOK -p $TRAC_ENV -r $newrev
-else
-    if expr "$newrev" : '0*$' >/dev/null
+    if expr "$oldrev" : '0*$' >/dev/null
     then
-        # 2345->0000 (delete)
-        $PYTHON $TRAC_POST_COMMIT_HOOK -p $TRAC_ENV -r $oldrev
+        # 0000->1234 (create)
+        $PYTHON $TRAC_POST_COMMIT_HOOK -p $TRAC_ENV -r $newrev
     else
-        # 1234->2345 (update)
-        for rev in $(git rev-list --reverse $oldrev..$newrev)
-        do
-            $PYTHON $TRAC_POST_COMMIT_HOOK -p $TRAC_ENV -r $rev
-        done
+        if expr "$newrev" : '0*$' >/dev/null
+        then
+            # 2345->0000 (delete)
+            $PYTHON $TRAC_POST_COMMIT_HOOK -p $TRAC_ENV -r $oldrev
+        else
+            # 1234->2345 (update)
+            for rev in $(git rev-list --reverse $oldrev..$newrev)
+            do
+                $PYTHON $TRAC_POST_COMMIT_HOOK -p $TRAC_ENV -r $rev
+            done
+        fi
     fi
-fi
+}
