@@ -29,7 +29,7 @@ class Arag_Config_Core
         if (get_magic_quotes_gpc() == True) {
             $value = serialize($value);
         } else {
-            $value = serialize(addslashes($value));
+            $value = addslashes(serialize($value));
         }        
 
         if (count($query) == 0){
@@ -55,9 +55,9 @@ class Arag_Config_Core
 
         if (count($query) > 0) {
             if (get_magic_quotes_gpc() == True) {
-                $result = unserialize(stripslashes($query->current()->value));
-            } else {
                 $result = unserialize($query->current()->value);
+            } else {
+                $result = unserialize(stripslashes($query->current()->value));
             }
         }
 
