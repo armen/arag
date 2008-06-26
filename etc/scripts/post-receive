@@ -1,0 +1,38 @@
+#!/bin/sh
+#
+# An example hook script for the post-receive event
+#
+# This script is run after receive-pack has accepted a pack and the
+# repository has been updated.  It is passed arguments in through stdin
+# in the form
+#  <oldrev> <newrev> <refname>
+# For example:
+#  aa453216d1b3e49e7f6f98441fa56946ddcd6a20 68f7abf4e6f922807889f52bc043ecd31b79f814 refs/heads/master
+#
+
+PYTHON="python2.5"
+TRAC_POST_COMMIT_HOOK="/path/to/trac-post-commit-hook"
+TRAC_ENV="/path/to/project/trac/env"
+
+read oldrev newrev refname
+
+oldrev=$(git rev-parse $oldrev)
+newrev=$(git rev-parse $newrev)
+
+if expr "$oldrev" : '0*$' >/dev/null
+then
+    # 0000->1234 (create)
+    $PYTHON $TRAC_POST_COMMIT_HOOK -p $TRAC_ENV -r $newrev
+else
+    if expr "$newrev" : '0*$' >/dev/null
+    then
+        # 2345->0000 (delete)
+        $PYTHON $TRAC_POST_COMMIT_HOOK -p $TRAC_ENV -r $oldrev
+    else
+        # 1234->2345 (update)
+        for rev in $(git rev-list --reverse $oldrev..$newrev)
+        do
+            $PYTHON $TRAC_POST_COMMIT_HOOK -p $TRAC_ENV -r $rev
+        done
+    fi
+fi
