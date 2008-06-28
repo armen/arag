@@ -119,7 +119,7 @@ class Applications_Controller extends Backend_Controller
     // {{{ groups_read_error
     public function groups_read_error()
     {
-        $this->_invalid_request("user/backend/applications/index");        
+        $this->_invalid_request("user/backend/applications/index", _("Invalid Application name"));
     }
     // }}}
     // {{{ default_group_read
@@ -139,7 +139,7 @@ class Applications_Controller extends Backend_Controller
     // {{{ default_group_read_error
     public function default_group_read_error()
     {
-        $this->_invalid_request("user/backend/applications/index");
+        $this->_invalid_request("user/backend/applications/index", _("Invalid Application name"));
     }
     // }}}
     // {{{ new_group_read
@@ -159,7 +159,7 @@ class Applications_Controller extends Backend_Controller
     // {{{ new_group_read_error
     public function new_group_read_error()
     {
-        $this->_invalid_request("user/backend/applications/index");
+        $this->_invalid_request("user/backend/applications/index", _("Invalid Application name"));
     }
     // }}}
     // {{{ users_read
@@ -191,7 +191,7 @@ class Applications_Controller extends Backend_Controller
     // {{{ users_read_error
     public function users_read_error()
     {
-        $this->_invalid_request("user/backend/applications/index");
+        $this->_invalid_request("user/backend/applications/index", _("Invalid ID or Application name"));
     }
     // }}}
     // {{{ all_users
@@ -244,7 +244,7 @@ class Applications_Controller extends Backend_Controller
     // {{{ new_user_read_error
     public function new_user_read_error()
     {
-        $this->_invalid_request("user/backend/applications/index");
+        $this->_invalid_request("user/backend/applications/index", _("Invalid Application name"));
     }
     // }}}
     // {{{ user_profile_read
@@ -266,7 +266,7 @@ class Applications_Controller extends Backend_Controller
     // {{{ user_profile_read_error
     public function user_profile_read_error()
     {
-        $this->_invalid_request("user/backend/applications/index");
+        $this->_invalid_request("user/backend/applications/index", _("Invalid Username"));
     }
     // }}}
     // {{{ delete
@@ -289,7 +289,7 @@ class Applications_Controller extends Backend_Controller
             }
             $this->global_tabs->addItem(_("Delete"), "user/backend/applications/delete/".$type);
         }
-        
+
         $subjects = array();
 
         foreach ($objects as $key) {
@@ -298,23 +298,23 @@ class Applications_Controller extends Backend_Controller
 
             if (preg_match("/^user$/", $type)) {
                 $exist = $this->Users->hasUserName($key);
-                
+
                 if (!$exist) {
-                    $this->_invalid_request("user/backend/applications/index");
+                    $this->_invalid_request("user/backend/applications/index", _("Invalid Type"));
                 }
-                
+
                 array_push($subjects, $key);
             } else if (preg_match("/^group$/", $type)) {
                 $exist = $this->Groups->hasGroup(NULL, NULL, $key);
-                
+
                 if (!$exist) {
-                    $this->_invalid_request("user/backend/applications/index");
+                    $this->_invalid_request("user/backend/applications/index", _("Invalid Type"));
                 }
-                
+
                 $row = $this->Groups->getGroup($key);
                 array_push($subjects, $row['name']);
             } else {
-                $this->_invalid_request("user/backend/applications/index");                
+                $this->_invalid_request("user/backend/applications/index", _("Invalid Object"));
             }
 
         }
@@ -348,7 +348,7 @@ class Applications_Controller extends Backend_Controller
                 url::redirect('user/backend/applications/all_users');
             }
         } else {
-            $this->_invalid_request("user/backend/applications/index");
+            $this->_invalid_request("user/backend/applications/index", _("No form is submitted"));
         }
     }
     // }}} 
@@ -534,16 +534,16 @@ class Applications_Controller extends Backend_Controller
                 // check if the passed filter(s) exist(s)
                 $exist = $this->Filters->hasFilter($appname, $filter);
             }
-                
+
             if (!$exist) {
-                $this->_invalid_request("user/backend/applications/index");
+                $this->_invalid_request("user/backend/applications/index", _("Invalid Object"));
             }
 
             array_push($subjects, $filter);
         }
-        
+
         $subjects = implode(", ", $subjects);
-        
+
         $data = array('objects'    => $objects,
                       'subjects'   => $subjects,
                       'objecttype' => $objecttype,
@@ -580,16 +580,16 @@ class Applications_Controller extends Backend_Controller
 
             // check if the passed app(s) exist(s)
             $exist = $this->Filters->hasApp($key);
-                
+
             if (!$exist) {
-                $this->_invalid_request("user/backend/applications/apps_filters");
+                $this->_invalid_request("user/backend/applications/apps_filters", _("Invalid Object"));
             }
 
             array_push($subjects, $key);
         }
-        
+
         $subjects = implode(", ", $subjects);
-        
+
         $data = array('objects'    => $objects,
                       'subjects'   => $subjects,
                       'objecttype' => $objecttype,
@@ -603,7 +603,7 @@ class Applications_Controller extends Backend_Controller
     {
         $objects    = $this->input->post('objects');
         $objecttype = $this->input->post('objecttype');
-         
+
         if ($this->input->post('submit')) {
             if ($objecttype) {
                 $this->Filters->deleteApps($objects);
@@ -614,7 +614,7 @@ class Applications_Controller extends Backend_Controller
                 url::redirect('user/backend/applications/app_filters/'.$appname);
             }
         } else {
-            $this->_invalid_request("user/backend/applications/index");
+            $this->_invalid_request("user/backend/applications/index", _("No form is submitted"));
         }
     }
     // }}}
@@ -750,7 +750,7 @@ class Applications_Controller extends Backend_Controller
     // {{{ privileges_edit_validate_read
     public function  privileges_edit_validate_read()
     {
-        $this->validation->name(0, _("Lable"))->add_rules(0, 'required', array($this, '_check_label'));
+        $this->validation->name(0, _("Label"))->add_rules(0, 'required', array($this, '_check_label'));
 
         return $this->validation->validate();
     }
@@ -758,7 +758,7 @@ class Applications_Controller extends Backend_Controller
     // {{{ privileges_edit_read_error
     public function privileges_edit_read_error()
     {
-        $this->_invalid_request('user/backend/applications/index');
+        $this->_invalid_request('user/backend/applications/index'. _("Invalid Label"));
     }
     // }}}
     // {{{ privileges_edit_write
@@ -833,9 +833,9 @@ class Applications_Controller extends Backend_Controller
             if ($labels->parent_id === "0") {
                 $flagcaption = true;
             }
-                
+
             if (!$exist) {
-                $this->_invalid_request("user/backend/applications/privileges_parents");
+                $this->_invalid_request("user/backend/applications/privileges_parents", _("Invalid Object"));
             }
 
             $subjects[] = $labels->label;
@@ -896,10 +896,10 @@ class Applications_Controller extends Backend_Controller
              ->add_rules('password', 'required', 'length['.$passwordLength.', 255]', 'matches[repassword]');
 
         $this->validation->name('name', _("Name"))->pre_filter('trim', 'name')
-             ->add_rules('name', 'required', 'valid::alpha');
+             ->add_rules('name', 'required', 'valid::standard_text');
 
         $this->validation->name('lastname', _("Last name"))->pre_filter('trim', 'lastame')
-             ->add_rules('lastname', 'required', 'valid::alpha');
+             ->add_rules('lastname', 'required', 'valid::standard_text');
 
         $this->validation->name('email', _("Email"))->pre_filter('trim', 'email')
              ->add_rules('email', 'required', 'valid::email');

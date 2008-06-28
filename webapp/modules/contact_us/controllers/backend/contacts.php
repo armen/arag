@@ -48,7 +48,7 @@ class Contacts_Controller extends Backend_Controller
     // {{{ delete_read_error
     public function delete_read_error()
     {
-        $this->_invalid_request('contact_us/backend/contacts');
+        $this->_invalid_request('contact_us/backend/contacts', _("Invalid contanct ID"));
     }
     // }}}
     // {{{ delete_write
@@ -73,7 +73,7 @@ class Contacts_Controller extends Backend_Controller
     // {{{ delete_write_error
     public function delete_write_error()
     {
-        $this->_invalid_request('contact_us/backend/contacts');
+        $this->_invalid_request('contact_us/backend/contacts', _("Invalid contact ID"));
     }
     // }}}
     // }}}

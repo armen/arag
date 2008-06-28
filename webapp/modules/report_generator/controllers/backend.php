@@ -252,7 +252,7 @@ class Backend_Controller extends ReportGenerator_Backend
     // {{{ delete_report_read_error
     public function delete_report_read_error()
     {
-        $this->_invalid_request('report_generator/backend/reports');
+        $this->_invalid_request('report_generator/backend/reports', _("Invalid ID"));
     }
     // }}}
     // {{{ delete_report_write
@@ -276,7 +276,7 @@ class Backend_Controller extends ReportGenerator_Backend
     // {{{ delete_report_write_error
     public function delete_write_error()
     {
-        $this->_invalid_request('report_generator/backend/reports');        
+        $this->_invalid_request('report_generator/backend/reports', _("Invalid ID"));
     }
     // }}}
     // }}}
@@ -313,7 +313,7 @@ class Backend_Controller extends ReportGenerator_Backend
     // {{{ execute_report_error
     public function execute_report_error()
     {
-        $this->_invalid_request('report_generator/backend/reports');
+        $this->_invalid_request('report_generator/backend/reports', _("Invalid ID"));
     }
     // }}}
     // }}}

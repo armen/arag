@@ -50,7 +50,7 @@ class Backend_Controller extends Controller
         $this->staticpages->addAction('staticpages/backend/delete/#id#', _("Delete"), 'delete_action');
         $this->staticpages->addAction('staticpages/backend/gdelete', _("Delete"), 'delete_action', PList_Component::GROUP_ACTION);
         $this->staticpages->setGroupActionParameterName('id');        
-        
+
         $this->layout->content = new View('backend/index');
     }
     // }}}
@@ -64,15 +64,15 @@ class Backend_Controller extends Controller
     public function edit_read($id = Null)
     {
         $this->StaticPages = new StaticPages_Model;
-        
+
         $exist = false;
 
         if (is_numeric($id)) {
             $exist = $this->StaticPages->checkID($id);
         }
-        
+
         if ($exist) {
-            
+
             $this->global_tabs->setParameter('id', $id);
 
             $row = $this->StaticPages->getPage($id);
@@ -83,7 +83,7 @@ class Backend_Controller extends Controller
 
             $this->layout->content = new View('backend/edit', $data);
         } else {
-            $this->_invalid_request("staticpages/backend/index");
+            $this->_invalid_request("staticpages/backend/index", _("Invalid ID"));
         }
     }
     // }}}
@@ -99,10 +99,10 @@ class Backend_Controller extends Controller
             $subject = $this->input->post('subject', Null, True);
 
             $this->StaticPages->createPage($this->session->get('username'), $subject, $page);
-            
+
             url::redirect('staticpages/backend/index');
         } else {
-            $this->_invalid_request("staticpages/backend/index");
+            $this->_invalid_request('staticpages/backend/index', _("No form is submitted"));
         }
     }
     // }}}
@@ -131,21 +131,21 @@ class Backend_Controller extends Controller
     {
         $this->StaticPages = new StaticPages_Model;
 
-        $exist = false;        
+        $exist = false;
 
         if (is_numeric($id) && $this->input->post('submit')) {
             $exist = $this->StaticPages->checkID($id);
         }
-        
+
         if ($exist) { 
             $page    = $this->input->post('page', Null, True);
             $subject = $this->input->post('subject', Null, True);
 
             $this->StaticPages->editPage($id, $subject, $page);
-        
+
             url::redirect('staticpages/backend/index');
         } else {
-            $this->_invalid_request("staticpages/backend/index");
+            $this->_invalid_request("staticpages/backend/index", _("Invalid ID"));
         }
     }
     // }}}
@@ -194,7 +194,7 @@ class Backend_Controller extends Controller
             $this->layout->content = new View('backend/delete', array('ids' => array($id), 'subjects' => $row['subject']));
 
         } else {
-            $this->_invalid_request("staticpages/backend/index");
+            $this->_invalid_request("staticpages/backend/index", _("Invalid ID"));
         }
     }
     // }}}
@@ -217,7 +217,7 @@ class Backend_Controller extends Controller
                 }
 
                 if (!$exist) {
-                    $this->_invalid_request("staticpages/backend/index");
+                    $this->_invalid_request("staticpages/backend/index", _("Invalid ID"));
                 }
 
                 $this->global_tabs->setParameter('id', $key);
@@ -225,15 +225,15 @@ class Backend_Controller extends Controller
                 $row        = $this->StaticPages->getPage($key);
                 $subjects[] = $row['subject'];
             }
-        
+
             $subjects = implode(",", $subjects);
-        
+
             $data = array('ids'      => $ids,
                           'subjects' => $subjects);
             $this->layout->content = new View('backend/delete', $data);
 
         } else {
-            $this->_invalid_request('staticpages/backend/index/');
+            $this->_invalid_request('staticpages/backend/index/', _("Invalid ID"));
         }
     }
     // }}}
@@ -241,10 +241,10 @@ class Backend_Controller extends Controller
     public function do_delete()
     {
         $this->StaticPages = new StaticPages_Model;
-        
+
         if (isset($_POST['submit'])) {
             $ids = $this->input->post('id');
-                        
+
             foreach ($ids as $key) {
                 $this->StaticPages = new StaticPages_Model;
                 $this->StaticPages->deletePage($key);
@@ -253,7 +253,7 @@ class Backend_Controller extends Controller
             url::redirect('staticpages/backend/index');
 
         } else {
-            $this->_invalid_request("staticpages/backend/index");
+            $this->_invalid_request("staticpages/backend/index", _("No form is submitted"));
         }
     }
     // }}}
@@ -261,15 +261,15 @@ class Backend_Controller extends Controller
     public function preview($id = Null)
     {
         $this->StaticPages = new StaticPages_Model;
-        
-        $exist = false;        
+
+        $exist = false;
 
         if (is_numeric($id)) {
             $exist = $this->StaticPages->checkID($id);
         }
-        
+
         if ($exist) {
-            
+
             $this->global_tabs->setParameter('id', $id);
 
             $row = $this->StaticPages->getPage($id);
@@ -281,7 +281,7 @@ class Backend_Controller extends Controller
             $this->layout->content = new View('backend/preview', $data);
 
         } else {
-            $this->_invalid_request("staticpages/backend/index");
+            $this->_invalid_request("staticpages/backend/index", _("Invalid ID"));
         }
     }
     // }}}

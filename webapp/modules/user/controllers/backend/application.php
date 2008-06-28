@@ -72,21 +72,21 @@ class Application_Controller extends Backend_Controller
     public function users_read($id)
     {
         $this->global_tabs->addItem(_("Users"), "user/backend/application/users/".$id);
-        
+
         $this->_create_users_plist($id);
 
         $this->users->addAction("user/backend/application/user_profile/#username#", _("Edit"), 'edit_action');
         $this->users->addAction("user/backend/application/delete/user/#username#", _("Delete"), 'delete_action');
         $this->users->addAction("user/backend/application/delete/user", _("Delete"), 'delete_action', PList_Component::GROUP_ACTION);
         $this->users->setGroupActionParameterName('username');
-        
+
         $this->layout->content = new View('backend/users', array("flagsearch" => false));
     }
     // }}}
     // {{{ users_read_error
     public function users_read_error()
     {
-        $this->_invalid_request("user/backend/application/index");
+        $this->_invalid_request("user/backend/application/index", _("Invalid ID"));
     }
     // }}}
     // {{{ new_user_read
@@ -114,7 +114,7 @@ class Application_Controller extends Backend_Controller
     // {{{ user_profile_read_error
     public function user_profile_read_error()
     {
-        $this->_invalid_request("user/backend/application/index");
+        $this->_invalid_request("user/backend/application/index", _("Invalid Username"));
     }
     // }}}
     // {{{ delete
@@ -135,34 +135,34 @@ class Application_Controller extends Backend_Controller
                 $objects = $this->input->post('username');
                 $flag = false;
             }
-            $this->global_tabs->addItem(_("Delete"), "user/backend/application/delete/".$type);
+            $this->global_tabs->addItem(_("Delete"), 'user/backend/application/delete/'.$type);
         }
-        
+
         $subjects = array();
 
         foreach ($objects as $key) {
 
             $exist = false;
 
-            if (preg_match("/^user$/", $type)) {
+            if (preg_match('/^user$/', $type)) {
                 $exist = $this->Users->hasUserName($key);
-                
+
                 if (!$exist) {
-                    $this->_invalid_request("user/backend/application/index");
+                    $this->_invalid_request('user/backend/application/index', _("Invalid Type"));
                 }
-                
+
                 array_push($subjects, $key);
             } else if (preg_match("/^group$/", $type)) {
                 $exist = $this->Groups->hasGroup(NULL, NULL, $key);
-                
+
                 if (!$exist) {
-                    $this->_invalid_request("user/backend/application/index");
+                    $this->_invalid_request('user/backend/application/index', _("Invalid Type"));
                 }
-                
+
                 $row = $this->Groups->getGroup($key);
                 array_push($subjects, $row['name']);
             } else {
-                $this->_invalid_request("user/backend/application/index");                
+                $this->_invalid_request("user/backend/application/index", _("Invalid Object"));
             }
 
         }
@@ -185,7 +185,7 @@ class Application_Controller extends Backend_Controller
     {
         $flag    = $this->input->post('flag');
         $objects = $this->input->post('objects');
-         
+
         if ($this->input->post('submit')) {
             if ($flag) {
                 $application = $this->input->post('application');
@@ -196,7 +196,7 @@ class Application_Controller extends Backend_Controller
                 url::redirect('user/backend/application/all_users');
             }
         } else {
-            $this->_invalid_request("user/backend/application/index");
+            $this->_invalid_request("user/backend/application/index", _("No form is submitted"));
         }
     }
     //}}}
@@ -211,7 +211,7 @@ class Application_Controller extends Backend_Controller
     // {{{ do_delete_error
     public function do_delete_error()
     {
-        $this->_invalid_request('user/backend/application');
+        $this->_invalid_request('user/backend/application', _("Invalid Object"));
     }
     // }}}
     //{{{ group_privileges_edit_read
@@ -303,7 +303,7 @@ class Application_Controller extends Backend_Controller
     public function user_profile_write()
     {
         if ($this->input->post('password') && !$this->_check_old_password($this->input->post('oldpassword'), $this->input->post('username'))) {
-            $this->_invalid_request('user/backend/application/index');
+            $this->_invalid_request('user/backend/application/index', _("Invalid Password change request"));
         }
         $this->_user_profile_write($this->appname);       
     }
