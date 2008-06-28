@@ -18,7 +18,8 @@ function arag_token()
             // At this point we can't Config::item('locale.lang') because Arag_site_lang 
             // is not executed so we use cookie to get the lang.
             $lang = (string) cookie::get('lang');
-            url::redirect($lang.'/invalid_request');
+            $controller = new Controller;
+            $controller->_invalid_request(Null, _("You tried to resubmit a form"));
         }
 
         $session->set('arag_token', sha1(rand().time()));

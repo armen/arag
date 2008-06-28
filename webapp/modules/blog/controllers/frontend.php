@@ -71,7 +71,7 @@ class Frontend_Controller extends Controller
     // {{{ view_error
     public function view_error()
     {
-        $this->_invalid_request('blog/frontend/index');
+        $this->_invalid_request('blog/frontend/index', _("Invalid ID"));
     }
     // }}}
     // }}}
@@ -117,16 +117,16 @@ class Frontend_Controller extends Controller
     // {{{ post_comment_read
     public function post_comment_read()
     {
-        $this->_invalid_request('blog/frontend/index');    
+        $this->_invalid_request('blog/frontend/index', _("Invalid reference ID"));
     }
-    // }}}    
+    // }}}
     // }}}
     // {{{ _check_entry
     public function _check_entry($id)
     {
         return $this->Blog->hasEntry($id, True);
     }
-    // }}}    
+    // }}}
 }
 
 ?>

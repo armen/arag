@@ -199,10 +199,12 @@ class Controller extends Controller_Core {
     }
     // }}}
     // {{{ _invalid_request
-    public function _invalid_request($uri = Null)
+    public function _invalid_request($uri = Null, $message = Null)
     {
         $this->session->set('_invalid_request_uri', $uri);
-
+        $this->session->set('_invalid_request_message', $message);
+        $trace = debug_backtrace();
+        Log::add('error', 'Invalid request: '.$trace[0]['file'].':'.$trace[0]['line']);
         url::redirect('invalid_request');
     }
     // }}}    

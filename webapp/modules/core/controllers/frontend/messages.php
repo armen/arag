@@ -15,6 +15,7 @@ class Messages_Controller extends Controller
 
         $this->layout->content->page_title = _("Invalid Request!");
         $this->layout->content->uri        = $this->session->get('_invalid_request_uri');
+        $this->layout->content->message    = $this->session->get('_invalid_request_message');
     }
     // }}}
     // {{{ not_authorized

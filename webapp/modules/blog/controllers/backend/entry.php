@@ -97,7 +97,7 @@ class Entry_Controller extends Blog_Backend
     // {{{ edit_read_error
     public function edit_read_error()
     {
-        $this->_invalid_request('blog/backend/entry');
+        $this->_invalid_request('blog/backend/entry', _("Invalid ID"));
     }
     // }}}    
     // {{{ edit_write
@@ -162,7 +162,7 @@ class Entry_Controller extends Blog_Backend
     // {{{ delete_read_error
     public function delete_read_error()
     {
-        $this->_invalid_request('blog/backend/entry');
+        $this->_invalid_request('blog/backend/entry', _("Invalid ID"));
     }
     // }}}
     // {{{ delete_write
@@ -178,13 +178,13 @@ class Entry_Controller extends Blog_Backend
     {
         $this->validation->name('id', _("ID"))->add_rules('id', 'required', 'valid::numeric', array($this, '_check_entry'));
 
-        return $this->validation->validate();        
+        return $this->validation->validate();
     }
     // }}}    
     // {{{ delete_write_error
     public function delete_write_error()
     {
-        $this->_invalid_request('blog/backend/entry');        
+        $this->_invalid_request('blog/backend/entry', _("Invalid ID"));
     }
     // }}}
     // }}}
@@ -217,7 +217,7 @@ class Entry_Controller extends Blog_Backend
     // {{{ preview_error
     public function preview_error()
     {
-        $this->_invalid_request('blog/backend/entry');
+        $this->_invalid_request('blog/backend/entry', _("Invalid ID"));
     }
     // }}}
     // }}}
