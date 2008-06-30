@@ -1,5 +1,5 @@
-/*  
-    vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:             
+/*
+    vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:
     File: $Id$
 */
 
@@ -18,7 +18,7 @@ input, textarea, select {
     border          : 1px solid #ccc;
     background-color: #eee;
     color           : #888;
-    padding         : .1em .0em;    
+    padding         : .1em .0em;
 }
 input[type=button], input[type=submit], input[type=reset] {
     background      : #eee;
@@ -69,14 +69,14 @@ input[type=reset][disabled] {
     border-left     : 1px solid #ccc;
     border-top      : 1px solid #ccc;
     background-color: #eee;
-    color           : #888;    
+    color           : #888;
     text-align      : center;
     font-weight     : bold;
     font-size       : 10px;
 }
 /* end of arag_block }}} */
 /* {{{ arag_default_block */
-.arag_default_block { 
+.arag_default_block {
     margin          : 0px;
     padding         : 0px;
     margin          : 0px 0px 5px 0px;
@@ -97,7 +97,7 @@ input[type=reset][disabled] {
     color           : #888;
     font-weight     : bold;
 }
-.arag_default_block_tr {     
+.arag_default_block_tr {
     background      : transparent url(../images/block/rounded_line_top_right.png) top right no-repeat;
 }
 .arag_default_block_left {
@@ -116,7 +116,7 @@ input[type=reset][disabled] {
 }
 .arag_default_block_bl {
     background      : transparent url(../images/block/rounded_line_bottom_left.png) bottom left no-repeat;
-    padding         : 0px; 
+    padding         : 0px;
     margin          : 0px 10px 0px 0px;  /* width of bottom_right corner */
 }
 .arag_default_block_br { /* footer */
@@ -131,7 +131,7 @@ input[type=reset][disabled] {
 .arag_error_block_content {
     margin          : 0px 0px 10px 0px;
     padding         : 9px 35px;
-    border          : 1px solid #ff7575;    
+    border          : 1px solid #ff7575;
 }
 /* end of arag_error_block }}} */
 /* {{{ arag_info_block */
@@ -142,7 +142,7 @@ input[type=reset][disabled] {
 .arag_info_block_content {
     margin          : 0px 0px 10px 0px;
     padding         : 9px 35px;
-    border          : 1px solid #4dbd60;    
+    border          : 1px solid #4dbd60;
 }
 /* end of arag_info_block }}} */
 /* {{{ arag_tips_block */
@@ -153,7 +153,7 @@ input[type=reset][disabled] {
 .arag_tips_block_content {
     margin          : 0px 0px 10px 0px;
     padding         : 9px 35px;
-    border          : 1px solid #66ccff;    
+    border          : 1px solid #66ccff;
 }
 /* end of arag_tips_block }}} */
 /* {{{ arag_warning_block */
@@ -168,7 +168,7 @@ input[type=reset][disabled] {
 .arag_warning_block_content {
     margin          : 0px 0px 10px 0px;
     padding         : 9px 35px;
-    border          : 1px solid #ffdf49;    
+    border          : 1px solid #ffdf49;
 }
 /* end of arag_warning_block }}} */
 /* {{{ arag_blank_block */
@@ -184,21 +184,21 @@ input[type=reset][disabled] {
 /* {{{ arag_collapsible_block */
 .arag_collapsible_block .expanded {
     border          : 1px solid #ccc;
-    margin-bottom   : 10px;    
+    margin-bottom   : 10px;
 }
-.arag_collapsible_block .expanded legend { 
+.arag_collapsible_block .expanded legend {
     background      : url(../images/misc/expanded.png) 0 50% no-repeat;
     color           : #666;
     font-size       : 110%;
     padding-left    : 16px;
     cursor          : pointer;
 }
-.arag_collapsible_block .collapsed { 
+.arag_collapsible_block .collapsed {
     border-width    : 0;
     border-top      : 1px solid #ccc;
     padding         : 0px 0px 0px 10px;
 }
-.arag_collapsible_block .collapsed legend { 
+.arag_collapsible_block .collapsed legend {
     background      : url(../images/misc/collapsed.png) 0 50% no-repeat;
     color           : #666;
     font-size       : 110%;
@@ -208,9 +208,9 @@ input[type=reset][disabled] {
 .arag_collapsible_block .collapsed div {
     display         : none;
 }
-/* }}} end of arag_collapsible_block */ 
+/* }}} end of arag_collapsible_block */
 /* {{{ arag_tags_ds */
-.arag_tags_ds a:link, 
+.arag_tags_ds a:link,
 .arag_tags_ds a:visited,
 .arag_tags_ds a:active {
     color           : #888;
@@ -223,37 +223,37 @@ input[type=reset][disabled] {
 .arag_tags_ds img {
     border          : 0px;
 }
-.arag_tags_ds ul, 
-.arag_tags_ds ol, 
+.arag_tags_ds ul,
+.arag_tags_ds ol,
 .arag_tags_ds li {
     list-style-type : none;
 }
 .arag_tags_ds h1,
-.arag_tags_ds h2, 
+.arag_tags_ds h2,
 .arag_tags_ds h3 {
     margin-top      : 0px;
     margin-bottom   : 0px;
 }
-.arag_tags_ds input, 
+.arag_tags_ds input,
 .arag_tags_ds select {
     border          : 1px solid #ccc;
     background-color: #eee;
     color           : #888;
-    padding         : .1em .0em;    
+    padding         : .1em .0em;
 }
-.arag_tags_ds input[type=button], 
-.arag_tags_ds input[type=submit], 
+.arag_tags_ds input[type=button],
+.arag_tags_ds input[type=submit],
 .arag_tags_ds input[type=reset] {
     background      : #eee;
     color           : #222;
     border          : 1px outset #ccc;
     padding         : .1em .5em;
 }
-.arag_tags_ds input[type=button]:hover, 
-.arag_tags_ds input[type=submit]:hover, 
+.arag_tags_ds input[type=button]:hover,
+.arag_tags_ds input[type=submit]:hover,
 .arag_tags_ds input[type=reset]:hover {
     background      : #aaa;
-    color           : #fff;    
+    color           : #fff;
 }
 .arag_tags_ds input[type=button][disabled],
 .arag_tags_ds input[type=submit][disabled],
@@ -269,7 +269,7 @@ input[type=reset][disabled] {
     margin          : 3px;
     border          : 1px solid #ccc;
     background-color: #eee;
-    color           : #888;    
+    color           : #888;
 }
 /* arag_tags_ds }}} */
 /* end of Blocks }}} */
@@ -299,7 +299,7 @@ input[type=reset][disabled] {
     text-align      : center;
     height          : 20px;
     font-size       : 12px;
-    border-right    : 1px solid #ccc;    
+    border-right    : 1px solid #ccc;
 }
 .plist th a:visited,
 .plist th a:link {
@@ -322,7 +322,7 @@ input[type=reset][disabled] {
 }
 .plist td {
     border-right    : solid 1px #ccc;
-    border-top      : solid 1px #ccc; 
+    border-top      : solid 1px #ccc;
     text-align      : center;
     height          : 24px;
 }
@@ -347,7 +347,7 @@ input[type=reset][disabled] {
 }
 .plist_footer td {
     border-right    : 1px solid #ccc;
-    border-top      : 1px solid #ccc;    
+    border-top      : 1px solid #ccc;
     border-bottom   : 1px solid #ccc;
 }
 .plist_group_actions_col {
@@ -358,7 +358,7 @@ input[type=reset][disabled] {
     padding         : 6px 0px 0px 30px;
     background      : transparent url('../images/list/arrow_ltr.png') no-repeat left top;
     width           : 24px;
-    height          : 16px;    
+    height          : 16px;
 }
 .plist_group_actions_rtl {
     direction       : rtl;
@@ -405,72 +405,72 @@ input[type=reset][disabled] {
     background      : transparent url(../images/list/lt.png) no-repeat center;
     font-size       : 0px;
     width           : 16px;
-    height          : 16px; 
+    height          : 16px;
 }
 .pager_ltlt a {
     display         : block;
     background      : transparent url(../images/list/ltlt.png) no-repeat center;
     font-size       : 0px;
     width           : 16px;
-    height          : 16px; 
+    height          : 16px;
 }
 .pager_disabled_lt {
     background      : transparent url(../images/list/lt_disabled.png) no-repeat center;
     font-size       : 0px;
     width           : 16px;
-    height          : 16px; 
+    height          : 16px;
 }
 .pager_disabled_ltlt {
     background      : transparent url(../images/list/ltlt_disabled.png) no-repeat center;
     font-size       : 0px;
     width           : 16px;
-    height          : 16px; 
+    height          : 16px;
 }
 .pager_gt a {
     display         : block;
     background      : transparent url(../images/list/gt.png) no-repeat center;
     font-size       : 0px;
     width           : 16px;
-    height          : 16px; 
+    height          : 16px;
 }
 .pager_gtgt a {
     display         : block;
     background      : transparent url(../images/list/gtgt.png) no-repeat center;
     font-size       : 0px;
     width           : 16px;
-    height          : 16px; 
+    height          : 16px;
 }
 .pager_disabled_gt {
     background      : transparent url(../images/list/gt_disabled.png) no-repeat center;
     font-size       : 0px;
     width           : 16px;
-    height          : 16px; 
+    height          : 16px;
 }
 .pager_disabled_gtgt {
     background      : transparent url(../images/list/gtgt_disabled.png) no-repeat center;
     font-size       : 0px;
     width           : 16px;
-    height          : 16px; 
+    height          : 16px;
 }
 .plist_norecords {
     text-align      : center;
     padding         : 10px;
-    background-color: #eee;        
+    background-color: #eee;
     border-top      : 2px solid #ccc;
-    border-bottom   : 1px solid #ccc;    
-    border-right    : 1px solid #ccc;    
-    border-left     : 1px solid #ccc;    
+    border-bottom   : 1px solid #ccc;
+    border-right    : 1px solid #ccc;
+    border-left     : 1px solid #ccc;
 }
 /* end of PList }}} */
 /* {{{ category */
 .category_norecords {
     text-align      : center;
     padding         : 10px;
-    background-color: #eee;        
+    background-color: #eee;
     border-top      : 2px solid #ccc;
-    border-bottom   : 1px solid #ccc;    
-    border-right    : 1px solid #ccc;    
-    border-left     : 1px solid #ccc;    
+    border-bottom   : 1px solid #ccc;
+    border-right    : 1px solid #ccc;
+    border-left     : 1px solid #ccc;
 }
 /* end of category }}} */
 /* {{{ PList icons */
@@ -480,34 +480,34 @@ input[type=reset][disabled] {
 .plist_group_actions .plist_icon {
     width           : 16px;
 }
-.plist_icon a, 
+.plist_icon a,
 .plist_icon div {
     display         : block;
-    margin          : 0px auto;    
+    margin          : 0px auto;
 }
 .edit_action {
     background      : transparent url(../images/list/edit.png) no-repeat center;
     font-size       : 0px;
     width           : 16px;
-    height          : 16px;    
+    height          : 16px;
 }
 .view_action {
     background      : transparent url(../images/list/view.png) no-repeat center;
     font-size       : 0px;
     width           : 16px;
-    height          : 16px;    
+    height          : 16px;
 }
 .view_action_alt {
     background      : transparent url(../images/list/disabled_view.png) no-repeat center;
     font-size       : 0px;
     width           : 16px;
-    height          : 16px;    
+    height          : 16px;
 }
 .print_action {
     background      : transparent url(../images/list/printer.png) no-repeat center;
     font-size       : 0px;
     width           : 16px;
-    height          : 16px;    
+    height          : 16px;
 }
 .delete_action {
     background      : transparent url(../images/list/trash.png) no-repeat center;
@@ -543,13 +543,13 @@ input[type=reset][disabled] {
     background      : transparent url(../images/list/apply.png) no-repeat center;
     font-size       : 0px;
     width           : 16px;
-    height          : 16px;    
+    height          : 16px;
 }
 .apply_action_alt {
     background      : transparent url(../images/list/disabled_apply.png) no-repeat center;
     font-size       : 0px;
     width           : 16px;
-    height          : 16px;    
+    height          : 16px;
 }
 .cancel_action {
     background      : transparent url(../images/list/cancel.png) no-repeat center;
@@ -585,13 +585,13 @@ input[type=reset][disabled] {
     background      : transparent url(../images/list/view_tree.png) no-repeat center;
     font-size       : 0px;
     width           : 16px;
-    height          : 16px;    
+    height          : 16px;
 }
 .view_tree_alt {
     background      : transparent url(../images/list/view_tree_disabled.png) no-repeat center;
     font-size       : 0px;
     width           : 16px;
-    height          : 16px;    
+    height          : 16px;
 }
 
 /* }}} end of List actions */
@@ -626,7 +626,7 @@ input[type=reset][disabled] {
     padding         : 0px;
 }
 .tabbed_block_nav a {
-    font-size       : .9em; 
+    font-size       : .9em;
     float           : left;
     display         : block;
     margin          : 0px 1px 2px 0px;
@@ -639,7 +639,7 @@ input[type=reset][disabled] {
     font-weight     : bold;
     white-space     : nowrap;
 }
-.tabbed_block_nav a:link, 
+.tabbed_block_nav a:link,
 .tabbed_block_nav a:visited,
 .tabbed_block_nav a:active {
     color           : #888;
@@ -654,7 +654,7 @@ input[type=reset][disabled] {
     padding         : 5px 15px 8px 10px;
     color           : #888;
     /* tabbed block background */
-    background      : #fff url("../images/tabbed_block/tb_shadow.png") right bottom no-repeat;     
+    background      : #fff url("../images/tabbed_block/tb_shadow.png") right bottom no-repeat;
     border-right    : 0px;
     border-top      : 0px;
     border-bottom   : 0px;
@@ -670,7 +670,7 @@ input[type=reset][disabled] {
 .tabbed_block_nav .deselected div {
     margin          : 0px;
     padding         : 5px 15px 5px 10px;
-    border-bottom   : 1px solid #ccc;    
+    border-bottom   : 1px solid #ccc;
 }
 /* commented backslash hack hides rule from IE5-Mac \*/
 .tabbed_block_nav a { float   : none; }
@@ -703,7 +703,7 @@ input[type=reset][disabled] {
     padding         : 0px;
 }
 .tabbed_block_subnav a {
-    font-size       : .9em; 
+    font-size       : .9em;
     float           : left;
     display         : block;
     margin          : 0px 1px 2px 0px;
@@ -715,7 +715,7 @@ input[type=reset][disabled] {
     font-weight     : bold;
     white-space     : nowrap;
 }
-.tabbed_block_subnav a:link, 
+.tabbed_block_subnav a:link,
 .tabbed_block_subnav a:visited,
 .tabbed_block_subnav a:active {
     color           : #888;
@@ -726,7 +726,7 @@ input[type=reset][disabled] {
 }
 .tabbed_block_subnav .selected a {
     margin          : 0px;
-    padding         : 2px 15px;    
+    padding         : 2px 15px;
     color           : #888;
     background-color: #eee;
 }
@@ -786,22 +786,22 @@ input[type=reset][disabled] {
 .comment_posted {
     color             : #888;
     font-size         : 12px;
-    border-bottom     : 1px solid #ccc;    
-    font-weight       : bold;    
+    border-bottom     : 1px solid #ccc;
+    font-weight       : bold;
 }
 .comment_posted a {
     color             : #888;
     font-size         : 12px;
-    border-bottom     : 1px solid #ccc;    
+    border-bottom     : 1px solid #ccc;
     text-decoration   : none;
     font-weight       : bold;
 }
 .comment_body {
     padding           : 5px;
-    color             : #888;    
+    color             : #888;
 }
 .comment_body li {
-    list-style-type : disc; 
+    list-style-type : disc;
 }
 /* }}} end of Comment */
 /* {{{ Profiler */
