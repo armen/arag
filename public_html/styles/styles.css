@@ -593,11 +593,9 @@ input[type=reset][disabled] {
     width           : 16px;
     height          : 16px;
 }
-
 /* }}} end of List actions */
 /* {{{ Tabbed Block */
 .tabbed_block_title {
-    float           : left;
     padding         : 25px 55px;
     margin          : 0px 5px;
     font-size       : 12px;
@@ -605,7 +603,6 @@ input[type=reset][disabled] {
     color           : #888;
 }
 .tabbed_block_nav {
-    float           : left;
     position        : relative;
     margin          : 0px;
     padding         : 0px;
