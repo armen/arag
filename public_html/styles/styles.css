@@ -597,6 +597,7 @@ input[type=reset][disabled] {
 /* }}} end of List actions */
 /* {{{ Tabbed Block */
 .tabbed_block_title {
+    float           : left;
     padding         : 25px 55px;
     margin          : 0px 5px;
     font-size       : 12px;
