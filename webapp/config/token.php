@@ -2,6 +2,6 @@
 
 $config = array
 (
-    'enable'   => TRUE,
-    'type'     => 'form'
+    'enable'    => True,
+    'life_time' => 30
 );
