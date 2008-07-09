@@ -9,13 +9,17 @@ $config['driver'] = 'database';
 /**
  * Session storage parameter, used by drivers.
  */
-$config['storage'] = Null;
+$config['storage'] = Array
+(
+    'group' => 'default',
+    'table' => 'core_sessions'
+);
 
 /**
  * Default session name.
  * It should contain only alphanumeric characters and at least one letter should be present.
  */
-$config['name'] = 'core_sessions';
+$config['name'] = 'arag_session';
 
 /**
  * Session parameters to validate: user_agent, ip_address, expiration.
