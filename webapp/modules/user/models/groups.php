@@ -1,5 +1,5 @@
 <?php
-// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:             
+// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:
 // +-------------------------------------------------------------------------+
 // | Authors: Sasan Rose <sasan.rose@gmail.com>                              |
 // |          Armen Baghumian <armen@OpenSourceClub.org>                     |
@@ -7,10 +7,10 @@
 // $Id$
 // ---------------------------------------------------------------------------
 
-class Groups_Model extends Model 
+class Groups_Model extends Model
 {
     // {{{ Properties
-    
+
     public $tableNameApps;
     public $tableNameGroups;
     public $tableNameUsers;
@@ -20,13 +20,12 @@ class Groups_Model extends Model
     // {{{ Constructor
     public function __construct()
     {
-        parent::__construct(new Database('default'));
+        parent::__construct();
 
         // set tables' names
         $this->tableNameApps   = 'user_applications';
         $this->tableNameGroups = 'user_groups';
         $this->tableNameUsers  = 'user_users';
-
     }
     // }}}
     // {{{ & getAnonymousGroup
@@ -63,11 +62,11 @@ class Groups_Model extends Model
         if ($appName != NULL) {
             $this->db->where('appname', $appName);
         }
-        
+
         $this->db->orderby('id', 'ASC');
 
         $query = $this->db->get();
-        
+
         $retval = $query->result(False);
         return $retval;
     }
@@ -94,22 +93,22 @@ class Groups_Model extends Model
     // {{{ getDate
     public function getDate($row)
     {
-        return format::date($row['create_date']);    
+        return format::date($row['create_date']);
     }
     // }}}
     // {{{ getModifyDate
     public function getModifyDate($row)
     {
-        return format::date($row['modify_date']);    
+        return format::date($row['modify_date']);
     }
     // }}}
     // {{{ setGroup
     public function setGroup($appName, $group)
     {
-       $row = Array('default_group' => $group); 
-       
+       $row = Array('default_group' => $group);
+
        $this->db->where('name', $appName);
-       $this->db->update($this->tableNameApps, $row);         
+       $this->db->update($this->tableNameApps, $row);
     }
     // }}}
     // {{{ getDefaultGroup
@@ -126,13 +125,13 @@ class Groups_Model extends Model
     public function getAllAppGroups($appName)
     {
         $allgroups = array();
-        
+
         $this->db->select('name');
         $this->db->from($this->tableNameGroups);
         $this->db->where('appname', $appName);
-        
+
         $query = $this->db->get();
-        
+
         foreach ($query->result(False) as $row) {
             array_push($allgroups, $row['name']);
         }
@@ -143,7 +142,7 @@ class Groups_Model extends Model
     // {{{ newGroup
     public function newGroup($appname, $newgroup, $author, $privileges = NULL)
     {
-        $row = Array('modified_by' => $author, 
+        $row = Array('modified_by' => $author,
                      'create_date' => time(),
                      'modify_date' => time(),
                      'created_by'  => $author,
@@ -181,7 +180,7 @@ class Groups_Model extends Model
     {
         foreach ($groups as $group) {
             $this->db->delete($this->tableNameGroups, Array('id' => $group));
-            
+
             $controller = new Users_Model;
 
             $anonymous = $controller->deleteUsers(NULL, $group, $author);
@@ -196,5 +195,3 @@ class Groups_Model extends Model
     }
     // }}}
 }
-
-?>

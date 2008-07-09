@@ -1,15 +1,15 @@
 <?php
-// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:             
+// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:
 // +-------------------------------------------------------------------------+
 // | Author: Armen Baghumian <armen@OpenSourceClub.org>                      |
 // +-------------------------------------------------------------------------+
 // $Id$
 // ---------------------------------------------------------------------------
 
-class Privileges_Model extends Model 
+class Privileges_Model extends Model
 {
     // {{{ Properties
-    
+
     public $tableNamePrivileges;
     public $tableNameGroups;
 
@@ -17,10 +17,10 @@ class Privileges_Model extends Model
     // {{{ Constructor
     public function __construct()
     {
-        parent::__construct(new Database('default'));
+        parent::__construct();
 
         // set tables' names
-        $this->tableNamePrivileges = 'user_privileges';        
+        $this->tableNamePrivileges = 'user_privileges';
         $this->tableNameGroups     = 'user_groups';
     }
     // }}}
@@ -30,7 +30,7 @@ class Privileges_Model extends Model
         $controller = new Filters_Model;
 
         $filters = $controller->getPrivilegeFilters($appname);
-        
+
         $this->db->select('id, parent_id, label, create_date, created_by, modify_date, modified_by, privilege')->from($this->tableNamePrivileges);
 
         if ($parentId !== NULL) {
@@ -38,11 +38,11 @@ class Privileges_Model extends Model
         }
 
         $privileges = $this->db->orderby('label')->get()->result_array(False);
-        
+
         if (is_array($filters)) {
 
             foreach ($filters as $filter) {
-            
+
                 // It contains four section which every section separated with a /.
                 // It should contain at least two sections. last section allways is *
                 // and othe sections are lower case cheractrer(s)
@@ -53,13 +53,13 @@ class Privileges_Model extends Model
 
                     foreach ($privileges as $key => $row) {
 
-                        if ($row['privilege'] != Null && 
+                        if ($row['privilege'] != Null &&
                             (preg_match($filter, $row['privilege']) ||
                              preg_match('|^'.str_replace('*', '.*', $row['privilege']).'$|', $oldFilter))) {
-                            
+
                             unset($privileges[$key]);
                         }
-                    }                        
+                    }
                 }
             }
         }
@@ -72,7 +72,7 @@ class Privileges_Model extends Model
     {
         $this->db->select('id, parent_id, label, create_date, created_by, modify_date, modified_by, privilege');
         $this->db->from($this->tableNamePrivileges);
-        
+
         return $this->db->where(array('id' => $id))->get()->current();
     }
     // }}}
@@ -86,7 +86,7 @@ class Privileges_Model extends Model
                        'created_by'  => $author,
                        'modify_date' => time(),
                        'create_date' => time());
-        
+
         $this->db->insert($this->tableNamePrivileges, $rows);
 
         if ($parentid != 0) {
@@ -99,12 +99,12 @@ class Privileges_Model extends Model
     public function editLabel($label, $id, $privilege = NULL, $author)
     {
         $row  = $this->getLabel($id);
-        
+
         $rows = array ('label'       => $label,
                        'privilege'   => trim(strtolower($privilege), '/'),
                        'modified_by' => $author,
                        'modify_date' => time());
-        
+
         $this->db->where('id', $id);
         $this->db->update($this->tableNamePrivileges, $rows);
 
@@ -123,7 +123,7 @@ class Privileges_Model extends Model
     // {{{ hasLabel
     public function hasLabel($id)
     {
-        $result = $this->db->select('count(id) as count')->getwhere($this->tableNamePrivileges, Array('id' => $id))->current(); 
+        $result = $this->db->select('count(id) as count')->getwhere($this->tableNamePrivileges, Array('id' => $id))->current();
         return (boolean)$result->count;
     }
     // }}}
@@ -131,7 +131,7 @@ class Privileges_Model extends Model
     public function deletePrivileges($objects, $author)
     {
         foreach ($objects as $object) {
-            $label = $this->getLabel($object);    
+            $label = $this->getLabel($object);
 
             if ($label->parent_id == 0) {
                 $this->db->delete($this->tableNamePrivileges, array('parent_id' => $object));
@@ -158,17 +158,17 @@ class Privileges_Model extends Model
         if ($row[0]['privileges'] == NULL) {
             return $filter = array();
         }
-        
+
         $rows = unserialize($row[0]['privileges']);
 
         if ($flag) {
             return $rows;
         }
-        
+
         $privileges = array();
 
         foreach ($rows as $key => $privilege) {
-            
+
             $privileges[$key]['privilege'] = $privilege;
             $privileges[$key]['id']        = $key;
             $privileges[$key]['label']     = Null;
@@ -177,7 +177,7 @@ class Privileges_Model extends Model
                 foreach ($labels as $keys => $row) {
                     $alllabels[$keys] = $row->label;
                 }
-                $privileges[$key]['label'] = implode(", ", $alllabels);               
+                $privileges[$key]['label'] = implode(", ", $alllabels);
             }
         }
 
@@ -198,9 +198,9 @@ class Privileges_Model extends Model
     public function getAppPrivileges($appname)
     {
         $rows = $this->getFilteredPrivileges($appname, 0);
-        
+
         $subpris = array();
-        
+
         foreach ($rows as $row) {
             $subpris[$row['id']] = $this->getFilteredPrivileges($appname, $row['id']);
         }
@@ -253,7 +253,7 @@ class Privileges_Model extends Model
     public function editPrivileges($ids, $groupid, $appname)
     {
         $privileges = array();
-        
+
         if (!empty($ids)) {
             foreach ($ids as $id) {
                 $label = $this->getLabel($id);
@@ -275,4 +275,3 @@ class Privileges_Model extends Model
     }
     // }}}
 }
-?>

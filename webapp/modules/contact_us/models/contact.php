@@ -9,12 +9,14 @@
 class Contact_Model extends Model
 {
     // {{{ Properties
+
     public $tableContacts;
+
     // }}}
     // {{{ Constructor
     public function __construct()
     {
-        parent::__construct(new Database('default'));
+        parent::__construct();
 
         // Set table name
         $this->tableContacts = 'contact_us_contacts';
@@ -85,5 +87,3 @@ class Contact_Model extends Model
     }
     // }}}
 }
-
-?>

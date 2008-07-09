@@ -1,12 +1,12 @@
 <?php
-// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:             
+// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:
 // +-------------------------------------------------------------------------+
 // | Author: Armen Baghumian <armen@OpenSourceClub.org>                      |
 // +-------------------------------------------------------------------------+
 // $Id$
 // ---------------------------------------------------------------------------
 
-class ReportGenerator_Model extends Model 
+class ReportGenerator_Model extends Model
 {
     // {{{ Properties
 
@@ -19,7 +19,7 @@ class ReportGenerator_Model extends Model
     {
         $this->config           = defined('MASTERAPP') ? Config::item('database.default') : Config::item('sites/'.APPNAME.'.database');
         $this->config['object'] = False;
-        
+
         parent::__construct(new Database($this->config));
     }
     // }}}
@@ -34,13 +34,13 @@ class ReportGenerator_Model extends Model
 
         $date_fields_name = Config::item('config.date_field_names');
         $result           = Array();
-        
+
         foreach ($table as $key => $column) {
             preg_match('/([a-z]+)(?:\(([0-9]+)\))?/', $column['Type'], $matches);
 
             $type  = $matches[1];
             $field = $column['Field'];
-           
+
             switch ($type) {
                 case 'clob':
                 case 'longclob';
@@ -87,7 +87,7 @@ class ReportGenerator_Model extends Model
 
         if (!empty($filters)) {
 
-            $combines = array_values($filters);        
+            $combines = array_values($filters);
             $filters  = array_keys($filters);
 
             // Add an opening parenthese at the begining of filters
@@ -131,20 +131,20 @@ class ReportGenerator_Model extends Model
     public function constructWhere($fields, $operators, $combines)
     {
         $where            = Null;
-        $date_fields_name = Config::item('config.date_field_names');         
+        $date_fields_name = Config::item('config.date_field_names');
 
         if (empty($fields)) {
             return $fields;
         }
 
         foreach ($fields as $field => $values) {
-            
+
             $escaped_field = $this->db->escape_table($field);
 
             foreach ($values as $index => $value) {
 
                 $where .= ' '.$combines[$field][$index].' '.$escaped_field.' ';
-                
+
                 switch ($operators[$field][$index]) {
                     case '<':
                     case '>':
@@ -155,8 +155,8 @@ class ReportGenerator_Model extends Model
                         if (in_array($field, $date_fields_name)) {
                             $value = strtotime($value);
                         }
-                        
-                        if (!is_numeric($value)) { 
+
+                        if (!is_numeric($value)) {
                             $value = $this->db->escape($value);
                         }
 
@@ -181,7 +181,7 @@ class ReportGenerator_Model extends Model
                 }
             }
         }
-        
+
         return $where;
     }
     // }}}
@@ -191,8 +191,8 @@ class ReportGenerator_Model extends Model
         $actions['parameter_name'] = $parameter_name;
 
         $row = Array(
-                      'table_name'         => $tableName, 
-                      'report_name'        => $reportName, 
+                      'table_name'         => $tableName,
+                      'report_name'        => $reportName,
                       'report_desc'        => $reportDesc,
                       'columns'            => serialize($columns),
                       'additional_columns' => serialize($additionalColumns),
@@ -226,7 +226,7 @@ class ReportGenerator_Model extends Model
 
         return (boolean)$result['count'];
     }
-    // }}}    
+    // }}}
     // {{{ getReportName
     public function getReportName($id)
     {
@@ -271,14 +271,14 @@ class ReportGenerator_Model extends Model
 
         return $result;
     }
-    // }}}    
+    // }}}
     // {{{ List callbacks
     // {{{ getDate
     public function getDate($row, $name)
     {
         return format::date($row[$name]);
     }
-    // }}}    
+    // }}}
     // {{{ getCreateDate
     public function getCreateDate($row)
     {

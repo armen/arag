@@ -1,5 +1,5 @@
 <?php
-// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:             
+// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:
 // +-------------------------------------------------------------------------+
 // | Authors: Sasan Rose <sasan.rose@gmail.com>                              |
 // |          Armen Baghumian <armen@OpenSourceClub.org>                     |
@@ -7,17 +7,17 @@
 // $Id$
 // ---------------------------------------------------------------------------
 
-class Filters_Model extends Model 
+class Filters_Model extends Model
 {
     // {{{ Properties
-    
+
     public $tableNameFilters;
 
     // }}}
     // {{{ Constructor
     public function __construct()
     {
-        parent::__construct(new Database('default'));
+        parent::__construct();
 
         // set tables' names
         $this->tableNameFilters = 'user_filters';
@@ -35,13 +35,13 @@ class Filters_Model extends Model
         if ($row[0]['filter'] == NULL) {
             return $filter = array();
         }
-        
+
         $rows = unserialize($row[0]['filter']);
 
         if ($flag) {
             return $rows;
         }
-        
+
         $filters = array();
 
         foreach ($rows as $key => $filter) {
@@ -56,7 +56,7 @@ class Filters_Model extends Model
     public function editFilter($filter, $id, $appname, $author)
     {
         $filters = $this->getFilters($appname, true);
-        
+
         $filters[$id] = strtolower($filter);
 
         $filter = serialize($filters);
@@ -74,7 +74,7 @@ class Filters_Model extends Model
     public function addFilter($filter, $appname, $author)
     {
         $filters = $this->getFilters($appname, true);
-        
+
         array_push($filters, strtolower($filter));
 
         $filter = serialize($filters);
@@ -92,8 +92,8 @@ class Filters_Model extends Model
     public function getFilterProperties($name = "", $flag = true)
     {
         $this->db->select('appname, create_date, created_by, modify_date, modified_by, filter');
-        $this->db->from($this->tableNameFilters);        
-        
+        $this->db->from($this->tableNameFilters);
+
         if ($flag) {
             $this->db->where('appname', $name);
         } else {
@@ -108,33 +108,33 @@ class Filters_Model extends Model
     // {{{ getDate
     public function getDate($row)
     {
-        return format::date($row['create_date']);    
+        return format::date($row['create_date']);
     }
     // }}}
     // {{{ getModifyDate
     public function getModifyDate($row)
     {
-        return format::date($row['modify_date']);    
+        return format::date($row['modify_date']);
     }
     // }}}
     // {{{ hasFilter
     public function hasFilter($appname, $filter)
     {
         $filters = $this->getFilters($appname);
-        
+
         foreach ($filters as $key) {
             if ($key['filter'] == $filter) {
                 return true;
             }
         }
-        
+
         return false;
     }
     // }}}
     // {{{ hasApp
     public function hasApp($appname)
     {
-        $result = $this->db->select('count(appname) as count')->getwhere($this->tableNameFilters, Array('appname' => $appname))->current(); 
+        $result = $this->db->select('count(appname) as count')->getwhere($this->tableNameFilters, Array('appname' => $appname))->current();
         return (boolean)$result->count;
     }
     // }}}
@@ -142,11 +142,11 @@ class Filters_Model extends Model
     public function deleteFilters($objects, $appname)
     {
         $filters = $this->getFilters($appname, true);
-        
+
         foreach ($objects as $object) {
             unset ($filters[$object]);
         }
-        
+
         if (count($filters) == 0) {
             $filters = NULL;
         } else {
@@ -185,17 +185,17 @@ class Filters_Model extends Model
 
         // Save filters more friendly schema
         foreach ($_filters as $filter) {
-            
-            $filters[$filter->appname] = ($filter->filter != Null) ? unserialize($filter->filter) : 
+
+            $filters[$filter->appname] = ($filter->filter != Null) ? unserialize($filter->filter) :
                                          // If filter was Null add * as the filter this will disallow
-                                         // any kind of access with this filter. The global filter is 
+                                         // any kind of access with this filter. The global filter is
                                          // Null by default to allow any access, so it should not be *
-                                         (($filter->appname === '_global_') ? Array() : Array('*')); 
+                                         (($filter->appname === '_global_') ? Array() : Array('*'));
         }
 
         // If there was no filter for application, use _default_ filter
         $appname = (isset($filters[$appname])) ? $appname : '_default_';
-        
+
         // Merge filters to generate a single filter;
         $filters = array_unique(array_merge($filters[$appname], $filters['_global_']));
 
@@ -211,7 +211,7 @@ class Filters_Model extends Model
                       'modify_date' => time(),
                       'created_by'  => $author,
                       'modified_by' => $author);
-        
+
         $this->db->insert($this->tableNameFilters, $rows);
     }
     // }}}
@@ -226,5 +226,3 @@ class Filters_Model extends Model
     }
     //}}}
 }
-
-?>

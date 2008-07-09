@@ -1,5 +1,5 @@
 <?php
-// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:             
+// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:
 // +-------------------------------------------------------------------------+
 // | Authors: Armen Baghumian <armen@OpenSourceClub.org                      |
 // |          Sasan Rose <sasan.rose@gmail.com>                              |
@@ -7,7 +7,7 @@
 // $Id$
 // ---------------------------------------------------------------------------
 
-class Users_Model extends Model 
+class Users_Model extends Model
 {
     // {{{ Properties
 
@@ -21,7 +21,7 @@ class Users_Model extends Model
     // {{{ Constructor
     public function __construct()
     {
-        parent::__construct(new Database('default'));
+        parent::__construct();
 
         // Set table name
         $this->tableNameUsers  = 'user_users';
@@ -40,15 +40,15 @@ class Users_Model extends Model
 
         // Don't believe the truth! double check it ;)
         if (count($query) == 1 && $username === $user->username) {
-            
+
             $this->db->select('username, password, verified, blocked, block_date');
-            $this->db->where('username', $username);           
+            $this->db->where('username', $username);
             $this->db->where('password', sha1($password));
 
-            $query = $this->db->get($this->tableNameUsers);           
-            $user  = $query->current();           
+            $query = $this->db->get($this->tableNameUsers);
+            $user  = $query->current();
 
-            $status = self::USER_OK;           
+            $status = self::USER_OK;
 
             if (count($query) != 1 || sha1($password) !== $user->password) {
                 $status |= self::USER_INCORRECT_PASS;
@@ -59,8 +59,8 @@ class Users_Model extends Model
                 if (!$user->verified) {
                     $status |= self::USER_NOT_VERIFIED;     // Add verfied to status
                     $status &= ~self::USER_OK;              // Remove the USER_OK flag
-                } 
-                
+                }
+
                 // Check if user blocked
                 if ($user->blocked) {
                     if ($user->block_date == 0 || ($expiretime > (time()-$user->block_date))) {
@@ -70,7 +70,7 @@ class Users_Model extends Model
                 }
 
             }
- 
+
             return (boolean)($status & self::USER_OK);  // Check if USER_OK flag is set
         }
 
@@ -84,7 +84,7 @@ class Users_Model extends Model
         $this->db->select('username');
         $this->db->where('username', $username);
 
-        $query = $this->db->get($this->tableNameUsers); 
+        $query = $this->db->get($this->tableNameUsers);
         $user  = $query->current();
 
         if (count($query) == 1 && $username === $user->username) {
@@ -92,16 +92,16 @@ class Users_Model extends Model
             $this->db->select('username, password, verify_string, blocked, block_date');
             $this->db->where('username', $username);
             $this->db->where('password', sha1($password));
-            $this->db->where('verify_string', $uri); 
-                    
+            $this->db->where('verify_string', $uri);
+
             if (Arag_Config::get('expire', 0) != 0) {
                 $this->db->where('expire_date >',  time()+Arag_Config::get('expire', 0));
             }
 
-            $query = $this->db->get($this->tableNameUsers); 
+            $query = $this->db->get($this->tableNameUsers);
             $user  = $query->current();
 
-            $status = self::USER_OK;    
+            $status = self::USER_OK;
 
             if (count($query) != 1 || sha1($password) !== $user->password || $uri !== $user->verify_string) {
                 $status |= self::USER_INCORRECT_PASS;
@@ -117,9 +117,9 @@ class Users_Model extends Model
         }
 
         $status = self::USER_NOT_FOUND; // Status is 0
-        return (boolean)$status;      
+        return (boolean)$status;
     }
-    // }}}   
+    // }}}
     // {{{ & getUser
     public function & getUser($username)
     {
@@ -135,7 +135,7 @@ class Users_Model extends Model
 
         if (isset($user['privileges'])) {
             $user['privileges'] = unserialize($user['privileges']);
-        } else {    
+        } else {
             $user['privileges'] = Array();
         }
 
@@ -167,7 +167,7 @@ class Users_Model extends Model
 
         $userProfile = (Array) $this->db->get()->current();
 
-        return $userProfile;        
+        return $userProfile;
     }
     // }}}
     // {{{ & getUsers
@@ -189,7 +189,7 @@ class Users_Model extends Model
         if ($groupName != NULL) {
             $this->db->like($this->tableNameGroups.".name", $groupName);
         }
-        
+
         if ($user != NULL) {
             $row = explode(" ", $user);
             foreach ($row as $tag) {
@@ -203,14 +203,14 @@ class Users_Model extends Model
             if ($flagappname) {
                 $this->db->like('appname', $appName);
             } else {
-                $this->db->where('appname', $appName);               
+                $this->db->where('appname', $appName);
             }
         }
 
         $this->db->orderby('appname', 'ASC');
         $this->db->orderby('lastname', 'ASC');
         $this->db->orderby('group_name', 'ASC');
-        
+
         $retval = $this->db->get($this->tableNameUsers)->result_array(False);
 
         return $retval;
@@ -222,8 +222,8 @@ class Users_Model extends Model
         $controller = new Groups_Model;
 
         $group = $controller->getGroup(NULL, $appname, $groupname);
-        
-        $row = Array('username'      => $username, 
+
+        $row = Array('username'      => $username,
                      'create_date'   => time(),
                      'modify_date'   => time(),
                      'expire_date'   => time(),
@@ -236,7 +236,7 @@ class Users_Model extends Model
                      'password'      => sha1($password),
                      'verified'      => $verified,
                      'verify_string' => $verify_string);
-        
+
         $controller->changeModifiers($group['id'], $author);
         $this->db->insert($this->tableNameUsers, $row);
     }
@@ -253,7 +253,7 @@ class Users_Model extends Model
         } else {
             $blocked = 0;
         }
-        
+
         $row = Array(
                      'modify_date'   => time(),
                      'modified_by'   => $author,
@@ -277,15 +277,15 @@ class Users_Model extends Model
     public function hasUserName($username, $appname = NULL)
     {
         if ($appname == NULL) {
-            
-            $result = $this->db->select('count(username) as count')->getwhere($this->tableNameUsers, Array('username' => $username))->current(); 
+
+            $result = $this->db->select('count(username) as count')->getwhere($this->tableNameUsers, Array('username' => $username))->current();
             return (boolean)$result->count;
 
         } else {
 
             $this->db->select('count(username) as count');
             $this->db->from($this->tableNameUsers);
-            $this->db->join($this->tableNameGroups, $this->tableNameGroups.'.id', $this->tableNameUsers.'.group_id');           
+            $this->db->join($this->tableNameGroups, $this->tableNameGroups.'.id', $this->tableNameUsers.'.group_id');
             $this->db->where('username', $username);
             $this->db->where('appname', $appname);
             $result = $this->db->get()->current();
@@ -296,7 +296,7 @@ class Users_Model extends Model
     // }}}
     // {{{ deleteUsers
     public function deleteUsers($usernames = NULL, $groupid = NULL, $author)
-    {   
+    {
         if ($groupid == NULL) {
             $controller = new Groups_Model;
             foreach ($usernames as $username) {
@@ -327,7 +327,7 @@ class Users_Model extends Model
     {
         $this->db->where('username', $username);
         $this->db->where('password', sha1($password));
-        $this->db->where('verify_string', $uri);       
+        $this->db->where('verify_string', $uri);
 
         $rows = array (
                        'verify_string' => NULL,
@@ -375,7 +375,7 @@ class Users_Model extends Model
         $result = $this->db->select('count(verify_string) as count')->getwhere($this->tableNameUsers, Array(
                                                                                                             'verify_string' => $verify_uri,
                                                                                                             'verified'      => $verified
-                                                                                                           ))->current(); 
+                                                                                                           ))->current();
         return (boolean)$result->count;
     }
     // }}}
@@ -397,7 +397,7 @@ class Users_Model extends Model
     public function getBlockInfo ($username)
     {
         $this->db->select('block_date, block_counter');
-        return $this->db->getwhere($this->tableNameUsers, array('username' => $username))->current();       
+        return $this->db->getwhere($this->tableNameUsers, array('username' => $username))->current();
     }
     // }}}
     // {{{ blockUser
@@ -414,5 +414,3 @@ class Users_Model extends Model
     }
     // }}}
 }
-
-?>

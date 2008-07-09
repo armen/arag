@@ -1,17 +1,17 @@
 <?php
-// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:             
+// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:
 // +-------------------------------------------------------------------------+
 // | Authors: Sasan Rose <sasan.rose@gmail.com>                              |
 // +-------------------------------------------------------------------------+
 // $Id$
 // ---------------------------------------------------------------------------
 
-class UserProfile_Model extends Model 
+class UserProfile_Model extends Model
 {
     // {{{ Constructor
     public function __construct()
     {
-        parent::__construct(new Database('default'));
+        parent::__construct();
 
         // Set table name
         $this->tableNameProfiles  = 'user_profiles';
@@ -59,7 +59,7 @@ class UserProfile_Model extends Model
     // {{{ hasUserName
     public function hasUserName($username)
     {
-        $result = $this->db->select('count(username) as count')->getwhere($this->tableNameProfiles, Array('username' => $username))->current(); 
+        $result = $this->db->select('count(username) as count')->getwhere($this->tableNameProfiles, Array('username' => $username))->current();
         return (boolean) $result->count;
     }
     // }}}
@@ -68,9 +68,7 @@ class UserProfile_Model extends Model
     {
         $this->db->select('id, city, phone, pan, cellphone, province, address, postal_code, country');
 
-        return (Array) $this->db->getwhere($this->tableNameProfiles, array('username' => $username))->current();     
+        return (Array) $this->db->getwhere($this->tableNameProfiles, array('username' => $username))->current();
     }
     // }}}
 }
-
-?>

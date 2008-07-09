@@ -1,15 +1,15 @@
 <?php
-// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:             
+// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:
 // +-------------------------------------------------------------------------+
 // | Author:   Sasan Rose <sasan.rose@gmail.com>                             |
 // +-------------------------------------------------------------------------+
 // $Id$
 // ---------------------------------------------------------------------------
 
-class Applications_Model extends Model 
+class Applications_Model extends Model
 {
     // {{{ Properties
-    
+
     public $tableNameApps;
     public $tableNameGroups;
     public $tableNameUsers;
@@ -18,7 +18,7 @@ class Applications_Model extends Model
     // {{{ Constructor
     public function __construct()
     {
-        parent::__construct(new Database('default'));
+        parent::__construct();
 
         // set tables' names
         $this->tableNameApps   = 'user_applications';
@@ -31,15 +31,15 @@ class Applications_Model extends Model
     {
         $this->db->select('name, default_group, create_date');
         $this->db->from($this->tableNameApps);
-        
+
         if ($name != "") {
             $this->db->like("name", $name);
         }
-        
+
         $this->db->orderby('name', 'ASC');
 
         $query = $this->db->get();
-        
+
         $retval = $query->result(False);
         return $retval;
     }
@@ -47,19 +47,19 @@ class Applications_Model extends Model
     // {{{ getDate
     public function getDate($row)
     {
-        return format::date($row['create_date']);    
+        return format::date($row['create_date']);
     }
     // }}}
     // {{{ getModifyDate
     public function getModifyDate($row)
     {
-        return format::date($row['modify_date']);    
+        return format::date($row['modify_date']);
     }
     // }}}
     // {{{ hasApp
     public function hasApp($name)
     {
-        $result = $this->db->select('count(name) as count')->getwhere($this->tableNameApps, Array('name' => $name))->current(); 
+        $result = $this->db->select('count(name) as count')->getwhere($this->tableNameApps, Array('name' => $name))->current();
         return (boolean) $result->count;
     }
     // }}}
@@ -78,4 +78,3 @@ class Applications_Model extends Model
     }
     // }}}
 }
-?>

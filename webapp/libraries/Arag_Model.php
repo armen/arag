@@ -21,23 +21,12 @@
 class Model extends Model_Core {
 
     // {{{ Constructor
-    public function __construct($database = Null)
+    public function __construct()
     {
-        static $db;
+        $config = defined('MASTERAPP') ? 'default' : Config::item('sites/'.APPNAME.'.database');
 
-        if (is_object($database) AND ($database instanceof Database)) {
-            // Use the passed database instance
-            $this->db = $database;
-        } else {
-
-            $config = defined('MASTERAPP') ? 'default' : Config::item('sites/'.APPNAME.'.database');
-
-            // Load the default database if necessary
-            ($db === NULL) and $db = new Database($config);
-
-            // Use the static database
-            $this->db = $db;
-        }
+        // Load the default database if necessary
+        $this->db = new Database($config);
     }
     // }}}
     // {{{ load
