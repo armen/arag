@@ -1,6 +1,6 @@
 {* Smarty *}
-{*  
-    vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:             
+{*
+    vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:
     File: $Id$
 *}
 
@@ -44,9 +44,9 @@
                 {/if}
 
                 {foreach name=list from=$plist item=row key=key}
-                    
+
                     {capture assign="class"}{cycle values="plist_odd,plist_even"}{/capture}
-                    <tr class="{$class}" onmouseover="listMouseEvent(this, 'over', '{$class}')" onmouseout="listMouseEvent(this, 'out', '{$class}')" 
+                    <tr class="{$class}" onmouseover="listMouseEvent(this, 'over', '{$class}')" onmouseout="listMouseEvent(this, 'out', '{$class}')"
                         onclick="listMouseEvent(this, 'click', '{$class}')">
 
                     {assign var="onclick" value=""}
@@ -55,7 +55,7 @@
                         <td>
                             {if isset($row.$parameter_name|smarty:nodefaults)}
                                 {assign var="onclick" value="onclick=\"toggleListCheckbox($('`$namespace``$parameter_name`_`$row.$parameter_name`'))\""}
-                                <input type="checkbox" name="{$parameter_name}[]" value="{$row.$parameter_name}" 
+                                <input type="checkbox" name="{$parameter_name}[]" value="{$row.$parameter_name}"
                                        id="{$namespace}{$parameter_name}_{$row.$parameter_name}" />
                             {/if}
                         </td>
@@ -71,7 +71,7 @@
                                 {/if}
                                 <td {$onclick|smarty:nodefaults}>{$row.$name|default:"&nbsp;"}</td>
                             {elseif isset($columns.$name|smarty:nodefaults) && $columns.$name.virtual}
-                                <td {$onclick|smarty:nodefaults}>{$plist->callCallback($name, $row)}</td>
+                                <td {$onclick|smarty:nodefaults}>{$plist->callCallback($name, $row)|smarty:nodefaults}</td>
                             {/if}
                         {/foreach}
                     {else}
@@ -81,20 +81,20 @@
                     {if count($actions) > 0}
                         {foreach from=$actions item=action}
                             <td class="plist_icon">
-                                {if isset($action.alternate_callback|smarty:nodefaults) && 
-                                    $action.alternate_callback != false && 
+                                {if isset($action.alternate_callback|smarty:nodefaults) &&
+                                    $action.alternate_callback != false &&
                                     $plist->callCallback($action.alternate_callback, $row)}
 
                                     {if $action.alternate_uri != null}
                                         {assign var=uri value=$plist->parseURI($action.alternate_uri, $row)}
-                                        <a href="{kohana_helper function="url::site" uri=$uri}" title="{$action.title}" class="{$action.class_name}_alt" 
+                                        <a href="{kohana_helper function="url::site" uri=$uri}" title="{$action.title}" class="{$action.class_name}_alt"
                                            target="{$action.target}">{$action.label}</a>
                                     {else}
                                         <div title="{$action.title}" class="{$action.class_name}_alt">{$action.label}</div>
                                     {/if}
                                 {else}
-                                    {assign var=uri value=$plist->parseURI($action.uri, $row)}                                
-                                    <a href="{kohana_helper function="url::site" uri=$uri}" title="{$action.title}" class="{$action.class_name}" 
+                                    {assign var=uri value=$plist->parseURI($action.uri, $row)}
+                                    <a href="{kohana_helper function="url::site" uri=$uri}" title="{$action.title}" class="{$action.class_name}"
                                        target="{$action.target}">{$action.label}</a>
                                 {/if}
                             </td>
@@ -103,13 +103,13 @@
                     </tr>
                 {/foreach}
 
-                {if $plist->hasFooter() && count($columns) > 0}    
+                {if $plist->hasFooter() && count($columns) > 0}
                 <tr class="plist_footer">
 
                     {if count($group_actions) > 0}
                         <td><input type="checkbox" onclick="toggleCheckboxesStatus(this.checked, '{$namespace}');" /></td>
                     {/if}
-                
+
                     {foreach from=$columnNames item=name}
                         {if isset($columns.$name|smarty:nodefaults) && !$columns.$name.hidden}
                             {if !$columns.$name.virtual && in_array($name, $sums)}
@@ -139,7 +139,7 @@
                         </select>
 
                     {else}
-                        
+
                         <table border="0" cellpadding="0" cellspacing="0">
                         <tr>
                         {foreach from=$group_actions item=action}
@@ -150,7 +150,7 @@
                         {/foreach}
                         </tr>
                         </table>
-                        
+
                     {/if}
                 </div>
             {/if}
