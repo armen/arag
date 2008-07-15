@@ -1,5 +1,5 @@
 <?php
-// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:             
+// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:
 // +-------------------------------------------------------------------------+
 // | Author: Armen Baghumian <armen@OpenSourceClub.org>                      |
 // +-------------------------------------------------------------------------+
@@ -15,28 +15,32 @@
 function smarty_function_html_checked($params, &$smarty)
 {
     $assign = Null;
-    
+
     foreach ($params as $_key => $_val) {
         switch ($_key) {
-            case 'name':
+            case 'value':
+            case 'exp_value':
                 $$_key = $_val;
                 break;
-                
+
             default:
                 $smarty->trigger_error("html_checked: Unknown attribute '$_key'");
         }
     }
 
-    if (!isset($name)) {
-       $smarty->trigger_error("html_checked: missing 'name' attribute");
+    if (!isset($value)) {
+       $smarty->trigger_error("html_checked: missing 'value' attribute");
        return;
     }
 
-    if ($smarty->get_template_vars($name)) {
+    if (!isset($exp_value)) {
+       $smarty->trigger_error("html_checked: missing 'exp_value' attribute");
+       return;
+    }
+
+    if ($value == $exp_value) {
         return 'checked="checked"';
     }
 
     return Null;
 }
-
-?>
