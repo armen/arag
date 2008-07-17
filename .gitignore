@@ -8,3 +8,5 @@ webapp/cache/smarty_compile/
 webapp/logs/*.log.php
 webapp/logs/*.log
 messages.mo
+*.swp
+*.swo
