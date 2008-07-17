@@ -27,7 +27,7 @@ class ReportGenerator_Model extends Model
     public function describe($table)
     {
         try {
-            $table = $this->db->query("Describe ".$this->config['table_prefix'].$table)->result_array();
+            $table = $this->db->query("Describe ".$this->config['table_prefix'].$table)->result_array(False);
         } catch(Kohana_Database_Exception $e) {
             return Array();
         }
