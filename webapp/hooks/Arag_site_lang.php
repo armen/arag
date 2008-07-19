@@ -57,7 +57,7 @@ function site_lang()
 
             // Remove language from url
             $uri = preg_replace('|^[a-zA-Z]{2}/|', '', url::current());
-            url::redirect($lang.'/'.$uri);            
+            url::redirect($lang.'/'.$uri);
         }
 
         // Store locale config values

@@ -30,16 +30,16 @@ class Controller extends Controller_Core {
     public function __construct()
     {
         parent::__construct();
-    
+
         if (Config::item('smarty.integration') == True) {
             $this->smarty = new Arag_Smarty;
         }
 
-        $this->validation = Validation::factory();        
+        $this->validation = Validation::factory();
 
         if ($this->layout == Null) {
             $this->layout = (strpos(Router::$controller_path, 'backend') !== False || Router::$controller === 'backend')
-                          ? 'arag_templates/backend_layout' 
+                          ? 'arag_templates/backend_layout'
                           : 'arag_templates/frontend_layout';
         }
 
@@ -58,12 +58,12 @@ class Controller extends Controller_Core {
         bind_textdomain_codeset('messages', 'utf8');
         textdomain('messages');
 
-        $locale = Config::item('locale.language') . '.utf8';
+        $locale = current(Config::item('locale.language')) . '.utf8';
 
         putenv('LANG=' . $locale);
         putenv('LANGUAGE=' . $locale);
         setlocale(LC_ALL, $locale);
-        
+
         Event::add('system.post_controller', array($this, '_display'));
     }
     // }}}
@@ -82,7 +82,7 @@ class Controller extends Controller_Core {
             return;
 
         if (substr(strrchr($template, '.'), 1) === Config::item('smarty.templates_ext')) {
-        
+
             // Assign variables to the template
             if (is_array($vars) && count($vars) > 0) {
                 foreach ($vars as $key => $val) {
@@ -93,15 +93,15 @@ class Controller extends Controller_Core {
             // Send Kohana::instance and base url to all templates
             $this->smarty->assign('this', $this);
 
-            $base_url = Config::item('sites/'.APPNAME.'.core.parent_base_url', False, False) ? 
-                        Config::item('sites/'.APPNAME.'.core.parent_base_url') : 
+            $base_url = Config::item('sites/'.APPNAME.'.core.parent_base_url', False, False) ?
+                        Config::item('sites/'.APPNAME.'.core.parent_base_url') :
                         url::base();
             $this->smarty->assign('arag_base_url', $base_url);
             $this->smarty->assign('arag_current_module', Router::$module);
 
             // Fetch the output
             $output = $this->smarty->fetch($template);
-            
+
         } else {
             $output = parent::_kohana_load_view($template, $vars);
         }
@@ -136,7 +136,7 @@ class Controller extends Controller_Core {
                 foreach ($data as $field => $value) {
                     $this->smarty->assign($field, $value);
                 }
-            }            
+            }
         }
 
         $alt_method = $method . '_' . Router::$request_method;
@@ -146,10 +146,10 @@ class Controller extends Controller_Core {
         // Is method exists?
         $method = method_exists($this, $method) ? $method : (method_exists($this, $alt_method) ? $alt_method : False);
 
-        if ($method == False) {            
+        if ($method == False) {
             // There is no method, try to find _default method
             if (method_exists($this, '_default')) {
-                
+
                 $this->_default(Router::$method, Router::$arguments);
                 return;
 
@@ -207,7 +207,7 @@ class Controller extends Controller_Core {
         Log::add('error', 'Invalid request: '.$trace[0]['file'].':'.$trace[0]['line']);
         url::redirect('invalid_request');
     }
-    // }}}    
+    // }}}
     // {{{ _display
     public function _display()
     {
@@ -217,5 +217,3 @@ class Controller extends Controller_Core {
     }
     // }}}
 }
-
-?>
