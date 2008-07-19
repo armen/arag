@@ -33,7 +33,9 @@ class url extends url_Core {
      */
     public static function site($uri = '', $protocol = FALSE)
     {
-        $uri = preg_match('|^[a-zA-Z]{2}/|', rtrim($uri, '/').'/') ? $uri : Config::item('locale.lang'). '/' . $uri;
+        if (Config::item('locale.multi_lingual')) {
+            $uri = preg_match('|^[a-zA-Z]{2}/|', rtrim($uri, '/').'/') ? $uri : Config::item('locale.lang'). '/' . $uri;
+        }
 
         return parent::site($uri, $protocol);
     }

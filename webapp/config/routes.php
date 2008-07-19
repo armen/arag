@@ -12,11 +12,13 @@
  * @param string   _allowed   Permitted URI characters
  * @param string   _default   Default route when no URI segments are found
  */
+
 $config = array
 (
-    '_default'         => 'arag/welcome',
-    '[a-zA-Z]{2}'      => 'arag/welcome',
-    '[a-zA-Z]{2}/(.*)' => '$1'
+    '_default' => 'arag/welcome',
 );
 
-?>
+if (Config::item('locale.multi_lingual')) {
+    $config['[a-zA-Z]{2}']      = 'arag/welcome';
+    $config['[a-zA-Z]{2}/(.*)'] = '$1';
+}

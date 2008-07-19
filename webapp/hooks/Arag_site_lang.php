@@ -8,7 +8,9 @@
 // This hook sets the locale.language and locale.lang config values
 // based on the language found in the first segment of the URL.
 
-Event::add('system.routing', 'site_lang');
+if (Config::item('locale.multi_lingual')) {
+    Event::add('system.routing', 'site_lang');
+}
 
 function site_lang()
 {
