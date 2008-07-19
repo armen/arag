@@ -1,5 +1,5 @@
 <?php
-// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:             
+// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:
 // +-------------------------------------------------------------------------+
 // | Authors: Sasan Rose <sasan.rose@gmail.com>                              |
 // |          Armen Baghumian <armen@OpenSourceClub.org>                     |
@@ -22,9 +22,9 @@ function smarty_function_arag_rte($params, &$smarty)
     $language         = 'en';
     $skin             = 'default';
     $toolbar_expanded = true;
-    
-    $pub_url = url::base();    
-    
+
+    $pub_url = url::base();
+
     $language = Config::item('locale.lang');
 
     if (Config::item('arag.fckeditor_skin') != Null) {
@@ -37,7 +37,7 @@ function smarty_function_arag_rte($params, &$smarty)
 
     if (Config::item('arag.fckeditor_height') != Null) {
         $height = Config::item('arag.fckeditor_height');
-    }    
+    }
 
     if (Config::item('arag.fckeditor_toolbar_set') != Null) {
         $toolbar_set = Config::item('arag.fckeditor_toolbar_set');
@@ -45,7 +45,7 @@ function smarty_function_arag_rte($params, &$smarty)
 
     if (Config::item('arag.fckeditor_toolbar_expanded') === False) {
         $toolbar_expanded = Config::item('arag.fckeditor_toolbar_expanded');
-    }    
+    }
 
     foreach ($params as $_key => $_val) {
         switch ($_key) {
@@ -56,7 +56,7 @@ function smarty_function_arag_rte($params, &$smarty)
             case 'height':
                 $$_key = $_val;
                 break;
-                
+
             default:
                 $smarty->trigger_error("arag_rte: Unknown attribute '$_key'");
         }
@@ -66,11 +66,11 @@ function smarty_function_arag_rte($params, &$smarty)
        $smarty->trigger_error("arag_rte: missing 'name' attribute");
        return;
     }
-    
+
     require_once DOCROOT . 'scripts/FCKeditor/fckeditor.php';
 
     $FCKeditor =& new FCKeditor($name);
-    
+
     $FCKeditor->Config['CustomConfigurationsPath'] = $pub_url . 'scripts/FCKeditor/fckconfig.js';
     $FCKeditor->Config['SkinPath']                 = $pub_url . 'scripts/FCKeditor/editor/skins/' . $skin . '/';
     $FCKeditor->Config['ToolbarStartExpanded']     = $toolbar_expanded;

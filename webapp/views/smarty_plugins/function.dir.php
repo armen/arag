@@ -1,5 +1,5 @@
 <?php
-// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:             
+// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:
 // +-------------------------------------------------------------------------+
 // | Author: Armen Baghumian <armen@OpenSourceClub.org>                      |
 // +-------------------------------------------------------------------------+
@@ -22,7 +22,7 @@ function smarty_function_dir($params, &$smarty)
                 case 'assign':
                     $$_key = (string)$_val;
                     break;
-                    
+
                 default:
                     $smarty->trigger_error("arag_function_dir: Unknown attribute '$_key'");
             }
@@ -30,7 +30,7 @@ function smarty_function_dir($params, &$smarty)
     }
 
     $lang      = Config::item('locale.lang');
-    $direction = Config::item('locale.languages_direction.'.$lang); 
+    $direction = Config::item('locale.languages_direction.'.$lang);
 
     if ($assign) {
         $smarty->assign($assign, $direction);
@@ -39,5 +39,3 @@ function smarty_function_dir($params, &$smarty)
 
     return $direction;
 }
-
-?>
