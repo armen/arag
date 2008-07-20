@@ -18,10 +18,10 @@
  *
  */
 
-class format_Core { 
+class format_Core {
 
     // {{{ date
-    public static function date($timestamp)
+    public static function date($timestamp, $showHours = True)
     {
         $lang = Config::item('locale.lang');
 
@@ -34,10 +34,12 @@ class format_Core {
         } else {
             $date = date::gregorian_to_jalali((int) $timestamp);
             $date = $date['year'].'-'.$date['month'].'-'.$date['day'];
-            $date = $date . date(' H:i:s', $timestamp);
+            if ($showHours) {
+                $date = $date . date(' H:i:s', $timestamp);
+            }
         }
 
-        return $date;    
+        return $date;
     }
     // }}}
 }
