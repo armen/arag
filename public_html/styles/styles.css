@@ -570,13 +570,13 @@ input[type=reset][disabled] {
     height          : 16px;
 }
 .apply_cancel_action {
-    background      : transparent url(../images/list/apply.png) no-repeat center;
+    background      : transparent url(../images/list/cancel.png) no-repeat center;
     font-size       : 0px;
     width           : 16px;
     height          : 16px;
 }
 .apply_cancel_action_alt {
-    background      : transparent url(../images/list/cancel.png) no-repeat center;
+    background      : transparent url(../images/list/apply.png) no-repeat center;
     font-size       : 0px;
     width           : 16px;
     height          : 16px;
