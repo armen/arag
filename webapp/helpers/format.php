@@ -30,7 +30,10 @@ class format_Core {
         }
 
         if ($lang === 'en') {
-            $date = date('Y-m-d H:i:s', $timestamp);
+            $date = date('Y-m-d', $timestamp);
+            if ($showHours) {
+                $date = $date . date(' H:i:s', $timestamp);
+            }
         } else {
             $date = date::gregorian_to_jalali((int) $timestamp);
             $date = $date['year'].'-'.$date['month'].'-'.$date['day'];
