@@ -1,21 +1,24 @@
 <?php
 /**
- * Name of the front controller for this application. Default: index.php
- *
- * This can be removed by using URL rewriting.
+ * Base path of the web site. If this includes a domain, eg: localhost/kohana/
+ * then a full URL will be used, eg: http://localhost/kohana/. If it only includes
+ * the path, and a site_protocol is specified, the domain will be auto-detected.
  */
 $config['index_page'] = basename($_SERVER['SCRIPT_NAME']);
 
-/*
- * Domain name, with the installation directory. Default: localhost/kohana/
+/**
+ * Force a default protocol to be used by the site. If no site_protocol is
+ * specified, then the current protocol is used, or when possible, only an
+ * absolute path (with no protocol/domain) is used.
  */
 $config['site_domain'] = $_SERVER['SERVER_NAME'].substr($_SERVER['SCRIPT_NAME'], 0, strpos($_SERVER['SCRIPT_NAME'], '/'.$config['index_page']));
 
 /**
- * Default protocol used to access the website. Default: http
+ * Name of the front controller for this application. Default: index.php
+ *
+ * This can be removed by using URL rewriting.
  */
 $config['site_protocol'] = (isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') ? 'https' : 'http';
-
 
 /**
  * Fake file extension that will be added to all generated URLs. Example: .html
@@ -27,7 +30,7 @@ $config['url_suffix'] = '';
  * The internal cache stores file paths and config entries across requests and
  * can give significant speed improvements at the expense of delayed updating.
  */
-$config['internal_cache'] = 0;
+$config['internal_cache'] = FALSE;
 
 /**
  * Enable or disable gzip output compression. This can dramatically decrease
@@ -45,10 +48,26 @@ $config['output_compression'] = FALSE;
 $config['global_xss_filtering'] = TRUE;
 
 /**
- * Enable or disable dynamic setting of configuration options. By default, all
- * configuration options are read-only.
+ * Enable or disable hooks. Setting this option to TRUE will enable
+ * all hooks. By using an array of hook filenames, you can control
+ * which hooks are enabled. Setting this option to FALSE disables hooks.
  */
-$config['allow_config_set'] = TRUE;
+$config['enable_hooks'] = TRUE;
+
+/**
+ * Log thresholds:
+ *  0 - Disable logging
+ *  1 - Errors and exceptions
+ *  2 - Warnings
+ *  3 - Notices
+ *  4 - Debugging
+ */
+$config['log_threshold'] = 1;
+
+/**
+ * Message logging directory.
+ */
+$config['log_directory'] = APPPATH.'logs';
 
 /**
  * Enable or display displaying of Kohana error pages. This will not affect
@@ -60,7 +79,7 @@ $config['display_errors'] = TRUE;
  * Enable or display statistics in the final output. Stats are replaced via
  * specific strings, such as {execution_time}.
  *
- * @see http://doc.kohanaphp.com/general/configuration/config
+ * @see http://docs.kohanaphp.com/general/configuration
  */
 $config['render_stats'] = TRUE;
 
@@ -77,9 +96,13 @@ $config['extension_prefix'] = 'Arag_';
  */
 $config['modules'] = array
 (
-	// MODPATH.'auth',   // Authentication
-	// MODPATH.'forge',  // Form generation
-	// MODPATH.'kodoc',  // Self-generating documentation
-	// MODPATH.'media',  // Media caching and compression
-	// MODPATH.'gmaps',  // Google Maps integration
+    // MODPATH.'auth',      // Authentication
+    // MODPATH.'forge',     // Form generation
+    // MODPATH.'kodoc',     // Self-generating documentation
+    // MODPATH.'media',     // Media caching and compression
+    // MODPATH.'gmaps',     // Google Maps integration
+    // MODPATH.'archive',   // Archive utility
+    // MODPATH.'payment',   // Online payments
+    // MODPATH.'unit_test', // Unit testing
+    // MODPATH.'object_db', // New OOP Database library (testing only!)
 );

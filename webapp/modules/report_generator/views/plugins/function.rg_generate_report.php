@@ -14,7 +14,7 @@
 
 function smarty_function_rg_generate_report($params, &$smarty)
 {
-    $ext      = Config::item('smarty.templates_ext');
+    $ext      = Kohana::config('smarty.templates_ext');
     $template = '/component/generate_report';
 
     foreach ($params as $_key => $_val) {

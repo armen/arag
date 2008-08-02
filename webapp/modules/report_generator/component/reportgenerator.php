@@ -58,7 +58,7 @@ class ReportGenerator_Component extends Component
                                                     $this->report['additional_columns'], $this->report['filters'], 
                                                     $where);
 
-        $date_fields_name = Config::item('config.date_field_names');
+        $date_fields_name = Kohana::config('config.date_field_names');
 
         $list = new PList_Component('report');
         $list->setResource($result);

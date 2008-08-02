@@ -1,22 +1,22 @@
 <?php
 
-if (Config::item('hooks.enable')) {
+if (Kohana::config('core.enable_hooks')) {
     Event::add('system.routing', 'arag_module_hooks');
 }
 
 function arag_module_hooks()
 {
     $hooks   = Array();
-    $modules = Config::item('config.hooks');
+    $modules = Kohana::config('config.hooks');
     $modules = is_array($modules) ? array_merge($modules, Array(Router::$module)) : Array(Router::$module);
 
-    $modules_path = $include_paths = Config::item('core.modules');
+    $modules_path = $include_paths = Kohana::config('core.modules');
     foreach ($modules as $module) {
         $modules_path[] = MODPATH.$module;
     }
 
-    Config::set('core.modules', $modules_path);
-    
+    Kohana::config_set('core.modules', $modules_path);
+
     foreach ($modules as $module) {
         $hooks = array_unique(array_merge($hooks, Kohana::list_files('modules/'.$module.'/hooks', TRUE)));
     }
@@ -32,9 +32,9 @@ function arag_module_hooks()
 
         } else {
             // This should never happen
-            Log::add('error', 'Hook not found: '.$hook);
+            Kohana::log('error', 'Hook not found: '.$hook);
         }
     }
-    
-    Config::set('core.modules', $include_paths);
+
+    Kohana::config_set('core.modules', $include_paths);
 }

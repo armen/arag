@@ -15,7 +15,7 @@
 function smarty_modifier_arag_escape($string, $char_set = Null)
 {
     if ($char_set == Null) {
-        $char_set = Config::item('charset');
+        $char_set = Kohana::config('charset');
     }
 
     if (is_string($string)) {

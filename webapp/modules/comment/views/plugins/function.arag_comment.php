@@ -14,7 +14,7 @@
 
 function smarty_function_arag_comment($params, &$smarty)
 {
-    $ext      = Config::item('smarty.templates_ext');
+    $ext      = Kohana::config('smarty.templates_ext');
     $template = 'linear';
 
     foreach ($params as $_key => $_val) {

@@ -29,8 +29,8 @@ function smarty_function_dir($params, &$smarty)
         }
     }
 
-    $lang      = Config::item('locale.lang');
-    $direction = Config::item('locale.languages_direction.'.$lang);
+    $lang      = Kohana::config('locale.lang');
+    $direction = Kohana::config('locale.languages_direction.'.$lang);
 
     if ($assign) {
         $smarty->assign($assign, $direction);

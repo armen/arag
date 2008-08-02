@@ -33,8 +33,8 @@ class url extends url_Core {
      */
     public static function site($uri = '', $protocol = FALSE)
     {
-        if (Config::item('locale.multi_lingual')) {
-            $uri = preg_match('|^[a-zA-Z]{2}/|', rtrim($uri, '/').'/') ? $uri : Config::item('locale.lang'). '/' . $uri;
+        if (Kohana::config('locale.multi_lingual')) {
+            $uri = preg_match('|^[a-zA-Z]{2}/|', rtrim($uri, '/').'/') ? $uri : Kohana::config('locale.lang'). '/' . $uri;
         }
 
         return parent::site($uri, $protocol);

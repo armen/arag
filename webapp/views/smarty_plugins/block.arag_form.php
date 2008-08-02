@@ -49,7 +49,7 @@ function smarty_block_arag_form($params, $content, &$smarty, &$repeat)
             $action = url::site($uri);
         }
 
-        if (Config::item('token.enable')) {
+        if (Kohana::config('token.enable')) {
             $content = '<input type="hidden" name="arag_token" value="'.Token::generate().'" />'.$content;
         }
 

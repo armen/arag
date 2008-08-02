@@ -67,7 +67,7 @@ class Frontend_Controller extends Controller
             if ($this->session->get('not_authorized_redirect_url')) {
                 url::redirect($this->session->get_once('not_authorized_redirect_url'));
             } else {
-                $redirect_url = Config::item('user.login_redirect', False, False);
+                $redirect_url = Kohana::config('user.login_redirect', False, False);
                 Arag_Auth::is_accessible($redirect_url) ? url::redirect($redirect_url) : url::redirect(url::site());
             }
 
@@ -169,7 +169,7 @@ class Frontend_Controller extends Controller
         $this->session->destroy();
 
         // Redirect to front controller
-        url::redirect(Config::item('user.logout_redirect', False, False));
+        url::redirect(Kohana::config('user.logout_redirect', False, False));
     }
     // }}}
     // {{{ forget_password_read

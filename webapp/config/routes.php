@@ -18,7 +18,7 @@ $config = array
     '_default' => 'arag/welcome',
 );
 
-if (Config::item('locale.multi_lingual')) {
+if (Kohana::config('locale.multi_lingual')) {
     $config['[a-zA-Z]{2}']      = 'arag/welcome';
     $config['[a-zA-Z]{2}/(.*)'] = '$1';
 }

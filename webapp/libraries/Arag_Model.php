@@ -23,7 +23,7 @@ class Model extends Model_Core {
     // {{{ Constructor
     public function __construct()
     {
-        $config = defined('MASTERAPP') ? 'default' : Config::item('sites/'.APPNAME.'.database');
+        $config = defined('MASTERAPP') ? 'default' : Kohana::config('sites/'.APPNAME.'.database');
 
         // Load the default database if necessary
         $this->db = new Database($config);
@@ -37,10 +37,10 @@ class Model extends Model_Core {
         }
 
         // Save old include paths
-        $old_include_paths = Config::include_paths();
+        $old_include_paths = Kohana::include_paths();
 
         // Change include_once to module path
-        Config::set('core.modules', array_unique(array_merge($old_include_paths, Array(MODPATH.$module))));
+        Kohana::config_set('core.modules', array_unique(array_merge($old_include_paths, Array(MODPATH.$module))));
 
         $model = ucfirst(strtolower($model)).'_Model';
         $model = new $model();

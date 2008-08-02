@@ -19,13 +19,13 @@
  * @subpackage    Libraries
  * @author        Armen Baghumian
  * @author        Kohana Team
- * @copyright     Copyright (c) 2007 Kohana Team 
+ * @copyright     Copyright (c) 2007 Kohana Team
  * @category      Router
  */
 class Router extends Router_Core {
-    
+
     // {{{ Properties
-        
+
     public static $module          = False;
     public static $request_method  = Null;
     public static $request_methods = Array('GET' => 'read', 'POST' => 'write', 'PUT' => 'create', 'DELETE' => 'remove');
@@ -44,21 +44,21 @@ class Router extends Router_Core {
             // Set the query string to the current query string
             self::$query_string = '?'.trim($_SERVER['QUERY_STRING'], '&');
         }
-    
+
         // Aet the request method
         self::request_method();
 
         // Set all modules in core.modules so we can fetch all routes
-        $old_include_paths = Config::include_paths();
-        Config::set('core.modules', array_unique(array_merge($old_include_paths, glob(MODPATH.'*', GLOB_ONLYDIR))));
+        $old_include_paths = Kohana::include_paths();
+        Kohana::config_set('core.modules', array_unique(array_merge($old_include_paths, glob(MODPATH.'*', GLOB_ONLYDIR))));
 
         if (self::$routes === NULL) {
             // Load routes
-            self::$routes = Config::item('routes');
+            self::$routes = Kohana::config('routes');
         }
 
         // Default route status
-        $default_route = FALSE;        
+        $default_route = FALSE;
 
         if (self::$current_uri === '') {
             // Make sure the default route is set
@@ -90,15 +90,15 @@ class Router extends Router_Core {
         }
 
         // Routed segments will never be empty
-        self::$rsegments = explode('/', self::$rsegments); 
-        
+        self::$rsegments = explode('/', self::$rsegments);
+
         // Find requested module
         $rsegments    = self::$rsegments;
-        self::$module = current(array_splice($rsegments, 0, 1));        
+        self::$module = current(array_splice($rsegments, 0, 1));
 
         // Set requested module in core.module
         $include_paths = array_unique(array_merge($old_include_paths, Array(MODPATH.self::$module)));
-        Config::set('core.modules', $include_paths);
+        Kohana::config_set('core.modules', $include_paths);
 
         // Prepare to find the controller
         $controller_path = '';
@@ -109,7 +109,7 @@ class Router extends Router_Core {
             $controller_path .= $segment;
 
             $found = FALSE;
-            foreach (Config::include_paths() as $dir) {
+            foreach (Kohana::include_paths() as $dir) {
                 // Search within controllers only
                 $dir .= 'controllers/';
 
@@ -151,7 +151,7 @@ class Router extends Router_Core {
             // Append default method
             self::$rsegments[] = self::$method;
         }
-        
+
         // Last chance to set routing before a 404 is triggered
         Event::run('system.post_routing');
 
@@ -169,7 +169,7 @@ class Router extends Router_Core {
         }
 
         if (self::$request_method == Null) {
-        
+
             if (isset($_SERVER['REQUEST_METHOD'])) {
                 $REQUEST_METHOD = $_SERVER['REQUEST_METHOD'];
 
@@ -200,5 +200,5 @@ class Router extends Router_Core {
 
         return self::$request_method;
     }
-    // }}}    
+    // }}}
 }

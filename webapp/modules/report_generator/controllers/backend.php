@@ -38,7 +38,7 @@ class Backend_Controller extends ReportGenerator_Backend
     // {{{ generate_report_read
     public function generate_report_read()
     {
-        $this->layout->allowed_tables = array_combine(Config::item('config.allowed_tables'), Config::item('config.allowed_tables'));
+        $this->layout->allowed_tables = array_combine(Kohana::config('config.allowed_tables'), Kohana::config('config.allowed_tables'));
         $this->layout->content = new View('backend/get_table'); 
     }
     // }}}
@@ -62,7 +62,7 @@ class Backend_Controller extends ReportGenerator_Backend
         $this->layout->filters            = $this->filters;
         $this->layout->actions            = $actions;
         $this->layout->parameter_name     = $parameter_name;
-        $date_fields_name                 = Config::item('config.date_field_names');        
+        $date_fields_name                 = Kohana::config('config.date_field_names');        
 
         // Generate report's list
         $report = new PList_Component('report');

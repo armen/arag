@@ -127,12 +127,12 @@ class Install_Controller extends Backend_Controller
             if (is_callable(array($Installation, 'install'))) {
                 
                 // Change include_once to module path
-                Config::set('core.modules', Array(MODPATH.$module));
+                Kohana::config_set('core.modules', Array(MODPATH.$module));
                 
                 $Installation->install($coreInstallation);
 
                 // Reset the include_paths
-                Config::set('core.modules', Array(MODPATH.Router::$module));
+                Kohana::config_set('core.modules', Array(MODPATH.Router::$module));
             }
         }
 

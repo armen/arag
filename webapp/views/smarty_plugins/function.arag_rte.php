@@ -25,26 +25,26 @@ function smarty_function_arag_rte($params, &$smarty)
 
     $pub_url = url::base();
 
-    $language = Config::item('locale.lang');
+    $language = Kohana::config('locale.lang');
 
-    if (Config::item('arag.fckeditor_skin') != Null) {
-        $skin = Config::item('arag.fckeditor_skin');
+    if (Kohana::config('arag.fckeditor_skin') != Null) {
+        $skin = Kohana::config('arag.fckeditor_skin');
     }
 
-    if (Config::item('arag.fckeditor_width') != Null) {
-        $width = Config::item('arag.fckeditor_width');
+    if (Kohana::config('arag.fckeditor_width') != Null) {
+        $width = Kohana::config('arag.fckeditor_width');
     }
 
-    if (Config::item('arag.fckeditor_height') != Null) {
-        $height = Config::item('arag.fckeditor_height');
+    if (Kohana::config('arag.fckeditor_height') != Null) {
+        $height = Kohana::config('arag.fckeditor_height');
     }
 
-    if (Config::item('arag.fckeditor_toolbar_set') != Null) {
-        $toolbar_set = Config::item('arag.fckeditor_toolbar_set');
+    if (Kohana::config('arag.fckeditor_toolbar_set') != Null) {
+        $toolbar_set = Kohana::config('arag.fckeditor_toolbar_set');
     }
 
-    if (Config::item('arag.fckeditor_toolbar_expanded') === False) {
-        $toolbar_expanded = Config::item('arag.fckeditor_toolbar_expanded');
+    if (Kohana::config('arag.fckeditor_toolbar_expanded') === False) {
+        $toolbar_expanded = Kohana::config('arag.fckeditor_toolbar_expanded');
     }
 
     foreach ($params as $_key => $_val) {
@@ -76,7 +76,7 @@ function smarty_function_arag_rte($params, &$smarty)
     $FCKeditor->Config['ToolbarStartExpanded']     = $toolbar_expanded;
     $FCKeditor->Config['AutoDetectLanguage']       = False ;
     $FCKeditor->Config['DefaultLanguage']          = $language;
-    $FCKeditor->Config['ContentLangDirection']     = Config::item('locale.languages_direction.'.$language);
+    $FCKeditor->Config['ContentLangDirection']     = Kohana::config('locale.languages_direction.'.$language);
     $FCKeditor->Config['DocType']                  = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" '.
                                                      '"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">';
 

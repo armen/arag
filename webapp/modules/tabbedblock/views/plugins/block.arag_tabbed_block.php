@@ -19,7 +19,7 @@ function smarty_block_arag_tabbed_block($params, $content, &$smarty, &$repeat)
         require_once $smarty->_get_plugin_filepath('function', 'dir');
         require_once $smarty->_get_plugin_filepath('function', 'left');
 
-        $ext      = Config::item('smarty.templates_ext');
+        $ext      = Kohana::config('smarty.templates_ext');
         $dir      = smarty_function_dir(Null, $smarty);
         $left     = smarty_function_left(Null, $smarty);
         $name     = $smarty->get_template_vars('_tabbedblock');

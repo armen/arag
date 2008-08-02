@@ -14,7 +14,7 @@
 
 function smarty_function_arag_history($params, &$smarty)
 {
-    $ext      = Config::item('smarty.templates_ext');
+    $ext      = Kohana::config('smarty.templates_ext');
     $template = 'navigation';
 
     foreach ($params as $_key => $_val) {
@@ -56,7 +56,7 @@ function smarty_function_arag_history($params, &$smarty)
 
         $smarty->assign('history', $history);
         $smarty->assign('current_history', $history->get_history());
-        $smarty->assign('separator', Config::item('history.separator'));
+        $smarty->assign('separator', Kohana::config('history.separator'));
         $smarty->assign('namespace', $namespace);
         $smarty->assign('history_templates_path', MODPATH . 'history/views/');
 

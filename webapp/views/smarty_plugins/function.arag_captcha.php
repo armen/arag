@@ -14,10 +14,10 @@
 
 function smarty_function_arag_captcha($params, &$smarty)
 {
-    $width  = Config::item('captcha.width');
-    $height = Config::item('captcha.height');
-    $style  = Config::item('captcha.style');
-    $length = Config::item('captcha.num_chars');
+    $width  = Kohana::config('captcha.width');
+    $height = Kohana::config('captcha.height');
+    $style  = Kohana::config('captcha.style');
+    $length = Kohana::config('captcha.num_chars');
     $code   = Null;
     
     foreach ($params as $_key => $_val) {
@@ -36,7 +36,7 @@ function smarty_function_arag_captcha($params, &$smarty)
     }
 
     $session = Session::instance();
-    $session->set('captcha_code', ($code == Null ? generate_captcha_code(Config::item('captcha.num_chars')) : Null));
+    $session->set('captcha_code', ($code == Null ? generate_captcha_code(Kohana::config('captcha.num_chars')) : Null));
 
     $captcha_source = url::site('/core/frontend/captcha/render/'.time());
     $content        = '<div><img src="'.$captcha_source.'" alt="captcha" width="'.$width.'" height="'.$height.'" /></div>'.

@@ -23,7 +23,7 @@ class format_Core {
     // {{{ date
     public static function date($timestamp, $showHours = True)
     {
-        $lang = Config::item('locale.lang');
+        $lang = Kohana::config('locale.lang');
 
         if (!$timestamp) {
             return "-";

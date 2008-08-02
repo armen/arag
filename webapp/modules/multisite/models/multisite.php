@@ -119,7 +119,7 @@ class MultiSite_Model extends Model
     // {{{ getNextDB
     public function getNextDB(&$DSN, &$databaseId) 
     {
-        $DSN        = Config::item('database.default.connection');
+        $DSN        = Kohana::config('database.default.connection');
         $databaseId = 1;
 
         return True;

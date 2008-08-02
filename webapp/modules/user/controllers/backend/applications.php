@@ -980,7 +980,7 @@ class Applications_Controller extends Backend_Controller
     // {{{ settings_write
     public function settings_write()
     {
-        Arag_Config::set('limit', $this->input->post('limit'));
+        Arag_Kohana::config_set('limit', $this->input->post('limit'));
 
               
         $this->session->set('settings_saved', true);
@@ -1018,7 +1018,7 @@ class Applications_Controller extends Backend_Controller
     public function password_write()
     {
 
-        Arag_Config::set('passlength', $this->input->post('length'));
+        Arag_Kohana::config_set('passlength', $this->input->post('length'));
 
         $this->session->set('user_settings_pass_length_saved', true);
 
@@ -1055,7 +1055,7 @@ class Applications_Controller extends Backend_Controller
     public function expire_time_write()
     {
 
-        Arag_Config::set('expire', $this->input->post('expire'));
+        Arag_Kohana::config_set('expire', $this->input->post('expire'));
 
         $this->session->set('user_settings_expire_saved', true);
 
@@ -1093,8 +1093,8 @@ class Applications_Controller extends Backend_Controller
     public function user_blocking_write()
     {
 
-        Arag_Config::set('block_expire', $this->input->post('block_expire'));
-        Arag_Config::set('block_counter', $this->input->post('block_counter'));
+        Arag_Kohana::config_set('block_expire', $this->input->post('block_expire'));
+        Arag_Kohana::config_set('block_counter', $this->input->post('block_counter'));
 
         $this->session->set('user_settings_user_blocking_saved', true);
 

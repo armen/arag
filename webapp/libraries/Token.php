@@ -45,8 +45,8 @@ class Token {
         $tokens = $session->get('arag_tokens');
         $token  = $input->post('arag_token');
 
-        if (!empty($token) && count($input->post()) && (!isset($tokens[$token]) || $tokens[$token] + Config::item('token.life_time') < time())) {
-            // At this point we can't Config::item('locale.lang') because Arag_site_lang
+        if (!empty($token) && count($input->post()) && (!isset($tokens[$token]) || $tokens[$token] + Kohana::config('token.life_time') < time())) {
+            // At this point we can't Kohana::config('locale.lang') because Arag_site_lang
             // is not executed so we use cookie to get the lang.
             $lang = (string) cookie::get('lang');
             $controller = new Controller;
@@ -63,7 +63,7 @@ class Token {
     {
         /*  Infinity lifetime is not good idea for tokens 
          *
-         *  if (Config::item('token.life_time') == 0) {
+         *  if (Kohana::config('token.life_time') == 0) {
          *      return;
          *  }
          */
@@ -74,7 +74,7 @@ class Token {
 
         foreach ($tokens as $token => $time) {
             
-            if ($time + Config::item('token.life_time') > time()) {
+            if ($time + Kohana::config('token.life_time') > time()) {
                 $alive_tokens[$token] = $time;
             }
         }

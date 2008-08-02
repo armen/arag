@@ -29,8 +29,8 @@ function smarty_function_left($params, &$smarty)
         }
     }
 
-    $lang  = Config::item('locale.lang');
-    $align = (Config::item('locale.languages_direction.'.$lang) == 'rtl') ? 'right' : 'left';
+    $lang  = Kohana::config('locale.lang');
+    $align = (Kohana::config('locale.languages_direction.'.$lang) == 'rtl') ? 'right' : 'left';
 
     if ($assign) {
         $smarty->assign($assign, $align);

@@ -13,10 +13,10 @@ class Arag {
     {
         if (!empty($module)) {
             // Change include_once to module path
-            Config::set('core.modules', array_unique(array_merge(Config::include_paths(), Array(MODPATH.$module))));
+            Kohana::config_set('core.modules', array_unique(array_merge(Kohana::include_paths(), Array(MODPATH.$module))));
         }
 
-        return Kohana::find_file($directory, $filename, $required, $ext);    
+        return Kohana::find_file($directory, $filename, $required, $ext);
     }
     // }}}
     // {{{ auto_load
@@ -28,7 +28,7 @@ class Arag {
         static $prefix, $module;
 
         // Set the extension prefix
-        empty($prefix) and $prefix = Config::item('core.extension_prefix');
+        empty($prefix) and $prefix = Kohana::config('core.extension_prefix');
         empty($module) and $module = class_exists('Router', FALSE) ? Router::$module : NULL;
 
         if (class_exists($class, FALSE))
@@ -44,7 +44,7 @@ class Arag {
                 $type   = 'component';
                 $file   = strtolower(substr($class, 0, -10)); // Lowercase filename
                 $module = $file;
-                break;            
+                break;
 
             default:
                 return False;
@@ -58,7 +58,7 @@ class Arag {
         // Load the requested file
         require_once $filepath;
 
-        return class_exists($class, FALSE);    
+        return class_exists($class, FALSE);
     }
     // }}}
 }

@@ -17,7 +17,7 @@ class ReportGenerator_Model extends Model
     // {{{ constructor
     public function __construct()
     {
-        $this->config           = defined('MASTERAPP') ? Config::item('database.default') : Config::item('sites/'.APPNAME.'.database');
+        $this->config           = defined('MASTERAPP') ? Kohana::config('database.default') : Kohana::config('sites/'.APPNAME.'.database');
         $this->config['object'] = False;
 
         parent::__construct(new Database($this->config));
@@ -32,7 +32,7 @@ class ReportGenerator_Model extends Model
             return Array();
         }
 
-        $date_fields_name = Config::item('config.date_field_names');
+        $date_fields_name = Kohana::config('config.date_field_names');
         $result           = Array();
 
         foreach ($table as $key => $column) {
@@ -120,7 +120,7 @@ class ReportGenerator_Model extends Model
             $resource = $resource->get()->result(False);
         } catch(Kohana_Database_Exception $e) {
             // Shit there is an sql error log it!
-            Log::add('error', "There is an SQL during execution of report: '".$this->db->last_query()."'");
+            Kohana::log('error', "There is an SQL during execution of report: '".$this->db->last_query()."'");
             exit;
         }
 
@@ -131,7 +131,7 @@ class ReportGenerator_Model extends Model
     public function constructWhere($fields, $operators, $combines)
     {
         $where            = Null;
-        $date_fields_name = Config::item('config.date_field_names');
+        $date_fields_name = Kohana::config('config.date_field_names');
 
         if (empty($fields)) {
             return $fields;

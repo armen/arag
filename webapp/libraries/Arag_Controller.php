@@ -31,7 +31,7 @@ class Controller extends Controller_Core {
     {
         parent::__construct();
 
-        if (Config::item('smarty.integration') == True) {
+        if (Kohana::config('smarty.integration') == True) {
             $this->smarty = new Arag_Smarty;
         }
 
@@ -58,7 +58,7 @@ class Controller extends Controller_Core {
         bind_textdomain_codeset('messages', 'utf8');
         textdomain('messages');
 
-        $locale = current(Config::item('locale.language')) . '.utf8';
+        $locale = current(Kohana::config('locale.language')) . '.utf8';
 
         putenv('LANG=' . $locale);
         putenv('LANGUAGE=' . $locale);
@@ -81,7 +81,7 @@ class Controller extends Controller_Core {
         if ($template == '')
             return;
 
-        if (substr(strrchr($template, '.'), 1) === Config::item('smarty.templates_ext')) {
+        if (substr(strrchr($template, '.'), 1) === Kohana::config('smarty.templates_ext')) {
 
             // Assign variables to the template
             if (is_array($vars) && count($vars) > 0) {
@@ -93,8 +93,8 @@ class Controller extends Controller_Core {
             // Send Kohana::instance and base url to all templates
             $this->smarty->assign('this', $this);
 
-            $base_url = Config::item('sites/'.APPNAME.'.core.parent_base_url', False, False) ?
-                        Config::item('sites/'.APPNAME.'.core.parent_base_url') :
+            $base_url = Kohana::config('sites/'.APPNAME.'.core.parent_base_url', False, False) ?
+                        Kohana::config('sites/'.APPNAME.'.core.parent_base_url') :
                         url::base();
             $this->smarty->assign('arag_base_url', $base_url);
             $this->smarty->assign('arag_current_module', Router::$module);
@@ -130,7 +130,7 @@ class Controller extends Controller_Core {
         if ($validator != False) {
             $validated = $this->_call($validator, $arguments);
 
-            if (!$validated && Config::item('smarty.integration') == True) {
+            if (!$validated && Kohana::config('smarty.integration') == True) {
                 // An error occured so repopulate it to smarty templates
                 $data = $this->validation->as_array();
                 foreach ($data as $field => $value) {
@@ -204,7 +204,7 @@ class Controller extends Controller_Core {
         $this->session->set('_invalid_request_uri', $uri);
         $this->session->set('_invalid_request_message', $message);
         $trace = debug_backtrace();
-        Log::add('error', 'Invalid request: '.$trace[0]['file'].':'.$trace[0]['line']);
+        Kohana::log('error', 'Invalid request: '.$trace[0]['file'].':'.$trace[0]['line']);
         url::redirect('invalid_request');
     }
     // }}}

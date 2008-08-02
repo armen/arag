@@ -32,7 +32,7 @@ class Installation_Model extends Model
     // {{{ setDSN
     public function setDSN($dsn = Null)
     {
-        $this->dsn = ($dsn == Null) ? Config::item('database.connection') : $dsn;
+        $this->dsn = ($dsn == Null) ? Kohana::config('database.connection') : $dsn;
     }
     // }}}
 

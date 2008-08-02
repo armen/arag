@@ -1,6 +1,6 @@
 <?php
 
-if (Config::item('token.enable')) {
+if (Kohana::config('token.enable')) {
     Event::add('system.ready', 'arag_token');
 }
 

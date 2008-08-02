@@ -14,7 +14,7 @@
 
 function smarty_prefilter_arag_escape($tpl, &$smarty) 
 {
-    $exclude = Config::item('smarty.escape_exclude_list');
+    $exclude = Kohana::config('smarty.escape_exclude_list');
     $matched = False;
 
     foreach ($exclude as $pattern) {
