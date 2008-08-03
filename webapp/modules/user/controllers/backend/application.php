@@ -372,7 +372,7 @@ class Application_Controller extends Backend_Controller
     // {{{ settings_write
     public function settings_write()
     {
-        Arag_Kohana::config_set('limit', $this->input->post('limit'));
+        Arag_Config::set('limit', $this->input->post('limit'));
 
               
         $this->session->set('settings_saved', true);

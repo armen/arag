@@ -58,7 +58,7 @@ class Backend_Controller extends Controller
                                                     ));
         }
 
-        Arag_Kohana::config_set('email_settings', $settings);
+        Arag_Config::set('email_settings', $settings);
 
         $this->session->set('core_settings_email_saved', true);
 

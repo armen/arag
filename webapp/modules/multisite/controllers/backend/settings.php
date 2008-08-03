@@ -33,7 +33,7 @@ class Settings_Controller extends Backend_Controller
     // {{{ index_write
     public function index_write()
     {
-        Arag_Kohana::config_set('limit', $this->input->post('limit'));
+        Arag_Config::set('limit', $this->input->post('limit'));
 
         $this->session->set('multi_site_settings_limit_saved', true);
 
@@ -77,8 +77,8 @@ class Settings_Controller extends Backend_Controller
     // {{{ privileges_write
     public function privileges_write()
     {
-        Arag_Kohana::config_set('adminpri', array_unique(explode(" ", preg_replace('/\s+/', ' ', trim($this->input->post('adminpri', Null, true))))));
-        Arag_Kohana::config_set('anonypri', array_unique(explode(" ", preg_replace('/\s+/', ' ', trim($this->input->post('anonypri', Null, true))))));
+        Arag_Config::set('adminpri', array_unique(explode(" ", preg_replace('/\s+/', ' ', trim($this->input->post('adminpri', Null, true))))));
+        Arag_Config::set('anonypri', array_unique(explode(" ", preg_replace('/\s+/', ' ', trim($this->input->post('anonypri', Null, true))))));
 
         $this->session->set('multi_site_settings_privileges_saved', true);
 
@@ -121,9 +121,9 @@ class Settings_Controller extends Backend_Controller
     public function user_blocking_write()
     {
 
-        Arag_Kohana::config_set('verify_block_expire', $this->input->post('block_expire'));
-        Arag_Kohana::config_set('verify_block_counter', $this->input->post('block_counter'));
-        Arag_Kohana::config_set('verify_block_action', $this->input->post('block_action'));
+        Arag_Config::set('verify_block_expire', $this->input->post('block_expire'));
+        Arag_Config::set('verify_block_counter', $this->input->post('block_counter'));
+        Arag_Config::set('verify_block_action', $this->input->post('block_action'));
 
         $this->session->set('multisite_settings_user_blocking_saved', true);
 

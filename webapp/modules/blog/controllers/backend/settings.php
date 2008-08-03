@@ -28,8 +28,8 @@ class Settings_Controller extends Blog_Backend
     // {{{ index_write
     public function index_write()
     {
-        Arag_Kohana::config_set('limit', $this->input->post('limit'));
-        Arag_Kohana::config_set('post_limit', $this->input->post('post_limit'));
+        Arag_Config::set('limit', $this->input->post('limit'));
+        Arag_Config::set('post_limit', $this->input->post('post_limit'));
 
         $this->session->set_flash('configuration_saved', True);
 

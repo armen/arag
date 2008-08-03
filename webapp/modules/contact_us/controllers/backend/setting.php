@@ -29,7 +29,7 @@ class Setting_Controller extends Backend_Controller
     // {{{ top_template_write
     public function top_template_write()
     {
-        Arag_Kohana::config_set('contact.top_template', $this->input->post('template'));
+        Arag_Config::set('contact.top_template', $this->input->post('template'));
 
         url::redirect('contact_us/backend/setting/bottom_template');
     }
@@ -63,7 +63,7 @@ class Setting_Controller extends Backend_Controller
     // {{{ bottom_template_write
     public function bottom_template_write()
     {
-        Arag_Kohana::config_set('contact.bottom_template', $this->input->post('template'));
+        Arag_Config::set('contact.bottom_template', $this->input->post('template'));
 
         url::redirect('contact_us/backend/setting/bottom_template');
     }
