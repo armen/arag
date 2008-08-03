@@ -31,9 +31,9 @@ if [ -d $LIBS_PATH/smarty ]; then
     rm -rf "${LIBS_PATH}/smarty"
 fi
 
-wget -c -P /tmp http://smarty.php.net/do_download.php?download_file=Smarty-2.6.18.tar.gz
-tar xvfz /tmp/Smarty-2.6.18.tar.gz
-mv ./Smarty-2.6.18/libs ${LIBS_PATH}/smarty
+wget -c -P /tmp http://www.smarty.net/do_download.php?download_file=Smarty-2.6.19.tar.gz
+tar xvfz /tmp/Smarty-2.6.19.tar.gz
+mv ./Smarty-2.6.19/libs ${LIBS_PATH}/smarty
 
 # Download pear
 if [ -d $LIBS_PATH/pear ]; then
@@ -66,8 +66,8 @@ mv ./fckeditor ${PUB_PATH}/scripts/FCKeditor
 
 # Cleanup
 
-rm -rf ./Smarty-2.6.18/
-rm -rf /tmp/Smarty-2.6.18.tar.gz
+rm -rf ./Smarty-2.6.19/
+rm -rf /tmp/Smarty-2.6.19.tar.gz
 
 rm -rf /tmp/pear.tar.bz2
 
