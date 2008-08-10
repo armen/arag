@@ -110,8 +110,8 @@ class Controller extends Controller_Core {
         return $output;
     }
     // }}}
-    // {{{ _remap
-    public function _remap($method, $arguments)
+    // {{{ __call
+    public function __call($method, $arguments)
     {
         if (substr($method, 0, 1) == '_') {
             // The method is protected so just call 404
