@@ -4,7 +4,7 @@
     <table>
         <name><variable>TABLES_PREFIX</variable>user_groups</name>
         <initialization>
-            
+
             <insert>
                 <field>
                      <name>id</name>
@@ -64,7 +64,7 @@
                 <field>
                      <name>created_by</name>
                      <value>core</value>
-                </field>                
+                </field>
                 <field>
                      <name>modify_date</name>
                      <value>0</value>

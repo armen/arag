@@ -286,7 +286,7 @@ document.head = document.getElementsByTagName('head')[0];
 /*
 Class: window
 	Some properties are attached to the window object by the browser detection.
-	
+
 Note:
 	browser detection is entirely object-based. We dont sniff.
 
@@ -1355,7 +1355,7 @@ Array.extend({
 
 });
 
-/* 
+/*
 Script: Function.js
 	Contains Function prototypes and utility functions .
 
@@ -1389,11 +1389,11 @@ Function.extend({
 				If set to a class name, the function will receive a new instance of this class (with the event passed as argument's constructor) as first argument.
 				Default is false.
 		arguments - A single argument or array of arguments that will be passed to the function when called.
-		
+
 					If both the event and arguments options are set, the event is passed as first argument and the arguments array will follow.
-					
+
 					Default is no custom arguments, the function will receive the standard arguments when called.
-					
+
 		delay - Numeric value: if set, the returned function will delay the actual execution by this amount of milliseconds and return a timer handle when called.
 				Default is no delay.
 		periodical - Numeric value: if set, the returned function will periodically perform the actual execution with this specified interval and return a timer handle when called.
@@ -3030,56 +3030,56 @@ Class: Elements
 */
 
 Elements.extend({
-	
+
 	/*
 	Property: filterByTag
 		Filters the collection by a specified tag name.
 		Returns a new Elements collection, while the original remains untouched.
 	*/
-	
+
 	filterByTag: function(tag){
 		return new Elements(this.filter(function(el){
 			return (Element.getTag(el) == tag);
 		}));
 	},
-	
+
 	/*
 	Property: filterByClass
 		Filters the collection by a specified class name.
 		Returns a new Elements collection, while the original remains untouched.
 	*/
-	
+
 	filterByClass: function(className, nocash){
 		var elements = this.filter(function(el){
 			return (el.className && el.className.contains(className, ' '));
 		});
 		return (nocash) ? elements : new Elements(elements);
 	},
-	
+
 	/*
 	Property: filterById
 		Filters the collection by a specified ID.
 		Returns a new Elements collection, while the original remains untouched.
 	*/
-	
+
 	filterById: function(id, nocash){
 		var elements = this.filter(function(el){
 			return (el.id == id);
 		});
 		return (nocash) ? elements : new Elements(elements);
 	},
-	
+
 	/*
 	Property: filterByAttribute
 		Filters the collection by a specified attribute.
 		Returns a new Elements collection, while the original remains untouched.
-		
+
 	Arguments:
 		name - the attribute name.
 		operator - optional, the attribute operator.
 		value - optional, the attribute value, only valid if the operator is specified.
 	*/
-	
+
 	filterByAttribute: function(name, operator, value, nocash){
 		var elements = this.filter(function(el){
 			var current = Element.getProperty(el, name);
@@ -3155,7 +3155,7 @@ function $ES(selector, filter){
 $$.shared = {
 
 	'regexp': /^(\w*|\*)(?:#([\w-]+)|\.([\w-]+))?(?:\[(\w+)(?:([!*^$]?=)["']?([^"'\]]*)["']?)?])?$/,
-	
+
 	'xpath': {
 
 		getParam: function(items, context, param, i){
@@ -3178,7 +3178,7 @@ $$.shared = {
 			items.push(temp.join(''));
 			return items;
 		},
-		
+
 		getItems: function(items, context, nocash){
 			var elements = [];
 			var xpath = document.evaluate('.//' + items.join('//'), context, $$.shared.resolver, XPathResult.UNORDERED_NODE_SNAPSHOT_TYPE, null);
@@ -3187,9 +3187,9 @@ $$.shared = {
 		}
 
 	},
-	
+
 	'normal': {
-		
+
 		getParam: function(items, context, param, i){
 			if (i == 0){
 				if (param[2]){
@@ -3323,11 +3323,11 @@ Element.extend({
 		}
 		return el;
 	}/*compatibility*/,
-	
-	getElementsByClassName: function(className){ 
-		return this.getElements('.' + className); 
+
+	getElementsByClassName: function(className){
+		return this.getElements('.' + className);
 	}
-	
+
 	/*end compatibility*/
 
 });
@@ -3471,8 +3471,8 @@ Element.Events.domready = {
 
 /*compatibility*/
 
-window.onDomReady = function(fn){ 
-	return this.addEvent('domready', fn); 
+window.onDomReady = function(fn){
+	return this.addEvent('domready', fn);
 };
 
 /*end compatibility*/
@@ -3497,7 +3497,7 @@ Options:
 	unit - the unit is 'px' by default (other values include things like 'em' for fonts or '%').
 	wait - boolean: to wait or not to wait for a current transition to end before running another of the same instance. defaults to true.
 	fps - the frames per second for the transition; default is 50
-	
+
 Events:
 	onStart - the function to execute as the effect begins; nothing (<Class.empty>) by default.
 	onComplete - the function to execute after the effect has processed; nothing (<Class.empty>) by default.
@@ -3599,7 +3599,7 @@ Fx.Base = new Class({
 		if (!end) this.fireEvent('onCancel', this.element);
 		return this;
 	}/*compatibility*/,
-	
+
 	custom: function(from, to){
 		return this.start(from, to);
 	},
@@ -4029,7 +4029,7 @@ Fx.Transitions.extend({
 	Fx.Transitions[transition] = new Fx.Transition(function(p){
 		return Math.pow(p, [i + 2]);
 	});
-	
+
 	/*compatibility*/
 	Fx.Transitions.compat(transition);
 	/*end compatibility*/

@@ -1,5 +1,5 @@
 <?php
-// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:             
+// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:
 // +-------------------------------------------------------------------------+
 // | Author: Roham Rafii Tehrani <roham.rafii@gmail.com>                     |
 // +-------------------------------------------------------------------------+
@@ -22,7 +22,7 @@ class Captcha_Controller extends Controller
 
         ob_end_clean();
         Event::clear('system.shutdown');
-        Event::clear('system.display');                
+        Event::clear('system.display');
 
         $captcha = new Captcha_Core();
         $captcha->set_code($code);

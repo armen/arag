@@ -30,10 +30,10 @@
                     {/arag_form}
                 {else}
                     {arag_form uri="user/backend/applications/app_filters/$appname" method="get"}
-                        <input type="submit" value={quote}_("No"){/quote} />        
+                        <input type="submit" value={quote}_("No"){/quote} />
                     {/arag_form}
                 {/if}
-            </td>            
+            </td>
             {if $objecttype}
                 <td>
                     &nbsp;

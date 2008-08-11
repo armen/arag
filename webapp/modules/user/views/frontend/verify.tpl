@@ -1,6 +1,6 @@
 {* Smarty *}
-{*  
-    vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:             
+{*
+    vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:
     File: $Id: edit.tpl 53 2007-10-11 18:38:57Z sasan $
 *}
 {arag_block}
@@ -10,13 +10,13 @@
             {$error_message|nl2br}
         {/arag_block}
     {else}
-        {arag_block template="info"}   
+        {arag_block template="info"}
             _("Please enter your username and password to activate your account")
         {/arag_block}
     {/if}
     {if $show_form}
         {arag_block template="blank"}
-        
+
             {arag_form uri="user/frontend/verify" method="post"}
             <table border="0" dir="{dir}" width="100%">
             <tr>

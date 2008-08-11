@@ -18,7 +18,7 @@
  */
 
 class valid extends valid_Core {
-    
+
     // {{{ id
     public static function id($id)
     {

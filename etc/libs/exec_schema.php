@@ -1,5 +1,5 @@
-<?php 
-// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:             
+<?php
+// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:
 // +-------------------------------------------------------------------------+
 // | Author: Armen Baghumian <armen@OpenSourceClub.org>                      |
 // +-------------------------------------------------------------------------+
@@ -39,13 +39,13 @@ function execSchemaFiles(&$manager, $schemaFiles, $dataFiles, $data, $schemaVars
 
             // Insert data
             if (isset($dataFiles[$dataFileName]) && is_readable($dataFiles[$dataFileName])) {
-                
+
                 $dataFile = $dataFiles[$dataFileName];
-                
+
                 $output .= "\n";
-                $output .= "executing '".$dataFileName."': ";        
+                $output .= "executing '".$dataFileName."': ";
                 $result =& $manager->writeInitialization($dataFile, $schema, $schemaVars);
-                
+
                 if (PEAR::isError($result)) {
                     $output .= ("Failed! (" . $result->getMessage() . ")\n" . $result->getUserInfo());
                 } else {
@@ -58,12 +58,12 @@ function execSchemaFiles(&$manager, $schemaFiles, $dataFiles, $data, $schemaVars
         }
 
         $output .= "\n";
-        
+
         if (dirname($schema) != $lastDirectory) {
-            $lastDirectory = dirname($schema);        
+            $lastDirectory = dirname($schema);
             $output = "\n" . $output;
         }
-        
+
         // Show result
         echo $output;
     }
@@ -71,7 +71,7 @@ function execSchemaFiles(&$manager, $schemaFiles, $dataFiles, $data, $schemaVars
     echo "\n";
 }
 // }}}
-// {{{ getSchameFilesList 
+// {{{ getSchameFilesList
 function getSchemaFilesList($module, $pattern)
 {
     $modulesPath = realpath(dirname(__FILE__).'/../../webapp');
@@ -83,7 +83,7 @@ function getSchemaFilesList($module, $pattern)
             include($path . '/config/module.php');
 
             $schemaPath = $path . '/schemas/v' . $config['version'];
-            
+
             // Is module enabled?
             if (strtolower($config['enabled']) && is_dir($schemaPath)) {
                 $files = array_merge($files, glob($schemaPath.'/'.$pattern));

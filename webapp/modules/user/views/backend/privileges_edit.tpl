@@ -1,6 +1,6 @@
 {* Smarty *}
-{*  
-    vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:             
+{*
+    vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:
     File: $Id: index.tpl 53 2007-10-11 18:38:57Z sasan $
 *}
 {arag_validation_errors}
@@ -40,6 +40,6 @@
                     <input type="submit" name="submit" value={quote}_("Submit"){/quote} />
                 </td>
             </tr>
-        </table> 
+        </table>
     {/arag_form}
 {/arag_block}

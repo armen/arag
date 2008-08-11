@@ -1,5 +1,5 @@
 <?php
-// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:             
+// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:
 // +-------------------------------------------------------------------------+
 // | Author: Armen Baghumian <armen@OpenSourceClub.org>                      |
 // |         Sasan Rose <sasan.rose@gmail.com>                               |
@@ -7,10 +7,10 @@
 // $Id$
 // ---------------------------------------------------------------------------
 
-class MultiSite_Model extends Model 
+class MultiSite_Model extends Model
 {
     // {{{ Properties
-    
+
     private $tableNameMultiSite;
     private $tableNameApps;
     private $tableNameGroups;
@@ -42,15 +42,15 @@ class MultiSite_Model extends Model
         $this->db->select($this->tableNameDatabases.".name as db_name");
         $this->db->from($this->tableNameApps);
         $this->db->join($this->tableNameDatabases, $this->tableNameApps.'.database_id', $this->tableNameDatabases.'.id');
- 
+
         if ($databaseID) {
             $this->db->where("database_id", $databaseID);
-        }      
+        }
 
         if ($name != "") {
             $this->db->like($this->tableNameApps.".name", $name);
         }
-        
+
         $retval = $this->db->orderby('app_name', 'ASC')->get()->result(False);
         return $retval;
     }
@@ -60,18 +60,18 @@ class MultiSite_Model extends Model
     {
         return format::date($row['create_date']);
     }
-    // }}} 
+    // }}}
     // {{{ getIDs
     public function getIDs()
     {
         $this->db->select('DISTINCT '.$this->tableNameApps.'.database_id');
         $this->db->select($this->tableNameDatabases.".name");
         $this->db->from($this->tableNameApps);
-        $this->db->join($this->tableNameDatabases, 'database_id', $this->tableNameDatabases.'.id');      
+        $this->db->join($this->tableNameDatabases, 'database_id', $this->tableNameDatabases.'.id');
 
         $retval = $this->db->get()->result_array(false);
-        
-        return $retval;       
+
+        return $retval;
     }
     // }}}
     // {{{ getModules
@@ -96,28 +96,28 @@ class MultiSite_Model extends Model
 
         require_once Kohana::find_file('vendor', 'swift/Swift');
         require_once Kohana::find_file('vendor', 'swift/Swift/Connection/SMTP');
-        
+
         $conn =& new Swift_Connection_SMTP($settings['smtpserver'], $settings['smtpport']);
-        
+
         if ($settings['authentication']) {
-            require_once Kohana::find_file('vendor', 'swift/Swift/Authenticator/LOGIN');       
+            require_once Kohana::find_file('vendor', 'swift/Swift/Authenticator/LOGIN');
             $conn->attachAuthenticator(new Swift_Authenticator_LOGIN());
             $conn->setUsername($settings['username']);
             $conn->setPassword($settings['password']);
         }
-        
+
         // Start Swift
         $swift =& new Swift($conn);
 
         // Create the message
         $message =& new Swift_Message($settings['subject'], nl2br($settings['template']), "text/html");
-        
+
         return $swift->send($message, $recipient, $settings['sender']);
 
     }
     // }}}
     // {{{ getNextDB
-    public function getNextDB(&$DSN, &$databaseId) 
+    public function getNextDB(&$DSN, &$databaseId)
     {
         $DSN        = Kohana::config('database.default.connection');
         $databaseId = 1;

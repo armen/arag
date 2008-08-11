@@ -1,5 +1,5 @@
 <?php
-// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:             
+// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:
 // +-------------------------------------------------------------------------+
 // | Author: Armen Baghumian <armen@OpenSourceClub.org>                      |
 // +-------------------------------------------------------------------------+
@@ -17,7 +17,7 @@ function smarty_block_arag_is_accessible($params, $content, &$smarty, &$repeat)
     if (!$repeat) {
 
         $uri = Null;
-     
+
         foreach ($params as $_key => $_val) {
             switch ($_key) {
                 case 'uri':

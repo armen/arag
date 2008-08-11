@@ -21,9 +21,9 @@
             </td>
             <td>
                 {arag_form uri="user/backend/applications/privileges_parents" method="get"}
-                    <input type="submit" value={quote}_("No"){/quote} />        
+                    <input type="submit" value={quote}_("No"){/quote} />
                 {/arag_form}
-            </td>            
+            </td>
             {if $flagcaption}
                 <td>
                     &nbsp;

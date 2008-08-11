@@ -1,6 +1,6 @@
 {* Smarty *}
-{*  
-    vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:             
+{*
+    vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:
     File: $Id$
 *}
 
@@ -16,7 +16,7 @@
             _("You must login to continue.")
         {/arag_block}
         {arag_block template="blank"}
-        
+
             {arag_form uri="user/frontend/login" method="post"}
             <table border="0" dir="{dir}" width="100%">
             <tr>

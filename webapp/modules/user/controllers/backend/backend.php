@@ -1,15 +1,15 @@
 <?php
-// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:             
+// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:
 // +-------------------------------------------------------------------------+
 // | Author: Sasan Rose <sasan.rose@gmail.com>                               |
 // +-------------------------------------------------------------------------+
 // $Id$
 // ---------------------------------------------------------------------------
 
-class Backend_Controller extends Controller 
+class Backend_Controller extends Controller
 {
     // {{{ Properties
-    
+
     protected $appname = Null;
 
     // }}}
@@ -19,14 +19,14 @@ class Backend_Controller extends Controller
         parent::__construct();
 
         // Load the models
-        $this->Applications = new Applications_Model;  
+        $this->Applications = new Applications_Model;
         $this->Groups       = new Groups_Model;
         $this->Users        = new Users_Model;
         $this->Filters      = new Filters_Model;
         $this->Privileges   = new Privileges_Model;
 
         // load global Tabs
-        $this->global_tabs  = new TabbedBlock_Component('global_tabs'); 
+        $this->global_tabs  = new TabbedBlock_Component('global_tabs');
 
         // Default page title
         $this->layout->page_title = 'User Management';
@@ -49,7 +49,7 @@ class Backend_Controller extends Controller
     protected function _create_users_plist($id, $appname = NULL, $groupname = NULL, $user = NULL, $flagappname = true)
     {
         $this->users = new PList_Component('users');
- 
+
         $this->users->setResource($this->Users->getUsers($id, $appname, $groupname, $user, $flagappname));
         $this->users->setLimit(Arag_Config::get('limit', 0));
         $this->users->addColumn('appname', _("Application"));
@@ -66,7 +66,7 @@ class Backend_Controller extends Controller
     // }}}
     // {{{ _settings_read
     public function _settings_read($flagform)
-    {   
+    {
         $data          = Array();
         $data['limit'] = Arag_Config::get("limit");
         $data['saved'] = $this->session->get_once('settings_saved');
@@ -82,7 +82,7 @@ class Backend_Controller extends Controller
 
         $privileges->setResource($this->Privileges->getFilteredPrivileges($appname, $parentid));
         $privileges->setLimit(Arag_Config::get('limit', 0));
-        $privileges->addColumn('id', _("ID"), PList_Component::HIDDEN_COLUMN);        
+        $privileges->addColumn('id', _("ID"), PList_Component::HIDDEN_COLUMN);
         $privileges->addColumn('label', _("Label"));
         $privileges->addColumn('modified_by', _("Modified By"));
         $privileges->addColumn('created_by', _("Created By"));
@@ -93,12 +93,12 @@ class Backend_Controller extends Controller
         $privileges->addAction('user/backend/applications/privileges/#id#', _("View"), 'view_tree', 'Privileges.isParent');
         $privileges->addAction('user/backend/applications/privileges_delete/#id#', _("Delete"), 'delete_action');
         $privileges->addAction("user/backend/applications/privileges_delete", _("Delete"), 'delete_action', PList_Component::GROUP_ACTION);
-        $privileges->setGroupActionParameterName('id'); 
+        $privileges->setGroupActionParameterName('id');
 
         $data = array("parentid"  => $parentid,
                       "flagsaved" => $this->session->get_once('privileges_add_saved'));
 
-        $this->layout->content = new View('backend/privileges', $data); 
+        $this->layout->content = new View('backend/privileges', $data);
     }
     // }}}
     // {{{ _create_groups_list
@@ -110,7 +110,7 @@ class Backend_Controller extends Controller
 
         $this->groups->setResource($this->Groups->getGroups($appname));
         $this->groups->setLimit(Arag_Config::get('limit', 0));
-        $this->groups->addColumn('id', Null, PList_Component::HIDDEN_COLUMN);       
+        $this->groups->addColumn('id', Null, PList_Component::HIDDEN_COLUMN);
         $this->groups->addColumn('name', _("Name"));
         $this->groups->addColumn('appname', _("Application"));
         $this->groups->addColumn('created_by', _("Created By"));
@@ -142,7 +142,7 @@ class Backend_Controller extends Controller
         $group   = $this->input->post("dgroup");
 
         $this->session->set('default_group_saved', true);
-            
+
         $this->Groups->setGroup($appname, $group);
 
         $this->default_group_read($appname);
@@ -151,7 +151,7 @@ class Backend_Controller extends Controller
     // {{{ _new_group
     protected function _new_group($appname, $flagform = true)
     {
-        $this->global_tabs->setParameter('name', $appname); 
+        $this->global_tabs->setParameter('name', $appname);
 
         $data = array("flagsaved" => $this->session->get_once('new_group_saved'),
                       "flagform"  => $flagform,
@@ -164,7 +164,7 @@ class Backend_Controller extends Controller
     protected function _new_group_write($appname)
     {
         $newgroup   = $this->input->post("newgroup", Null, true);
-            
+
         $this->Groups->newGroup($appname, $newgroup, $this->session->get('user.username'));
 
         $this->session->set('new_group_saved', true);
@@ -175,8 +175,8 @@ class Backend_Controller extends Controller
     // {{{ _new_user
     protected function _new_user($appname, $flagform = true)
     {
-        $this->global_tabs->setParameter('name', $appname); 
-        
+        $this->global_tabs->setParameter('name', $appname);
+
         $row     = $this->Groups->getAllAppGroups($appname);
         $default = $this->Groups->getDefaultGroup($appname);
 
@@ -186,7 +186,7 @@ class Backend_Controller extends Controller
                       "defaultgroup" => $default,
                       "flagform"     => $flagform);
 
-        $this->layout->content = new View('backend/new_user', $data);       
+        $this->layout->content = new View('backend/new_user', $data);
     }
     // }}}
     // {{{ _new_user_write
@@ -198,13 +198,13 @@ class Backend_Controller extends Controller
         $groupname = $this->input->post('group', Null, true);
         $username  = $this->input->post('username', Null, true);
         $password  = $this->input->post('password', Null, true);
-        
+
         $this->Users->createUser($appname, $email, $name, $lastname, $groupname, $username, $password, $this->session->get('user.username'));
 
         $this->session->set('new_user_saved', true);
 
         $this->new_user_read($appname);
-        
+
     }
     // }}}
     // {{{ _user_profile
@@ -244,7 +244,7 @@ class Backend_Controller extends Controller
 
         $this->session->set('edit_user_saved', true);
 
-        $this->user_profile_read($username);   
+        $this->user_profile_read($username);
     }
     // }}}
     // {{{ user_profile_write_error
@@ -278,7 +278,7 @@ class Backend_Controller extends Controller
     {
         $ids     = $this->input->post('privileges');
         $groupid = $this->input->post('id');
-        
+
         $this->Privileges->editPrivileges($ids, $groupid, $appname);
 
         $this->session->set('group_privileges_edit_saved', true);
@@ -311,22 +311,22 @@ class Backend_Controller extends Controller
     // {{{ _check_user_name
     public function _check_user_name($username)
     {
-        return (!preg_match("/^[a-z0-9_.]+_admin$/", strtolower($username)) && 
+        return (!preg_match("/^[a-z0-9_.]+_admin$/", strtolower($username)) &&
                 !$this->Users->hasUserName($username) && preg_match("/^[a-z][a-z0-9_.]*$/", strtolower($username)));
     }
     // }}}
     // {{{ _check_user_name_profile
     public function _check_user_name_profile($username)
-    {   
+    {
         return $this->Users->hasUserName($username, $this->appname);
     }
     // }}}
     // {{{ _check_user_name_profile_master
     public function _check_user_name_profile_master($username)
-    {   
+    {
         return $this->Users->hasUserName($username);
     }
-    // }}}   
+    // }}}
     // {{{ _check_filter
     public function _check_filter($filter)
     {
@@ -385,7 +385,7 @@ class Backend_Controller extends Controller
     {
         if ($password == NULL) {
             $password = $this->validation->oldpassword;
-        }       
+        }
 
         if ($username == NULL) {
             $username = $this->validation->username;

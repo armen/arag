@@ -12,7 +12,7 @@
                 <field>
                     <name>parent_id</name>
                     <value>0</value>
-                </field>            
+                </field>
                 <field>
                     <name>label</name>
                     <value>Super Admin</value>
@@ -26,7 +26,7 @@
                 <field>
                     <name>parent_id</name>
                     <value>0</value>
-                </field>            
+                </field>
                 <field>
                     <name>label</name>
                     <value>Minor Admin</value>
@@ -40,7 +40,7 @@
                 <field>
                     <name>parent_id</name>
                     <value>0</value>
-                </field>            
+                </field>
                 <field>
                     <name>label</name>
                     <value>Operator</value>
@@ -54,7 +54,7 @@
                 <field>
                     <name>parent_id</name>
                     <value>0</value>
-                </field>            
+                </field>
                 <field>
                     <name>label</name>
                     <value>Ordinary User</value>
@@ -68,7 +68,7 @@
                 <field>
                     <name>parent_id</name>
                     <value>1</value>
-                </field>            
+                </field>
                 <field>
                     <name>label</name>
                     <value>Master User Management</value>
@@ -86,7 +86,7 @@
                 <field>
                     <name>parent_id</name>
                     <value>1</value>
-                </field>            
+                </field>
                 <field>
                     <name>label</name>
                     <value>Core Management</value>
@@ -104,7 +104,7 @@
                 <field>
                     <name>parent_id</name>
                     <value>1</value>
-                </field>            
+                </field>
                 <field>
                     <name>label</name>
                     <value>Multi Site</value>
@@ -122,7 +122,7 @@
                 <field>
                     <name>parent_id</name>
                     <value>2</value>
-                </field>            
+                </field>
                 <field>
                     <name>label</name>
                     <value>Application User Management</value>
@@ -140,7 +140,7 @@
                 <field>
                     <name>parent_id</name>
                     <value>3</value>
-                </field>            
+                </field>
                 <field>
                     <name>label</name>
                     <value>Blog</value>
@@ -158,7 +158,7 @@
                 <field>
                     <name>parent_id</name>
                     <value>4</value>
-                </field>            
+                </field>
                 <field>
                     <name>label</name>
                     <value>Blog Frontend</value>
@@ -176,7 +176,7 @@
                 <field>
                     <name>parent_id</name>
                     <value>4</value>
-                </field>            
+                </field>
                 <field>
                     <name>label</name>
                     <value>Main Pages</value>
@@ -194,7 +194,7 @@
                 <field>
                     <name>parent_id</name>
                     <value>4</value>
-                </field>            
+                </field>
                 <field>
                     <name>label</name>
                     <value>Multi Site Verify Page</value>
@@ -212,7 +212,7 @@
                 <field>
                     <name>parent_id</name>
                     <value>4</value>
-                </field>            
+                </field>
                 <field>
                     <name>label</name>
                     <value>User Login and Logout</value>
@@ -230,7 +230,7 @@
                 <field>
                     <name>parent_id</name>
                     <value>4</value>
-                </field>            
+                </field>
                 <field>
                     <name>label</name>
                     <value>Core Frontend</value>
@@ -248,7 +248,7 @@
                 <field>
                     <name>parent_id</name>
                     <value>1</value>
-                </field>            
+                </field>
                 <field>
                     <name>label</name>
                     <value>Control Panel</value>
@@ -266,7 +266,7 @@
                 <field>
                     <name>parent_id</name>
                     <value>2</value>
-                </field>            
+                </field>
                 <field>
                     <name>label</name>
                     <value>User Index</value>
@@ -284,7 +284,7 @@
                 <field>
                     <name>parent_id</name>
                     <value>4</value>
-                </field>            
+                </field>
                 <field>
                     <name>label</name>
                     <value>Profile</value>
@@ -302,7 +302,7 @@
                 <field>
                     <name>parent_id</name>
                     <value>1</value>
-                </field>            
+                </field>
                 <field>
                     <name>label</name>
                     <value>Report Generator</value>

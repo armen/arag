@@ -13,10 +13,10 @@ $config = Array
     'security'              => True,         // XXX: DO NOT SET TO FALSE, SERIOUS SECURITY RISK IF SET!
     'secure_dirs'           => Array         // Smarty secure directories
     (
-    ),    
+    ),
     'if_funcs'              => Array         // We'll allow these functions in if statement
     (
-        'array',  'list',     'trim',       'isset', 'empty', 
+        'array',  'list',     'trim',       'isset', 'empty',
         'sizeof', 'in_array', 'is_array',   'true',  'false',
         'null',   'reset',    'array_keys', 'end',   'count'
     ),
@@ -36,14 +36,14 @@ $config = Array
                                              // XXX: after change clear the cache to take effect
     (
         'arag_escape', 'arag_gettext'
-    ),  
+    ),
 
     // Do not escape these directories and files
     // Prototype:
-    //          
+    //
     //    Array ('|/views/arag_templates/[a-zA-Z_0-9]+\.tpl$|',
     //           '|/themes/[a-zA-Z_0-9]+/display_blocks\.tpl$|',
-    //           '|/themes/[a-zA-Z_0-9]+/[a-zA-Z_0-9]+block\.tpl$|',                      
+    //           '|/themes/[a-zA-Z_0-9]+/[a-zA-Z_0-9]+block\.tpl$|',
     //           '|/views/arag_block/[a-zA-Z_0-9]+\.tpl$|',
     //           '|/views/arag_tabbed_block/[a-zA-Z_0-9]+\.tpl$|'),
 

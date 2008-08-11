@@ -71,7 +71,7 @@
                 <name>modified_by</name>
                 <type>text</type>
                 <length>255</length>
-            </field> 
+            </field>
             <index>
                 <name>primary</name>
                 <primary>true</primary>

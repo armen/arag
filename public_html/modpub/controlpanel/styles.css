@@ -1,5 +1,5 @@
-/*  
-    vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:             
+/*
+    vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:
     File: $Id: styles.css 493 2007-12-22 11:05:54Z armen $
 */
 
@@ -54,7 +54,7 @@
 .cp_items_box .cp_link a:hover {
     color           : #aaa;
     background-color: #fff;
-    border          : 0px;    
+    border          : 0px;
 }
 .cp_items_box .cp_item_over {
     float           : left;
@@ -65,7 +65,7 @@
     background-color: #fff;
     margin          : 5px;
     padding         : 5px;
-    border          : 1px solid #aaa; 
+    border          : 1px solid #aaa;
 }
 .cp_items_box .cp_item_over a {
     text-decoration : none;

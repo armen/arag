@@ -14,12 +14,12 @@ For example :
         {
             // Statements
         }
-  
+
         public function example_write()
         {
             // Statements
         }
-  
+
         public function exmaple()
         {
             // Statements

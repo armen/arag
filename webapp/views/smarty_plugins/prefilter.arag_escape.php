@@ -1,5 +1,5 @@
 <?php
-// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:             
+// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:
 // +-------------------------------------------------------------------------+
 // | Author: Armen Baghumian <armen@OpenSourceClub.org>                      |
 // +-------------------------------------------------------------------------+
@@ -12,7 +12,7 @@
 // $Id$
 // ---------------------------------------------------------------------------
 
-function smarty_prefilter_arag_escape($tpl, &$smarty) 
+function smarty_prefilter_arag_escape($tpl, &$smarty)
 {
     $exclude = Kohana::config('smarty.escape_exclude_list');
     $matched = False;

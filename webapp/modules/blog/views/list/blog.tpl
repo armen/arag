@@ -1,6 +1,6 @@
 {* Smarty *}
-{*  
-    vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:             
+{*
+    vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:
     File: $Id$
 *}
 
@@ -21,7 +21,7 @@
                     {if isset($extended|smarty:nodefaults) && $extended}
                     <div class="blog_extended_body">{$row.extended_entry|smarty:nodefaults}</div>
                     {/if}
-                </div>                    
+                </div>
             {/foreach}
         </div>
 

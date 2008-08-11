@@ -6,7 +6,7 @@ $config = array
     'title'       => 'MultiSite',
     'version'     => '0.1',
     'name'        => 'multisite',
-    'author'      => Array( 
+    'author'      => Array(
                           'Armen Baghumian (Armen@OpenSourceClub.org)',
                           'Sasan Rose (sasan.rose@gmail.com)'
                          ),

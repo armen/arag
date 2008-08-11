@@ -4,9 +4,9 @@ Don't worry, there is nothing new here except that in Arag, You can use smarty t
 
 Lets have a closer look at it. For example you can have a file called "index.php" and another one "index.tpl" and simply load the view with following code:
 
-  $this->load->view('index'); 
+  $this->load->view('index');
 
-or 
+or
 
   $view = new View('index');
 

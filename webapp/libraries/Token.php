@@ -31,9 +31,9 @@ class Token {
         $tokens[$token] = time();
 
         // Add token to tokens list
-        $session->set('arag_tokens', $tokens);        
+        $session->set('arag_tokens', $tokens);
 
-        return $token;    
+        return $token;
     }
     // }}}
     // {{{ validate
@@ -61,19 +61,19 @@ class Token {
     // {{{ gc
     public static function gc()
     {
-        /*  Infinity lifetime is not good idea for tokens 
+        /*  Infinity lifetime is not good idea for tokens
          *
          *  if (Kohana::config('token.life_time') == 0) {
          *      return;
          *  }
          */
 
-        $session      = Session::instance();    
+        $session      = Session::instance();
         $tokens       = (array) $session->get('arag_tokens', Array());
         $alive_tokens = Array();
 
         foreach ($tokens as $token => $time) {
-            
+
             if ($time + Kohana::config('token.life_time') > time()) {
                 $alive_tokens[$token] = $time;
             }

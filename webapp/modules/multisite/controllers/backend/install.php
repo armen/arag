@@ -1,5 +1,5 @@
 <?php
-// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:             
+// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:
 // +-------------------------------------------------------------------------+
 // | Author: Armen Baghumian <armen@OpenSourceClub.org>                      |
 // |         Sasan Rose <sasan.rose@gmail.com>                               |
@@ -9,7 +9,7 @@
 
 require_once "backend.php";
 
-class Install_Controller extends Backend_Controller 
+class Install_Controller extends Backend_Controller
 {
     // {{{ Construct
     public function __construct()
@@ -54,7 +54,7 @@ class Install_Controller extends Backend_Controller
             'user',
             'multisite',
             'ta_locator'
-        );        
+        );
 
         $data = array('modules'   => $multiSite->getModules($excludeModules),
                       'messages'  => $messages,
@@ -66,7 +66,7 @@ class Install_Controller extends Backend_Controller
     // {{{ index_write
     public function index_write()
     {
-        // Load Models 
+        // Load Models
         $multiSite        = new MultiSite_Model;
         $coreInstallation = Model::load('Installation', 'core');
         $groups           = Model::load('Groups', 'user');
@@ -89,8 +89,8 @@ class Install_Controller extends Backend_Controller
         // Set the DSN and tablePrefix
         $tablePrefix = str_replace('.', '_', $appname) . '_';
         $coreInstallation->setTablePrefix($tablePrefix);
-        $coreInstallation->setDSN($DSN);        
-        
+        $coreInstallation->setDSN($DSN);
+
         $applications->addApp($appname, $author, 'anonymous', $databaseID);      // Create the application
         $groups->newGroup($appname, 'admin', $author, $adminpri);         // Create admin group of this application
         $groups->newGroup($appname, 'anonymous', $author, $anonypri);     // Create anonymous group of this application
@@ -118,17 +118,17 @@ class Install_Controller extends Backend_Controller
         if (empty($modules) || !is_array($modules) || !in_array('core', $modules)) {
             $modules[] = 'core';
         }
-        
+
         foreach ($modules as $module) {
-            
+
             $Installation = ucfirst($module) . 'Installation';
             $Installation = Model::load($Installation, $module);
-            
+
             if (is_callable(array($Installation, 'install'))) {
-                
+
                 // Change include_once to module path
                 Kohana::config_set('core.modules', Array(MODPATH.$module));
-                
+
                 $Installation->install($coreInstallation);
 
                 // Reset the include_paths
@@ -142,7 +142,7 @@ class Install_Controller extends Backend_Controller
                            'uri'      => html::anchor('multisite/frontend/index/' . $verify_uri),
                            'username' => $username,
                            'password' => $password);
-        
+
         try {
             $is_sent = $multiSite->sendEmail($email, $strings, $settings);
         } catch(Swift_Exception $e) {
@@ -152,7 +152,7 @@ class Install_Controller extends Backend_Controller
 
         $this->session->set('multisite_installed', true);
         $this->session->set('multisite_email_is_sent', $is_sent);
-        
+
         // Okay, everything is done so redirect to post installer
         url::redirect('multisite/backend/postinstaller');
     }

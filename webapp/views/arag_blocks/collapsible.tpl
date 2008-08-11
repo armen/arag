@@ -1,6 +1,6 @@
 {* Smarty *}
-{*  
-    vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:             
+{*
+    vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:
     File: $Id$
 *}
 
@@ -12,7 +12,7 @@
         <fieldset class="{$status|smarty:nodefaults|default:"expanded"}">
             <legend>{$arag_block_title}</legend>
             <div>
-                {$arag_block_content|smarty:nodefaults}            
+                {$arag_block_content|smarty:nodefaults}
             <div>
         </fieldset>
     </div>
@@ -21,7 +21,7 @@
         <fieldset class="{$status|smarty:nodefaults|default:"expanded"}">
             <legend>&nbsp;</legend>
             <div>
-                {$arag_block_content|smarty:nodefaults}            
+                {$arag_block_content|smarty:nodefaults}
             <div>
         </fieldset>
     </div>

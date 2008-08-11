@@ -1,6 +1,6 @@
 {* Smarty *}
-{*  
-    vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:             
+{*
+    vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:
     File: $Id: index.tpl 53 2007-10-11 18:38:57Z sasan $
 *}
 {if $flagsaved}
@@ -13,7 +13,7 @@
         {assign var=uri value="user/backend/applications/group_privileges_edit/$id/$appname"}
     {else}
         {assign var=uri value="user/backend/application/group_privileges_edit/$id/$appname"}
-    {/if} 
+    {/if}
     {arag_form uri=$uri}
         <table border="0" cellpadding="0" cellspacing="0" dir="{dir}" width="100%" class="prilist" >
             {foreach from=$parent_privileges item=object}

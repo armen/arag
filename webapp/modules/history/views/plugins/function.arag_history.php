@@ -1,5 +1,5 @@
 <?php
-// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:             
+// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:
 // +-------------------------------------------------------------------------+
 // | Author: Armen Baghumian <armen@OpenSourceClub.org>                      |
 // +-------------------------------------------------------------------------+
@@ -24,7 +24,7 @@ function smarty_function_arag_history($params, &$smarty)
                 break;
 
             case 'template':
-                $template = $_val;                
+                $template = $_val;
                 $template = rtrim($template, '.'.$ext);
                 break;
 
@@ -52,7 +52,7 @@ function smarty_function_arag_history($params, &$smarty)
     if (isset($history)) {
 
         // Get namespace
-        $namespace = $smarty->get_template_vars($name.'_namespace');        
+        $namespace = $smarty->get_template_vars($name.'_namespace');
 
         $smarty->assign('history', $history);
         $smarty->assign('current_history', $history->get_history());

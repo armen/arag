@@ -1,5 +1,5 @@
 <?php
-// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:             
+// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:
 // +-------------------------------------------------------------------------+
 // | Author: Sasan Rose <sasan.rose@gmail.com>                               |
 // +-------------------------------------------------------------------------+
@@ -8,7 +8,7 @@
 
 require_once "backend.php";
 
-class Settings_Controller extends Backend_Controller 
+class Settings_Controller extends Backend_Controller
 {
     // {{{ Constructor
     public function __construct()
@@ -22,7 +22,7 @@ class Settings_Controller extends Backend_Controller
     // }}}
     // {{{ index_read
     public function index_read()
-    {   
+    {
         $data          = Array();
         $data['limit'] = Arag_Config::get("limit");
         $data['saved'] = $this->session->get_once('multi_site_settings_limit_saved');
@@ -58,9 +58,9 @@ class Settings_Controller extends Backend_Controller
     // }}}
     // {{{ privileges_read
     public function privileges_read()
-    {   
+    {
         $data = Array();
-        
+
         if (Arag_Config::get("adminpri") != NULL) {
             $data['adminpri'] = implode(" ", Arag_Config::get("adminpri"));
         }
@@ -93,7 +93,7 @@ class Settings_Controller extends Backend_Controller
     // }}}
     // {{{ user_blocking_read
     public function user_blocking_read()
-    {   
+    {
         $data                  = Array();
         $data['block_expire']  = Arag_Config::get("verify_block_expire");
         $data['block_counter'] = Arag_Config::get("verify_block_counter");

@@ -1,5 +1,5 @@
 <?php
-// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:             
+// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:
 // +-------------------------------------------------------------------------+
 // | Author: Armen Baghumian <armen@OpenSourceClub.org>                      |
 // +-------------------------------------------------------------------------+
@@ -33,7 +33,7 @@ class Messages_Controller extends Controller
     {
         $this->layout->content = new View('messages/page_not_found');
 
-        $this->layout->content->page_title = _("Page Not Found!");        
+        $this->layout->content->page_title = _("Page Not Found!");
     }
     // }}}
 }

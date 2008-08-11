@@ -83,4 +83,4 @@ find . -type f | grep -v .svn | grep -v 'convert' | grep -v docs.wiki | grep -v 
 # get validators started from 0 instead 1
 # routes should be converted by hand
 # add a $tablePrefix vriable to your model
-# cleanup all '^//'es 
+# cleanup all '^//'es

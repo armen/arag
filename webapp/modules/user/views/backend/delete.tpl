@@ -45,10 +45,10 @@
                         {assign var=uri value="user/backend/application/index" method="get"}
                     {/if}
                     {arag_form uri=$uri}
-                        <input type="submit" name="submit" value={quote}_("No"){/quote} />        
+                        <input type="submit" name="submit" value={quote}_("No"){/quote} />
                     {/arag_form}
                 {/if}
-            </td>            
+            </td>
             {if $flag}
                 <td>
                     &nbsp;

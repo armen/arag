@@ -1,10 +1,10 @@
 {* Smarty *}
-{*  
-    vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:             
+{*
+    vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:
     File: $Id: edit.tpl 53 2007-10-11 18:38:57Z sasan $
 *}
 {arag_block}
-    
+
     {arag_validation_errors}
 
     {if $saved == 'saved'}
@@ -12,7 +12,7 @@
             _("Settings are updated successfuly!")
         {/arag_block}
     {/if}
-    
+
     {if $form}
         {assign var=uri value="user/backend/applications/settings"}
     {else}
@@ -30,7 +30,7 @@
         <td>&nbsp;</td>
         <td>
             <input type="submit" value={quote}_("Save"){/quote} />
-            <input type="reset" value={quote}_("Reset"){/quote} />            
+            <input type="reset" value={quote}_("Reset"){/quote} />
         </td>
     </tr>
     </table>

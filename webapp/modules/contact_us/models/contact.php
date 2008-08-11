@@ -42,7 +42,7 @@ class Contact_Model extends Model
         // Select * FROM tableNameProducts WHERE
         $this->db->select('id, create_date, name, tel, email, title, content');
         $this->db->from($this->tableContacts);
-        
+
         return $this->db->where('id', $id)->get()->result()->current();
     }
     // }}}

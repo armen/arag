@@ -1,6 +1,6 @@
 {* Smarty *}
-{*  
-    vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:             
+{*
+    vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:
     File: $Id$
 *}
 
@@ -57,7 +57,7 @@
                     {kohana_helper function="html::anchor" uri=$plist->parseURI($uri, "_page=page`$namespace`/`$pager.lastpage`;") title='&nbsp;&gt;&gt;&nbsp;'}
                 </td>
             {else}
-                <td class="pager_disabled_gt">&nbsp;&gt;&nbsp;</td><td class="pager_disabled_gtgt">&nbsp;&gt;&gt;&nbsp;</td>        
+                <td class="pager_disabled_gt">&nbsp;&gt;&nbsp;</td><td class="pager_disabled_gtgt">&nbsp;&gt;&gt;&nbsp;</td>
             {/if}
             {* end of Creating >> & > *}
             </tr>

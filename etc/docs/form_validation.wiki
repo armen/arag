@@ -1,6 +1,6 @@
 ﻿**Deprecated**
 
-TODO: Rewrite whole validation documentation 
+TODO: Rewrite whole validation documentation
 TODO: Describe based on execution flow
 TODO: Describe form repopulation
 
@@ -24,7 +24,7 @@ For more informations about Kohana rules and their jobs take a look at Kohana of
 Now in you main controller you have to add a error method in which, if error occured it will let the job continues, else, it will do what you put in the method:
 
     public function create_write_error()
-    {   
+    {
         $this->create_read();
     }
 
@@ -38,10 +38,10 @@ And adding values to your form elements for enabling repopulating:
 
   {arag_rte name="page" value=$page|smarty:nodefaults}
 
-  
+
   <input type="text" name="subject" value="{$subject}" />
 
-And now it's done!!\\ \\ 
+And now it's done!!\\ \\
 Arag's form validation also supports validating of data passing through URL. In this case you can check if the correct data is passed or not. For example you want to pass a page's id for editing through address bar. So you use "<controller>/edit/<id>". Arag Form Validation, helps you to check the existence of the given id, take numeric ids and etc. It's almost same as post method, except that the array doesn't consist of the HTML field name:
 
   $validator['edit']['read']['rules']  = array (array( 'ID' , "required"));

@@ -1,6 +1,6 @@
 {* Smarty *}
-{*  
-    vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:             
+{*
+    vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:
     File: $Id: index.tpl 53 2007-10-11 18:38:57Z sasan $
 *}
 
@@ -19,7 +19,7 @@
         {arag_block align="left" template="warning"}
             _("There was a problem in sending email to the admin of the new application!")
         {/arag_block}
-    {/if}    
+    {/if}
 {/if}
 
 {arag_block}

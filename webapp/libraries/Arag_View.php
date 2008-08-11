@@ -24,7 +24,7 @@ class View extends View_Core {
         if (!Kohana::find_file('views', $name, FALSE, $type)) {
             $type = Null;
         }
-    
+
         parent::__construct($name, $data, $type);
     }
     // }}}

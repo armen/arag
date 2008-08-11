@@ -1,5 +1,5 @@
 <?php
-// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:             
+// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:
 // +-------------------------------------------------------------------------+
 // | Authors: Armen Baghumian <armen@OpenSourceClub.org>                     |
 // |          Sasan Rose <sasan.rose@gmail.com>                              |
@@ -9,7 +9,7 @@
 
 /*
  * Class for create paginated list
- * 
+ *
  * @author Armen Baghumian <armen@OpenSourceClub.org>
  * @author Sasan Rose      <sasan.rose@gmail.com>
  * @since  PHP 5
@@ -18,7 +18,7 @@
 class Comment_Component extends Component
 {
     // {{{ Properties
-    
+
     private $module;
     private $referenceId;
     private $postUri;
@@ -27,7 +27,7 @@ class Comment_Component extends Component
     private $comments = Null;
 
     // }}}
-    // {{{ Constructor 
+    // {{{ Constructor
     public function __construct($namespace = Null)
     {
         parent::__construct($namespace);
@@ -56,7 +56,7 @@ class Comment_Component extends Component
     {
         $this->postUri = empty($uri) ? Router::$current_uri : $uri;
     }
-    // }}}    
+    // }}}
     // {{{ setTitle
     public function setTitle($title = Null)
     {
@@ -80,7 +80,7 @@ class Comment_Component extends Component
     {
         return $this->postUri;
     }
-    // }}}    
+    // }}}
     // {{{ getComments
     public function getComments()
     {
@@ -99,7 +99,7 @@ class Comment_Component extends Component
         if (is_bool($onlyComment)) {
             $this->onlyComment = $onlyComment;
         }
-        
+
         return $this->onlyComment;
     }
     // }}}

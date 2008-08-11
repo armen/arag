@@ -47,6 +47,6 @@ class text extends text_Core {
 
         return $string;
     }
-    // }}}    
+    // }}}
 
 } // End text

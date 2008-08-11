@@ -1,6 +1,6 @@
 {* Smarty *}
-{*  
-    vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:             
+{*
+    vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:
     File: $Id: edit.tpl 53 2007-10-11 18:38:57Z sasan $
 *}
 {arag_block}
@@ -10,11 +10,11 @@
             {$error_message|nl2br}
         {/arag_block}
     {else}
-        {arag_block template="info"}   
+        {arag_block template="info"}
             _("Please enter your username and password to activate your account")
         {/arag_block}
     {/if}
-    
+
     {if $show_form}
         {arag_block template="blank"}
             {arag_form uri="multisite/frontend/index" method="post"}
@@ -26,7 +26,7 @@
             <tr>
                 <td align="{right}" width="100">_("Password"):</td>
                 <td><input type="password" name="password" value="{$post_limit|smarty:nodefaults|default:null}" dir="ltr" /></td>
-            </tr>    
+            </tr>
             <tr>
                 <td align="{right}" width="100">_("Enter text in image"):</td>
                 <td>{arag_captcha}</td>

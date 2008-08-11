@@ -1,5 +1,5 @@
 <?php
-// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:             
+// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:
 // +-------------------------------------------------------------------------+
 // | Author: Armen Baghumian <armen@OpenSourceClub.org>                      |
 // +-------------------------------------------------------------------------+
@@ -9,14 +9,14 @@
 class LexicalAnalyzer
 {
     // {{{ properties
-    
+
     protected $tokens       = Array();
     protected $currentToken = Null;
     protected $prevToken    = Null;
     protected $inputLength  = 0;
     protected $inputOffset  = 0;
     protected $symbolTable  = Null;
-    
+
     protected $patterns     = Array();
     protected $skipTokens   = Array();
     protected $EOIToken     = Null;
@@ -31,17 +31,17 @@ class LexicalAnalyzer
     public function & init($input, &$symbolTable)
     {
         $this->input = $input;
-        
+
         // Set symboltable
         $this->symbolTable =& $symbolTable;
-        
+
         // Set input length
         $this->inputLength = strlen($input);
 
         // Reset index for nextToken and prevToken
         $this->currentToken = 0;
         $this->prevToken    = 0;
-        
+
         // Get pattern from patterns array
         $pattern = $this->getPattern();
 
@@ -51,7 +51,7 @@ class LexicalAnalyzer
         //echo "<pre>";
         //print_r($matchs);
         //echo "</pre>";
-        
+
         // Get all tokens
         $tokens = $matchs[0];
         unset($matchs[0]);
@@ -60,10 +60,10 @@ class LexicalAnalyzer
         $tokensList = $matchs;
 
         foreach ($tokens as $offset => $value) {
-        
+
             foreach ($tokensList as $token => $dummy) {
                 if ($tokensList[$token][$offset] != Null) {
-                    
+
                     $this->tokens[$offset] = Array('token' => $token, 'token_val' => $value);
                 }
             }
@@ -78,18 +78,18 @@ class LexicalAnalyzer
         if (count($this->patterns) == 0) {
             return "//";
         }
-        
+
         $pattern = "/";
         reset($this->patterns);
         ksort($this->patterns);
         $index = 1;
         while ($regex = current($this->patterns)) {
-            
+
             if (key($this->patterns) > $index++) {
                 $pattern .= "()|";
-            } else {            
+            } else {
                 $pattern .= (next($this->patterns))?"($regex)|":"($regex)/i";
-            }    
+            }
         }
 
         return $pattern;
@@ -104,9 +104,9 @@ class LexicalAnalyzer
         }
 
         // escape unset offsets
-        while(($this->currentToken <= $this->inputLength) && 
+        while(($this->currentToken <= $this->inputLength) &&
               (!isset($this->tokens[$this->currentToken]))) {
-              
+
               $this->currentToken++;
         }
 
@@ -119,18 +119,18 @@ class LexicalAnalyzer
                 $this->currentToken++;
                 return $this->nextToken();
             }
-            
+
             $this->prevToken = $this->currentToken;
             $token            = $this->tokens[$this->currentToken++]['token'];
 
             return $token;
-        }    
-        
+        }
+
         return $this->EOIToken;
     }
     // }}}
     // {{{ addTokenPatterns
-    public function addTokenPatterns($token, $pattern) 
+    public function addTokenPatterns($token, $pattern)
     {
         $this->patterns[$token] = $pattern;
     }

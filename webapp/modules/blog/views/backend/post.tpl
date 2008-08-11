@@ -1,10 +1,10 @@
 {* Smarty *}
-{*  
-    vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:             
+{*
+    vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:
     File: $Id$
 *}
 {arag_block}
-    
+
     {arag_validation_errors}
 
     {arag_block template="info"}
@@ -18,7 +18,7 @@
         <td>&nbsp;</td>
         <td>
             <input type="submit" value={quote}_("Create"){/quote} />
-            <input type="reset" value={quote}_("Reset"){/quote} />            
+            <input type="reset" value={quote}_("Reset"){/quote} />
         </td>
     </tr>
     </table>

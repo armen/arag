@@ -24,12 +24,12 @@ function listForward(el, namespace)
 
     } else if (el.getTag() == 'select') {
         // Set selected index to 0 then if user hit the back will see defaul value
-        toggleCheckboxesStatus(false, namespace);                    
-        el.selectedIndex = 0;                    
+        toggleCheckboxesStatus(false, namespace);
+        el.selectedIndex = 0;
     }
 
     // Uncheck checkboxes then if user hit the back will see defaul value
-    toggleCheckboxesStatus(false, namespace);                
+    toggleCheckboxesStatus(false, namespace);
 }
 // }}}
 // {{{ listMouseEvent

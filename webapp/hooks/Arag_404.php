@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 Event::replace('system.404', array('Kohana', 'show_404'), 'arag_404');
 

@@ -1,6 +1,6 @@
 {* Smarty *}
-{*  
-    vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:             
+{*
+    vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:
     File: $Id$
 *}
 
@@ -31,7 +31,7 @@ sffdfsdfsdfsdfsdfsdf
 {/if}
 
 {arag_block}
-    {arag_block template="blank"}    
+    {arag_block template="blank"}
         {arag_validation_errors}
 
         {arag_block template="info"}
@@ -58,18 +58,18 @@ sffdfsdfsdfsdfsdfsdf
         <tr>
             <td align="{right}" width="100">_("Comment"){asterisk}:</td>
             <td><textarea name="comment" rows="7" cols="15">{$comment|smarty:nodefaults|default:null}</textarea></td>
-        </tr>        
+        </tr>
         <tr>
             <td>&nbsp;</td>
             <td>
                 {if $component->onlyComment()}
                     <input type="hidden" name="name" value="{$name|smarty:nodefaults|default:'Anonymous'}" />
                     <input type="hidden" name="email" value="{$email|smarty:nodefaults|default:null}" />
-                {/if}            
+                {/if}
                 <input type="hidden" name="module" value="{$component->getModule()}" />
                 <input type="hidden" name="reference_id" value="{$component->getReferenceId()}" />
                 <input type="submit" value={quote}_("Submit"){/quote} />
-                <input type="reset" value={quote}_("Reset"){/quote} />            
+                <input type="reset" value={quote}_("Reset"){/quote} />
             </td>
         </tr>
         </table>

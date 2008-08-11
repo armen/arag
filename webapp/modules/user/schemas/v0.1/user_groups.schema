@@ -7,13 +7,13 @@
             <field>
                 <name>id</name>
                 <type>integer</type>
-                <notnull>true</notnull>                
+                <notnull>true</notnull>
                 <autoincrement>true</autoincrement>
-            </field>        
+            </field>
             <field>
                 <name>name</name>
                 <type>text</type>
-                <length>255</length>                
+                <length>255</length>
                 <notnull>true</notnull>
             </field>
             <field>
@@ -37,8 +37,8 @@
             <field>
                 <name>modified_by</name>
                 <type>text</type>
-                <length>255</length>                
-            </field>            
+                <length>255</length>
+            </field>
             <field>
                 <name>privileges</name>
                 <type>clob</type>
@@ -46,7 +46,7 @@
             <field>
                 <name>redirect</name>
                 <type>integer</type>
-                <length>1</length> 
+                <length>1</length>
             </field>
             <index>
                 <name>primary</name>

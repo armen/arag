@@ -28,7 +28,7 @@
                 <name>modified_by</name>
                 <type>text</type>
                 <length>255</length>
-            </field>            
+            </field>
             <field>
                 <name>subject</name>
                 <type>text</type>
@@ -45,11 +45,11 @@
             <field>
                 <name>category</name>
                 <type>integer</type>
-            </field>            
+            </field>
             <field>
                 <name>tags</name>
                 <type>clob</type>
-            </field>            
+            </field>
             <field>
                 <name>published</name>
                 <type>integer</type>
@@ -64,7 +64,7 @@
                 <name>requires_moderation</name>
                 <type>integer</type>
                 <length>1</length>
-            </field>            
+            </field>
             <index>
                 <name>primary</name>
                 <primary>true</primary>

@@ -4,7 +4,7 @@
     <table>
         <name><variable>TABLES_PREFIX</variable>user_filters</name>
         <initialization>
-            
+
             <insert>
                 <field>
                      <name>appname</name>
@@ -58,7 +58,7 @@
                      <value>a:2:{i:0;s:27:"user/backend/applications/*";i:1;s:19:"multisite/backend/*";}</value>
                 </field>
             </insert>
-            
+
         </initialization>
     </table>
 </database>

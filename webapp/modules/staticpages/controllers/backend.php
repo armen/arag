@@ -1,18 +1,18 @@
 <?php
-// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:             
+// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:
 // +-------------------------------------------------------------------------+
 // | Author:    Sasan Rose <sasan.rose@gamil.com                             |
 // +-------------------------------------------------------------------------+
 // $Id$
 // ---------------------------------------------------------------------------
 
-class Backend_Controller extends Controller 
+class Backend_Controller extends Controller
 {
     // {{{ Constructor
     function __construct()
     {
         parent::__construct();
-       
+
         // Default page title
         $this->layout->page_title = _("Static Pages");
 
@@ -41,7 +41,7 @@ class Backend_Controller extends Controller
         $this->staticpages->setResource($this->StaticPages->getPages());
         $this->staticpages->setLimit(Arag_Config::get('limit', 0));
         $this->staticpages->addColumn('id', Null, PList_Component::HIDDEN_COLUMN);
-        $this->staticpages->addColumn('subject', _("Subject"));        
+        $this->staticpages->addColumn('subject', _("Subject"));
         $this->staticpages->addColumn('author', _("Author"));
         $this->staticpages->addColumn('StaticPages.getDate', _("Create Date"), PList_Component::VIRTUAL_COLUMN);
         $this->staticpages->addColumn('StaticPages.getModifyDate', _("Modify Date"), PList_Component::VIRTUAL_COLUMN);
@@ -49,7 +49,7 @@ class Backend_Controller extends Controller
         $this->staticpages->addAction('staticpages/backend/edit/#id#', _("Edit"), 'edit_action');
         $this->staticpages->addAction('staticpages/backend/delete/#id#', _("Delete"), 'delete_action');
         $this->staticpages->addAction('staticpages/backend/gdelete', _("Delete"), 'delete_action', PList_Component::GROUP_ACTION);
-        $this->staticpages->setGroupActionParameterName('id');        
+        $this->staticpages->setGroupActionParameterName('id');
 
         $this->layout->content = new View('backend/index');
     }
@@ -120,7 +120,7 @@ class Backend_Controller extends Controller
     // }}}
     // {{{ create_write_error
     public function create_write_error()
-    {   
+    {
         $this->create_read();
     }
     // }}}
@@ -137,7 +137,7 @@ class Backend_Controller extends Controller
             $exist = $this->StaticPages->checkID($id);
         }
 
-        if ($exist) { 
+        if ($exist) {
             $page    = $this->input->post('page', Null, True);
             $subject = $this->input->post('subject', Null, True);
 
@@ -165,9 +165,9 @@ class Backend_Controller extends Controller
     // }}}
     // {{{ edit_write_error
     public function edit_write_error()
-    {   
+    {
         $id = $this->input->post('id');
-        $this->global_tabs->setParameter('id', $id); 
+        $this->global_tabs->setParameter('id', $id);
 
         $this->layout->content = new View('backend/edit', Array('id' => $id));
     }
@@ -190,7 +190,7 @@ class Backend_Controller extends Controller
             $this->global_tabs->setParameter('id', $id);
 
             $row = $this->StaticPages->getPage($id);
-            
+
             $this->layout->content = new View('backend/delete', array('ids' => array($id), 'subjects' => $row['subject']));
 
         } else {
@@ -292,7 +292,7 @@ class Backend_Controller extends Controller
         $data          = Array();
         $data['limit'] = Arag_Config::get("limit");
         $data['saved'] = $this->session->get_once('configuration_saved');
-        
+
         $this->layout->content = new View('backend/settings', $data);
     }
     // }}}
@@ -311,7 +311,7 @@ class Backend_Controller extends Controller
         $this->validation->name('limit', _("Limit"))->pre_filter('trim', 'limit')
              ->add_rules('limit', 'required', 'numeric');
 
-        return $this->validation->validate();       
+        return $this->validation->validate();
     }
     // }}}
     // {{{ settings_write_error

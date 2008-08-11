@@ -27,7 +27,7 @@
                 </td>
                 <td align="{left}">
                     <select name="dgroup">
-                        {html_options values=$allgroups|smarty:nodefaults selected=$defaultgroup|smarty:nodefaults|default:null 
+                        {html_options values=$allgroups|smarty:nodefaults selected=$defaultgroup|smarty:nodefaults|default:null
                                       output=$allgroups|smarty:nodefaults}
                     </select>
                 </td>

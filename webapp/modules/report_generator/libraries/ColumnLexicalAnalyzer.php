@@ -1,5 +1,5 @@
 <?php
-// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:             
+// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:
 // +-------------------------------------------------------------------------+
 // | Author: Armen Baghumian <armen@OpenSourceClub.org>                      |
 // +-------------------------------------------------------------------------+
@@ -13,7 +13,7 @@ class ColumnLexicalAnalyzer extends LexicalAnalyzer
     const T_ID        = 1;
     const T_NUMBER    = 2;
     const T_OPERATOR  = 3;
-    const T_WITESPACE = 4; 
+    const T_WITESPACE = 4;
     const T_INVALID   = 5;
     const T_FUNCTION  = 999;
     const T_EOI       = 1000;
@@ -24,8 +24,8 @@ class ColumnLexicalAnalyzer extends LexicalAnalyzer
     {
         // Set symbol table
         $this->symbolTable = new SymbolTable;
-       
-        // Add patterns for matching 
+
+        // Add patterns for matching
         $this->addTokenPatterns(ColumnLexicalAnalyzer::T_ID,        "[a-zA-z][0-9a-zA-Z_]+");  // functions and columns id
         $this->addTokenPatterns(ColumnLexicalAnalyzer::T_NUMBER,    "[0-9]\.?[0-9]*");         // numbers
         $this->addTokenPatterns(ColumnLexicalAnalyzer::T_OPERATOR,  "[*\/\%\-+\(\)]");         // *, /, %, -, +, ( and )

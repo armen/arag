@@ -85,7 +85,7 @@
                 <td align="{left}">
                     <select name="group">
                         {if isset($group|smarty:nodefaults)}{assign var="defaultgroup" value=$group}{/if}
-                        {html_options values=$allgroups|smarty:nodefaults selected=$defaultgroup|smarty:nodefaults|default:null 
+                        {html_options values=$allgroups|smarty:nodefaults selected=$defaultgroup|smarty:nodefaults|default:null
                                       output=$allgroups|smarty:nodefaults}
                     </select>
                     &nbsp;

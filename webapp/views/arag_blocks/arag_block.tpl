@@ -1,6 +1,6 @@
 {* Smarty *}
-{*  
-    vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:             
+{*
+    vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:
     File: $Id$
 *}
 
@@ -11,6 +11,6 @@
     </div>
 {else}
     <div class="arag_block"{$arag_block_direction|smarty:nodefaults}{$arag_block_align|smarty:nodefaults}>
-        <div class="arag_block_content arag_tags_ds">{$arag_block_content|smarty:nodefaults}</div> 
+        <div class="arag_block_content arag_tags_ds">{$arag_block_content|smarty:nodefaults}</div>
     </div>
 {/if}

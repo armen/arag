@@ -1,15 +1,15 @@
 <?php
-// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:             
+// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:
 // +-------------------------------------------------------------------------+
 // | Author: Armen Baghumian <armen@OpenSourceClub.org>                      |
 // +-------------------------------------------------------------------------+
 // $Id$
 // ---------------------------------------------------------------------------
 
-class Installation_Model extends Model 
+class Installation_Model extends Model
 {
     // {{{ Properties
-    
+
     private $dsn;
     private $tablePrefix;
 
@@ -26,7 +26,7 @@ class Installation_Model extends Model
     // {{{ setTablePrefix
     public function setTablePrefix($tablePrefix = Null)
     {
-        $this->tablePrefix = ($tablePrefix == Null) ? $this->db->table_prefix() : $tablePrefix;        
+        $this->tablePrefix = ($tablePrefix == Null) ? $this->db->table_prefix() : $tablePrefix;
     }
     // }}}
     // {{{ setDSN
@@ -41,7 +41,7 @@ class Installation_Model extends Model
     {
         if (!file_exists($directory)) {
             $this->createDirectory(dirname($directory), $mod);
-            $oldumask = umask(0);            
+            $oldumask = umask(0);
             mkdir($directory, $mod);
             umask($oldumask);
 
@@ -84,7 +84,7 @@ class Installation_Model extends Model
 
     // {{{ & getFromTemplate
     public function & getFromTemplate($template, $parameters = Array(), $baseDirectory = Null)
-    {   
+    {
         // TODO: baseDirectory sould be validated!!
         $filename = $baseDirectory . '/' . $template;
         $handle   = fopen($filename, "r");
@@ -116,7 +116,7 @@ class Installation_Model extends Model
     public function & executeSchema($file, $dataSet = Null, $initializeData = False, $oldFile = Null)
     {
         ini_set('include_path', LIBSPATH.'pear'.PATH_SEPARATOR.ini_get('include_path'));
-        
+
         include_once 'pear/MDB2/Schema.php';
         include_once 'pear/MDB2.php';
 
@@ -128,7 +128,7 @@ class Installation_Model extends Model
 
         // Do not change database name to lowercase
         $mdb->setOption('portability', MDB2_PORTABILITY_ALL ^ MDB2_PORTABILITY_FIX_CASE);
-        
+
         // Get database name
         $dsn    = $mdb->getDSN('array');
         $dbName = $dsn['database'];
@@ -157,15 +157,15 @@ class Installation_Model extends Model
             $hasData = False;
 
             if ($initializeData) {
-            
+
                 // Schema has data?
                 if ($dataSet != Null && is_readable(str_replace('.schema', ".{$dataSet}.data", $file))) {
-                    
+
                     $dataFile = str_replace('.schema', ".{$dataSet}.data", $file);
                     $hasData  = True;
-                    
+
                 } else if (is_readable(str_replace('.schema', '.data', $file))) {
-                
+
                     $dataFile = str_replace('.schema', '.data', $file);
                     $hasData  = True;
                 }
@@ -174,10 +174,10 @@ class Installation_Model extends Model
                 if ($hasData) {
                     $result = $manager->writeInitialization($dataFile, $file, $schemaVars);
                     if (PEAR::isError($result)) { return $result; }
-                }    
+                }
             }
         }
-        
+
         // We have to unlink it from cache
         if (is_readable($oldFile)) {
             unlink(APPPATH . 'cache/' . basename($oldFile));

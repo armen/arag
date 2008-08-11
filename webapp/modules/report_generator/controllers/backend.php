@@ -1,5 +1,5 @@
 <?php
-// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:             
+// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:
 // +-------------------------------------------------------------------------+
 // | Author: Armen Baghumian <armen@OpenSourceClub.org>                      |
 // +-------------------------------------------------------------------------+
@@ -9,7 +9,7 @@
 class Backend_Controller extends ReportGenerator_Backend
 {
     // {{{ properties
-    
+
     private $additional_columns = Array();
     private $filters            = Array();
 
@@ -24,11 +24,11 @@ class Backend_Controller extends ReportGenerator_Backend
         $reports->setLimit(Arag_Config::get('limit', 0));
         $reports->setEmptyListMessage(_("There is no report!"));
         $reports->addColumn('report_name', _("Name"));
-        $reports->addColumn('report_desc', _("Description"));        
-        $reports->addColumn('table_name', _("Table Name"));        
+        $reports->addColumn('report_desc', _("Description"));
+        $reports->addColumn('table_name', _("Table Name"));
         $reports->addColumn('ReportGenerator.getCreateDate', _("Create Date"), PList_Component::VIRTUAL_COLUMN);
-        $reports->addColumn('ReportGenerator.getModifyDate', _("Modify Date"), PList_Component::VIRTUAL_COLUMN);        
-        $reports->addAction('report_generator/backend/execute_report/#id#', 'Execute Report', 'view_action');        
+        $reports->addColumn('ReportGenerator.getModifyDate', _("Modify Date"), PList_Component::VIRTUAL_COLUMN);
+        $reports->addAction('report_generator/backend/execute_report/#id#', 'Execute Report', 'view_action');
         $reports->addAction('report_generator/backend/delete_report/#id#', 'Delete Report', 'delete_action');
 
         $this->layout->content = new View('backend/reports');
@@ -39,7 +39,7 @@ class Backend_Controller extends ReportGenerator_Backend
     public function generate_report_read()
     {
         $this->layout->allowed_tables = array_combine(Kohana::config('config.allowed_tables'), Kohana::config('config.allowed_tables'));
-        $this->layout->content = new View('backend/get_table'); 
+        $this->layout->content = new View('backend/get_table');
     }
     // }}}
     // {{{ generate_report_write
@@ -62,7 +62,7 @@ class Backend_Controller extends ReportGenerator_Backend
         $this->layout->filters            = $this->filters;
         $this->layout->actions            = $actions;
         $this->layout->parameter_name     = $parameter_name;
-        $date_fields_name                 = Kohana::config('config.date_field_names');        
+        $date_fields_name                 = Kohana::config('config.date_field_names');
 
         // Generate report's list
         $report = new PList_Component('report');
@@ -75,7 +75,7 @@ class Backend_Controller extends ReportGenerator_Backend
                 $report->addColumn('ReportGenerator.getDate['.$column.']', $column, PList_Component::VIRTUAL_COLUMN);
             } else {
                 $report->addColumn($column);
-            }            
+            }
         }
 
         foreach ($this->additional_columns as $label => $column) {
@@ -85,8 +85,8 @@ class Backend_Controller extends ReportGenerator_Backend
         // Add report actions
         foreach ($actions as $action) {
             if (!empty($action['uri'])) {
-                $group_action = (isset($action['group_action']) && $action['group_action'] == 'on') 
-                              ? PList_Component::GROUP_ACTION 
+                $group_action = (isset($action['group_action']) && $action['group_action'] == 'on')
+                              ? PList_Component::GROUP_ACTION
                               : False;
                 $report->addAction($action['uri'], $action['tooltip'], $action['class_name'], $group_action);
             }
@@ -151,8 +151,8 @@ class Backend_Controller extends ReportGenerator_Backend
             }
         }
 
-        (!empty($columns_label) AND !empty($formulas)) AND  $this->additional_columns = array_combine($columns_label, $formulas);        
-        
+        (!empty($columns_label) AND !empty($formulas)) AND  $this->additional_columns = array_combine($columns_label, $formulas);
+
         // }}}
 
         // {{{ validate filter
@@ -219,9 +219,9 @@ class Backend_Controller extends ReportGenerator_Backend
         (!empty($columns_label) AND !empty($additional_columns)) AND  $additional_columns = array_combine($columns_label, $additional_columns);
 
         $rg = new ReportGenerator_Model;
-        $rg->saveReport($this->input->post('table_name'), 
-                        $this->input->post('report_name'), 
-                        $this->input->post('report_description'), 
+        $rg->saveReport($this->input->post('table_name'),
+                        $this->input->post('report_name'),
+                        $this->input->post('report_description'),
                         $this->input->post('columns'),
                         $additional_columns,
                         $filters,
@@ -235,7 +235,7 @@ class Backend_Controller extends ReportGenerator_Backend
     // {{{ delete_report_read
     public function delete_report_read($id)
     {
-        $rg = new ReportGenerator_Model;    
+        $rg = new ReportGenerator_Model;
         $this->global_tabs->setParameter('id', $id);
 
         $this->layout->content = new View('backend/delete_report', Array('id' => $id, 'name' => $rg->getReportName($id)));
@@ -264,15 +264,15 @@ class Backend_Controller extends ReportGenerator_Backend
 
         url::redirect('report_generator/backend/reports');
     }
-    // }}}    
+    // }}}
     // {{{ delete_report_validate_write
     public function delete_report_validate_write()
     {
         $this->validation->name('id', _("ID"))->add_rules('id', 'required', 'valid::numeric', array($this, '_check_report'));
 
-        return $this->validation->validate();        
+        return $this->validation->validate();
     }
-    // }}}    
+    // }}}
     // {{{ delete_report_write_error
     public function delete_write_error()
     {
@@ -309,7 +309,7 @@ class Backend_Controller extends ReportGenerator_Backend
 
         return $this->validation->validate();
     }
-    // }}}    
+    // }}}
     // {{{ execute_report_error
     public function execute_report_error()
     {

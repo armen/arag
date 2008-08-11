@@ -1,11 +1,11 @@
 {* Smarty *}
-{*  
-    vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:             
+{*
+    vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:
     File: $Id$
 *}
 
 {arag_block}
-    
+
     {arag_validation_errors}
 
     {arag_form uri="report_generator/backend/generate_report" method="post"}
@@ -32,7 +32,7 @@
                         <td>_("URI"):</td>
                         <td><input type="text" name="actions[{$smarty.section.actions.index}][uri]" size="50" /></td>
                         <td>_("Class Name"):</td>
-                        <td><input type="text" name="actions[{$smarty.section.actions.index}][class_name]" /></td>                        
+                        <td><input type="text" name="actions[{$smarty.section.actions.index}][class_name]" /></td>
                         <td>_("Tool Tip"):</td>
                         <td><input type="text" name="actions[{$smarty.section.actions.index}][tooltip]" /></td>
                         <td>
@@ -41,11 +41,11 @@
                     </tr>
                     {/section}
                     <tr><td colspan="7">&nbsp;</td></tr>
-                    <tr><td colspan="7">_("Parameter Name of Group Action"):&nbsp;<input type="text" name="parameter_name" /></td></tr> 
+                    <tr><td colspan="7">_("Parameter Name of Group Action"):&nbsp;<input type="text" name="parameter_name" /></td></tr>
                 </table>
             {/arag_block}
         </td>
-    </tr>    
+    </tr>
     <tr>
         <td>&nbsp;</td>
         <td>

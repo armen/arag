@@ -22,7 +22,7 @@
                 <name>data</name>
                 <type>blob</type>
                 <notnull>true</notnull>
-            </field>            
+            </field>
             <index>
                 <name>primary</name>
                 <primary>true</primary>

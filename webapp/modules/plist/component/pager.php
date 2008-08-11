@@ -1,5 +1,5 @@
 <?php
-// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:             
+// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:
 // +-------------------------------------------------------------------------+
 // | Based on:                                                               |
 // |    PEAR DB Pager                                                        |
@@ -46,7 +46,7 @@ class Pager
     * @return array associative array with data or DB_error on error
     *
     */
-    
+
     public function & getData($page, $limit, $numrows, $maxpages = false)
     {
         if (empty($numrows) || ($numrows < 0)) {
@@ -70,7 +70,7 @@ class Pager
         // modified by Armen!
         $data['firstpage'] = 1;
         $data['lastpage']  = $pages;
-        
+
         // Previous page
         $prevpage = $page - 1;
         $data['prevpage'] = ($prevpage >= 1)?$prevpage:null;

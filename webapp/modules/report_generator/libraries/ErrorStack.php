@@ -1,5 +1,5 @@
 <?php
-// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:             
+// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:
 // +-------------------------------------------------------------------------+
 // | Author: Armen Baghumian <armen@OpenSourceClub.org>                      |
 // +-------------------------------------------------------------------------+
@@ -56,7 +56,7 @@ class ErrorStack
     public function getErrors($level = 'error')
     {
         return $this->stack[$level];
-    }    
+    }
     // }}}
     // {{{ hasErrors
     public function hasErrors()

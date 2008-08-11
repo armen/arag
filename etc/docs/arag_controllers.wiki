@@ -15,7 +15,7 @@ If you intend to use a constructor in any of your Controllers, you MUST place pa
       function __construct()
       {
           parent::__construct();
-      }     
+      }
   }
 
 A new feature is implemented in Arag to make the naming and calling of a controller's methods very easy and understandable. By this way, Arag recognize when you call a function within a post or get method. so that if it is GET, it will call "<functionname>_read" and it will call "<functionname>_write" if it is POST. If none of them available, automatically it will call <"functionname>":
@@ -24,7 +24,7 @@ A new feature is implemented in Arag to make the naming and calling of a control
 	{
 		// Statements
 	}
-  
+
 	function edit_read()
 	{
 		// Statement
@@ -37,12 +37,12 @@ But remember that the raw function of "<functionname>", has more priority than "
 	{
 		// Statements
 	}
-  
+
 	function edit_write()
 	{
 		// Statements
 	}
-  
+
 	function edit_read()
 	{
 		// Statement
@@ -56,9 +56,9 @@ As you may know, Kohana completely uses PHP5. So you can use PHP5's OOP in your 
 	{
 		// Statements
 	}
-  
+
 or:
-  
+
 	private function edit()
 	{
 		// Statements

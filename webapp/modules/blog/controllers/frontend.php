@@ -1,12 +1,12 @@
 <?php
-// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:             
+// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:
 // +-------------------------------------------------------------------------+
 // | Author: Armen Baghumian <armen@OpenSourceClub.org>                      |
 // +-------------------------------------------------------------------------+
 // $Id$
 // ---------------------------------------------------------------------------
 
-class Frontend_Controller extends Controller 
+class Frontend_Controller extends Controller
 {
     // {{{ Constructor
     public function __construct()
@@ -22,7 +22,7 @@ class Frontend_Controller extends Controller
         $this->validation->message('standard_text', _("%s should be ordinary text."));
         $this->validation->message('email', _("%s should be a valid email."));
         $this->validation->message('url', _("%s should be a valid url."));
-       
+
         // Default page title
         $this->layout->page_title = 'Blog';
     }
@@ -38,7 +38,7 @@ class Frontend_Controller extends Controller
         // Load the Comment component, comment ain't used but just loaded
         $comments = new Comment_Component('comments');
 
-        $this->layout->content = new View('frontend/view', Array('entry_uri' => '/blog/frontend/view/#id#/extended'));    
+        $this->layout->content = new View('frontend/view', Array('entry_uri' => '/blog/frontend/view/#id#/extended'));
     }
     // }}}
     // {{{ view
@@ -53,7 +53,7 @@ class Frontend_Controller extends Controller
         $comments->setReferenceId($id);
         $comments->setPostUri('blog/frontend/post_comment');
 
-        $data = Array('extended'  => $extended == 'extended', 
+        $data = Array('extended'  => $extended == 'extended',
                       'entry_uri' => '/blog/frontend/view/#id#/extended');
 
         $this->layout->content = new View('frontend/view', $data);
@@ -65,7 +65,7 @@ class Frontend_Controller extends Controller
         $this->validation->name(0, _("ID"))->add_rules(0, 'required', 'valid::numeric', array($this, '_check_entry'));
         $this->validation->add_rules(1, 'required', 'valid::alpha');
 
-        return $this->validation->validate();        
+        return $this->validation->validate();
     }
     // }}}
     // {{{ view_error
@@ -83,7 +83,7 @@ class Frontend_Controller extends Controller
 
         $entryId = $this->input->post('reference_id');
 
-        $comment->createComment('blog', 
+        $comment->createComment('blog',
                                 $entryId,
                                 $this->session->get('user.username'),
                                 $this->input->post('comment'),

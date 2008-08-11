@@ -1,15 +1,15 @@
 <?php
-// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:             
+// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:
 // +-------------------------------------------------------------------------+
 // | Author: Armen Baghumian <armen@OpenSourceClub.org>                      |
 // +-------------------------------------------------------------------------+
 // $Id$
 // ---------------------------------------------------------------------------
 
-class Blog_Model extends Model 
+class Blog_Model extends Model
 {
     // {{{ Properties
-    
+
     public $tableName;
 
     const PROP_PUBLISH             = 1;
@@ -29,8 +29,8 @@ class Blog_Model extends Model
     // {{{ createEntry
     public function createEntry($subject, $entry, $extendedEntry, $author, $published, $allowComments, $requiresModeration, $category)
     {
-        $row = Array('subject'             => $subject, 
-                     'entry'               => $entry, 
+        $row = Array('subject'             => $subject,
+                     'entry'               => $entry,
                      'extended_entry'      => $extendedEntry,
                      'author'              => $author,
                      'create_date'         => time(),
@@ -49,9 +49,9 @@ class Blog_Model extends Model
     {
         $entry = $this->getEntry($id);
 
-        $row = Array('subject'             => $subject, 
-                     'entry'               => $entryBody, 
-                     'extended_entry'      => $extendedEntry,                     
+        $row = Array('subject'             => $subject,
+                     'entry'               => $entryBody,
+                     'extended_entry'      => $extendedEntry,
                      'author'              => $entry['author'],
                      'create_date'         => $entry['create_date'],
                      'modify_date'         => time(),
@@ -60,7 +60,7 @@ class Blog_Model extends Model
                      'allow_comments'      => $allowComments,
                      'requires_moderation' => $requiresModeration,
                      'category'            => $category);
-       
+
        $this->db->where('id', $id);
        $this->db->update($this->tableName, $row);
     }
@@ -93,7 +93,7 @@ class Blog_Model extends Model
         if ($published) {
             $result = $this->db->select('count(id) as count')->getwhere($this->tableName, Array('id' => $id, 'published' => '1'))->current();
         } else {
-            $result = $this->db->select('count(id) as count')->getwhere($this->tableName, Array('id' => $id))->current();        
+            $result = $this->db->select('count(id) as count')->getwhere($this->tableName, Array('id' => $id))->current();
         }
 
         return (boolean)$result->count;
@@ -107,14 +107,14 @@ class Blog_Model extends Model
 
         return $query->current()->subject;
     }
-    // }}}    
+    // }}}
     // {{{ & getEntries
     public function & getEntries($published = false)
     {
         $this->db->select('id, subject, entry, extended_entry, author, create_date, modify_date, modified_by, '.
                           'published, allow_comments, requires_moderation, category');
         $this->db->orderby('create_date', 'desc');
-        
+
         if ($published) {
             $query = $this->db->getwhere($this->tableName, Array('published' => '1'));
         } else {
@@ -149,7 +149,7 @@ class Blog_Model extends Model
     // {{{ getModifiedBy
     public function getModifiedBy($row)
     {
-        return format::date($row['modified_by']);    
+        return format::date($row['modified_by']);
     }
     // }}}
     // }}}

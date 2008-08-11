@@ -1,5 +1,5 @@
 <?php
-// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:             
+// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:
 // +-------------------------------------------------------------------------+
 // | Author: Armen Baghumian <armen@OpenSourceClub.org>                      |
 // +-------------------------------------------------------------------------+
@@ -8,7 +8,7 @@
 
 /*
  * Class for create Tabbed page
- * 
+ *
  * @author  Armen Baghumian <armen@OpenSourceClub.org>
  * @since   PHP 5
  */
@@ -16,11 +16,11 @@
 class TabbedBlock_Component extends Component
 {
     // {{{ properties
-    
+
     var $_items      = Array();
     var $_title      = Null;
     var $_parameters = Array();
-        
+
     // }}}
     // {{{ Constructor
     public function __construct($namespace = Null)
@@ -37,7 +37,7 @@ class TabbedBlock_Component extends Component
     // {{{ addItem
     public function addItem($name, $uri, $parentUri = Null, $title = Null, $enabled = True, $selected = False)
     {
-        $item = Array('name'                => $name, 
+        $item = Array('name'                => $name,
                       'uri'                 => $uri,
                       'is_url'              => (boolean) preg_match('!^\w+://!i', $uri),
                       'selected'            => $selected,
@@ -51,7 +51,7 @@ class TabbedBlock_Component extends Component
 
         } else if ($parentUri != Null && isset($this->_items[md5($parentUri)])) {
 
-            $this->_items[md5($uri.$parentUri)] = $item;            
+            $this->_items[md5($uri.$parentUri)] = $item;
             $this->_items[md5($uri.$parentUri)]['parent_uri'] = $parentUri;
             $this->_items[md5($uri.$parentUri)]['is_parent']  = False;
         }
@@ -98,7 +98,7 @@ class TabbedBlock_Component extends Component
 
             $parameter = isset($this->_parameters[$matches[1]]) ? $this->_parameters[$matches[1]] : Null;
             $uri       = str_replace("%{$matches[1]}%", $parameter, $uri);
-    
+
             // Check for another variable
             return $this->parseURI($uri);
         }
@@ -114,7 +114,7 @@ class TabbedBlock_Component extends Component
         }
 
         if (preg_match('!^\w+://!i', $uri)) {
-            // there is \w:// at begining of uri            
+            // there is \w:// at begining of uri
             return $uri;
         } else {
             return url::site($uri);

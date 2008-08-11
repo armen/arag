@@ -1,9 +1,9 @@
 <?php
- 
-class arr extends arr_Core 
+
+class arr extends arr_Core
 {
     // {{{ standardize_files_array
-    function standardize_files_array($array) 
+    function standardize_files_array($array)
     {
         if (!is_array($array)) { // No file upload
             return array();
@@ -21,7 +21,7 @@ class arr extends arr_Core
     }
     // }}}
     // {{{ standardize_files_array_alter
-    function standardize_files_array_alter($array) 
+    function standardize_files_array_alter($array)
     {
         foreach ($array as $property_name => $property_value) {
             foreach ($property_value as $file_index => $file_value) {

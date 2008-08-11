@@ -1,5 +1,5 @@
 <?php
-// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:             
+// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:
 // +-------------------------------------------------------------------------+
 // | Author: Armen Baghumian <armen@OpenSourceClub.org>                      |
 // +-------------------------------------------------------------------------+
@@ -17,21 +17,21 @@ class FilterLexicalAnalyzer extends LexicalAnalyzer
     const T_RELOP_NE  = 5;     // !=
     const T_RELOP_GE  = 6;     // >=
     const T_RELOP_LE  = 7;     // <=
-    const T_RELOP     = 8;     // <, =, >  
+    const T_RELOP     = 8;     // <, =, >
                                // XXX: FilterLexicalAnalyzer::T_RELOP must be after _NE,_GE,
                                //      _LE because those contain <,=,>
-    const T_WITESPACE = 9; 
+    const T_WITESPACE = 9;
     const T_INVALID   = 10;
     const T_OPERATOR  = 998;   // NOT, OR, AND
     const T_FUNCTION  = 999;
     const T_EOI       = 1000;
-    
+
     // }}}
     // {{{ constructor
     public function __construct()
     {
         // Set symbol table
-        $this->symbolTable = new SymbolTable;        
+        $this->symbolTable = new SymbolTable;
 
         $this->addTokenPatterns(FilterLexicalAnalyzer::T_ID,        "[a-zA-z][0-9a-zA-Z_]+");  // functions and columns id
         $this->addTokenPatterns(FilterLexicalAnalyzer::T_NUMBER,    "[0-9]\.?[0-9]*");         // numbers decimal or float numbers
@@ -49,7 +49,7 @@ class FilterLexicalAnalyzer extends LexicalAnalyzer
 
         // Set case insensitive check for symboltable
         $this->symbolTable->setCaseSensitiveCheck(False);
-        
+
         // Add pre defined id to symbol table and it's token
         $this->symbolTable->insert('and', FilterLexicalAnalyzer::T_OPERATOR);
         $this->symbolTable->insert('or', FilterLexicalAnalyzer::T_OPERATOR);
@@ -68,7 +68,7 @@ class FilterLexicalAnalyzer extends LexicalAnalyzer
             }
         } else if ($token == FilterLexicalAnalyzer::T_PARENTHES) {
             $token = $this->getPrevTokenVal();
-        }        
+        }
 
         return $token;
     }

@@ -1,5 +1,5 @@
 <?php
-// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:             
+// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:
 // +-------------------------------------------------------------------------+
 // | Author: Sasan Rose <sasan.rose@gmail.com>                               |
 // +-------------------------------------------------------------------------+
@@ -8,7 +8,7 @@
 
 require_once "backend.php";
 
-class Application_Controller extends Backend_Controller 
+class Application_Controller extends Backend_Controller
 {
     // {{{ Constructor
     public function __construct()
@@ -21,7 +21,7 @@ class Application_Controller extends Backend_Controller
         $this->global_tabs->additem(_("Users"), 'user/backend/application/all_users');
         $this->global_tabs->addItem(_("Default Group"), 'user/backend/application/default_group');
         $this->global_tabs->additem(_("New Group"), 'user/backend/application/new_group');
-        $this->global_tabs->additem(_("New User"), 'user/backend/application/new_user');       
+        $this->global_tabs->additem(_("New User"), 'user/backend/application/new_user');
         $this->global_tabs->addItem(_("Settings"), 'user/backend/application/settings');
 
         // Validation Messages
@@ -46,7 +46,7 @@ class Application_Controller extends Backend_Controller
         $this->_create_groups_list($this->appname);
 
         $this->groups->addAction('user/backend/application/group_privileges_edit/#id#/', _("Privileges"), 'privileges_action');
-        $this->groups->addAction('user/backend/application/users/#id#/', _("Users List"), 'users_list'); 
+        $this->groups->addAction('user/backend/application/users/#id#/', _("Users List"), 'users_list');
         $this->groups->addAction('user/backend/application/delete/group/#id#', _("Delete"), 'delete_action');
         $this->groups->addAction("user/backend/application/delete/group", _("Delete"), 'delete_action', PList_Component::GROUP_ACTION);
         $this->groups->setGroupActionParameterName('id');
@@ -92,15 +92,15 @@ class Application_Controller extends Backend_Controller
     // {{{ new_user_read
     public function new_user_read()
     {
-        $this->_new_user($this->appname, false);      
+        $this->_new_user($this->appname, false);
     }
     // }}}
     // {{{ user_profile_read
     public function user_profile_read($username)
     {
-        $this->global_tabs->addItem(_("User's Profile"), "user/backend/application/user_profile/%username%"); 
+        $this->global_tabs->addItem(_("User's Profile"), "user/backend/application/user_profile/%username%");
         $this->global_tabs->setParameter('username', $username);
-        $this->_user_profile($username, false, true);    
+        $this->_user_profile($username, false, true);
     }
     // }}}
     // {{{ user_profile_validate_read
@@ -166,7 +166,7 @@ class Application_Controller extends Backend_Controller
             }
 
         }
-        
+
         $appname = $this->session->get_once('delete_appname');
 
         $subjects = implode(",", $subjects);
@@ -232,7 +232,7 @@ class Application_Controller extends Backend_Controller
     // {{{ all_users
     public function all_users($page = NULL)
     {
-        if ($page != Null && preg_match('|page[a-z_]*:[0-9]*|', $page)) {        
+        if ($page != Null && preg_match('|page[a-z_]*:[0-9]*|', $page)) {
             $user       = $this->session->get('user_user_user');
             $group_name = $this->session->get('user_user_group');
         } else {
@@ -242,21 +242,21 @@ class Application_Controller extends Backend_Controller
 
         $this->session->set('user_user_user', $user);
         $this->session->set('user_user_group', $group_name);
-        
+
         $this->_create_users_plist(NULL, $this->appname, $group_name, $user, false);
 
         $this->users->addAction("user/backend/application/user_profile/#username#", _("Edit"), 'edit_action');
         $this->users->addAction("user/backend/application/delete/user/#username#", _("Delete"), 'delete_action');
         $this->users->addAction("user/backend/application/delete/user", _("Delete"), 'delete_action', PList_Component::GROUP_ACTION);
         $this->users->setGroupActionParameterName('username');
-        
+
         $data = array("flagsearch" => true,
                       "user"       => $user,
                       "app_name"   => $this->appname,
                       "group_name" => $group_name,
                       "flagform"   => false);
 
-        $this->layout->content = new View('backend/users', $data);    
+        $this->layout->content = new View('backend/users', $data);
     }
     // }}}
     // {{{ new_user_write
@@ -305,7 +305,7 @@ class Application_Controller extends Backend_Controller
         if ($this->input->post('password') && !$this->_check_old_password($this->input->post('oldpassword'), $this->input->post('username'))) {
             $this->_invalid_request('user/backend/application/index', _("Invalid Password change request"));
         }
-        $this->_user_profile_write($this->appname);       
+        $this->_user_profile_write($this->appname);
     }
     // }}}
     // {{{ user_profile_validate_write
@@ -341,11 +341,11 @@ class Application_Controller extends Backend_Controller
     {
          $this->_default_group_write($this->appname);
     }
-    // }}} 
+    // }}}
     // {{{ new_group_write
     public function new_group_write()
     {
-         $this->_new_group_write($this->appname);              
+         $this->_new_group_write($this->appname);
     }
     // }}}
     // {{{ new_group_validate_write
@@ -374,7 +374,7 @@ class Application_Controller extends Backend_Controller
     {
         Arag_Config::set('limit', $this->input->post('limit'));
 
-              
+
         $this->session->set('settings_saved', true);
 
         //url::redirect('user/backend/applications/settings');

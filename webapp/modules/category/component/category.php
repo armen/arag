@@ -1,5 +1,5 @@
 <?php
-// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:             
+// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:
 // +-------------------------------------------------------------------------+
 // | Author: Sasan Rose <sasan.rose@gmail.com>                               |
 // +-------------------------------------------------------------------------+
@@ -8,7 +8,7 @@
 
 /*
  * Class for create categories
- * 
+ *
  * @author  Sasan Rose <sasan.rose@gmail.com>
  * @since   PHP 5
  */
@@ -16,7 +16,7 @@
 class Category_Component extends Component
 {
     // {{{ Properties
-    
+
     private $module;
     private $categories       = Null;
     private $category;
@@ -97,7 +97,7 @@ class Category_Component extends Component
             $uri = $uri.$this->parentURI.$id;
 
         }
-        
+
         return $uri;
     }
     // }}}

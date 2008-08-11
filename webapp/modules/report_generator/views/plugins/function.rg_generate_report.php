@@ -1,5 +1,5 @@
 <?php
-// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:             
+// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:
 // +-------------------------------------------------------------------------+
 // | Author: Armen Baghumian <armen@OpenSourceClub.org>                      |
 // +-------------------------------------------------------------------------+
@@ -51,7 +51,7 @@ function smarty_function_rg_generate_report($params, &$smarty)
     if (isset($rg)) {
 
         // Generate report
-        $rg->generateReport();    
+        $rg->generateReport();
 
         // Get namespace
         $namespace = $smarty->get_template_vars($name.'_namespace');
@@ -63,7 +63,7 @@ function smarty_function_rg_generate_report($params, &$smarty)
         $smarty->assign('combines', $rg->getCombines(True));
         $smarty->assign('id', $rg->getReportId());
         $smarty->assign('uri', url::current());
-        $smarty->assign('namespace', $namespace);        
+        $smarty->assign('namespace', $namespace);
 
         return $smarty->fetch(Arag::find_file('report_generator', 'views', $template, False, $ext));
     }

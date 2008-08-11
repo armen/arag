@@ -40,7 +40,7 @@
             <field>
                 <name>actions</name>
                 <type>clob</type>
-            </field>            
+            </field>
             <field>
                 <name>create_date</name>
                 <type>integer</type>
@@ -48,7 +48,7 @@
             <field>
                 <name>modify_date</name>
                 <type>integer</type>
-            </field>            
+            </field>
             <index>
                 <name>primary</name>
                 <primary>true</primary>

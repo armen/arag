@@ -1,5 +1,5 @@
 <?php
-// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:             
+// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:
 // +-------------------------------------------------------------------------+
 // | Author: Armen Baghumian <armen@OpenSourceClub.org>                      |
 // +-------------------------------------------------------------------------+
@@ -32,13 +32,13 @@ function smarty_block_arag_block($params, $content, &$smarty, &$repeat)
                     }
             }
         }
-        
+
         // Set default values
         if (!isset($template)) { $template = 'arag_block'; }
         if (!isset($title)) { $title = Null; }
         if (!isset($align)) { $align = ''; }
 
-        // Find template location 
+        // Find template location
         $template = Kohana::find_file('views', 'arag_blocks/' . $template, True, 'tpl');
 
         // Set alignment
@@ -51,7 +51,7 @@ function smarty_block_arag_block($params, $content, &$smarty, &$repeat)
         if (trim($align)) {
             $align = ' align="'.$align.'"'; // there is a space at begining
         }
-        
+
         // Set direction
         $direction = Null;
 

@@ -1,6 +1,6 @@
 <?php
 
-class Welcome_Controller extends Controller 
+class Welcome_Controller extends Controller
 {
     // {{{ Constructor
     public function __construct()

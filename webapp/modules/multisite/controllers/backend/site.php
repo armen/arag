@@ -1,5 +1,5 @@
 <?php
-// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:             
+// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:
 // +-------------------------------------------------------------------------+
 // | Author: Sasan Rose <sasan.rose@gmail.com>                               |
 // +-------------------------------------------------------------------------+
@@ -8,15 +8,15 @@
 
 require_once "backend.php";
 
-class Site_Controller extends Backend_Controller 
+class Site_Controller extends Backend_Controller
 {
     // {{{ index
     public function index($page = NULL)
     {
-        $multiSite          = new MultiSite_Model;    
+        $multiSite          = new MultiSite_Model;
         $this->applications = new PList_Component('applications');
 
-        if ($page != Null && preg_match('|page[a-z_]*:[0-9]*|', $page)) {        
+        if ($page != Null && preg_match('|page[a-z_]*:[0-9]*|', $page)) {
             $name = $this->session->get('user_app_name');
             $dbid = $this->session->get('user_app_dbid');
         } else {
@@ -33,8 +33,8 @@ class Site_Controller extends Backend_Controller
         $this->applications->addColumn('default_group', _("Default Group"));
         $this->applications->addColumn('MultiSite.getDate', _("Create Date"), PList_Component::VIRTUAL_COLUMN);
         $this->applications->addColumn('db_name', _("Database Name"));
-        $this->applications->addAction($multiSite->getAppUrl('#app_name#'), _("View"), 'view_action', False, NULL, TRUE);      
-        
+        $this->applications->addAction($multiSite->getAppUrl('#app_name#'), _("View"), 'view_action', False, NULL, TRUE);
+
         $ids = $multiSite->getIDs();
 
         $data = array("name" => $name,

@@ -1,6 +1,6 @@
 #!/usr/bin/php -q
-<?php 
-// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:             
+<?php
+// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:
 // +-------------------------------------------------------------------------+
 // | Author: Armen Baghumian <armen@OpenSourceClub.org>                      |
 // +-------------------------------------------------------------------------+
@@ -49,18 +49,18 @@ $data   = '';
 
 // Extract options
 foreach ($options[0] as $option) {
-    
+
     switch ($option[0]) {
         case 'd':
         case '--data-set':
             $data = '.'.$option[1];
             break;
-        
+
         case 'p':
         case '--prefix':
             $prefix = $option[1];
             break;
-        
+
         case '--dsn':
             $dsn = $option[1];
             break;
@@ -90,8 +90,8 @@ if (!isset($dsn) || empty($options[0]) || (!isset($module) && empty($options[1])
 // XXX: we moved to MDB2 so seqcol_name will not id
 // $mdb =& MDB2::factory($dsn, Array('seqcol_name' => 'id'));
 $mdb =& MDB2::factory($dsn);
-if (PEAR::isError($mdb)) { 
-    die ($mdb->getMessage() . "\n" . $mdb->getUserInfo() . "\n"); 
+if (PEAR::isError($mdb)) {
+    die ($mdb->getMessage() . "\n" . $mdb->getUserInfo() . "\n");
 }
 
 // Get database name
@@ -119,7 +119,7 @@ if (isset($module)) {
 
     foreach ($options[1] as $file) {
          $dataFiles[] = str_replace('.schema', $data.'.data', $file);
-         $dataFiles[] = str_replace('.schema', '.data', $file);         
+         $dataFiles[] = str_replace('.schema', '.data', $file);
     }
 }
 

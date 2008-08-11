@@ -1,6 +1,6 @@
 {* Smarty *}
-{*  
-    vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:             
+{*
+    vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:
     File: $Id$
 *}
 
@@ -29,7 +29,7 @@
 <script type="text/javascript">
     window.addEvent('domready', function() {
         $('save').addEvent('click', function(e) {
-            
+
             var form   = $('form');
             var action = form.getProperty('action');
             form.setProperty('action', action.replace(/(.*\/)[a-z_]*$/, '$1save_report'));
@@ -57,18 +57,18 @@
                     {$formula_splited_input.last_part}
                 {/arag_block}
             {/if}
-        
+
             <table border="0" cellspacing="0" cellpadding="0" width="100%" class="report_table">
             <tr>
                 <td width="200" colspan="3">&nbsp;</td>
                 <td colspan="3">
                     <input type="button" class="column_operator" value="+" />
-                    <input type="button" class="column_operator" value="-" /> 
+                    <input type="button" class="column_operator" value="-" />
                     <input type="button" class="column_operator" value="*" />
                     <input type="button" class="column_operator" value="/" />
-                    <input type="button" class="column_operator" value="%" /> 
+                    <input type="button" class="column_operator" value="%" />
                     <input type="button" class="column_operator" value="(" />
-                    <input type="button" class="column_operator" value=")" />                        
+                    <input type="button" class="column_operator" value=")" />
                 </td>
             </tr>
             <tr>
@@ -85,7 +85,7 @@
                         {/foreach}
                     </select>
                     </label>
-                </td>                    
+                </td>
                 <td width="20"><input type="button" id="add_additional_column" value="+" /></td>
             </tr>
             {if !empty($additional_columns|smarty:nodefaults)}
@@ -93,11 +93,11 @@
                     <tr>
                         <td>_("Label"):</td>
                         <td><div class="virtual_input">{$label}</div></td>
-                        <td>_("Formula"):</td>                            
+                        <td>_("Formula"):</td>
                         <td><div class="virtual_input">{$column}</div></td>
                         <td>&nbsp;</td>
                         <td>
-                            <input type="hidden" name="columns_label[]" value="{$label}" />                                
+                            <input type="hidden" name="columns_label[]" value="{$label}" />
                             <input type="hidden" name="formulas[]" value="{$column}" />
                             <input type="button" class="remove_additional_column" value="-" />
                         </td>
@@ -120,16 +120,16 @@
                     {$filter_error}
                 {/arag_block}
             {/if}
-        
+
             <table border="0" cellspacing="0" cellpadding="0" width="100%" class="report_table">
-            <tr>              
+            <tr>
                 <td>&nbsp;</td>
                 <td colspan="4">
                     <input type="button" class="filter_operator" style="width:40px;" value="AND" />
-                    <input type="button" class="filter_operator" style="width:40px;" value="OR" /> 
+                    <input type="button" class="filter_operator" style="width:40px;" value="OR" />
                     <input type="button" class="filter_operator" value="(" />
                     <input type="button" class="filter_operator" value=")" />
-                    <input type="button" class="filter_operator" value="<=" /> 
+                    <input type="button" class="filter_operator" value="<=" />
                     <input type="button" class="filter_operator" value=">=" />
                     <input type="button" class="filter_operator" value="<" />
                     <input type="button" class="filter_operator" value=">" />
@@ -176,7 +176,7 @@
                         <td width="20" align="center">
                             <input type="hidden" name="filters[]" value="{$filter|smarty:nodefaults}" />
                             <input type="button" class="remove_filter" value="-" />
-                        </td>                        
+                        </td>
                     </tr>
                 {/foreach}
             {/if}
@@ -198,7 +198,7 @@
             <input type="hidden" name="report_description" value="{$report_description}" />
             <input type="hidden" name="table_name" value="{$table_name}" />
             <input type="submit" style="width:70px;height:20px;" value={quote}_("Preview"){/quote} />
-            <input type="button" style="width:50px;height:20px;" id="save" value={quote}_("Save"){/quote} />            
+            <input type="button" style="width:50px;height:20px;" id="save" value={quote}_("Save"){/quote} />
         {/arag_block}
 
     {/arag_form}

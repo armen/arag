@@ -1,5 +1,5 @@
 <?php
-// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:             
+// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:
 // +-------------------------------------------------------------------------+
 // | Author: Armen Baghumian <armen@OpenSourceClub.org>                      |
 // +-------------------------------------------------------------------------+
@@ -23,7 +23,7 @@ function smarty_block_arag_tabbed_block($params, $content, &$smarty, &$repeat)
         $dir      = smarty_function_dir(Null, $smarty);
         $left     = smarty_function_left(Null, $smarty);
         $name     = $smarty->get_template_vars('_tabbedblock');
-        $template = 'arag_tabbed_block';        
+        $template = 'arag_tabbed_block';
 
         foreach ($params as $_key => $_val) {
             switch ($_key) {
@@ -32,10 +32,10 @@ function smarty_block_arag_tabbed_block($params, $content, &$smarty, &$repeat)
                     break;
 
                 case 'template':
-                    $template = $_val;                
+                    $template = $_val;
                     $template = text::strrtrim($template, '.'.$ext);
                     break;
-                    
+
                 default:
                     $smarty->trigger_error("arag_tabbed_block: Unknown attribute '$_key'");
             }
@@ -53,7 +53,7 @@ function smarty_block_arag_tabbed_block($params, $content, &$smarty, &$repeat)
         $tabbedBlock = $smarty->get_template_vars($name);
 
         // Get selected item
-        $selectedItemName = Null;        
+        $selectedItemName = Null;
         $selectedItem     = Null;
 
         foreach ($tabbedBlock->getItems() as $key => $item) {
@@ -86,15 +86,15 @@ function smarty_block_arag_tabbed_block($params, $content, &$smarty, &$repeat)
                     } else {
 
                         $parentUri = $tabbedBlock->_items[$key]['parent_uri'];
-                    
-                        // Set parent status to selected 
+
+                        // Set parent status to selected
                         $tabbedBlock->_items[md5($parentUri)]['selected']            = True;
                         $tabbedBlock->_items[md5($parentUri)]['has_selected_subtab'] = True;
 
                         // Selected item is not parent, so set parent as selected item
-                        $selectedItem = $tabbedBlock->_items[md5($parentUri)];                        
+                        $selectedItem = $tabbedBlock->_items[md5($parentUri)];
                     }
-                } 
+                }
             }
         }
 
@@ -109,7 +109,7 @@ function smarty_block_arag_tabbed_block($params, $content, &$smarty, &$repeat)
             $smarty->assign('tabbedblock_module', Router::$module);
 
             return $smarty->fetch(Arag::find_file('tabbedblock', 'views', $template, False, $ext));
-            
+
         } else {
 
             // Do nothing just return the content

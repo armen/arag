@@ -1,5 +1,5 @@
 <?php
-// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:             
+// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:
 // +-------------------------------------------------------------------------+
 // | Author: Armen Baghumian <armen@OpenSourceClub.org>                      |
 // +-------------------------------------------------------------------------+
@@ -45,28 +45,28 @@ class ColumnSyntaxAnalyzer extends SyntaxAnalyzer
                 $id     = $this->lexer->getPrevTokenVal();
                 $offset = strpos($input, $id);
 
-                $splitedInput = Array ('first_part'   => substr($input, 0, $offset), 
-                                       'unknown_part' => substr($input, $offset, strlen($id)), 
+                $splitedInput = Array ('first_part'   => substr($input, 0, $offset),
+                                       'unknown_part' => substr($input, $offset, strlen($id)),
                                        'last_part'    => substr($input, $offset+strlen($id)));
 
-                $params = Array('id' => $id, 'splitedinput' => $splitedInput); 
+                $params = Array('id' => $id, 'splitedinput' => $splitedInput);
                 $this->stack->push(SyntaxAnalyzer::UNDEFINED_ID_ERROR, 'error', $params, 'Undifined ID');
             }
         }
-        
+
         if ($this->getLookAhead() == $token) {
             $this->lookAhead = $this->lexer->nextToken();
         } else {
-            
+
             // Push error to error stack
             $input  = $this->lexer->getInput();
             $offset = $this->lexer->getInputOffset();
             $match  = $this->tokenToString($token, $this->lexer->getTokenVal());
             $tToken = $this->tokenToString($this->lexer->prevToken(),$this->lexer->getPrevTokenVal());
-            $splitedInput = Array ('first_part'   => substr($input, 0, $offset-strlen($tToken)), 
+            $splitedInput = Array ('first_part'   => substr($input, 0, $offset-strlen($tToken)),
                                    'unknown_part' => substr($input, $offset-strlen($tToken), strlen($tToken)),
                                    'last_part'    => substr($input, $offset, strlen($input)));
-            
+
             $params = Array ('token' => $tToken, 'match' => $match, 'offset'=> $offset, 'splitedinput' => $splitedInput);
 
             $this->stack->push(SyntaxAnalyzer::SYNTAX_ERROR, 'error', $params, 'Syntax Error');
@@ -96,27 +96,27 @@ class ColumnSyntaxAnalyzer extends SyntaxAnalyzer
     protected function mathStmt()
     {
         if ($this->getLookAhead() == ColumnLexicalAnalyzer::T_ID || $this->getLookAhead() == ColumnLexicalAnalyzer::T_NUMBER) {
-        
+
             $this->match($this->getLookAhead());
-        
+
         } else if ($this->getLookAhead() == '(') {
-            
+
             $this->match('('); $this->mathStmt(); $this->match(')');
-        
+
         } else if ($this->getLookAhead() == ColumnLexicalAnalyzer::T_FUNCTION) {
-            
-            $this->match(ColumnLexicalAnalyzer::T_FUNCTION); $this->match('('); $this->match(ColumnLexicalAnalyzer::T_ID); $this->match(')'); 
-        
+
+            $this->match(ColumnLexicalAnalyzer::T_FUNCTION); $this->match('('); $this->match(ColumnLexicalAnalyzer::T_ID); $this->match(')');
+
         } else {
 
             // Push error to error stack
             $input        = $this->lexer->getInput();
             $offset       = $this->lexer->getInputOffset();
             $tToken       = $this->tokenToString($this->lookAhead, $this->lexer->getTokenVal());
-            $splitedInput = Array ('first_part'   => substr($input, 0, $offset-strlen($tToken)), 
+            $splitedInput = Array ('first_part'   => substr($input, 0, $offset-strlen($tToken)),
                                    'unknown_part' => substr($input, $offset-strlen($tToken), strlen($tToken)),
                                    'last_part'    => substr($input, $offset, strlen($input)));
-            
+
             $params = Array ('token' => $tToken, 'match' => "(', `ID' or `NUMBER", 'offset' => $offset,
                              'splitedinput' => $splitedInput);
 
@@ -128,10 +128,10 @@ class ColumnSyntaxAnalyzer extends SyntaxAnalyzer
     }
     protected function mathStmtSecPart()
     {
-        if ($this->getLookAhead() == '+' || $this->getLookAhead() == '-' || 
-            $this->getLookAhead() == '*' || $this->getLookAhead() == '/' || 
+        if ($this->getLookAhead() == '+' || $this->getLookAhead() == '-' ||
+            $this->getLookAhead() == '*' || $this->getLookAhead() == '/' ||
             $this->getLookAhead() == '%') {
-            
+
             $this->match($this->getLookAhead()); $this->mathStmt();
         }
     }
@@ -143,7 +143,7 @@ class ColumnSyntaxAnalyzer extends SyntaxAnalyzer
             SyntaxAnalyzer::SYNTAX_ERROR       => "Syntax error near `%token%' token. I can't match `%match%' in offset: %offset%",
             SyntaxAnalyzer::UNDEFINED_ID_ERROR => "Undefined ID '%id%'"
         );
-                          
+
         $this->stack->setErrorMessageTemplate($messages);
     }
     // }}}

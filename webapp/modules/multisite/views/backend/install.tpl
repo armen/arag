@@ -1,6 +1,6 @@
 {* Smarty *}
-{*  
-    vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:             
+{*
+    vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:
     File: $Id: index.tpl 53 2007-10-11 18:38:57Z sasan $
 *}
 
@@ -46,10 +46,10 @@
                         _("Modules"):{asterisk}
                     </td>
                     <td align="{left}">
-                        {foreach from=$modules item=module}                   
+                        {foreach from=$modules item=module}
                             <label><input type="checkbox" name="modules[]" value="{$module.module|smarty:nodefaults|default:null}" />
                                     &nbsp;{$module.name}</label><br />
-                        {/foreach}               
+                        {/foreach}
                     </td>
                 </tr>
                 <tr>

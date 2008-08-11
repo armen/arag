@@ -25,13 +25,13 @@ class date extends date_Core {
 
     private static $jcal_jalali_month_len = array (31, 31, 31, 31, 31, 31, 30, 30, 30, 30, 30, 29);
     private static $jcal_jleap_tracker = array (1, 5, 9, 13, 17, 22, 26, 30);
-    
-    private static $jcal_jalali_months = array ("Farvardin", "Ordibehesht", "Khordaad", "Tir", "Mordaad", "Shahrivar", 
+
+    private static $jcal_jalali_months = array ("Farvardin", "Ordibehesht", "Khordaad", "Tir", "Mordaad", "Shahrivar",
                                                 "Mehr", "Aabaan", "Aazar", "Dey", "Bahman", "Esfand");
 
-    private static $jalali_days = array ("Shanbeh", "Yek-Shanbeh", "Do-Shanbeh", "Seh-Shanbeh", "Chahaar-Shanbeh", 
+    private static $jalali_days = array ("Shanbeh", "Yek-Shanbeh", "Do-Shanbeh", "Seh-Shanbeh", "Chahaar-Shanbeh",
                                          "Panj-Shanbeh", "Aadineh");
-    
+
     const JCAL_GLEAP = 1968;
     const JCAL_JLEAP = 1346;
 
@@ -62,7 +62,7 @@ class date extends date_Core {
     const JCAL_PAHLAVI_FLAG   = 'p';
     const JCAL_SHOW_VERSION   = 'V';
 
-    const JCAL_CAL_VERSION = '0.1.2'; 
+    const JCAL_CAL_VERSION = '0.1.2';
 
     // }}}
     // {{{ is_jleap
@@ -88,11 +88,11 @@ class date extends date_Core {
             }
 
         } else {
-            
+
             $pr %= 128;
 
             if ($pr < 29) {
-                
+
                 if ($pr == 0) {
                     return FALSE;
                 } else if ($pr % 4 == 0) {
@@ -102,7 +102,7 @@ class date extends date_Core {
                 }
 
             } else if ($pr < 62) {
-                
+
                 $pr -= 29;
 
                 if ($pr == 0) {
@@ -114,7 +114,7 @@ class date extends date_Core {
                 }
 
             } else if ($pr < 95) {
-                
+
                 $pr -= 62;
 
                 if ($pr == 0) {
@@ -139,7 +139,7 @@ class date extends date_Core {
             }
         }
 
-        return FALSE;    
+        return FALSE;
     }
     // }}}
     // {{{ is_gleap
@@ -161,7 +161,7 @@ class date extends date_Core {
             }
         }
 
-        return FALSE;    
+        return FALSE;
     }
     // }}}
     // {{{ get_last_gleap
@@ -178,9 +178,9 @@ class date extends date_Core {
     // }}}
     // {{{ convert_to_jalali
     /**
-     * Method of conversion, used to convert days to jalali date.      
+     * Method of conversion, used to convert days to jalali date.
      * all days are calculated from UTC Epoch.
-     */    
+     */
     public static function convert_to_jalali($fu_days)
     {
         $r_days  = 0;
@@ -188,7 +188,7 @@ class date extends date_Core {
         $n_years = 0;
         $fn_days;
         $redirect;
-        
+
         /* determining day of the week */
         $n_days  = $fu_days;
         $n_days %= 7;
@@ -199,7 +199,7 @@ class date extends date_Core {
         }
 
         $wday = abs($n_days % 7);
-        
+
         $fn_days = $fu_days + 287;
 
         /* determining current year */
@@ -207,14 +207,14 @@ class date extends date_Core {
         $year = $n_years + self::JCAL_BASE_CAL_YEAR;
 
         $redirect = (($n_years * self::JCAL_YEAR_LEND) - floor($n_years * self::JCAL_YEAR_LEND));
-        
+
         /*
          * Accurate constant is not known, probably does't work for some
          * blah-blah dates, but I'll improve it later.
          */
 
         if ($redirect <= 0.52) {
-            $today = ceil($fn_days - ($n_years * self::JCAL_YEAR_LEND)); 
+            $today = ceil($fn_days - ($n_years * self::JCAL_YEAR_LEND));
 
         } else if ($redirect <= self::JCAL_SEGMENT_REDIRECTION) {
             $today = ($fn_days - ($n_years * self::JCAL_YEAR_LEND));
@@ -235,10 +235,10 @@ class date extends date_Core {
             }
             $year--;
         }
-                
+
         if ($today == 366) {
             $today-= (self::is_jleap($year)) ? 0 : 365;
-            
+
             if (!self::is_jleap($year)) {
                 $year++;
             }
@@ -255,35 +255,35 @@ class date extends date_Core {
                 $month = $i;
                 $day   = $r_days;
 
-                return array('year'  => (int) $year, 
-                             'month' => (int) $month, 
-                             'day'   => (int) $day, 
-                             'wday'  => (int) $wday, 
+                return array('year'  => (int) $year,
+                             'month' => (int) $month,
+                             'day'   => (int) $day,
+                             'wday'  => (int) $wday,
                              'today' => (int) $today);
             }
 
             $r_days -= self::$jcal_jalali_month_len[$i-1];
         }
-        
-        return array('year'  => (int) $year, 
-                     'month' => 12, 
-                     'day'   => (int) $r_days, 
-                     'wday'  => (int) $wday, 
+
+        return array('year'  => (int) $year,
+                     'month' => 12,
+                     'day'   => (int) $r_days,
+                     'wday'  => (int) $wday,
                      'today' => (int) $today);
     }
     // }}}
     // {{{ convert_to_days
     /**
-     * Method of conversion, used to convert a date to jalali days.    
+     * Method of conversion, used to convert a date to jalali days.
      * all days are calculated from UTC Epoch.
      */
     public static function convert_to_days($year, $month, $day)
     {
         $n_years = $year - self::JCAL_BASE_CAL_YEAR;
-        
-        $today    = 0; 
-        $fu_days  = 0; 
-        $redirect = 0.0; 
+
+        $today    = 0;
+        $fu_days  = 0;
+        $redirect = 0.0;
         $c_flag   = 0.0;
 
         for ($i=1; $i < $month; $i++) {
@@ -294,7 +294,7 @@ class date extends date_Core {
 
         $redirect  = $c_flag = ($n_years * self::JCAL_YEAR_LEND) + ($today - 287.0);
         $c_flag   -= floor($c_flag);
-        
+
         if ($c_flag >= 0.0) {
 
             if ($c_flag < 0.75) {
@@ -312,28 +312,28 @@ class date extends date_Core {
             }
         }
 
-        return $fu_days;    
+        return $fu_days;
     }
     // }}}
     // {{{ calc_current
-    /** 
+    /**
      * calc_current() is a method to get the current date. It returns an array
-     * with five element which are Year, Month, Day (of the month), Wday (day of week), 
+     * with five element which are Year, Month, Day (of the month), Wday (day of week),
      * Today (day of year).
      */
     public static function calc_current()
-    {   
+    {
         $n_seconds = time();
 
-        /* 
+        /*
          * This section requires optimization since time-difference
          * calculation is static at the moment.
          * Assuming IRST +3:30.
          */
 
         $n_seconds += (210 * 60);
-        $n_days     = (int) ($n_seconds / self::JCAL_DAY_LEN); 
-        
+        $n_days     = (int) ($n_seconds / self::JCAL_DAY_LEN);
+
         return self::convert_to_jalali($n_days);
     }
     // }}}
@@ -343,16 +343,16 @@ class date extends date_Core {
      */
     public static function gregorian_to_jalali($timestamp)
     {
-        /* 
+        /*
          * This section requires optimization since time-difference
          * calculation is static at the moment.
          * Assuming IRST +3:30.
          */
 
         $timestamp += (210 * 60);
-        $n_days     = (int) ($timestamp / self::JCAL_DAY_LEN); 
-        
-        return self::convert_to_jalali($n_days);        
+        $n_days     = (int) ($timestamp / self::JCAL_DAY_LEN);
+
+        return self::convert_to_jalali($n_days);
     }
     // }}}
     // {{{ jalali_to_gregorian
@@ -372,7 +372,7 @@ class date extends date_Core {
     {
         $fu_days = self::convert_to_days($dyear, $dmonth, $dday);
         $jd      = self::convert_to_jalali($fu_days);
-        
+
         return $jd['wday'];
     }
     // }}}
@@ -384,8 +384,8 @@ class date extends date_Core {
     {
         $fu_days = self::convert_to_days($dyear, $dmonth, $dday);
         $jd      = self::convert_to_jalali($fu_days);
-        
-        return $jd['today'];    
+
+        return $jd['today'];
     }
     // }}}
     // {{{ get_year_week
@@ -396,7 +396,7 @@ class date extends date_Core {
     {
         $fu_days = self::convert_to_days($dyear, $dmonth, $dday);
         $jd      = self::convert_to_jalali($fu_days);
-        
+
         return ((int) ceil(($jd['today'] + $jd['wday']) / 7));
     }
     // }}}

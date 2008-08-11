@@ -2,7 +2,7 @@
 # vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:
 
 if [ ! -f ./ref.po ]; then
-    
+
     echo ""
     echo "Extracting messages..."
 
@@ -10,17 +10,17 @@ if [ ! -f ./ref.po ]; then
     sed -i -e 's/CHARSET/utf-8/' ./ref.po
 
     echo ""
-    echo "Merging/Creating messages..."    
+    echo "Merging/Creating messages..."
 
     if [ -d ./locale ]; then
 
         for path in `find ./locale -name 'LC_MESSAGES' -type d | grep -v .svn`
         do
             if [ -f "${path}/messages.po" ]; then
-                echo -n "Mergeing ref.po file with ${path}/messages.po file: "            
+                echo -n "Mergeing ref.po file with ${path}/messages.po file: "
                 msgmerge "${path}/messages.po" ./ref.po -o "${path}/messages.po"
             else
-                echo "Creating ${path}/messages.po"            
+                echo "Creating ${path}/messages.po"
                 mv ./ref.po "${path}/messages.po"
             fi
         done

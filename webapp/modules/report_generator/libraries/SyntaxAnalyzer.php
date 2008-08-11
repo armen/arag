@@ -1,5 +1,5 @@
 <?php
-// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:             
+// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:
 // +-------------------------------------------------------------------------+
 // | Author: Armen Baghumian <armen@OpenSourceClub.org>                      |
 // +-------------------------------------------------------------------------+
@@ -9,7 +9,7 @@
 class SyntaxAnalyzer
 {
     // {{{ properties
-    
+
     protected $lexer        = Null;
     protected $lookAhead    = Null;
     protected $stack        = Null;   // Error stack

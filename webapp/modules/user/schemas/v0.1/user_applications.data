@@ -4,7 +4,7 @@
     <table>
         <name><variable>TABLES_PREFIX</variable>user_applications</name>
         <initialization>
-            
+
             <insert>
                 <field>
                      <name>name</name>
@@ -13,7 +13,7 @@
                 <field>
                      <name>database_id</name>
                      <value>1</value>
-                </field>                
+                </field>
                 <field>
                      <name>create_date</name>
                      <value><variable>NOW_TIMESTAMP</variable></value>
@@ -25,7 +25,7 @@
                 <field>
                      <name>isactive</name>
                      <value>1</value>
-                </field>                
+                </field>
                 <field>
                      <name>default_group</name>
                      <value>anonymous</value>

@@ -25,7 +25,7 @@ Event::add_before('system.execute', current(Event::get('system.execute')), array
  * @category    Auth
  */
 class Arag_Auth {
-    
+
     // {{{ check
     public static function check()
     {
@@ -37,7 +37,7 @@ class Arag_Auth {
         if (!$session->get('user.authenticated') && $session->get('user.username') != 'anonymous') {
 
             // Fetch Anonymouse user information and store in session
-            $users = Model::load('Users', 'user');            
+            $users = Model::load('Users', 'user');
             $session->set(Array('user' => $users->getAnonymouseUser($appname)));
         }
 
@@ -45,7 +45,7 @@ class Arag_Auth {
             if (!$session->get('user.authenticated')) {
                 $session->set_flash('not_authorized_redirect_url', $destination);
             }
-            url::redirect('not_authorized');        
+            url::redirect('not_authorized');
             exit;
         }
     }
@@ -62,26 +62,26 @@ class Arag_Auth {
 
             foreach ($privileges as $privilege) {
 
-                // BLAKLIST: 
+                // BLAKLIST:
                 //     * is allowed when we are working with black lists
-                if (((boolean) $whiteList == False && $privilege === '*') || 
+                if (((boolean) $whiteList == False && $privilege === '*') ||
                     // BLAKLIST:
                     //     It contains four section which every section separated with a /.
                     //     It should contain at least two sections. last section allways is *
                     //     and othe sections are lower case cheractrer(s)
                     ((boolean) $whiteList == False && preg_match('/^[a-z_]+(\/[a-z_]+){0,2}\/\*$/', $privilege)) ||
                     // WHITELIST:
-                    //     Which can include urls and rules. URL contains four section which every section 
+                    //     Which can include urls and rules. URL contains four section which every section
                     //     separated with a /. It should contain at least two
-                    //     sections. Each section can contain * 
-                    //     (except first and last section when we have 4 or 3 sections) or 
+                    //     sections. Each section can contain *
+                    //     (except first and last section when we have 4 or 3 sections) or
                     //     lower case character(s). At the other hand, a rule
                     //     should be initialized with a @ at the beggining and
                     //     contain two sections. in which the second one can
                     //     contain * too.
-                    ((boolean) $whiteList == True && 
+                    ((boolean) $whiteList == True &&
                      preg_match('/^(([a-z_]+(((\/[a-z_]+){0,2}\/\*)|((\/[a-z_]+){2,3})))|(@[a-z_]+\/(([a-z_]+)|(\*))))$/', $privilege))) {
-                    
+
                     // Replace * with .*
                     $privilege = '|^'.str_replace('*', '.*', $privilege).'$|';
 
@@ -90,13 +90,13 @@ class Arag_Auth {
                     }
 
                 } else if ((boolean) $whiteList == False) {
-                    // We are checking filters which are blacklist and the filter is invalid so 
+                    // We are checking filters which are blacklist and the filter is invalid so
                     // return False
                     return False;
 
                 } // else, privilege is invalid, ignore it
             }
-            
+
             // Return depend on list type
             return !(boolean) $whiteList;
         }
@@ -111,14 +111,14 @@ class Arag_Auth {
         $session = Session::instance();
         $appname = $session->get('user.appname', APPNAME);
 
-        // When user Logins privilege_filters unset by login method 
+        // When user Logins privilege_filters unset by login method
         // then we fetch current application privilege filters here
         if ($session->get('privilege_filters') === False) {
 
             // Fetch privilege filters for current application
-            $filters = Model::load('Filters', 'user');                        
+            $filters = Model::load('Filters', 'user');
             $session->set('privilege_filters', $filters->getPrivilegeFilters($appname));
-        }        
+        }
 
         if (!$routed_uri) {
             $uri = Router::routed_uri($uri);

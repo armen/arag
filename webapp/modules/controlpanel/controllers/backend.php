@@ -1,12 +1,12 @@
 <?php
-// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:             
+// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:
 // +-------------------------------------------------------------------------+
 // | Author: Armen Baghumian <armen@OpenSourceClub.org>                      |
 // +-------------------------------------------------------------------------+
 // $Id$
 // ---------------------------------------------------------------------------
 
-class Backend_Controller extends Controller 
+class Backend_Controller extends Controller
 {
     // {{{ Constructor
     public function __construct()
@@ -42,7 +42,7 @@ class Backend_Controller extends Controller
             }
         }
 
-        $this->layout->content->modules = $accessible_modules;        
+        $this->layout->content->modules = $accessible_modules;
     }
     // }}}
 }

@@ -1,5 +1,5 @@
-/*  
-    vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:             
+/*
+    vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:
     File: $Id$
 */
 
@@ -10,7 +10,7 @@
 .blog_subject {
     font-size         : 13px;
     font-weight       : bold;
-    border-bottom     : 1px solid #ccc;    
+    border-bottom     : 1px solid #ccc;
 }
 .blog_posted {
     color             : #888;

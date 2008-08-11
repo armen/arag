@@ -14,13 +14,13 @@ The following sample code shows how to use a block:
      {/arag_block}
   {/arag_block}
 
-Above code generates this XHTML: 
+Above code generates this XHTML:
 
    <div class="arag_block" dir="ltr">
        <div class="arag_block_title">This is a test!</div>
        <div class="arag_block_content arag_tags_ds">
            <div class="arag_blank_block" dir="ltr">
-               <div class="arag_blank_block_content arag_tags_ds">This is a default block wrapped in a blank block.</div> 
+               <div class="arag_blank_block_content arag_tags_ds">This is a default block wrapped in a blank block.</div>
            </div>
        </div>
    </div>
@@ -75,12 +75,12 @@ So when you are using a Smarty variable it will be escaped automatically. Follow
   // Controller
   $data = array('my_html_code', '<script language="javascript">alert('XSS');</script>');
   $view = new View('insecure', $data);
-  
+
   // Template (insecure.tpl)
   {$my_html_code}
-  
-  // Expected output 
-  <script language="javascript">alert('XSS');</script> 
+
+  // Expected output
+  <script language="javascript">alert('XSS');</script>
 
 If you execute this example resulting in an unexpected output (I mean a popup window with 'XSS' message) it shows that "arag_escape" modifier is not enabled. To solve the problem you should configure it in "smarty.php" config file.
 
@@ -117,8 +117,8 @@ Following example is the default "head.tpl" file for Arag project:
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
   <link rel="icon" href="{$arag_base_url|smarty:nodefaults}/images/misc/favicon.ico" type="image/x-icon" />
   <link rel="shortcut icon" href="{$arag_base_url|smarty:nodefaults}/images/misc/favicon.ico" type="image/x-icon" />
-  <link rel="stylesheet" media="all" type="text/css" title="Arag" 
-        href="{$arag_base_url|smarty:nodefaults}/styles/styles.css" />    
+  <link rel="stylesheet" media="all" type="text/css" title="Arag"
+        href="{$arag_base_url|smarty:nodefaults}/styles/styles.css" />
 
 === Form ===
 

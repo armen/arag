@@ -1,5 +1,5 @@
 <?php
-// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:             
+// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:
 // +-------------------------------------------------------------------------+
 // | Author: Armen Baghumian <armen@OpenSourceClub.org>                      |
 // +-------------------------------------------------------------------------+
@@ -23,14 +23,14 @@ function smarty_function_asterisk($params, &$smarty)
             case 'message':
                 $$_key = (string)$_val;
                 break;
-                
+
             default:
                 $smarty->trigger_error("asterisk: Unknown attribute '$_key'");
         }
     }
 
     $output = '<span class="asterisk">&nbsp;*&nbsp;</span>';
-    
+
     if ($message != Null && strpos($message, '%s')) {
         $output = sprintf($message, $output);
     }

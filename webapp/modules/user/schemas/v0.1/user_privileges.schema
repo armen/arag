@@ -7,17 +7,17 @@
             <field>
                 <name>id</name>
                 <type>integer</type>
-                <notnull>true</notnull>                
+                <notnull>true</notnull>
                 <autoincrement>true</autoincrement>
             </field>
             <field>
                 <name>parent_id</name>
                 <type>integer</type>
-            </field>            
+            </field>
             <field>
                 <name>label</name>
                 <type>text</type>
-                <length>255</length>                
+                <length>255</length>
                 <notnull>true</notnull>
             </field>
             <field>
@@ -36,11 +36,11 @@
             <field>
                 <name>modified_by</name>
                 <type>text</type>
-                <length>255</length>                
-            </field>            
+                <length>255</length>
+            </field>
             <field>
                 <name>privilege</name>
-                <type>text</type>                
+                <type>text</type>
                 <length>255</length>
             </field>
             <index>

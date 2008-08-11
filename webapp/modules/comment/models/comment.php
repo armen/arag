@@ -1,15 +1,15 @@
 <?php
-// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:             
+// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:
 // +-------------------------------------------------------------------------+
 // | Author: Armen Baghumian <armen@OpenSourceClub.org>                      |
 // +-------------------------------------------------------------------------+
 // $Id$
 // ---------------------------------------------------------------------------
 
-class Comment_Model extends Model 
+class Comment_Model extends Model
 {
     // {{{ Properties
-    
+
     private $tableName;
 
     // }}}
@@ -25,7 +25,7 @@ class Comment_Model extends Model
     // {{{ createComment
     public function createComment($moduleName, $referenceId, $author, $comment, $verified = 0, $parentId = 0, $name = Null, $email = Null, $homepage = Null)
     {
-        $row = Array('module_name'  => $moduleName, 
+        $row = Array('module_name'  => $moduleName,
                      'reference_id' => $referenceId,
                      'comment'      => $comment,
                      'parent_id'    => $parentId,
@@ -46,13 +46,13 @@ class Comment_Model extends Model
     {
         $comment = $this->getComment($id);
 
-        $row = Array('module_name'  => $comment['module_name'], 
+        $row = Array('module_name'  => $comment['module_name'],
                      'reference_id' => $comment['reference_id'],
                      'comment'      => $comment,
                      'parent_id'    => ($parentId === False) ? $comment['parent_id'] : $parentId,
                      'homepage'     => empty($homepage) ? $comment['homepage'] : $homepage,
                      'name'         => empty($homepage) ? $comment['name'] : $name,
-                     'email'        => empty($homepage) ? $comment['email'] : $email,                     
+                     'email'        => empty($homepage) ? $comment['email'] : $email,
                      'verified'     => ($verified === False) ? $comment['verified'] : $verified,
                      'create_date'  => $comment['create_date'],
                      'created_by'   => $comment['created_by'],
@@ -86,7 +86,7 @@ class Comment_Model extends Model
     {
         $query = $this->db->select('id, reference_id, comment, parent_id, homepage, name, email, verified,'.
                                    'create_date, created_by, modify_date, modified_by');
-        
+
         if ($referenceId !== False) {
             $query->where('reference_id', $referenceId);
         }
@@ -94,7 +94,7 @@ class Comment_Model extends Model
         if ($verified !== Null) {
             $query->where('verified', $verified);
         }
-        
+
         $retval = $query->where('module_name', $moduleName)->orderby('create_date', 'asc')->get($this->tableName)->result();
 
         return $retval;
@@ -105,7 +105,7 @@ class Comment_Model extends Model
     // {{{ getCreateDate
     public function getCreateDate($row)
     {
-        return ($row['create_date']) ? date('Y-m-d H:i:s', $row['create_date']) : '-';        
+        return ($row['create_date']) ? date('Y-m-d H:i:s', $row['create_date']) : '-';
     }
     // }}}
     // {{{ getCreatedBy
@@ -113,7 +113,7 @@ class Comment_Model extends Model
     {
         return ($row['created_by']) ? $row['created_by'] : '-';
     }
-    // }}}    
+    // }}}
     // {{{ getModifyDate
     public function getModifyDate($row)
     {

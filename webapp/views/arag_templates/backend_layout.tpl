@@ -1,6 +1,6 @@
 {* Smarty *}
-{*  
-    vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:             
+{*
+    vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:
     File: $Id$
 *}
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
@@ -16,17 +16,17 @@
         {capture assign="logout"}_("Logout"){/capture}
         {capture assign="profile"}_("My Profile"){/capture}
         {capture assign="controlpanel"}_("Control Panel"){/capture}
-        {$welcome|sprintf:$firstname:$surname} | 
-        {kohana_helper function="html::anchor" uri="user_profile/backend/index" title="$profile"} | 
-        {kohana_helper function="html::anchor" uri="user/frontend/logout" title="$logout"} | 
+        {$welcome|sprintf:$firstname:$surname} |
+        {kohana_helper function="html::anchor" uri="user_profile/backend/index" title="$profile"} |
+        {kohana_helper function="html::anchor" uri="user/frontend/logout" title="$logout"} |
         {kohana_helper function="html::anchor" uri="controlpanel" title="$controlpanel"}
-    {/arag_block}            
+    {/arag_block}
 
     {arag_tabbed_block name="global_tabs"}
         {$content|smarty:nodefaults|default:""}
     {/arag_tabbed_block}
     {literal}
-        Execution: <b>{execution_time}</b> Memory usage: <b>{memory_usage}</b> Included files: <b>{included_files}</b>    
+        Execution: <b>{execution_time}</b> Memory usage: <b>{memory_usage}</b> Included files: <b>{included_files}</b>
     {/literal}
 </body>
 </html>

@@ -18,7 +18,7 @@ class Validation extends Validation_Core {
     public static function factory(&$array = NULL)
     {
         $data = array_slice(Router::$arguments, 1);
-    
+
         if (is_array($array)) {
             return $array = new Validation($array);
 

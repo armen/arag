@@ -23,7 +23,7 @@ window.addEvent('domready', function() {
 
     $$('.remove_filter').addEvent('click', function(e) {
 
-        // Grand parent is <tr>        
+        // Grand parent is <tr>
         var target = e.target.getParent().getParent();
         var button = e.target;
 

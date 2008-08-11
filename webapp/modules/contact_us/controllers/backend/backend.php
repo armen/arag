@@ -1,5 +1,5 @@
 <?php
-// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:             
+// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:
 // +-------------------------------------------------------------------------+
 // | Author: Roham Rafii Tehrani <roham.rafii@gmail.com>                     |
 // +-------------------------------------------------------------------------+
@@ -14,7 +14,7 @@ class Backend_Controller extends Controller
         parent::__construct();
 
         // load global Tabs
-        $this->global_tabs = new TabbedBlock_Component('global_tabs'); 
+        $this->global_tabs = new TabbedBlock_Component('global_tabs');
         $this->global_tabs->setTitle(_("Contacts Management"));
 
         $this->global_tabs->addItem(_("Contacts"), 'contact_us/backend/contacts');

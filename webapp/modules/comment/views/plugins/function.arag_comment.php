@@ -1,5 +1,5 @@
 <?php
-// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:             
+// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:
 // +-------------------------------------------------------------------------+
 // | Author: Armen Baghumian <armen@OpenSourceClub.org>                      |
 // +-------------------------------------------------------------------------+
@@ -24,8 +24,8 @@ function smarty_function_arag_comment($params, &$smarty)
                 break;
 
             case 'template':
-                $template = $_val;                
-                $template = text::strrtrim($template, '.'.$ext);                
+                $template = $_val;
+                $template = text::strrtrim($template, '.'.$ext);
                 break;
 
             default:
@@ -53,8 +53,8 @@ function smarty_function_arag_comment($params, &$smarty)
     if (isset($comment)) {
 
         // Get namespace
-        $namespace = $smarty->get_template_vars($name.'_namespace');        
-        
+        $namespace = $smarty->get_template_vars($name.'_namespace');
+
         if ($comment->getComments() == Null) {
             $comment->build();
         }
@@ -65,7 +65,7 @@ function smarty_function_arag_comment($params, &$smarty)
         $smarty->assign('namespace', $namespace);
         $smarty->assign('comment_templates_path', MODPATH . 'comment/views/');
         $smarty->assign('name', $session->get('user.name') . ' ' . $session->get('user.last_name'));
-        $smarty->assign('email', $session->get('user.email')); 
+        $smarty->assign('email', $session->get('user.email'));
 
         return $smarty->fetch(Arag::find_file('comment', 'views', $template, False, $ext));
     }

@@ -1,15 +1,15 @@
 <?php
-// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:             
+// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:
 // +-------------------------------------------------------------------------+
 // | Author:   Sasan Rose <sasan.rose@gmail.com>                             |
 // +-------------------------------------------------------------------------+
 // $Id$
 // ---------------------------------------------------------------------------
 
-class StaticPages_Model extends Model 
+class StaticPages_Model extends Model
 {
     // {{{ Properties
-    
+
     public $tableName;
 
     // }}}
@@ -25,7 +25,7 @@ class StaticPages_Model extends Model
     // {{{ createPage
     public function createPage($author, $subject, $page)
     {
-        $row = Array('author'      => $author, 
+        $row = Array('author'      => $author,
                      'create_date' => time(),
                      'modify_date' => time(),
                      'subject'     => $subject,
@@ -39,12 +39,12 @@ class StaticPages_Model extends Model
     {
         $entry = $this->getPage($id);
 
-        $row = Array('subject'     => $subject, 
-                     'page'        => $page, 
+        $row = Array('subject'     => $subject,
+                     'page'        => $page,
                      'author'      => $entry['author'],
                      'create_date' => $entry['create_date'],
                      'modify_date' => time());
-       
+
        $this->db->where('id', $id);
        $this->db->update($this->tableName, $row);
     }
@@ -57,14 +57,14 @@ class StaticPages_Model extends Model
     // }}}
     // {{{ & getPage
     public function & getPage($id)
-    {   
+    {
         $this->db->select('id, subject, page, author, create_date');
         $this->db->from($this->tableName);
         $this->db->where('id', $id);
-        
+
         $query = $this->db->get();
         $row = (Array) $query->current();
-        
+
         return $row;
     }
     // }}}
@@ -82,20 +82,20 @@ class StaticPages_Model extends Model
     // {{{ getDate
     public function getDate($row)
     {
-        return format::date($row['create_date']);    
+        return format::date($row['create_date']);
     }
     // }}}
     // {{{ getModifyDate
     public function getModifyDate($row)
     {
-        return format::date($row['modify_date']);    
+        return format::date($row['modify_date']);
     }
     // }}}
     // {{{ checkID
     public function checkID($id)
     {
         $this->db->select('id');
-        $query = $this->db->getwhere($this->tableName, Array('id' => $id)); 
+        $query = $this->db->getwhere($this->tableName, Array('id' => $id));
         return (boolean)count($query);
     }
     // }}}

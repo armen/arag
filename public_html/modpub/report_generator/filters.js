@@ -1,14 +1,14 @@
 window.addEvent('domready', function() {
 
     // {{{ properties
-    
+
     var operators = {
         'text':    [{text: "contains", value: "~" }, {text: "doesn't contain", value: "!~" }, {text: "begins with", value: "^" },
                     {text: "ends with", value: "$" }, {text: "is", value: "=" }, {text: "is not", value: "!=" }],
-        'numeric': [{text: "=", value: "=" }, {text: "!=", value: "!=" }, {text: ">", value: ">" }, {text: "<", value: "<" }, 
+        'numeric': [{text: "=", value: "=" }, {text: "!=", value: "!=" }, {text: ">", value: ">" }, {text: "<", value: "<" },
                     {text: "<=", value: "<=" }, {text: ">=", value: ">=" }],
-        'date':    [{text: "=", value: "=" }, {text: "!=", value: "!=" }, {text: ">", value: ">" }, {text: "<", value: "<" }, 
-                    {text: "<=", value: "<=" }, {text: ">=", value: ">=" }]                    
+        'date':    [{text: "=", value: "=" }, {text: "!=", value: "!=" }, {text: ">", value: ">" }, {text: "<", value: "<" },
+                    {text: "<=", value: "<=" }, {text: ">=", value: ">=" }]
     };
 
     var combines  = [{text: "OR", value: "OR"}, {text: "AND", value: "AND"}];
@@ -20,7 +20,7 @@ window.addEvent('domready', function() {
     // }}}
     // {{{ addSelect
 
-    // A function to create select input field    
+    // A function to create select input field
     var addSelect = function(name, options, selected) {
         if (options) {
             var select = new Element('select', {'name': name});
@@ -37,7 +37,7 @@ window.addEvent('domready', function() {
 
         return new Element('span');
     }
-    
+
     // }}}
     // {{{ addFilter
 
@@ -47,22 +47,22 @@ window.addEvent('domready', function() {
         if (!$defined(value)) { value = null; }
         if (!$defined(selected_operator)) { selected_operator = null; }
         if (!$defined(selected_combine)) { selected_combine = null; }
-        
+
         // Each filter has this structure
-        // 
+        //
         // <tr>
         //    +-------+---------+-------------+---------------+
         //    | Label | Operator| Input field | remove button |
         //    +-------+---------+-------------+---------------+
         // </tr>
         //
-        
+
         // Maximum acceptable length is 60
         var length  = Number(table_desc[field].length).limit(0, 60);
         var tr      = new Element('tr');
         var combine = new Element('td', {'width':'30'}).injectInside(tr);
         var label   = new Element('td', {'align':right_align, 'width':'150'}).injectInside(tr);
-        
+
         if ($$('#filters table tr').length > 0) {
             addSelect('combines['+field+'][]', combines, selected_combine).injectInside(combine);
         } else {
@@ -71,7 +71,7 @@ window.addEvent('domready', function() {
         }
 
         tr.injectInside(table);
-        label.setHTML(field.replace(/_/g, ' ').capitalize());        
+        label.setHTML(field.replace(/_/g, ' ').capitalize());
 
         /**
          *
@@ -82,22 +82,22 @@ window.addEvent('domready', function() {
          *      tr.injectInside(table);
          *      label.setHTML(field.replace(/_/g, ' ').capitalize());
          *  } else {
-         *      // There is created instance of this field so use "or" as label of this 
+         *      // There is created instance of this field so use "or" as label of this
          *      // field and add it after existing field
          *
          *      // Get grand parent of last element which is <tr> and inject "tr" after that
          *      tr.injectAfter($$('#filters .field_'+field).getLast().getParent().getParent());
          *      label.setStyle('color', 'brown').setHTML('or');
          *  }
-         */        
+         */
         var operator = new Element('td', {'class':'operator'}).injectInside(tr);  // Operator
         var input    = new Element('td', {'class':'input'}).injectInside(tr);     // Input
         var remove   = new Element('td', {'class':'remove'}).injectInside(tr);    // Remove button
         var textbox  = new Element('input', {
-            'type':'text', 
-            'size':length, 
-            'name':'fields['+field+'][]', 
-            'class':'field_'+field, 
+            'type':'text',
+            'size':length,
+            'name':'fields['+field+'][]',
+            'class':'field_'+field,
             'value':value,
         }).injectInside(input);
 
@@ -105,7 +105,7 @@ window.addEvent('domready', function() {
 
         new Element('input', {'type':'button', 'name': field, 'value':'-'}).injectInside(remove).addEvent('click', function(e) {
 
-            // Grand parent is <tr>        
+            // Grand parent is <tr>
             var target = e.target.getParent().getParent();
             var button = e.target;
 
@@ -128,25 +128,25 @@ window.addEvent('domready', function() {
             transition: Fx.Transitions.Quad.easeOut
         }).start({
             'background-color': ['#fff692', '#fff']
-        }); 
+        });
     }
 
     // }}}
     // {{{ initialize
 
     $('filter_fields').addEvent('change', function(e) {
-        
+
         var field = e.target.getValue();
         addFilter(field);
 
-        // Unselect selected item with selecting first item on list        
+        // Unselect selected item with selecting first item on list
         e.target.getFirst().selected = true;
     });
 
     $each(fields, function(values, field){
         $each(values, function(value, index) {
             var selected_operator = fields_operators[field][index];
-            var selected_combine  = fields_combines[field][index];            
+            var selected_combine  = fields_combines[field][index];
             addFilter(field, value, selected_operator, selected_combine);
         });
     });

@@ -21,9 +21,9 @@
             </td>
             <td>
                 {arag_form uri="staticpages/backend/index"}
-                    <input type="submit" name="submit" value={quote}_("No"){/quote} />        
+                    <input type="submit" name="submit" value={quote}_("No"){/quote} />
                 {/arag_form}
-            </td>            
+            </td>
         </tr>
         </table>
     {/arag_block}

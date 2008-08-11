@@ -1,17 +1,17 @@
 <?php
-// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:             
+// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:
 // +-------------------------------------------------------------------------+
 // | Author: Sasan Rose <sasan.rose@gmail.com>                               |
 // +-------------------------------------------------------------------------+
 // $Id$
 // ---------------------------------------------------------------------------
 
-class Modules_Model extends Model 
+class Modules_Model extends Model
 {
     // {{{ Properties
-    
+
     private $tableNameCoreModules;
-    
+
     // }}}
     // {{{ Constructor
     public function __construct()

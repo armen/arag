@@ -1,5 +1,5 @@
 <?php
-// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:             
+// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:
 // +-------------------------------------------------------------------------+
 // | Author: Armen Baghumian <armen@OpenSourceClub.org>                      |
 // +-------------------------------------------------------------------------+
@@ -8,7 +8,7 @@
 
 /*
  * Class for create Reports
- * 
+ *
  * @author  Armen Baghumian <armen@OpenSourceClub.org>
  * @since   PHP 5
  */
@@ -16,7 +16,7 @@
 class ReportGenerator_Component extends Component
 {
     // {{{ properties
-    
+
     private $report    = Null;
     private $rg        = Null;
     private $fields    = Null;
@@ -36,7 +36,7 @@ class ReportGenerator_Component extends Component
     // {{{ generateById
     public function generateById($id)
     {
-        $this->report = $this->rg->getReport($id);     
+        $this->report = $this->rg->getReport($id);
     }
     // }}}
     // {{{ generateByName
@@ -54,8 +54,8 @@ class ReportGenerator_Component extends Component
         $this->combines  = $input->post('combines');
         $this->table     = $this->rg->describe($this->report['table_name']);
         $where           = $this->rg->constructWhere($this->fields, $this->operators, $this->combines);
-        $result          = $this->rg->executeReport($this->report['table_name'], $this->report['columns'], 
-                                                    $this->report['additional_columns'], $this->report['filters'], 
+        $result          = $this->rg->executeReport($this->report['table_name'], $this->report['columns'],
+                                                    $this->report['additional_columns'], $this->report['filters'],
                                                     $where);
 
         $date_fields_name = Kohana::config('config.date_field_names');
@@ -71,7 +71,7 @@ class ReportGenerator_Component extends Component
             } else {
                 $list->addColumn($column);
             }
-        }        
+        }
 
         foreach ($this->report['additional_columns'] as $label => $column) {
             $list->addColumn($label);
@@ -80,8 +80,8 @@ class ReportGenerator_Component extends Component
         // Add this->report actions
         foreach ($this->report['actions'] as $action) {
             if (is_array($action) && !empty($action['uri'])) {
-                $group_action = (isset($action['group_action']) && $action['group_action'] == 'on') 
-                              ? PList_Component::GROUP_ACTION 
+                $group_action = (isset($action['group_action']) && $action['group_action'] == 'on')
+                              ? PList_Component::GROUP_ACTION
                               : False;
                 $list->addAction($action['uri'], $action['tooltip'], $action['class_name'], $group_action);
             }
@@ -109,7 +109,7 @@ class ReportGenerator_Component extends Component
     {
         return $jason ? json_encode($this->combines) : $this->combines;
     }
-    // }}}    
+    // }}}
     // {{{ getFields
     public function getFields($jason = False)
     {

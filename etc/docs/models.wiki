@@ -10,7 +10,7 @@ This will load a model called 'ExampleModel' in current module. But what if you 
 
   $this->load->model('ModelName', 'CallingName');
 
-okay same as Kohana not? 
+okay same as Kohana not?
 
 You can also load models from other modules simply like this:
 

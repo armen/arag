@@ -1,10 +1,10 @@
 {* Smarty *}
-{*  
-    vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:             
+{*
+    vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:
     File: $Id: edit.tpl 53 2007-10-11 18:38:57Z armen $
 *}
 {arag_block}
-    
+
     {arag_validation_errors}
 
     {if $saved == 'saved'}
@@ -24,12 +24,12 @@
         <td align="{right}" width="200">_("Number of posts per page"):</td>
         <td><input type="text" name="post_limit" value="{$post_limit|smarty:nodefaults|default:null}" dir="ltr" />&nbsp;
             <span class="smallfont">_("0 means unlimited.")</span></td>
-    </tr>    
+    </tr>
     <tr>
         <td>&nbsp;</td>
         <td>
             <input type="submit" value={quote}_("Save"){/quote} />
-            <input type="reset" value={quote}_("Reset"){/quote} />            
+            <input type="reset" value={quote}_("Reset"){/quote} />
         </td>
     </tr>
     </table>

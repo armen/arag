@@ -1,5 +1,5 @@
 <?php
-// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:             
+// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:
 // +-------------------------------------------------------------------------+
 // | Author: Armen Baghumian <armen@OpenSourceClub.org>                      |
 // +-------------------------------------------------------------------------+
@@ -8,7 +8,7 @@
 
 /*
  * Class for create paginated list
- * 
+ *
  * @author  Armen Baghumian <armen@OpenSourceClub.org>
  * @since   PHP 5
  */
@@ -16,7 +16,7 @@
 class PList_Component extends Component implements IteratorAggregate, ArrayAccess
 {
     // {{{ properties
-    
+
     private $resource;
     private $columns        = Array();
     private $virtualColumns = Array();
@@ -45,7 +45,7 @@ class PList_Component extends Component implements IteratorAggregate, ArrayAcces
     const CAPTION  = 1;
     const HEADER   = 2;
     const FOOTER   = 4;
-    const SORTABLE = 8; 
+    const SORTABLE = 8;
 
     private $properties = 0;
 
@@ -86,7 +86,7 @@ class PList_Component extends Component implements IteratorAggregate, ArrayAcces
         if (is_array($resource)) {
             $resource = new IteratorIterator(new ArrayIterator($resource));
         }
-        
+
         if ($resource instanceof Traversable) {
             $this->resource = $resource;
             return;
@@ -96,7 +96,7 @@ class PList_Component extends Component implements IteratorAggregate, ArrayAcces
     }
     // }}}
     // {{{ setLimit
-    public function setLimit($limit, $offset = 0) 
+    public function setLimit($limit, $offset = 0)
     {
         if (!is_numeric($limit) || $limit < 0) {
             $limit = 0;
@@ -150,7 +150,7 @@ class PList_Component extends Component implements IteratorAggregate, ArrayAcces
     {
         return $this->groupActionType;
     }
-    // }}}    
+    // }}}
     // {{{ hasHeader
     public function hasHeader()
     {
@@ -184,7 +184,7 @@ class PList_Component extends Component implements IteratorAggregate, ArrayAcces
             $this->virtualColumns[$name] = Array('label' => $label);
         }
 
-        $this->columns[$name] = Array ('label'   => $label, 
+        $this->columns[$name] = Array ('label'   => $label,
                                        'hidden'  => $type & PList_Component::HIDDEN_COLUMN,
                                        'virtual' => $type & PList_Component::VIRTUAL_COLUMN);
     }
@@ -246,7 +246,7 @@ class PList_Component extends Component implements IteratorAggregate, ArrayAcces
     {
         return $this->groupActions;
     }
-    // }}}    
+    // }}}
     // {{{ getActionsCount
     public function getActionsCount()
     {
@@ -264,7 +264,7 @@ class PList_Component extends Component implements IteratorAggregate, ArrayAcces
     {
         return $this->groupActionParameterName;
     }
-    // }}}    
+    // }}}
     // {{{ getEmptyListMessage
     public function getEmptyListMessage()
     {
@@ -310,7 +310,7 @@ class PList_Component extends Component implements IteratorAggregate, ArrayAcces
             // Checking for url Variables
             if (is_array($row) && array_key_exists($params[1], $row)) {
                 $uri = str_replace("#{$params[1]}#", $row[$params[1]], $uri);
-            
+
             } else if (is_string($row) && preg_match('/([a-zA-z_][a-zA-Z_0-9]*)=([a-zA-Z_0-9\/]+);/', $row, $matches)) {
                 $uri = str_replace("#{$matches[1]}#", $matches[2], $uri);
             }
@@ -333,19 +333,19 @@ class PList_Component extends Component implements IteratorAggregate, ArrayAcces
             // Replace escaped comma with comma
             $_args  = str_replace('\,', ',', $_args);
             $args   = array_merge($args, $_args);
-        }  
+        }
 
         if (strpos($callback, '.') !== false) {
             // Model and function separated with a dot
             list($modelName, $functionName) = explode('.', $callback);
-            
+
             $modelName .= '_Model';
             $modelName  = new $modelName;
-            
+
             if (method_exists($modelName, $functionName)) {
                 return call_user_func_array(array($modelName, $functionName), $args);
             }
-        
+
         } else if (strpos($callback, '::') !== false) {
 
             // Classname and function separated with a ::
@@ -359,7 +359,7 @@ class PList_Component extends Component implements IteratorAggregate, ArrayAcces
             // The function is in resource
             if (method_exists($this->resource, $callback)) {
                 return call_user_func_array(array($this->resource, $callback), $args);
-            }            
+            }
         }
 
         throw new Exception('No such callback found: ' . $callback);
@@ -396,18 +396,18 @@ class PList_Component extends Component implements IteratorAggregate, ArrayAcces
     public function offsetExists($offset)
     {
         $resource = iterator_to_array($this->resource);
-        if (isset($resource[$offset])) { 
+        if (isset($resource[$offset])) {
             return True;
         }
 
         return False;
-    }   
+    }
     // }}}
     // {{{ offsetGet
     public function offsetGet($offset)
     {
         $resource = iterator_to_array($this->resource);
-    
+
         if ($this->offsetExists($offset)) {
             return $resource[$offset];
         }

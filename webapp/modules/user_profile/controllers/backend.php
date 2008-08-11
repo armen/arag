@@ -1,15 +1,15 @@
 <?php
-// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:             
+// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:
 // +-------------------------------------------------------------------------+
 // | Author: Sasan Rose <sasan.rose@gmail.com>                               |
 // +-------------------------------------------------------------------------+
 // $Id$
 // ---------------------------------------------------------------------------
 
-class Backend_Controller extends Controller 
+class Backend_Controller extends Controller
 {
     // {{{ Properties
-    
+
     protected $username = Null;
     protected $section  = 'backend';
 
@@ -20,15 +20,15 @@ class Backend_Controller extends Controller
         parent::__construct();
 
         // Load the models
-        $this->UserProfile = new UserProfile_Model;   
-        //$this->Applications = new Applications_Model;        
-        //$this->Groups = new Groups_Model;        
-        $this->Users = Model::load('Users', 'user');        
+        $this->UserProfile = new UserProfile_Model;
+        //$this->Applications = new Applications_Model;
+        //$this->Groups = new Groups_Model;
+        $this->Users = Model::load('Users', 'user');
         //$this->Filters = new Filters_Model;
         //$this->Privileges = new  Privileges_Model;
 
         // load global Tabs
-        $this->globals_tabs = new TabbedBlock_Component('global_tabs'); 
+        $this->globals_tabs = new TabbedBlock_Component('global_tabs');
 
         // Default page title
         $this->layout->page_title = 'User Profile';
@@ -39,8 +39,8 @@ class Backend_Controller extends Controller
         // Global tabbedbock
         $this->global_tabs = new TabbedBlock_Component('global_tabs');
         $this->global_tabs->setTitle(_("User Profile"));
-        $this->global_tabs->addItem(_("Personal Information"), 'user_profile/'.$this->section.'/index'); 
-        $this->global_tabs->addItem(_("Change Password"), 'user_profile/'.$this->section.'/password'); 
+        $this->global_tabs->addItem(_("Personal Information"), 'user_profile/'.$this->section.'/index');
+        $this->global_tabs->addItem(_("Change Password"), 'user_profile/'.$this->section.'/password');
 
         // Validation Messages
         $passwordLength = Arag_Config::get("passlength", 0, 'user');
@@ -60,10 +60,10 @@ class Backend_Controller extends Controller
     {
         $data = array();
         $data = $this->Users->getUserProfile($this->username);
-        
+
         if ($isset_profile = $this->UserProfile->hasUserName($this->username)) {
             $data = array_merge($data, $this->UserProfile->getProfile($this->username));
-            
+
             /*if ($data['pan'] != NULL) {
                 $data['pan'] = $this->panSplitter($data['pan']);
             }*/
@@ -91,7 +91,7 @@ class Backend_Controller extends Controller
         $postal_code = $this->input->post('postal_code', Null, true);
         $name        = $this->input->post('name', Null, true);
         $lastname    = $this->input->post('lastname', Null, true);
-        
+
         if ($this->UserProfile->hasUserName($this->username)) {
             $this->UserProfile->editProfile($province, $city, $address, $phone, $cellphone, $postal_code, $this->username, $name, $lastname, $country);
         } else {

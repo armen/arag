@@ -2,7 +2,7 @@
 
 Two major things you have to know about Arag modules: first there is an additional segment in URI that specified what modules should be executed and the second one is directory structure of modules.
 
-In Arag there is no application directory, but we have just modules directory contains modules. 
+In Arag there is no application directory, but we have just modules directory contains modules.
 Directory structure of modules could be something like this:
 
   +-- webapp
@@ -48,7 +48,7 @@ The below example is the user module's 'routes.php'
   (
       'user'              => 'user/backend/applications',
       'user/applications' => 'user/backend/applications',
-      'user/application'  => 'user/backend/application',    
+      'user/application'  => 'user/backend/application',
   );
 
 The other configuration file which each modules should have one, is a 'module.php' file which contains some information for installing or updating a module. Like the following example:
@@ -59,7 +59,7 @@ The other configuration file which each modules should have one, is a 'module.ph
       'title'       => 'User',
       'version'     => '0.1',
       'name'        => 'user',
-      'author'      => Array( 
+      'author'      => Array(
                              'Armen Baghumian (Armen@OpenSourceClub.org)',
                              'Sasan Rose (sasan.rose@gmail.com)'
                             ),
@@ -70,7 +70,7 @@ The other configuration file which each modules should have one, is a 'module.ph
 
 One of the major features of Arag is the ability of installing different applications which each has its own modules. For making this ability enable, you have to put an installation model in each modules models directory. This file is called "<modulename>installation.php". To see how to write an installation file take a look at an existent one.
 
-In modules you can have a bunch of controllers - in your "controllers" directory of each module - that extend the main controller of that module. In this way you can break your controller into new ones which inherit the main controller, so that you will have a neat and more flexible code.\\ Imagine these scenario. You have a "backend.php" controller in the root of your controller directory. In this backend controller you have bunch of methods, from index to settings, list, create, edit and etc. Whenever you want to call one of these controllers you have to for example use this address: "<modulename>/backend/edit". At first sight it seems that it's much easier and simple, but if you think more you will understand that you have a thousand lines source code just for your backend. Besides implementing special features, like authorization, on each of your controller's methods individually,  will be so difficult. But if you break it into new controllers, like "settings.php" or "edit.php" which has their own constructor, "index_read" and "index_write" methods, all of these problems will be solved automatically. In this way, you can create a "tabbedblock" in your main controller's constructor and then share it with other controllers by making them extend it. Our new controllers directory will be something like this: 
+In modules you can have a bunch of controllers - in your "controllers" directory of each module - that extend the main controller of that module. In this way you can break your controller into new ones which inherit the main controller, so that you will have a neat and more flexible code.\\ Imagine these scenario. You have a "backend.php" controller in the root of your controller directory. In this backend controller you have bunch of methods, from index to settings, list, create, edit and etc. Whenever you want to call one of these controllers you have to for example use this address: "<modulename>/backend/edit". At first sight it seems that it's much easier and simple, but if you think more you will understand that you have a thousand lines source code just for your backend. Besides implementing special features, like authorization, on each of your controller's methods individually,  will be so difficult. But if you break it into new controllers, like "settings.php" or "edit.php" which has their own constructor, "index_read" and "index_write" methods, all of these problems will be solved automatically. In this way, you can create a "tabbedblock" in your main controller's constructor and then share it with other controllers by making them extend it. Our new controllers directory will be something like this:
 
 
   +-- webapp
@@ -85,10 +85,10 @@ In modules you can have a bunch of controllers - in your "controllers" directory
                    |     |   +-- settings.php
                    |     |
                    |     +-- frontend.php
-                   | 
+                   |
                    +-- locale
                    +-- models
                    +-- schemas
                    +-- views
-            
+
 Just remember that doing this, you have to change your validation directory too. It means that every controller you have, should have it's own validation file in its associated directory. For more information about validations, refer to [[Form Validation]] section.

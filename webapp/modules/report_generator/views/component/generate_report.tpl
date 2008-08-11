@@ -1,6 +1,6 @@
 {* Smarty *}
-{*  
-    vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:             
+{*
+    vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:
     File: $Id$
 *}
 
@@ -8,7 +8,7 @@
     var table_desc       = {$table_desc|smarty:nodefaults};
     var fields           = {$fields|smarty:nodefaults};
     var fields_operators = {$operators|smarty:nodefaults};
-    var fields_combines  = {$combines|smarty:nodefaults};    
+    var fields_combines  = {$combines|smarty:nodefaults};
     var right_align      = '{right}';
 </script>
 {arag_load_script src="scripts/mootools.js"}
@@ -21,7 +21,7 @@
         <label id="add_filter" style="float:{right}">
             _("Add filter"):
             <select id="filter_fields">
-                <option>&nbsp;</option>            
+                <option>&nbsp;</option>
                 {foreach from=$table item=column}
                     <option value="{$column.field}">{$column.field}</option>
                 {/foreach}
@@ -30,7 +30,7 @@
     {/arag_block}
 
     {arag_block template="blank" align="right"}
-        <input type="hidden" name="id" value="{$id}" />    
+        <input type="hidden" name="id" value="{$id}" />
         <input type="submit" value={quote}_("Update"){/quote} />
     {/arag_block}
 

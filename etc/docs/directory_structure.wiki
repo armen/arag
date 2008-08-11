@@ -9,7 +9,7 @@ These are the directories found at the root of the Arag project:
   |    +-- smarty
   |    +-- Kohana
   |    +-- pear
-  |  
+  |
   +-- public_html
   |    +-- images
   |    +-- styles
@@ -20,8 +20,8 @@ These are the directories found at the root of the Arag project:
   +-- webapp
        +-- cache
        +-- config
-       +-- errors  
-       +-- helpers 
+       +-- errors
+       +-- helpers
        +-- hooks
        +-- libraries
        +-- modules
@@ -34,6 +34,6 @@ In the following table you can find a brief introduction for some of these direc
 | libs              | Contains libraries which will be used in applications. At least it contains Smarty (/smarty) and Kohana (/kohana). |
 | public_html       | Contains front controller, styles and images. In general it contains everything we need to send to end user client. |
 | webapp/helpers    | Contains Smarty helper wrappers. |
-| weabpp/libraries  | Contains Arag libraries which extends Kohana libraries. | 
+| weabpp/libraries  | Contains Arag libraries which extends Kohana libraries. |
 | webapp/modules    | Contains modules and components. |
 | webapp/views      | Contains global templates and Smarty plugins/configs. |

@@ -1,5 +1,5 @@
 <?php
-// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:             
+// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:
 // +-------------------------------------------------------------------------+
 // | Author:  Roham Rafii Tehrani<roham.rafii@gmail.com>                     |
 // +-------------------------------------------------------------------------+
@@ -19,7 +19,7 @@ function smarty_function_arag_captcha($params, &$smarty)
     $style  = Kohana::config('captcha.style');
     $length = Kohana::config('captcha.num_chars');
     $code   = Null;
-    
+
     foreach ($params as $_key => $_val) {
         switch ($_key) {
             case 'width':
@@ -29,7 +29,7 @@ function smarty_function_arag_captcha($params, &$smarty)
             case 'code':
                 $$_key = $_val;
                 break;
-                
+
             default:
                 $smarty->trigger_error("arag_captcha: Unknown attribute '$_key'");
         }

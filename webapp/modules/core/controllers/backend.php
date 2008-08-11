@@ -1,5 +1,5 @@
 <?php
-// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:             
+// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:
 // +-------------------------------------------------------------------------+
 // | Author: Sasan Rose <sasan.rose@gmail.com>                               |
 // +-------------------------------------------------------------------------+
@@ -30,7 +30,7 @@ class Backend_Controller extends Controller
     // }}}
     // {{{ email_read
     public function email_read()
-    {   
+    {
         $data = Arag_Config::get("email_settings", array());
 
         $data['saved'] = $this->session->get_once('core_settings_email_saved');

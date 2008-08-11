@@ -1,6 +1,6 @@
 {* Smarty *}
-{*  
-    vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:             
+{*
+    vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:
     File: $Id$
 *}
 
@@ -14,13 +14,13 @@
                 {/if}
                 <li>
                 {if $tabbedblock_item.enabled}
-                    <a href="{$tabbedblock_item.href|default:""}" 
+                    <a href="{$tabbedblock_item.href|default:""}"
                     title="{$tabbedblock_item.title|default:""}">{$tabbedblock_item.name}</a>
                 {else}
                     {$tabbedblock_item.name}
                 {/if}
-                </li>        
-            {/foreach}    
+                </li>
+            {/foreach}
         </ul>
     </div>
 </div>

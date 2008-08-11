@@ -1,5 +1,5 @@
 <?php
-// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:             
+// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:
 // +-------------------------------------------------------------------------+
 // | Author: Armen Baghumian <armen@OpenSourceClub.org>                      |
 // +-------------------------------------------------------------------------+
@@ -20,7 +20,7 @@ function smarty_function_arag_load_script($params, &$smarty)
                 case 'src':
                     $$_key = (string)$_val;
                     break;
-                    
+
                 default:
                     $smarty->trigger_error("arag_function_arag_load_script: Unknown attribute '$_key'");
             }
@@ -33,9 +33,9 @@ function smarty_function_arag_load_script($params, &$smarty)
 
     if (!isset($smarty->_tpl_vars['_loaded'][sha1($src)])) {
         $smarty->_tpl_vars['_loaded'][sha1($src)] = True;
-        return html::script($src);    
+        return html::script($src);
     }
-    
+
     return Null;
 }
 

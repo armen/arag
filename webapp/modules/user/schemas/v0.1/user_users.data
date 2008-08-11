@@ -4,7 +4,7 @@
     <table>
         <name><variable>TABLES_PREFIX</variable>user_users</name>
         <initialization>
-            
+
             <insert>
                 <field>
                      <name>username</name>
@@ -37,7 +37,7 @@
                 <field>
                      <name>modify_date</name>
                      <value></value>
-                </field>                
+                </field>
                 <field>
                      <name>expire_date</name>
                      <value></value>

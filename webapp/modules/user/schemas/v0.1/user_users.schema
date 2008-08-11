@@ -52,7 +52,7 @@
                 <name>modified_by</name>
                 <type>text</type>
                 <length>255</length>
-            </field> 
+            </field>
             <field>
                 <name>verify_string</name>
                 <type>text</type>
@@ -75,11 +75,11 @@
             <field>
                 <name>blocked</name>
                 <type>integer</type>
-            </field>            
+            </field>
             <field>
                 <name>block_counter</name>
                 <type>integer</type>
-            </field>            
+            </field>
             <field>
                 <name>block_date</name>
                 <type>integer</type>

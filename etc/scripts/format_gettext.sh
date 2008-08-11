@@ -3,12 +3,12 @@
 
 global=`find . -name 'global.po' -type f | grep 'fa_IR.utf8/LC_MESSAGES' | grep -v .svn | grep -v -e "/\..*"`
 
-for name in `find . -name 'messages.po' -type f | grep 'fa_IR.utf8/LC_MESSAGES' | grep -v .svn | grep -v -e "/\..*"` 
+for name in `find . -name 'messages.po' -type f | grep 'fa_IR.utf8/LC_MESSAGES' | grep -v .svn | grep -v -e "/\..*"`
 do
     path=`dirname $name`
     if [ -f "${path}/messages.po" ]; then
 
-        echo "Processing '${path}/messages.po'"        
+        echo "Processing '${path}/messages.po'"
 
         if [ -f $global ]; then
             echo -n "    Meging the message.po with global.po"
