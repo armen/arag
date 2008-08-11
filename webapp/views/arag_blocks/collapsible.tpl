@@ -13,7 +13,7 @@
             <legend>{$arag_block_title}</legend>
             <div>
                 {$arag_block_content|smarty:nodefaults}
-            <div>
+            </div>
         </fieldset>
     </div>
 {else}
@@ -22,7 +22,7 @@
             <legend>&nbsp;</legend>
             <div>
                 {$arag_block_content|smarty:nodefaults}
-            <div>
+            </div>
         </fieldset>
     </div>
 {/if}
