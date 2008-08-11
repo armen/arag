@@ -430,9 +430,6 @@ class Users_Model extends Model
         $this->db->update($this->tableNameUsers, $rows);
     }
     // }}}
-
-
-    
     // {{{ unBlockUser
     public function unBlockUser($username)
     {
