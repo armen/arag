@@ -62,7 +62,7 @@ class Frontend_Controller extends Controller
             $this->session->set(Array('user' => array_merge($users->getUser($username), Array('authenticated' => True))));
             $this->_reset_login_hit();
 
-            $users->blockUser($username);
+            $users->unBlockUser($username);
 
             // Redirect to front controller or Redirect URL
             if ($this->session->get('not_authorized_redirect_url')) {
@@ -89,21 +89,22 @@ class Frontend_Controller extends Controller
             }
 
             if ($status & Users_Model::USER_INCORRECT_PASS) {
+
                 $error_message[] = _("Wrong Username or Password.");
                 $block_info = $users->getBlockInfo($username);
 
-                if (Arag_Config::get('block_counter', 3) != 0 && $block_info->block_counter >= Arag_Config::get('block_counter', 3)) {
+                if ((Arag_Config::get('block_counter', 3) != 0 && $block_info->block_counter >= Arag_Config::get('block_counter', 3))) {
 
-                    $users->blockUser($username, 1, 0, time());
+                    $users->blockUser($username);
                     $error_message[] = sprintf(_("Attention!! Your username got blocked for %s hours!"), Arag_Config::get('block_expire', 0.5));
 
-                } else {
+                } else if (!$block_info->blocked) { // If user is not already blocked
 
-                    $users->blockUser($username, 0, ++$block_info->block_counter);
+                    $users->addUserBlockCounter($username);
 
                     if (Arag_Config::get('block_counter', 3) != 0) {
                         $error_message[] = sprintf(_("Attention!! You will be blocked if you miss more than %s times while login!"),
-                                                   Arag_Config::get('block_counter', 3));
+                                                   Arag_Config::get('block_counter', 3) - $block_info->block_counter );
                     }
                 }
             }
@@ -588,7 +589,7 @@ class Frontend_Controller extends Controller
 
         if ($users->checkVerify($username, $password, $verify_uri, $status, Arag_Config::get('block_expire', 0.5) * 3600)) {
             $users->verify($username, $password, $verify_uri);
-            $users->blockUser($username);
+            $users->unBlockUser($username);
             $this->layout->content = new View('frontend/verified');
 
         } else {

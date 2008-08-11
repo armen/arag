@@ -32,7 +32,7 @@ class Users_Model extends Model
     // {{{ check
     public function check($username, $password, &$status = 0, $expiretime = 0)
     {
-        $this->db->select('username');
+        $this->db->select('username, verified, blocked, block_date');
         $this->db->where('username', $username);
 
         $query = $this->db->get($this->tableNameUsers);
@@ -45,30 +45,30 @@ class Users_Model extends Model
             $this->db->where('username', $username);
             $this->db->where('password', sha1($password));
 
-            $query = $this->db->get($this->tableNameUsers);
-            $user  = $query->current();
+            $query      = $this->db->get($this->tableNameUsers);
+            $secureUser = $query->current();
 
             $status = self::USER_OK;
 
-            if (count($query) != 1 || sha1($password) !== $user->password) {
+            if (count($query) != 1 || sha1($password) !== $secureUser->password) {
                 $status |= self::USER_INCORRECT_PASS;
                 $status &= ~self::USER_OK;
-            } else {
+            }
 
-                // Check if user verified
-                if (!$user->verified) {
-                    $status |= self::USER_NOT_VERIFIED;     // Add verfied to status
+            // Check if user verified
+            if (!$user->verified) {
+                $status |= self::USER_NOT_VERIFIED;     // Add verfied to status
+                $status &= ~self::USER_INCORRECT_PASS;  // Do not show incorrect password message
+                $status &= ~self::USER_OK;              // Remove the USER_OK flag
+            }
+
+            // Check if user blocked
+            if ($user->blocked) {
+                if ($user->block_date == 0 || ($expiretime > (time() - $user->block_date))) {
+                    $status |= self::USER_BLOCKED;          // Add blocked to status
+                    $status &= ~self::USER_INCORRECT_PASS;  // Do not show incorrect password message
                     $status &= ~self::USER_OK;              // Remove the USER_OK flag
                 }
-
-                // Check if user blocked
-                if ($user->blocked) {
-                    if ($user->block_date == 0 || ($expiretime > (time()-$user->block_date))) {
-                        $status |= self::USER_BLOCKED;          // Add blocked to status
-                        $status &= ~self::USER_OK;              // Remove the USER_OK flag
-                    }
-                }
-
             }
 
             return (boolean)($status & self::USER_OK);  // Check if USER_OK flag is set
@@ -106,7 +106,9 @@ class Users_Model extends Model
             if (count($query) != 1 || sha1($password) !== $user->password || $uri !== $user->verify_string) {
                 $status |= self::USER_INCORRECT_PASS;
                 $status &= ~self::USER_OK;
+
             } else if ($user->blocked) {
+
                 if ($user->block_date == 0 || ($expiretime > (time()-$user->block_date))) {
                     $status |= self::USER_BLOCKED;          // Add blocked to status
                     $status &= ~self::USER_OK;              // Remove the USER_OK flag
@@ -396,17 +398,48 @@ class Users_Model extends Model
     // {{{ getBlockInfo
     public function getBlockInfo ($username)
     {
-        $this->db->select('block_date, block_counter');
+        $this->db->select('blocked, block_date, block_counter');
         return $this->db->getwhere($this->tableNameUsers, array('username' => $username))->current();
     }
     // }}}
     // {{{ blockUser
-    public function blockUser($username, $block = 0, $counter = 0, $block_date = 0)
+    public function blockUser($username)
     {
         $rows = array (
-                       'block_counter' => $counter,
-                       'blocked'       => $block,
-                       'block_date'    => $block_date
+                       'block_counter' => 0,
+                       'blocked'       => True,
+                       'block_date'    => time()
+                      );
+
+        $this->db->where('username', $username);
+        $this->db->update($this->tableNameUsers, $rows);
+    }
+    // }}}
+    // {{{ addUserBlockCounter
+    public function addUserBlockCounter($username)
+    {
+        $user = $this->getBlockInfo($username);
+
+        $rows = array (
+                       'block_counter' => ++$user->block_counter,
+                       'blocked'       => False,
+                       'block_date'    => 0
+                      );
+
+        $this->db->where('username', $username);
+        $this->db->update($this->tableNameUsers, $rows);
+    }
+    // }}}
+
+
+    
+    // {{{ unBlockUser
+    public function unBlockUser($username)
+    {
+        $rows = array (
+                        'block_counter' => 0,
+                        'blocked'       => False,
+                        'block_date'    => 0
                       );
 
         $this->db->where('username', $username);
