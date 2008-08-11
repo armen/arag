@@ -1,12 +1,13 @@
 {* Smarty *}
-{*  
-    vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:             
+{*
+    vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:
     File: $Id: index.tpl 53 2007-10-11 18:38:57Z sasan $
 *}
 {arag_validation_errors}
 {if $flagsaved}
     {arag_block align="left" template="info"}
-        _("New user added to '{$appname}' application!")
+        {capture assign="msg"}_("New user added to '%s' application!"){/capture}
+        {$msg|sprintf:$appname}
     {/arag_block}
 {/if}
 {arag_block}
@@ -61,10 +62,11 @@
                 <td align="{left}">
                     <select name="group">
                         {if isset($group|smarty:nodefaults)}{assign var="defaultgroup" value=$group}{/if}
-                        {html_options values=$allgroups|smarty:nodefaults selected=$defaultgroup|smarty:nodefaults|default:null output=$allgroups|smarty:nodefaults}
+                        {html_options values=$allgroups|smarty:nodefaults selected=$defaultgroup|smarty:nodefaults|default:null 
+                                      output=$allgroups|smarty:nodefaults}
                     </select>
                 </td>
-            </tr> 
+            </tr>
             <tr>
                 <td align="{right}">
                     _("Name"):{asterisk}
@@ -72,7 +74,7 @@
                 <td align="{left}">
                     <input type="text" name="name" value="{$name|smarty:nodefaults|default:null}" />
                 </td>
-            </tr>           
+            </tr>
             <tr>
                 <td align="{right}">
                     _("Last Name"):{asterisk}

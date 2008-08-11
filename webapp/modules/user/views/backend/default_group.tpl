@@ -1,11 +1,12 @@
 {* Smarty *}
-{*  
-    vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:             
+{*
+    vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:
     File: $Id: index.tpl 53 2007-10-11 18:38:57Z sasan $
 *}
 {if $flagsaved}
     {arag_block align="left" template="info"}
-        _("Default group for '{$appname}' application, changed successfuly!")
+         {capture assign="msg"}_("Default group for '%s' application, changed successfuly!"){/capture}
+         {$msg|sprintf:$appname}
     {/arag_block}
 {/if}
 {arag_block template="tips"}
@@ -21,11 +22,13 @@
         <table border="0" dir="{dir}">
             <tr>
                 <td align="{right}">
-                    _("Default Group for '{$appname}'"):
+                    {capture assign="msg"}_("Default Group for '%s'"):{/capture}
+                    {$msg|sprintf:$appname}
                 </td>
                 <td align="{left}">
                     <select name="dgroup">
-                        {html_options values=$allgroups|smarty:nodefaults selected=$defaultgroup|smarty:nodefaults|default:null output=$allgroups|smarty:nodefaults}
+                        {html_options values=$allgroups|smarty:nodefaults selected=$defaultgroup|smarty:nodefaults|default:null 
+                                      output=$allgroups|smarty:nodefaults}
                     </select>
                 </td>
             </tr>

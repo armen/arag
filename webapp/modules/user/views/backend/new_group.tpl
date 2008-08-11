@@ -1,12 +1,13 @@
 {* Smarty *}
-{*  
-    vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:             
+{*
+    vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:
     File: $Id: index.tpl 53 2007-10-11 18:38:57Z sasan $
 *}
 {arag_validation_errors}
 {if $flagsaved}
     {arag_block align="left" template="info"}
-        _("New group added to '{$appname}' application!")
+        {capture assign="msg"}_("New group added to '%s' application!"){/capture}
+        {$msg|sprintf:$appname}
     {/arag_block}
 {/if}
 {arag_block}
@@ -19,7 +20,8 @@
         <table border="0" dir="{dir}">
             <tr>
                 <td align="{right}">
-                    _("New Group for '{$appname}'"):
+                    {capture assign="msg"}_("New Group for '%s'"):{/capture}
+                    {$msg|sprintf:$appname}
                 </td>
                 <td align="{left}">
                     <input type="text" name="newgroup" dir="ltr"/>

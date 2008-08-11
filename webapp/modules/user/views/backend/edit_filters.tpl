@@ -1,17 +1,18 @@
 {* Smarty *}
-{*  
-    vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:             
+{*
+    vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:
     File: $Id: index.tpl 53 2007-10-11 18:38:57Z sasan $
 *}
 {arag_validation_errors}
 {if $flagsaved}
     {arag_block align="left" template="info"}
-        _("Filters for '{$appname}' application, changed successfuly!")
+        {capture assign="msg"}_("Filters for '%s' application, changed successfuly!"){/capture}
+        {$msg|sprintf:$appname}
     {/arag_block}
 {/if}
 {arag_block}
     {arag_form uri="user/backend/applications/filters_edit/$appname/$id"}
-        <table border="0" dir="{dir}"> 
+        <table border="0" dir="{dir}">
              <tr>
                 <td align="{right}">
                     _("Filter"):{asterisk}
@@ -21,7 +22,7 @@
                     <input type="hidden" value="{$appname}" name="application" />
                     <input type="hidden" value="{$id}" name="id" />
                 </td>
-            </tr> 
+            </tr>
             <tr>
                 <td align="{right}">
                 </td>
