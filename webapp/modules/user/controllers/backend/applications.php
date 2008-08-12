@@ -51,7 +51,7 @@ class Applications_Controller extends Backend_Controller
         $this->validation->message('_check_filter', _("Please enter a valid %s"));
         $this->validation->message('_check_privilege', _("Please enter a valid %s"));
         $this->validation->message('_check_app_filter', _("This application filter exists"));
-        $this->validation->message('password_length',sprintf(_("Password length should be at least %s characters "), $passwordLength));
+        $this->validation->message('password_length', sprintf(_("Password length should be at least %s characters "), $passwordLength));
     }
     // }}}
     // {{{ index
@@ -1081,10 +1081,11 @@ class Applications_Controller extends Backend_Controller
     // {{{ user_blocking_read
     public function user_blocking_read()
     {
-        $data                  = Array();
-        $data['block_expire']  = Arag_Config::get("block_expire");
-        $data['block_counter'] = Arag_Config::get("block_counter");
-        $data['saved']         = $this->session->get_once('user_settings_user_blocking_saved');
+        $data                    = Array();
+        $data['block_expire']    = Arag_Config::get("block_expire");
+        $data['block_counter']   = Arag_Config::get("block_counter");
+        $data['captcha_counter'] = Arag_Config::get("captcha_counter");
+        $data['saved']           = $this->session->get_once('user_settings_user_blocking_saved');
 
         $this->layout->content = new View('backend/settings_user_blocking', $data);
     }
@@ -1092,24 +1093,39 @@ class Applications_Controller extends Backend_Controller
     // {{{ user_blocking_write
     public function user_blocking_write()
     {
-
         Arag_Config::set('block_expire', $this->input->post('block_expire'));
         Arag_Config::set('block_counter', $this->input->post('block_counter'));
+        Arag_Config::set('captcha_counter', $this->input->post('captcha_counter'));
 
-        $this->session->set('user_settings_user_blocking_saved', true);
+        $this->session->set('user_settings_user_blocking_saved', True);
 
         $this->user_blocking_read();
-
     }
     // }}}
     // {{{ user_blocking_validate_write
     public function user_blocking_validate_write()
     {
+        $block_counter = $this->input->post('block_counter');
+
         $this->validation->name('block_expire', _("Blocking expire time"))->pre_filter('trim', 'block_expire')
              ->add_rules('block_expire', 'required', 'valid::numeric');
 
-        $this->validation->name('block_counter', _("Blocking attempts"))->pre_filter('trim','block_counter')
+        $this->validation->name('block_counter', _("Blocking attempts"))->pre_filter('trim', 'block_counter')
              ->add_rules('block_counter', 'required', 'valid::numeric');
+
+        $this->validation->name('captcha_counter', _("Captcha attempts"))->pre_filter('trim', 'captcha_counter')
+             ->add_rules('captcha_counter', 'required', 'valid::numeric');
+
+        if ((int) $block_counter > 0) {
+            $this->validation->message('_less_than', sprintf(_("%s should be less than %d."),
+                                       _("Captcha attempts"), $block_counter));
+            $this->validation->name('captcha_counter', _("Captcha attempts"))->pre_filter('trim', 'captcha_counter')
+                 ->add_rules('captcha_counter', 'required', 'valid::numeric', 'Applications_Controller::_less_than['.$block_counter.']');
+
+        } else {
+            $this->validation->name('captcha_counter', _("Captcha attempts"))->pre_filter('trim', 'captcha_counter')
+                 ->add_rules('captcha_counter', 'required', 'valid::numeric');
+        }
 
         return $this->validation->validate();
     }
@@ -1121,4 +1137,3 @@ class Applications_Controller extends Backend_Controller
     }
     // }}}
 }
-?>

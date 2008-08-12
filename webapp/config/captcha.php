@@ -1,44 +1,29 @@
-<?php defined('SYSPATH') or die('No direct access allowed.');
+<?php
 /**
- * @package  Captcha
+ * @package  Core
  *
- * Configure the Captcha
- * Custom styles can be added by extending the Captcha class
+ * Captcha configuration is defined in groups which allows you to easily switch
+ * between different Captcha settings for different forms on your website.
+ * Note: all groups inherit and overwrite the default group.
+ *
+ * Group Options:
+ *  style      - Captcha type, e.g. basic, alpha, word, math, riddle
+ *  width      - Width of the Captcha image
+ *  height     - Height of the Captcha image
+ *  complexity - Difficulty level (0-10), usage depends on chosen style
+ *  background - Path to background image file
+ *  fontpath   - Path to font folder
+ *  fonts      - Font files
+ *  promote    - Valid response count threshold to promote user (FALSE to disable)
  */
-/**
- * Width of captcha image, ignored if using a background
- */
-$config['width'] = 150;
-/**
- * Height of captcha image, ignored if using a background
- */
-$config['height'] = 40;
-/**
- * Captcha style to use. Default is 'basic' and is only for testing as it
- * does not require any TrueType fonts installed.
- * 'standard' is the recommended style. A font must be supplied. A background
- * image is optional.
- * 'math' is a 'solve the question' style.
- * A font must be supplied. A background image is optional.
- * Custom styles can be added easily by extending the library
- */
-$config['style'] = 'standard';
-/**
- * Number of characters to use for the captcha, ignored if using style 'math'
- * Four or five seems optimal.
- */
-$config['num_chars'] = 6;
-/**
- * Path to font files. Default is none, ''. Example 'application/fonts/'
- * If using 'standard' style, you must supply a valid truetype font file.
- */
-$config['font_path'] = '/usr/share/fonts/truetype/ttf-dejavu/';
-/**
- * Name of the font, Case sensitive, with the file extension, default is ''
- */
-$config['font_name'] = 'DejaVuSerif.ttf';
-/**
- * Background image. Default ''. Example 'application/images/pattern.jpg'
- * The dimensions of this image will be used.
- */
-$config['background_image'] = '';
+$config['default'] = array
+(
+    'style'      => 'alpha',
+    'width'      => 150,
+    'height'     => 30,
+    'complexity' => 5,
+    'background' => '',
+    'fontpath'   => SYSPATH.'fonts/',
+    'fonts'      => array('DejaVuSerif.ttf'),
+    'promote'    => FALSE,
+);

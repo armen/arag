@@ -397,4 +397,3 @@ class Application_Controller extends Backend_Controller
     }
     // }}}
 }
-?>

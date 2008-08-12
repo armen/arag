@@ -1,21 +1,14 @@
 <?php
 /**
- * Route Configuration
- * -----------------------------------------------------------------------------
- * Supported shortcuts are:
+ * @package  Core
  *
- *   :any - matches any non-blank string
- *   :num - matches any number
- *
- * User Guide: http://kohanaphp.com/user_guide/en/libraries/database.html
- *
- * @param string   _allowed   Permitted URI characters
- * @param string   _default   Default route when no URI segments are found
+ * Sets the default route to "welcome"
  */
 
 $config = array
 (
-    '_default' => 'arag/welcome',
+    '_default'        => 'arag/welcome',
+    'captcha/default' => 'core/frontend/captcha/default'
 );
 
 if (Kohana::config('locale.multi_lingual')) {

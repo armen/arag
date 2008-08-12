@@ -410,6 +410,12 @@ class Backend_Controller extends Controller
         return true;
     }
     // }}}
+    // {{{ _less_than
+    public function _less_than($number, array $limit)
+    {
+        $limit = current($limit);
+        return ((int) $number) < $limit;
+    }
+    // }}}
     // }}}
 }
-?>

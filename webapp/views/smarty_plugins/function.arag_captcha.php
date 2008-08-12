@@ -16,17 +16,13 @@ function smarty_function_arag_captcha($params, &$smarty)
 {
     $width  = Kohana::config('captcha.width');
     $height = Kohana::config('captcha.height');
-    $style  = Kohana::config('captcha.style');
     $length = Kohana::config('captcha.num_chars');
-    $code   = Null;
 
     foreach ($params as $_key => $_val) {
         switch ($_key) {
             case 'width':
             case 'height':
-            case 'style':
             case 'length':
-            case 'code':
                 $$_key = $_val;
                 break;
 
@@ -35,24 +31,24 @@ function smarty_function_arag_captcha($params, &$smarty)
         }
     }
 
-    $session = Session::instance();
-    $session->set('captcha_code', ($code == Null ? generate_captcha_code(Kohana::config('captcha.num_chars')) : Null));
-
-    $captcha_source = url::site('/core/frontend/captcha/render/'.time());
-    $content        = '<div><img src="'.$captcha_source.'" alt="captcha" width="'.$width.'" height="'.$height.'" /></div>'.
-                      '<div><input name="captcha" value="" type="text" /></div>';
+    $captcha = new Captcha();
+    $content = '<div>'.$captcha->render().'</div>'.
+               '<div style="padding: 5px 0px;"><input name="captcha" type="text" /></div>';
 
     return $content;
 }
 
-function generate_captcha_code($len)
+function generate_captcha_code($length)
 {
-    $chars = 'ABCEFGHJKLMNPRSTUVWXYZ2356789';
-    $string = '';
-    for ($i = 0; $i < $len; $i++) {
-        $pos = rand(0, strlen($chars)-1);
+    $chars  = 'ABCEFGHJKLMNPRSTUVWXYZ2356789';
+    $string = Null;
+
+    for ($i = 0; $i < $length; $i++) {
+
+        $pos     = rand(0, strlen($chars) - 1);
         $string .= $chars{$pos};
     }
+
     return $string;
 }
 

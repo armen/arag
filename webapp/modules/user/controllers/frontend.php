@@ -40,7 +40,7 @@ class Frontend_Controller extends Controller
     // {{{ login_read
     public function login_read()
     {
-        $this->layout->content = new View('frontend/login', array('error_message' => false));
+        $this->layout->content                  = new View('frontend/login', array('error_message' => false));
         $this->layout->content->display_captcha = $this->_check_display_captcha();
     }
     // }}}
@@ -60,8 +60,6 @@ class Frontend_Controller extends Controller
             $this->session->delete('privilege_filters');
 
             $this->session->set(Array('user' => array_merge($users->getUser($username), Array('authenticated' => True))));
-            $this->_reset_login_hit();
-
             $users->unBlockUser($username);
 
             // Redirect to front controller or Redirect URL
@@ -93,7 +91,7 @@ class Frontend_Controller extends Controller
                 $error_message[] = _("Wrong Username or Password.");
                 $block_info = $users->getBlockInfo($username);
 
-                if ((Arag_Config::get('block_counter', 3) != 0 && $block_info->block_counter >= Arag_Config::get('block_counter', 3))) {
+                if ((arag_config::get('block_counter', 3) != 0 && $block_info->block_counter >= arag_config::get('block_counter', 3))) {
 
                     $users->blockUser($username);
                     $error_message[] = sprintf(_("Attention!! Your username got blocked for %s hours!"), Arag_Config::get('block_expire', 0.5));
@@ -104,7 +102,7 @@ class Frontend_Controller extends Controller
 
                     if (Arag_Config::get('block_counter', 3) != 0) {
                         $error_message[] = sprintf(_("Attention!! You will be blocked if you miss more than %s times while login!"),
-                                                   Arag_Config::get('block_counter', 3) - $block_info->block_counter );
+                                                   Arag_Config::get('block_counter', 3) - $block_info->block_counter);
                     }
                 }
             }
@@ -126,6 +124,7 @@ class Frontend_Controller extends Controller
                     $error_message[] = sprintf($error, $waiting_hours, $waiting_mins);
 
                 } else {
+
                     $error_message[] = _("This user name is blocked. Please contact site administrator for further information.");
                 }
             }
@@ -134,9 +133,9 @@ class Frontend_Controller extends Controller
                 $error_message[] = _("Unknown error");
             }
 
-            $error_message = implode("\n", $error_message);
-
-            $this->layout->content = new View('frontend/login', array('status' => $status, 'error_message' => $error_message));
+            $error_message                          = implode("\n", $error_message);
+            $this->layout->content                  = new View('frontend/login', array('status' => $status, 'error_message' => $error_message));
+            $this->layout->content->display_captcha = $this->_check_display_captcha();
         }
     }
     // }}}
@@ -149,11 +148,10 @@ class Frontend_Controller extends Controller
         $this->validation->name('password', _("Password"))->pre_filter('trim', 'password')
              ->add_rules('password', 'required');
 
-        if ($this->_check_display_captcha()) {
-            $this->validation->name('captcha', _("Image's Text"))->add_rules('captcha', 'Captcha_Core::valid_captcha', 'required');
+        if ($this->_check_display_captcha($this->input->post('username'))) {
+            $this->validation->message('valid', _("Please enter a valid %s"));
+            $this->validation->name('captcha', _("Captcha"))->add_rules('captcha', 'Captcha::valid', 'required');
         }
-
-        $this->_increase_login_hit();
 
         return $this->validation->validate();
     }
@@ -634,29 +632,19 @@ class Frontend_Controller extends Controller
                 !$users->hasUserName($username) && preg_match("/^[a-z][a-z0-9_.]*$/", strtolower($username)));
     }
     // }}}
-    // {{{ display_captcha
     // {{{ _check_display_captcha
-    public function _check_display_captcha()
+    public function _check_display_captcha($username = Null)
     {
-        $tryNumber = (int)$this->session->get('login.hit');
-        $hitNumber = (int)Arag_Config::get('login.hit', 3);
-        $displayCaptcha = $hitNumber <= $tryNumber ? True : False;
+        if ($username === Null) {
+            $username = $this->session->get('captcha_username');
+        } else {
+            $this->session->set('captcha_username', $username);
+        }
 
-        return $displayCaptcha;
+        $users = new Users_Model;
+        $user  = $users->getBlockInfo($username);
+
+        return (Arag_Config::get('captcha_counter', 3) != 0 && $user->block_counter >= Arag_Config::get('captcha_counter', 3) + 1);
     }
-    // }}}
-    // {{{ _reset_login_hit
-    public function _reset_login_hit()
-    {
-        $this->session->set('login.hit', 0);
-    }
-    // }}}
-    // {{{ _increase_login_hit
-    public function _increase_login_hit()
-    {
-         $tryNumber = (int)$this->session->get('login.hit');
-         $this->session->set('login.hit', ++$tryNumber);
-    }
-    // }}}
     // }}}
 }
