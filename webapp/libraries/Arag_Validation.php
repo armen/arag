@@ -17,13 +17,11 @@ class Validation extends Validation_Core {
     // {{{ factory
     public static function factory(&$array = NULL)
     {
-        $data = array_slice(Router::$arguments, 1);
-
         if (is_array($array)) {
             return $array = new Validation($array);
 
-        } elseif (Router::$request_method === 'read' && is_array($data)) {
-            return new Validation($data);
+        } elseif (Router::$request_method === 'read' && is_array(Router::$arguments)) {
+            return new Validation(Router::$arguments);
         }
 
         return $_POST = new Validation(array_merge($_POST, arr::standardize_files_array($_FILES)));
