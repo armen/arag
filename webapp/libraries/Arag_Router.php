@@ -42,7 +42,7 @@ class Router extends Router_Core {
     {
         if ( ! empty($_SERVER['QUERY_STRING'])) {
             // Set the query string to the current query string
-            self::$query_string = '?'.trim($_SERVER['QUERY_STRING'], '&');
+            self::$query_string = '?'.trim($_SERVER['QUERY_STRING'], '&/');
         }
 
         // Aet the request method
@@ -75,11 +75,14 @@ class Router extends Router_Core {
         // Make sure the URL is not tainted with HTML characters
         self::$current_uri = html::specialchars(self::$current_uri, FALSE);
 
+        // Remove all dot-paths from the URI, they are not valid
+        self::$current_uri = preg_replace('#\.[\s./]*/#', '', self::$current_uri);
+
         // At this point segments, rsegments, and current URI are all the same
         self::$segments = self::$rsegments = self::$current_uri = trim(self::$current_uri, '/');
 
         // Set the complete URI
-        self::$complete_uri = self::$query_string.self::$current_uri;
+        self::$complete_uri = self::$current_uri.self::$query_string;
 
         // Explode the segments by slashes
         self::$segments = ($default_route === TRUE OR self::$segments === '') ? array() : explode('/', self::$segments);
@@ -88,6 +91,9 @@ class Router extends Router_Core {
             // Custom routing
             self::$rsegments = self::routed_uri(self::$current_uri);
         }
+
+        // The routed URI is now complete
+        self::$routed_uri = self::$rsegments;
 
         // Routed segments will never be empty
         self::$rsegments = explode('/', self::$rsegments);
@@ -110,22 +116,29 @@ class Router extends Router_Core {
 
             $found = FALSE;
             foreach (Kohana::include_paths() as $dir) {
+
                 // Search within controllers only
                 $dir .= 'controllers/';
 
-                if (file_exists($dir.$controller_path) OR file_exists($dir.$controller_path.EXT)) {
+                if (is_dir($dir.$controller_path) OR is_file($dir.$controller_path.EXT)) {
                     // Valid path
                     $found = TRUE;
 
-                    if (is_file($dir.$controller_path.EXT)) {
+                    // The controller must be a file that exists with the search path
+                    if ($c = str_replace('\\', '/', realpath($dir.$controller_path.EXT))
+                        AND is_file($c) AND strpos($c, $dir) === 0) {
+
                         // Set controller name
                         self::$controller = $segment;
 
                         // Change controller path
-                        self::$controller_path = $dir.$controller_path.EXT;
+                        self::$controller_path = $c;
 
                         // Set the method segment
                         $method_segment = $key + 1;
+
+                        // Stop searching
+                        break;
                     }
                 }
             }
@@ -139,17 +152,19 @@ class Router extends Router_Core {
             $controller_path .= '/';
         }
 
-        if ($method_segment !== NULL AND isset($rsegments[$method_segment])) {
+        if ($method_segment !== NULL AND isset($rsegments[$method_segment]))
+        {
             // Set method
             self::$method = $rsegments[$method_segment];
 
-            if (isset($rsegments[$method_segment + 1])) {
+            if (isset($rsegments[$method_segment + 1]))
+            {
                 // Set arguments
                 self::$arguments = array_slice($rsegments, $method_segment + 1);
             }
-        } else  {
+        } else {
             // Append default method
-            self::$rsegments[] = self::$method;
+            $rsegments[] = self::$method;
         }
 
         // Last chance to set routing before a 404 is triggered
