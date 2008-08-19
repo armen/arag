@@ -7,6 +7,10 @@ webapp/cache/kohana_file_paths
 webapp/cache/smarty_compile/
 webapp/logs/*.log.php
 webapp/logs/*.log
+webapp/logs/cli/*.log.php
+webapp/logs/cli/*.log
+webapp/logs/apache2handler/*.log.php
+webapp/logs/apache2handler/*.log
 messages.mo
 *.swp
 *.swo
