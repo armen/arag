@@ -4,6 +4,7 @@
 BASE_PATH="`pwd`/`dirname $0`"
 LIBS_PATH="${BASE_PATH}/../../libs/"
 PUB_PATH="${BASE_PATH}/../../public_html/"
+MODS_PATH="${PUB_PATH}/modpub/"
 
 # Check for required commands
 for CMD in wget tar unzip; do
@@ -44,25 +45,17 @@ wget -c -P /tmp http://pub.vardump.org/pear-1.6.2.tar.bz2
 tar xvfj /tmp/pear-1.6.2.tar.bz2
 mv ./pear $LIBS_PATH
 
-# Download FCKeditor
+# Download TinyMce
 
-if [ -d $PUB_PATH/scripts/FCKeditor ]; then
-    rm -rf "${PUB_PATH}/scripts/FCKeditor"
+if [ -d $MODS_PATH/tinymce ]; then
+    rm -rf "$MODS_PATH/tinymce"
 fi
 
-wget -c -P /tmp http://prdownloads.sourceforge.net/fckeditor/FCKeditor_2.4.3.tar.gz?download
-tar xvfz /tmp/FCKeditor_2.4.3.tar.gz
+wget -c -P /tmp http://prdownloads.sourceforge.net/tinymce/tinymce_2_1_3.tgz?download
+tar xvfz /tmp/tinymce_2_1_3.tgz
 
-find ./fckeditor | grep -e '/_[a-z_0-9.]*$' | xargs rm -rf
-find ./fckeditor/ -maxdepth 1 -name fckeditor.* | grep -v 'js' | grep -v 'php' | xargs rm
-find ./fckeditor/ -type f | xargs grep ' xmlns="http:\/\/www.w3.org\/1999\/xhtml"' -l | xargs sed -i -e 's/ xmlns="http:\/\/www.w3.org\/1999\/xhtml"//'
-find ./fckeditor/ -type f | xargs grep '<meta.*/>' -l | xargs sed -i -e 's/<meta\(.*\)\/>/<meta\1>/'
-
-# Add comment tab for script tags
-sed -i -e 's/<script.*>/&\r\n\t<!--/'    ./fckeditor/editor/fckeditor.html
-sed -i -e 's/<\/script>/\/\/-->\r\n\t&/' ./fckeditor/editor/fckeditor.html
-
-mv ./fckeditor ${PUB_PATH}/scripts/FCKeditor
+mkdir ${MODS_PATH}/tinymce
+mv ./tinymce ${MODS_PATH}/tinymce
 
 # Cleanup
 
