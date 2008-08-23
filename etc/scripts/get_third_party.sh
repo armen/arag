@@ -51,11 +51,11 @@ if [ -d $MODS_PATH/tinymce ]; then
     rm -rf "$MODS_PATH/tinymce"
 fi
 
-wget -c -P /tmp http://prdownloads.sourceforge.net/tinymce/tinymce_2_1_3.tgz?download
-tar xvfz /tmp/tinymce_2_1_3.tgz
+wget -c -P /tmp http://prdownloads.sourceforge.net/tinymce/tinymce_3_1_1.zip?download
+unzip -u /tmp/tinymce_3_1_1.zip -d /tmp
 
 mkdir ${MODS_PATH}/tinymce
-mv ./tinymce ${MODS_PATH}/tinymce
+mv /tmp/tinymce/jscripts/tiny_mce/* ${MODS_PATH}/tinymce
 
 # Cleanup
 
@@ -64,4 +64,5 @@ rm -rf /tmp/Smarty-2.6.19.tar.gz
 
 rm -rf /tmp/pear.tar.bz2
 
-rm -rf /tmp/FCKeditor_2.4.3.tar.gz
+rm -rf /tmp/tinymce_3_1_1.zip
+rm -rf /tmp/tinymce
