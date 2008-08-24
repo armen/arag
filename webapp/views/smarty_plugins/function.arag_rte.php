@@ -20,7 +20,11 @@ function smarty_function_arag_rte($params, &$smarty)
        $smarty->trigger_error("arag_rte: missing 'name' attribute");
        return;
     }
-	print '<textarea name='.$params['name'].' class="rte"></textarea>';
+
+    $session = New Session;
+
+    $session->set_flash('EasyUpload_CurrentModule', Router::$module);
+    print '<textarea name='.$params['name'].' class="rte"></textarea>';
 }
 
 ?>
