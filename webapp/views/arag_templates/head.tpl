@@ -13,6 +13,9 @@
 {literal}
 <script language="javascript" type="text/javascript">
 tinyMCE.init({
+        theme : "advanced",
+        plugins : "EasyUpload",
+        theme_advanced_buttons3_add : "EasyUpload",
         mode: "specific_textareas",
         editor_selector: "rte"
 });
