@@ -10,7 +10,7 @@ class Frontend_Controller extends Controller
 {
     function index_read()
     {
-        $this->layout = new View('EasyUpload');
+        $this->layout = new View('easyUpload');
     }
 
     function index_write()
@@ -50,7 +50,5 @@ class Frontend_Controller extends Controller
 
         $this->layout->content      = new View('result');
         $this->layout->content->url = $attachmentsUrl.'/'.$filename;
-
-        var_dump($file, $name, $extension, $module, $moduleDirectory, $attachments, $attachmentsUrl, $attachmentsPath, $modulePath, $this->layout->content->url);
     }
 }
