@@ -21,7 +21,7 @@
 			});
 
 			// Register buttons
-			ed.addButton('easyUpload', {title : 'easyUpload.Description', cmd : 'easyUpload'});
+			ed.addButton('easyUpload', {title : 'easyUpload.Description', cmd : 'easyUpload', image : url + '/img/icon.gif'});
 		},
 
 		getInfo : function() {
