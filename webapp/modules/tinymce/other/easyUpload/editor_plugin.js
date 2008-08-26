@@ -5,15 +5,15 @@
  */
 
 (function() {
-	tinymce.PluginManager.requireLangPack('EasyUpload');
-	tinymce.create('tinymce.plugins.EasyUpload', {
+	tinymce.PluginManager.requireLangPack('easyUPload');
+	tinymce.create('tinymce.plugins.easyUPload', {
 		init : function(ed, url) {
 			// Register commands
-			ed.addCommand('EasyUpload', function() {
+			ed.addCommand('easyUPload', function() {
 				ed.windowManager.open({
 					file : '../../index.php/tinymce/frontend/',
-					width : 250 + parseInt(ed.getLang('EasyUpload.Width', 0)),
-					height : 160 + parseInt(ed.getLang('EasyUpload.Height', 0)),
+					width : 250 + parseInt(ed.getLang('easyUPload.Width', 0)),
+					height : 160 + parseInt(ed.getLang('easyUPload.Height', 0)),
 					inline : 1
 				}, {
 					plugin_url : url
@@ -21,7 +21,7 @@
 			});
 
 			// Register buttons
-			ed.addButton('EasyUpload', {title : 'EasyUpload.Description', cmd : 'EasyUpload'});
+			ed.addButton('easyUPload', {title : 'easyUPload.Description', cmd : 'easyUPload'});
 		},
 
 		getInfo : function() {
@@ -35,5 +35,5 @@
 	});
 
 	// Register plugin
-	tinymce.PluginManager.add('EasyUpload', tinymce.plugins.EasyUpload);
+	tinymce.PluginManager.add('easyUPload', tinymce.plugins.easyUPload);
 })();

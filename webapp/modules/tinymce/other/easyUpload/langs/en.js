@@ -1,5 +1,5 @@
-tinyMCE.addI18n('en.EasyUpload',{
-Title:"Easy Upload",
+tinyMCE.addI18n('en.easyUpload',{
+Title:"Image upload",
 Description:"Upload an image",
 Width:"0",
 Height:"0",
