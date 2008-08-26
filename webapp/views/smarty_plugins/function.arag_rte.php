@@ -22,9 +22,8 @@ function smarty_function_arag_rte($params, &$smarty)
     }
 
     $session = New Session;
-
-    $session->set_flash('EasyUpload_CurrentModule', Router::$module);
-    print '<textarea name='.$params['name'].' class="rte"></textarea>';
+    $session->set('rte_'.$params['name'], Router::$module);
+    print '<textarea name="'.$params['name'].'" class="rte"></textarea>';
 }
 
 ?>
