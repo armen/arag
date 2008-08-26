@@ -5,6 +5,7 @@ BASE_PATH="`pwd`/`dirname $0`"
 LIBS_PATH="${BASE_PATH}/../../libs/"
 PUB_PATH="${BASE_PATH}/../../public_html/"
 MODS_PATH="${PUB_PATH}/modpub/"
+WEBAPP_PATH="${BASE_PATH}/../../webapp/"
 
 # Check for required commands
 for CMD in wget tar unzip; do
@@ -23,7 +24,15 @@ if [ -d $LIBS_PATH/kohana ]; then
     svn update ${LIBS_PATH}/kohana
 else
     mkdir -p ${LIBS_PATH}/kohana
-    svn co http://svn.kohanaphp.com/trunk/system ${LIBS_PATH}/kohana
+    svn co http://source.kohanaphp.com/trunk/system ${LIBS_PATH}/kohana
+fi
+
+# Checkout kohana's payment module
+if [ -d $LIBS_PATH/kohana_payment ]; then
+    svn update ${LIBS_PATH}/kohana_payment
+else
+    mkdir -p ${LIBS_PATH}/kohana_payment
+    svn co http://source.kohanaphp.com/trunk/modules/payment ${LIBS_PATH}/kohana_payment
 fi
 
 # Download smarty
@@ -56,6 +65,7 @@ unzip -u /tmp/tinymce_3_1_1.zip -d /tmp
 
 mkdir ${MODS_PATH}/tinymce
 mv /tmp/tinymce/jscripts/tiny_mce/* ${MODS_PATH}/tinymce
+cp -rf ${WEBAPP_PATH}/modules/tinymce/other/easyUpload/ ${MODS_PATH}/tinymce/plugins/
 
 # Cleanup
 
