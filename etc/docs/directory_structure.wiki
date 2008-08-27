@@ -1,39 +1,47 @@
-﻿==== Directory structure ====
+﻿== Directory structure ==
 
 These are the directories found at the root of the Arag project:
 
-  +-- etc
-  |    +-- scripts
-  |
-  +-- libs
-  |    +-- smarty
-  |    +-- Kohana
-  |    +-- pear
-  |
-  +-- public_html
-  |    +-- images
-  |    +-- styles
-  |    +-- scripts
-  |    +-- sites
-  |    +-- index.php
-  |
-  +-- webapp
-       +-- cache
-       +-- config
-       +-- errors
-       +-- helpers
-       +-- hooks
-       +-- libraries
-       +-- modules
-       +-- views
+{{{
+.
+|-- CHANGELOG
+|-- INSTALL
+|-- LICENSE
+|-- LICENSE-KOHANA
+|-- etc
+|   |-- docs
+|   |-- libs
+|   `-- scripts
+|-- libs
+|   |-- kohana
+|   |-- pear
+|   `-- smarty
+|-- public_html
+|   |-- _htaccess
+|   |-- images
+|   |-- index.php
+|   |-- modpub
+|   |-- scripts
+|   `-- styles
+`-- webapp
+    |-- cache
+    |-- config
+    |-- helpers
+    |-- hooks
+    |-- libraries
+    |-- logs
+    |-- modules
+    `-- views
+}}}
 
 In the following table you can find a brief introduction for some of these directories(for directories not listed below refer to the Kohana  documentation):
 
-^ Directory         ^ Description ^
-| etc/scripts       | Contains bash or PHP scripts called from a command line. |
-| libs              | Contains libraries which will be used in applications. At least it contains Smarty (/smarty) and Kohana (/kohana). |
-| public_html       | Contains front controller, styles and images. In general it contains everything we need to send to end user client. |
-| webapp/helpers    | Contains Smarty helper wrappers. |
-| weabpp/libraries  | Contains Arag libraries which extends Kohana libraries. |
-| webapp/modules    | Contains modules and components. |
-| webapp/views      | Contains global templates and Smarty plugins/configs. |
+|| '''Directory'''   || '''Description''' ||
+|| etc/scripts       || Contains bash or PHP scripts called from a command line. ||
+|| libs              || Contains libraries which will be used in applications. At least it contains Smarty (/smarty) and Kohana (/kohana). ||
+|| public_html       || Contains front controller, styles and images. In general it contains everything we need to send to end user client. ||
+|| webapp/helpers    || Contains Arag's helpers. ||
+|| webapp/hooks      || Contains Arag's hooks. ||
+|| weabpp/libraries  || Contains Arag's libraries which extends Kohana libraries. ||
+|| webapp/modules    || Contains modules and components. ||
+|| webapp/views      || Contains global templates and Smarty plugins/configs. ||

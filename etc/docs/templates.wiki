@@ -1,14 +1,20 @@
-﻿==== Templates (Views) ====
+﻿== Templates (Views) ==
 
 Don't worry, there is nothing new here except that in Arag, You can use smarty templates as your view.
 
 Lets have a closer look at it. For example you can have a file called "index.php" and another one "index.tpl" and simply load the view with following code:
 
-  $this->load->view('index');
-
-or
-
+{{{
   $view = new View('index');
+}}}
 
 If Smarty integration is enabled in "webapp/config/smarty.php", loader will load "index.tpl" file otherwise it will load "index.php".
 In ".tpl" files you can use Smarty templates engine language, Smarty plugins and helpers.
+
+In default behavior you have to create your view in content variable of layout view. layout view is the main view of the Arag which is used as decoration layout. it has a variable called "content" which should be used as a placeholder to put content of module's view.
+So, following example shows correct way to create a view and assign variables to it.
+
+{{{
+  $this->layout->content  = new View('index');
+  $this->layout->variable = "This is a sample data";
+}}}

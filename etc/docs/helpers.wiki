@@ -1,5 +1,7 @@
-﻿==== Helpers ====
+﻿== Helpers ==
 
 When Smarty integration is enabled, You can use a wrapper plugin to call kohana's helpers through smarty templating language. Following example shows how to use this wrapper.
 
-	{kohana_helper function="html::anchor" uri="user/frontend/forget_password" title="Forget your Password?"}
+{{{
+   {kohana_helper function="html::anchor" uri="user/frontend/forget_password" title="Forget your Password?"}
+}}}

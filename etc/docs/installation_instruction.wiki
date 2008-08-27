@@ -1,38 +1,42 @@
-﻿==== Installation Instructions ====
+﻿== Installation Instructions ==
 
-==== Installing from SVN ====
+=== Installing from SVN ===
 
-1) Checkout a copy from SVN:
-<code bash>
+1. Checkout a copy from SVN:
+{{{
   git clone git://vardump.org/arag.git
-</code>
-2) Download third party libraries:
-<code bash>
+}}}
+2. Download third party libraries:
+{{{
   ./arag/etc/scripts/get_third_party.sh
-</code>
+}}}
+This command simply downloads and extracts the "Smarty-2.6.19" and moves libs directory content to "libs/smarty".
 
-This command simply downloads and extracts the "Smarty-2.6.18" and moves libs directory content to "libs/smarty".
-
-3) Set "webapp/cache" and "webapp/logs" directories to be writeable by your web server:
-<code bash>
+3. Set "webapp/cache" and "webapp/logs" directories to be writable by your web server:
+{{{
   chmod 777 arag/webapp/cache/ arag/webapp/logs/
-</code>
+}}}
+=== Installation of Sample module ===
 
-==== Installation of Sample module ====
+1. Follow arag installation steps
 
-1) Follow arag installation steps
+2. Create a database (currently only MySQL is supported)
 
-2) Create a database (currently only MySQL is supported)
+3. Cahnge database configuration located at ./arag/webapp/config/database.php
 
-3) Cahnge database configuration located at ./arag/webapp/config/database.php
-
-4) Create necessary tables
+4. Create necessary tables
+{{{
   ./arag/etc/scripts/create_schema.php --dsn=<DBMS name>://<username>[:<password>]@<server>/<database_name> --all-modules
+}}}
 Example:
+{{{
   ./arag/etc/scripts/create_schema.php --dsn=mysql://myuser:mypass@localhost/arag --all-modules
-
-5) use following URL to execute backend of sample module
+}}}
+5. use following URL to execute backend of sample module
+{{{
   http://<domain_name>/index.php/blog/admin
-
+}}}
 And following URL to execute frontend of sample module
+{{{
   http://<domain_name>/index.php/blog
+}}}

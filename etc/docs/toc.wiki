@@ -1,36 +1,36 @@
-﻿===== Getting Started =====
+﻿== Getting Started ==
 
-[[Installation Instruction]]
+ * [wiki:InstallationInstruction Installation Instruction]
 
 
-===== Arag Basics =====
+== Arag Basics ==
 
-[[Directory Structure]]
+ * [wiki:DirectoryStructure Directory Structure]
 
-[[Execution flow]]
+ * [wiki:ExecutionFlow Execution flow]
 
-[[Arag Configuration]]
+ * [wiki:AragConfiguration Arag Configuration]
 
-[[Arag Controllers]]
+ * [wiki:AragController Arag Controllers]
 
-[[Modules]]
+ * [wiki:Modules]
 
-[[Database Schemes]]
+ * [wiki:DatabaseSchemas Database Schemes]
 
-[[Models]]
+ * [wiki:Models]
 
-[[Templates|Templates (Views)]]
+ * [wiki:Templates Templates (Views)]
 
-[[Global smarty plugins]]
+ * [wiki:GlobalSmartyPlugins Global smarty plugins]
 
-[[Helpers]]
+ * [wiki:Helpers]
 
-[[Components]]
+ * [wiki:Components]
 
-[[I18N]]
+ * [wiki:I18N]
 
-[[Form Validation]]
+ * [wiki:FormValidation Form Validation]
 
-[[Invalid Request Page]]
+ * [wiki:InvalidRequestPage Invalid Request Page]
 
-[[Arag Libraries]]
+ * [wiki:AragLibrary Arag Libraries]

@@ -1,13 +1,29 @@
-﻿==== Database Schemes ====
+﻿== Database Schemes ==
 
-Every module can have its own database schema with which you can create new tables with new entries. In this way you can revert to previous versions of your database schema any time it is needed. Schemes are located at "<moduleName>/schemas/<VersionNumber>/<ModuleName>.schema". There is also a "module.php" file for every module, which has information about the related module - such as version of the module. This file is located at "<ModuleName>/config/module.php".\\
+Every module can have its own database schema with which you can create new tables with new entries. In this way you can revert to previous versions of your database schema any time it is needed. Schemes are located at "<moduleName>/schemas/<version_number>/<module_name>.schema". There is also a "module.php" file for every module, which has information about the related module - such as version of the module. This file is located at "<module_name>/config/module.php".
 Now, lets take a look at how we should use an existing schema. To run a schema, you have to use a script located at "etc/scripts", called "create_schema.php", as below:
 
-  ./create_schema.php --dsn=mysql://<username>:<password>@<host>/<dbname> <ModuleName>/schemas/<VersionNumber>/<ModuleName>.schema
+{{{
+  ./create_schema.php --dsn=mysql://<username>:<password>@<host>/<dbname> <module_name>/schemas/<version_number>/<module_name>.schema
+}}}
 
+For example:
+
+{{{
   ./create_schema.php --dsn=mysql://root:root@localhost/cms blog/schemas/v0.1/blog_entries.schema
+}}}
 
 There are also some more options in running a "create_schema.php". First one is "--all-modules" which with this option you will create all the schemas in all the modules and the second one is "-p <table prefix>" which with you can give a table prefix to the tables you are going to create.
+
+For example:
+
+{{{
+  ./create_schema.php --dsn=mysql://root:root@localhost/cms --all-modules
+
+  or
+
+  ./create_schema.php --dsn=mysql://root:root@localhost/cms -a
+}}}
 
 As well as schemas, you can have data files which will be default data for the created tables. Data files automatically will be executed when you run "create_schema.php". Only you must remember that their name have to be same as their related schema with .data extension and they should be located in the same directory to be executed.
 

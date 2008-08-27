@@ -1,4 +1,4 @@
-﻿==== Execution flow ====
+﻿== Execution flow ==
 
 Execution Flow is bihavior of Arag for calling methods in Controllers.
 
@@ -8,7 +8,8 @@ Arag implements new feature for calling controller's method more easy and unders
 
 For example :
 
-    class MyController extends Controller
+{{{
+    class My_Controller extends Controller
     {
         public function example_read()
         {
@@ -20,17 +21,41 @@ For example :
             // Statements
         }
 
-        public function exmaple()
-        {
-            // Statements
-        }
+        // public function example()
+        // {
+        //     // This will never execute
+        //     // Statements
+        // }
     }
+}}}
 
-If you load address "MyController/example", Arag calls "example_read()" because method is GET. But if you submit a form to "MyController/example" by POST method, Arag calls "example_write()".
+If you load address "my_controller/example", Arag calls "example_read()" because method is GET. But if you submit a form to "my_controller/example" by POST method, Arag calls "example_write()".
 Although, Arag calls "example" function automatically, If could not find none of them.
 
 === Validation and Error Handling ===
 
-Arag automatically checks validator file, loads it's rules if file exists, then run validation. If error occurs, Arag calls "<function>_error".
+When a method requested within GET method, if "<functionname>_validate_read" exists it will be called before "<functionname>_read", if returned value of "<functionname>_validate_read" was True it indicates that validation passed and "<functionname>_validate_read" should be called, otherwise, "<functionname>_read_error" will be called to handle the error.
 
-For example if function is "example()", Arag calls "example_error()" if error occurs. If function is "example_read()", Arag calls "example_read_error()".
+For example:
+
+{{{
+    class My_Controller extends Controller
+    {
+        public function example_read()
+        {
+            // Statements
+        }
+
+        public function example_validate_read()
+        {
+            // Validate input and return the result;
+
+            return $result;
+        }
+
+        public function example_read_error()
+        {
+            // Statements
+        }
+    }
+}}}
