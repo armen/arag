@@ -4,7 +4,7 @@ $config = Array
 (
     // {{{ Global paths
 
-    'cache_path'     => APPPATH . 'cache/',
+    'cache_path' => APPPATH . 'cache/',
 
     // }}}
     // {{{ FCKeditor settings
