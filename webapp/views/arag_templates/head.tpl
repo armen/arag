@@ -14,8 +14,8 @@
 <script language="javascript" type="text/javascript">
 tinyMCE.init({
         theme : "advanced",
-        plugins : "easyUpload",
-        theme_advanced_buttons3_add : "easyUpload",
+        plugins : "easyUpload, table",
+        theme_advanced_buttons3_add : "easyUpload, table, delete_table, delete_col, col_after, col_before, cell_props, delete_row, row_after, row_before, row_props, split_cells, merge_cells",
         mode: "specific_textareas",
         editor_selector: "rte"
 });
