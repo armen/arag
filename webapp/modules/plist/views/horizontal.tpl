@@ -81,21 +81,15 @@
                     {if count($actions) > 0}
                         {foreach from=$actions item=action}
                             <td class="plist_icon">
-                                {if isset($action.alternate_callback|smarty:nodefaults) &&
-                                    $action.alternate_callback != false &&
-                                    $plist->callCallback($action.alternate_callback, $row)}
-
-                                    {if $action.alternate_uri != null}
-                                        {assign var=uri value=$plist->parseURI($action.alternate_uri, $row)}
-                                        <a href="{kohana_helper function="url::site" uri=$uri}" title="{$action.title}" class="{$action.class_name}_alt"
-                                           target="{$action.target}">{$action.label}</a>
-                                    {else}
-                                        <div title="{$action.title}" class="{$action.class_name}_alt">{$action.label}</div>
-                                    {/if}
-                                {else}
+                                {if $action.callback|smarty:nodefaults}
+                                    {assign var="action" value=$plist->callCallback($action.callback,$row)}
+                                {/if}
+                                {if $action.uri}
                                     {assign var=uri value=$plist->parseURI($action.uri, $row)}
-                                    <a href="{kohana_helper function="url::site" uri=$uri}" title="{$action.title}" class="{$action.class_name}"
-                                       target="{$action.target}">{$action.label}</a>
+                                    <a href="{kohana_helper function="url::site" uri=$uri}" title="{$action.label}" class="{$action.className}"
+                                        target="{$action.target}">{$action.label}</a>
+                                {else}
+                                    <div title="{$action.label}" class="{$action.className}">{$action.label}</div>
                                 {/if}
                             </td>
                         {/foreach}
@@ -134,7 +128,7 @@
                         <select onchange="listForward(this, '{$namespace}')">
                         <option value="">- Select an action -</option>
                         {foreach from=$group_actions item=action}
-                            <option value="{kohana_helper function="url::site" uri=$action.uri}" title="{$action.title}">{$action.label}</option>
+                            <option value="{kohana_helper function="url::site" uri=$action.uri}" title="{$action.label}">{$action.label}</option>
                         {/foreach}
                         </select>
 
@@ -144,7 +138,7 @@
                         <tr>
                         {foreach from=$group_actions item=action}
                             <td class="plist_icon">
-                                <a href="{kohana_helper function="url::site" uri=$action.uri}" title="{$action.title}" class="{$action.class_name}"
+                                <a href="{kohana_helper function="url::site" uri=$action.uri}" title="{$action.title}" class="{$action.className}"
                                    onclick="listForward(this, '{$namespace}')">{$action.label}</a>
                             </td>
                         {/foreach}

@@ -190,36 +190,17 @@ class PList_Component extends Component implements IteratorAggregate, ArrayAcces
     }
     // }}}
     // {{{ addAction
-    public function addAction($uri, $label, $className = Null, $alternateCallback = False, $alternateUri = Null, $target = FALSE)
+    public function addAction($uri, $label=Null, $className = Null, $target = FALSE)
     {
-        $title = Null;
+        if ($label && $className) {
+            $this->actions[] = Array('uri'       => $uri,
+                                     'label'     => $label,
+                                     'className' => $className,
+                                     'target'    => $target,
+                                     'callback'  => False );
 
-        if (is_array($uri)) {
-            $uri = implode('/', $uri);
-        }
-
-        if (is_array($label)) {
-            @list($label, $title) = $label;
-        }
-
-        // Is it a group action?
-        if ($alternateCallback === self::GROUP_ACTION) {
-
-            $this->groupActions[] = Array('uri'             => $uri,
-                                          'label'           => $label,
-                                          'class_name'      => $className,
-                                          'class_attribute' => ($className != Null) ? 'class="'.$className.'"' : Null,
-                                          'title'           => ($title == Null) ? $label : $title);
-        } else {
-
-            $this->actions[] = Array('uri'                => $uri,
-                                     'label'              => $label,
-                                     'target'             => ($target) ? '_blank' : '_self',
-                                     'class_name'         => $className,
-                                     'class_attribute'    => ($className != Null) ? 'class="'.$className.'"' : Null,
-                                     'alternate_callback' => $alternateCallback,
-                                     'alternate_uri'      => $alternateUri,
-                                     'title'              => ($title == Null) ? $label : $title);
+        } else { //uri argument is not a uri, its a callback
+            $this->actions[] = Array('callback' => $uri);
         }
     }
     // }}}
@@ -352,7 +333,13 @@ class PList_Component extends Component implements IteratorAggregate, ArrayAcces
             list($className, $functionName) = explode('::', $callback);
 
             if (method_exists($className, $functionName)) {
-                return call_user_func_array(array($className, $functionName), $args);
+                $action              = call_user_func_array(array($className, $functionName), $args);
+                $action['uri']       = isset($action['uri']) ? $action['uri'] : Null;
+                $action['label']     = isset($action['label']) ? $action['label'] : Null;
+                $action['className'] = isset($action['className']) ? $action['className'] : Null;
+                $action['target']    = isset($action['target']) ? $action['target'] : Null;
+
+                return $action;
             }
 
         } else {
