@@ -138,7 +138,7 @@
                         <tr>
                         {foreach from=$group_actions item=action}
                             <td class="plist_icon">
-                                <a href="{kohana_helper function="url::site" uri=$action.uri}" title="{$action.title}" class="{$action.className}"
+                                <a href="{kohana_helper function="url::site" uri=$action.uri}" title="{$action.label}" class="{$action.className}"
                                    onclick="listForward(this, '{$namespace}')">{$action.label}</a>
                             </td>
                         {/foreach}

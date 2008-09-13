@@ -18,36 +18,36 @@ class PList_Component extends Component implements IteratorAggregate, ArrayAcces
     // {{{ properties
 
     private $resource;
-    private $columns        = Array();
-    private $virtualColumns = Array();
-    private $actions        = Array();
-    private $baseURI        = Array();
-    private $sums           = Array();
+    private $columns                  = Array();
+    private $virtualColumns           = Array();
+    private $actions                  = Array();
+    private $baseURI                  = Array();
+    private $sums                     = Array();
 
     private $groupActions             = Array();
     private $groupActionType          = 'button';
     private $groupActionParameterName = 'id';
 
-    private $limit    = 0;   // How many results per page. 0 is infinity
-    private $offset   = 0;   // Offset
-    private $page     = 1;   // The page to start listing
-    private $maxpages = 10;  // How many pages to show (google style) --> set false to disable
+    private $limit                    = 0;   // How many results per page. 0 is infinity
+    private $offset                   = 0;   // Offset
+    private $page                     = 1;   // The page to start listing
+    private $maxpages                 = 10;  // How many pages to show (google style) --> set false to disable
 
-    private $emptyListMessage = Null;
+    private $emptyListMessage         = Null;
 
-    const NONE           = Null;
-    const HIDDEN_COLUMN  = 1;
-    const VIRTUAL_COLUMN = 2;
+    const NONE                        = Null;
+    const HIDDEN_COLUMN               = 1;
+    const VIRTUAL_COLUMN              = 2;
 
-    const GROUP_ACTION = 1;
+    const GROUP_ACTION                = 1;
 
     // PList properties
-    const CAPTION  = 1;
-    const HEADER   = 2;
-    const FOOTER   = 4;
-    const SORTABLE = 8;
+    const CAPTION                     = 1;
+    const HEADER                      = 2;
+    const FOOTER                      = 4;
+    const SORTABLE                    = 8;
 
-    private $properties = 0;
+    private $properties               = 0;
 
     // }}}
     // {{{ Constructor
@@ -190,14 +190,20 @@ class PList_Component extends Component implements IteratorAggregate, ArrayAcces
     }
     // }}}
     // {{{ addAction
-    public function addAction($uri, $label=Null, $className = Null, $target = FALSE)
+    public function addAction($uri, $label=Null, $className = Null, $target = False, $Flags = Null)
     {
-        if ($label && $className) {
+        if ( $Flags && PList_Component::GROUP_ACTION ) {
+            $this->groupActions[] = Array('uri'             => $uri,
+                                          'label'           => $label,
+                                          'className'      => $className);
+
+        } else if ($label && $className) {
             $this->actions[] = Array('uri'       => $uri,
                                      'label'     => $label,
                                      'className' => $className,
                                      'target'    => $target,
-                                     'callback'  => False );
+                                     'callback'  => False,
+                                     'flags'     => $Flags );
 
         } else { //uri argument is not a uri, its a callback
             $this->actions[] = Array('callback' => $uri);
@@ -338,6 +344,7 @@ class PList_Component extends Component implements IteratorAggregate, ArrayAcces
                 $action['label']     = isset($action['label']) ? $action['label'] : Null;
                 $action['className'] = isset($action['className']) ? $action['className'] : Null;
                 $action['target']    = isset($action['target']) ? $action['target'] : Null;
+                $action['flags']     = isset($action['flags']) ? $action['flags'] : Null;
 
                 return $action;
             }
