@@ -24,7 +24,7 @@ class Entry_Controller extends Blog_Backend
         $entries->addAction('blog/backend/entry/delete/#id#', 'Delete', 'delete_action');
         $entries->addAction('blog/backend/entry/preview/#id#', 'Preview', 'view_action');
 
-        // $this->entries->addAction('blog/backend/entry/delete', 'Delete', 'delete_action', PList_Component::GROUP_ACTION);
+        // $this->entries->addAction('blog/backend/entry/delete', 'Delete', 'delete_action', False, PList_Component::GROUP_ACTION);
         $entries->setEmptyListMessage(_("There is no entry!"));
 
         $this->layout->content = new View('backend/index');

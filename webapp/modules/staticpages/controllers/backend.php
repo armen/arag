@@ -48,7 +48,7 @@ class Backend_Controller extends Controller
         $this->staticpages->addAction('staticpages/backend/preview/#id#', _("Preview"), 'view_action');
         $this->staticpages->addAction('staticpages/backend/edit/#id#', _("Edit"), 'edit_action');
         $this->staticpages->addAction('staticpages/backend/delete/#id#', _("Delete"), 'delete_action');
-        $this->staticpages->addAction('staticpages/backend/gdelete', _("Delete"), 'delete_action', PList_Component::GROUP_ACTION);
+        $this->staticpages->addAction('staticpages/backend/gdelete', _("Delete"), 'delete_action', False, PList_Component::GROUP_ACTION);
         $this->staticpages->setGroupActionParameterName('id');
 
         $this->layout->content = new View('backend/index');

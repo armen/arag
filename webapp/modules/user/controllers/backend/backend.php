@@ -92,7 +92,7 @@ class Backend_Controller extends Controller
         $privileges->addAction('user/backend/applications/privileges_edit/#id#', _("Edit"), 'edit_action');
         $privileges->addAction('Backend_Controller::_view_tree_action');
         $privileges->addAction('user/backend/applications/privileges_delete/#id#', _("Delete"), 'delete_action');
-        $privileges->addAction("user/backend/applications/privileges_delete", _("Delete"), 'delete_action', PList_Component::GROUP_ACTION);
+        $privileges->addAction("user/backend/applications/privileges_delete", _("Delete"), 'delete_action', False, PList_Component::GROUP_ACTION);
         $privileges->setGroupActionParameterName('id');
 
         $data = array("parentid"  => $parentid,

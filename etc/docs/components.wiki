@@ -1,4 +1,4 @@
-﻿== Components ==
+== Components ==
 
 Component is a new feature implemented in Arag project which probably you are not familiar with it.
 
@@ -155,7 +155,7 @@ If you are interested about callable methods of "PList" component which you can 
 With Arag "Plist", it is also possible to add group actions to your list. So that you give your list the ability of doing an action on more than one item of your list simultaneously. To add a group action to you list you should use the following syntax in which, the first parameter is the URL of the action, the second is the title and the third one specifies the icon which the action uses:
 
 {{{
-  $this->blog->addAction('blog/backend/gdelete', 'Delete', 'delete_action', PList_Component::GROUP_ACTION);
+  $this->blog->addAction('blog/backend/gdelete', 'Delete', 'delete_action', True, PList_Component::GROUP_ACTION);
 }}}
 
 === TabbedBlock Component ===
