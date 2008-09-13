@@ -218,11 +218,7 @@ class Filters_Model extends Model
     //{{{ isDeletable
     public function isDeletable($row)
     {
-        if ($row['appname'] != "_global_" && $row['appname'] != "_default_") {
-            return false;
-        } else {
-            return true;
-        }
+        return ($row['appname'] != "_global_" && $row['appname'] != "_default_");
     }
     //}}}
 }

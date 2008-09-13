@@ -90,7 +90,7 @@ class Backend_Controller extends Controller
         $privileges->addColumn('Applications.getModifyDate', _("Modify Date"), PList_Component::VIRTUAL_COLUMN);
         $privileges->addColumn('privilege', _("Privilege"));
         $privileges->addAction('user/backend/applications/privileges_edit/#id#', _("Edit"), 'edit_action');
-        $privileges->addAction('user/backend/applications/privileges/#id#', _("View"), 'view_tree', 'Privileges.isParent');
+        $privileges->addAction('Backend_Controller::_view_tree_action');
         $privileges->addAction('user/backend/applications/privileges_delete/#id#', _("Delete"), 'delete_action');
         $privileges->addAction("user/backend/applications/privileges_delete", _("Delete"), 'delete_action', PList_Component::GROUP_ACTION);
         $privileges->setGroupActionParameterName('id');
@@ -99,6 +99,21 @@ class Backend_Controller extends Controller
                       "flagsaved" => $this->session->get_once('privileges_add_saved'));
 
         $this->layout->content = new View('backend/privileges', $data);
+    }
+    // }}}
+    // {{{ _view_tree_action
+    public static function _view_tree_action($privilege)
+    {
+        $Privileges = Model::load('Privileges', 'user');
+
+        if ($Privileges->isParent($privilege)) {
+            return Array( 'uri'       => 'user/backend/applications/privileges/'.$privilege['id'],
+                          'label'     => _("View"),
+                          'className' => 'view_tree' );
+        } else {
+            return Array( 'label'     => _("View"),
+                          'className' => 'view_tree_alt' );
+        }
     }
     // }}}
     // {{{ _create_groups_list

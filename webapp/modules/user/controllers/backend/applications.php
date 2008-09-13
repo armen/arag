@@ -373,13 +373,28 @@ class Applications_Controller extends Backend_Controller
         $applications->addColumn('Filters.getDate', _("Create Date"), PList_Component::VIRTUAL_COLUMN);
         $applications->addColumn('Filters.getModifyDate', _("Modify Date"), PList_Component::VIRTUAL_COLUMN);
         $applications->addAction('user/backend/applications/app_filters/#appname#', _("Edit"), 'edit_action');
-        $applications->addAction('user/backend/applications/app_filters_delete/#appname#', _("Delete"), 'delete_action', 'Filters.isDeletable');
+        $applications->addAction('Applications_Controller::_delete_action');
         $applications->addAction("user/backend/applications/app_filters_delete/", _("Delete"), 'delete_action', PList_Component::GROUP_ACTION);
         $applications->setGroupActionParameterName('appname');
 
         $this->layout->content = new View('backend/index', array("name" => $name, "flag" => true));
     }
     //}}}
+    // {{{ _delete_action
+    public static function _delete_action($application)
+    {
+        $Filters = Model::load('Filters', 'user');
+
+        if ($Filters->isDeletable($application)) {
+            return Array( 'uri' => 'user/backend/applications/app_filters_delete/'.$application['appname'],
+                          'label' => _("Delete"),
+                          'className' => 'delete_action' );
+        } else {
+            return Array( 'label' => _("Applicaiton is not deletable"),
+                          'className' => 'delete_action_alt' );
+        }
+    }
+    // }}}
     //{{{ app_filters_read
     public function app_filters_read($appname)
     {

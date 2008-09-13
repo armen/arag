@@ -117,7 +117,7 @@ class Privileges_Model extends Model
     // {{{ isParent
     public function isParent($row)
     {
-        return (boolean) $row['parent_id'];
+        return (boolean) $row['parent_id'] == 0;
     }
     // }}}
     // {{{ hasLabel
