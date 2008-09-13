@@ -1,7 +1,7 @@
 libs/kohana
 libs/smarty
 libs/pear
-public_html/scripts/FCKeditor/
+public_html/modpub/tinymce
 webapp/cache/kohana_configuration
 webapp/cache/kohana_file_paths
 webapp/cache/smarty_compile/
