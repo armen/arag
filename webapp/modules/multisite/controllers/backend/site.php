@@ -33,7 +33,7 @@ class Site_Controller extends Backend_Controller
         $this->applications->addColumn('default_group', _("Default Group"));
         $this->applications->addColumn('MultiSite.getDate', _("Create Date"), PList_Component::VIRTUAL_COLUMN);
         $this->applications->addColumn('db_name', _("Database Name"));
-        $this->applications->addAction($multiSite->getAppUrl('#app_name#'), _("View"), 'view_action', False, NULL, TRUE);
+        $this->applications->addAction($multiSite->getAppUrl('#app_name#'), _("View"), 'view_action', TRUE);
 
         $ids = $multiSite->getIDs();
 
