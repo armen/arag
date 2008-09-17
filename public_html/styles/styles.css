@@ -871,3 +871,8 @@ input[type=reset][disabled] {
 	background-color: #F6F8FB;
 }
 /* end of Profiler }}} */
+
+
+*, #top_nav, .top_nav, #footer, p.top_nav {
+    behavior: url('../scripts/iepngfix.htc');
+}
