@@ -873,6 +873,6 @@ input[type=reset][disabled] {
 /* end of Profiler }}} */
 
 
-*, #top_nav, .top_nav, #footer, p.top_nav {
+* {
     behavior: url('../scripts/iepngfix.htc');
 }
