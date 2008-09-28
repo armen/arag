@@ -31,7 +31,7 @@ class valid extends valid_Core {
     // }}}
     // {{{ equals
     public static function equals($value, $options) {
-        return (bool) $value == current($options);
+        return $value == current($options);
     }
     // }}}
 
