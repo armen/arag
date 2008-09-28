@@ -250,7 +250,7 @@ class Frontend_Controller extends Controller
         $this->validation->name('email', _("Email"))->pre_filter('trim', 'email')
              ->add_rules('email', 'required', 'valid::email');
 
-        $this->validation->name('captcha', _("Image's Text"))->add_rules('captcha', 'Captcha_Core::valid_captcha', 'required');
+        $this->validation->name('captcha', _("Image's Text"))->add_rules('captcha', 'Captcha::valid', 'required');
 
         return $this->validation->validate();
     }
@@ -537,7 +537,7 @@ class Frontend_Controller extends Controller
         $this->validation->name('reemail', _("Email"))->pre_filter('trim', 'reemail')
              ->add_rules('reemail', 'required', 'valid::email');
 
-        $this->validation->name('captcha', _("Image's Text"))->add_rules('captcha', 'Captcha_Core::valid_captcha', 'required');
+        $this->validation->name('captcha', _("Image's Text"))->add_rules('captcha', 'Captcha::valid', 'required');
 
         return $this->validation->validate();
     }

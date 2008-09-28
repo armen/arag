@@ -132,7 +132,7 @@ class Frontend_Controller extends Controller
     // {{{ index_validate_write
     public function index_validate_write()
     {
-        $this->validation->name('captcha', _("Image's Text"))->add_rules('captcha', 'Captcha_Core::valid_captcha', 'required');
+        $this->validation->name('captcha', _("Image's Text"))->add_rules('captcha', 'Captcha::valid', 'required');
 
         return $this->validation->validate();
     }

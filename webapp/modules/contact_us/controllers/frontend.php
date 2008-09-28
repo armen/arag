@@ -85,7 +85,7 @@ class Frontend_Controller extends Controller
         $this->validation->name('contact_content', _("Message content"))->pre_filter('trim', 'contact_content')
              ->add_rules('contact_content', 'required', 'security::xss_clean');
 
-        $this->validation->name('captcha', _("Image's Text"))->add_rules('captcha', 'Captcha_Core::valid_captcha', 'required');
+        $this->validation->name('captcha', _("Image's Text"))->add_rules('captcha', 'Captcha::valid', 'required');
 
         return $this->validation->validate();
     }
