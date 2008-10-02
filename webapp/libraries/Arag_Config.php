@@ -62,7 +62,10 @@ class Arag_Config_Core
             }
         }
 
-        $db     = new Database();
+        static $db;
+        if (!isset($db)) {
+            $db     = new Database();
+        }
         $result = $default;
 
         $db->select('value');
