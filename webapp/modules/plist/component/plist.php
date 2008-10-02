@@ -193,20 +193,27 @@ class PList_Component extends Component implements IteratorAggregate, ArrayAcces
     public function addAction($uri, $label=Null, $className = Null, $target = False, $Flags = Null)
     {
         if ( $Flags && PList_Component::GROUP_ACTION ) {
-            $this->groupActions[] = Array('uri'             => $uri,
-                                          'label'           => $label,
-                                          'className'      => $className);
+            $this->groupActions[] = Array(
+                                          'uri'       => $uri,
+                                          'label'     => $label,
+                                          'className' => $className
+                                         );
 
         } else if ($label && $className) {
-            $this->actions[] = Array('uri'       => $uri,
+            $this->actions[] = Array(
+                                     'uri'       => $uri,
                                      'label'     => $label,
                                      'className' => $className,
-                                     'target'    => $target,
+                                     'target'    => ($target) ? '_blank' : '_self',
                                      'callback'  => False,
-                                     'flags'     => $Flags );
+                                     'flags'     => $Flags
+                                    );
 
         } else { //uri argument is not a uri, its a callback
-            $this->actions[] = Array('callback' => $uri);
+            $this->actions[] = Array(
+                                     'callback' => $uri,
+                                     'target'   => ($target) ? '_blank' : '_self'
+                                    );
         }
     }
     // }}}
@@ -327,7 +334,12 @@ class PList_Component extends Component implements IteratorAggregate, ArrayAcces
             list($modelName, $functionName) = explode('.', $callback);
 
             $modelName .= '_Model';
-            $modelName  = new $modelName;
+            static $models = array();
+            if (!isset($models[$modelName])) {
+                $models[$modelName] = new $modelName;
+            }
+
+            $modelName = $models[$modelName];
 
             if (method_exists($modelName, $functionName)) {
                 return call_user_func_array(array($modelName, $functionName), $args);
