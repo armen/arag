@@ -216,4 +216,16 @@ class Router extends Router_Core {
         return self::$request_method;
     }
     // }}}
+    // {{{ routed_uri
+    public static function routed_uri($uri)
+    {
+        static $cache = Array();
+
+        if (!isset($cache[$uri])) {
+            $cache[$uri] = parent::routed_uri($uri);
+        }
+
+        return $cache[$uri];
+    }
+    // }}}
 }
