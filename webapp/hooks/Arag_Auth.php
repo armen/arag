@@ -42,7 +42,7 @@ class Arag_Auth {
             $session->set(Array('user' => $users->getAnonymouseUser($appname)));
         }
 
-        if (!self::is_accessible($destination, True)) {
+        if (!self::is_accessible($destination, False)) {
             if (!$session->get('user.authenticated')) {
                 $session->set_flash('not_authorized_redirect_url', $destination);
             }
@@ -110,11 +110,11 @@ class Arag_Auth {
     }
     // }}}
     // {{{ is_accessible
-    public static function is_accessible($uri, $routed_uri = False)
+    public static function is_accessible($uri, $routed_uri = True)
     {
         static $cache = Array();
 
-        if (!$routed_uri) {
+        if ($routed_uri) {
             $uri = Router::routed_uri($uri);
         }
 
