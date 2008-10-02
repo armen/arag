@@ -33,6 +33,7 @@ class Arag_Auth {
         $appname = $session->get('user.appname', APPNAME);
 
         $destination = implode('/', Router::$rsegments);
+        $destination = rtrim($destination, '/').'/';      // Append a slash to $destination
 
         if (!$session->get('user.authenticated') && $session->get('user.username') != 'anonymous') {
 
@@ -53,8 +54,11 @@ class Arag_Auth {
     // {{{ is_authorized
     private static function is_authorized($destination, $privileges, $whiteList = True)
     {
+        // Append a slash to $destination
+        $destination = rtrim($destination, '/').'/';
+
         // XXX: We have to allow this destination otherwise it is possible to happen an infinity loop.
-        if ($destination === 'core/frontend/messages/not_authorized') {
+        if ($destination === 'core/frontend/messages/not_authorized/') {
             return True;
         }
 
@@ -66,9 +70,9 @@ class Arag_Auth {
                 //     * is allowed when we are working with black lists
                 if (((boolean) $whiteList == False && $privilege === '*') ||
                     // BLAKLIST:
-                    //     It contains four section which every section separated with a /.
+                    //     It contains four sections which every section separated with a /.
                     //     It should contain at least two sections. last section allways is *
-                    //     and othe sections are lower case cheractrer(s)
+                    //     and other sections are lower case cheractrer(s)
                     ((boolean) $whiteList == False && preg_match('/^[a-z_]+(\/[a-z_]+){0,2}\/\*$/', $privilege)) ||
                     // WHITELIST:
                     //     Which can include urls and rules. URL contains four section which every section
