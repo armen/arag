@@ -37,7 +37,11 @@ class url extends url_Core {
             $uri = preg_match('|^[a-zA-Z]{2}/|', rtrim($uri, '/').'/') ? $uri : Kohana::config('locale.lang'). '/' . $uri;
         }
 
-        return parent::site($uri, $protocol);
+        static $protocols;
+        if (!isset($protocols[$protocol])) {
+            $protocols[$protocol] = parent::site(null, $protocol);
+        }
+        return $protocols[$protocol].$uri;
     }
     // }}}
 
