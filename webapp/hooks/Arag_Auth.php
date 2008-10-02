@@ -112,30 +112,37 @@ class Arag_Auth {
     // {{{ is_accessible
     public static function is_accessible($uri, $routed_uri = False)
     {
-        $session = Session::instance();
-        $appname = $session->get('user.appname', APPNAME);
-
-        // When user Logins privilege_filters unset by login method
-        // then we fetch current application privilege filters here
-        if ($session->get('privilege_filters') === False) {
-
-            // Fetch privilege filters for current application
-            $filters = Model::load('Filters', 'user');
-            $session->set('privilege_filters', $filters->getPrivilegeFilters($appname));
-        }
+        static $cache = Array();
 
         if (!$routed_uri) {
             $uri = Router::routed_uri($uri);
         }
 
-        $authorized = self::is_authorized($uri, $session->get('user.privileges'));
+        if (!isset($cache[$uri])) {
 
-        if ($authorized) {
-            // The user is authorized so we will try to filter his/her privileges with a blacklist
-            $authorized = self::is_authorized($uri, $session->get('privilege_filters'), False);
+            $session = Session::instance();
+            $appname = $session->get('user.appname', APPNAME);
+
+            // When user Logins privilege_filters unset by login method
+            // then we fetch current application privilege filters here
+            if ($session->get('privilege_filters') === False) {
+
+                // Fetch privilege filters for current application
+                $filters = Model::load('Filters', 'user');
+                $session->set('privilege_filters', $filters->getPrivilegeFilters($appname));
+            }
+
+            $authorized = self::is_authorized($uri, $session->get('user.privileges'));
+
+            if ($authorized) {
+                // The user is authorized so we will try to filter his/her privileges with a blacklist
+                $authorized = self::is_authorized($uri, $session->get('privilege_filters'), False);
+            }
+
+            $cache[$uri] = $authorized;
         }
 
-        return $authorized;
+        return $cache[$uri];
     }
     // }}}
 }
