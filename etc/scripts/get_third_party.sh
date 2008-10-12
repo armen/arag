@@ -27,6 +27,14 @@ else
     svn co http://source.kohanaphp.com/tags/2.2.1/system ${LIBS_PATH}/kohana
 fi
 
+# Checkout kohana's payment module
+if [ -d $LIBS_PATH/kohana_payment ]; then
+    svn update ${LIBS_PATH}/kohana_payment
+else
+    mkdir -p ${LIBS_PATH}/kohana_payment
+    svn co http://source.kohanaphp.com/tags/2.2.1/modules/payment ${LIBS_PATH}/kohana_payment
+fi
+
 # Download smarty
 
 if [ -d $LIBS_PATH/smarty ]; then
@@ -59,6 +67,25 @@ mkdir ${MODS_PATH}/tinymce
 mv /tmp/tinymce/jscripts/tiny_mce/* ${MODS_PATH}/tinymce
 cp -rf ${WEBAPP_PATH}/modules/tinymce/other/easyUpload/ ${MODS_PATH}/tinymce/plugins/
 
+# Download JalaliJSCalendar
+
+if [ -d $PUB_PATH/scripts/JalaliJSCalendar ]; then
+    rm -rf "${PUB_PATH}/scripts/JalaliJSCalendar"
+fi
+
+wget -c -P /tmp http://farhadi.ir/downloads/JalaliJSCalendar-1.1.5.tar.gz
+wget -c -P /tmp http://pub.vardump.org/calendar.patch
+
+mkdir JalaliJSCalendar-1.1.5
+tar xvfz /tmp/JalaliJSCalendar-1.1.5.tar.gz -C ./JalaliJSCalendar-1.1.5
+
+rm -r ./JalaliJSCalendar-1.1.5/doc
+rm -r ./JalaliJSCalendar-1.1.5/examples
+
+patch ./JalaliJSCalendar-1.1.5/calendar.js /tmp/calendar.patch
+
+mv ./JalaliJSCalendar-1.1.5 ${PUB_PATH}/scripts/JalaliJSCalendar
+
 # Cleanup
 
 rm -rf ./Smarty-2.6.19/
@@ -68,3 +95,6 @@ rm -rf /tmp/pear.tar.bz2
 
 rm -rf /tmp/tinymce_3_1_1.zip
 rm -rf /tmp/tinymce
+
+rm -rf /tmp/JalaliJSCalendar-1.1.5.tar.gz
+rm /tmp/calendar.patch
