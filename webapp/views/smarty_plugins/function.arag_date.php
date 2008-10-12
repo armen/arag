@@ -17,7 +17,8 @@ function smarty_function_arag_date($params, &$smarty)
 
     foreach ($params as $_key => $_val) {
         switch ($_key) {
-            case 'name':
+            case 'value':
+            case 'name' :
                 $$_key = $_val;
                 break;
 
@@ -40,6 +41,7 @@ function smarty_function_arag_date($params, &$smarty)
     $data['lang']   = $lang;
     $data['type']   = $type;
     $data['name']   = $name;
+    $data['value']  = $value;
     $data['format'] = '%m/%d/%Y';
 
     $view = new View('arag_templates/arag_date', $data);

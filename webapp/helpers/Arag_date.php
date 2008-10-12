@@ -400,4 +400,19 @@ class date extends date_Core {
         return ((int) ceil(($jd['today'] + $jd['wday']) / 7));
     }
     // }}}
+    // {{{ strtotime
+    public static function strtotime($str)
+    {
+            if (!$str) {
+                return 0;
+            }
+            $array = explode('/', $str);
+            if (Kohana::config('locale.lang') == "fa") {
+                $timestamp = date::jalali_to_gregorian($array[0], $array[1], $array[2]) - (210 * 60);
+            } else {
+                $timestamp = mktime(0, 0, 0, $array[0], $array[1], $array[2]);
+            }
+            return $timestamp;
+    }
+    // }}}
 }

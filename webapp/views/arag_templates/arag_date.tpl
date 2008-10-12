@@ -3,8 +3,8 @@
 {arag_load_script src="scripts/JalaliJSCalendar/calendar-setup.js"}
 {arag_load_script src="scripts/JalaliJSCalendar/jalali.js"}
 
-<input id="{$name}" name="{$name}" type="text" onfocus="javascript:Calendar.show;" />
-<img src="{$arag_base_url}images/date/date.png" width="22" height="22" id="{$name}_cal" alt={quote}_("Calendar"){/quote} style="cursor: pointer;" title={quote}_("Calendar"){/quote} />
+<input id="{$name}" name="{$name}" type="text" value="{$value}" onfocus="javascript:Calendar.show;" />
+<img src="{$arag_base_url}images/date/date.png" width="22" height="22" id="{$name}_cal" alt={quote}_("Calendar"){/quote} style="cursor: pointer;" alt="" />
 
 <script type="text/javascript">
     var id     = "{$name}";
