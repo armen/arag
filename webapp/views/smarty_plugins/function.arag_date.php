@@ -41,7 +41,7 @@ function smarty_function_arag_date($params, &$smarty)
     $data['lang']   = $lang;
     $data['type']   = $type;
     $data['name']   = $name;
-    $data['value']  = $value;
+    $data['value']  = isset($value) ? $value : "";
     $data['format'] = '%m/%d/%Y';
 
     $view = new View('arag_templates/arag_date', $data);
