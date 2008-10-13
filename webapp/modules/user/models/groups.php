@@ -31,7 +31,7 @@ class Groups_Model extends Model
     // {{{ & getAnonymousGroup
     public function & getAnonymousGroup($appname)
     {
-        $this->db->select('name, appname, privileges, redirect');
+        $this->db->select('id as group_id, name, appname, privileges, redirect');
         $this->db->from($this->tableNameGroups);
         $this->db->where('appname', $appname);
         $this->db->where('name', 'anonymous');
@@ -192,6 +192,12 @@ class Groups_Model extends Model
     {
         $this->db->where('id', $groupid);
         $this->db->update($this->tableNameGroups, array('modify_date' => time(), 'modified_by' => $author));
+    }
+    // }}}
+    // {{{ getNumberOfUsers
+    public function getNumberOfUsers($row)
+    {
+        return $this->db->select('count(username) as count')->getwhere($this->tableNameUsers, Array('group_id' => $row['id']))->current()->count;
     }
     // }}}
 }
