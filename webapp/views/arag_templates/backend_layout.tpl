@@ -9,6 +9,18 @@
 <head>
     <title>{$page_title}</title>
     {arag_head}
+    <script language="javascript" type="text/javascript" src="{$arag_base_url|smarty:nodefaults}modpub/tinymce/tiny_mce.js"></script>
+    {literal}
+    <script language="javascript" type="text/javascript">
+    tinyMCE.init({
+            theme : "advanced",
+            plugins : "easyUpload, table, layer, directionality",
+            theme_advanced_buttons3_add : "easyUpload, table, delete_table, delete_col, col_after, col_before, cell_props, delete_row, row_after, row_before, row_props, split_cells, merge_cells, moveforward, movebackward, absolute, insertlayer, ltr, rtl, fontselect, fontsizeselect, forecolorpicker, backcolorpicker",
+            mode: "specific_textareas",
+            editor_selector: "rte",
+            content_css: "{/literal}{$arag_base_url|smarty:nodefaults}modpub/tinymce/tinymce.css"
+    });
+    </script>
 </head>
 <body>
     {arag_block align="right" template="blank"}
