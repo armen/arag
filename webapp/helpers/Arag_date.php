@@ -407,12 +407,27 @@ class date extends date_Core {
                 return 0;
             }
             $array = explode('/', $str);
+            if (count($array)!=3) {
+                return 0;
+            }
             if (Kohana::config('locale.lang') == "fa") {
                 $timestamp = date::jalali_to_gregorian($array[0], $array[1], $array[2]) - (210 * 60);
             } else {
                 $timestamp = mktime(0, 0, 0, $array[0], $array[1], $array[2]);
             }
             return $timestamp;
+    }
+    // }}}
+    // {{{ timetostr
+    public static function timetostr($timestamp)
+    {
+            if (Kohana::config('locale.lang') == "fa") {
+                $date = date::gregorian_to_jalali($timestamp);
+                $str  = $date['year'].'/'.$date['month'].'/'.$date['day'];
+            } else {
+                $str  = date('y/m/d', $timestamp);
+            }
+            return $str;
     }
     // }}}
 }

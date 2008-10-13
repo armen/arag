@@ -30,9 +30,15 @@ class valid extends valid_Core {
     }
     // }}}
     // {{{ equals
-    public static function equals($value, $options) {
+    public static function equals($value, $options)
+    {
         return $value == current($options);
     }
     // }}}
-
+    // {{{
+    public static function date($date)
+    {
+        return (bool) date::strtotime($date); //I '"_think_"' it should work
+    }
+    // }}}
 } // End valid
