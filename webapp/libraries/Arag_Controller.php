@@ -38,9 +38,13 @@ class Controller extends Controller_Core {
         $this->validation = Validation::factory();
 
         if ($this->layout == Null) {
-            $this->layout = (strpos(Router::$controller_path, 'backend') !== False || Router::$controller === 'backend')
-                          ? 'arag_templates/backend_layout'
-                          : 'arag_templates/frontend_layout';
+            $theme = Kohana::config('theme.default');
+
+            if (strpos(Router::$controller_path, 'backend') !== False || Router::$controller === 'backend') {
+                $this->layout = 'themes/'.$theme.'/backend_layout';
+            } else {
+                $this->layout = 'themes/'.$theme.'/frontend_layout';
+            }
         }
 
         $this->session = Session::instance();

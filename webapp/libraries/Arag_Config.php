@@ -38,11 +38,28 @@ class Arag_Config_Core
             $db->update(self::$tableName, Array('name' => $name, 'namespace' => $namespace, 'value' => $value),
                                           Array('name' => $name, 'namespace' => $namespace));
         }
+        static $cache;
+        if (!isset($cache)) {
+            $cache = new Cache;
+        }
+        $cache->delete($name.'_'.$namespace);
     }
     // }}}
     // {{{ & get
     public static function & get($name, $default = Null, $namespace = Null, $try_kohana_config_first = False)
     {
+        static $cache;
+        if (!isset($cache)) {
+            $cache = new Cache;
+        }
+
+        $id = $name.'_'.$namespace.'_'.$try_kohana_config_first;
+
+        $cached = $cache->get($id);
+        if ($cached) {
+            return $cached;
+        }
+
         if ($namespace == Null) {
             $namespace = Router::$module;
         }
@@ -56,29 +73,28 @@ class Arag_Config_Core
             Kohana::config_set('core.modules', array_unique(array_merge($old_include_paths, Array(MODPATH.$namespace))));
 
             $result = Kohana::config($name);
+        }
 
-            if (!empty($result)) {
-                return $result;
+        if (empty($result)) {
+            static $db;
+            if (!isset($db)) {
+                $db     = new Database();
+            }
+            $result = $default;
+
+            $db->select('value');
+            $query = $db->getwhere(self::$tableName, Array('name' => $name, 'namespace' => $namespace));
+
+            if (count($query) > 0) {
+                if (get_magic_quotes_gpc() == True) {
+                    $result = unserialize($query->current()->value);
+                } else {
+                    $result = unserialize(stripslashes($query->current()->value));
+                }
             }
         }
 
-        static $db;
-        if (!isset($db)) {
-            $db     = new Database();
-        }
-        $result = $default;
-
-        $db->select('value');
-        $query = $db->getwhere(self::$tableName, Array('name' => $name, 'namespace' => $namespace));
-
-        if (count($query) > 0) {
-            if (get_magic_quotes_gpc() == True) {
-                $result = unserialize($query->current()->value);
-            } else {
-                $result = unserialize(stripslashes($query->current()->value));
-            }
-        }
-
+        $cache->set($id, $result);
         return $result;
     }
     // }}}

@@ -14,6 +14,8 @@
 
 function smarty_function_arag_head($params, &$smarty)
 {
+    $theme = Kohana::config('theme.default');
+    $smarty->assign('theme', $theme);
     return $smarty->fetch(Kohana::find_file('views', 'arag_templates/head', True, 'tpl'));
 }
 
