@@ -7,10 +7,11 @@ class Welcome_Controller extends Controller
     {
         $session = Session::instance();
 
+        $theme = Kohana::config('theme.default');
         if ($session->get('user.authenticated')) {
-            $this->layout = 'arag_templates/backend_layout';
+            $this->layout = 'themes/'.$theme.'/backend_layout';
         } else {
-            $this->layout = 'arag_templates/frontend_layout';
+            $this->layout = 'themes/'.$theme.'/frontend_layout';
         }
 
         parent::__construct();
