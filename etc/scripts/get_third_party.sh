@@ -55,11 +55,8 @@ tar xvfj /tmp/pear-1.6.2.tar.bz2
 mv ./pear $LIBS_PATH
 
 # Download TinyMce
-find $MODS_PATH/tinymce | grep -r tinymce.css | xargs rm -rf #Delete tinymce, but not the css file
 
-if [ -d $MODS_PATH/tinymce ]; then
-    rm -rf "$MODS_PATH/tinymce"
-fi
+find $MODS_PATH/tinymce | grep -r tinymce.css | xargs rm -rf #Delete tinymce, but not the css file
 
 wget -c -P /tmp http://prdownloads.sourceforge.net/tinymce/tinymce_3_1_1.zip?download
 unzip -u /tmp/tinymce_3_1_1.zip -d /tmp
