@@ -19,6 +19,7 @@ function smarty_function_arag_date($params, &$smarty)
         switch ($_key) {
             case 'value':
             case 'name' :
+            case 'toggle':
                 $$_key = $_val;
                 break;
 
@@ -41,6 +42,7 @@ function smarty_function_arag_date($params, &$smarty)
     $data['lang']   = $lang;
     $data['type']   = $type;
     $data['name']   = $name;
+    $data['toggle'] = isset($toggle) ? True : False;
     $data['value']  = isset($value) ? $value : "";
     $data['format'] = '%m/%d/%Y';
 

@@ -400,22 +400,37 @@ class date extends date_Core {
         return ((int) ceil(($jd['today'] + $jd['wday']) / 7));
     }
     // }}}
-    // {{{ strtotime
-    public static function strtotime($str)
+    // {{{ get_time
+    public static function get_time($name)
     {
-            if (!$str) {
-                return 0;
-            }
-            $array = explode('/', $str);
-            if (count($array)!=3) {
-                return 0;
-            }
-            if (Kohana::config('locale.lang') == "fa") {
-                $timestamp = date::jalali_to_gregorian($array[0], $array[1], $array[2]) - (210 * 60);
-            } else {
-                $timestamp = mktime(0, 0, 0, $array[0], $array[1], $array[2]);
-            }
-            return $timestamp;
+        $value = Input::instance()->Post($name);
+        $type  = Input::instance()->Post($name.'_type');
+
+        if (!$type) {
+            $lang = Kohana::config('locale.lang') == "fa";
+            $type = $lang == 'fa' ? 'jalali' : 'gregorian';
+        }
+        return date::strtotime($value, $type);
+    }
+    // }}}
+    // {{{ strtotime
+    public static function strtotime($str, $type)
+    {
+        if (!$str) {
+            return 0;
+        }
+        $array = explode('/', $str);
+        if (count($array)!=3) {
+            return 0;
+        }
+
+        if ($type == "jalali") {
+            $timestamp = date::jalali_to_gregorian($array[0], $array[1], $array[2]) - (210 * 60);
+        } else {
+            $timestamp = mktime(0, 0, 0, $array[1], $array[2], $array[0]);
+        }
+
+        return $timestamp;
     }
     // }}}
     // {{{ timetostr

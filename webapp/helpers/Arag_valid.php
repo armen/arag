@@ -36,9 +36,9 @@ class valid extends valid_Core {
     }
     // }}}
     // {{{
-    public static function date($date)
+    public static function date($date, $options)
     {
-        return (bool) date::strtotime($date); //I '"_think_"' it should work
+        return (bool) date::get_time(current($options));
     }
     // }}}
 } // End valid
