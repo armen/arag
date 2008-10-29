@@ -189,7 +189,6 @@ class Entry_Controller extends Blog_Backend
     // }}}
     // }}}
     // {{{ preview
-    // {{{ preview
     public function preview_any($id)
     {
         $this->global_tabs->setParameter('id', $id);
