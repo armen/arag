@@ -1,0 +1,438 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2008-04-10 17:21+0430\n"
+"PO-Revision-Date: 2008-04-14 02:48-0800\n"
+"Last-Translator: vafaei\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: views/arag_templates/frontend_layout.tpl:18
+msgid "Main Page"
+msgstr "صفحه اصلی"
+
+#: views/arag_templates/frontend_layout.tpl:19
+msgid "Cards"
+msgstr "کارتها"
+
+#: views/arag_templates/frontend_layout.tpl:20
+msgid "Compare Cards"
+msgstr "مقایسه کارتها"
+
+#: views/arag_templates/frontend_layout.tpl:21
+msgid "About Us"
+msgstr "درباره ما"
+
+#: views/arag_templates/frontend_layout.tpl:22
+msgid "Contact Us"
+msgstr "ارتباط با ما"
+
+#: views/arag_templates/frontend_layout.tpl:30
+msgid "Buy Card"
+msgstr "خرید کارت"
+
+#: views/arag_templates/frontend_layout.tpl:31
+msgid "List of orders"
+msgstr "فهرست سفارشات"
+
+#: views/arag_templates/frontend_layout.tpl:32
+msgid "User Guide"
+msgstr "راهنمای کاربر"
+
+#: views/arag_templates/frontend_layout.tpl:33
+msgid "Get Card Information"
+msgstr "دریافت اطلاعات کارت"
+
+#: views/arag_templates/frontend_layout.tpl:48
+#: views/arag_templates/frontend_layout.tpl:65
+#: modules/core/views/messages/not_authorized.tpl:37
+#: modules/user/views/frontend/login.tpl:32
+msgid "Login"
+msgstr "ورود"
+
+#: views/arag_templates/frontend_layout.tpl:51
+msgid "Username"
+msgstr "نام کاربری"
+
+#: views/arag_templates/frontend_layout.tpl:57
+msgid "Password"
+msgstr "رمز عبور"
+
+#: views/arag_templates/frontend_layout.tpl:70
+#: views/arag_templates/frontend_layout.tpl:75
+msgid "Register"
+msgstr "ثبت نام"
+
+#: views/arag_templates/frontend_layout.tpl:71
+#, c-format
+msgid "If you want to use this site, %s here."
+msgstr "در صورت تمایل به استفاده از مزایا و امکانات جانبی این سایت، توصیه میشود %s نمایید"
+
+#: views/arag_templates/frontend_layout.tpl:76
+msgid "Forgot Password"
+msgstr "رمز خود را فراموش کرده اید؟"
+
+#: views/arag_templates/frontend_layout.tpl:83
+#: views/arag_templates/backend_layout.tpl:16
+msgid "Logout"
+msgstr "خروج"
+
+#: views/arag_templates/frontend_layout.tpl:86
+msgid "Admin"
+msgstr "مدیریت"
+
+#: views/arag_templates/frontend_layout.tpl:89
+#: views/arag_templates/backend_layout.tpl:17
+msgid "My Profile"
+msgstr "اطلاعات فردی"
+
+#: views/arag_templates/frontend_layout.tpl:97
+msgid "Buy card"
+msgstr "خربد کارت"
+
+#: views/arag_templates/frontend_layout.tpl:116
+msgid "Copyright &copy; 2008 DES Inc. All rights reserved."
+msgstr "کلیه حقوق برای شرکت توسعه تجارت الکترونیک سامانه کیش محفوظ است."
+
+#: views/arag_templates/backend_layout.tpl:15
+#, c-format
+msgid "Welcome %s %s"
+msgstr "%s %s خوش آمدید"
+
+#: views/arag_templates/backend_layout.tpl:18
+msgid "Control Panel"
+msgstr "پنل مدیریت"
+
+#: views/arag_templates/backend_layout.tpl:19
+msgid "Home"
+msgstr "صفحه اصلی"
+
+#: views/messages/not_authorized.tpl:9
+msgid "You are not authorized to access this section!"
+msgstr "شما اجازه دسترسی به این صفحه را ندارید."
+
+#: views/messages/not_authorized.tpl:10
+msgid "Return to the Main Page"
+msgstr "بازگشت به صفحه اصلی"
+
+msgid "Core"
+msgstr "هسته"
+
+msgid "Blog"
+msgstr "بلاگ"
+
+msgid "User Management"
+msgstr "مدیریت کاربران"
+
+msgid "Multisite"
+msgstr "سایت ها"
+
+msgid "Order Manager"
+msgstr "مدیریت سفارشات"
+
+msgid "Product Manager"
+msgstr "مدیریت محصولات"
+
+msgid "Workflows"
+msgstr "روند ها"
+
+msgid "Static Pages"
+msgstr "صفحات ثابت"
+
+msgid "Deliver Methods"
+msgstr "روش های ارسال"
+
+msgid "Actions"
+msgstr "عملیات"
+
+msgid "List content is Empty!"
+msgstr "هیچ رکوردی یافت نشد!"
+
+msgid "Saman online payment"
+msgstr "پرداخت آنلاین سامان"
+
+msgid "Mellat Bank"
+msgstr "بانک ملت"
+
+msgid "unpaid"
+msgstr "پرداخت نشده"
+
+msgid "paid"
+msgstr "پرداخت شده"
+
+msgid "finished"
+msgstr "پایان یافته"
+
+msgid "unconfirmed_paid"
+msgstr "منتظر تایید"
+
+msgid "confirmed_paid"
+msgstr "تایید اولیه"
+
+msgid "no_pan_error"
+msgstr "PAN موجود نیست"
+
+msgid "no_pin_error"
+msgstr "PIN موجود نیست"
+
+msgid "email_not_sent"
+msgstr "خطا در ارسال ایمیل"
+
+msgid "unmatched_amount_error"
+msgstr "عدم تطابق مبالغ"
+
+msgid "charge_error"
+msgstr "خطا در شارژ"
+
+msgid "payment_verify_error"
+msgstr "خطا در تایید پرداخت"
+
+msgid "check_credit"
+msgstr "بررسی اعتبار"
+
+msgid "charged"
+msgstr "شارژ شده"
+
+msgid "repan"
+msgstr "دریافت دوباره ی PAN"
+
+msgid "deliver"
+msgstr "منتظر ارسال"
+
+msgid "sent"
+msgstr "ارسال شده"
+
+msgid "delivered"
+msgstr "دریافت شده"
+
+msgid "suspend"
+msgstr "معلق"
+
+msgid "proccess"
+msgstr "در حال بررسی"
+
+msgid "canceled"
+msgstr "باطل شده"
+
+msgid "add_to_first_stage_spool"
+msgstr "اضافه به Spool مرحله ی اول"
+
+msgid "add_to_second_stage_spool"
+msgstr "اضافه به Spool مرحله ی دوم"
+
+msgid "add_to_third_stage_spool"
+msgstr "اضافه به Spool مرحله ی سوم"
+
+msgid "remove_from_second_spool"
+msgstr "اضافه به Spool مرحله ی دوم"
+
+msgid "remove_from_third_spool"
+msgstr "اضافه به Spool مرحله ی سوم"
+
+msgid "reverse_amount"
+msgstr "برگرداندن مبلغ"
+
+msgid "amount_reverted"
+msgstr "برگشت مبلغ"
+
+msgid "revert_error"
+msgstr "خطا در برگشت مبلغ"
+
+msgid "wrong_files"
+msgstr "فایل های اشتباه"
+
+msgid "add_to_credit"
+msgstr "مبلغ به اعتبار اضافه شد"
+
+msgid "not_enough_credit"
+msgstr "اعتبار ناکافی"
+
+msgid "reserved_amount_less_than_total_amount"
+msgstr "مبلغ رزرو شده کمتر از مبلغ کل"
+
+msgid "spool"
+msgstr "در حال انجام"
+
+msgid "Spool"
+msgstr "سفارش های در حال انجام"
+
+msgid "FC Payment"
+msgstr "پرداخت ارزی"
+
+msgid "assign_pan"
+msgstr "اختصاص PAN"
+
+msgid "assign_pin"
+msgstr "اختصاص PIN"
+
+msgid "send_email"
+msgstr "ارسال ایمیل"
+
+msgid "recalculate"
+msgstr "محاسبه ی مجدد"
+
+msgid "Report Generator"
+msgstr "گزارش گیری"
+
+msgid "Cost Manager"
+msgstr "مدیریت هزینه ها"
+
+msgid "Credit"
+msgstr "اعتبار"
+
+msgid "Order paid"
+msgstr "پرداخت شد"
+
+msgid "Welcome"
+msgstr "خوش آمدید"
+
+msgid "Rial(s)"
+msgstr "ریال"
+
+msgid "Your credit: "
+msgstr "اعتبار شما: "
+
+msgid "Saman Reverse Amount"
+msgstr "برگشت زدن پرداخت های سامان"
+
+msgid "You tried to resubmit a form"
+msgstr "شما تلاش برای ارسال مجدد یک فرم کردید!"
+
+msgid "The order has been charged."
+msgstr "سفارش شما شارژ شد."
+
+msgid "There was not enough credit for this order"
+msgstr "اعتبار شما برای پرداخت این سفارش کافی نیست"
+
+msgid "There was not enough credit in your account.Please contact administrator for more information."
+msgstr "متاسفانه اعتبار موجود در حساب شما کافی نمی باشد. لطفا با مدیر سایت تماس حاصل نمایید."
+
+msgid "Irancell Report"
+msgstr "گزارشهای ایرانسل"
+
+msgid "Fields marked with a %s are required."
+msgstr "تکمیل بخش های دارای علامت %s الزامی می باشد."
+
+msgid "Online payment with the support of following debit card:"
+msgstr "پرداخت آنلاین با استفاده از کارت های زیر:"
+
+msgid "Status changed to"
+msgstr "وضعیت سفارش تغییر کرد به"
+
+msgid "Order added to confirmation spool!"
+msgstr "سفارش در مرحله ی منتظر تایید پرداخت است"
+
+msgid "Back to Order Details"
+msgstr "برگشت به جزئیات سفارش"
+
+msgid "Index"
+msgstr "شروع"
+
+msgid "Get Info"
+msgstr "اطلاعات اولیه"
+
+msgid "Confirmation"
+msgstr "تاییدیه"
+
+msgid "Resume"
+msgstr "ادامه"
+
+msgid "Error"
+msgstr "خطا"
+
+#: libraries/IrancellStatusHandler.php:88
+msgid ""
+"Dear %name%\n"
+"\n"
+"Thank you very much for your shopping. Your order is now finished. Use the "
+"following PIN for charging:\n"
+"\n"
+"PIN: %pin%\n"
+"\n"
+"Payment Reference Number: %reference_num%\n"
+"\n"
+"Guide:\n"
+"\n"
+"Activete your charge card by using:\n"
+"*140*%pin%# (Yes/OK)\n"
+"\n"
+"You can also go to your orders history page to see the full details of your "
+"order"
+msgstr ""
+"%name% عزیز،\n"
+"\n"
+"از خرید شما سپاسگذاریم. سفارش شما با موفقیت به پایان رسیده است. لطفا برای "
+"شارژ ایرانسل خود از رمز شارژ زیر استفاده نمایید:\n"
+"\n"
+"PIN: %pin%\n"
+"\n"
+"رسید تراکنش شما: %reference_num%\n"
+"\n"
+"نحوه ی استفاده:\n"
+"\n"
+"برای شارژ خط ایرانسل خود به شکل زیر شماره گیری کنید:\n"
+"*140*%pin%# (Yes/OK)\n"
+"\n"
+"شما همچنین می توانید با مراجعه به صفحه ی سفارشات خود، جزئیات کامل سفارش خود "
+"را مشاهده نمایید"
+
+#: libraries/IrancellStatusHandler.php:96
+msgid ""
+"Thank you very much for your shopping. Your order is now finished. Use the "
+"following PIN for charging:\n"
+"\n"
+"PIN: %pin%\n"
+"\n"
+"Payment Reference Number: %reference_num%\n"
+"\n"
+"Guide:\n"
+"\n"
+"Activete your charge card by using:\n"
+"*140*%pin%# (Yes/OK)\n"
+"\n"
+"You can register in our site for better to see the complete details of your "
+"orders"
+msgstr ""
+"از خرید شما سپاسگذاریم. سفارش شما با موفقیت به پایان رسیده است. لطفا برای "
+"شارژ کارت ایرانسل خود از PIN زیر استفاده نمایید:\n"
+"\n"
+"PIN: %pin%\n"
+"\n"
+"رسید تراکنش شما: %reference_num%\n"
+"\n"
+"نحوه ی استفاده:\n"
+"\n"
+"برای شارژ خط ایرانسل خود به شکل زیر شماره گیری کنید:\n"
+"*140*%pin%# (Yes/OK)\n"
+"\n"
+"شما می توانید با ثبت نام در سایت به جزئیات کامل تاریخچه ی سفارشات خود دسترسی "
+"داشته باشید."
+
+msgid "Number of Pages"
+msgstr "تعداد صفحات"
+
+msgid "Number of Resources"
+msgstr "تعداد رکوردها"
+
+msgid "Row"
+msgstr "ردیف"
+
+msgid "Total Amount"
+msgstr "مبلغ کل"
+
+msgid "Help"
+msgstr "راهنما"
+
+msgid "Manage helps"
+msgstr "مدیریت راهنما‌ها"
+
+msgid "Add Help to this page"
+msgstr "اضافه‌کردن راهنما به این صفحه"

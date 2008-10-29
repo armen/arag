@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-06-02 14:58+0430\n"
+"POT-Creation-Date: 2008-09-26 22:51+0330\n"
 "PO-Revision-Date: 2008-04-14 02:27-0800\n"
 "Last-Translator: vafaei\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -78,15 +78,15 @@ msgstr "جدید"
 msgid "Settings"
 msgstr "تنظیمات"
 
-#: controllers/backend.php:25 controllers/backend.php:48
+#: controllers/backend.php:25 controllers/backend.php:49
 msgid "Edit"
 msgstr "ویرایش"
 
-#: controllers/backend.php:26 controllers/backend.php:50
+#: controllers/backend.php:26 controllers/backend.php:48
 msgid "Preview"
 msgstr "نمایش"
 
-#: controllers/backend.php:27 controllers/backend.php:49
+#: controllers/backend.php:27 controllers/backend.php:50
 #: controllers/backend.php:51
 msgid "Delete"
 msgstr "حذف"
@@ -112,6 +112,16 @@ msgstr "تاریخ ایجاد"
 #: controllers/backend.php:47
 msgid "Modify Date"
 msgstr "تاریخ اصلاح"
+
+#: controllers/backend.php:86 controllers/backend.php:148
+#: controllers/backend.php:197 controllers/backend.php:220
+#: controllers/backend.php:236 controllers/backend.php:284
+msgid "Invalid ID"
+msgstr "شناسه نا معتبر"
+
+#: controllers/backend.php:105 controllers/backend.php:256
+msgid "No form is submitted"
+msgstr "هیچ فرمی ارسال نشده است"
 
 #: controllers/backend.php:115 controllers/backend.php:160
 msgid "Page"
