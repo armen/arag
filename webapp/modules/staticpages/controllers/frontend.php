@@ -17,6 +17,11 @@ class Frontend_Controller extends Controller
         $this->layout->page_title = _("Static Pages");
     }
     // }}}
+    // {{{ index
+    public function index()
+    {
+    }
+    // }}}
     // {{{ view
     public function view_any($id = 0)
     {
@@ -35,6 +40,8 @@ class Frontend_Controller extends Controller
             $data = Array('id'      => $row['id'],
                           'subject' => $row['subject'],
                           'page'    => $row['page']);
+
+            $this->layout->page_title = $row['subject'];
 
             $this->layout->content = new View('frontend/preview', $data);
 
