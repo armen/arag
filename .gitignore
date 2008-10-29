@@ -2,9 +2,11 @@ libs/kohana
 libs/smarty
 libs/pear
 public_html/modpub/tinymce
+public_html/scripts/JalaliJSCalendar/
 webapp/cache/kohana_configuration
 webapp/cache/kohana_file_paths
 webapp/cache/smarty_compile/
+webapp/cache/*~~[0-9]*
 webapp/logs/*.log.php
 webapp/logs/*.log
 webapp/logs/cli/*.log.php
