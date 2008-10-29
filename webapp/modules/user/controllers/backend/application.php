@@ -41,7 +41,7 @@ class Application_Controller extends Backend_Controller
     }
     // }}}
     // {{{ index
-    public function index()
+    public function index_any()
     {
         $this->_create_groups_list($this->appname);
 
@@ -118,7 +118,7 @@ class Application_Controller extends Backend_Controller
     }
     // }}}
     // {{{ delete
-    public function delete($type, $objects = NULL)
+    public function delete_any($type, $objects = NULL)
     {
         if ($objects != NULL) {
             $this->global_tabs->addItem(_("Delete"), "user/backend/application/delete/".$type."/".$objects);
@@ -181,7 +181,7 @@ class Application_Controller extends Backend_Controller
     }
     // }}}
     // {{{ do_delete
-    public function do_delete()
+    public function do_delete_any()
     {
         $flag    = $this->input->post('flag');
         $objects = $this->input->post('objects');
@@ -201,7 +201,7 @@ class Application_Controller extends Backend_Controller
     }
     //}}}
     // {{{ do_delete_validate
-    public function do_delete_validate()
+    public function do_delete_validate_any()
     {
         $this->validation->name('objects', _("Objects"))->add_rules(array($this, '_check_current_deletables'));
 
@@ -209,7 +209,7 @@ class Application_Controller extends Backend_Controller
     }
     // }}}
     // {{{ do_delete_error
-    public function do_delete_error()
+    public function do_delete_any_error()
     {
         $this->_invalid_request('user/backend/application', _("Invalid Object"));
     }
@@ -230,7 +230,7 @@ class Application_Controller extends Backend_Controller
     }
     //}}}
     // {{{ all_users
-    public function all_users($page = NULL)
+    public function all_users_any($page = NULL)
     {
         if ($page != Null && preg_match('|page[a-z_]*:[0-9]*|', $page)) {
             $user       = $this->session->get('user_user_user');

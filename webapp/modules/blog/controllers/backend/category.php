@@ -9,10 +9,8 @@
 class Category_Controller extends Blog_Backend
 {
     // {{{ index
-    public function index()
+    public function index_any()
     {
     }
     // }}}
 }
-
-?>

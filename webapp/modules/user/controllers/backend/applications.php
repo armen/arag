@@ -55,7 +55,7 @@ class Applications_Controller extends Backend_Controller
     }
     // }}}
     // {{{ index
-    public function index($page = Null)
+    public function index_any($page = Null)
     {
         $applications = new PList_Component('applications');
 
@@ -77,8 +77,8 @@ class Applications_Controller extends Backend_Controller
         $this->layout->content = new View('backend/index', array("name" => $name, "flag" => false));
     }
     // }}}
-    // {{{ index_validate
-    public function index_validate()
+    // {{{ index_validate_any
+    public function index_validate_any()
     {
         $this->validation->name('name', _("Name"))->pre_filter('trim', 'name')
              ->add_rules('name', 'required');
@@ -86,10 +86,10 @@ class Applications_Controller extends Backend_Controller
         return $this->validation->validate();
     }
     // }}}
-    // {{{ index_error
-    public function index_error()
+    // {{{ index_any_error
+    public function index_any_error()
     {
-        $this->index();
+        $this->index_any();
     }
     // }}}
     // {{{ groups_read
@@ -195,7 +195,7 @@ class Applications_Controller extends Backend_Controller
     }
     // }}}
     // {{{ all_users
-    public function all_users($page = NULL)
+    public function all_users_any($page = NULL)
     {
         if ($page != Null && preg_match('|page[a-z_]*:[0-9]*|', $page)) {
             $user       = $this->session->get('user_user_user');
@@ -270,7 +270,7 @@ class Applications_Controller extends Backend_Controller
     }
     // }}}
     // {{{ delete
-    public function delete($type, $objects = NULL)
+    public function delete_any($type, $objects = NULL)
     {
         if ($objects != NULL) {
             $this->global_tabs->addItem(_("Delete"), "user/backend/applications/delete/".$type."/".$objects, "user/backend/applications");
@@ -332,8 +332,8 @@ class Applications_Controller extends Backend_Controller
         $this->layout->content = new View('backend/delete', $data);
     }
     // }}}
-    // {{{ do_delete
-    public function do_delete()
+    // {{{ do_delete_any
+    public function do_delete_any()
     {
         $flag    = $this->input->post('flag');
         $objects = $this->input->post('objects');
@@ -352,8 +352,8 @@ class Applications_Controller extends Backend_Controller
         }
     }
     // }}}
-    //{{{ apps_filters
-    public function apps_filters($page = NULL)
+    //{{{ apps_filters_any
+    public function apps_filters_any($page = NULL)
     {
         $applications = new PList_Component('applications');
 
@@ -514,8 +514,8 @@ class Applications_Controller extends Backend_Controller
         $this->filters_edit_read($appname, $id);
     }
     //}}}
-    // {{{ filters_delete
-    public function filters_delete($appname, $objects = NULL)
+    // {{{ filters_delete_any
+    public function filters_delete_any($appname, $objects = NULL)
     {
         // object type clarify that ifyou are going to delete indivual filters
         // or whole application's filters: False means a filter and true means
@@ -567,8 +567,8 @@ class Applications_Controller extends Backend_Controller
         $this->layout->content = new View('backend/filters_delete', $data);
     }
     // }}}
-    // {{{ app_filters_delete
-    public function app_filters_delete($objects = NULL)
+    // {{{ app_filters_delete_any
+    public function app_filters_delete_any($objects = NULL)
     {
         // object type clarify that ifyou are going to delete indivual filters
         // or whole application's filters: False means a filter and true means
@@ -613,8 +613,8 @@ class Applications_Controller extends Backend_Controller
         $this->layout->content = new View('backend/filters_delete', $data);
     }
     // }}}
-    // {{{ filters_do_delete
-    public function filters_do_delete()
+    // {{{ filters_do_delete_any
+    public function filters_do_delete_any()
     {
         $objects    = $this->input->post('objects');
         $objecttype = $this->input->post('objecttype');
@@ -698,7 +698,7 @@ class Applications_Controller extends Backend_Controller
     }
     // }}}
     // {{{ privileges_all
-    public function privileges_all()
+    public function privileges_all_any()
     {
         $this->_create_privileges_list($this->appname);
     }
@@ -812,8 +812,8 @@ class Applications_Controller extends Backend_Controller
         $this->privileges_edit_read($id);
     }
     // }}}
-    // {{{ privileges_delete
-    public function privileges_delete($objects = NULL)
+    // {{{ privileges_delete_any
+    public function privileges_delete_any($objects = NULL)
     {
 
         // This flag decides wheter to show a caption message in case the
@@ -865,8 +865,8 @@ class Applications_Controller extends Backend_Controller
         $this->layout->content = new View('backend/privileges_delete', $data);
     }
     // }}}
-    // {{{  privileges_do_delete
-    public function privileges_do_delete()
+    // {{{  privileges_do_delete_any
+    public function privileges_do_delete_any()
     {
         $objects = $this->input->post('objects');
 

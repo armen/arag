@@ -163,8 +163,8 @@ class Frontend_Controller extends Controller
     }
     // }}}
     // }}}
-    // {{{ logout
-    public function logout()
+    // {{{ logout_any
+    public function logout_any()
     {
         // Good bye!
         $this->session->destroy();

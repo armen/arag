@@ -36,7 +36,7 @@ class Backend_Controller extends Controller
     }
     // }}}
     // {{{ index
-    public function index()
+    public function index_any()
     {
         if (defined('MASTERAPP')) {
             url::redirect("user/backend/applications");

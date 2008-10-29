@@ -10,8 +10,8 @@ require_once "backend.php";
 
 class Site_Controller extends Backend_Controller
 {
-    // {{{ index
-    public function index($page = NULL)
+    // {{{ index_any
+    public function index_any($page = NULL)
     {
         $multiSite          = new MultiSite_Model;
         $this->applications = new PList_Component('applications');
@@ -45,11 +45,10 @@ class Site_Controller extends Backend_Controller
         $this->layout->content = new View('backend/site', $data);
     }
     // }}}
-    // {{{ index_error
-    public function index_error()
+    // {{{ index_any_error
+    public function index_any_error()
     {
-        $this->index();
+        $this->index_any();
     }
     // }}}
 }
-?>

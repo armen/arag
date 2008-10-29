@@ -63,10 +63,6 @@ class Backend_Controller extends Controller
 
         if ($isset_profile = $this->UserProfile->hasUserName($this->username)) {
             $data = array_merge($data, $this->UserProfile->getProfile($this->username));
-
-            /*if ($data['pan'] != NULL) {
-                $data['pan'] = $this->panSplitter($data['pan']);
-            }*/
         }
 
         $data = array_merge($data, array (
@@ -171,16 +167,6 @@ class Backend_Controller extends Controller
         $this->password_read();
     }
     // }}}
-    // {{{ panSplitter
-    public function panSplitter($pan)
-    {
-        if (is_array($pan)) {
-            return implode('', $pan);
-        } else {
-            return str_split($pan, 4);
-        }
-    }
-    // }}}
     // {{{ _check_old_password
     public function _check_old_password($password)
     {
@@ -194,4 +180,3 @@ class Backend_Controller extends Controller
     }
     // }}}
 }
-?>

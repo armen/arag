@@ -17,7 +17,7 @@ class Contacts_Controller extends Backend_Controller
     }
     // }}}
     // {{{ index
-    public function index()
+    public function index_any()
     {
         $this->list_read();
     }

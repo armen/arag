@@ -9,7 +9,7 @@
 class Entry_Controller extends Blog_Backend
 {
     // {{{ index
-    public function index()
+    public function index_any()
     {
         $entries = new PList_Component('entries');
 
@@ -190,7 +190,7 @@ class Entry_Controller extends Blog_Backend
     // }}}
     // {{{ preview
     // {{{ preview
-    public function preview($id)
+    public function preview_any($id)
     {
         $this->global_tabs->setParameter('id', $id);
 
@@ -206,16 +206,16 @@ class Entry_Controller extends Blog_Backend
         $this->layout->content = new View('backend/preview', Array('extended'  => True, 'entry_uri' => '/blog/backend/entry/preview/#id#'));
     }
     // }}}
-    // {{{ preview_validate
-    public function preview_validate()
+    // {{{ preview_validate_any
+    public function preview_validate_any()
     {
         $this->validation->name(0, _("ID"))->add_rules(0, 'required', 'valid::numeric', array($this, '_check_entry'));
 
         return $this->validation->validate();
     }
     // }}}
-    // {{{ preview_error
-    public function preview_error()
+    // {{{ preview_any_error
+    public function preview_any_error()
     {
         $this->_invalid_request('blog/backend/entry', _("Invalid ID"));
     }

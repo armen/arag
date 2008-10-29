@@ -28,7 +28,7 @@ class Frontend_Controller extends Controller
     }
     // }}}
     // {{{ index
-    public function index()
+    public function index_any()
     {
         $entry = new PList_Component('entry');
         $entry->setLimit(Arag_Config::get('post_limit', 0));
@@ -42,8 +42,8 @@ class Frontend_Controller extends Controller
     }
     // }}}
     // {{{ view
-    // {{{ view
-    public function view($id, $extended = False)
+    // {{{ view_any
+    public function view_any($id, $extended = False)
     {
         $entry = new PList_Component('entry');
         $entry->setResource(Array($this->Blog->getEntry($id, True)));
@@ -59,8 +59,8 @@ class Frontend_Controller extends Controller
         $this->layout->content = new View('frontend/view', $data);
     }
     // }}}
-    // {{{ view_validate
-    public function view_validate()
+    // {{{ view_validate_any
+    public function view_validate_any()
     {
         $this->validation->name(0, _("ID"))->add_rules(0, 'required', 'valid::numeric', array($this, '_check_entry'));
         $this->validation->add_rules(1, 'required', 'valid::alpha');
@@ -68,8 +68,8 @@ class Frontend_Controller extends Controller
         return $this->validation->validate();
     }
     // }}}
-    // {{{ view_error
-    public function view_error()
+    // {{{ view_any_error
+    public function view_any_error()
     {
         $this->_invalid_request('blog/frontend/index', _("Invalid ID"));
     }

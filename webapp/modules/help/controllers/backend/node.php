@@ -9,7 +9,7 @@
 class Node_Controller extends Help_Backend
 {
     // {{{ index
-    public function index()
+    public function index_any()
     {
         $help  = new Help_Model;
         $nodes = new PList_Component('nodes');

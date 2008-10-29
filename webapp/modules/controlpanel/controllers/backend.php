@@ -21,7 +21,7 @@ class Backend_Controller extends Controller
     }
     // }}}
     // {{{ index
-    public function index()
+    public function index_any()
     {
         $modules = Model::load('Modules', 'core');
 
@@ -46,5 +46,3 @@ class Backend_Controller extends Controller
     }
     // }}}
 }
-
-?>

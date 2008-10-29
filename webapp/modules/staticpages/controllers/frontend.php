@@ -18,7 +18,7 @@ class Frontend_Controller extends Controller
     }
     // }}}
     // {{{ view
-    public function view($id = 0)
+    public function view_any($id = 0)
     {
         $this->StaticPages = new StaticPages_Model;
 
@@ -44,5 +44,3 @@ class Frontend_Controller extends Controller
     }
     // }}}
 }
-
-?>

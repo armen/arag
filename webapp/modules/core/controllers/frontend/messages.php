@@ -9,7 +9,7 @@
 class Messages_Controller extends Controller
 {
     // {{{ invalid_request
-    public function invalid_request()
+    public function invalid_request_any()
     {
         $this->layout->content = new View('messages/invalid_request');
 
@@ -19,7 +19,7 @@ class Messages_Controller extends Controller
     }
     // }}}
     // {{{ not_authorized
-    public function not_authorized()
+    public function not_authorized_any()
     {
         $this->session->keep_flash('not_authorized_redirect_url');
 
@@ -29,7 +29,7 @@ class Messages_Controller extends Controller
     }
     // }}}
     // {{{ page_not_found
-    public function page_not_found()
+    public function page_not_found_any()
     {
         $this->layout->content = new View('messages/page_not_found');
 
@@ -37,5 +37,3 @@ class Messages_Controller extends Controller
     }
     // }}}
 }
-
-?>

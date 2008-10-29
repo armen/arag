@@ -32,7 +32,7 @@ class Backend_Controller extends Controller
     }
     // }}}
     // {{{ index
-    public function index()
+    public function index_any()
     {
         $this->StaticPages = new StaticPages_Model;
 
@@ -174,7 +174,7 @@ class Backend_Controller extends Controller
     // }}}
     // }}}
     // {{{ delete
-    public function delete($id = Null)
+    public function delete_any($id = Null)
     {
         $this->StaticPages = new StaticPages_Model;
 
@@ -199,7 +199,7 @@ class Backend_Controller extends Controller
     }
     // }}}
     // {{{ gdelete
-    public function gdelete($id = Null)
+    public function gdelete_any($id = Null)
     {
         $this->StaticPages = new StaticPages_Model;
 
@@ -238,7 +238,7 @@ class Backend_Controller extends Controller
     }
     // }}}
     // {{{ do_delete
-    public function do_delete()
+    public function do_delete_any()
     {
         $this->StaticPages = new StaticPages_Model;
 
@@ -258,7 +258,7 @@ class Backend_Controller extends Controller
     }
     // }}}
     // {{{ preview
-    public function preview($id = Null)
+    public function preview_any($id = Null)
     {
         $this->StaticPages = new StaticPages_Model;
 
@@ -322,4 +322,3 @@ class Backend_Controller extends Controller
     // }}}
     // }}}
 }
-?>

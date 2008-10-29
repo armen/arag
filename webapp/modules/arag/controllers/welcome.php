@@ -21,7 +21,7 @@ class Welcome_Controller extends Controller
     }
     // }}}
     // {{{ index
-    public function index()
+    public function index_any()
     {
         $this->layout->content = new View('index');
 
