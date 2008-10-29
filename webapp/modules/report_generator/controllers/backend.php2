@@ -325,40 +325,4 @@ class Backend_Controller extends ReportGenerator_Backend
         return $rg->hasReport($id);
     }
     // }}}
-    // {{{ settings_read
-    public function settings_read()
-    {
-        $data          = Array();
-        $data['limit'] = Arag_Config::get("limit");
-        $data['saved'] = $this->session->get_once('report_generator.limit_saved');
-
-        $this->layout->content = new View('backend/settings_limit', $data);
-    }
-    // }}}
-    // {{{ settings_write
-    public function settings_write()
-    {
-
-        Arag_Config::set('limit', $this->input->post('limit'));
-
-        $this->session->set('report_generator.limit_saved', true);
-
-        $this->settings_read();
-
-    }
-    // }}}
-    // {{{ settings_validate_write
-    public function settings_validate_write()
-    {
-        $this->validation->name('limit', _("Limit"))->add_rules('limit', 'required', 'valid::numeric')->post_filter('trim', 'limit');
-
-        return $this->validation->validate();
-    }
-    // }}}
-    // {{{ settings_write_error
-    public function settings_write_error()
-    {
-        $this->settings_read();
-    }
-    // }}}
 }

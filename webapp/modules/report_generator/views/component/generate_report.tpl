@@ -12,6 +12,7 @@
     var right_align      = '{right}';
 </script>
 {arag_load_script src="scripts/mootools.js"}
+{arag_load_script src="scripts/mootools-more.js"}
 {arag_load_script src="modpub/report_generator/filters.js"}
 
 {arag_form uri=$uri id="form"}

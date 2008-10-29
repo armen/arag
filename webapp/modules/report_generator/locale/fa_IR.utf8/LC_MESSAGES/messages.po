@@ -3,12 +3,11 @@
 # This file is distributed under the same license as the PACKAGE package.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-06-02 15:39+0430\n"
+"POT-Creation-Date: 2008-10-04 18:06+0330\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,48 +15,48 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: views/component/generate_report.tpl:22
+#: views/component/generate_report.tpl:23
 msgid "Add filter"
 msgstr "اضافه کردن فیلتر"
 
-#: views/component/generate_report.tpl:34
+#: views/component/generate_report.tpl:35
 msgid "Update"
 msgstr "جدید کردن"
 
-#: views/backend/generate_report.tpl:75 views/backend/generate_report.tpl:94
+#: views/backend/generate_report.tpl:76 views/backend/generate_report.tpl:95
 msgid "Label"
 msgstr "بر چسب"
 
-#: views/backend/generate_report.tpl:77 views/backend/generate_report.tpl:96
+#: views/backend/generate_report.tpl:78 views/backend/generate_report.tpl:97
 #: controllers/backend.php:197
 msgid "Formula"
 msgstr "فرمول"
 
-#: views/backend/generate_report.tpl:82 views/backend/generate_report.tpl:149
+#: views/backend/generate_report.tpl:83 views/backend/generate_report.tpl:150
 msgid "Insert column"
 msgstr "درج ستون"
 
-#: views/backend/generate_report.tpl:141 views/backend/generate_report.tpl:161
+#: views/backend/generate_report.tpl:142 views/backend/generate_report.tpl:162
 msgid "Filter"
 msgstr "فیلتر"
 
-#: views/backend/generate_report.tpl:164
+#: views/backend/generate_report.tpl:165
 msgid "Combine"
 msgstr "ترکیب کردن"
 
-#: views/backend/generate_report.tpl:167
+#: views/backend/generate_report.tpl:168
 msgid "OR"
 msgstr "یا"
 
-#: views/backend/generate_report.tpl:169
+#: views/backend/generate_report.tpl:170
 msgid "AND"
 msgstr "و"
 
-#: views/backend/generate_report.tpl:200
+#: views/backend/generate_report.tpl:201
 msgid "Preview"
 msgstr "پیش نمایش"
 
-#: views/backend/generate_report.tpl:201
+#: views/backend/generate_report.tpl:202 views/backend/settings_limit.tpl:25
 msgid "Save"
 msgstr "ذخیره"
 
@@ -73,6 +72,22 @@ msgstr "بلی"
 #: views/backend/delete_report.tpl:23
 msgid "No"
 msgstr "خیر"
+
+#: views/backend/settings_limit.tpl:12
+msgid "Settings are updated successfuly!"
+msgstr "تنظیمات با موفقیت تغییر یافت!"
+
+#: views/backend/settings_limit.tpl:19
+msgid "List items per page"
+msgstr "تعداد رکورد ها در هر صفحه"
+
+#: views/backend/settings_limit.tpl:20
+msgid "0 means Unlimited"
+msgstr "0 به معنای نا محدود است"
+
+#: views/backend/settings_limit.tpl:26
+msgid "Reset"
+msgstr "فرم جدید"
 
 #: views/backend/get_table.tpl:14 controllers/backend.php:28
 msgid "Table Name"
@@ -100,7 +115,7 @@ msgstr "جعبه ابزار"
 
 #: views/backend/get_table.tpl:39
 msgid "Group Action"
-msgstr ""
+msgstr "عملیات گروهی"
 
 #: views/backend/get_table.tpl:44
 msgid "Parameter Name of Group Action"
@@ -137,10 +152,18 @@ msgid "Generate Report"
 msgstr "ایجاد گزارش"
 
 #: libraries/ReportGenerator_Backend.php:29
+msgid "Settings"
+msgstr "تنظیمات"
+
+#: libraries/ReportGenerator_Backend.php:30
+msgid "List Limit"
+msgstr "تعریف محدویدیت"
+
+#: libraries/ReportGenerator_Backend.php:31
 msgid "Delete Report"
 msgstr "حذف گزارش گزارش"
 
-#: libraries/ReportGenerator_Backend.php:31
+#: libraries/ReportGenerator_Backend.php:33
 msgid "Execute Report"
 msgstr "اجرای گزارش"
 
@@ -168,3 +191,12 @@ msgstr "برچسب ستون"
 #: controllers/backend.php:300 controllers/backend.php:308
 msgid "ID"
 msgstr "شناسه"
+
+#: controllers/backend.php:255 controllers/backend.php:279
+#: controllers/backend.php:316
+msgid "Invalid ID"
+msgstr "شناسه نا معتبر"
+
+#: controllers/backend.php:353
+msgid "Limit"
+msgstr "محدودیت"

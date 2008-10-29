@@ -75,6 +75,7 @@ class ReportGenerator_Component extends Component
 
         foreach ($this->report['additional_columns'] as $label => $column) {
             $list->addColumn($label);
+            $list->calculateSum($label);
         }
 
         // Add this->report actions

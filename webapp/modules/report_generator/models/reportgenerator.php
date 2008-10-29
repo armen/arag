@@ -224,22 +224,23 @@ class ReportGenerator_Model extends Model
     {
         $result = $this->db->select('count(id) as count')->getwhere($this->tableName, Array('id' => $id))->current();
 
-        return (boolean)$result['count'];
+        return (boolean)$result->count;
     }
     // }}}
     // {{{ getReportName
     public function getReportName($id)
     {
         $result = $this->db->select('report_name')->getwhere($this->tableName, Array('id' => $id))->current();
-        return $result['report_name'];
+        return $result->report_name;
     }
     // }}}
     // {{{ getReport
     public function getReport($id)
     {
         $result = $this->db->select('id, table_name, report_name, report_desc, columns, additional_columns, filters, actions, create_date, modify_date')
-                           ->getwhere($this->tableName, Array('id' => $id))->current();
+                           ->getwhere($this->tableName, Array('id' => $id))->result_array(False);
 
+        $result                       = current($result);
         $result['columns']            = unserialize($result['columns']);
         $result['filters']            = unserialize($result['filters']);
         $result['actions']            = unserialize($result['actions']);
@@ -257,8 +258,9 @@ class ReportGenerator_Model extends Model
     public function getReportByName($name)
     {
         $result = $this->db->select('id, table_name, report_name, report_desc, columns, additional_columns, filters, actions, create_date, modify_date')
-                           ->getwhere($this->tableName, Array('report_name' => $name))->current();
+                           ->getwhere($this->tableName, Array('report_name' => $name))->result_array(False);
 
+        $result                       = current($result);
         $result['columns']            = unserialize($result['columns']);
         $result['filters']            = unserialize($result['filters']);
         $result['actions']            = unserialize($result['actions']);

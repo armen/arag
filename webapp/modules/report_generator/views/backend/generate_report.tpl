@@ -23,6 +23,7 @@
 {/if}
 
 {arag_load_script src="scripts/mootools.js"}
+{arag_load_script src="scripts/mootools-more.js"}
 {arag_load_script src="modpub/report_generator/complex_filters.js"}
 {arag_load_script src="modpub/report_generator/additional_columns.js"}
 {literal}
