@@ -126,7 +126,7 @@ class Controller extends Controller_Core {
         Router::$method = $method;
 
         $alt_validator = $method . '_validate_' . Router::$request_method;
-        $validator     = $method . '_validate';
+        $validator     = $method . '_validate_any';
         $validator     = method_exists($this, $validator) ? $validator : (method_exists($this, $alt_validator) ? $alt_validator : False);
 
         $validated = True;
@@ -145,7 +145,7 @@ class Controller extends Controller_Core {
 
         $alt_method = $method . '_' . Router::$request_method;
         $alt_method = ($validated) ? $alt_method : $alt_method . '_error';
-        $method     = ($validated) ? $method : $method . '_error';
+        $method     = ($validated) ? $method . '_any' : $method . '_any_error';
 
         // Is method exists?
         $method = method_exists($this, $method) ? $method : (method_exists($this, $alt_method) ? $alt_method : False);
