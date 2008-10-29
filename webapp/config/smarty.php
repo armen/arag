@@ -13,6 +13,7 @@ $config = Array
     'security'              => True,         // XXX: DO NOT SET TO FALSE, SERIOUS SECURITY RISK IF SET!
     'secure_dirs'           => Array         // Smarty secure directories
     (
+        LIBSPATH.'arag/views',
     ),
     'if_funcs'              => Array         // We'll allow these functions in if statement
     (
@@ -22,7 +23,7 @@ $config = Array
     ),
     'modifier_funcs'        => Array         // We'll allow these modifiers
     (
-        'sprintf', 'count'
+        'sprintf', 'count', 'urlencode', 'urldecode'
     ),
 
     'post_filters'          => Array         // XXX: After change clear the cache to take effect
@@ -53,7 +54,5 @@ $config = Array
     'plugins_paths'         => Array
     (
         APPPATH.'views/smarty_plugins/',
-        APPPATH.'helpers/html/',
-        APPPATH.'helpers/url/'
     )
 );
