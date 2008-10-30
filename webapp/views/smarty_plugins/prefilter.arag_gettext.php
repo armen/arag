@@ -12,12 +12,12 @@
 // $Id$
 // ---------------------------------------------------------------------------
 
-function smarty_prefilter_arag_gettext($tpl, &$smarty) {
+function smarty_prefilter_arag_gettext($tpl, &$smarty)
+{
     return preg_replace_callback('/(_|gettext)\("(.+?)"\)/', '_gettext', $tpl);
 }
 
-function _gettext($match) {
+function _gettext($match)
+{
     return gettext($match[2]);
 }
-
-?>
