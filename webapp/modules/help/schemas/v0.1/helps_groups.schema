@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<database>
+    <name><variable>DATABASE_NAME</variable></name>
+    <table>
+        <name><variable>TABLES_PREFIX</variable>helps_groups</name>
+        <declaration>
+            <field>
+                <name>help_id</name>
+                <type>integer</type>
+                <notnull>true</notnull>
+            </field>
+            <field>
+                <name>group_id</name>
+                <type>integer</type>
+                <notnull>true</notnull>
+            </field>
+        </declaration>
+    </table>
+</database>
