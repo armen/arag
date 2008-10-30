@@ -43,6 +43,6 @@ function smarty_function_arag_rte($params, &$smarty)
     $session = New Session;
     $session->set('rte_'.$params['name'], Router::$module);
 
-    return '<textarea name="'.$params['name'].'" class="rte" style="width:'.$width.';height:'.$height.'px;" col="'.$width.'" row="'.$height.'">'.
+    return '<textarea name="'.$params['name'].'" class="rte" style="width:'.$width.';height:'.$height.'px;" cols="'.$width.'" rows="'.$height.'">'.
            $value.'</textarea>';
 }
