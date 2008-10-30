@@ -16,11 +16,16 @@ function smarty_function_arag_history($params, &$smarty)
 {
     $ext      = Kohana::config('smarty.templates_ext');
     $template = 'navigation';
+    $prepend  = Null;
 
     foreach ($params as $_key => $_val) {
         switch ($_key) {
             case 'name':
                 $name = $_val;
+                break;
+
+            case 'prepend':
+                $prepend = $_val;
                 break;
 
             case 'template':
@@ -55,6 +60,7 @@ function smarty_function_arag_history($params, &$smarty)
         $namespace = $smarty->get_template_vars($name.'_namespace');
 
         $smarty->assign('history', $history);
+        $smarty->assign('prepend', $prepend);
         $smarty->assign('current_history', $history->get_history());
         $smarty->assign('separator', Kohana::config('history.separator'));
         $smarty->assign('namespace', $namespace);

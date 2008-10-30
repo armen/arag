@@ -6,6 +6,9 @@
 
 {arag_block template="blank"}
     <ul style="position:relative;padding:0px;margin:0px;" dir="{dir}">
+    {if $prepend|smarty:nodefaults|default:null != null}
+        <li style="float:{left};">{$prepend}{$separator|smarty:nodefaults}</li>
+    {/if}
     {foreach name=history from=$current_history.uri_map key=index item=uri}
         {if $smarty.foreach.history.last}
             <li style="float:{left};">{$current_history.titles.$index}</li>

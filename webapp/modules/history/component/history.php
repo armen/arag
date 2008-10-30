@@ -35,7 +35,7 @@ class History_Component extends Component
 
         array_splice($history['rsegments'], $offset, count($history['rsegments']), $rsegments);
         array_splice($history['uri_map'], $offset, count($history['uri_map']), Router::$current_uri);
-        array_splice($history['titles'], $offset, count($history['titles']),$title);
+        array_splice($history['titles'], $offset, count($history['titles']), _($title));
 
         $session->set_flash('history.'.Router::$module, $history);
     }
