@@ -98,7 +98,7 @@ class Backend_Controller extends Controller
             $page    = $this->input->post('page', Null, True);
             $subject = $this->input->post('subject', Null, True);
 
-            $this->StaticPages->createPage($this->session->get('username'), $subject, $page);
+            $this->StaticPages->createPage($this->session->get('user.username'), $subject, $page);
 
             url::redirect('staticpages/backend/index');
         } else {
