@@ -49,6 +49,11 @@ class Token {
             // At this point we can't Kohana::config('locale.lang') because Arag_site_lang
             // is not executed so we use cookie to get the lang.
             $lang = (string) cookie::get('lang');
+
+            $referer = $_SERVER['HTTP_REFERER'] ? $_SERVER['HTTP_REFERER'] : "Direct";
+            $trace   = debug_backtrace();
+            Kohana::log('error', 'Token Validation. HTTP_REFERER: '. $referer);
+
             $controller = new Controller;
             $controller->_invalid_request(Null, _("You tried to resubmit a form"));
 
