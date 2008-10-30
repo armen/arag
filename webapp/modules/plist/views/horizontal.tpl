@@ -13,13 +13,25 @@
 {assign var=group_actions value=$plist->getGroupActions()}
 {assign var=virtualColumns value=$plist->getVirtualColumns()}
 {assign var=pager value=$plist->getPager()}
-{assign var=sums value=$plist->getSums()}
+{assign var=limit value=$plist->getLimit()}
+{assign var=show_counter value=$plist->ifShowCounter()}
+{assign var=resource_count value=$plist->getResourceCount()}
+{assign var=sums value=$plist->getPageSums($pager.current)}
 
 {arag_block template="blank"}
-
     {if $plist->getResourceCount() > 0}
+        {math equation="(pager - 1) * limit" limit=$limit pager=$pager.current assign="start"}
+        {counter name=row start=$start print=false}
 
         {arag_form method="post" id="plist_$namespace" class="plist_form"}
+            <table border="0" cellpadding="0" cellspacing="0" dir="{dir}" width="100%">
+                <tr>
+                    <td align="{right}" dir="{dir}" width="100%">
+                        _("Number of Pages"):&nbsp;{$pager.numpages}<br />
+                        _("Number of Resources"):&nbsp;{$resource_count}
+                    </td>
+                </tr>
+            </table>
             <table border="0" cellpadding="0" cellspacing="0" dir="{dir}" width="100%" class="plist" >
                 <caption dir="{dir}">&nbsp;</caption>
                 {if $plist->hasHeader() && count($columns) > 0}
@@ -28,10 +40,14 @@
                         <th class="plist_group_actions_col"><input type="checkbox" onclick="toggleCheckboxesStatus(this.checked, '{$namespace}');" /></th>
                     {/if}
 
+                    {if $show_counter}
+                        <th>_("Row")</th>
+                    {/if}
+
                     {foreach from=$columnNames item=name}
                         {if isset($columns.$name|smarty:nodefaults) && !$columns.$name.hidden}
                             <th>{$columns.$name.label}</th>
-                            {if !$columns.$name.virtual && in_array($name, $sums)}
+                            {if !$columns.$name.virtual && isset($sums.$name|smarty:nodefaults)}
                                 {assign var=_$name value=0}
                             {/if}
                         {/if}
@@ -61,10 +77,16 @@
                         </td>
                     {/if}
 
+                    {if $show_counter}
+                        <td>
+                            {counter name=row}
+                        </td>
+                    {/if}
+
                     {if is_array($row) && count($row) > 0}
                         {foreach from=$columnNames item=name}
                             {if count($columns) == 0 || (isset($columns.$name|smarty:nodefaults) && !$columns.$name.hidden && !$columns.$name.virtual)}
-                                {if !$columns.$name.virtual && in_array($name, $sums)}
+                                {if !$columns.$name.virtual && isset($sums.$name|smarty:nodefaults)}
                                     {assign var="temp" value=$row.$name|default:0}
                                     {arag_get_var assign="item" var=_$name}
                                     {assign var=_$name value="`$item+$temp`"}
@@ -81,13 +103,14 @@
                     {if count($actions) > 0}
                         {foreach from=$actions item=action}
                             <td class="plist_icon">
+                                {assign var="target" value=$action.target}
                                 {if $action.callback|smarty:nodefaults}
                                     {assign var="action" value=$plist->callCallback($action.callback,$row)}
                                 {/if}
                                 {if $action.uri}
                                     {assign var=uri value=$plist->parseURI($action.uri, $row)}
                                     <a href="{kohana_helper function="url::site" uri=$uri}" title="{$action.label}" class="{$action.className}"
-                                        target="{$action.target}">{$action.label}</a>
+                                       target="{$target}">{$action.label}</a>
                                 {else}
                                     <div title="{$action.label}" class="{$action.className}">{$action.label}</div>
                                 {/if}
@@ -104,10 +127,14 @@
                         <td><input type="checkbox" onclick="toggleCheckboxesStatus(this.checked, '{$namespace}');" /></td>
                     {/if}
 
+                    {if $show_counter}
+                        <td>-</td>
+                    {/if}
+
                     {foreach from=$columnNames item=name}
                         {if isset($columns.$name|smarty:nodefaults) && !$columns.$name.hidden}
-                            {if !$columns.$name.virtual && in_array($name, $sums)}
-                                <td>{arag_get_var var=_$name}</td>
+                            {if !$columns.$name.virtual && isset($sums.$name|smarty:nodefaults)}
+                                <td dir="ltr">&nbsp;{arag_get_var var=_$name}&nbsp;/&nbsp;{$sums.$name}&nbsp;</td>
                             {else}
                                 <td>-</td>
                             {/if}

@@ -28,6 +28,8 @@ class PList_Component extends Component implements IteratorAggregate, ArrayAcces
     private $groupActionType          = 'button';
     private $groupActionParameterName = 'id';
 
+    private $show_counter             = True;
+
     private $limit                    = 0;   // How many results per page. 0 is infinity
     private $offset                   = 0;   // Offset
     private $page                     = 1;   // The page to start listing
@@ -139,6 +141,24 @@ class PList_Component extends Component implements IteratorAggregate, ArrayAcces
         return $this->properties;
     }
     // }}}
+    // {{{ ifShowCounter
+    public function ifShowCounter()
+    {
+        return $this->show_counter;
+    }
+    // }}}
+    // {{{ getNumberOfResources
+    public function getNumberOfResources()
+    {
+        return count($this->resource);
+    }
+    // }}}
+    // {{{ showCounter
+    public function showCounter($show = True)
+    {
+        $this->show_counter = $show;
+    }
+    // }}}
     // {{{ setGroupActionType
     public function setGroupActionType($type)
     {
@@ -220,7 +240,7 @@ class PList_Component extends Component implements IteratorAggregate, ArrayAcces
     // {{{ calculateSum
     public function calculateSum($name)
     {
-        $this->sums[] = $name;
+        $this->sums[$name] = 0;
     }
     // }}}
     // {{{ & getVirtualColumns
@@ -259,6 +279,12 @@ class PList_Component extends Component implements IteratorAggregate, ArrayAcces
         return $this->groupActionParameterName;
     }
     // }}}
+    // {{{ getLimit
+    public function getLimit()
+    {
+        return $this->limit;
+    }
+    // }}}
     // {{{ getEmptyListMessage
     public function getEmptyListMessage()
     {
@@ -284,9 +310,20 @@ class PList_Component extends Component implements IteratorAggregate, ArrayAcces
         return $columnNames;
     }
     // }}}
-    // {{{ getSums
-    public function & getSums()
+    // {{{ getPageSums
+    public function getPageSums($current_page)
     {
+        if (!empty($this->sums)) {
+            foreach (iterator_to_array($this->resource) as $key => $resource) {
+                foreach($this->sums as $sum => $value) {
+                    $this->sums[$sum] += $resource[$sum];
+                }
+                if ($this->limit != 0 && $key == (($current_page * $this->limit) - 1)) {
+                    break;
+                }
+            }
+        }
+
         return $this->sums;
     }
     // }}}
