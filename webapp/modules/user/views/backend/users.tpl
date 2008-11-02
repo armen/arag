@@ -41,6 +41,38 @@
                 </tr>
                 <tr>
                     <td align="{right}">
+                        _("Email"):
+                    </td>
+                    <td align="{left}">
+                        <input type="text" name="email" value="{$email|smarty:nodefaults|default:null}" dir="ltr" />
+                    </td>
+                </tr>
+                <tr>
+                    <td align="{right}">
+                        _("Is Blocked"):
+                    </td>
+                    <td align="{left}">
+                        {if $is_blocked}
+                            <input type="checkbox" name="is_blocked" checked="checked" />
+                        {else}
+                            <input type="checkbox" name="is_blocked" />
+                        {/if}
+                    </td>
+                </tr>
+                <tr>
+                    <td align="{right}">
+                        _("Is Not Verified"):
+                    </td>
+                    <td align="{left}">
+                        {if $is_not_verified}
+                            <input type="checkbox" name="is_not_verified" checked="checked" />
+                        {else}
+                            <input type="checkbox" name="is_not_verified" />
+                        {/if}
+                    </td>
+                </tr>
+                <tr>
+                    <td align="{right}">
                     </td>
                     <td align="{left}">
                         <input type="submit" name="submit" value={quote}_("Search"){/quote} />

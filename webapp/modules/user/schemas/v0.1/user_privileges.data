@@ -312,6 +312,24 @@
                     <value>report_generator/*</value>
                 </field>
             </insert>
+            <insert>
+                <field>
+                    <name>id</name>
+                    <value>19</value>
+                </field>
+                <field>
+                    <name>parent_id</name>
+                    <value>1</value>
+                </field>
+                <field>
+                    <name>label</name>
+                    <value>Help Module</value>
+                </field>
+                <field>
+                    <name>privilege</name>
+                    <value>help/*</value>
+                </field>
+            </insert>
         </initialization>
     </table>
 </database>

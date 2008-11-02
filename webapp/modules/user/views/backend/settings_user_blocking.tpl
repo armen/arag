@@ -7,7 +7,7 @@
 
     {arag_block align="left" template="tips"}
         _("0 for expire time means unlimited")<br />
-        _("Number of attemts to displaying captcha should be less than number of attemts to block a user")<br />
+        _("Number of attempts to displaying captcha should be less than number of attempts to block a user")<br />
         _("Remember, blocking and displaying captcha will be disabled if you set blocking attempts to 0")<br />
     {/arag_block}
 

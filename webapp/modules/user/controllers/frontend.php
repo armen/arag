@@ -208,7 +208,7 @@ class Frontend_Controller extends Controller
             $settings = Arag_Config::get('email_settings', NULL, 'core');
             $settings['template'] = _("You asked to change your password, for '%username%'. So please follow the below link:\n\n%verifyuri%\n\n".
                                       "And if you didn't ask to do so, please strongly visit:\n\n%removeuri%");
-            $settings['subject']  = _("Change Password");
+            $settings['subject']  = "Change Password";
 
             $strings  = array (
                                'verifyuri' => html::anchor('user/frontend/change_password/' . $verify_uri),
@@ -223,6 +223,7 @@ class Frontend_Controller extends Controller
             } catch(Swift_Exception $e) {
                 // Shit, there was an error here!
                 $is_sent = False;
+                Kohana::log('error', $e->getMessage());
             }
         }
 
@@ -315,7 +316,7 @@ class Frontend_Controller extends Controller
             // Send an email to verify the user
             $settings = Arag_Config::get('email_settings', NULL, 'core');
             $settings['template'] = _("Your new password for %username%' is '%password%'");
-            $settings['subject']  = _("Password Changed");
+            $settings['subject']  = "Password Changed";
             $strings  = array (
                                'username' => $user['username'],
                                'password' => $password
@@ -329,6 +330,7 @@ class Frontend_Controller extends Controller
             } catch(Swift_Exception $e) {
                 // Shit, there was an error here!
                 $is_sent = False;
+                Kohana::log('error', $e->getMessage());
             }
 
         }
@@ -496,6 +498,7 @@ class Frontend_Controller extends Controller
 
             // Shit, there was an error here!
             $is_sent = False;
+            Kohana::log('error', $e->getMessage());
         }
 
         $this->layout->content = new View('frontend/user_registration', array(
@@ -644,7 +647,7 @@ class Frontend_Controller extends Controller
         $users = new Users_Model;
         $user  = $users->getBlockInfo($username);
 
-        return (Arag_Config::get('captcha_counter', 3) != 0 && $user->block_counter >= Arag_Config::get('captcha_counter', 3) + 1);
+        return ($user && (Arag_Config::get('captcha_counter', 3) != 0 && $user->block_counter >= Arag_Config::get('captcha_counter', 3) + 1));
     }
     // }}}
 }

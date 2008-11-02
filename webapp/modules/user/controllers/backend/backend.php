@@ -46,11 +46,12 @@ class Backend_Controller extends Controller
     }
     // }}}
     // {{{ _create_users_plist
-    protected function _create_users_plist($id, $appname = NULL, $groupname = NULL, $user = NULL, $flagappname = true)
+    protected function _create_users_plist($id, $appname = NULL, $groupname = NULL, $user = NULL, $email = Null, $flagappname = true, $is_blocked = Null,
+                                           $is_not_verified = Null)
     {
         $this->users = new PList_Component('users');
 
-        $this->users->setResource($this->Users->getUsers($id, $appname, $groupname, $user, $flagappname));
+        $this->users->setResource($this->Users->getUsers($id, $appname, $groupname, $user, $flagappname, $email, $is_blocked, $is_not_verified));
         $this->users->setLimit(Arag_Config::get('limit', 0));
         $this->users->addColumn('appname', _("Application"));
         $this->users->addColumn('group_name', _("Group"));
@@ -130,6 +131,7 @@ class Backend_Controller extends Controller
         $this->groups->addColumn('appname', _("Application"));
         $this->groups->addColumn('created_by', _("Created By"));
         $this->groups->addColumn('modified_by', _("Modified By"));
+        $this->groups->addColumn('Groups.getNumberOfUsers', _("Number Of Users"), PList_Component::VIRTUAL_COLUMN);
         $this->groups->addColumn('Applications.getDate', _("Create Date"), PList_Component::VIRTUAL_COLUMN);
         $this->groups->addColumn('Applications.getModifyDate', _("Modify Date"), PList_Component::VIRTUAL_COLUMN);
     }
@@ -238,6 +240,7 @@ class Backend_Controller extends Controller
                       "lastname"     => $userprofile['lastname'],
                       "email"        => $userprofile['email'],
                       "blocked"      => $userprofile['blocked'],
+                      "verified"     => $userprofile['verified'],
                       "flagform"     => $flagform,
                       "oldpassword"  => $oldpassword);
 
@@ -254,8 +257,10 @@ class Backend_Controller extends Controller
         $username  = $this->input->post('username', Null, true);
         $password  = $this->input->post('password', Null, true);
         $blocked   = $this->input->post('blocked', Null, true);
+        $verified  = $this->input->post('verified', Null, true);
 
-        $this->Users->editUser($appname, $email, $name, $lastname, $groupname, $username, $password, $blocked, $this->session->get('user.username'));
+        $this->Users->editUser($appname, $email, $name, $lastname, $groupname, $username, $password, $blocked,
+                               $this->session->get('user.username'), $verified);
 
         $this->session->set('edit_user_saved', true);
 

@@ -163,7 +163,7 @@ class Users_Model extends Model
     public function & getUserProfile($username)
     {
         $this->db->select('username, name, lastname, password, create_date, created_by, modify_date, modified_by, blocked, block_date, profile_id,
-                           email, group_id');
+                           email, group_id, verified');
         $this->db->from($this->tableNameUsers);
         $this->db->where('username', $username);
 
@@ -173,7 +173,7 @@ class Users_Model extends Model
     }
     // }}}
     // {{{ & getUsers
-    public function & getUsers($groupID = NULL, $appName, $groupName, $user, $flagappname)
+    public function & getUsers($groupID = NULL, $appName, $groupName, $user, $flagappname, $email = Null, $is_blocked = Null, $is_not_verified = Null)
     {
         $this->db->select('username, lastname, email, appname, id');
         $this->db->select($this->tableNameGroups.".name as group_name");
@@ -195,9 +195,10 @@ class Users_Model extends Model
         if ($user != NULL) {
             $row = explode(" ", $user);
             foreach ($row as $tag) {
-                $this->db->like('(username', $tag);
+                $this->db->like('username', $tag);
+                /* This will be commented until pranthises support implements
                 $this->db->orlike($this->tableNameUsers.".name", $tag);
-                $this->db->orlike('lastname)', $tag);
+                $this->db->orlike('lastname', $tag);*/
             }
         }
 
@@ -207,6 +208,18 @@ class Users_Model extends Model
             } else {
                 $this->db->where('appname', $appName);
             }
+        }
+
+        if ($email != NULL) {
+            $this->db->like('email', $email);
+        }
+
+        if ($is_blocked != Null) {
+            $this->db->where('blocked', 1);
+        }
+
+        if ($is_not_verified != Null) {
+            $this->db->where('verified', 0);
         }
 
         $this->db->orderby('appname', 'ASC');
@@ -244,7 +257,7 @@ class Users_Model extends Model
     }
     // }}}
     // {{{ editUser
-    public function editUser($appname, $email, $name, $lastname, $groupname, $username, $password = "", $blocked, $author)
+    public function editUser($appname, $email, $name, $lastname, $groupname, $username, $password = "", $blocked, $author, $verified)
     {
         $controller = new Groups_Model;
 
@@ -265,6 +278,11 @@ class Users_Model extends Model
                      'email'         => $email,
                      'blocked'       => $blocked
                     );
+
+        if ($verified) {
+            $row['verified']      = 1;
+            $row['verify_string'] = Null;
+        }
 
         if ($password != "") {
             $row['password'] = sha1($password);

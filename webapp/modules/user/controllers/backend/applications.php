@@ -57,9 +57,11 @@ class Applications_Controller extends Backend_Controller
     // {{{ index
     public function index_any($page = Null)
     {
+        $this->index_validate();
+
         $applications = new PList_Component('applications');
 
-        if ($page != Null && preg_match('|page[a-z_]*:[0-9]*|', $page)) {
+        if ($page != Null && preg_match('|^page_orders$|', $page)) {
             $name = $this->session->get('user_app_name');
         } else {
             $name = $this->input->post('name', Null, True);
@@ -172,6 +174,7 @@ class Applications_Controller extends Backend_Controller
         $this->_create_users_plist($id);
 
         $this->users->addAction("user/backend/applications/user_profile/#username#", _("Edit"), 'edit_action');
+        $this->users->addAction("user_profile/backend/view/#username#", _("View Profile"), 'view_profile');
         $this->users->addAction("user/backend/applications/delete/user/#username#", _("Delete"), 'delete_action');
         $this->users->addAction("user/backend/applications/delete/user", _("Delete"), 'delete_action', False, PList_Component::GROUP_ACTION);
         $this->users->setGroupActionParameterName('username');
@@ -197,32 +200,45 @@ class Applications_Controller extends Backend_Controller
     // {{{ all_users
     public function all_users_any($page = NULL)
     {
-        if ($page != Null && preg_match('|page[a-z_]*:[0-9]*|', $page)) {
-            $user       = $this->session->get('user_user_user');
-            $app_name   = $this->session->get('user_user_app');
-            $group_name = $this->session->get('user_user_group');
+        if ($page != Null && preg_match('|^page_orders$|', $page)) {
+            $user            = $this->session->get('user_user_user');
+            $app_name        = $this->session->get('user_user_app');
+            $group_name      = $this->session->get('user_user_group');
+            $email           = $this->session->get('user_user_email');
+            $is_blocked      = $this->session->get('user_user_is_blocked');
+            $is_not_verified = $this->session->get('user_user_is_not_verified');
         } else {
-            $user       = $this->input->post('user', Null, True);
-            $app_name   = $this->input->post('app_name', Null, True);
-            $group_name = $this->input->post('group_name', Null, True);
+            $user            = $this->input->post('user', Null, True);
+            $app_name        = $this->input->post('app_name', Null, True);
+            $group_name      = $this->input->post('group_name', Null, True);
+            $email           = $this->input->post('email', Null, True);
+            $is_blocked      = $this->input->post('is_blocked', Null, True);
+            $is_not_verified = $this->input->post('is_not_verified', Null, True);
         }
 
         $this->session->set('user_user_user', $user);
         $this->session->set('user_user_app', $app_name);
         $this->session->set('user_user_group', $group_name);
+        $this->session->set('user_user_email', $email);
+        $this->session->set('user_user_is_blocked', $is_blocked);
+        $this->session->set('user_user_is_not_verified', $is_not_verified);
 
-        $this->_create_users_plist(NULL, $app_name, $group_name, $user);
+        $this->_create_users_plist(NULL, $app_name, $group_name, $user, $email, true, $is_blocked, $is_not_verified);
 
         $this->users->addAction("user/backend/applications/user_profile/#username#", _("Edit"), 'edit_action');
+        $this->users->addAction("user_profile/backend/view/#username#", _("View Profile"), 'view_profile');
         $this->users->addAction("user/backend/applications/delete/user/#username#", _("Delete"), 'delete_action');
         $this->users->addAction("user/backend/applications/delete/user", _("Delete"), 'delete_action', False, PList_Component::GROUP_ACTION);
         $this->users->setGroupActionParameterName('username');
 
-        $data = array("flagsearch" => true,
-                      "user"       => $user,
-                      "app_name"   => $app_name,
-                      "group_name" => $group_name,
-                      "flagform"   => true);
+        $data = array('flagsearch'      => true,
+                      'user'            => $user,
+                      'app_name'        => $app_name,
+                      'group_name'      => $group_name,
+                      'email'           => $email,
+                      'is_blocked'      => $is_blocked,
+                      'is_not_verified' => $is_not_verified,
+                      'flagform'        => true);
 
         $this->layout->content = new View('backend/users', $data);
     }
@@ -357,7 +373,7 @@ class Applications_Controller extends Backend_Controller
     {
         $applications = new PList_Component('applications');
 
-        if ($page != Null && preg_match('|page[a-z_]*:[0-9]*|', $page)) {
+        if ($page != Null && preg_match('|^page_orders$|', $page)) {
             $name = $this->session->get('user_app_name');
         } else {
             $name = $this->input->post('name', Null, True);

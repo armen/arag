@@ -232,7 +232,7 @@ class Application_Controller extends Backend_Controller
     // {{{ all_users
     public function all_users_any($page = NULL)
     {
-        if ($page != Null && preg_match('|page[a-z_]*:[0-9]*|', $page)) {
+        if ($page != Null && preg_match('|^page_orders$|', $page)) {
             $user       = $this->session->get('user_user_user');
             $group_name = $this->session->get('user_user_group');
         } else {
@@ -243,7 +243,7 @@ class Application_Controller extends Backend_Controller
         $this->session->set('user_user_user', $user);
         $this->session->set('user_user_group', $group_name);
 
-        $this->_create_users_plist(NULL, $this->appname, $group_name, $user, false);
+        $this->_create_users_plist(NULL, $this->appname, $group_name, $user, Null, false);
 
         $this->users->addAction("user/backend/application/user_profile/#username#", _("Edit"), 'edit_action');
         $this->users->addAction("user/backend/application/delete/user/#username#", _("Delete"), 'delete_action');

@@ -78,6 +78,16 @@
                     {/if}
                 </td>
             </tr>
+            {if !$verified}
+                <tr>
+                    <td align="{right}">
+                        _("Verified"):
+                    </td>
+                    <td align="{left}">
+                            <input type="checkbox" name="verified" />
+                    </td>
+                </tr>
+            {/if}
             <tr>
                 <td align="{right}">
                     _("Group"):{asterisk}
