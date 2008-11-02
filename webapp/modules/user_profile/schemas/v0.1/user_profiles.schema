@@ -36,29 +36,26 @@
             <field>
                 <name>phone</name>
                 <type>text</type>
-                <length>8</length>
+                <length>20</length>
             </field>
             <field>
                 <name>cellphone</name>
                 <type>text</type>
-                <length>11</length>
+                <length>20</length>
             </field>
             <field>
                 <name>country</name>
-                <type>text</type>
-                <length>255</length>
+                <type>integer</type>
                 <notnull>true</notnull>
             </field>
             <field>
                 <name>city</name>
-                <type>text</type>
-                <length>255</length>
+                <type>integer</type>
                 <notnull>true</notnull>
             </field>
             <field>
                 <name>province</name>
-                <type>text</type>
-                <length>255</length>
+                <type>integer</type>
                 <notnull>true</notnull>
             </field>
             <field>

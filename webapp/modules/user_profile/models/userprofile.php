@@ -15,11 +15,19 @@ class UserProfile_Model extends Model
 
         // Set table name
         $this->tableNameProfiles  = 'user_profiles';
+        $this->tableNameCities    = 'user_profiles_cities';
+        $this->tableNameProvinces = 'user_profiles_provinces';
+        $this->tableNameCountries = 'user_profiles_countries';
     }
     // }}}
     // {{{ editProfile
     public function editProfile($province, $city, $address, $phone, $cellphone, $postal_code, $username, $name, $lastname, $country)
     {
+        if ($country != 32) {
+            $province = 0;
+            $city     = 0;
+        }
+
         $row = Array(
                      'province'    => $province,
                      'city'        => $city,
@@ -39,6 +47,11 @@ class UserProfile_Model extends Model
     // {{{ insertProfile
     public function insertProfile($province, $city, $address, $phone, $cellphone, $postal_code, $username, $name, $lastname, $country)
     {
+        if ($country != 32) {
+            $province = 0;
+            $city     = 0;
+        }
+
         $row = Array(
                      'province'       => $province,
                      'city'           => $city,
@@ -70,5 +83,83 @@ class UserProfile_Model extends Model
 
         return (Array) $this->db->getwhere($this->tableNameProfiles, array('username' => $username))->current();
     }
+    // }}}
+    // {{{ Countries, Provinces and Cities :D
+    // {{{ getCities
+    public function getCities($province = null)
+    {
+        $this->db->select('code, city, province')->from($this->tableNameCities);
+
+        if ($province != null) {
+            $this->db->where('province', $province);
+        }
+
+        return $this->db->get()->result_array(False);
+    }
+    // }}}
+    // {{{ getProvinces
+    public function getProvinces()
+    {
+        $this->db->select('id, province')->from($this->tableNameProvinces);
+
+        return $this->db->get()->result_array(False);
+    }
+    // }}}
+    // {{{ getCountries
+    public function getCountries()
+    {
+        $this->db->select('id, country')->from($this->tableNameCountries);
+
+        return $this->db->get()->result_array(False);
+    }
+    // }}}
+    // {{{ getCity
+    public function getCity($code)
+    {
+        $this->db->select('code, city, province')->from($this->tableNameCities);
+
+        if (is_array($code)) {
+            if (isset($code['city'])) {
+                $this->db->where('code', $code['city']);
+                return $this->db->get()->current()->city;
+            }
+        } else {
+            $this->db->where('code', $code);
+            return $this->db->get()->current();
+        }
+    }
+    // }}}
+    // {{{ getProvince
+    public function getProvince($id)
+    {
+        $this->db->select('id, province')->from($this->tableNameProvinces);
+
+        if (is_array($id)) {
+            if (isset($id['province'])) {
+                $this->db->where('id', $id['province']);
+                return $this->db->get()->current()->province;
+            }
+        } else {
+            $this->db->where('id', $id);
+            return $this->db->get()->current();
+        }
+    }
+    // }}}
+    // {{{ getCountry
+    public function getCountry($id)
+    {
+        $this->db->select('id, country')->from($this->tableNameCountries);
+
+        if (is_array($id)) {
+            if (isset($id['country'])) {
+                $this->db->where('id', $id['country']);
+                return $this->db->get()->current()->country;
+            }
+        } else {
+            $this->db->where('id', $id);
+            return $this->db->get()->current();
+        }
+    }
+    // }}}
     // }}}
 }

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<database>
+    <name><variable>DATABASE_NAME</variable></name>
+    <table>
+        <name><variable>TABLES_PREFIX</variable>user_profiles_provinces</name>
+        <declaration>
+            <field>
+                <name>id</name>
+                <type>integer</type>
+                <autoincrement>true</autoincrement>
+                <notnull>true</notnull>
+            </field>
+            <field>
+                <name>province</name>
+                <type>text</type>
+                <length>255</length>
+                <notnull>true</notnull>
+            </field>
+            <index>
+                <name>primary</name>
+                <primary>true</primary>
+                <field>
+                    <name>code</name>
+                </field>
+            </index>
+        </declaration>
+    </table>
+</database>

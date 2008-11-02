@@ -13,6 +13,10 @@ class Backend_Controller extends Controller
     protected $username = Null;
     protected $section  = 'backend';
 
+    public $default_city;
+    public $default_country;
+    public $default_province;
+
     // }}}
     // {{{ Constructor
     public function __construct()
@@ -21,17 +25,18 @@ class Backend_Controller extends Controller
 
         // Load the models
         $this->UserProfile = new UserProfile_Model;
-        //$this->Applications = new Applications_Model;
-        //$this->Groups = new Groups_Model;
         $this->Users = Model::load('Users', 'user');
-        //$this->Filters = new Filters_Model;
-        //$this->Privileges = new  Privileges_Model;
 
         // load global Tabs
         $this->globals_tabs = new TabbedBlock_Component('global_tabs');
 
         // Default page title
         $this->layout->page_title = 'User Profile';
+
+        // Default Locations
+        $this->default_city     = Kohana::config('config.default_city');
+        $this->default_country  = Kohana::config('config.default_country');
+        $this->default_province = Kohana::config('config.default_province');
 
         // Get the appname
         $this->username = $this->session->get('user.username');
@@ -59,17 +64,38 @@ class Backend_Controller extends Controller
     public function index_read()
     {
         $data = array();
+
         $data = $this->Users->getUserProfile($this->username);
 
+        $isset_profile = False;
+
         if ($isset_profile = $this->UserProfile->hasUserName($this->username)) {
-            $data = array_merge($data, $this->UserProfile->getProfile($this->username));
+            $data          = array_merge($data, $this->UserProfile->getProfile($this->username));
+            $isset_profile = True;
+
+        }
+
+        $provinces = $this->UserProfile->getProvinces();
+
+        $cities = array();
+
+        if (!isset($data['province']) || $data['province'] == 0) {
+            $cities = $this->UserProfile->getCities($this->default_province);
+            $data['province'] = $this->default_province;
+        } else {
+            $cities = $this->UserProfile->getCities($data['province']);
         }
 
         $data = array_merge($data, array (
                                           'flagsaved'     => $this->session->get_once('user_profile_profile_saved'),
                                           'isset_profile' => $isset_profile,
                                           'username'      => $this->username,
-                                          'section'       => $this->section
+                                          'section'       => $this->section,
+                                          'countries'     => $this->UserProfile->getCountries(),
+                                          'provinces'     => $provinces,
+                                          'cities'        => $cities,
+                                          'defaults'      => array('city' => $this->default_city, 'province' => $this->default_province,
+                                                                   'country' => $this->default_country)
                                          ));
 
         $this->layout->content = new View($this->section.'_user_profile', $data);
@@ -108,11 +134,12 @@ class Backend_Controller extends Controller
 
         $this->validation->name('address', _("Address"))->add_rules('address', 'required');
 
-        $this->validation->name('city', _("City"))->add_rules('city', 'required');
-
         $this->validation->name('country', _("Country"))->add_rules('country', 'required');
 
-        $this->validation->name('province', _("Province"))->add_rules('province', 'required');
+        if ($this->input->post('country') == $this->default_country) {
+            $this->validation->name('city', _("City"))->add_rules('city', 'required');
+            $this->validation->name('province', _("Province"))->add_rules('province', 'required');
+        }
 
         $this->validation->name('postal_code', _("Postal Code"))->add_rules('postal_code', 'required', 'valid::numeric', 'length[5, 10]');
 
@@ -144,7 +171,7 @@ class Backend_Controller extends Controller
 
         $this->session->set('user_profile_password_saved', true);
 
-        $this->password_read();
+        url::redirect('user_profile/'.$this->section.'/password');
     }
     // }}}
     // {{{ password_validate_write
@@ -167,6 +194,65 @@ class Backend_Controller extends Controller
         $this->password_read();
     }
     // }}}
+    // {{{ view_read
+    public function view_read($username)
+    {
+        $this->global_tabs->addItem(_("View User Profile"), 'user_profile/'.$this->section.'/view/'.$username);
+        $data = array();
+
+        $data = $this->Users->getUserProfile($username);
+
+        $isset_profile = False;
+
+        if ($isset_profile = $this->UserProfile->hasUserName($username)) {
+            $data          = array_merge($data, $this->UserProfile->getProfile($username));
+            $isset_profile = True;
+
+        }
+
+        $provinces = $this->UserProfile->getProvinces();
+
+        $cities = array();
+
+        if (!isset($data['province']) || $data['province'] == 0) {
+            $cities = $this->UserProfile->getCities($this->default_province);
+            $data['province'] = $this->default_province;
+        } else {
+            $cities = $this->UserProfile->getCities($data['province']);
+        }
+
+        $data = array_merge($data, array (
+                                          'isset_profile' => $isset_profile,
+                                          'username'      => $username,
+                                          'section'       => $this->section,
+                                          'countries'     => $this->UserProfile->getCountries(),
+                                          'provinces'     => $provinces,
+                                          'cities'        => $cities,
+                                          'defaults'      => array('city' => $this->default_city, 'province' => $this->default_province,
+                                                                   'country' => $this->default_country)
+                                         ));
+
+        $this->layout->content = new View('view_user_profile', $data);
+    }
+    // }}}
+    // {{{ view_validate_read
+    public function view_validate_read()
+    {
+        if (!Arag_Auth::is_accessible('user/backend') || !Arag_Auth::is_accessible('user_profile/backend')) {
+            return False;
+        }
+
+        $this->validation->name(0, _("Username"))->add_rules(0, 'required', array($this, '_has_user_name'));
+
+        return $this->validation->validate();
+    }
+    // }}}
+    // {{{ view_read_error
+    public function view_read_error()
+    {
+        $this->_invalid_request();
+    }
+    // }}}
     // {{{ _check_old_password
     public function _check_old_password($password)
     {
@@ -179,4 +265,11 @@ class Backend_Controller extends Controller
         return true;
     }
     // }}}
+    // {{{ _has_user_name
+    public function _has_user_name($username)
+    {
+        return $this->Users->hasUserName($username);
+    }
+    // }}}
 }
+?>
