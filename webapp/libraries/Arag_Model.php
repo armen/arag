@@ -48,4 +48,23 @@ class Model extends Model_Core {
         return $model;
     }
     // }}}
+    // {{{ instance
+    public static function instance($model = False, $module = False)
+    {
+        if ($module == False) {
+            $module = Router::$module;
+        }
+
+        // Save old include paths
+        $old_include_paths = Kohana::include_paths();
+
+        // Change include_once to module path
+        Kohana::config_set('core.modules', array_unique(array_merge($old_include_paths, Array(MODPATH.$module))));
+
+        $model = ucfirst(strtolower($model)).'_Model';
+        eval("\$model = $model::instance();");
+
+        return $model;
+    }
+    // }}}
 }
