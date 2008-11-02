@@ -232,7 +232,7 @@ class Application_Controller extends Backend_Controller
     // {{{ all_users
     public function all_users_any($page = NULL)
     {
-        if ($page != Null && preg_match('|^page_orders$|', $page)) {
+        if ($page != Null && preg_match('|^page_users$|', $page)) {
             $user       = $this->session->get('user_user_user');
             $group_name = $this->session->get('user_user_group');
         } else {

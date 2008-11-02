@@ -16,7 +16,7 @@ class Site_Controller extends Backend_Controller
         $multiSite          = new MultiSite_Model;
         $this->applications = new PList_Component('applications');
 
-        if ($page != Null && preg_match('|page[a-z_]*:[0-9]*|', $page)) {
+        if ($page != Null && preg_match('|^page_applications$|', $page)) {
             $name = $this->session->get('user_app_name');
             $dbid = $this->session->get('user_app_dbid');
         } else {

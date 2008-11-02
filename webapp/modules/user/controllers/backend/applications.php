@@ -61,7 +61,7 @@ class Applications_Controller extends Backend_Controller
 
         $applications = new PList_Component('applications');
 
-        if ($page != Null && preg_match('|^page_orders$|', $page)) {
+        if ($page != Null && preg_match('|^page_applications$|', $page)) {
             $name = $this->session->get('user_app_name');
         } else {
             $name = $this->input->post('name', Null, True);
@@ -200,7 +200,7 @@ class Applications_Controller extends Backend_Controller
     // {{{ all_users
     public function all_users_any($page = NULL)
     {
-        if ($page != Null && preg_match('|^page_orders$|', $page)) {
+        if ($page != Null && preg_match('|^page_users$|', $page)) {
             $user            = $this->session->get('user_user_user');
             $app_name        = $this->session->get('user_user_app');
             $group_name      = $this->session->get('user_user_group');
@@ -373,7 +373,7 @@ class Applications_Controller extends Backend_Controller
     {
         $applications = new PList_Component('applications');
 
-        if ($page != Null && preg_match('|^page_orders$|', $page)) {
+        if ($page != Null && preg_match('|^page_applications$|', $page)) {
             $name = $this->session->get('user_app_name');
         } else {
             $name = $this->input->post('name', Null, True);
