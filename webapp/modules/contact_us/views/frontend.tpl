@@ -26,7 +26,7 @@
                 </td>
             </tr>
             <tr>
-                <td align="{right}">_("Email Address"):</td>
+                <td align="{right}">_("Email Address"):{asterisk}</td>
                 <td align="{left}">
                     <input type="text" name="contact_email" value="{$contact_email|smarty:nodefaults|default:null}" dir="ltr" />
                 </td>

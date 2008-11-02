@@ -32,8 +32,15 @@ class Contact_Model extends Model
                      'content'     => $contactContent,
                      'create_date' => time());
 
-        $result = $this->db->insert($this->tableContacts, $row) == False ? false : True;
-        return $result;
+        return $this->db->insert($this->tableContacts, $row);
+    }
+    // }}}
+    // {{{ updateContent
+    public function updateContent($id, $content)
+    {
+        $this->db->where('id', $id);
+
+        $this->db->update($this->tableContacts, array('content' => $content));
     }
     // }}}
     // {{{ getInfo
@@ -81,7 +88,7 @@ class Contact_Model extends Model
     public function getContent($row)
     {
         $truncateLength = (int)Arag_Config::get('contact.truncate_length', Null);
-        $content = $truncateLength > 0 ? substr($row['content'], 0, $truncateLength) : $row['content'];
+        $content        = $truncateLength > 0 ? substr($row['content'], 0, $truncateLength) : $row['content'];
 
         return $content;
     }

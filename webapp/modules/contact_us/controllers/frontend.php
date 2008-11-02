@@ -24,28 +24,12 @@ class Frontend_Controller extends Controller
     // {{{ index_read
     public function index_read()
     {
-        $this->layout->content = new View('frontend');
-        $this->layout->content->uri  = 'contact_us/frontend/';
+        $this->layout->content      = new View('frontend');
+        $this->layout->content->uri = 'contact_us/frontend/';
 
-        $this->layout->content->name = $this->input->post('contact_name') == Null
-                                     ? ''
-                                     : $this->input->post('contact_name');
-
-        $this->layout->content->name = $this->input->post('contact_number') == Null
-                                     ? ''
-                                     : $this->input->post('contact_number');
-
-        $this->layout->content->name = $this->input->post('contact_email') == Null
-                                     ? ''
-                                     : $this->input->post('contact_email');
-
-        $this->layout->content->name = $this->input->post('contact_title') == Null
-                                     ? ''
-                                     : $this->input->post('contact_title');
-
-        $this->layout->content->name = $this->input->post('contact_content') == Null
-                                     ? ''
-                                     : $this->input->post('contact_content');
+        if ($this->session->get('user.authenticated') && !$this->input->post('contact_email', False)) {
+            $this->layout->content->contact_email = $this->session->get('user.email');
+        }
 
         $this->layout->content->contact_top_template    = Arag_Config::get('contact.top_template', Null);
         $this->layout->content->contact_bottom_template = Arag_Config::get('contact.bottom_template', Null);
@@ -77,7 +61,7 @@ class Frontend_Controller extends Controller
              ->add_rules('contact_number', 'numeric');
 
         $this->validation->name('contact_email', _("Contact email"))->pre_filter('trim', 'contant_email')
-             ->add_rules('contact_email', 'email');
+             ->add_rules('contact_email', 'required', 'valid::email');
 
         $this->validation->name('contact_title', _("Message title"))->pre_filter('trim', 'contact_title')
              ->add_rules('contact_title', 'required', 'standard_text');

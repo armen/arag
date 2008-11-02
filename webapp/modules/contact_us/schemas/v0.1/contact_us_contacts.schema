@@ -18,7 +18,7 @@
             <field>
                 <name>tel</name>
                 <type>text</type>
-                <length>8</length>
+                <length>20</length>
             </field>
             <field>
                 <name>email</name>

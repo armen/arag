@@ -5,6 +5,11 @@
 *}
 
 {arag_block}
+    {if $message}
+        {arag_block template="info"}
+            {$message}
+        {/arag_block}
+    {/if}
     <table border="0" dir="{dir}">
         <tr>
             <td align="{right}">_("Full name"):</td>
@@ -27,13 +32,9 @@
             <td align="{left}">{$contact_info.title}</td>
         </tr>
         <tr>
-            <td align="{right}">_("Message Content"):</td>
-            <td align="{left}">{$contact_info.content}</td>
-        </tr>
-        <tr>
-            <td></td>
+            <td align="{right}" valign="top">_("Message Content"):</td>
             <td align="{left}">
-                <input type="button" name="delete" value="Delete" onclick="document.location.href='{kohana_helper function="url::site"}/contact_us/backend/contacts/delete/{$contact_info.id}'" />
+                {$contact_info.content|nl2br}
             </td>
         </tr>
     </table>
