@@ -25,9 +25,9 @@
     </script>
 {/if}
 <input id="{$name}" name="{$name}" type="text" value="{$value}" onfocus="javascript:Calendar.show;" />
-<img src="{$arag_base_url}images/date/date.png" width="22" height="22" id="{$name}_cal" alt={quote}_("Calendar"){/quote} style="cursor: pointer;" alt="" />
+<img src="{$arag_base_url}images/date/date.png" width="22" height="22" id="{$name}_cal" alt={quote}_("Calendar"){/quote} style="cursor: pointer;" />
 {if $toggle}
-    <img src="{$arag_base_url}images/date/toggle.png" width="22" height="22" id="{$name}_toggle" alt={quote}_("Change calendar system"){/quote} style="cursor: pointer;" alt="" />
+    <img src="{$arag_base_url}images/date/toggle.png" width="22" height="22" id="{$name}_toggle" alt={quote}_("Change calendar system"){/quote} style="cursor: pointer;" />
     <input id="{$name}_type" name="{$name}_type" type="hidden" value="{$type}" />
 {/if}
 <script type="text/javascript">
