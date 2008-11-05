@@ -127,7 +127,7 @@ class Controller extends Controller_Core {
 
         $alt_validator = $method . '_validate_' . Router::$request_method;
         $validator     = $method . '_validate_any';
-        $validator     = method_exists($this, $validator) ? $validator : (method_exists($this, $alt_validator) ? $alt_validator : False);
+        $validator     = method_exists($this, $alt_validator) ? (method_exists($this, $alt_validator) ? $alt_validator : False) : $validator;
 
         $validated = True;
 
@@ -148,7 +148,7 @@ class Controller extends Controller_Core {
         $method     = ($validated) ? $method . '_any' : $method . '_any_error';
 
         // Is method exists?
-        $method = method_exists($this, $method) ? $method : (method_exists($this, $alt_method) ? $alt_method : False);
+        $method = method_exists($this, $alt_method) ? (method_exists($this, $alt_method) ? $alt_method : False) : $method;
 
         if ($method == False) {
             // There is no method, try to find _default method
