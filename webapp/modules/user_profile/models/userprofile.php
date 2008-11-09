@@ -23,7 +23,7 @@ class UserProfile_Model extends Model
     // {{{ editProfile
     public function editProfile($province, $city, $address, $phone, $cellphone, $postal_code, $username, $name, $lastname, $country)
     {
-        if ($country != 32) {
+        if ($country != Kohana::config('config.default_country')) {
             $province = 0;
             $city     = 0;
         }
@@ -47,7 +47,7 @@ class UserProfile_Model extends Model
     // {{{ insertProfile
     public function insertProfile($province, $city, $address, $phone, $cellphone, $postal_code, $username, $name, $lastname, $country)
     {
-        if ($country != 32) {
+        if ($country != Kohana::config('config.default_country')) {
             $province = 0;
             $city     = 0;
         }
