@@ -5,7 +5,7 @@
 // $Id$
 // ---------------------------------------------------------------------------
 
-class Messaging_Model extends Model 
+class Messaging_Model extends Model
 {
     // {{{ Constructor
     function __construct()
@@ -23,18 +23,18 @@ class Messaging_Model extends Model
                      'body'         => $body,
                      'created_date' => $creatDate,
                      'read_status'  => $read_status);
-    
-        $this->db->insert($this->tableName,$row);               
+
+        $this->db->insert($this->tableName,$row);
     }
     // }}}
     // {{{ getMessages
     function getMessages($user_name,$id='')
     {
-        $this->db->select('id, parrent_id, message_from, message_to, subject, body, created_date'); 
+        $this->db->select('id, parrent_id, message_from, message_to, subject, body, created_date');
         if($id){
-            $query  = $this->db->getWhere($this->tableName,array('id'=>$id, 'message_to' => $user_name)); 
+            $query  = $this->db->getWhere($this->tableName,array('id'=>$id, 'message_to' => $user_name));
         }else{
-            $query  = $this->db->getWhere($this->tableName,array('message_to' => $user_name)); 
+            $query  = $this->db->getWhere($this->tableName,array('message_to' => $user_name));
         }
         $result = $query->result_array(false);
         if($id){
@@ -47,24 +47,65 @@ class Messaging_Model extends Model
     // {{{ getDate
     function getDate($row)
     {
-        return format::date($row['created_date']);   
+        return format::date($row['created_date']);
     }
     // }}}
     // {{{ getSentMessages
     function getSentMessages($user_name,$id='')
     {
-        $this->db->select('id, parrent_id, message_from, message_to, subject, body, created_date'); 
+        $this->db->select('id, parrent_id, message_from, message_to, subject, body, created_date');
         if($id){
-            $query  = $this->db->getWhere($this->tableName,array('id' => $id, 'message_from' => $user_name)); 
+            $query  = $this->db->getWhere($this->tableName, array('id' => $id, 'message_from' => $user_name));
         }else{
-            $query  = $this->db->getWhere($this->tableName,array('message_from' => $user_name));
-        } 
+            $query  = $this->db->getWhere($this->tableName, array('message_from' => $user_name));
+        }
         $result = $query->result_array(false);
         if($id){
             return current($result);
         }else{
-            return $result; 
+            return $result;
         }
+    }
+    // }}}
+    // {{{ updateStatuse
+    function updateStatuse($id)
+    {
+           $this->db->where('id',$id);
+           $row = array( 'read_status' => 1);
+           $this->db->update($this->tableName, $row);
+    }
+    // }}}
+    // {{{ getMessageSubject
+    function getMessageSubject($id)
+    {
+        $this->db->select('subject');
+        $query  = $this->db->get($this->tableName, array( 'id' => $id ));
+        $result = $query->current()->subject;
+        return  $result;
+    }
+    // }}}
+    // {{{ checkMessageTo
+    function checkMessageTo($id, $user_name)
+    {
+        $this->db->select('count(id) as count');
+        $query  = $this->db->getwhere($this->tableName, array( 'id' => $id , 'message_to' => $user_name));
+        $result = (boolean)$query->current()->count;
+        return  $result;
+    }
+    // }}}
+    // {{{ deleteMessage
+    function deleteMessage($id)
+    {
+        $this->db->delete($this->tableName, Array('id' => $id));
+    }
+    // }}}
+    // {{{ checkMessageFrom
+    function checkMessageFrom($id, $user_name)
+    {
+        $this->db->select('count(id) as count');
+        $query  = $this->db->getwhere($this->tableName, array( 'id' => $id , 'message_from' => $user_name));
+        $result = (boolean)$query->current()->count;
+        return  $result;
     }
     // }}}
 }
