@@ -18,6 +18,7 @@ class Inbox_Controller extends Messaging_Frontend
         $messages->addColumn('subject', _("Subject"));
         $messages->addAction('messaging/frontend/inbox/message_body/#id#', _("Body"), 'view_action');
         $messages->addAction('messaging/frontend/inbox/delete/#id#', _("Delete"), 'delete_action');
+        $messages->addAction('Inbox_Controller::show_status');
 
         $this->layout->content = new View('frontend/inbox');
     }
@@ -62,9 +63,10 @@ class Inbox_Controller extends Messaging_Frontend
         $message_to   = $this->input->post('username');
         $subject      = $this->input->post('subject');
         $body         = $this->input->post('body');
+        $parrent_id   = $this->input->post('parrent_id');
         $read_status  = 0;
 
-        $this->message->createMessage($message_from, $message_to, $subject, $body, $creatDate, $read_status);
+        $this->message->createMessage($message_from, $message_to, $subject, $body, $creatDate, $read_status, $parrent_id);
         url::redirect('messaging/frontend/inbox');
     }
     // }}}
@@ -79,6 +81,7 @@ class Inbox_Controller extends Messaging_Frontend
         $sent_messages->addColumn('subject', _("Subject"));
         $sent_messages->addAction('messaging/frontend/inbox/sent_message_body/#id#', 'view', 'view_action');
         $sent_messages->addAction('messaging/frontend/inbox/delete_sent/#id#', _("Delete"), 'delete_action');
+        $sent_messages->addAction('Inbox_Controller::show_status');
         $sent_messages->setEmptyListMessage(_("There is no message!"));
 
         $this->layout->content = new View('frontend/sent');
@@ -215,8 +218,10 @@ class Inbox_Controller extends Messaging_Frontend
     // {{{ reply_read
     function reply_read($id)
     {
-        $message = $this->message->getMessages($this->session->get('user.username'), $id);
+        $this->global_tabs->addItem(_("Reply"), "messaging/frontend/inbox/reply/$id", "messaging/frontend/inbox");
 
+        $message = $this->message->getMessages($this->session->get('user.username'), $id);
+        $this->layout->content = new View('frontend/reply', $message);
     }
     // }}}
     // {{{ reply_validate_read
@@ -237,6 +242,32 @@ class Inbox_Controller extends Messaging_Frontend
     function check_message($id)
     {
        return  $this->message->checkMessageTo($id, $this->session->get('user.username'));
+    }
+    // }}}
+    // {{{ show_status
+    function show_status($message)
+    {
+        if($message['read_status']==1){
+            return Array( 'uri'       => "messaging/frontend/inbox/change_status/".$message['id']."/".$message['read_status'],
+                          'label'     => _("Change read status"),
+                          'className' => 'apply_action' );
+        }else{
+            return Array( 'uri'       => "messaging/frontend/inbox/change_status/".$message['id']."/".$message['read_status'],
+                          'label'     => _("Change read status"),
+                          'className' => 'apply_action_alt' );
+        }
+
+    }
+    // }}}
+    // {{{ change_status
+    function change_status($id, $status)
+    {
+        if($status==1){
+             $this->message->updateStatuseToUnread($id);
+        }else{
+             $this->message->updateStatuse($id);
+        }
+        url::redirect('messaging/frontend/inbox');
     }
     // }}}
  }

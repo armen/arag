@@ -15,9 +15,10 @@ class Messaging_Model extends Model
     }
     // }}}
     // {{{ createMessage
-    function createMessage($message_from, $message_to, $subject, $body, $creatDate, $read_status)
+    function createMessage($message_from, $message_to, $subject, $body, $creatDate, $read_status, $parrent_id=null)
     {
-        $row = array('message_from' => $message_from,
+        $row = array('parrent_id'   => $parrent_id,
+                     'message_from' => $message_from,
                      'message_to'   => $message_to,
                      'subject'      => $subject,
                      'body'         => $body,
@@ -30,7 +31,7 @@ class Messaging_Model extends Model
     // {{{ getMessages
     function getMessages($user_name,$id='')
     {
-        $this->db->select('id, parrent_id, message_from, message_to, subject, body, created_date');
+        $this->db->select('id, parrent_id, message_from, message_to, subject, body, created_date, read_status');
         if($id){
             $query  = $this->db->getWhere($this->tableName,array('id'=>$id, 'message_to' => $user_name));
         }else{
@@ -53,7 +54,7 @@ class Messaging_Model extends Model
     // {{{ getSentMessages
     function getSentMessages($user_name,$id='')
     {
-        $this->db->select('id, parrent_id, message_from, message_to, subject, body, created_date');
+        $this->db->select('id, parrent_id, message_from, message_to, subject, body, created_date, read_status');
         if($id){
             $query  = $this->db->getWhere($this->tableName, array('id' => $id, 'message_from' => $user_name));
         }else{
@@ -70,9 +71,17 @@ class Messaging_Model extends Model
     // {{{ updateStatuse
     function updateStatuse($id)
     {
-           $this->db->where('id',$id);
-           $row = array( 'read_status' => 1);
-           $this->db->update($this->tableName, $row);
+        $this->db->where('id',$id);
+        $row = array( 'read_status' => 1);
+        $this->db->update($this->tableName, $row);
+    }
+    // }}}
+    // {{{ updateStatuseToUnread
+    function updateStatuseToUnread($id)
+    {
+       $this->db->where('id',$id);
+       $row = array( 'read_status' => 0);
+       $this->db->update($this->tableName, $row);
     }
     // }}}
     // {{{ getMessageSubject
