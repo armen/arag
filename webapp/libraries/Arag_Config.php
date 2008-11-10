@@ -48,20 +48,20 @@ class Arag_Config_Core
     // {{{ & get
     public static function & get($name, $default = Null, $namespace = Null, $try_kohana_config_first = False)
     {
+        if ($namespace == Null) {
+            $namespace = Router::$module;
+        }
+
         static $cache;
         if (!isset($cache)) {
             $cache = new Cache;
         }
 
-        $id = $name.'_'.$namespace.'_'.$try_kohana_config_first;
+        $id = $name.'_'.$namespace;
 
         $cached = $cache->get($id);
         if ($cached) {
             return $cached;
-        }
-
-        if ($namespace == Null) {
-            $namespace = Router::$module;
         }
 
         if ($try_kohana_config_first) {
