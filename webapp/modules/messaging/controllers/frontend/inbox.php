@@ -15,7 +15,7 @@ class Inbox_Controller extends Messaging_Frontend
         $messages->setLimit(Arag_Config::get('limit',0));
         $messages->addColumn('Messaging.getDate', _("Created Date"), PList_Component::VIRTUAL_COLUMN );
         $messages->addColumn('message_from', _("From"));
-        $messages->addColumn('subject', _("Subject"));
+        $messages->addColumn('Inbox_Controller::bold_subject', _("Subject"), PList_Component::VIRTUAL_COLUMN );
         $messages->addAction('messaging/frontend/inbox/message_body/#id#', _("Body"), 'view_action');
         $messages->addAction('messaging/frontend/inbox/delete/#id#', _("Delete"), 'delete_action');
         $messages->addAction('Inbox_Controller::show_status');
@@ -32,7 +32,7 @@ class Inbox_Controller extends Messaging_Frontend
 
         $userOptions = array();
 
-        foreach ($usersList as $user){
+        foreach ($usersList as $user) {
             $userOptions[$user['username']] = $user['user_name'];
         }
 
@@ -81,7 +81,6 @@ class Inbox_Controller extends Messaging_Frontend
         $sent_messages->addColumn('subject', _("Subject"));
         $sent_messages->addAction('messaging/frontend/inbox/sent_message_body/#id#', 'view', 'view_action');
         $sent_messages->addAction('messaging/frontend/inbox/delete_sent/#id#', _("Delete"), 'delete_action');
-        $sent_messages->addAction('Inbox_Controller::show_status');
         $sent_messages->setEmptyListMessage(_("There is no message!"));
 
         $this->layout->content = new View('frontend/sent');
@@ -92,6 +91,7 @@ class Inbox_Controller extends Messaging_Frontend
     {
         $this->global_tabs->addItem(_("Body"), "messaging/frontend/inbox/message_body", "messaging/frontend/inbox");
         $this->global_tabs->addItem(_("Reply"), "messaging/frontend/inbox/reply/$id", "messaging/frontend/inbox");
+        $this->global_tabs->addItem(_("Delete"), "messaging/frontend/inbox/delete/$id", "messaging/frontend/inbox");
 
         $this->message->updateStatuse($id);
 
@@ -103,6 +103,7 @@ class Inbox_Controller extends Messaging_Frontend
     function sent_message_body($id)
     {
         $this->global_tabs->addItem(_("Body"), "messaging/frontend/inbox/sent_message_body", 'messaging/frontend/inbox/sent_messages');
+        $this->global_tabs->addItem(_("Delete"), "messaging/frontend/inbox/delete_sent/$id", 'messaging/frontend/inbox/sent_messages');
 
         $this->message->updateStatuse($id);
 
@@ -247,11 +248,11 @@ class Inbox_Controller extends Messaging_Frontend
     // {{{ show_status
     function show_status($message)
     {
-        if($message['read_status']==1){
+        if ($message['read_status'] == 1) {
             return Array( 'uri'       => "messaging/frontend/inbox/change_status/".$message['id']."/".$message['read_status'],
                           'label'     => _("Change read status"),
                           'className' => 'apply_action' );
-        }else{
+        } else {
             return Array( 'uri'       => "messaging/frontend/inbox/change_status/".$message['id']."/".$message['read_status'],
                           'label'     => _("Change read status"),
                           'className' => 'apply_action_alt' );
@@ -262,12 +263,23 @@ class Inbox_Controller extends Messaging_Frontend
     // {{{ change_status
     function change_status($id, $status)
     {
-        if($status==1){
+        if ($status == 1) {
              $this->message->updateStatuseToUnread($id);
-        }else{
+        } else {
              $this->message->updateStatuse($id);
         }
+
         url::redirect('messaging/frontend/inbox');
+    }
+    // }}}
+    // {{{ bold_subject
+    function bold_subject($message)
+    {
+        if ($message['read_status'] == 1) {
+            return  $message['subject'];
+        }
+
+       return "<b>".$message['subject']."</b>";
     }
     // }}}
  }

@@ -1,6 +1,6 @@
 <?php
 // +-------------------------------------------------------------------------+
-// | Author: Jila Khaghani<jilakhaghani@gmail.com>                           |
+// | Author: Jila Khaghani <jilakhaghani@gmail.com>                           |
 // +-------------------------------------------------------------------------+
 // $Id$
 // ---------------------------------------------------------------------------
@@ -25,24 +25,26 @@ class Messaging_Model extends Model
                      'created_date' => $creatDate,
                      'read_status'  => $read_status);
 
-        $this->db->insert($this->tableName,$row);
+        $this->db->insert($this->tableName, $row);
     }
     // }}}
     // {{{ getMessages
-    function getMessages($user_name,$id='')
+    function getMessages($user_name, $id = '')
     {
-        $this->db->select('id, parrent_id, message_from, message_to, subject, body, created_date, read_status');
-        if($id){
-            $query  = $this->db->getWhere($this->tableName,array('id'=>$id, 'message_to' => $user_name));
-        }else{
-            $query  = $this->db->getWhere($this->tableName,array('message_to' => $user_name));
+        $this->db->select('id, parrent_id, message_from, message_to, subject, body, created_date, read_status')
+                 ->from($this->tableName)->where('message_to',$user_name)->orderby('created_date', 'DESC');
+
+        if ($id) {
+            $this->db->where('id', $id);
         }
-        $result = $query->result_array(false);
-        if($id){
+
+        $result = $this->db->get()->result_array(false);
+
+        if ($id) {
             return current($result);
-        }else{
-            return $result;
         }
+
+        return $result;
     }
     // }}}
     // {{{ getDate
@@ -52,20 +54,22 @@ class Messaging_Model extends Model
     }
     // }}}
     // {{{ getSentMessages
-    function getSentMessages($user_name,$id='')
+    function getSentMessages($user_name, $id = '')
     {
-        $this->db->select('id, parrent_id, message_from, message_to, subject, body, created_date, read_status');
-        if($id){
-            $query  = $this->db->getWhere($this->tableName, array('id' => $id, 'message_from' => $user_name));
-        }else{
-            $query  = $this->db->getWhere($this->tableName, array('message_from' => $user_name));
+        $this->db->select('id, parrent_id, message_from, message_to, subject, body, created_date, read_status')
+                  ->from($this->tableName)->where('message_from', $user_name)->orderby('created_date', 'DESC');
+
+        if ($id) {
+             $this->db->where('id', $id);
         }
-        $result = $query->result_array(false);
-        if($id){
+
+        $result = $this->db->get()->result_array(false);
+
+        if ($id) {
             return current($result);
-        }else{
-            return $result;
         }
+
+        return $result;
     }
     // }}}
     // {{{ updateStatuse

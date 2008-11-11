@@ -12,13 +12,13 @@
     	            </td>
     	            <td>
         	            {arag_form uri="messaging/frontend/inbox/delete_sent" method="post"}
-        	                <input type="hidden" name="id" value="{$id}">
-                            <input type="submit" value={quote}_("Yes"){/quote}>
+        	                <input type="hidden" name="id" value="{$id}" />
+                            <input type="submit" value={quote}_("Yes"){/quote} />
         	            {/arag_form}
     	            </td>
     	            <td>
         	            {arag_form uri="messaging/frontend/inbox/sent_messages" method="post"}
-        	               <input type="submit" value={quote}_("No"){/quote}>
+        	               <input type="submit" value={quote}_("No"){/quote} />
         	            {/arag_form}
     	            </td>
                 </tr>

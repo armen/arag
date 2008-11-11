@@ -44,6 +44,7 @@
 			<field>
 				<name>read_status</name>
 				<type>integer</type>
+				<length>1</length>
 			</field>
 			<field>
 				<name>change_status_date</name>

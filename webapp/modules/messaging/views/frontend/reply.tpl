@@ -17,7 +17,7 @@
             </tr>
             <tr>
                 <td>{asterisk}_("Subject"):</td>
-                <td><input type="text" name="subject" size="15"></td>
+                <td><input type="text" name="subject" size="15" /></td>
             </tr>
             <tr>
                 <td>_("Message body"):</td>
@@ -31,8 +31,8 @@
                 </td>
             </tr>
         </table>
-        <input type="hidden" name="username" value="{$message_from}">
-        <input type="hidden" name="parrent_id" value="{$id}">
+        <input type="hidden" name="username" value="{$message_from}" />
+        <input type="hidden" name="parrent_id" value="{$id}" />
     {/arag_form}
 {/arag_block}
 {/arag_tabbed_block}
