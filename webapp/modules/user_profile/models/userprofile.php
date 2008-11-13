@@ -21,7 +21,7 @@ class UserProfile_Model extends Model
     }
     // }}}
     // {{{ editProfile
-    public function editProfile($province, $city, $address, $phone, $cellphone, $postal_code, $username, $name, $lastname, $country)
+    public function editProfile($province, $city, $address, $phone, $cellphone, $postal_code, $username, $country)
     {
         if ($country != Kohana::config('config.default_country')) {
             $province = 0;
@@ -35,8 +35,6 @@ class UserProfile_Model extends Model
                      'phone'       => $phone,
                      'cellphone'   => $cellphone,
                      'postal_code' => $postal_code,
-                     'name'        => $name,
-                     'lastname'    => $lastname,
                      'country'     => $country
                     );
         $this->db->where('username', $username);

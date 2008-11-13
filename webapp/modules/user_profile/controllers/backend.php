@@ -115,7 +115,7 @@ class Backend_Controller extends Controller
         $lastname    = $this->input->post('lastname', Null, true);
 
         if ($this->UserProfile->hasUserName($this->username)) {
-            $this->UserProfile->editProfile($province, $city, $address, $phone, $cellphone, $postal_code, $this->username, $name, $lastname, $country);
+            $this->UserProfile->editProfile($province, $city, $address, $phone, $cellphone, $postal_code, $this->username, $country);
         } else {
             $this->UserProfile->insertProfile($province, $city, $address, $phone, $cellphone, $postal_code, $this->username, $name, $lastname, $country);
         }
