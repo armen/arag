@@ -414,7 +414,7 @@ class date extends date_Core {
     }
     // }}}
     // {{{ strtotime
-    public static function strtotime($str, $type)
+    public static function strtotime($str, $type = Null)
     {
         if (!$str) {
             return 0;
@@ -422,6 +422,11 @@ class date extends date_Core {
         $array = explode('/', $str);
         if (count($array)!=3) {
             return 0;
+        }
+
+        if (!$type) {
+            $lang = Kohana::config('locale.lang') == "fa";
+            $type = $lang == 'fa' ? 'jalali' : 'gregorian';
         }
 
         if ($type == "jalali") {
