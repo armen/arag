@@ -136,6 +136,50 @@
                     <value></value>
                 </field>
             </insert>
+            <insert>
+                <field>
+                    <name>name</name>
+                    <value>Messaging</value>
+                </field>
+                <field>
+                    <name>module</name>
+                    <value>messaging</value>
+                </field>
+                <field>
+                    <name>version</name>
+                    <value>0.1</value>
+                </field>
+                <field>
+                    <name>state</name>
+                    <value>1</value>
+                </field>
+                <field>
+                    <name>description</name>
+                    <value></value>
+                </field>
+            </insert>
+            <insert>
+                <field>
+                    <name>name</name>
+                    <value>Logger</value>
+                </field>
+                <field>
+                    <name>module</name>
+                    <value>logger</value>
+                </field>
+                <field>
+                    <name>version</name>
+                    <value>0.1</value>
+                </field>
+                <field>
+                    <name>state</name>
+                    <value>1</value>
+                </field>
+                <field>
+                    <name>description</name>
+                    <value></value>
+                </field>
+            </insert>
         </initialization>
     </table>
 </database>
