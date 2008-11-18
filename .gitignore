@@ -16,3 +16,4 @@ webapp/logs/apache2handler/*.log
 messages.mo
 *.swp
 *.swo
+*.~
