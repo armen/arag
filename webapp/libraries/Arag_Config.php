@@ -123,4 +123,15 @@ class Arag_Config_Core
         return $result;
     }
     // }}}
+    // {{{ delete
+    public function delete($name, $namespace = Null)
+    {
+        if (!$namespace) {
+            $namespace = Router::$module;
+        }
+
+         $db = New Database();
+         return $db->delete(self::$tableName, Array('name' => $name, 'namespace' => $namespace));
+    }
+    // }}}
 }
