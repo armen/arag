@@ -23,7 +23,7 @@
     {arag_block}
         {arag_block template="blank"}
             <table >
-                <tr>    
+                <tr>
                     <td>{$body}</td>
                 </tr>
             </table>
