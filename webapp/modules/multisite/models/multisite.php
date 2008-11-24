@@ -100,8 +100,17 @@ class MultiSite_Model extends Model
         $conn =& new Swift_Connection_SMTP($settings['smtpserver'], $settings['smtpport']);
 
         if ($settings['authentication']) {
-            require_once Kohana::find_file('vendor', 'swift/Swift/Authenticator/LOGIN');
-            $conn->attachAuthenticator(new Swift_Authenticator_LOGIN());
+            require_once Kohana::find_file('vendor', 'swift/Swift/Authenticator/'.$settings['authenticator']);
+            switch ($settings['authenticator']) {
+                case 'LOGIN':
+                    $conn->attachAuthenticator(new Swift_Authenticator_LOGIN());
+                    break;
+                case 'CRAMMD5':
+                    $conn->attachAuthenticator(new Swift_Authenticator_CRAMMD5());
+                    break;
+                default:
+                    $conn->attachAuthenticator(new Swift_Authenticator_PLAIN());
+            }
             $conn->setUsername($settings['username']);
             $conn->setPassword($settings['password']);
         }

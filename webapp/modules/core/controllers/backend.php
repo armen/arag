@@ -33,7 +33,8 @@ class Backend_Controller extends Controller
     {
         $data = Arag_Config::get("email_settings", array());
 
-        $data['saved'] = $this->session->get_once('core_settings_email_saved');
+        $data['saved']          = $this->session->get_once('core_settings_email_saved');
+        $data['authenticators'] = array('PLAIN' => _("PLAIN"), 'LOGIN' => _("LOGIN"), 'CRAMMD5' => _("CRAMMD5"));
 
         $this->layout->content = new View('backend/settings_email', $data);
     }
@@ -47,6 +48,7 @@ class Backend_Controller extends Controller
                            'subject'        => $this->input->post('subject'),
                            'template'       => $this->input->post('template'),
                            'smtpport'       => $this->input->post('smtpport'),
+                           'authenticator'  => $this->input->post('authenticator'),
                            'authentication' => false
                           );
 
@@ -81,6 +83,9 @@ class Backend_Controller extends Controller
 
         $this->validation->name('subject', _("Subject"))->pre_filter('trim', 'subject')
              ->add_rules('subject', 'required');
+
+        $this->validation->name('authenticator', _("Authenticator"))->pre_filter('trim', 'authenticator')
+             ->add_rules('authenticator', 'required');
 
         $this->validation->name('template', _("Email's template"))->pre_filter('trim', 'template')
              ->add_rules('template', 'required');

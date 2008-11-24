@@ -43,6 +43,11 @@
     </tr>
     <tr><td colspan="2">&nbsp;</td></tr>
     <tr>
+        <td align="{right}" width="100">_("Authenticator"):{asterisk}</td>
+        <td>{html_options options=$authenticators name="authenticator" selected=$authenticator|smarty:nodefaults|default:null}</td>
+    </tr>
+    <tr><td colspan="2">&nbsp;</td></tr>
+    <tr>
         <td align="{right}" width="100">_("Subject"):{asterisk}</td>
         <td><input type="text" name="subject" value="{$subject|smarty:nodefaults|default:null}" /></td>
     </tr>
