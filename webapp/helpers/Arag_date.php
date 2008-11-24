@@ -403,18 +403,30 @@ class date extends date_Core {
     // {{{ get_time
     public static function get_time($name)
     {
-        $value = Input::instance()->Post($name);
-        $type  = Input::instance()->Post($name.'_type');
+        $values = Input::instance()->Post($name);
+        $types  = Input::instance()->Post('type_'.$name);
+        $lang   = Kohana::config('locale.lang') == "fa";
 
-        if (!$type) {
-            $lang = Kohana::config('locale.lang') == "fa";
-            $type = $lang == 'fa' ? 'jalali' : 'gregorian';
+        if (!is_array($values)) {
+            if (!$types) {
+                $types = $lang == 'fa' ? 'jalali' : 'gregorian';
+            }
+            return date::strtotime($values, $types);
+        } else {
+            $dates = Array();
+            foreach ($values as $key => $value) {
+                if (!$types[$key]) {
+                    $types[$key] = $lang == 'fa' ? 'jalali' : 'gregorian';
+                }
+                $dates[] = date::strtotime($value, $types[$key]);
+            }
+
+            return $dates;
         }
-        return date::strtotime($value, $type);
     }
     // }}}
     // {{{ strtotime
-    public static function strtotime($str, $type = Null)
+    public static function strtotime($str, $type)
     {
         if (!$str) {
             return 0;
@@ -422,11 +434,6 @@ class date extends date_Core {
         $array = explode('/', $str);
         if (count($array)!=3) {
             return 0;
-        }
-
-        if (!$type) {
-            $lang = Kohana::config('locale.lang') == "fa";
-            $type = $lang == 'fa' ? 'jalali' : 'gregorian';
         }
 
         if ($type == "jalali") {

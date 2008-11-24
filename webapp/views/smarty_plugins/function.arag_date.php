@@ -17,8 +17,10 @@ function smarty_function_arag_date($params, &$smarty)
 
     foreach ($params as $_key => $_val) {
         switch ($_key) {
-            case 'value':
-            case 'name' :
+            case 'value' :
+            case 'name'  :
+            case 'id'    :
+            case 'type'  :
             case 'toggle':
                 $$_key = $_val;
                 break;
@@ -34,14 +36,19 @@ function smarty_function_arag_date($params, &$smarty)
     }
 
     $lang = Kohana::config('locale.lang');
-    if ($lang == 'fa') {
-        $type = 'jalali';
-    } else {
-        $type = 'gregorian';
+
+    if (!isset($type) || $type == '') {
+        if ($lang == 'fa') {
+            $type = 'jalali';
+        } else {
+            $type = 'gregorian';
+        }
     }
+
     $data['lang']   = $lang;
     $data['type']   = $type;
     $data['name']   = $name;
+    $data['id']     = isset($id) ? $id : $name;
     $data['toggle'] = isset($toggle) ? True : False;
     $data['value']  = isset($value) ? $value : "";
     $data['format'] = '%m/%d/%Y';
