@@ -3,13 +3,13 @@ window.addEvent('domready', function() {
     $('additional_column_columns').addEvent('change', function(e) {
 
         var formula   = $('formula');
-        var value     = e.target.getValue();
-        var old_value = formula.getValue();
+        var value     = e.target.get('value');
+        var old_value = formula.get('value');
 
         if (old_value) {
-            formula.setProperty('value', old_value+' '+value+' ');
+            formula.set('value', old_value+' '+value+' ');
         } else {
-            formula.setProperty('value', value+' ');
+            formula.set('value', value+' ');
         }
 
         // Unselect selected item with selecting first item on list
@@ -23,17 +23,14 @@ window.addEvent('domready', function() {
 
     $$('.remove_additional_column').addEvent('click', function(e) {
 
+        e.stop();
+
         // Grand parent is <tr>
         var target = e.target.getParent().getParent();
         var button = e.target;
 
-        new Fx.Styles(target, {
-            duration: 500,
-            wait: true,
-            transition: Fx.Transitions.Quad.easeOut
-        }).start({
-            'opacity': [1, 0]
-        }).addEvent('onComplete', function(e) {
+        var myTarget = new Fx.Tween(target);
+        myTarget.start('opacity', '1', '0').addEvent('onComplete', function(e) {
             target.empty();
         });
     });
@@ -42,13 +39,13 @@ window.addEvent('domready', function() {
     $$('.column_operator').addEvent('click', function(e) {
 
         var formula   = $('formula');
-        var value     = e.target.getProperty('value');
-        var old_value = formula.getValue();
+        var value     = e.target.get('value');
+        var old_value = formula.get('value');
 
         if (old_value) {
-            formula.setProperty('value', old_value+' '+value+' ');
+            formula.set('value', old_value+' '+value+' ');
         } else {
-            formula.setProperty('value', value+' ');
+            formula.set('value', value+' ');
         }
     });
 });

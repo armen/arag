@@ -26,9 +26,9 @@ window.addEvent('domready', function() {
             var select = new Element('select', {'name': name});
             options.each(function(option) {
                 if (option.value == selected) {
-                    new Element('option', {'value': option.value, 'selected':'selected'}).setHTML(option.text).injectInside(select);
+                    new Element('option', {'value': option.value, 'selected':'selected'}).set('html', option.text).injectInside(select);
                 } else {
-                    new Element('option', {'value': option.value}).setHTML(option.text).injectInside(select);
+                    new Element('option', {'value': option.value}).set('html', option.text).injectInside(select);
                 }
             });
 
@@ -71,7 +71,7 @@ window.addEvent('domready', function() {
         }
 
         tr.injectInside(table);
-        label.setHTML(field.replace(/_/g, ' ').capitalize());
+        label.set('html', field.replace(/_/g, ' ').capitalize());
 
         /**
          *
@@ -109,26 +109,15 @@ window.addEvent('domready', function() {
             var target = e.target.getParent().getParent();
             var button = e.target;
 
-            new Fx.Styles(target, {
-                duration: 500,
-                wait: true,
-                transition: Fx.Transitions.Quad.easeOut
-            }).start({
-                'opacity': [1, 0]
-            }).addEvent('onComplete', function(e) {
-                // var field = button.getProperty('name');
+            var myTarget = new Fx.Tween(target);
+            myTarget.start('opacity', '1', '0').addEvent('onComplete', function(e) {
                 target.empty();
             });
         });
 
         // Create a visual fx then user can find added filter
-        new Fx.Styles(tr, {
-            duration: 1500,
-            wait: false,
-            transition: Fx.Transitions.Quad.easeOut
-        }).start({
-            'background-color': ['#fff692', '#fff']
-        });
+        var myTr = new Fx.Tween(tr);
+        myTr.start('background-color', '#fff692', '#fff');
     }
 
     // }}}
@@ -136,7 +125,7 @@ window.addEvent('domready', function() {
 
     $('filter_fields').addEvent('change', function(e) {
 
-        var field = e.target.getValue();
+        var field = e.target.get('value');
         addFilter(field);
 
         // Unselect selected item with selecting first item on list
