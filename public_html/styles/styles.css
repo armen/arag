@@ -801,6 +801,24 @@ input[type=reset][disabled] {
     list-style-type : disc;
 }
 /* }}} end of Comment */
+/* {{{ user_autocomplete */
+.user_autocomplete {
+    background-color: #E8DEFF;
+    list-style: none;
+    border: 1px solid black;
+    margin:0px;
+    padding: 0px;
+    position: absolute;
+}
+.user_autocomplete li {
+    border-bottom:1px dashed #ccc;
+    padding: 1px;
+}
+
+.user_autocomplete li:hover {
+    background-color: #ABA4BC;
+}
+/* }}} end */
 /* {{{ Profiler */
 #kohana-profiler
 {

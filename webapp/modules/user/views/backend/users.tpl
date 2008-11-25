@@ -36,7 +36,7 @@
                         _("User"):
                     </td>
                     <td align="{left}">
-                        <input type="text" name="user" value="{$user|smarty:nodefaults|default:null}" dir="ltr" />
+                        {arag_user_search name="user" value=$user|smarty:nodefaults|default:null}
                     </td>
                 </tr>
                 <tr>

@@ -653,7 +653,7 @@ class Frontend_Controller extends Controller
      // {{{ search_write
     public function search_write()
     {
-        $usersMan = Model::load('Users', 'user');
+        $usersMan = New users_Model;
         $results  = $usersMan->getUsers(Null, Null, Null, $this->input->post('search'));
         foreach($results as $result) {
             $simple[] = $result['username'];

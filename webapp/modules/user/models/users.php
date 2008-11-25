@@ -173,7 +173,7 @@ class Users_Model extends Model
     }
     // }}}
     // {{{ & getUsers
-    public function & getUsers($groupID = NULL, $appName, $groupName, $user, $flagappname, $email = Null, $is_blocked = Null, $is_not_verified = Null)
+    public function & getUsers($groupID = NULL, $appName, $groupName, $user, $flagappname = Null, $email = Null, $is_blocked = Null, $is_not_verified = Null)
     {
         $this->db->select('username, lastname, email, appname, id');
         $this->db->select($this->tableNameGroups.".name as group_name");
