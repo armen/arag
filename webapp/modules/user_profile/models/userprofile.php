@@ -117,7 +117,7 @@ class UserProfile_Model extends Model
         $this->db->select('code, city, province')->from($this->tableNameCities);
 
         if (is_array($code)) {
-            if (isset($code['city'])) {
+            if (isset($code['city']) && $code['city'] != 0) {
                 $this->db->where('code', $code['city']);
                 return $this->db->get()->current()->city;
             }
@@ -133,7 +133,7 @@ class UserProfile_Model extends Model
         $this->db->select('id, province')->from($this->tableNameProvinces);
 
         if (is_array($id)) {
-            if (isset($id['province'])) {
+            if (isset($id['province']) && $id['province'] != 0) {
                 $this->db->where('id', $id['province']);
                 return $this->db->get()->current()->province;
             }

@@ -86,6 +86,17 @@ class Backend_Controller extends Controller
             $cities = $this->UserProfile->getCities($data['province']);
         }
 
+        $provinces = $this->UserProfile->getProvinces();
+
+        $cities = array();
+
+        if (!isset($data['province']) || $data['province'] == 0) {
+            $cities = $this->UserProfile->getCities($this->default_province);
+            $data['province'] = $this->default_province;
+        } else {
+            $cities = $this->UserProfile->getCities($data['province']);
+        }
+
         $data = array_merge($data, array (
                                           'flagsaved'     => $this->session->get_once('user_profile_profile_saved'),
                                           'isset_profile' => $isset_profile,
@@ -207,7 +218,6 @@ class Backend_Controller extends Controller
         if ($isset_profile = $this->UserProfile->hasUserName($username)) {
             $data          = array_merge($data, $this->UserProfile->getProfile($username));
             $isset_profile = True;
-
         }
 
         $provinces = $this->UserProfile->getProvinces();
@@ -272,4 +282,3 @@ class Backend_Controller extends Controller
     }
     // }}}
 }
-?>
