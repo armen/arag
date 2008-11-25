@@ -1,28 +1,28 @@
 // {{{ toggleCheckboxesStatus
 function toggleCheckboxesStatus(status, namespace)
 {
-    $$('#plist_'+namespace+' input[type="checkbox"]').setProperty('checked', status);
+    $$('#plist_'+namespace+' input[type="checkbox"]').set('checked', status);
 }
 // }}}
 // {{{ toggleListCheckbox
 function toggleListCheckbox(el)
 {
-    el.setProperty('checked', !el.getProperty('checked'));
+    el.set('checked', !el.get('checked'));
 }
 // }}}
 // {{{ listForward
 function listForward(el, namespace)
 {
-    var action = (el.getTag() == 'a')?el.href:
-                 ((el.getTag() == 'select')?el.options[el.selectedIndex].value:Null);
+    var action = (el.get('tag') == 'a')?el.href:
+                 ((el.get('tag') == 'select')?el.options[el.selectedIndex].value:Null);
 
-    $('plist_'+namespace).setProperty('action', action).submit();
+    $('plist_'+namespace).set('action', action).submit();
 
-    if (el.getTag() == 'a') {
+    if (el.get('tag') == 'a') {
         // Set the href to none, important to set unless it does not work
         el.href = '#none';
 
-    } else if (el.getTag() == 'select') {
+    } else if (el.get('tag') == 'select') {
         // Set selected index to 0 then if user hit the back will see defaul value
         toggleCheckboxesStatus(false, namespace);
         el.selectedIndex = 0;

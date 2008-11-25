@@ -593,6 +593,18 @@ input[type=reset][disabled] {
     width           : 16px;
     height          : 16px;
 }
+.view_profile {
+    background      : transparent url(../images/list/view_profile.png) no-repeat center;
+    font-size       : 0px;
+    width           : 16px;
+    height          : 16px;
+}
+.view_profile_alt {
+    background      : transparent url(../images/list/view_profile_alt.png) no-repeat center;
+    font-size       : 0px;
+    width           : 16px;
+    height          : 16px;
+}
 /* }}} end of List actions */
 /* {{{ Tabbed Block */
 .tabbed_block_title {
