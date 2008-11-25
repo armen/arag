@@ -53,6 +53,7 @@ $config = Array
     ),
     'plugins_paths'         => Array
     (
+        MODPATH.'user/views/plugins/',
         APPPATH.'views/smarty_plugins/',
     )
 );

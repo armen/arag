@@ -650,4 +650,16 @@ class Frontend_Controller extends Controller
         return ($user && (Arag_Config::get('captcha_counter', 3) != 0 && $user->block_counter >= Arag_Config::get('captcha_counter', 3) + 1));
     }
     // }}}
+     // {{{ search_write
+    public function search_write()
+    {
+        $usersMan = Model::load('Users', 'user');
+        $results  = $usersMan->getUsers(Null, Null, Null, $this->input->post('search'));
+        foreach($results as $result) {
+            $simple[] = $result['username'];
+        }
+        print json_encode($simple);
+        die();
+    }
+    // }}}
 }
