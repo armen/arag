@@ -32,6 +32,8 @@ function smarty_function_arag_user_search($params, &$smarty)
        return Null;
     }
     $smarty->assign('name', $name);
-    $smarty->assign('value', $value);
+    if (isset($value)) {
+        $smarty->assign('value', $value);
+    }
     return $smarty->fetch(Arag::find_file('user', 'views', 'frontend/search', True, Kohana::config('smarty.templates_ext')));
 }
