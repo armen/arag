@@ -14,6 +14,7 @@ $config = Array
     'secure_dirs'           => Array         // Smarty secure directories
     (
         LIBSPATH.'arag/views',
+        MODPATH.'user/views/frontend/'
     ),
     'if_funcs'              => Array         // We'll allow these functions in if statement
     (
