@@ -401,10 +401,14 @@ class date extends date_Core {
     }
     // }}}
     // {{{ get_time
-    public static function get_time($name)
+    public static function get_time($name, $values = Null, $types = Null)
     {
-        $values = Input::instance()->Post($name);
-        $types  = Input::instance()->Post('type_'.$name);
+        if (!$values) {
+            $values = Input::instance()->Post($name);
+        }
+        if (!$types) {
+            $types  = Input::instance()->Post('type_'.$name);
+        }
         $lang   = Kohana::config('locale.lang') == "fa";
 
         if (!is_array($values)) {
@@ -426,7 +430,7 @@ class date extends date_Core {
     }
     // }}}
     // {{{ strtotime
-    public static function strtotime($str, $type)
+    public static function strtotime($str, $type=Null)
     {
         if (!$str) {
             return 0;
@@ -435,7 +439,10 @@ class date extends date_Core {
         if (count($array)!=3) {
             return 0;
         }
-
+        if (!$type) {
+            $lang   = Kohana::config('locale.lang') == "fa";
+            $type   = $lang == 'fa' ? 'jalali' : 'gregorian';
+        }
         if ($type == "jalali") {
             $timestamp = date::jalali_to_gregorian($array[0], $array[1], $array[2]) - (210 * 60);
         } else {

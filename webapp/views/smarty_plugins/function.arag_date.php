@@ -49,6 +49,8 @@ function smarty_function_arag_date($params, &$smarty)
     $data['type']   = $type;
     $data['name']   = $name;
     $data['id']     = isset($id) ? $id : $name;
+    $data['id']     = str_replace('[', '_', $data['id']);
+    $data['id']     = str_replace(']', '_', $data['id']);
     $data['toggle'] = isset($toggle) ? True : False;
     $data['value']  = isset($value) ? $value : "";
     $data['format'] = '%m/%d/%Y';
