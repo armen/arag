@@ -115,6 +115,7 @@ class Backend_Controller extends Controller
     // {{{ index_write
     public function index_write()
     {
+        $data        = $this->Users->getUserProfile($this->username);
         $province    = $this->input->post('province', Null, true);
         $city        = $this->input->post('city', Null, true);
         $country     = $this->input->post('country', Null, true);
@@ -122,13 +123,11 @@ class Backend_Controller extends Controller
         $phone       = $this->input->post('phone', Null, true);
         $cellphone   = $this->input->post('cellphone', Null, true);
         $postal_code = $this->input->post('postal_code', Null, true);
-        $name        = $this->input->post('name', Null, true);
-        $lastname    = $this->input->post('lastname', Null, true);
 
         if ($this->UserProfile->hasUserName($this->username)) {
             $this->UserProfile->editProfile($province, $city, $address, $phone, $cellphone, $postal_code, $this->username, $country);
         } else {
-            $this->UserProfile->insertProfile($province, $city, $address, $phone, $cellphone, $postal_code, $this->username, $name, $lastname, $country);
+            $this->UserProfile->insertProfile($province, $city, $address, $phone, $cellphone, $postal_code, $this->username, $data['name'], $data['lastname'], $country);
         }
 
         $this->session->set('user_profile_profile_saved', true);

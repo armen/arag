@@ -68,7 +68,6 @@
                     </td>
                     <td align="{left}">
                         {$username|smarty:nodefaults|default:null}
-                        <input type="hidden" name="username" value="{$username|smarty:nodefaults|default:null}" dir="ltr" />
                     </td>
                 </tr>
                 <tr>
@@ -93,7 +92,6 @@
                     </td>
                     <td align="{left}">
                         {$email|smarty:nodefaults|default:null}
-                        <input type="hidden" name="email" value="{$email|smarty:nodefaults|default:null}" dir="ltr" />
                     </td>
                 </tr>
                 <tr>
