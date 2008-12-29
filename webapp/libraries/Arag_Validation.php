@@ -58,5 +58,23 @@ class Validation extends Validation_Core {
         return ((int) $field <= (int) current($inputs));
     }
     // }}}
+    // {{{ get_names
+    public function get_names()
+    {
+        return $this->names;
+    }
+    // }}}
+    // {{{ get_messages
+    public function get_messages()
+    {
+        return $this->messages;
+    }
+    // }}}
+    // {{{ get_errors
+    public function get_errors()
+    {
+        return $this->errors;
+    }
+    // }}}
 
 } // End Validation
