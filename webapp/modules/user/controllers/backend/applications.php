@@ -55,6 +55,7 @@ class Applications_Controller extends Backend_Controller
     }
     // }}}
     // {{{ index
+    // {{{ index
     public function index_any($page = Null)
     {
         $this->index_validate();
@@ -94,6 +95,8 @@ class Applications_Controller extends Backend_Controller
         $this->index_any();
     }
     // }}}
+    // }}}
+    // {{{ groups
     // {{{ groups_read
     public function groups_read($appname)
     {
@@ -124,6 +127,8 @@ class Applications_Controller extends Backend_Controller
         $this->_invalid_request("user/backend/applications/index", _("Invalid Application name"));
     }
     // }}}
+    // }}}
+    // {{{ default_group
     // {{{ default_group_read
     public function default_group_read($appname)
     {
@@ -144,6 +149,8 @@ class Applications_Controller extends Backend_Controller
         $this->_invalid_request("user/backend/applications/index", _("Invalid Application name"));
     }
     // }}}
+    // }}}
+    // {{{ new_group
     // {{{ new_group_read
     public function new_group_read($appname)
     {
@@ -164,6 +171,8 @@ class Applications_Controller extends Backend_Controller
         $this->_invalid_request("user/backend/applications/index", _("Invalid Application name"));
     }
     // }}}
+    // }}}
+    // {{{ users
     // {{{ users_read
     public function users_read($id, $appname)
     {
@@ -197,6 +206,8 @@ class Applications_Controller extends Backend_Controller
         $this->_invalid_request("user/backend/applications/index", _("Invalid ID or Application name"));
     }
     // }}}
+    // }}}
+    // {{{ all_users
     // {{{ all_users
     public function all_users_any($page = NULL)
     {
@@ -263,6 +274,8 @@ class Applications_Controller extends Backend_Controller
         $this->_invalid_request("user/backend/applications/index", _("Invalid Application name"));
     }
     // }}}
+    // }}}
+    // {{{ user_profile
     // {{{ user_profile_read
     public function user_profile_read($username)
     {
@@ -285,6 +298,8 @@ class Applications_Controller extends Backend_Controller
         $this->_invalid_request("user/backend/applications/index", _("Invalid Username"));
     }
     // }}}
+    // }}}
+    // {{{ delete
     // {{{ delete
     public function delete_any($type, $objects = NULL)
     {
@@ -368,7 +383,8 @@ class Applications_Controller extends Backend_Controller
         }
     }
     // }}}
-    //{{{ apps_filters_any
+    // }}}
+    // {{{ apps_filters_any
     public function apps_filters_any($page = NULL)
     {
         $applications = new PList_Component('applications');
@@ -395,7 +411,7 @@ class Applications_Controller extends Backend_Controller
 
         $this->layout->content = new View('backend/index', array("name" => $name, "flag" => true));
     }
-    //}}}
+    // }}}
     // {{{ _delete_action
     public static function _delete_action($application)
     {
@@ -411,14 +427,15 @@ class Applications_Controller extends Backend_Controller
         }
     }
     // }}}
-    //{{{ app_filters_read
+    // {{{ app_filters
+    // {{{ app_filters_read
     public function app_filters_read($appname)
     {
         $this->global_tabs->addItem(_("$appname's Filters"), 'user/backend/applications/app_filters/%appname%', 'user/backend/applications/apps_filters');
         $this->global_tabs->setParameter('appname', $appname);
         $this->_filters_read($appname);
     }
-    //}}}
+    // }}}
     // {{{ app_filters_write
     public function app_filters_write()
     {
@@ -431,7 +448,7 @@ class Applications_Controller extends Backend_Controller
 
         $this->app_filters_read($appname);
     }
-    //}}}
+    // }}}
     // {{{ app_filters_validate_write
     public function app_filters_validate_write()
     {
@@ -440,13 +457,15 @@ class Applications_Controller extends Backend_Controller
         return $this->validation->validate();
     }
     // }}}
-    //{{{ app_filters_write_error
+    // {{{ app_filters_write_error
     public function app_filters_write_error()
     {
         $this->app_filters_read($this->input->post('application'));
     }
-    //}}}
-    //{{{ _filters_read
+    // }}}
+    // }}}
+    // {{{ filters
+    // {{{ _filters_read
     protected function _filters_read($appname)
     {
         $flagsaved = false;
@@ -478,14 +497,13 @@ class Applications_Controller extends Backend_Controller
 
         $this->layout->content = new View('backend/filters', array('appname' => $appname, 'flagsaved' => $flagsaved));
     }
-    //}}}
-    //{{{ _filters_read_error
+    // }}}
+    // {{{ _filters_read_error
     protected function _filters_read_error()
     {
-
     }
-    //}}}
-    //{{{ filters_edit_read
+    // }}}
+    // {{{ filters_edit_read
     public function filters_edit_read($appname, $id, $flagsaved = false)
     {
         $filters = $this->Filters->getFilters($appname);
@@ -501,8 +519,8 @@ class Applications_Controller extends Backend_Controller
 
         $this->layout->content = new View('backend/edit_filters', $data);
     }
-    //}}}
-    //{{{ filters_edit_write
+    // }}}
+    // {{{ filters_edit_write
     public function filters_edit_write()
     {
         $filter  = $this->input->post('filter');
@@ -513,7 +531,7 @@ class Applications_Controller extends Backend_Controller
 
         $this->filters_edit_read($appname, $id, true);
     }
-    //}}}
+    // }}}
     // {{{ filters_edit_validate_write
     public function filters_edit_validate_write()
     {
@@ -522,14 +540,14 @@ class Applications_Controller extends Backend_Controller
         return $this->validation->validate();
     }
     // }}}
-    //{{{ filters_edit_write_error
+    // {{{ filters_edit_write_error
     public function filters_edit_write_error()
     {
         $appname = $this->input->post('application');
         $id      = $this->input->post('id');
         $this->filters_edit_read($appname, $id);
     }
-    //}}}
+    // }}}
     // {{{ filters_delete_any
     public function filters_delete_any($appname, $objects = NULL)
     {
@@ -583,6 +601,27 @@ class Applications_Controller extends Backend_Controller
         $this->layout->content = new View('backend/filters_delete', $data);
     }
     // }}}
+    // {{{ filters_do_delete_any
+    public function filters_do_delete_any()
+    {
+        $objects    = $this->input->post('objects');
+        $objecttype = $this->input->post('objecttype');
+
+        if ($this->input->post('submit')) {
+            if ($objecttype) {
+                $this->Filters->deleteApps($objects);
+                url::redirect('user/backend/applications/apps_filters');
+            } else {
+                $appname = $this->input->post('application');
+                $this->Filters->deleteFilters($objects, $appname);
+                url::redirect('user/backend/applications/app_filters/'.$appname);
+            }
+        } else {
+            $this->_invalid_request("user/backend/applications/index", _("No form is submitted"));
+        }
+    }
+    // }}}
+    // }}}
     // {{{ app_filters_delete_any
     public function app_filters_delete_any($objects = NULL)
     {
@@ -629,26 +668,7 @@ class Applications_Controller extends Backend_Controller
         $this->layout->content = new View('backend/filters_delete', $data);
     }
     // }}}
-    // {{{ filters_do_delete_any
-    public function filters_do_delete_any()
-    {
-        $objects    = $this->input->post('objects');
-        $objecttype = $this->input->post('objecttype');
-
-        if ($this->input->post('submit')) {
-            if ($objecttype) {
-                $this->Filters->deleteApps($objects);
-                url::redirect('user/backend/applications/apps_filters');
-            } else {
-                $appname = $this->input->post('application');
-                $this->Filters->deleteFilters($objects, $appname);
-                url::redirect('user/backend/applications/app_filters/'.$appname);
-            }
-        } else {
-            $this->_invalid_request("user/backend/applications/index", _("No form is submitted"));
-        }
-    }
-    // }}}
+    // {{{ add_apps_filters
     // {{{ add_apps_filters_read
     public function add_apps_filters_read()
     {
@@ -680,6 +700,8 @@ class Applications_Controller extends Backend_Controller
         $this->add_apps_filters_read();
     }
     // }}}
+    // }}}
+    // {{{ privileges_parents
     // {{{ privileges_parents_read
     public function privileges_parents_read()
     {
@@ -713,12 +735,14 @@ class Applications_Controller extends Backend_Controller
         $this->privileges_parents_read();
     }
     // }}}
+    // }}}
     // {{{ privileges_all
     public function privileges_all_any()
     {
         $this->_create_privileges_list($this->appname);
     }
     // }}}
+    // {{{ privileges
     // {{{ privileges_read
     public function privileges_read($id)
     {
@@ -761,6 +785,8 @@ class Applications_Controller extends Backend_Controller
         $this->privileges_read($id);
     }
     // }}}
+    // }}}
+    // {{{ privileges_edit
     // {{{ privileges_edit_read
     public function privileges_edit_read($id)
     {
@@ -828,6 +854,8 @@ class Applications_Controller extends Backend_Controller
         $this->privileges_edit_read($id);
     }
     // }}}
+    // }}}
+    // {{{ privileges_delete
     // {{{ privileges_delete_any
     public function privileges_delete_any($objects = NULL)
     {
@@ -891,7 +919,9 @@ class Applications_Controller extends Backend_Controller
         url::redirect('user/backend/applications/privileges_parents');
     }
     // }}}
-    //{{{ group_privileges_edit_read
+    // }}}
+    // {{{ group_privileges_edit
+    // {{{ group_privileges_edit_read
     public function group_privileges_edit_read($id, $appname)
     {
         $row  = $this->Groups->getGroup($id);
@@ -902,13 +932,15 @@ class Applications_Controller extends Backend_Controller
                                                                   "user/backend/applications");
         $this->_privileges_edit_read($id, $appname);
     }
-    //}}}
-    //{{{ group_privileges_edit_write
+    // }}}
+    // {{{ group_privileges_edit_write
     public function group_privileges_edit_write()
     {
         $this->_privileges_edit_write($this->input->post('appname'));
     }
-    //}}}
+    // }}}
+    // }}}
+    // {{{ new_user
     // {{{ new_user_write
     public function new_user_write()
     {
@@ -947,6 +979,8 @@ class Applications_Controller extends Backend_Controller
         $this->new_user_read($this->input->post('appname'));
     }
     // }}}
+    // }}}
+    // {{{ user_profile
     // {{{ user_profile_write
     public function user_profile_write()
     {
@@ -975,6 +1009,8 @@ class Applications_Controller extends Backend_Controller
         return $this->validation->validate();
     }
     // }}}
+    // }}}
+    // {{{ new_group
     // {{{ new_group_write
     public function new_group_write()
     {
@@ -996,12 +1032,14 @@ class Applications_Controller extends Backend_Controller
         $this->new_group_read($this->input->post('appname'));
     }
     // }}}
+    // }}}
     // {{{ default_group_write
     public function default_group_write()
     {
          $this->_default_group_write($this->input->post('appname'));
     }
     // }}}
+    // {{{ settings
     // {{{ settings_read
     public function settings_read()
     {
@@ -1035,6 +1073,8 @@ class Applications_Controller extends Backend_Controller
         $this->settings_read();
     }
     // }}}
+    // }}}
+    // {{{ password
     // {{{ password_read
     public function password_read()
     {
@@ -1072,6 +1112,8 @@ class Applications_Controller extends Backend_Controller
         $this->password_read();
     }
     // }}}
+    // }}}
+    // {{{ expire_time
     // {{{ expire_time_read
     public function expire_time_read()
     {
@@ -1109,6 +1151,8 @@ class Applications_Controller extends Backend_Controller
         $this->expire_time_read();
     }
     // }}}
+    // }}}
+    // {{{ user_blocking
     // {{{ user_blocking_read
     public function user_blocking_read()
     {
@@ -1166,5 +1210,6 @@ class Applications_Controller extends Backend_Controller
     {
         $this->user_blocking_read();
     }
+    // }}}
     // }}}
 }
