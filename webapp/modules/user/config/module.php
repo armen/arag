@@ -4,7 +4,7 @@ $config = array
 (
     'enabled'     => True,
     'title'       => 'User',
-    'version'     => '0.1',
+    'version'     => '0.2',
     'name'        => 'user',
     'author'      => Array(
                            'Armen Baghumian (Armen@OpenSourceClub.org)',

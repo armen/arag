@@ -18,10 +18,12 @@ class Application_Controller extends Backend_Controller
         // Global tabbedbock
         $this->global_tabs->setTitle(_("User Management"));
         $this->global_tabs->addItem(_("Groups"), 'user/backend/application/index');
+        $this->global_tabs->addItem(_("Groups List"), 'user/backend/application/index', 'user/backend/application/index');
         $this->global_tabs->additem(_("Users"), 'user/backend/application/all_users');
-        $this->global_tabs->addItem(_("Default Group"), 'user/backend/application/default_group');
-        $this->global_tabs->additem(_("New Group"), 'user/backend/application/new_group');
-        $this->global_tabs->additem(_("New User"), 'user/backend/application/new_user');
+        $this->global_tabs->addItem(_("Users List"), 'user/backend/application/all_users', 'user/backend/application/all_users');
+        $this->global_tabs->addItem(_("Default Group"), 'user/backend/application/default_group', 'user/backend/application/index');
+        $this->global_tabs->additem(_("New Group"), 'user/backend/application/new_group', 'user/backend/application/index');
+        $this->global_tabs->additem(_("New User"), 'user/backend/application/new_user', 'user/backend/application/all_users');
         $this->global_tabs->addItem(_("Settings"), 'user/backend/application/settings');
 
         // Validation Messages
@@ -71,9 +73,9 @@ class Application_Controller extends Backend_Controller
     // {{{ users_read
     public function users_read($id)
     {
-        $this->global_tabs->addItem(_("Users"), "user/backend/application/users/".$id);
+        $this->global_tabs->addItem(_("Users"), 'user/backend/application/users/'.$id, 'user/backend/application/index');
 
-        $this->_create_users_plist($id);
+        $this->_create_users_plist($id, APPNAME);
 
         $this->users->addAction("user/backend/application/user_profile/#username#", _("Edit"), 'edit_action');
         $this->users->addAction("user/backend/application/delete/user/#username#", _("Delete"), 'delete_action');
@@ -98,7 +100,8 @@ class Application_Controller extends Backend_Controller
     // {{{ user_profile_read
     public function user_profile_read($username)
     {
-        $this->global_tabs->addItem(_("User's Profile"), "user/backend/application/user_profile/%username%");
+        $this->global_tabs->addItem(_("User's Profile"), 'user/backend/application/user_profile/%username%');
+
         $this->global_tabs->setParameter('username', $username);
         $this->_user_profile($username, false, true);
     }
@@ -120,8 +123,10 @@ class Application_Controller extends Backend_Controller
     // {{{ delete
     public function delete_any($type, $objects = NULL)
     {
+        $parent_uri = ($type == 'group') ? 'user/backend/application/index' : 'user/backend/application/all_users';
+
         if ($objects != NULL) {
-            $this->global_tabs->addItem(_("Delete"), "user/backend/application/delete/".$type."/".$objects);
+            $this->global_tabs->addItem(_("Delete"), "user/backend/application/delete/".$type."/".$objects, $parent_uri);
             $flag = false;
             if (is_numeric($objects)) {
                 $flag = true;
@@ -135,7 +140,7 @@ class Application_Controller extends Backend_Controller
                 $objects = $this->input->post('username');
                 $flag = false;
             }
-            $this->global_tabs->addItem(_("Delete"), 'user/backend/application/delete/'.$type);
+            $this->global_tabs->addItem(_("Delete"), 'user/backend/application/delete/'.$type, $parent_uri);
         }
 
         $subjects = array();
@@ -171,11 +176,12 @@ class Application_Controller extends Backend_Controller
 
         $subjects = implode(",", $subjects);
 
-        $data = array('objects'  => $objects,
-                      'subjects' => $subjects,
-                      'flag'     => $flag,
-                      'appname'  => $appname,
-                      'flagform' => false);
+        $data = array('objects'    => $objects,
+                      'subjects'   => $subjects,
+                      'flag'       => $flag,
+                      'appname'    => $appname,
+                      'flagform'   => false,
+                      'parent_uri' => $parent_uri);
 
         $this->layout->content = new View('backend/delete', $data);
     }
@@ -233,28 +239,40 @@ class Application_Controller extends Backend_Controller
     public function all_users_any($page = NULL)
     {
         if ($page != Null && preg_match('|^page_users$|', $page)) {
-            $user       = $this->session->get('user_user_user');
-            $group_name = $this->session->get('user_user_group');
+            $user            = $this->session->get('user_user_user');
+            $group_name      = $this->session->get('user_user_group');
+            $email           = $this->session->get('user_user_email');
+            $is_blocked      = $this->session->get('user_user_is_blocked');
+            $is_not_verified = $this->session->get('user_user_is_not_verified');
         } else {
-            $user       = $this->input->post('user', Null, True);
-            $group_name = $this->input->post('group_name', Null, True);
+            $user            = $this->input->post('user', Null, True);
+            $group_name      = $this->input->post('group_name', Null, True);
+            $email           = $this->input->post('email', Null, True);
+            $is_blocked      = $this->input->post('is_blocked', Null, True);
+            $is_not_verified = $this->input->post('is_not_verified', Null, True);
         }
 
         $this->session->set('user_user_user', $user);
         $this->session->set('user_user_group', $group_name);
+        $this->session->set('user_user_email', $email);
+        $this->session->set('user_user_is_blocked', $is_blocked);
+        $this->session->set('user_user_is_not_verified', $is_not_verified);
 
-        $this->_create_users_plist(NULL, $this->appname, $group_name, $user, Null, false);
+        $this->_create_users_plist(NULL, $this->appname, $group_name, $user, $email, true, $is_blocked, $is_not_verified);
 
         $this->users->addAction("user/backend/application/user_profile/#username#", _("Edit"), 'edit_action');
+        $this->users->addAction("user_profile/backend/view/#username#", _("View Profile"), 'view_profile');
         $this->users->addAction("user/backend/application/delete/user/#username#", _("Delete"), 'delete_action');
         $this->users->addAction("user/backend/application/delete/user", _("Delete"), 'delete_action', False, PList_Component::GROUP_ACTION);
         $this->users->setGroupActionParameterName('username');
 
-        $data = array("flagsearch" => true,
-                      "user"       => $user,
-                      "app_name"   => $this->appname,
-                      "group_name" => $group_name,
-                      "flagform"   => false);
+        $data = array('flagsearch'      => true,
+                      'user'            => $user,
+                      'group_name'      => $group_name,
+                      'email'           => $email,
+                      'is_blocked'      => $is_blocked,
+                      'is_not_verified' => $is_not_verified,
+                      'flagform'        => false);
 
         $this->layout->content = new View('backend/users', $data);
     }

@@ -15,8 +15,8 @@
 $config = array
 (
 	'prefix'   => '',
-	'domain'   => '',
-	'path'     => '/'.APPNAME,
+	'domain'   => '', // .domain_name.ext
+	'path'     => '/',
 	'expire'   => 0,
 	'secure'   => FALSE,
 	'httponly' => FALSE

@@ -2,6 +2,11 @@
 
 $config = Array
 (
+    'default_appnames' => array
+    (
+        'arag', 'www'
+    ),
+
     // {{{ Global paths
 
     'cache_path' => APPPATH . 'cache/',

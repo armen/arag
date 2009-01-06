@@ -17,16 +17,16 @@ class Users_Model extends Model
     const USER_BLOCKED        = 4;
     const USER_INCORRECT_PASS = 8;
 
+    private $tableNameUsers       = 'user_users';
+    private $tableNameGroups      = 'user_groups';
+    private $tableNameApps        = 'user_applications';
+    private $tableNameUsersGroups = 'user_users_groups';
+
     // }}}
     // {{{ Constructor
     public function __construct()
     {
         parent::__construct();
-
-        // Set table name
-        $this->tableNameUsers  = 'user_users';
-        $this->tableNameGroups = 'user_groups';
-        $this->tableNameApps   = 'user_applications';
     }
     // }}}
     // {{{ check
@@ -123,22 +123,42 @@ class Users_Model extends Model
     }
     // }}}
     // {{{ & getUser
-    public function & getUser($username)
+    public function & getUser($username, $appname = APPNAME)
     {
-        $this->db->select('appname, '.$this->tableNameGroups.'.name as groupname, username, privileges, redirect,'.
-                          $this->tableNameUsers.'.name as name, lastname, email, group_id');
-        $this->db->from($this->tableNameUsers);
-        $this->db->join($this->tableNameGroups, $this->tableNameGroups.'.id', $this->tableNameUsers.'.group_id');
-        $this->db->where('username', $username);
-        $this->db->where('verified', True);
-        $this->db->where('blocked',  False);
+        if ($appname) {
+            $this->db->select('appname, '.$this->tableNameGroups.'.name as groupname, '.$this->tableNameUsers.'.username, privileges, redirect,'.
+                              $this->tableNameUsers.'.name as name, lastname, email, '.$this->tableNameUsersGroups.'.group_id');
+            $this->db->from($this->tableNameUsers);
+            $this->db->join($this->tableNameUsersGroups, $this->tableNameUsers.'.username', $this->tableNameUsersGroups.'.username');
+            $this->db->join($this->tableNameGroups, $this->tableNameGroups.'.id', $this->tableNameUsersGroups.'.group_id');
+            $this->db->where($this->tableNameUsers.'.username', $username);
+            $this->db->where('verified', True);
+            $this->db->where('blocked',  False);
+            $this->db->where('appname',  $appname);
 
-        $user = (Array) $this->db->get()->current();
+            $user = (Array) $this->db->get()->current();
 
-        if (isset($user['privileges'])) {
-            $user['privileges'] = unserialize($user['privileges']);
+            if (isset($user['privileges'])) {
+                $user['privileges'] = unserialize($user['privileges']);
+            } else {
+                $user['privileges'] = Array();
+            }
+
+            // Save privilege grouped by application name
+            $privileges                   = $user['privileges'];
+            $user['privileges']           = Null;
+            $user['privileges'][$appname] = $privileges;
+
         } else {
-            $user['privileges'] = Array();
+
+            // There is no appname so just fetch user informations
+            $this->db->select('username, name, lastname, email');
+            $this->db->from($this->tableNameUsers);
+            $this->db->where('username', $username);
+            $this->db->where('verified', True);
+            $this->db->where('blocked',  False);
+
+            $user = (Array) $this->db->get()->current();
         }
 
         return $user;
@@ -162,10 +182,11 @@ class Users_Model extends Model
     // {{{ & getUserProfile
     public function & getUserProfile($username)
     {
-        $this->db->select('username, name, lastname, password, create_date, created_by, modify_date, modified_by, blocked, block_date, profile_id,
-                           email, group_id, verified');
+        $this->db->select($this->tableNameUsers.'.username, name, lastname, password, create_date, created_by, modify_date, modified_by, blocked, block_date, profile_id,
+                           email, verified, '.$this->tableNameUsersGroups.'.group_id');
         $this->db->from($this->tableNameUsers);
-        $this->db->where('username', $username);
+        $this->db->join($this->tableNameUsersGroups, $this->tableNameUsers.'.username', $this->tableNameUsersGroups.'.username');
+        $this->db->where($this->tableNameUsers.'.username', $username);
 
         $userProfile = (Array) $this->db->get()->current();
 
@@ -175,17 +196,17 @@ class Users_Model extends Model
     // {{{ & getUsers
     public function & getUsers($groupID = NULL, $appName = Null, $groupName = Null, $user = Null, $flagappname = True, $email = Null, $is_blocked = Null, $is_not_verified = Null)
     {
-        $this->db->select('username, lastname, email, appname, id');
-        $this->db->select($this->tableNameGroups.".name as group_name");
+        $this->db->select('distinct '.$this->tableNameUsers.'.username, lastname, email, id');
         $this->db->select($this->tableNameUsers.".name as user_name");
         $this->db->select($this->tableNameUsers.".modify_date");
         $this->db->select($this->tableNameUsers.".create_date");
         $this->db->select($this->tableNameUsers.".modified_by");
         $this->db->select($this->tableNameUsers.".created_by");
-        $this->db->join($this->tableNameGroups, $this->tableNameGroups.'.id', $this->tableNameUsers.'.group_id');
+        $this->db->join($this->tableNameGroups, $this->tableNameGroups.'.id', $this->tableNameUsersGroups.'.group_id');
+        $this->db->join($this->tableNameUsersGroups, $this->tableNameUsers.'.username', $this->tableNameUsersGroups.'.username');
 
         if ($groupID != NULL) {
-            $this->db->where('group_id', $groupID);
+            $this->db->where($this->tableNameGroups.'.id', $groupID);
         }
 
         if ($groupName != NULL) {
@@ -195,7 +216,7 @@ class Users_Model extends Model
         if ($user != NULL) {
             $row = explode(" ", $user);
             foreach ($row as $tag) {
-                $this->db->like('username', $tag);
+                $this->db->like($this->tableNameUsers.'.username', $tag);
                 /* This will be commented until pranthises support implements
                 $this->db->orlike($this->tableNameUsers.".name", $tag);
                 $this->db->orlike('lastname', $tag);*/
@@ -203,6 +224,10 @@ class Users_Model extends Model
         }
 
         if ($appName != NULL) {
+
+            $this->db->select($this->tableNameGroups.".appname as appname");
+            $this->db->select($this->tableNameGroups.".name as groupname");
+
             if ($flagappname) {
                 $this->db->like('appname', $appName);
             } else {
@@ -224,7 +249,7 @@ class Users_Model extends Model
 
         $this->db->orderby('appname', 'ASC');
         $this->db->orderby('lastname', 'ASC');
-        $this->db->orderby('group_name', 'ASC');
+        $this->db->groupby('username');
 
         $retval = $this->db->get($this->tableNameUsers)->result_array(False);
 
@@ -234,49 +259,41 @@ class Users_Model extends Model
     // {{{ createUser
     public function createUser($appname, $email, $name, $lastname, $groupname, $username, $password, $author, $verify_string = NULL, $verified =  1)
     {
-        $controller = new Groups_Model;
+        $groups = new Groups_Model;
+        $group  = $groups->getGroup(NULL, $appname, $groupname);
+        $row    = Array(
+                         'username'      => $username,
+                         'create_date'   => time(),
+                         'modify_date'   => time(),
+                         'expire_date'   => time(),
+                         'modified_by'   => $author,
+                         'created_by'    => $author,
+                         'name'          => $name,
+                         'lastname'      => $lastname,
+                         'email'         => $email,
+                         'password'      => sha1($password),
+                         'verified'      => $verified,
+                         'verify_string' => $verify_string
+                       );
 
-        $group = $controller->getGroup(NULL, $appname, $groupname);
-
-        $row = Array('username'      => $username,
-                     'create_date'   => time(),
-                     'modify_date'   => time(),
-                     'expire_date'   => time(),
-                     'modified_by'   => $author,
-                     'created_by'    => $author,
-                     'name'          => $name,
-                     'lastname'      => $lastname,
-                     'group_id'      => $group['id'],
-                     'email'         => $email,
-                     'password'      => sha1($password),
-                     'verified'      => $verified,
-                     'verify_string' => $verify_string);
-
-        $controller->changeModifiers($group['id'], $author);
+        $groups->changeModifiers($group['id'], $author);
         $this->db->insert($this->tableNameUsers, $row);
+        $this->db->insert($this->tableNameUsersGroups, Array('username' => $username, 'group_id' => $group['id']));
     }
     // }}}
     // {{{ editUser
     public function editUser($appname, $email, $name, $lastname, $groupname, $username, $password = "", $blocked, $author, $verified)
     {
-        $controller = new Groups_Model;
-
-        $group = $controller->getGroup(NULL, $appname, $groupname);
-
-        if ($blocked) {
-            $blocked = 1;
-        } else {
-            $blocked = 0;
-        }
+        $groups = new Groups_Model;
+        $group  = $groups->getGroup(NULL, $appname, $groupname);
 
         $row = Array(
-                     'modify_date'   => time(),
-                     'modified_by'   => $author,
-                     'name'          => $name,
-                     'lastname'      => $lastname,
-                     'group_id'      => $group['id'],
-                     'email'         => $email,
-                     'blocked'       => $blocked
+                     'modify_date' => time(),
+                     'modified_by' => $author,
+                     'name'        => $name,
+                     'lastname'    => $lastname,
+                     'email'       => $email,
+                     'blocked'     => (int) $blocked
                     );
 
         if ($verified) {
@@ -288,30 +305,20 @@ class Users_Model extends Model
             $row['password'] = sha1($password);
         }
 
-        $controller->changeModifiers($group['id'], $author);
+        $groups->changeModifiers($group['id'], $author);
         $this->db->where('username', $username);
         $this->db->update($this->tableNameUsers, $row);
+
+        $this->db->where('username', $username);
+        $this->db->update($this->tableNameUsersGroups, array('group_id' => $group['id']));
     }
     // }}}
     // {{{ hasUserName
     public function hasUserName($username, $appname = NULL)
     {
-        if ($appname == NULL) {
+        $user = $this->getUser($username, $appname);
 
-            $result = $this->db->select('count(username) as count')->getwhere($this->tableNameUsers, Array('username' => $username))->current();
-            return (boolean)$result->count;
-
-        } else {
-
-            $this->db->select('count(username) as count');
-            $this->db->from($this->tableNameUsers);
-            $this->db->join($this->tableNameGroups, $this->tableNameGroups.'.id', $this->tableNameUsers.'.group_id');
-            $this->db->where('username', $username);
-            $this->db->where('appname', $appname);
-            $result = $this->db->get()->current();
-
-            return (boolean)$result->count;
-        }
+        return isset($user['username']);
     }
     // }}}
     // {{{ deleteUsers
@@ -323,9 +330,16 @@ class Users_Model extends Model
                 $row = $this->getUserProfile($username);
                 $controller->changeModifiers($row['group_id'], $author);
                 $this->db->delete($this->tableNameUsers, Array('username' => $username));
+                $this->db->delete($this->tableNameUsersGroups, Array('username' => $username));
             }
         } else {
-            $this->db->delete($this->tableNameUsers, Array('group_id' => $groupid));
+            $rows = $this->db->select('username')->from($this->tableNameUsersGroups)->where('group_id', $groupid)->get()->result_array(False);
+
+            foreach ($rows as $row) {
+                $this->db->delete($this->tableNameUsers, Array('username' => $row['username']));
+            }
+
+            $this->db->delete($this->tableNameUsersGroups, Array('group_id' => $groupid));
         }
     }
     // }}}
@@ -459,6 +473,25 @@ class Users_Model extends Model
 
         $this->db->where('username', $username);
         $this->db->update($this->tableNameUsers, $rows);
+    }
+    // }}}
+    // {{{ getUserAppname
+    public function getUserAppname($data)
+    {
+        $this->db->select('appname, '.$this->tableNameGroups.'.name as groupname');
+        $this->db->from($this->tableNameUsers);
+        $this->db->join($this->tableNameUsersGroups, $this->tableNameUsers.'.username', $this->tableNameUsersGroups.'.username');
+        $this->db->join($this->tableNameGroups, $this->tableNameGroups.'.id', $this->tableNameUsersGroups.'.group_id');
+        $this->db->where($this->tableNameUsers.'.username', $data['username']);
+
+        $rows     = $this->db->get()->result_array(False);
+        $appnames = Array();
+
+        foreach ($rows as $row) {
+            $appnames[] = $row['appname'].'::'.$row['groupname'];
+        }
+
+        return implode(', ', $appnames);
     }
     // }}}
 }

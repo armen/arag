@@ -29,20 +29,39 @@ class Arag_Auth {
     // {{{ check
     public static function check()
     {
-        $session = Session::instance();
-        $appname = $session->get('user.appname', APPNAME);
-
+        $session     = Session::instance();
+        $users       = Model::load('Users', 'user');
+        $appname     = $session->get('user.appname', APPNAME);
+        $username    = $session->get('user.username');
         $destination = implode('/', Router::$rsegments);
         $destination = rtrim($destination, '/').'/';      // Append a slash to $destination
 
-        if (!$session->get('user.authenticated') && $session->get('user.username') != 'anonymous') {
+        if (!$session->get('user.authenticated') && $username != 'anonymous') {
 
             // Fetch Anonymouse user information and store in session
-            $users = Model::load('Users', 'user');
             $session->set(Array('user' => $users->getAnonymouseUser($appname)));
         }
 
+        if ($session->get('user.appname') != APPNAME) {
+
+            // User switched between applications, fetch user information of selected
+            // application and store it to session, as far as user will not switch between
+            // applications often, so its ok to hit database every time.
+            $user = $username ? $users->getUser($username, APPNAME) : Null;
+            $user = isset($user['username']) ? $user : $users->getAnonymouseUser(APPNAME);
+
+            // Throw away personal information, we already set those in session
+            if ($username) {
+                unset($user['name'], $user['username'], $user['lastname'], $user['email']);
+            }
+
+            // Merge user privileges of current application with existed privileges
+            $user['privileges'] = array_merge($session->get('user.privileges', Array()), $user['privileges']);
+            $session->set('user', array_merge($session->get('user', Array()), $user));
+        }
+
         if (!self::is_accessible($destination, False)) {
+
             if (!$session->get('user.authenticated')) {
                 $session->set_flash('not_authorized_redirect_url', $destination);
             }
@@ -132,7 +151,8 @@ class Arag_Auth {
                 $session->set('privilege_filters', $filters->getPrivilegeFilters($appname));
             }
 
-            $authorized = self::is_authorized($uri, $session->get('user.privileges'));
+            $privileges = $session->get('user.privileges');
+            $authorized = self::is_authorized($uri, $privileges[APPNAME]);
 
             if ($authorized) {
                 // The user is authorized so we will try to filter his/her privileges with a blacklist

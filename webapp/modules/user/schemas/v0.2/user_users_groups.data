@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<database>
+    <name><variable>DATABASE_NAME</variable></name>
+    <table>
+        <name><variable>TABLES_PREFIX</variable>user_users_groups</name>
+        <initialization>
+
+            <insert>
+                <field>
+                     <name>username</name>
+                     <value>admin</value>
+                </field>
+                <field>
+                     <name>group_id</name>
+                     <value>2</value>
+                </field>
+            </insert>
+
+        </initialization>
+    </table>
+</database>

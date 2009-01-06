@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<database>
+    <name><variable>DATABASE_NAME</variable></name>
+    <table>
+        <name><variable>TABLES_PREFIX</variable>user_filters</name>
+        <initialization>
+
+            <insert>
+                <field>
+                     <name>appname</name>
+                     <value>_global_</value>
+                </field>
+                <field>
+                     <name>create_date</name>
+                     <value><variable>NOW_TIMESTAMP</variable></value>
+                </field>
+                <field>
+                     <name>created_by</name>
+                     <value>core</value>
+                </field>
+                <field>
+                     <name>modify_date</name>
+                     <value>0</value>
+                </field>
+                <field>
+                     <name>modified_by</name>
+                     <value></value>
+                </field>
+                <field>
+                     <name>filter</name>
+                     <value></value>
+                </field>
+            </insert>
+
+            <insert>
+                <field>
+                     <name>appname</name>
+                     <value>_default_</value>
+                </field>
+                <field>
+                     <name>create_date</name>
+                     <value><variable>NOW_TIMESTAMP</variable></value>
+                </field>
+                <field>
+                     <name>created_by</name>
+                     <value>core</value>
+                </field>
+                <field>
+                     <name>modify_date</name>
+                     <value>0</value>
+                </field>
+                <field>
+                     <name>modified_by</name>
+                     <value></value>
+                </field>
+                <field>
+                     <name>filter</name>
+                     <value>a:2:{i:0;s:27:"user/backend/applications/*";i:1;s:19:"multisite/backend/*";}</value>
+                </field>
+            </insert>
+
+        </initialization>
+    </table>
+</database>

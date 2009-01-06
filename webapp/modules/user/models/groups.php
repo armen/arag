@@ -11,21 +11,16 @@ class Groups_Model extends Model
 {
     // {{{ Properties
 
-    public $tableNameApps;
-    public $tableNameGroups;
-    public $tableNameUsers;
-    public $tableNameFilters;
+    private $tableNameUsers       = 'user_users';
+    private $tableNameGroups      = 'user_groups';
+    private $tableNameApps        = 'user_applications';
+    private $tableNameUsersGroups = 'user_users_groups';
 
     // }}}
     // {{{ Constructor
     public function __construct()
     {
         parent::__construct();
-
-        // set tables' names
-        $this->tableNameApps   = 'user_applications';
-        $this->tableNameGroups = 'user_groups';
-        $this->tableNameUsers  = 'user_users';
     }
     // }}}
     // {{{ & getAnonymousGroup
@@ -36,19 +31,26 @@ class Groups_Model extends Model
         $this->db->where('appname', $appname);
         $this->db->where('name', 'anonymous');
 
-        $group = (Array) $this->db->getwhere()->current();
+        $group = $this->db->getwhere()->current();
 
-        if (!empty($group)) {
+        if ($group) {
+            $group               = (Array) $group;
             $group['privileges'] = unserialize($group['privileges']);
         } else {
 
             // XXX: Okay, there is no anonymous group for this appname so just construct a Null
             //      anonymous group
+            $group               = Array();
             $group['name']       = 'anonymous';
             $group['appname']    = $appname;
             $group['privileges'] = Null;
             $group['redirect']   = False;
         }
+
+        // Save privilege grouped by application name
+        $privileges                    = $group['privileges'];
+        $group['privileges']           = Null;
+        $group['privileges'][$appname] = $privileges;
 
         return $group;
     }
@@ -197,7 +199,7 @@ class Groups_Model extends Model
     // {{{ getNumberOfUsers
     public function getNumberOfUsers($row)
     {
-        return $this->db->select('count(username) as count')->getwhere($this->tableNameUsers, Array('group_id' => $row['id']))->current()->count;
+        return $this->db->select('count(username) as count')->from($this->tableNameUsersGroups)->where('group_id', $row['id'])->get()->current()->count;
     }
     // }}}
 }

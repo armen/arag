@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<database>
+    <name><variable>DATABASE_NAME</variable></name>
+    <table>
+        <name><variable>TABLES_PREFIX</variable>user_users_groups</name>
+        <declaration>
+            <field>
+                <name>username</name>
+                <type>text</type>
+                <length>255</length>
+                <notnull>true</notnull>
+            </field>
+            <field>
+                <name>group_id</name>
+                <type>integer</type>
+                <notnull>true</notnull>
+            </field>
+            <index>
+                <name>user_users_groups_primary</name>
+                <primary>true</primary>
+                <field>
+                    <name>username</name>
+                </field>
+                <field>
+                    <name>group_id</name>
+                </field>
+            </index>
+        </declaration>
+    </table>
+</database>

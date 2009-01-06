@@ -35,14 +35,24 @@ class Backend_Controller extends Controller
         $this->appname = $this->session->get('user.appname');
     }
     // }}}
-    // {{{ index
+    // {{{ index_any
     public function index_any()
     {
-        if (defined('MASTERAPP')) {
+        if (MASTERAPP) {
             url::redirect("user/backend/applications");
         } else {
             url::redirect("user/backend/application");
         }
+    }
+    // }}}
+    // {{{ __call
+    public function __call($method, $arguments)
+    {
+        if (Router::$controller == 'applications' && !MASTERAPP) {
+            url::redirect("user/backend/application");
+        }
+
+        parent::__call($method, $arguments);
     }
     // }}}
     // {{{ _create_users_plist
@@ -53,11 +63,17 @@ class Backend_Controller extends Controller
 
         $this->users->setResource($this->Users->getUsers($id, $appname, $groupname, $user, $flagappname, $email, $is_blocked, $is_not_verified));
         $this->users->setLimit(Arag_Config::get('limit', 0));
-        $this->users->addColumn('appname', _("Application"));
-        $this->users->addColumn('group_name', _("Group"));
-        $this->users->addColumn('lastname', _("Lastname"));
-        $this->users->addColumn('user_name', _("Name"));
         $this->users->addColumn('username', _("Username"));
+        $this->users->addColumn('user_name', _("Name"));
+        $this->users->addColumn('lastname', _("Lastname"));
+
+        if ($appname) {
+            $this->users->addColumn('groupname', _("Group Name"));
+        } else {
+            // List all applications that user registered on
+            $this->users->addColumn('Users.getUserAppname', _("Application::Group"), PList_Component::VIRTUAL_COLUMN);
+        }
+
         $this->users->addColumn('email', _("Email"));
         $this->users->addColumn('Applications.getDate', _("Create Date"), PList_Component::VIRTUAL_COLUMN);
         $this->users->addColumn('Applications.getModifyDate', _("Modify Date"), PList_Component::VIRTUAL_COLUMN);

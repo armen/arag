@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<database>
+    <name><variable>DATABASE_NAME</variable></name>
+    <table>
+        <name><variable>TABLES_PREFIX</variable>user_applications</name>
+        <initialization>
+
+            <insert>
+                <field>
+                     <name>name</name>
+                     <value>arag</value>
+                </field>
+                <field>
+                     <name>database_id</name>
+                     <value>1</value>
+                </field>
+                <field>
+                     <name>create_date</name>
+                     <value><variable>NOW_TIMESTAMP</variable></value>
+                </field>
+                <field>
+                     <name>created_by</name>
+                     <value>core</value>
+                </field>
+                <field>
+                     <name>isactive</name>
+                     <value>1</value>
+                </field>
+                <field>
+                     <name>default_group</name>
+                     <value>anonymous</value>
+                </field>
+            </insert>
+
+        </initialization>
+    </table>
+</database>

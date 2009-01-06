@@ -23,6 +23,7 @@ class Applications_Controller extends Backend_Controller
         $this->global_tabs->additem(_("New Group"), 'user/backend/applications/new_group/%name%', 'user/backend/applications');
         $this->global_tabs->additem(_("New User"), 'user/backend/applications/new_user/%name%', 'user/backend/applications');
         $this->global_tabs->addItem(_("Users"), 'user/backend/applications/all_users');
+        $this->global_tabs->addItem(_("Users List"), 'user/backend/applications/all_users', 'user/backend/applications/all_users');
         $this->global_tabs->addItem(_("Filters"), 'user/backend/applications/apps_filters');
         $this->global_tabs->addItem(_("Filters"), 'user/backend/applications/apps_filters', 'user/backend/applications/apps_filters');
         $this->global_tabs->addItem(_("Add Application"), 'user/backend/applications/add_apps_filters', 'user/backend/applications/apps_filters');
@@ -180,9 +181,9 @@ class Applications_Controller extends Backend_Controller
 
         $this->global_tabs->addItem(_("Users"), "user/backend/applications/users/".$id."/".$appname, "user/backend/applications");
 
-        $this->_create_users_plist($id);
+        $this->_create_users_plist($id, $appname);
 
-        $this->users->addAction("user/backend/applications/user_profile/#username#", _("Edit"), 'edit_action');
+        $this->users->addAction("user/backend/applications/app_user_profile/#username#", _("Edit"), 'edit_action');
         $this->users->addAction("user_profile/backend/view/#username#", _("View Profile"), 'view_profile');
         $this->users->addAction("user/backend/applications/delete/user/#username#", _("Delete"), 'delete_action');
         $this->users->addAction("user/backend/applications/delete/user", _("Delete"), 'delete_action', False, PList_Component::GROUP_ACTION);
@@ -254,6 +255,8 @@ class Applications_Controller extends Backend_Controller
         $this->layout->content = new View('backend/users', $data);
     }
     // }}}
+    // }}}
+    // {{{ new_user
     // {{{ new_user_read
     public function new_user_read($appname)
     {
@@ -276,10 +279,17 @@ class Applications_Controller extends Backend_Controller
     // }}}
     // }}}
     // {{{ user_profile
+    // {{{ app_user_profile
+    public function app_user_profile($username)
+    {
+        $this->user_profile_read($username);
+        $this->global_tabs->addItem(_("User's Profile"), 'user/backend/applications/app_user_profile/%username%', 'user/backend/applications');
+    }
+    // }}}
     // {{{ user_profile_read
     public function user_profile_read($username)
     {
-        $this->global_tabs->addItem(_("User's Profile"), "user/backend/applications/user_profile/%username%");
+        $this->global_tabs->addItem(_("User's Profile"), 'user/backend/applications/user_profile/%username%', 'user/backend/applications/all_users');
         $this->global_tabs->setParameter('username', $username);
         $this->_user_profile($username);
     }
@@ -303,8 +313,10 @@ class Applications_Controller extends Backend_Controller
     // {{{ delete
     public function delete_any($type, $objects = NULL)
     {
+        $parent_uri = ($type == 'group') ? 'user/backend/applications' : 'user/backend/applications/all_users';
+
         if ($objects != NULL) {
-            $this->global_tabs->addItem(_("Delete"), "user/backend/applications/delete/".$type."/".$objects, "user/backend/applications");
+            $this->global_tabs->addItem(_("Delete"), "user/backend/applications/delete/".$type."/".$objects, $parent_uri);
             $flag = false;
             if (is_numeric($objects)) {
                 $flag = true;
@@ -318,7 +330,7 @@ class Applications_Controller extends Backend_Controller
                 $objects = $this->input->post('username');
                 $flag = false;
             }
-            $this->global_tabs->addItem(_("Delete"), "user/backend/applications/delete/".$type);
+            $this->global_tabs->addItem(_("Delete"), "user/backend/applications/delete/".$type, $parent_uri);
         }
 
         $subjects = array();
@@ -335,6 +347,7 @@ class Applications_Controller extends Backend_Controller
                 }
 
                 array_push($subjects, $key);
+
             } else if (preg_match("/^group$/", $type)) {
                 $exist = $this->Groups->hasGroup(NULL, NULL, $key);
 
@@ -344,6 +357,10 @@ class Applications_Controller extends Backend_Controller
 
                 $row = $this->Groups->getGroup($key);
                 array_push($subjects, $row['name']);
+
+                $this->global_tabs->setParameter('name', $row['appname']);
+                $parent_uri = "user/backend/applications/groups/{$row['appname']}";
+
             } else {
                 $this->_invalid_request("user/backend/applications/index", _("Invalid Object"));
             }
@@ -354,11 +371,12 @@ class Applications_Controller extends Backend_Controller
 
         $subjects = implode(",", $subjects);
 
-        $data = array('objects'  => $objects,
-                      'subjects' => $subjects,
-                      'flag'     => $flag,
-                      'appname'  => $appname,
-                      'flagform' => true);
+        $data = array('objects'    => $objects,
+                      'subjects'   => $subjects,
+                      'flag'       => $flag,
+                      'appname'    => $appname,
+                      'flagform'   => true,
+                      'parent_uri' => $parent_uri);
 
         $this->layout->content = new View('backend/delete', $data);
     }

@@ -68,6 +68,8 @@ class Controller extends Controller_Core {
         putenv('LANGUAGE=' . $locale);
         setlocale(LC_ALL, $locale);
 
+        new Profiler;
+
         Event::add('system.post_controller', array($this, '_display'));
     }
     // }}}

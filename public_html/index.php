@@ -75,9 +75,6 @@ define('EXT', '.php');
 // $Id$
 //
 
-define('MASTERAPP', TRUE);
-define('APPNAME',   'arag');
-
 // Define the front controller name and docroot
 define('DOCROOT', getcwd().DIRECTORY_SEPARATOR);
 define('KOHANA',  basename(__FILE__));

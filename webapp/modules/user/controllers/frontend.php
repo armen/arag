@@ -58,8 +58,14 @@ class Frontend_Controller extends Controller
             // important to Arag_Auth! we will fetch privilege
             // filters of current application there.
             $this->session->delete('privilege_filters');
+            $this->session->delete('user');
 
-            $this->session->set(Array('user' => array_merge($users->getUser($username), Array('authenticated' => True))));
+            // Try to fetch user for this application, if there was not try to fetch user information only,
+            // this registered user privilege will set in Arag_Auth as an anonymous user
+            $user = $users->getUser($username);
+            $user = isset($user['username']) ? $user : $users->getUser($username, False);
+
+            $this->session->set(Array('user' => array_merge($user, Array('authenticated' => True))));
             $users->unBlockUser($username);
 
             // Redirect to front controller or Redirect URL
