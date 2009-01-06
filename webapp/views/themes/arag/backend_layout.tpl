@@ -34,7 +34,7 @@
         {$welcome|sprintf:$firstname:$surname} |
         {kohana_helper function="html::anchor" uri="user_profile/backend/index" title="$profile"} |
         {kohana_helper function="html::anchor" uri="user/frontend/logout" title="$logout"} |
-        {kohana_helper function="html::anchor" uri="controlpanel" title="$controlpanel"} |
+        {arag_is_accessible uri="controlpanel"}{kohana_helper function="html::anchor" uri="controlpanel" title="$controlpanel"} |{/arag_is_accessible}
         {kohana_helper function="html::anchor" uri="$home_url_site" title="$home"}
     {/arag_block}
 
