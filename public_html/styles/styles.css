@@ -10,7 +10,7 @@ body {
     margin          : 0px;
     padding         : 50px;
     color           : #000;
-    background      : #fff url(../images/misc/background.png);
+    background      : #fff url(../images/misc/background.jpg);
 }
 input, textarea, select {
     font-size       : 12px;
@@ -327,7 +327,7 @@ input[type=reset][disabled] {
     height          : 24px;
 }
 .plist_odd td {
-    background      : #fff url(../images/misc/background.png);
+    background      : #fff url(../images/misc/background.jpg);
 }
 .plist_even td{
     background-color: #fff;
@@ -535,6 +535,18 @@ input[type=reset][disabled] {
 }
 .users_list {
     background      : transparent url(../images/list/users_list.png) no-repeat center;
+    font-size       : 0px;
+    width           : 16px;
+    height          : 16px;
+}
+.view_profile {
+    background      : transparent url(../images/list/view_profile.png) no-repeat center;
+    font-size       : 0px;
+    width           : 16px;
+    height          : 16px;
+}
+.view_profile_alt {
+    background      : transparent url(../images/list/view_profile_alt.png) no-repeat center;
     font-size       : 0px;
     width           : 16px;
     height          : 16px;
@@ -902,6 +914,15 @@ input[type=reset][disabled] {
 }
 /* end of Profiler }}} */
 
+.odd {
+    text-align: center;
+    background-color: #ececec;
+    border: 1px solid #ccc;
+}
+.even {
+    text-align: center;
+    border: 1px solid #ccc;
+}
 
 * {
     behavior: url('../scripts/iepngfix.htc');

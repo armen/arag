@@ -20,7 +20,7 @@
                 </field>
                 <field>
                      <name>lastname</name>
-                     <value></value>
+                     <value>-</value>
                 </field>
                 <field>
                      <name>email</name>
