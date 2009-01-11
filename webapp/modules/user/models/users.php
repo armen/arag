@@ -129,8 +129,8 @@ class Users_Model extends Model
             $this->db->select('appname, '.$this->tableNameGroups.'.name as groupname, '.$this->tableNameUsers.'.username, privileges, redirect,'.
                               $this->tableNameUsers.'.name as name, lastname, email, '.$this->tableNameUsersGroups.'.group_id');
             $this->db->from($this->tableNameUsers);
-            $this->db->join($this->tableNameUsersGroups, $this->tableNameUsers.'.username', $this->tableNameUsersGroups.'.username');
-            $this->db->join($this->tableNameGroups, $this->tableNameGroups.'.id', $this->tableNameUsersGroups.'.group_id');
+            $this->db->join(Array($this->tableNameUsersGroups, $this->tableNameGroups), Array($this->tableNameUsers.'.username' => $this->tableNameUsersGroups.'.username',
+                                                                                              $this->tableNameGroups.'.id' => $this->tableNameUsersGroups.'.group_id'));
             $this->db->where($this->tableNameUsers.'.username', $username);
             $this->db->where('verified', True);
             $this->db->where('blocked',  False);
@@ -202,9 +202,8 @@ class Users_Model extends Model
         $this->db->select($this->tableNameUsers.".create_date");
         $this->db->select($this->tableNameUsers.".modified_by");
         $this->db->select($this->tableNameUsers.".created_by");
-        $this->db->join($this->tableNameGroups, $this->tableNameGroups.'.id', $this->tableNameUsersGroups.'.group_id');
-        $this->db->join($this->tableNameUsersGroups, $this->tableNameUsers.'.username', $this->tableNameUsersGroups.'.username');
-
+        $this->db->join(Array($this->tableNameUsersGroups, $this->tableNameGroups), Array($this->tableNameUsers.'.username' => $this->tableNameUsersGroups.'.username',
+                                                                                          $this->tableNameGroups.'.id' => $this->tableNameUsersGroups.'.group_id'));
         if ($groupID != NULL) {
             $this->db->where($this->tableNameGroups.'.id', $groupID);
         }
@@ -480,8 +479,8 @@ class Users_Model extends Model
     {
         $this->db->select('appname, '.$this->tableNameGroups.'.name as groupname');
         $this->db->from($this->tableNameUsers);
-        $this->db->join($this->tableNameUsersGroups, $this->tableNameUsers.'.username', $this->tableNameUsersGroups.'.username');
-        $this->db->join($this->tableNameGroups, $this->tableNameGroups.'.id', $this->tableNameUsersGroups.'.group_id');
+        $this->db->join(Array($this->tableNameUsersGroups, $this->tableNameGroups), Array($this->tableNameUsers.'.username' => $this->tableNameUsersGroups.'.username',
+                                                                                          $this->tableNameGroups.'.id' => $this->tableNameUsersGroups.'.group_id'));
         $this->db->where($this->tableNameUsers.'.username', $data['username']);
 
         $rows     = $this->db->get()->result_array(False);
