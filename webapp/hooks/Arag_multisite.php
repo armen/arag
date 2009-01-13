@@ -10,6 +10,7 @@ function multisite_fetch_appname()
     if (empty($appname) || in_array($appname[1], Kohana::config('arag.default_appnames'))) {
         define('MASTERAPP', TRUE);
         define('APPNAME', current(Kohana::config('arag.default_appnames')));
+        define('APPALIAS', isset($appname[1]) ? $appname[1] : APPNAME);
     } else {
         define('MASTERAPP', FALSE);
         define('APPNAME', $appname[1]);
