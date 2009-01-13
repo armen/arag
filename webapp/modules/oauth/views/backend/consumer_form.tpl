@@ -27,19 +27,19 @@
         <td><input type="text" name="callback_uri" value="{$callback_uri|smarty:nodefaults|default:null}" /></td>
     </tr>
     <tr>
-        <td align="{right}" width="120">_("Allication URI"):</td>
+        <td align="{right}" width="120">_("Application URI"):</td>
         <td><input type="text" name="application_uri" value="{$application_uri|smarty:nodefaults|default:null}" /></td>
     </tr>
     <tr>
-        <td align="{right}" width="120">_("Allication Title"):</td>
+        <td align="{right}" width="120">_("Application Title"):</td>
         <td><input type="text" name="application_title" value="{$application_title|smarty:nodefaults|default:null}" /></td>
     </tr>
     <tr>
-        <td align="{right}" width="120">_("Allication Desc"):</td>
+        <td align="{right}" width="120">_("Application Desc"):</td>
         <td><input type="text" name="application_desc" value="{$application_desc|smarty:nodefaults|default:null}" /></td>
     </tr>
     <tr>
-        <td align="{right}" width="120">_("Allication Notes"):</td>
+        <td align="{right}" width="120">_("Application Notes"):</td>
         <td><input type="text" name="application_notes" value="{$application_notes|smarty:nodefaults|default:null}" /></td>
     </tr>
     <tr>

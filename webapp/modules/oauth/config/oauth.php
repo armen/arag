@@ -2,5 +2,6 @@
 
 $config = Array
 (
-    'callback_url' => url::site('oauth/frontend/server/api')
+    'callback_url' => url::site('oauth/frontend/client/callback'),
+    'api'          => url::site('oauth/frontend/api')
 );

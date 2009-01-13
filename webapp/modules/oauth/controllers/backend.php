@@ -100,11 +100,14 @@ class Backend_Controller extends Controller
         $key      = $this->store->updateConsumer($consumer, $user_id);
         $consumer = $this->store->getConsumer($key, $user_id);
 
+        // TODO: this should not be here, we have to implement a backend for client, to
+        // register/update/delete server for a specified consumer
+
         // The server description
         $server = array(
             'consumer_key'      => $consumer['consumer_key'],
             'consumer_secret'   => $consumer['consumer_secret'],
-            'server_uri'        => url::site('oauth/frontend/api'),
+            'server_uri'        => Kohana::config('oauth.api'),
             'request_token_uri' => url::site('oauth/frontend/server/request_token'),
             'authorize_uri'     => url::site('oauth/frontend/server/authorize'),
             'access_token_uri'  => url::site('oauth/frontend/server/access_token'),
