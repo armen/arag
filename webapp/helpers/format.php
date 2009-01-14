@@ -45,4 +45,17 @@ class format_Core {
         return $date;
     }
     // }}}
+    // {{{ money
+    public static function money($string, $decimals=2, $dec_point=".", $thousands_sep=",")
+    {
+        if (is_numeric($string)) // check if it's a number
+        {
+            return number_format($string, $decimals, $dec_point, $thousands_sep);
+        }
+        else
+        {
+            return $string;
+        }
+    }
+    // }}}
 }
