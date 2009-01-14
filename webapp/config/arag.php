@@ -2,11 +2,15 @@
 
 $config = Array
 (
-    'default_appnames' => array
+    // {{{ Multisite
+
+    'master_appname'    => 'arag',
+    'master_appaliases' => array
     (
-        'arag', 'www'
+        'www'
     ),
 
+    // }}}
     // {{{ Global paths
 
     'cache_path' => APPPATH . 'cache/',

@@ -6,13 +6,18 @@ function multisite_fetch_appname()
 {
     // Fetch application name
     preg_match('/^(.*)\.[^.]++\.[^.]++$/', $_SERVER['SERVER_NAME'], $appname);
+    $appname = isset($appname[1]) ? $appname[1] : Kohana::config('arag.master_appname');
 
-    if (empty($appname) || in_array($appname[1], Kohana::config('arag.default_appnames'))) {
+    if ($appname == Kohana::config('arag.master_appname') ||
+        in_array($appname, Kohana::config('arag.master_appaliases')) ||
+        in_array('.*', Kohana::config('arag.master_appaliases'))) {
+
         define('MASTERAPP', TRUE);
-        define('APPNAME', current(Kohana::config('arag.default_appnames')));
-        define('APPALIAS', isset($appname[1]) ? $appname[1] : APPNAME);
+        define('APPNAME', Kohana::config('arag.master_appname'));
+        define('APPALIAS', $appname);
+
     } else {
         define('MASTERAPP', FALSE);
-        define('APPNAME', $appname[1]);
+        define('APPNAME', $appname);
     }
 }
