@@ -913,7 +913,7 @@ input[type=reset][disabled] {
 	background-color: #F6F8FB;
 }
 /* end of Profiler }}} */
-
+/* {{{ misc */
 .odd {
     text-align: center;
     background-color: #ececec;
@@ -923,7 +923,7 @@ input[type=reset][disabled] {
     text-align: center;
     border: 1px solid #ccc;
 }
-
 * {
     behavior: url('../scripts/iepngfix.htc');
 }
+/* }}} */
