@@ -4,6 +4,8 @@ Event::add_before('system.ready', current(Event::get('system.ready')), 'multisit
 
 function multisite_fetch_appname()
 {
+    (PHP_SAPI == 'cli') AND $_SERVER['SERVER_NAME'] = Null;
+
     // Fetch application name
     preg_match('/^(.*)\.[^.]++\.[^.]++$/', $_SERVER['SERVER_NAME'], $appname);
     $appname = isset($appname[1]) ? $appname[1] : Kohana::config('arag.master_appname');
