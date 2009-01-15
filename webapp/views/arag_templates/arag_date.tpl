@@ -56,7 +56,7 @@
                     var element = document.getElementById(id);
                     element.value = null;
             		for (var i in cal.multiple) if (cal.multiple[i] instanceof Date) {
-                        element.value += cal.date.print(cal.dateFormat, cal.dateType, cal.langNumbers)+',';
+                        element.value += cal.multiple[i].print(cal.dateFormat, cal.dateType, cal.langNumbers)+',';
                     }
                 }
                 cal.hide();

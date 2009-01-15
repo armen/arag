@@ -27,12 +27,12 @@ function smarty_function_arag_date($params, &$smarty)
                 break;
 
             default:
-                $smarty->trigger_error("arag_rte: Unknown attribute '$_key'");
+                $smarty->trigger_error("arag_date: Unknown attribute '$_key'");
         }
     }
 
     if (!isset($name)) {
-       $smarty->trigger_error("arag_rte: missing 'name' attribute");
+       $smarty->trigger_error("arag_date: missing 'name' attribute");
        return Null;
     }
 
