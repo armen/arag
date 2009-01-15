@@ -10,7 +10,7 @@ body {
     margin          : 0px;
     padding         : 50px;
     color           : #000;
-    background      : #fff url(../images/misc/background.jpg);
+    background      : #fff url(../images/misc/background.png);
 }
 input, textarea, select {
     font-size       : 12px;
@@ -505,6 +505,12 @@ input[type=reset][disabled] {
 }
 .print_action {
     background      : transparent url(../images/list/printer.png) no-repeat center;
+    font-size       : 0px;
+    width           : 16px;
+    height          : 16px;
+}
+.print_action_alt {
+    background      : transparent url(../images/list/printer_disabled.png) no-repeat center;
     font-size       : 0px;
     width           : 16px;
     height          : 16px;
