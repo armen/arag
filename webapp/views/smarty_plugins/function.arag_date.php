@@ -22,6 +22,7 @@ function smarty_function_arag_date($params, &$smarty)
             case 'id'    :
             case 'type'  :
             case 'toggle':
+            case 'multiple':
                 $$_key = $_val;
                 break;
 
@@ -45,15 +46,15 @@ function smarty_function_arag_date($params, &$smarty)
         }
     }
 
-    $data['lang']   = $lang;
-    $data['type']   = $type;
-    $data['name']   = $name;
-    $data['id']     = isset($id) ? $id : $name;
-    $data['id']     = str_replace('[', '_', $data['id']);
-    $data['id']     = str_replace(']', '_', $data['id']);
-    $data['toggle'] = isset($toggle) ? True : False;
-    $data['value']  = isset($value) ? $value : "";
-    $data['format'] = '%m/%d/%Y';
+    $data['lang']           = $lang;
+    $data['type']           = $type;
+    $data['name']           = $name;
+    $data['id']             = isset($id) ? $id : $name;
+    $data['toggle']         = isset($toggle) ? True : False;
+    $data['value']          = isset($value) ? $value : Null;
+    $data['format']         = '%Y/%m/%d';
+    $data['multiple']       = (isset($multiple) && $multiple == 'true') ? 'true' : 'false';
+    $data['multiple_value'] = is_array($value) ? implode(',', $value) : Null;
 
     $view = new View('arag_templates/arag_date', $data);
     return $view->render();
