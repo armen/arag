@@ -403,25 +403,32 @@ class date extends date_Core {
     // {{{ get_time
     public static function get_time($name, $values = Null, $types = Null)
     {
-        if (!$values) {
-            $values = Input::instance()->Post($name);
-        }
-        if (!$types) {
-            $types  = Input::instance()->Post('type_'.$name);
-        }
-        $lang   = Kohana::config('locale.lang') == "fa";
+        empty($values) AND $values = Input::instance()->Post($name);
+        empty($types) AND $types = Input::instance()->Post('type_'.$name);
+
+        // Is dates comma separated
+        (strpos($values, ',') !== False) AND $values = explode(',', trim($values, ','));
+
+        $lang = Kohana::config('locale.lang') == "fa";
 
         if (!is_array($values)) {
+
             if (!$types) {
-                $types = $lang == 'fa' ? 'jalali' : 'gregorian';
+                $types = ($lang == 'fa') ? 'jalali' : 'gregorian';
             }
+
             return date::strtotime($values, $types);
+
         } else {
+
             $dates = Array();
+
             foreach ($values as $key => $value) {
-                if (!$types[$key]) {
-                    $types[$key] = $lang == 'fa' ? 'jalali' : 'gregorian';
+
+                if (!isset($types[$key])) {
+                    $types[$key] = ($lang == 'fa') ? 'jalali' : 'gregorian';
                 }
+
                 $dates[] = date::strtotime($value, $types[$key]);
             }
 
@@ -453,13 +460,13 @@ class date extends date_Core {
     }
     // }}}
     // {{{ timetostr
-    public static function timetostr($timestamp)
+    public static function timetostr($timestamp, $format = 'y/m/d')
     {
             if (Kohana::config('locale.lang') == "fa") {
                 $date = date::gregorian_to_jalali($timestamp);
                 $str  = $date['year'].'/'.$date['month'].'/'.$date['day'];
             } else {
-                $str  = date('y/m/d', $timestamp);
+                $str  = date($format, $timestamp);
             }
             return $str;
     }
