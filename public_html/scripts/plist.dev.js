@@ -13,6 +13,7 @@ function toggleListCheckbox(el)
 // {{{ listForward
 function listForward(el, namespace)
 {
+    el = $(el);
     var action = (el.get('tag') == 'a')?el.href:
                  ((el.get('tag') == 'select')?el.options[el.selectedIndex].value:Null);
 
