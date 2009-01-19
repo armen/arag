@@ -35,12 +35,13 @@
 {/if}
 <img src="{$arag_base_url}images/date/date.png" width="22" height="22" id="{$id}_cal" alt={quote}_("Calendar"){/quote} style="cursor: pointer;" />
 <script type="text/javascript">
-    var id       = "{$id}";
-    var type     = "{$type}";
-    var format   = "{$format}";
-    var button   = "{$id}_cal";
-    var multiple = {if $multiple == "true"}[{foreach from=$value item="date"}Date.parseDate("{$date}", format, type),{/foreach}]{else}false{/if};
-    var {$id}Cal = Calendar.setup(
+    var id              = "{$id}";
+    var type            = "{$type}";
+    var format          = "{$format}";
+    var button          = "{$id}_cal";
+    var multiple        = {if $multiple == "true"}[{foreach from=$value item="date"}Date.parseDate("{$date}", format, type),{/foreach}]{else}false{/if};
+    var {$id}validDates = {$valid_dates|smarty:nodefaults};
+    var {$id}Cal        = Calendar.setup(
     {literal}
         {
             inputField      : multiple ? null : id,       // ID of the input field
@@ -60,6 +61,21 @@
                     }
                 }
                 cal.hide();
+            },
+            disableFunc     : function(date) {
+
+                var validDates = {/literal}{$id}validDates;{literal}
+
+                if (validDates) {
+                    for (i = 0; i < validDates.length; i++) {
+                        if (validDates[i] == date.print(format, type, false)) {
+                            return false;
+                        }
+                    }
+                    return true;
+                }
+
+                return false;
             }
         });
     {/literal}
