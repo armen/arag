@@ -19,6 +19,7 @@ function smarty_block_arag_block($params, $content, &$smarty, &$repeat)
             switch ($_key) {
                 case 'template':
                 case 'title':
+                case 'id':
                 case 'align':
                 case 'dir':
                     $$_key = (string)$_val;
@@ -36,6 +37,7 @@ function smarty_block_arag_block($params, $content, &$smarty, &$repeat)
         // Set default values
         if (!isset($template)) { $template = 'arag_block'; }
         if (!isset($title)) { $title = Null; }
+        if (!isset($id)) { $id = Null; }
         if (!isset($align)) { $align = ''; }
 
         // Find template location
@@ -61,6 +63,10 @@ function smarty_block_arag_block($params, $content, &$smarty, &$repeat)
             $direction = ' dir="'.$dir.'"'; // there is a space at begining
         }
 
+        if ($id) {
+            $id = ' id="'.$id.'"';
+        }
+
         $iconAlign = 'left';
         if ($dir == 'rtl') {
             $iconAlign = 'right';
@@ -68,6 +74,7 @@ function smarty_block_arag_block($params, $content, &$smarty, &$repeat)
 
         $smarty->assign_by_ref('arag_block_content', $content);
         $smarty->assign('arag_block_title', $title);
+        $smarty->assign('arag_block_id', $id);
         $smarty->assign('arag_block_direction', $direction);
         $smarty->assign('arag_block_align', $align);
         $smarty->assign('arag_icon_align', $iconAlign);

@@ -4,6 +4,6 @@
     File: $Id$
 *}
 
-<div{$arag_block_direction|smarty:nodefaults}{$arag_block_align|smarty:nodefaults}>
+<div{$arag_block_direction|smarty:nodefaults}{$arag_block_align|smarty:nodefaults}{$arag_block_id|smarty:nodefaults}>
     {$arag_block_content|smarty:nodefaults}
 </div>
