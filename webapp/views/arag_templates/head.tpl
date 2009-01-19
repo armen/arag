@@ -10,3 +10,4 @@
 <link rel="stylesheet" media="all" type="text/css" href="{$arag_base_url|smarty:nodefaults}themes/{$theme}/styles/style.css" />
 <link rel="stylesheet" media="all" type="text/css" href="{$arag_base_url|smarty:nodefaults}styles/styles.css" />
 <link rel="stylesheet" media="all" type="text/css" href="{$arag_base_url|smarty:nodefaults}scripts/JalaliJSCalendar/skins/calendar-blue.css" />
+<link rel="stylesheet" media="all" type="text/css" href="{$arag_base_url|smarty:nodefaults}scripts/MoodalBox/css/moodalbox.css" />
