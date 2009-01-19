@@ -39,12 +39,12 @@
     var type            = "{$type}";
     var format          = "{$format}";
     var button          = "{$id}_cal";
-    var multiple        = {if $multiple == "true"}[{foreach from=$value item="date"}Date.parseDate("{$date}", format, type),{/foreach}]{else}false{/if};
+    var multiple        = {if $multiple == "true"}[{foreach from=$value item="date" name="dates"}Date.parseDate("{$date}", format, type){if !$smarty.foreach.dates.last},{/if}{/foreach}]{else}false{/if};
     var {$id}validDates = {$valid_dates|smarty:nodefaults};
     var {$id}Cal        = Calendar.setup(
     {literal}
         {
-            inputField      : multiple ? null : id,       // ID of the input field
+            inputField      : multiple ? false : id,       // ID of the input field
             dateType        : type,     // the date format
             daFormat        : format,
             button          : button,   // ID of the button
@@ -53,10 +53,10 @@
             multiple        : multiple,
             onClose         : function(cal) {
 
-            	if (cal.multiple) {
-                    var element = document.getElementById(id);
-                    element.value = null;
-            		for (var i in cal.multiple) if (cal.multiple[i] instanceof Date) {
+                if (cal.multiple) {
+                    var element   = document.getElementById(id);
+                    element.value = '';
+                    for (var i in cal.multiple) if (cal.multiple[i] instanceof Date) {
                         element.value += cal.multiple[i].print(cal.dateFormat, cal.dateType, cal.langNumbers)+',';
                     }
                 }
