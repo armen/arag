@@ -400,6 +400,14 @@ class date extends date_Core {
         return ((int) ceil(($jd['today'] + $jd['wday']) / 7));
     }
     // }}}
+    // {{{ get_type
+    public static function get_type($name)
+    {
+        $lang = Kohana::config('locale.lang') == "fa";
+        $types = Input::instance()->Post('type_'.$name, ($lang == 'fa') ? 'jalali' : 'gregorian');
+        return $types;
+    }
+    // }}}
     // {{{ get_time
     public static function get_time($name, $values = Null, $types = Null)
     {
