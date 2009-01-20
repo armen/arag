@@ -330,6 +330,42 @@
                     <value>help/*</value>
                 </field>
             </insert>
+            <insert>
+                <field>
+                    <name>id</name>
+                    <value>20</value>
+                </field>
+                <field>
+                    <name>parent_id</name>
+                    <value>1</value>
+                </field>
+                <field>
+                    <name>label</name>
+                    <value>Locations Management</value>
+                </field>
+                <field>
+                    <name>privilege</name>
+                    <value>locations/*</value>
+                </field>
+            </insert>
+            <insert>
+                <field>
+                    <name>id</name>
+                    <value>21</value>
+                </field>
+                <field>
+                    <name>parent_id</name>
+                    <value>4</value>
+                </field>
+                <field>
+                    <name>label</name>
+                    <value>Locations Frontend</value>
+                </field>
+                <field>
+                    <name>privilege</name>
+                    <value>locations/frontend/*</value>
+                </field>
+            </insert>
         </initialization>
     </table>
 </database>

@@ -2,7 +2,7 @@
 <database>
     <name><variable>DATABASE_NAME</variable></name>
     <table>
-        <name><variable>TABLES_PREFIX</variable>user_profiles_cities</name>
+        <name><variable>TABLES_PREFIX</variable>locations_cities</name>
         <declaration>
             <field>
                 <name>code</name>
@@ -20,6 +20,17 @@
                 <name>province</name>
                 <type>integer</type>
                 <notnull>true</notnull>
+            </field>
+            <field>
+                <name>country</name>
+                <type>integer</type>
+                <notnull>true</notnull>
+            </field>
+            <field>
+                <name>deleted</name>
+                <type>integer</type>
+                <notnull>true</notnull>
+                <default>0</default>
             </field>
             <index>
                 <name>primary</name>

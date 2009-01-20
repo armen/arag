@@ -34,3 +34,7 @@ $config['languages_direction'] = array
     'en' => 'ltr',
     'fa' => 'rtl'
 );
+
+$config['default_country']  = 32;
+$config['default_province'] = 7;
+$config['default_city']     = 111299;

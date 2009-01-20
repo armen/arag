@@ -19,5 +19,3 @@ $config = array
     'core/backend'    => 'core/backend/email',
     'captcha/default' => 'core/frontend/captcha/index'
 );
-
-?>
