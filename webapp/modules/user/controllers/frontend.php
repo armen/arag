@@ -30,7 +30,7 @@ class Frontend_Controller extends Controller
         $this->validation->message('alpha_dash', _("%s can contain only alpha-numeric characters, underscores or dashes"));
         $this->validation->message('alpha', _("%s can contain only alpha characters"));
         $this->validation->message('smtp_error', _("SMTP settings are not set"));
-        $this->validation->message('valid_captcha', _("Image's text does not match !"));
+        $this->validation->message('valid', _("Please enter a valid %s"));
 
         $this->message = False;
 
