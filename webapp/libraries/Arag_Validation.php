@@ -76,5 +76,12 @@ class Validation extends Validation_Core {
         return $this->errors;
     }
     // }}}
+    // {{{ add_error
+    public function add_error($field, $name)
+    {
+        $this->errors[$field] = $name;
+        return $this;
+    }
+    // }}}
 
 } // End Validation
