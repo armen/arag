@@ -23,7 +23,8 @@ class Messages_Controller extends Controller
     {
         $this->session->keep_flash('not_authorized_redirect_url');
 
-        $this->layout->content = new View('messages/not_authorized', array('show_login' => $this->session->get('not_authorized_redirect_url')));
+        $show_login = $this->session->get('not_authorized_redirect_url') || !$this->session->get('user.authenticated');
+        $this->layout->content = new View('messages/not_authorized', array('show_login' => $show_login));
 
         $this->layout->content->page_title = _("Not Authorized!");
     }
