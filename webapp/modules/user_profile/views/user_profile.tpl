@@ -96,7 +96,7 @@
                 </tr>
                 <tr>
                     <td align="{right}">
-                        _("Postal Code"):{asterisk}
+                        _("Postal Code"):
                     </td>
                     <td align="{left}">
                         <input type="text" name="postal_code" value="{$postal_code|smarty:nodefaults|default:null}" dir="ltr" />
