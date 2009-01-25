@@ -13,8 +13,13 @@ class Backend_Controller extends Logger_Backend
         $user_name      = $this->input->post('username', null);
         $operation      = $this->input->post('operation', null);
         $date           = date::get_time('date');
+        $namespace      = $this->session->get("logger_appname", APPNAME);
 
-        $logs = $this->logger->search($archive_status, $user_name, $operation, $date);
+        $logs = $this->logger->search(array('archive_status'    => $archive_status,
+                                            'user_name'         => $user_name,
+                                            'operation'         => $operation,
+                                            'date'              => $date,
+                                            'namespace'         => $namespace));
 
         $archive_array = array(0 => _("Non Archived"), 1 => _("Archived"));
 
@@ -22,6 +27,7 @@ class Backend_Controller extends Logger_Backend
         $logs_list->setResource($logs);
         $logs_list->addColumn('Backend_Controller::show_operation', _("Operation"), PList_Component::VIRTUAL_COLUMN);
         $logs_list->addColumn('owner', _("User"));
+        $logs_list->addColumn('namespace', _("For"));
         $logs_list->addColumn('Backend_Controller::show_date', _("Date"), PList_Component::VIRTUAL_COLUMN);
         $logs_list->addAction('logger/backend/archive', _("Archive"), 'edit_action',  False, PList_Component::GROUP_ACTION);
         $logs_list->setGroupActionParameterName('id');

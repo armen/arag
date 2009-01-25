@@ -11,35 +11,41 @@ class Logger_Model extends Model
     {
         parent::__construct();
         $this->tableName = 'logger';
+        $this->namespace = Session::instance()->get("logger_appname", APPNAME);
     }
     // }}}
     // {{{ insertLog
-    function insertLog($uri, $username, $date)
+    function insertLog($uri, $username, $date, $namespace = '')
     {
-        $row = array( 'uri'    => $uri,
-                      'owner'  => $username,
-                      'date'   => $date,
-                      'archive'=> 0 );
+        $row = array( 'namespace'   => $namespace ? $namespace : $this->namespace,
+                      'uri'         => $uri,
+                      'owner'       => $username,
+                      'date'        => $date,
+                      'archive'     => 0 );
        $this->db->insert($this->tableName, $row);
     }
     // }}}
     // {{{ search
-    function search($archive_status, $user_name, $operation, $date)
+    function search($params)
     {
-        $this->db->select('id, uri, owner, date, archive');
-        $this->db->Where('archive', $archive_status);
+        $this->db->select('id, namespace, uri, owner, date, archive');
+        $this->db->Where('archive', $params['archive_status']);
 
-        if ($user_name) {
-            $this->db->like('owner', $user_name);
+        if (isset($params['user_name']) and $params['user_name']) {
+            $this->db->like('owner', $params['user_name']);
         }
 
-        if ($operation) {
-            $this->db->where('uri', $operation);
+        if (isset($params['operation']) and $params['operation']) {
+            $this->db->where('uri', $params['operation']);
         }
 
-        if ($date) {
-            $this->db->where('date >=', $date);
-            $this->db->where('date <=', $date + 86400);
+        if (isset($params['date']) and $params['date']) {
+            $this->db->where('date >=', $params['date']);
+            $this->db->where('date <=', $params['date'] + 86400);
+        }
+
+        if (isset($params['namespace']) and $params['namespace']) {
+            $this->db->where('namespace', $params['namespace']);
         }
 
         $query = $this->db->get($this->tableName);
@@ -51,7 +57,7 @@ class Logger_Model extends Model
     // {{{ archive
     function archive($ids)
     {
-        $row = array( 'archive' => 1);
+        $row = array('archive' => 1);
         foreach ($ids as $id){
             $this->db->where('id', $id);
             $this->db->update($this->tableName, $row);

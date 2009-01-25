@@ -4,11 +4,17 @@
      <table>
         <name><variable>TABLES_PREFIX</variable>logger</name>
         <declaration>
-	    <field>
+	        <field>
                 <name>id</name>
                 <type>integer</type>
                 <notnull>true</notnull>
-		<autoincrement>true</autoincrement>
+		        <autoincrement>true</autoincrement>
+            </field>
+            <field>
+                <name>namespace</name>
+                <type>text</type>
+                <length>255</length>
+                <notnull>true</notnull>
             </field>
             <field>
                 <name>uri</name>
