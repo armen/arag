@@ -52,49 +52,22 @@ class Locations_Model extends Model
     // {{{ getCity
     public function getCity($code)
     {
-        $this->db->select('code, city, province, country, deleted')->from($this->tableNameCities);
-
-        if (is_array($code)) {
-            if (isset($code['city']) && $code['city'] != 0) {
-                $this->db->where('code', $code['city']);
-                return $this->db->get()->current()->city;
-            }
-        } else {
-            $this->db->where('code', $code);
-            return $this->db->get()->current();
-        }
+        $this->db->select('code, city, province, country, deleted')->from($this->tableNameCities)->where('code', $code);
+        return $this->db->get()->result(False)->current();
     }
     // }}}
     // {{{ getProvince
     public function getProvince($id)
     {
-        $this->db->select('id, province, country, deleted')->from($this->tableNameProvinces);
-
-        if (is_array($id)) {
-            if (isset($id['province']) && $id['province'] != 0) {
-                $this->db->where('id', $id['province']);
-                return $this->db->get()->current()->province;
-            }
-        } else {
-            $this->db->where('id', $id);
-            return $this->db->get()->current();
-        }
+        $this->db->select('id, province, country, deleted')->from($this->tableNameProvinces)->where('id', $id);
+        return $this->db->get()->result(False)->current();
     }
     // }}}
     // {{{ getCountry
     public function getCountry($id)
     {
-        $this->db->select('id, country, deleted')->from($this->tableNameCountries);
-
-        if (is_array($id)) {
-            if (isset($id['id'])) {
-                $this->db->where('id', $id['id']);
-                return $this->db->get()->current()->country;
-            }
-        } else {
-            $this->db->where('id', $id);
-            return $this->db->get()->current();
-        }
+        $this->db->select('id, country, deleted')->from($this->tableNameCountries)->where('id', $id);
+        return $this->db->get()->result(False)->current();
     }
     // }}}
     // {{{ isCityDefined
@@ -103,7 +76,7 @@ class Locations_Model extends Model
         $this->db->select('code, city, province, country, deleted')->from($this->tableNameCities);
         ($province) ? $this->db->where(array('city' => $name, 'province' => $province, 'deleted' => false))
                     : $this->db->where(array('city' => $name, 'deleted' => false));
-        $result = $this->db->get()->current();
+        $result = $this->db->get()->result(False)->current();
         return ($result) ? (array) $result : null;
     }
     // }}}
@@ -113,7 +86,7 @@ class Locations_Model extends Model
         $this->db->select('id, province, country, deleted')->from($this->tableNameProvinces);
         ($country) ? $this->db->where(array('province' => $name, 'country' => $country, 'deleted' => false))
                    : $this->db->where(array('province' => $name, 'deleted' => false));
-        $result = $this->db->get()->current();
+        $result = $this->db->get()->result(False)->current();
         return ($result) ? (array) $result : null;
     }
     // }}}
@@ -122,7 +95,7 @@ class Locations_Model extends Model
     {
         $this->db->select('id, country, deleted')->from($this->tableNameCountries);
         $this->db->where(array('country' => $name, 'deleted' => false));
-        $result = $this->db->get()->current();
+        $result = $this->db->get()->result(False)->current();
         return ($result) ? (array) $result : null;
     }
     // }}}

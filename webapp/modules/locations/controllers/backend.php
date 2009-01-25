@@ -103,7 +103,7 @@ class Backend_Controller extends Controller
         $this->global_tabs->addItem(_("Edit Country"), 'locations/backend/edit_country/%country_id%',
                                     'locations/backend');
         $this->global_tabs->setParameter('country_id', $id);
-        $this->layout->content = new View('backend/add_country', (array) $this->locations->getCountry($id));
+        $this->layout->content = new View('backend/add_country', $this->locations->getCountry($id));
     }
     // }}}
     // {{{ edit_country_validate_read
@@ -172,7 +172,7 @@ class Backend_Controller extends Controller
                                     'locations/backend');
         $this->global_tabs->setParameter('country_id', $country_id);
 
-        $data = Array('country' => (array) $this->locations->getCountry($country_id));
+        $data = Array('country' => $this->locations->getCountry($country_id));
 
         $this->layout->content = new View('backend/delete_country', $data);
     }
@@ -218,7 +218,7 @@ class Backend_Controller extends Controller
     // {{{ list_provinces_any
     public function list_provinces_any($country_id = 0)
     {
-        $country = (array) $this->locations->getCountry($country_id);
+        $country = $this->locations->getCountry($country_id);
         $this->global_tabs->addItem(_("Countries"), 'locations/backend/list_countries', 'locations/backend');
         $this->global_tabs->addItem(_("Add Country"), 'locations/backend/add_country', 'locations/backend');
         $this->global_tabs->addItem(sprintf(_("Provinces of '%s'"), $country['country']),
@@ -257,14 +257,14 @@ class Backend_Controller extends Controller
     // {{{ add_province_read
     public function add_province_read($country_id = 0)
     {
-        $country = (array) $this->locations->getCountry($country_id);
+        $country = $this->locations->getCountry($country_id);
         $this->global_tabs->addItem(_("Countries"), 'locations/backend/list_countries', 'locations/backend');
         $this->global_tabs->addItem(_("Add Country"), 'locations/backend/add_country', 'locations/backend');
         $this->global_tabs->addItem(sprintf(_("Provinces of '%s'"), $country['country']),
                                     'locations/backend/list_provinces/%country_id%', 'locations/backend');
         $this->global_tabs->addItem(_("Add Province"), 'locations/backend/add_province/%country_id%', 'locations/backend');
         $this->global_tabs->setParameter('country_id', $country_id);
-        $data = array('country' => (array) $this->locations->getCountry($country_id));
+        $data = array('country' => $this->locations->getCountry($country_id));
 
         $this->layout->content = new View('backend/add_province', $data);
     }
@@ -314,7 +314,7 @@ class Backend_Controller extends Controller
     // {{{ add_province_write_error
     public function add_province_write_error()
     {
-        $country = (array) $this->locations->getCountry($this->input->post('country_id', Null, true));
+        $country = $this->locations->getCountry($this->input->post('country_id', Null, true));
 
         $data = array('country'  => array('id'       => $this->input->post('country_id', Null, true),
                                           'country'  => $this->input->post('country_name', Null, true)),
@@ -335,9 +335,9 @@ class Backend_Controller extends Controller
     // {{{ edit_province_read
     function edit_province_read($province_id = 0)
     {
-        $data = (array) $this->locations->getProvince($province_id);
+        $data = $this->locations->getProvince($province_id);
         if ($data) {
-            $data['country'] = (array) $this->locations->getCountry($data['country']);
+            $data['country'] = $this->locations->getCountry($data['country']);
         }
         $this->global_tabs->addItem(_("Countries"), 'locations/backend/list_countries', 'locations/backend');
         $this->global_tabs->addItem(_("Add Country"), 'locations/backend/add_country', 'locations/backend');
@@ -370,7 +370,7 @@ class Backend_Controller extends Controller
     {
         $id          = $this->input->post('id', Null, true);
         $province    = $this->input->post('province', Null, true);
-        if ($old_province = (array) $this->locations->getProvince($id)) {
+        if ($old_province = $this->locations->getProvince($id)) {
             $tempProvince = $this->locations->isProvinceDefined($province, $old_province['country']);
             if (!($tempProvince and ($tempProvince['id'] != $id))) {
                 $this->locations->editProvince($id, $old_province['country'], $province);
@@ -400,8 +400,8 @@ class Backend_Controller extends Controller
     function edit_province_write_error()
     {
         $id         = $this->input->post('id', Null, true);
-        $province   = (array) $this->locations->getProvince($id);
-        $country    = (array) $this->locations->getCountry($province['country']);
+        $province   = $this->locations->getProvince($id);
+        $country    = $this->locations->getCountry($province['country']);
         $data       = array('id'       => $id,
                             'country'  => $country,
                             'province' => $this->input->post('province', Null, true));
@@ -423,8 +423,8 @@ class Backend_Controller extends Controller
     // {{{ delete_province_read
     public function delete_province_read($province_id)
     {
-        $province = (array) $this->locations->getProvince($province_id);
-        $country  = (array) $this->locations->getCountry($province['country']);
+        $province = $this->locations->getProvince($province_id);
+        $country  = $this->locations->getCountry($province['country']);
 
         $this->global_tabs->addItem(_("Countries"), 'locations/backend/list_countries', 'locations/backend');
         $this->global_tabs->addItem(_("Add Country"), 'locations/backend/add_country', 'locations/backend');
@@ -459,7 +459,7 @@ class Backend_Controller extends Controller
     public function delete_province_write()
     {
         $province_id = $this->input->post('province_id');
-        $province = (array) $this->locations->getProvince($province_id);
+        $province = $this->locations->getProvince($province_id);
         $this->locations->deleteProvince($province_id);
         url::redirect('locations/backend/list_provinces/' . $province['country']);
     }
@@ -484,8 +484,8 @@ class Backend_Controller extends Controller
     // {{{ list_cities_any
     public function list_cities_any($province_id = 0)
     {
-        $province = (array) $this->locations->getProvince($province_id);
-        $country  = (array) $this->locations->getCountry($province['country']);
+        $province = $this->locations->getProvince($province_id);
+        $country  = $this->locations->getCountry($province['country']);
         $this->global_tabs->addItem(_("Countries"), 'locations/backend/list_countries', 'locations/backend');
         $this->global_tabs->addItem(_("Add Country"), 'locations/backend/add_country', 'locations/backend');
         $this->global_tabs->addItem(sprintf(_("Provinces of '%s'"), $country['country']),
@@ -528,8 +528,8 @@ class Backend_Controller extends Controller
     // {{{ add_city_read
     public function add_city_read($province_id = 0)
     {
-        $province   = (array) $this->locations->getProvince($province_id);
-        $country    = (array) $this->locations->getCountry($province['country']);
+        $province   = $this->locations->getProvince($province_id);
+        $country    = $this->locations->getCountry($province['country']);
 
         $this->global_tabs->addItem(_("Countries"), 'locations/backend/list_countries', 'locations/backend');
         $this->global_tabs->addItem(_("Add Country"), 'locations/backend/add_country', 'locations/backend');
@@ -567,7 +567,7 @@ class Backend_Controller extends Controller
     {
         $province_id    = $this->input->post('province_id', Null, true);
         $city           = $this->input->post('city', Null, true);
-        $province       = (array) $this->locations->getProvince($province_id);
+        $province       = $this->locations->getProvince($province_id);
 
         $tempCity = $this->locations->isCityDefined($city, $province_id);
         if (!$tempCity) {
@@ -619,11 +619,11 @@ class Backend_Controller extends Controller
     // {{{ edit_city_read
     function edit_city_read($city_id = 0)
     {
-        $data = (array) $this->locations->getCity($city_id);
+        $data = $this->locations->getCity($city_id);
         if ($data) {
             $data['id']         = $data['code'];
-            $data['province']   = (array) $this->locations->getProvince($data['province']);
-            $data['country']    = (array) $this->locations->getCountry($data['country']);
+            $data['province']   = $this->locations->getProvince($data['province']);
+            $data['country']    = $this->locations->getCountry($data['country']);
         }
 
         $this->global_tabs->addItem(_("Countries"), 'locations/backend/list_countries', 'locations/backend');
@@ -662,7 +662,7 @@ class Backend_Controller extends Controller
         $id     = $this->input->post('id', Null, true);
         $city   = $this->input->post('city', Null, true);
 
-        if ($old_city = (array) $this->locations->getCity($id)) {
+        if ($old_city = $this->locations->getCity($id)) {
             $tempCity = $this->locations->isCityDefined($city, $old_city['province']);
             if (!($tempCity and ($tempCity['code'] != $id))) {
                 $this->locations->editCity($id, $old_city['country'], $old_city['province'], $city);
@@ -723,9 +723,9 @@ class Backend_Controller extends Controller
     // {{{ delete_city_read
     public function delete_city_read($city_id)
     {
-        $city       = (array) $this->locations->getCity($city_id);
-        $province   = (array) $this->locations->getProvince($city['province']);
-        $country    = (array) $this->locations->getCountry($city['country']);
+        $city       = $this->locations->getCity($city_id);
+        $province   = $this->locations->getProvince($city['province']);
+        $country    = $this->locations->getCountry($city['country']);
 
         $this->global_tabs->addItem(_("Countries"), 'locations/backend/list_countries', 'locations/backend');
         $this->global_tabs->addItem(_("Add Country"), 'locations/backend/add_country', 'locations/backend');
@@ -764,7 +764,7 @@ class Backend_Controller extends Controller
     public function delete_city_write()
     {
         $city_id = $this->input->post('city_id');
-        $city = (array) $this->locations->getCity($city_id);
+        $city = $this->locations->getCity($city_id);
         $this->locations->deleteCity($city_id);
         url::redirect('locations/backend/list_cities/' . $city['province']);
     }
