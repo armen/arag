@@ -25,7 +25,7 @@ class Backend_Controller extends Controller
         $this->global_tabs = new TabbedBlock_Component('global_tabs');
         $this->global_tabs->setTitle(_("Locations"));
         $this->global_tabs->addItem(_("Locations"), 'locations/backend');
-        $this->global_tabs->addItem(_("Settings"), 'locations/backend/settings');
+//        $this->global_tabs->addItem(_("Settings"), 'locations/backend/settings');
 
         // Validation Messages
         $this->validation->message('numeric', _("%s should be numeric"));
