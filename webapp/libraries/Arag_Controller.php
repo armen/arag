@@ -101,7 +101,13 @@ class Controller extends Controller_Core {
                         Kohana::config('sites/'.APPNAME.'.core.parent_base_url') :
                         url::base();
             $this->smarty->assign('arag_base_url', $base_url);
+            $this->smarty->assign('arag_appname', APPNAME);
+            $this->smarty->assign('arag_masterapp', MASTERAPP);
             $this->smarty->assign('arag_current_module', Router::$module);
+
+            // Add current module plugins directory to plugins_dir
+            $this->smarty->plugins_dir[] = MODPATH.Router::$module.'/views/plugins';
+            array_unique($this->smarty->plugins_dir);
 
             // Fetch the output
             $output = $this->smarty->fetch($template);
