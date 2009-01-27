@@ -7,7 +7,8 @@ $config = array
     'version'     => '0.1',
     'name'        => 'locations',
     'author'      => array(
-                          'Armen Baghumian (Armen@OpenSourceClub.org)'
+                          'Armen Baghumian (Armen@OpenSourceClub.org)',
+                          'Peyman Karimi (zeegco@yahoo.com)'
                          ),
     'homepage'    => '',
     'update_url'  => '',
