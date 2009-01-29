@@ -8,7 +8,7 @@
         {literal}
         window.addEvent('domready', function() {
             $('{/literal}{$id}{literal}_toggle').addEvent('click', function() {
-                            cal = {/literal}{$id}{literal}Cal;
+                            cal = {/literal}{$prefix}{literal}Cal;
                             var dateType = cal.dateType;
                             if (dateType == 'jalali') {
                                 cal.setDateType('gregorian');
@@ -35,13 +35,13 @@
 {/if}
 <img src="{$arag_base_url}images/date/date.png" width="22" height="22" id="{$id}_cal" alt={quote}_("Calendar"){/quote} style="cursor: pointer;" />
 <script type="text/javascript">
-    var id              = "{$id}";
-    var type            = "{$type}";
-    var format          = "{$format}";
-    var button          = "{$id}_cal";
-    var multiple        = {if $multiple == "true"}[{foreach from=$value item="date" name="dates"}Date.parseDate("{$date}", format, type){if !$smarty.foreach.dates.last},{/if}{/foreach}]{else}false{/if};
-    var {$id}validDates = {$valid_dates|smarty:nodefaults};
-    var {$id}Cal        = Calendar.setup(
+    var id                  = "{$id}";
+    var type                = "{$type}";
+    var format              = "{$format}";
+    var button              = "{$id}_cal";
+    var multiple            = {if $multiple == "true"}[{foreach from=$value item="date" name="dates"}Date.parseDate("{$date}", format, type){if !$smarty.foreach.dates.last},{/if}{/foreach}]{else}false{/if};
+    var {$prefix}validDates = {$valid_dates|smarty:nodefaults};
+    var {$prefix}Cal        = Calendar.setup(
     {literal}
         {
             inputField      : multiple ? false : id,       // ID of the input field
@@ -64,7 +64,7 @@
             },
             disableFunc     : function(date) {
 
-                var validDates = {/literal}{$id}validDates;{literal}
+                var validDates = {/literal}{$prefix}validDates;{literal}
 
                 if (validDates) {
                     for (i = 0; i < validDates.length; i++) {

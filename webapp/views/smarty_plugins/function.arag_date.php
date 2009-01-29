@@ -51,6 +51,7 @@ function smarty_function_arag_date($params, &$smarty)
     $data['lang']           = $lang;
     $data['type']           = $type;
     $data['name']           = $name;
+    $data['prefix']         = str_replace(Array('[', ']'), '_', $name);
     $data['id']             = isset($id) ? $id : $name;
     $data['toggle']         = isset($toggle) ? True : False;
     $data['value']          = isset($value) ? $value : Null;
