@@ -403,7 +403,7 @@ class date extends date_Core {
     // {{{ get_type
     public static function get_type($name)
     {
-        $lang = Kohana::config('locale.lang') == "fa";
+        $lang  = Kohana::config('locale.lang') == "fa";
         $types = Input::instance()->Post('type_'.$name, ($lang == 'fa') ? 'jalali' : 'gregorian');
         return $types;
     }
@@ -414,8 +414,8 @@ class date extends date_Core {
         empty($values) AND $values = Input::instance()->Post($name);
         empty($types) AND $types = Input::instance()->Post('type_'.$name);
 
-        // Is dates comma separated
-        (strpos($values, ',') !== False) AND $values = explode(',', trim($values, ','));
+        // Are dates comma separated
+        (!empty($values) && (strpos($values, ',') !== False)) AND $values = explode(',', trim($values, ','));
 
         $lang = Kohana::config('locale.lang') == "fa";
 
