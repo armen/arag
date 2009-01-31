@@ -19,12 +19,11 @@
     {/literal}
 </script>
 <select id="{$prefix}country" name="{$prefix}country" style="width:180px">
+    <option value="0">&nbsp;</option>
     {foreach from=$countries item=entry}
         <option value="{$entry.id}"{if isset($country|smarty:nodefaults) && $entry.id == $country} selected="selected"{/if}>
             {$entry.country|smarty:nodefaults|default:"&nbsp;"}
         </option>
-    {foreachelse}
-        <option value="0">&nbsp;</option>
     {/foreach}
 </select>
 <div id="{$prefix}province_container">

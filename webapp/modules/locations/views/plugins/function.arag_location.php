@@ -26,10 +26,14 @@ function smarty_function_arag_location($params, &$smarty)
                 $$_key = $_val.'_';
                 break;
 
+            case 'accept_null':
+                // This is dummy
+                break;
+
             case 'city':
             case 'province':
             case 'country':
-                ((int) $_val) AND $$_key = (int) $_val;
+                ((isset($params['accept_null']) && $params['accept_null']) || (int) $_val) AND $$_key = (int) $_val;
                 break;
 
             default:
