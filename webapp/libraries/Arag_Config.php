@@ -14,12 +14,12 @@ class Arag_Config_Core
 
     // }}}
     // {{{ set
-    public static function set($name, $value, $namespace = Null)
+    public static function set($name, $value, $namespace = Null, $appname = APPNAME)
     {
         $db = new Database();
 
         if ($namespace == Null) {
-            $namespace = Router::$module;
+            $namespace = ($appname === True) ? Router::$module : $appname.'::'.Router::$module;
         }
 
         $db->select('value');
@@ -46,10 +46,10 @@ class Arag_Config_Core
     }
     // }}}
     // {{{ & get
-    public static function & get($name, $default = Null, $namespace = Null, $try_kohana_config_first = False)
+    public static function & get($name, $default = Null, $namespace = Null, $try_kohana_config_first = False, $appname = APPNAME)
     {
         if ($namespace == Null) {
-            $namespace = Router::$module;
+            $namespace = ($appname === True) ? Router::$module : $appname.'::'.Router::$module;
         }
 
         static $cache;
@@ -99,13 +99,13 @@ class Arag_Config_Core
     }
     // }}}
     // {{{ & get_namespace
-    public static function & get_namespace($namespace = Null)
+    public static function & get_namespace($namespace = Null, $appname = APPNAME)
     {
         $db     = new Database();
         $result = Array();
 
         if ($namespace == Null) {
-            $namespace = Router::$module;
+            $namespace = ($appname === True) ? Router::$module : $appname.'::'.Router::$module;
         }
 
         $db->select('name, value');
@@ -124,10 +124,10 @@ class Arag_Config_Core
     }
     // }}}
     // {{{ delete
-    public function delete($name, $namespace = Null)
+    public function delete($name, $namespace = Null, $appname = APPNAME)
     {
         if (!$namespace) {
-            $namespace = Router::$module;
+            $namespace = ($appname === True) ? Router::$module : $appname.'::'.Router::$module;
         }
 
          $db = New Database();
