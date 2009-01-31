@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<database>
+    <name><variable>DATABASE_NAME</variable></name>
+    <table>
+        <name><variable>TABLES_PREFIX</variable>theme_manager</name>
+        <declaration>
+            <field>
+                <name>namespace</name>
+                <type>text</type>
+                <length>255</length>
+                <notnull>true</notnull>
+            </field>
+            <field>
+                <name>property</name>
+                <type>text</type>
+                <length>255</length>
+                <notnull>true</notnull>
+            </field>
+            <field>
+                <name>description</name>
+                <type>clob</type>
+            </field>
+            <field>
+                <name>value</name>
+                <type>text</type>
+                <length>255</length>
+                <notnull>true</notnull>
+            </field>
+            <field>
+                <name>type</name>
+                <type>text</type>
+                <length>255</length>
+                <notnull>true</notnull>
+            </field>
+            <index>
+                <name>primary</name>
+                <primary>true</primary>
+                <field>
+                    <name>namespace</name>
+                </field>
+                <field>
+                    <name>property</name>
+                </field>
+            </index>
+        </declaration>
+    </table>
+</database>
