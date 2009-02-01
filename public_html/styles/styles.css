@@ -10,7 +10,7 @@ body {
     margin          : 0px;
     padding         : 50px;
     color           : #000;
-    background      : #fff url(../images/misc/background.png);
+    background      : #fff url(../images/misc/background.jpg);
 }
 input, textarea, select {
     font-size       : 12px;
@@ -639,6 +639,12 @@ input[type=reset][disabled] {
 }
 .apply_cancel_action_alt {
     background      : transparent url(../images/list/apply.png) no-repeat center;
+    font-size       : 0px;
+    width           : 16px;
+    height          : 16px;
+}
+.lock_action {
+    background      : transparent url(../images/list/lock.png) no-repeat center;
     font-size       : 0px;
     width           : 16px;
     height          : 16px;
