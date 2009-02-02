@@ -6,18 +6,18 @@
 // $Id$
 // ---------------------------------------------------------------------------
 
-class Theme_manager_Model extends Model
+class ThemeManager_Model extends Model
 {
     // {{{ set
-    public function set($styles, $namespace)
+    public function set($styles)
     {
-        Arag_Config::set('styles', $styles, $namespace);
+        Arag_Config::set('styles', $styles);
     }
     // }}}
     // {{{ get
-    public function getStyles($namespace)
+    public function get()
     {
-        return Arag_Config::get('styles', array(), $namespace);
+        return Arag_Config::get('styles', array());
     }
     // }}}
     // {{{ getDefaults

@@ -14,12 +14,14 @@
 
 function smarty_function_arag_colorpicker($params, &$smarty)
 {
-    $ending = $color = Null;
+    $ending = $name = $color = Null;
 
     foreach ($params as $_key => $_val) {
         switch ($_key) {
             case 'ending':
                 $$_key = '_'.$_val; break;
+           case 'name':
+                $$_key = $_val; break;
             case 'color':
                 $$_key = $_val; break;
             default:
@@ -29,7 +31,8 @@ function smarty_function_arag_colorpicker($params, &$smarty)
 
     $view           = new View('backend/arag_colorpicker');
     $view->ending   = $ending;
-    $view->color    = $city;
+    $view->name     = $name;
+    $view->color    = $color;
 
     return $view->render();
 }

@@ -2,6 +2,6 @@
 
 $config = array
 (
-    'locations/backend/index' => 'locations/backend/list_countries',
-    'locations/backend'       => 'locations/backend/list_countries'
+    'theme_manager/backend'     => 'theme_manager/backend/edit',
+    'theme_manager/styles.css'  => 'theme_manager/frontend/get_style'
 );

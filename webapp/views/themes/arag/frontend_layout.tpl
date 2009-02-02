@@ -10,6 +10,7 @@
     <title>{$page_title}</title>
     {arag_head}
 	<link rel="stylesheet" media="all" type="text/css" href="{$arag_base_url|smarty:nodefaults}themes/arag/styles/style.css" />
+    <link rel="stylesheet" media="all" type="text/css" href="{kohana_helper function="url::site" uri="theme_manager/styles.css"}" />
 </head>
 <body>
     {arag_block align="right" template="blank"}
