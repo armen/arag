@@ -21,8 +21,9 @@
 class format_Core {
 
     // {{{ date
-    public static function date($timestamp, $showHours = True)
+    public static function date($timestamp, $showHours = True, $dateFormat = 'Y-m-d', $timeFormat = ' H:i:s')
     {
+        // TODO: Jalali date should be able to accept date formats
         $lang = Kohana::config('locale.lang');
 
         if (!$timestamp) {
@@ -30,15 +31,15 @@ class format_Core {
         }
 
         if ($lang === 'en') {
-            $date = date('Y-m-d', $timestamp);
+            $date = date($dateFormat, $timestamp);
             if ($showHours) {
-                $date = $date . date(' H:i:s', $timestamp);
+                $date = $date . date($timeFormat, $timestamp);
             }
         } else {
             $date = date::gregorian_to_jalali((int) $timestamp);
             $date = $date['year'].'-'.$date['month'].'-'.$date['day'];
             if ($showHours) {
-                $date = $date . date(' H:i:s', $timestamp);
+                $date = $date . date($timeFormat, $timestamp);
             }
         }
 
