@@ -59,4 +59,10 @@ class format_Core {
         }
     }
     // }}}
+    // {{{ show_date
+    public function show_date($row, $field)
+    {
+        return format::date($row[$field], false);
+    }
+    // }}}
 }
