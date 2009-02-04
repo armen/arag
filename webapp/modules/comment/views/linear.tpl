@@ -3,76 +3,78 @@
     vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:
     File: $Id$
 *}
-
+{arag_load_script src="scripts/mootools.js"}
 {assign var=comments value=$component->getComments()}
 {assign var=title value=$component->getTitle()}
-sffdfsdfsdfsdfsdfsdf
+
 {if count($comments)}
-    <div class="comments">
-        <h3>{$title}</h3>
-        {foreach from=$comments item=_comment key=key}
-            <div class="comment">
-                <div class="comment_posted">
-                    {capture assign="posted"}_("#%d. %s on %s"){/capture}
-                    {capture assign="date"}{kohana_helper function="format::date" date=$_comment->create_date}{/capture}
-                    {counter assign="counter"}
-                    {if empty($_comment->homepage|smarty:nodefaults)}
-                        {$posted|sprintf:$counter:$_comment->name:$date}
-                    {else}
-                        {kohana_helper function="html::anchor" uri=$_comment->homepage title=$posted|sprintf:$counter:$_comment->name:$date}
-                    {/if}
+    {arag_block}
+        <div class="comments">
+            <h3>{$title}</h3>
+            {foreach from=$comments item=_comment key=key}
+                <div class="comment">
+                    <div class="comment_posted">
+                        {capture assign="posted"}_("#%d. %s on %s"){/capture}
+                        {capture assign="date"}{kohana_helper function="format::date" date=$_comment->create_date}{/capture}
+                        {counter assign="counter"}
+                        {if empty($_comment->homepage|smarty:nodefaults)}
+                            {$posted|sprintf:$counter:$_comment->name:$date}
+                        {else}
+                            {kohana_helper function="html::anchor" uri=$_comment->homepage title=$posted|sprintf:$counter:$_comment->name:$date}
+                        {/if}
+                    </div>
+                    <div class="comment_body">
+                        {$_comment->comment|nl2br|smarty:nodefaults}
+                    </div>
                 </div>
-                <div class="comment_body">
-                    {$_comment->comment|nl2br|smarty:nodefaults}
-                </div>
-            </div>
-        {/foreach}
-    </div>
+            {/foreach}
+        </div>
+    {/arag_block}
 {/if}
 
 {arag_block}
-    {arag_block template="blank"}
-        {arag_validation_errors}
-
-        {arag_block template="info"}
-            {capture assign="info_msg"}_("Fields marked with a %s are required."){/capture}
-            {asterisk message=$info_msg}
-        {/arag_block}
-
-        {arag_form uri=$component->getPostUri() method="post"}
-        <table border="0" dir="{dir}" width="100%">
-        {if !$component->onlyComment()}
-            <tr>
-                <td align="{right}" width="100">_("Name"){asterisk}:</td>
-                <td><input type="text" name="name" value="{$name|smarty:nodefaults|default:null}" /></td>
-            </tr>
-            <tr>
-                <td align="{right}" width="100">_("Email"):</td>
-                <td><input type="text" name="email" value="{$email|smarty:nodefaults|default:null}" dir="ltr" /></td>
-            </tr>
-            <tr>
-                <td align="{right}" width="100">_("Home page"):</td>
-                <td><input type="text" name="homepage" value="{$homepage|smarty:nodefaults|default:null}" dir="ltr" /></td>
-            </tr>
-        {/if}
+    {arag_validation_errors}{$component->getUri()}
+    {arag_form uri=$component->getUri() method="post" enctype="multipart/form-data"}
+    <table border="0" dir="{dir}" width="100%">
         <tr>
-            <td align="{right}" width="100">_("Comment"){asterisk}:</td>
-            <td><textarea name="comment" rows="7" cols="15">{$comment|smarty:nodefaults|default:null}</textarea></td>
+            <td align="{right}" width="100">
+                _("Comment"){asterisk}:
+            </td>
+            <td align="{left}">
+                <textarea name="comment" rows="7" cols="15">{$comment|smarty:nodefaults|default:null}</textarea>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                <input type="hidden" name="key" value="{$component->getKey()}" />
+            </td>
+        </tr>
+        <tr>
+            <td align="{right}">
+                _("Attachment"):
+            </td>
+            <td align="{left}">
+                <div style="float:{left};">
+                    <div id="attachment" style="display:none;">
+                        <input type="file" name="attachments[]" />
+                    </div>
+                    <div id="attachments_container">
+                        <input type="file" name="attachments[]" />
+                    </div>
+                </div>
+                <div style="float:{left};">
+                    <input type="button" value="+" onclick="$('attachment').clone().injectAfter('attachments_container').set('style', 'display:block;');" />
+                </div>
+                <div style="clear:both;"></div>
+            </td>
         </tr>
         <tr>
             <td>&nbsp;</td>
-            <td>
-                {if $component->onlyComment()}
-                    <input type="hidden" name="name" value="{$name|smarty:nodefaults|default:'Anonymous'}" />
-                    <input type="hidden" name="email" value="{$email|smarty:nodefaults|default:null}" />
-                {/if}
-                <input type="hidden" name="module" value="{$component->getModule()}" />
-                <input type="hidden" name="reference_id" value="{$component->getReferenceId()}" />
+            <td align="{left}">
                 <input type="submit" value={quote}_("Submit"){/quote} />
                 <input type="reset" value={quote}_("Reset"){/quote} />
             </td>
         </tr>
-        </table>
-        {/arag_form}
-    {/arag_block}
+    </table>
+    {/arag_form}
 {/arag_block}

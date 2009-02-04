@@ -23,9 +23,9 @@ class Comment_Model extends Model
     }
     // }}}
     // {{{ createComment
-    public function createComment($moduleName, $referenceId, $author, $comment, $verified = 0, $parentId = 0, $name = Null, $email = Null, $homepage = Null)
+    public function createComment($namespace, $referenceId, $author, $comment, $verified = 0, $parentId = 0, $name = Null, $email = Null, $homepage = Null)
     {
-        $row = Array('module_name'  => $moduleName,
+        $row = Array('namespace'    => $namespace,
                      'reference_id' => $referenceId,
                      'comment'      => $comment,
                      'parent_id'    => $parentId,
@@ -46,7 +46,7 @@ class Comment_Model extends Model
     {
         $comment = $this->getComment($id);
 
-        $row = Array('module_name'  => $comment['module_name'],
+        $row = Array('namespace'    => $comment['namespace'],
                      'reference_id' => $comment['reference_id'],
                      'comment'      => $comment,
                      'parent_id'    => ($parentId === False) ? $comment['parent_id'] : $parentId,
@@ -72,7 +72,7 @@ class Comment_Model extends Model
     // {{{ & getComment
     public function & getComment($id)
     {
-        $this->db->select('module_name, reference_id, comment, parent_id, homepage, name, email, verified,'.
+        $this->db->select('namespace, reference_id, comment, parent_id, homepage, name, email, verified,'.
                           'create_date, created_by, modify_date, modified_by');
 
         $query = $this->db->getwhere($this->tableName, Array('id' => $id));
@@ -82,7 +82,7 @@ class Comment_Model extends Model
     }
     // }}}
     // {{{ getComments
-    public function getComments($moduleName, $referenceId = False, $verified = Null)
+    public function getComments($namespace, $referenceId = False, $verified = Null)
     {
         $query = $this->db->select('id, reference_id, comment, parent_id, homepage, name, email, verified,'.
                                    'create_date, created_by, modify_date, modified_by');
@@ -95,7 +95,7 @@ class Comment_Model extends Model
             $query->where('verified', $verified);
         }
 
-        $retval = $query->where('module_name', $moduleName)->orderby('create_date', 'asc')->get($this->tableName)->result();
+        $retval = $query->where('namespace', $namespace)->orderby('create_date', 'asc')->get($this->tableName)->result();
 
         return $retval;
     }

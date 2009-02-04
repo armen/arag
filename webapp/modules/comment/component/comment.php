@@ -8,7 +8,7 @@
 // ---------------------------------------------------------------------------
 
 /*
- * Class for create paginated list
+ * Class for creating comment component
  *
  * @author Armen Baghumian <armen@OpenSourceClub.org>
  * @author Sasan Rose      <sasan.rose@gmail.com>
@@ -19,42 +19,55 @@ class Comment_Component extends Component
 {
     // {{{ Properties
 
-    private $module;
+    private $namespace;
     private $referenceId;
-    private $postUri;
-    private $onlyComment;
+    private $onlyComment = True;
     private $title;
     private $comments = Null;
+    private $uri;
+    private $key;
+    private $session;
+    private $controller;
 
     // }}}
     // {{{ Constructor
-    public function __construct($namespace = Null)
+    public function __construct($namespace = Null, $referenceId = Null)
     {
         parent::__construct($namespace);
 
-        $this->setModule();
-        $this->setPostUri();
+        $this->session = Session::instance();
+
+        $this->setNamespace($namespace);
+        $this->setReferenceId($referenceId);
         $this->onlyComment(False);
 
-        $this->title = _("Comments");
+        $controller       = implode('/', array_diff(Router::$rsegments, Router::$arguments));
+        $controller       = rtrim($controller, Router::$method.'/'); // Append a slash to $destination
+        $this->setUri($controller);
+
+        $this->title      = _("Comments");
     }
     // }}}
     // {{{ setReferenceId
     public function setReferenceId($referenceId)
     {
         $this->referenceId = $referenceId;
+        $this->session->set('comment.'.$this->getKey().'.reference_id', $referenceId);
     }
     // }}}
-    // {{{ setModule
-    public function setModule($module = Null)
+    // {{{ setNamespace
+    public function setNamespace($namespace = Null)
     {
-        $this->module = empty($module) ? Router::$module : $module;
+        $this->namespace = empty($namespace) ? Router::$module : $namespace; //If namespace is not set, namespace is module name
+        $this->session->set('comment.'.$this->getKey().'.namespace', $this->namespace);
     }
     // }}}
-    // {{{ setPostUri
-    public function setPostUri($uri = Null)
+    // {{{ setUri
+    public function setUri($uri = Null)
     {
-        $this->postUri = empty($uri) ? Router::$current_uri : $uri;
+        $this->uri = $uri;
+        $this->session->set('comment.'.$this->getKey().'.uri', Router::$current_uri); //Redirect back here baby
+        $this->session->set('comment.'.$this->getKey().'.controller', $uri); //My address, for link to attachments
     }
     // }}}
     // {{{ setTitle
@@ -69,16 +82,16 @@ class Comment_Component extends Component
         return $this->referenceId;
     }
     // }}}
-    // {{{ getModule
-    public function getModule()
+    // {{{ getNamespace
+    public function getNamespace()
     {
-        return $this->module;
+        return $this->namespace;
     }
     // }}}
-    // {{{ getPostUri
-    public function getPostUri()
+    // {{{ getUri
+    public function getUri()
     {
-        return $this->postUri;
+        return $this->uri.'/comment_add';
     }
     // }}}
     // {{{ getComments
@@ -91,6 +104,15 @@ class Comment_Component extends Component
     public function getTitle()
     {
         return $this->title;
+    }
+    // }}}
+    // {{{ getKey
+    public function getKey()
+    {
+        if (!$this->key) {
+            $this->key = sha1(microtime());
+        }
+        return $this->key;
     }
     // }}}
     // {{{ onlyComment
@@ -107,7 +129,7 @@ class Comment_Component extends Component
     public function build()
     {
         $comment        = new Comment_Model;
-        $this->comments = $comment->getComments($this->module, $this->referenceId);
+        $this->comments = $comment->getComments($this->namespace, $this->referenceId);
     }
     // }}}
 }
