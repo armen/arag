@@ -946,7 +946,7 @@ class Applications_Controller extends Backend_Controller
         $name = $row['name'];
         $this->global_tabs->setParameter('name', $appname);
 
-        $this->global_tabs->addItem(_("Edit $name's privileges"), "user/backend/applications/group_privileges_edit/".$id."/".$appname,
+        $this->global_tabs->addItem(sprintf(_("Edit '%s's' privileges"), $name), "user/backend/applications/group_privileges_edit/".$id."/".$appname,
                                                                   "user/backend/applications");
         $this->_privileges_edit_read($id, $appname);
     }
