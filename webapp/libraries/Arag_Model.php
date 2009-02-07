@@ -23,7 +23,7 @@ class Model extends Model_Core {
     // {{{ Constructor
     public function __construct()
     {
-        $config = defined('MASTERAPP') ? 'default' : Kohana::config('sites/'.APPNAME.'.database');
+        $config = MASTERAPP ? 'default' : Kohana::config('sites/'.APPNAME.'.database', 'default', False);
 
         // Load the default database if necessary
         $this->db = new Database($config);

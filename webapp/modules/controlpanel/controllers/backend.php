@@ -27,7 +27,7 @@ class Backend_Controller extends Controller
 
         $this->layout->content = new View('backend/controlpanel');
 
-        if (defined('MASTERAPP')) {
+        if (MASTERAPP) {
             $modules = $modules->getModules();
         } else {
             $modules = $modules->getModules(Array('multisite', 'ta_locator', 'core'));

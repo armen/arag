@@ -17,7 +17,9 @@ class ReportGenerator_Model extends Model
     // {{{ constructor
     public function __construct()
     {
-        $this->config           = defined('MASTERAPP') ? Kohana::config('database.default') : Kohana::config('sites/'.APPNAME.'.database');
+        $this->config           = MASTERAPP 
+                                ? Kohana::config('database.default') 
+                                : Kohana::config('sites/'.APPNAME.'.database', Kohana::config('database.default'), False);
         $this->config['object'] = False;
 
         parent::__construct(new Database($this->config));

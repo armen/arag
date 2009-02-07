@@ -172,7 +172,7 @@ class Filters_Model extends Model
     {
         $filters = array();
 
-        if (defined('MASTERAPP')) {
+        if (MASTERAPP) {
             // Sir, you are the master and you don't need any filter \:)
             return $filters;
         }
