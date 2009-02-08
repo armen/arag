@@ -141,22 +141,23 @@ class Arag_Auth {
 
             $session = Session::instance();
             $appname = $session->get('user.appname', APPNAME);
+            $filters = $session->get('privilege_filters.'.$appname, False);
 
             // When user Logins privilege_filters unset by login method
             // then we fetch current application privilege filters here
-            if ($session->get('privilege_filters') === False) {
+            if ($filters == False) {
 
                 // Fetch privilege filters for current application
-                $filters = Model::load('Filters', 'user');
-                $session->set('privilege_filters', $filters->getPrivilegeFilters($appname));
+                $filtersModel = Model::load('Filters', 'user');
+                $session->set('privilege_filters', array_merge($session->get('privilege_filters', Array()), Array($appname => $filtersModel->getPrivilegeFilters($appname))));
             }
 
             $privileges = $session->get('user.privileges');
-            $authorized = self::is_authorized($uri, $privileges[APPNAME]);
+            $authorized = self::is_authorized($uri, $privileges[$appname]);
 
             if ($authorized) {
                 // The user is authorized so we will try to filter his/her privileges with a blacklist
-                $authorized = self::is_authorized($uri, $session->get('privilege_filters'), False);
+                $authorized = self::is_authorized($uri, $session->get('privilege_filters.'.$appname, Array()), False);
             }
 
             $cache[$uri] = $authorized;
