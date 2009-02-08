@@ -9,6 +9,7 @@
     {/arag_block}
 {/if}
 {arag_block}
+    {arag_block template="blank"}
     <table border="0" dir="{dir}">
         <tr>
             <td align="{right}">
@@ -42,19 +43,17 @@
                 {$email|smarty:nodefaults|default:null}
             </td>
         </tr>
-        <tr>
-            <td align="{right}" colspan="2">
-                &nbsp;
-            </td>
-        </tr>
+        {if $phone|smarty:nodefaults|default:null}
         <tr>
             <td align="{right}">
-                _("Phone"):{asterisk}
+                _("Phone"):
             </td>
             <td align="{left}">
                 {$phone|smarty:nodefaults|default:null}
             </td>
         </tr>
+        {/if}
+        {if $cellphone|smarty:nodefaults|default:null}
         <tr>
             <td align="{right}">
                 _("Cellphone"):
@@ -63,44 +62,38 @@
                 {$cellphone|smarty:nodefaults|default:null}
             </td>
         </tr>
-        <tr>
-            <td align="{right}" colspan="2">
-                &nbsp;
-            </td>
-        </tr>
-        <tr>
-            <td align="{right}">
-                _("Country"):{asterisk}
-            </td>
-            <td align="{left}">
-                {foreach from=$countries item=item}
-                    {if $isset_profile && $item.id == $country}
-                        {$item.country}
-                    {/if}
-                {/foreach}
-            </td>
-        </tr>
-        {if $isset_profile && $country == $defaults.country}
+        {/if}
+        {if $isset_profile}
             <tr>
                 <td align="{right}">
-                    _("Province"):{asterisk}
+                    _("Country"):
                 </td>
                 <td align="{left}">
-                    {foreach from=$provinces item=item}
+                    {foreach from=$countries|smarty:nodefaults|default:null item=item}
+                        {if $isset_profile && $item.id == $country}
+                            {$item.country}
+                        {/if}
+                    {/foreach}
+                </td>
+            </tr>
+            <tr>
+                <td align="{right}">
+                    _("Province"):
+                </td>
+                <td align="{left}">
+                    {foreach from=$provinces|smarty:nodefaults|default:null item=item}
                         {if $isset_profile && $item.id == $province}
                             {$item.province}
                         {/if}
                     {/foreach}
                 </td>
             </tr>
-        {/if}
-        {if $isset_profile && $country == $defaults.country}
             <tr>
                 <td align="{right}">
-                    _("City"):{asterisk}
+                    _("City"):
                 </td>
                 <td align="{left}" id="cities">
-                    {foreach from=$cities item=item}
+                    {foreach from=$cities|smarty:nodefaults|default:null item=item}
                         {if $isset_profile && $item.code == $city}
                             {$item.city}
                         {/if}
@@ -108,26 +101,26 @@
                 </td>
             </tr>
         {/if}
-        <tr>
-            <td align="{right}" colspan="2">
-                &nbsp;
-            </td>
-        </tr>
+        {if $address|smarty:nodefaults|default:null}
         <tr>
             <td align="{right}">
-                _("Address"):{asterisk}
+                _("Address"):
             </td>
             <td align="{left}">
                 {$address|smarty:nodefaults|default:null}
             </td>
         </tr>
+        {/if}
+        {if $postal_code|smarty:nodefaults|default:null}
         <tr>
             <td align="{right}">
-                _("Postal Code"):{asterisk}
+                _("Postal Code"):
             </td>
             <td align="{left}">
                 {$postal_code|smarty:nodefaults|default:null}
             </td>
         </tr>
+        {/if}
     </table>
+    {/arag_block}
 {/arag_block}

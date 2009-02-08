@@ -155,9 +155,15 @@ class Backend_Controller extends Controller
     // {{{ view_read
     public function view_read($username)
     {
+        $locations = Model::load('Locations', 'locations');
+
         $this->global_tabs->addItem(_("View User Profile"), 'user_profile/'.$this->section.'/view/'.$username);
 
-        $data          = $this->Users->getUserProfile($username);
+        $data              = $this->Users->getUserProfile($username);
+        $data['city']      = Kohana::config('locale.default_city', 0);
+        $data['province']  = Kohana::config('locale.default_province', 0);
+        $data['country']   = Kohana::config('locale.default_country', 0);
+
         $isset_profile = False;
 
         if ($isset_profile = $this->UserProfile->hasUserName($username)) {
@@ -171,7 +177,10 @@ class Backend_Controller extends Controller
                                           'section'       => $this->section
                                          ));
 
-        $this->layout->content = new View('view_user_profile', $data);
+        $this->layout->content            = new View('view_user_profile', $data);
+        $view->layout->content->countries = $locations->getCountries();
+        $view->layout->content->provinces = $locations->getProvinces($data['country']);
+        $view->layout->content->cities    = $locations->getCities($data['province'], $data['country']);
     }
     // }}}
     // {{{ view_validate_read
