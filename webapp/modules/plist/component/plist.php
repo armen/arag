@@ -28,8 +28,6 @@ class PList_Component extends Component implements IteratorAggregate, ArrayAcces
     private $groupActionType          = 'button';
     private $groupActionParameterName = 'id';
 
-    private $show_counter             = True;
-
     private $limit                    = 0;   // How many results per page. 0 is infinity
     private $offset                   = 0;   // Offset
     private $page                     = 1;   // The page to start listing
@@ -48,6 +46,8 @@ class PList_Component extends Component implements IteratorAggregate, ArrayAcces
     const HEADER                      = 2;
     const FOOTER                      = 4;
     const SORTABLE                    = 8;
+    const COUNTER                     = 16;
+    const STATS                       = 32;
 
     private $properties               = 0;
 
@@ -60,7 +60,7 @@ class PList_Component extends Component implements IteratorAggregate, ArrayAcces
         $this->emptyListMessage = _("List content is Empty!");
 
         $this->setResource(Array());
-        $this->setProperties(self::CAPTION | self::HEADER | self::FOOTER | self::SORTABLE);
+        $this->setProperties(self::CAPTION | self::HEADER | self::FOOTER | self::SORTABLE | self::COUNTER | self::STATS);
 
         $Controller = Kohana::instance();
 
@@ -141,22 +141,10 @@ class PList_Component extends Component implements IteratorAggregate, ArrayAcces
         return $this->properties;
     }
     // }}}
-    // {{{ ifShowCounter
-    public function ifShowCounter()
-    {
-        return $this->show_counter;
-    }
-    // }}}
     // {{{ getNumberOfResources
     public function getNumberOfResources()
     {
         return count($this->resource);
-    }
-    // }}}
-    // {{{ showCounter
-    public function showCounter($show = True)
-    {
-        $this->show_counter = $show;
     }
     // }}}
     // {{{ setGroupActionType
@@ -181,6 +169,18 @@ class PList_Component extends Component implements IteratorAggregate, ArrayAcces
     public function hasFooter()
     {
         return $this->properties & self::FOOTER;
+    }
+    // }}}
+    // {{{ hasStats
+    public function hasStats()
+    {
+        return $this->properties & self::STATS;
+    }
+    // }}}
+    // {{{ hasCounter
+    public function hasCounter()
+    {
+        return $this->properties & self::COUNTER;
     }
     // }}}
     // {{{ hasCaption

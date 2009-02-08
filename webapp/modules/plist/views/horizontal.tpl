@@ -14,7 +14,6 @@
 {assign var=virtualColumns value=$plist->getVirtualColumns()}
 {assign var=pager value=$plist->getPager()}
 {assign var=limit value=$plist->getLimit()}
-{assign var=show_counter value=$plist->ifShowCounter()}
 {assign var=resource_count value=$plist->getResourceCount()}
 {assign var=sums value=$plist->getPageSums($pager.current)}
 
@@ -24,14 +23,16 @@
         {counter name=row start=$start print=false}
 
         {arag_form method="post" id="plist_$namespace" class="plist_form"}
-            <table border="0" cellpadding="0" cellspacing="0" dir="{dir}" width="100%">
-                <tr>
-                    <td align="{right}" dir="{dir}" width="100%">
-                        _("Number of Pages"):&nbsp;{$pager.numpages}<br />
-                        _("Number of Resources"):&nbsp;{$resource_count}
-                    </td>
-                </tr>
-            </table>
+            {if $plist->hasStats()}
+                <table border="0" cellpadding="0" cellspacing="0" dir="{dir}" width="100%">
+                    <tr>
+                        <td align="{right}" dir="{dir}" width="100%">
+                            _("Number of Pages"):&nbsp;{$pager.numpages}<br />
+                            _("Number of Resources"):&nbsp;{$resource_count}
+                        </td>
+                    </tr>
+                </table>
+            {/if}
             <table border="0" cellpadding="0" cellspacing="0" dir="{dir}" width="100%" class="plist" >
                 <caption dir="{dir}">&nbsp;</caption>
                 {if $plist->hasHeader() && count($columns) > 0}
@@ -40,7 +41,7 @@
                         <th class="plist_group_actions_col"><input type="checkbox" onclick="toggleCheckboxesStatus(this.checked, '{$namespace}');" /></th>
                     {/if}
 
-                    {if $show_counter}
+                    {if $plist->hasCounter()}
                         <th>_("Row")</th>
                     {/if}
 
@@ -77,7 +78,7 @@
                         </td>
                     {/if}
 
-                    {if $show_counter}
+                    {if $plist->hasCounter()}
                         <td>
                             {counter name=row}
                         </td>
@@ -127,7 +128,7 @@
                         <td><input type="checkbox" onclick="toggleCheckboxesStatus(this.checked, '{$namespace}');" /></td>
                     {/if}
 
-                    {if $show_counter}
+                    {if $plist->hasCounter()}
                         <td>-</td>
                     {/if}
 
