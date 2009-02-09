@@ -983,3 +983,22 @@ input[type=reset][disabled] {
     behavior: url('../scripts/iepngfix.htc');
 }
 /* }}} */
+/* {{{ Tooltip */
+.tool-tip .tip {
+	background-color: #333;
+	padding: 2px;
+	opacity: 0.85;
+}
+.tool-tip .tip-title {
+	color: #fff;
+	font-size: 12px;
+	padding: 2px;
+}
+.tool-tip .tip-text {
+	color: #fff;
+	font-size: 10px;
+	background-color: #666;
+	padding: 2px;
+}
+/* end of Tooltip }}} */
+
