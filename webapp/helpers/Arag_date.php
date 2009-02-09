@@ -415,7 +415,7 @@ class date extends date_Core {
         empty($types) AND $types = Input::instance()->Post('type_'.$name);
 
         // Are dates comma separated
-        (!empty($values) && (strpos($values, ',') !== False)) AND $values = explode(',', trim($values, ','));
+        (is_string($values) && !empty($values) && (strpos($values, ',') !== False)) AND $values = explode(',', trim($values, ','));
 
         $lang = Kohana::config('locale.lang') == "fa";
 
