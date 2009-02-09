@@ -33,7 +33,7 @@
 {/if}
 
 {arag_block}
-    {arag_validation_errors}{$component->getUri()}
+    {arag_validation_errors}
     {arag_form uri=$component->getUri() method="post" enctype="multipart/form-data"}
     <table border="0" dir="{dir}" width="100%">
         <tr>
