@@ -400,6 +400,69 @@ class date extends date_Core {
         return ((int) ceil(($jd['today'] + $jd['wday']) / 7));
     }
     // }}}
+    // {{{ fuzzy
+    public function fuzzy($date, $from = Null, $level = Null)
+    {
+        if (!$from) {
+            $from = time();
+        }
+        if ($date > $from) {
+            $diff = $date - $from;
+        } else {
+            $diff = $from - $date;
+        }
+
+        $units['century'] =  2903040000;
+        $units['year']    = 29030400;
+        $units['month']   = 2419200;
+        $units['week']    = 604800;
+        $units['day']     = 86400;
+        $units['hour']    = 3600;
+        $units['minute']  = 60;
+
+        $names['century'] = array(_("century"), _("centuries"));
+        $names['year']    = array(_("year"), _("years"));
+        $names['month']   = array(_("month"), _("months"));
+        $names['week']    = array(_("week"), _("weeks"));
+        $names['day']     = array(_("day"), _("days"));
+        $names['hour']    = array(_("hour"), _("hours"));
+        $names['minute']  = array(_("minute"), _("minutes"));
+
+        foreach($units as $name => $value) {
+            $num  = (int) ($diff / $value);
+            if ($num > 0) {
+                $diff = $diff % $value;
+                $result[$name] = $num;
+            }
+        }
+
+        if (!$level) {
+            $levels    = Kohana::config('date.fuzzy.levels');
+            $main_unit = current(array_keys($result));
+            $level     = $levels[$main_unit];
+        }
+
+        $output    = '';
+        $deep      = 0;
+        foreach($result as $name => $num) {
+            if ($deep > $level) {
+                continue;
+            }
+            if ($num === 1) {
+                $title = $names[$name][0];
+            } else {
+                $title = $names[$name][1];
+            }
+            if ($output) {
+                $output .= ' '._("and").' ';
+            }
+            $output .= $num .' '.$title;
+            $deep++;
+        }
+
+        return $output;
+    }
+    // }}}
     // {{{ get_type
     public static function get_type($name)
     {
