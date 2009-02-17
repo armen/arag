@@ -12,7 +12,7 @@ class Groups_Model extends Model
     // {{{ Properties
 
     private $tableNameUsers       = 'user_users';
-    private $tableNameGroups      = 'user_groups';
+    public  $tableNameGroups      = 'user_groups'; //Public because applicaion model needs it when cloning
     private $tableNameApps        = 'user_applications';
     private $tableNameUsersGroups = 'user_users_groups';
 

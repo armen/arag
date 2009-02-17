@@ -27,7 +27,7 @@ class Applications_Model extends Model
     }
     // }}}
     // {{{ getApps
-    public function getApps($name)
+    public function getApps($name=Null)
     {
         $this->db->select('name, default_group, create_date');
         $this->db->from($this->tableNameApps);
@@ -38,10 +38,7 @@ class Applications_Model extends Model
 
         $this->db->orderby('name', 'ASC');
 
-        $query = $this->db->get();
-
-        $retval = $query->result(False);
-        return $retval;
+        return $this->db->get()->result(False);
     }
     // }}}
     // {{{ getDate
@@ -63,8 +60,14 @@ class Applications_Model extends Model
         return (boolean) $result->count;
     }
     // }}}
+    // {{{ get
+    public function get($name)
+    {
+        return $this->db->select('name, default_group')->from($this->tableNameApps)->where('name', $name)->get()->result(False)->current();
+    }
+    // }}}
     // {{{ addApp
-    public function addApp($appname, $author, $defaultgroup = "admin", $databaseid = 1)
+    public function addApp($appname, $author, $defaultgroup = "admin", $databaseid = 1, $template = Null)
     {
         $rows = array (
                        'name'          => $appname,
@@ -75,6 +78,17 @@ class Applications_Model extends Model
                       );
 
         $this->db->insert($this->tableNameApps, $rows);
+
+        if ($template) { //Template is the application which we are going to copy all groups and privileges and filters from
+            $templateApp = $this->get($template);
+            $filters     = Model::load('Filters', 'user');
+            $groups      = Model::load('Groups', 'user');
+            $privileges  = Model::load('Privileges', 'user');
+
+            $this->db->query('INSERT INTO '.$this->db->table_prefix().$filters->tableNameFilters.'(appname, create_date, created_by, filter) SELECT "'.$appname.'", "'.time().'", "'.$author.'", filter FROM '.$this->db->table_prefix().$filters->tableNameFilters.' WHERE appname="'.$template.'"');
+            $this->db->query('INSERT INTO '.$this->db->table_prefix().$groups->tableNameGroups.'(name, appname, create_date, created_by, privileges, redirect, deletable) SELECT name, "'.$appname.'", "'.time().'", "'.$author.'", privileges, redirect, deletable FROM '.$this->db->table_prefix().$groups->tableNameGroups.' WHERE appname="'.$template.'"');
+            $this->db->where('name', $appname)->update($this->tableNameApps, array('default_group' => $templateApp['default_group']));
+        }
     }
     // }}}
 }

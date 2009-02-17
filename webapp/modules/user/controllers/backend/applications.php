@@ -18,10 +18,7 @@ class Applications_Controller extends Backend_Controller
         // Global tabbedbock
         $this->global_tabs->setTitle(_("User Management"));
         $this->global_tabs->addItem(_("Apllications"), 'user/backend/applications');
-        $this->global_tabs->addItem(_("Groups"), 'user/backend/applications/groups/%name%', 'user/backend/applications');
-        $this->global_tabs->addItem(_("Default Group"), 'user/backend/applications/default_group/%name%', 'user/backend/applications');
-        $this->global_tabs->additem(_("New Group"), 'user/backend/applications/new_group/%name%', 'user/backend/applications');
-        $this->global_tabs->additem(_("New User"), 'user/backend/applications/new_user/%name%', 'user/backend/applications');
+        $this->global_tabs->addItem(_("Apllications"), 'user/backend/applications', 'user/backend/applications');
         $this->global_tabs->addItem(_("Users"), 'user/backend/applications/all_users');
         $this->global_tabs->addItem(_("Users List"), 'user/backend/applications/all_users', 'user/backend/applications/all_users');
         $this->global_tabs->addItem(_("Filters"), 'user/backend/applications/apps_filters');
@@ -60,6 +57,7 @@ class Applications_Controller extends Backend_Controller
     public function index_any($page = Null)
     {
         $this->index_validate();
+        $this->global_tabs->addItem(_("New Application"), 'user/backend/applications/add', 'user/backend/applications');
 
         $applications = new PList_Component('applications');
 
@@ -101,6 +99,11 @@ class Applications_Controller extends Backend_Controller
     // {{{ groups_read
     public function groups_read($appname)
     {
+        $this->global_tabs->addItem(_("Groups"), 'user/backend/applications/groups/%name%', 'user/backend/applications');
+        $this->global_tabs->addItem(_("Default Group"), 'user/backend/applications/default_group/%name%', 'user/backend/applications');
+        $this->global_tabs->additem(_("New Group"), 'user/backend/applications/new_group/%name%', 'user/backend/applications');
+        $this->global_tabs->additem(_("New User"), 'user/backend/applications/new_user/%name%', 'user/backend/applications');
+        
         $this->_create_groups_list($appname);
 
         $this->groups->addAction('user/backend/applications/group_privileges_edit/#id#/'.$appname, _("Privileges"), 'privileges_action');
@@ -1242,6 +1245,44 @@ class Applications_Controller extends Backend_Controller
     public function user_blocking_write_error()
     {
         $this->user_blocking_read();
+    }
+    // }}}
+    // {{{ add_read
+    public function add_read()
+    {
+        $this->global_tabs->addItem(_("New Application"), 'user/backend/applications/add', 'user/backend/applications');
+
+        $this->layout->content               = New View('backend/add_app');
+        $this->layout->content->name         = $this->input->post('name');
+        $this->layout->content->applications = $this->Applications->getApps();
+    }
+    // }}}
+    // {{{ add_validate_write
+    public function add_validate_write()
+    {
+        $this->validation->name('name', _("Name"))->add_rules('name', 'required');
+        if ($this->Applications->hasApp($this->input->post('name'))) {
+            $this->validation->message('already_exists', _("An application with name %s already exists.Please choose another name."));
+            $this->validation->add_error('name', 'already_exists');
+        }
+        return $this->validation->validate();
+    }
+    // }}}
+    // {{{ add_write_error
+    public function add_write_error()
+    {
+        $this->add_read();
+    }
+    // }}}
+    // {{{ add_write
+    public function add_write()
+    {
+        $name     = $this->input->post('name');
+        $author   = $this->session->get('user.username');
+        $template = $this->input->post('template');
+
+        $this->Applications->addApp($name, $author, 'admin', 1, $template);
+        url::redirect('user/backend/applications');
     }
     // }}}
     // }}}
