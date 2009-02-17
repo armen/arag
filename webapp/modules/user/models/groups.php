@@ -181,12 +181,19 @@ class Groups_Model extends Model
     public function deleteGroups($groups, $author)
     {
         foreach ($groups as $group) {
-            $this->db->delete($this->tableNameGroups, Array('id' => $group));
+            $this->db->delete($this->tableNameGroups, Array('id' => $group, 'deletable' => True));
 
             $controller = new Users_Model;
 
             $anonymous = $controller->deleteUsers(NULL, $group, $author);
         }
+    }
+    // }}}
+    // {{{ isDeletetable
+    public function isDeletable($group_id)
+    {
+        $result = $this->db->select('deletable')->from($this->tableNameGroups)->where('id', $group_id)->get()->result(False)->current();
+        return (boolean) $result['deletable'];
     }
     // }}}
     // {{{ changeModifiers

@@ -105,13 +105,28 @@ class Applications_Controller extends Backend_Controller
 
         $this->groups->addAction('user/backend/applications/group_privileges_edit/#id#/'.$appname, _("Privileges"), 'privileges_action');
         $this->groups->addAction('user/backend/applications/users/#id#/'.$appname, _("Users List"), 'users_list');
-        $this->groups->addAction('user/backend/applications/delete/group/#id#', _("Delete"), 'delete_action');
+        $this->groups->addAction('Applications_Controller::_deleteGroup', PLIST_Component::VIRTUAL_COLUMN);
         $this->groups->addAction("user/backend/applications/delete/group", _("Delete"), 'delete_action', False, PList_Component::GROUP_ACTION);
         $this->groups->setGroupActionParameterName('id');
 
         $this->session->set('delete_appname', $appname);
 
         $this->layout->content = new View('backend/groups');
+    }
+    // }}}
+    // {{{ _deleteGroup
+    public function _deleteGroup($group)
+    {
+        if (Model::load('Groups', 'User')->isDeletable($group['id'])) {
+            return array( 'label' => _("Delete group"),
+                          'uri'   => 'user/backend/applications/delete/group/#id#',
+                          'className' => 'delete_action'
+                        );
+        } else {
+            return array( 'label' => _("You cannot delete this group"),
+                          'className' => 'delete_action_alt'
+                        );
+        }
     }
     // }}}
     // {{{ groups_validate_read

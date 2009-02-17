@@ -48,6 +48,12 @@
                 <type>integer</type>
                 <length>1</length>
             </field>
+            <field>
+                <name>deletable</name>
+                <type>integer</type>
+                <length>1</length>
+                <default>1</default>
+            </field>
             <index>
                 <name>primary</name>
                 <primary>true</primary>
