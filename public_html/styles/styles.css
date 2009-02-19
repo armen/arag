@@ -984,17 +984,17 @@ input[type=reset][disabled] {
 }
 /* }}} */
 /* {{{ Tooltip */
-.tool-tip .tip {
+.tooltip .tip {
 	background-color: #333;
 	padding: 2px;
 	opacity: 0.85;
 }
-.tool-tip .tip-title {
+.tooltip .tip-title {
 	color: #fff;
 	font-size: 12px;
 	padding: 2px;
 }
-.tool-tip .tip-text {
+.tooltip .tip-text {
 	color: #fff;
 	font-size: 10px;
 	background-color: #666;
