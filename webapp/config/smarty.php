@@ -57,6 +57,7 @@ $config = Array
     (
         MODPATH.'user/views/plugins/',
         MODPATH.'locations/views/plugins/',
+        MODPATH.'forecast/views/plugins/',
         APPPATH.'views/smarty_plugins/'
     )
 );

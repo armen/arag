@@ -1002,3 +1002,26 @@ input[type=reset][disabled] {
 }
 /* end of Tooltip }}} */
 
+/* {{{ arag_weather */
+.arag_weather {
+/*     width: 200px; */
+    background-color: #f3f3f3;
+    border: 1px solid #eee;
+    display: table;
+    padding: 2px;
+}
+.arag_weather:hover {
+    background-color: #eee;
+}
+.arag_weather .location, .arag_weather .temperature {
+    font-size: 25px;
+    text-align: center;
+}
+.arag_weather .icon {
+    float:left;
+}
+.arag_weather .temperature {
+    padding-top: 25px;
+    float: center;
+}
+/* }}} */
