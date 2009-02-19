@@ -8,8 +8,8 @@
     <div class="temperature">
         {$weather.temperature} °C
     </div>
+    <img id="activator" src="{$arag_base_url}modpub/forecast/icons/zoom.png" style="float:{right};" />
     <div style="clear:both;"></div>
-    <div id="activator" class="view_action" style="float:{right};"></div>
     {arag_tooltip activator='activator' title='_("Details")'}
         <table dir={dir} id='tooltip' class='tooltip'>
             <tr>
