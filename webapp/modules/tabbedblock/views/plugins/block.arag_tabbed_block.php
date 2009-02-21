@@ -72,7 +72,7 @@ function smarty_block_arag_tabbed_block($params, $content, &$smarty, &$repeat)
                 // Replace configuration variables with a [^/]+ to match everything except /
                 $uri = '|^'.preg_replace('|%[a-zA-Z_0-9]*%|', '[^/]+', preg_quote($uri, '|')).'$|';
 
-                if ($item['selected'] != True && preg_match($uri, $ruri)) {
+                if (($item['selected'] != True && preg_match($uri, $ruri)) || $item['selected'] == True) {
 
                     // Set selected to true
                     $tabbedBlock->_items[$key]['selected'] = True;
