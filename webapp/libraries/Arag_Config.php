@@ -50,6 +50,17 @@ class Arag_Config_Core
     // {{{ & get
     public static function & get($name, $default = Null, $namespace = Null, $try_kohana_config_first = False, $appname = APPNAME)
     {
+        if ($try_kohana_config_first) {
+
+            // Save old include paths
+            $old_include_paths = Kohana::include_paths();
+
+            // Change include_once to module path
+            Kohana::config_set('core.modules', array_unique(array_merge($old_include_paths, Array(MODPATH.$namespace))));
+
+            $result = Kohana::config($name);
+        }
+
         if ($namespace == Null) {
             $namespace = ($appname === True) ? Router::$module : $appname.'::'.Router::$module;
         } else {
@@ -66,17 +77,6 @@ class Arag_Config_Core
         $cached = $cache->get($id);
         if ($cached) {
             return $cached;
-        }
-
-        if ($try_kohana_config_first) {
-
-            // Save old include paths
-            $old_include_paths = Kohana::include_paths();
-
-            // Change include_once to module path
-            Kohana::config_set('core.modules', array_unique(array_merge($old_include_paths, Array(MODPATH.$namespace))));
-
-            $result = Kohana::config($name);
         }
 
         if (empty($result)) {
