@@ -12,6 +12,8 @@
 // $Id$
 // ---------------------------------------------------------------------------
 
+static $_loaded = Array();
+
 function smarty_function_arag_load_script($params, &$smarty)
 {
     if (is_array($params) && count($params)) {
@@ -31,12 +33,12 @@ function smarty_function_arag_load_script($params, &$smarty)
         $smarty->trigger_error("arag_function_arag_load_script: You have to set 'src' attribute.");
     }
 
-    if (!isset($smarty->_tpl_vars['_loaded'][sha1($src)])) {
-        $smarty->_tpl_vars['_loaded'][sha1($src)] = True;
+    global $_loaded;
+
+    if (!isset($_loaded[sha1($src)])) {
+        $_loaded[sha1($src)] = True;
         return html::script($src);
     }
 
     return Null;
 }
-
-?>
