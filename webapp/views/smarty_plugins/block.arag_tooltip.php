@@ -30,6 +30,8 @@ function smarty_block_arag_tooltip($params, $content, &$smarty, &$repeat)
                     $smarty->trigger_error("arag_tooltip: Unknown attribute '$_key'");
             }
         }
+	$title   = str_replace('"', "'", $title);
+	$title   = str_replace("\n", '', $title);
         $content = str_replace("\n", '', $content);
         $content = str_replace('"', "'", $content);
         $smarty->assign('title', $title);
