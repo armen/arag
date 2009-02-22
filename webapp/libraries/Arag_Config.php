@@ -20,6 +20,8 @@ class Arag_Config_Core
 
         if ($namespace == Null) {
             $namespace = ($appname === True) ? Router::$module : $appname.'::'.Router::$module;
+        } else {
+            $namespace = ($appname === True) ? $namespace : $appname.'::'.$namespace;
         }
 
         $db->select('value');
@@ -50,6 +52,8 @@ class Arag_Config_Core
     {
         if ($namespace == Null) {
             $namespace = ($appname === True) ? Router::$module : $appname.'::'.Router::$module;
+        } else {
+            $namespace = ($appname === True) ? $namespace : $appname.'::'.$namespace;
         }
 
         static $cache;
@@ -106,6 +110,8 @@ class Arag_Config_Core
 
         if ($namespace == Null) {
             $namespace = ($appname === True) ? Router::$module : $appname.'::'.Router::$module;
+        } else {
+            $namespace = ($appname === True) ? $namespace : $appname.'::'.$namespace;
         }
 
         $db->select('name, value');
