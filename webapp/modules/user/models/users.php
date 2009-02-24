@@ -498,7 +498,7 @@ class Users_Model extends Model
     {
         !is_array($appname) AND $appname = Array($appname);
 
-        $this->db->select('appname, '.$this->tableNameGroups.'.name as groupname');
+        $this->db->select('appname, '.$this->tableNameGroups.'.name as groupname, '.$this->tableNameGroups.'.id as group_id');
         $this->db->from($this->tableNameUsers);
         $this->db->join(Array($this->tableNameUsersGroups, $this->tableNameGroups), Array($this->tableNameUsers.'.username' => $this->tableNameUsersGroups.'.username',
                                                                                           $this->tableNameGroups.'.id' => $this->tableNameUsersGroups.'.group_id'));
@@ -514,7 +514,7 @@ class Users_Model extends Model
         $appnames = Array();
 
         foreach ($rows as $row) {
-            $appnames[] = Array ('appname' => $row['appname'], 'groupname' => $row['groupname']);
+            $appnames[] = Array ('appname' => $row['appname'], 'groupname' => $row['groupname'], 'group_id' => $row['group_id']);
         }
 
         return $appnames;
