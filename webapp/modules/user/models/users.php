@@ -493,4 +493,31 @@ class Users_Model extends Model
         return implode(', ', $appnames);
     }
     // }}}
+    // {{{ getUserGroups
+    public function getUserGroups($username, $appname = Array(), $include = True)
+    {
+        !is_array($appname) AND $appname = Array($appname);
+
+        $this->db->select('appname, '.$this->tableNameGroups.'.name as groupname');
+        $this->db->from($this->tableNameUsers);
+        $this->db->join(Array($this->tableNameUsersGroups, $this->tableNameGroups), Array($this->tableNameUsers.'.username' => $this->tableNameUsersGroups.'.username',
+                                                                                          $this->tableNameGroups.'.id' => $this->tableNameUsersGroups.'.group_id'));
+        $this->db->where($this->tableNameUsers.'.username', $username);
+
+        if ($include && !empty($appname)) {
+            $this->db->in('appname', $appname);
+        } else if (!empty($appname)) {
+            $this->db->notin('appname', $appname);
+        }
+
+        $rows     = $this->db->get()->result_array(False);
+        $appnames = Array();
+
+        foreach ($rows as $row) {
+            $appnames[] = Array ('appname' => $row['appname'], 'groupname' => $row['groupname']);
+        }
+
+        return $appnames;
+    }
+    // }}}
 }
