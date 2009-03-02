@@ -88,7 +88,7 @@ class MultiSite_Model extends Model
     }
     // }}}
     // {{{ sendEmail
-    public function sendEmail($recipient, $strings, $settings)
+    public function sendEmail($recipients, $strings, $settings, $newLines = True)
     {
         foreach ($strings as $str => $replace) {
             $settings['template'] = str_replace("%$str%", $replace, $settings['template']);
@@ -119,7 +119,18 @@ class MultiSite_Model extends Model
         $swift =& new Swift($conn);
 
         // Create the message
-        $message =& new Swift_Message($settings['subject'], nl2br($settings['template']), "text/html");
+        $message =& new Swift_Message($settings['subject']);
+
+        // Create a multipart email
+        if (isset($settings['plain_template'])) {
+            $message->attach(new Swift_Message_Part($settings['template']));
+        }
+
+        if ($newLines) {
+            $settings['template'] = nl2br($settings['template']);
+        }
+
+        $message->attach(new Swift_Message_Part($settings['template'], "text/html"));
 
         return $swift->send($message, $recipient, $settings['sender']);
 
