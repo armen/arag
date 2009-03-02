@@ -94,6 +94,8 @@ class MultiSite_Model extends Model
             $settings['template'] = str_replace("%$str%", $replace, $settings['template']);
         }
 
+        $recipients = is_array($recipients) ? $recipients : Array($recipients);
+
         require_once Kohana::find_file('vendor', 'swift/Swift');
         require_once Kohana::find_file('vendor', 'swift/Swift/Connection/SMTP');
 
@@ -117,6 +119,12 @@ class MultiSite_Model extends Model
 
         // Start Swift
         $swift =& new Swift($conn);
+        // Add addresses
+        $addresses =& new Swift_RecipientList();
+
+        foreach ($recipients as $recipient) {
+            $addresses->addTo($recipient);
+        }
 
         // Create the message
         $message =& new Swift_Message($settings['subject']);
@@ -132,7 +140,7 @@ class MultiSite_Model extends Model
 
         $message->attach(new Swift_Message_Part($settings['template'], "text/html"));
 
-        return $swift->send($message, $recipient, $settings['sender']);
+        return $swift->send($message, $addresses, $settings['sender']);
 
     }
     // }}}
