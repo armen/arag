@@ -979,49 +979,4 @@ input[type=reset][disabled] {
     text-align: center;
     border: 1px solid #ccc;
 }
-* {
-    behavior: url('../scripts/iepngfix.htc');
-}
-/* }}} */
-/* {{{ Tooltip */
-.tooltip .tip {
-	background-color: #333;
-	padding: 2px;
-	opacity: 0.85;
-}
-.tooltip .tip-title {
-	color: #fff;
-	font-size: 12px;
-	padding: 2px;
-}
-.tooltip .tip-text {
-	color: #fff;
-	font-size: 10px;
-	background-color: #666;
-	padding: 2px;
-}
-/* end of Tooltip }}} */
-
-/* {{{ arag_weather */
-.arag_weather {
-/*     width: 200px; */
-    background-color: #f3f3f3;
-    border: 1px solid #eee;
-    display: table;
-    padding: 2px;
-}
-.arag_weather:hover {
-    background-color: #eee;
-}
-.arag_weather .location, .arag_weather .temperature {
-    font-size: 25px;
-    text-align: center;
-}
-.arag_weather .icon {
-    float:left;
-}
-.arag_weather .temperature {
-    padding-top: 25px;
-    float: center;
-}
 /* }}} */
