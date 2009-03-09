@@ -29,6 +29,14 @@
             </tr>
             <tr>
                 <td align="{right}">
+                    _("Expiration date"):
+                </td>
+                <td align="{left}">
+                    {arag_date name="expire_date" value=$expire_date}
+                </td>
+            </tr>
+            <tr>
+                <td align="{right}">
                 </td>
                 <td align="{left}">
                     <input type="hidden" name="appname" value="{$appname}" />

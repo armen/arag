@@ -54,6 +54,12 @@
                 <length>1</length>
                 <default>1</default>
             </field>
+            <field>
+                <name>expire_date</name>
+                <type>integer</type>
+                <length>11</length>
+                <nodefault>true</nodefault>
+            </field>
             <index>
                 <name>primary</name>
                 <primary>true</primary>

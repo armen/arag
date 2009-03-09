@@ -16,6 +16,7 @@ class Users_Model extends Model
     const USER_NOT_VERIFIED   = 2;
     const USER_BLOCKED        = 4;
     const USER_INCORRECT_PASS = 8;
+    const USER_GROUP_EXPIRED  = 16;
 
     private $tableNameUsers       = 'user_users';
     private $tableNameGroups      = 'user_groups';
@@ -71,7 +72,23 @@ class Users_Model extends Model
                 }
             }
 
-            return (boolean)($status & self::USER_OK);  // Check if USER_OK flag is set
+            
+
+            $result = (boolean)($status & self::USER_OK);  // Check if USER_OK flag is set
+
+            if ($result) {
+                $profile = $this->getUser($user->username);
+                $group   = $profile['group_id'];
+
+                $groups  = Model::load('Groups', 'user');
+                if ($groups->isExpired($group)) {
+                    $status |= self::USER_GROUP_EXPIRED;
+                    $status &= ~self::USER_OK;
+                    return False;
+                }
+
+                return $status;
+            }
         }
 
         $status = self::USER_NOT_FOUND; // Status is 0

@@ -198,19 +198,20 @@ class Backend_Controller extends Controller
         $this->global_tabs->additem(_("New User"), 'user/backend/applications/new_user/%name%', 'user/backend/applications');
 
 
-        $data = array("flagsaved" => $this->session->get_once('new_group_saved'),
-                      "flagform"  => $flagform,
-                      "appname"   => $appname);
+        $data = array("flagsaved"   => $this->session->get_once('new_group_saved'),
+                      "flagform"    => $flagform,
+                      "appname"     => $appname,
+                      "expire_date" => $this->input->post('expire_date'));
 
         $this->layout->content = new View('backend/new_group', $data);
     }
     // }}}
     // {{{ _new_group_write
-    protected function _new_group_write($appname)
+    protected function _new_group_write($appname, $expire_date = Null)
     {
         $newgroup   = $this->input->post("newgroup", Null, true);
 
-        $this->Groups->newGroup($appname, $newgroup, $this->session->get('user.username'));
+        $this->Groups->newGroup($appname, $newgroup, $this->session->get('user.username'), Null, $expire_date);
 
         $this->session->set('new_group_saved', true);
 

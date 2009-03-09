@@ -1050,7 +1050,7 @@ class Applications_Controller extends Backend_Controller
     // {{{ new_group_write
     public function new_group_write()
     {
-         $this->_new_group_write($this->input->post('appname'));
+         $this->_new_group_write($this->input->post('appname'), date::get_time('expire_date'));
     }
     // }}}
     // {{{ new_group_validate_write
@@ -1058,6 +1058,8 @@ class Applications_Controller extends Backend_Controller
     {
         $this->validation->name('newgroup', _("Name for new group"))->pre_filter('trim', 'newgroup')
              ->add_rules('newgroup', 'required', array($this, '_check_group_name'));
+
+        $this->validation->name('expire_date', _("Expire date"))->add_rules('expire_date', 'valid::date[expire_date]');
 
         return $this->validation->validate();
     }

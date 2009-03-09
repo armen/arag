@@ -148,7 +148,7 @@ class Groups_Model extends Model
     }
     // }}}
     // {{{ newGroup
-    public function newGroup($appname, $newgroup, $author, $privileges = NULL)
+    public function newGroup($appname, $newgroup, $author, $privileges = Null, $expire_date = Null)
     {
         $row = Array('modified_by' => $author,
                      'create_date' => time(),
@@ -156,7 +156,8 @@ class Groups_Model extends Model
                      'created_by'  => $author,
                      'appname'     => $appname,
                      'name'        => $newgroup,
-                     'privileges'  => $privileges);
+                     'privileges'  => $privileges,
+                     'expire_date' => $expire_date);
 
         $this->db->insert($this->tableNameGroups, $row);
     }
@@ -213,6 +214,17 @@ class Groups_Model extends Model
     public function getNumberOfUsers($row)
     {
         return $this->db->select('count(username) as count')->from($this->tableNameUsersGroups)->where('group_id', $row['id'])->get()->current()->count;
+    }
+    // }}}
+    // {{{ isExpired
+    public function isExpired($group_id)
+    {
+        $expiration_date = $this->db->select('expire_date')->from($this->tableNameGroups)->where('id', $group_id)->get(False)->current()->expire_date;
+        if ( $expiration_date == 0 ) {
+            return False;
+        } else {
+            return $expiration_date <= time();
+        }
     }
     // }}}
 }

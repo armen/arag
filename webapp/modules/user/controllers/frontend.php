@@ -140,6 +140,10 @@ class Frontend_Controller extends Controller
                 }
             }
 
+            if ($status & Users_Model::USER_GROUP_EXPIRED) {
+                $error_message[] = _("Your group is expired.");
+            }
+
             if (!isset($error_message)) {
                 $error_message[] = _("Unknown error");
             }
