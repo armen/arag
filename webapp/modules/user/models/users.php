@@ -165,18 +165,21 @@ class Users_Model extends Model
     }
     // }}}
     // {{{ & getAnonymousUser
-    public function & getAnonymouseUser($appname)
+    public function & getAnonymouseUser($appname, $defaultGroup = False)
     {
         // This will called from Arag_Auth so do not use
         // Model::load(...); here
-        $groups    = Model::load('Groups', 'user');
-        $anonymous = $groups->getAnonymousGroup($appname);
+        $groups = Model::load('Groups', 'user');
+        $group  = $groups->getAnonymousGroup($appname, $defaultGroup);
 
-        $anonymous['groupname'] = $anonymous['name'];
-        $anonymous['username']  = $anonymous['name'];
-        $anonymous['name']      = ucfirst($anonymous['name']);
+        $group['groupname'] = $group['name'];
 
-        return $anonymous;
+        if ($group['name'] == 'anonymous') {
+            $group['username'] = $group['name'];
+            $group['name']     = ucfirst($group['name']);
+        }
+
+        return $group;
     }
     // }}}
     // {{{ & getUserProfile

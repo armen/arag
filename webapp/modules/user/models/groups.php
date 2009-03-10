@@ -24,12 +24,18 @@ class Groups_Model extends Model
     }
     // }}}
     // {{{ & getAnonymousGroup
-    public function & getAnonymousGroup($appname)
+    public function & getAnonymousGroup($appname, $defaultGroup = False)
     {
+        $groupname = 'anonymous';
+
+        if ($defaultGroup) {
+            $groupname = $this->getDefaultGroup($appname);
+        }
+
         $this->db->select('id as group_id, name, appname, privileges, redirect');
         $this->db->from($this->tableNameGroups);
         $this->db->where('appname', $appname);
-        $this->db->where('name', 'anonymous');
+        $this->db->where('name', $groupname);
 
         $group = $this->db->getwhere()->current();
 

@@ -48,7 +48,10 @@ class Arag_Auth {
             // application and store it to session, as far as user will not switch between
             // applications often, so its ok to hit database every time.
             $user = $username ? $users->getUser($username, APPNAME) : Null;
-            $user = isset($user['username']) ? $user : $users->getAnonymouseUser(APPNAME);
+
+            // Fetch Anonymous user in case of unknown user, in case of known authenticated
+            // user fetch default group of this application
+            $user = isset($user['username']) ? $user : $users->getAnonymouseUser(APPNAME, (boolean) $session->get('user.authenticated', False));
 
             // Throw away personal information, we already set those in session
             if ($username) {
