@@ -1260,7 +1260,7 @@ class Applications_Controller extends Backend_Controller
     // {{{ add_validate_write
     public function add_validate_write()
     {
-        $this->validation->name('name', _("Name"))->add_rules('name', 'required');
+        $this->validation->name('name', _("Name"))->add_rules('name', 'required', 'alpha_dash');
         if ($this->Applications->hasApp($this->input->post('name'))) {
             $this->validation->message('already_exists', _("An application with name %s already exists.Please choose another name."));
             $this->validation->add_error('name', 'already_exists');
