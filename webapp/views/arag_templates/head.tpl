@@ -16,7 +16,7 @@
 blank_image = '{/literal}{$arag_base_url}{literal}images/misc/blank.gif';
 </script>
 {/literal}
-<style>
+<style type="text/css">
 {literal}
 body { behavior: url('{/literal}{$arag_base_url}{literal}/scripts/whateverhover.htc') }
 /* * { behavior: url('{/literal}{$arag_base_url}{literal}/scripts/iepngfix.htc') } */
