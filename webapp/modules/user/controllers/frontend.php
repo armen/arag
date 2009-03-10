@@ -60,10 +60,15 @@ class Frontend_Controller extends Controller
             $this->session->delete('privilege_filters');
             $this->session->delete('user');
 
-            // Try to fetch user for this application, if there was not try to fetch user information only,
-            // this registered user privilege will set in Arag_Auth as an anonymous user
+            // Try to fetch user for this application, if there was not, try to fetch user information only
+            // and grant default group access to him/her
             $user = $users->getUser($username);
-            $user = isset($user['username']) ? $user : $users->getUser($username, False);
+
+            if (!isset($user['username'])) {
+                // Fetch defauly group and merge it with user information
+                $userinfo = $users->getUser($username, False);
+                $user     = array_merge($users->getAnonymousUser(APPNAME, True), $userinfo); // Fetch default group
+            }
 
             $this->session->set(Array('user' => array_merge($user, Array('authenticated' => True))));
             $users->unBlockUser($username);

@@ -165,7 +165,7 @@ class Users_Model extends Model
     }
     // }}}
     // {{{ & getAnonymousUser
-    public function & getAnonymouseUser($appname, $defaultGroup = False)
+    public function & getAnonymousUser($appname, $defaultGroup = False)
     {
         // This will called from Arag_Auth so do not use
         // Model::load(...); here

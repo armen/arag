@@ -39,7 +39,7 @@ class Arag_Auth {
         if (!$session->get('user.authenticated') && $username != 'anonymous') {
 
             // Fetch Anonymouse user information and store in session
-            $session->set(Array('user' => $users->getAnonymouseUser($appname)));
+            $session->set(Array('user' => $users->getAnonymousUser($appname)));
         }
 
         if ($session->get('user.appname') != APPNAME) {
@@ -51,7 +51,7 @@ class Arag_Auth {
 
             // Fetch Anonymous user in case of unknown user, in case of known authenticated
             // user fetch default group of this application
-            $user = isset($user['username']) ? $user : $users->getAnonymouseUser(APPNAME, (boolean) $session->get('user.authenticated', False));
+            $user = isset($user['username']) ? $user : $users->getAnonymousUser(APPNAME, (boolean) $session->get('user.authenticated', False));
 
             // Throw away personal information, we already set those in session
             if ($username) {
