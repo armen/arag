@@ -15,32 +15,61 @@ class Comments_Controller extends Controller
         $namespace    = $this->session->get('comment.'.$key.'.namespace');
         $reference_id = $this->session->get('comment.'.$key.'.reference_id');
         $uri          = $this->session->get('comment.'.$key.'.uri');
-        $controller   = $this->session->get('comment.'.$key.'.controller');
-        $comment      = $this->input->post('comment');
-        $attachments  = $this->input->post('attachments');
+        $body         = $this->input->post('comment');
+        $users        = Model::load('Users', 'user');
 
         if (!$namespace || !$reference_id || !$uri) {
           $this->_invalid_request();
         }
 
-        $Comment       = Model::load('Comment', 'comment');
+        $comment = Model::load('Comment', 'comment');
+        $body    .= $this->attach();
+
+        $profile = $users->getUser($this->session->get('user.username'));
+
+        $comment->createComment($namespace, $reference_id, $this->session->get('user.username'), $body, 0, 0, $profile['name']);
+        url::redirect($uri);
+    }
+    // }}}
+    // {{{ comment_upload_path
+    protected function comment_upload_path()
+    {
+        return DOCROOT.'modpub/comment/attachments/';
+    }
+    // }}}
+    // {{{ comment_upload_uri
+    protected function comment_upload_uri($controller)
+    {
+        return url::site($controller.'/get_comment_file');
+    }
+    // }}}
+    // {{{ comment_filename
+    protected function comment_filename($file)
+    {
+        return sha1(rand(10000, 99999).microtime()).'.'.file::extension($file['name']);
+    }
+    // }}}
+    // {{{ attach
+    private function attach()
+    {
         $attach_string = '';
+        $attachments   = $this->input->post('attachments');
+        $key           = $this->input->post('key');
+        $controller    = $this->session->get('comment.'.$key.'.controller');
 
         if (is_array($attachments)) {
 
-            $upload_path = DOCROOT.'modpub/comment/attachments/';
-            $upload_url  = url::site($controller.'/get_comment_file');
+            $upload_path = $this->comment_upload_path();
+            $upload_url  = $this->comment_upload_uri($controller);
 
             if (is_writable($upload_path) && file_exists($upload_path)) {
-
                 $count = 0;
 
                 foreach($attachments as $index=>$attachment) {
-
                     if ($attachment['error'] === 0) {
 
-                        $filename = sha1(rand(10000, 99999).microtime()).'.'.file::extension($attachment['name']);
-                        $attach_string .= '<li><a href='.$upload_url.'/'.$filename.'>'._("File ").($index+1).'</a></li>';
+                        $filename = $this->comment_filename($attachment);
+                        $attach_string .= '<li><a href='.$upload_url.'/'.$filename.'>'._("File ").($count+1).'</a></li>';
                         move_uploaded_file($attachment['tmp_name'], $upload_path.$filename);
                         $count++;
                     }
@@ -49,7 +78,7 @@ class Comments_Controller extends Controller
                 if ($count) {
                     $attach_string  = "\n\n"._("Attachments:").'<ul>'.$attach_string;
                     $attach_string .= '</ul>';
-                    $comment .= $attach_string;
+                    return $attach_string;
                 }
 
             } else {
@@ -58,12 +87,6 @@ class Comments_Controller extends Controller
                 Kohana::log('error', $upload_path.' is not writable or doesnt exists');
             }
         }
-
-        $Users   = Model::load('Users', 'user');
-        $profile = $Users->getUser($this->session->get('user.username'));
-
-        $Comment->createComment($namespace, $reference_id, $this->session->get('user.username'), $comment, 0, 0, $profile['name']);
-        url::redirect($uri);
     }
     // }}}
     // {{{ order_validate_write
@@ -82,23 +105,20 @@ class Comments_Controller extends Controller
         $this->_invalid_request($this->session->get('comment.reference_id'));
     }
     // }}}
-// THIS IS HELL OF A TODO! MUST BE FIXED! ATTACHMENTS ARE NOT WPRKING!
-//     // {{{ get_comment_file
-//     public function get_comment_file($filename)
-//     {
-//         $path = DOCROOT.'modpub/comment/attachments/'.$filename;
-//
-//         if (!file_exists($path)) {
-//             return false;
-//         }
-//
-//         $id = (int) current(explode('_', $filename));
-//
-//         $this->_get_file($path);
-//     }
+    // {{{ get_comment_file
+    public function get_comment_file($filename)
+    {
+        $path = DOCROOT.'modpub/comment/attachments/'.$filename;
+
+        if (!file_exists($path)) {
+            return false;
+        }
+
+        $this->_get_file($path);
+    }
     // }}}
     // {{{ _get_file
-    private function _get_file($path)
+    protected function _get_file($path)
     {
         ob_clean();
         header('Content-Type:'.file::mime($path));
