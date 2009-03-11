@@ -69,7 +69,7 @@ class Comments_Controller extends Controller
                     if ($attachment['error'] === 0) {
 
                         $filename = $this->comment_filename($attachment);
-                        $attach_string .= '<li><a href='.$upload_url.'/'.$filename.'>'._("File ").($count+1).'</a></li>';
+                        $attach_string .= '<li><a href="'.$upload_url.'/'.$filename.'">'._("File ").($count+1).'</a></li>';
                         move_uploaded_file($attachment['tmp_name'], $upload_path.$filename);
                         $count++;
                     }
