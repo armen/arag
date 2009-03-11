@@ -52,22 +52,22 @@ class Comment_Component extends Component
     public function setReferenceId($referenceId)
     {
         $this->referenceId = $referenceId;
-        $this->session->set('comment.'.$this->getKey().'.reference_id', $referenceId);
+        $this->session->set_flash('comment.'.$this->getKey().'.reference_id', $referenceId);
     }
     // }}}
     // {{{ setNamespace
     public function setNamespace($namespace = Null)
     {
         $this->namespace = empty($namespace) ? Router::$module : $namespace; //If namespace is not set, namespace is module name
-        $this->session->set('comment.'.$this->getKey().'.namespace', $this->namespace);
+        $this->session->set_flash('comment.'.$this->getKey().'.namespace', $this->namespace);
     }
     // }}}
     // {{{ setUri
     public function setUri($uri = Null)
     {
         $this->uri = $uri;
-        $this->session->set('comment.'.$this->getKey().'.uri', Router::$current_uri); //Redirect back here baby
-        $this->session->set('comment.'.$this->getKey().'.controller', $uri); //My address, for link to attachments
+        $this->session->set_flash('comment.'.$this->getKey().'.uri', Router::$current_uri); //Redirect back here baby
+        $this->session->set_flash('comment.'.$this->getKey().'.controller', $uri); //My address, for link to attachments
     }
     // }}}
     // {{{ setTitle
