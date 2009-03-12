@@ -15,16 +15,24 @@
 {arag_form uri=$uri method="post"}
     {arag_block}
          <table border="0" dir="{dir}">
-             <tr>
-                 <td align="{right}">_("Country"):{asterisk}</td>
-                 <td>
+            <tr>
+                <td align="{right}">_("Country"):{asterisk}</td>
+                <td>
                     <input type="text" name="country" value="{if isset($country|smarty:nodefaults)}{$country|smarty:nodefaults|default:null}{/if}" />
-                    {if isset($id|smarty:nodefaults)}<input type="hidden" name="id" value="{$id|smarty:nodefaults|default:null}" />{/if}
-                 </td>
-             </tr>
+                </td>
+            </tr>
+            <tr>
+                <td align="{right}">_("English name"):{asterisk}</td>
+                <td>
+                    <input type="text" name="english" value="{if isset($english|smarty:nodefaults)}{$english|smarty:nodefaults|default:null}{/if}" />
+                </td>
+            </tr>
             <tr>
                 <td>&nbsp;</td>
-                <td><input type="submit" value={quote}_("Save"){/quote} /></td>
+                <td>
+                    <input type="submit" value={quote}_("Save"){/quote} />
+                    {if isset($id|smarty:nodefaults)}<input type="hidden" name="id" value="{$id|smarty:nodefaults|default:null}" />{/if}
+                </td>
             </tr>
          </table>
 

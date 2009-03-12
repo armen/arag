@@ -17,6 +17,12 @@
                 <notnull>true</notnull>
             </field>
             <field>
+                <name>english</name>
+                <type>text</type>
+                <length>255</length>
+                <notnull>true</notnull>
+            </field>
+            <field>
                 <name>deleted</name>
                 <type>integer</type>
                 <notnull>true</notnull>

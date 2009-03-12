@@ -31,6 +31,7 @@ class Backend_Controller extends Controller
         $this->validation->message('numeric', _("%s should be numeric"));
         $this->validation->message('required', _("%s is required"));
         $this->validation->message('alpha_numeric', _("%s must be alph-numeric."));
+        $this->validation->message('alpha', _("%s must be standard English text"));
     }
     // }}}
     // {{{ Countries
@@ -64,10 +65,11 @@ class Backend_Controller extends Controller
     // {{{ add_country_write
     public function add_country_write()
     {
-        $country = $this->input->post('country', Null, true);
+        $country = $this->input->post('country');
+        $english = $this->input->post('english');
         $tempCountry = $this->locations->isCountryDefined($country);
         if (!$tempCountry) {
-            $this->locations->createCountry($country);
+            $this->locations->createCountry($country, $english);
         }
         $this->session->set('locations_country_saved', true);
         url::redirect('locations/backend/list_countries');
@@ -80,6 +82,8 @@ class Backend_Controller extends Controller
              ->pre_filter('trim', 'country')
              ->add_rules('country', 'required');
 
+        $this->validation->name('english', _("English name"))->add_rules('english', 'required', 'valid::alpha');
+
         return $this->validation->validate();
     }
     // }}}
@@ -88,7 +92,7 @@ class Backend_Controller extends Controller
     {
         $this->global_tabs->addItem(_("Countries"), 'locations/backend/list_countries', 'locations/backend');
         $this->global_tabs->addItem(_("Add Country"), 'locations/backend/add_country', 'locations/backend');
-        $data = array ('country' => $this->input->post('country', Null, true));
+        $data = array ('country' => $this->input->post('country'));
 
         $this->layout->content = new View('backend/add_country', $data);
     }
@@ -123,12 +127,13 @@ class Backend_Controller extends Controller
     // {{{ edit_country_write
     function edit_country_write()
     {
-        $id         = $this->input->post('id', Null, true);
-        $country    = $this->input->post('country', Null, true);
+        $id         = $this->input->post('id');
+        $country    = $this->input->post('country');
+        $english    = $this->input->post('english');
 
         $tempCountry = $this->locations->isCountryDefined($country);
         if (!($tempCountry and ($tempCountry['id'] != $id))) {
-            $this->locations->editCountry($id, $country);
+            $this->locations->editCountry($id, $country, $english);
         }
 
         $this->session->set('locations_country_saved', true);
@@ -146,14 +151,16 @@ class Backend_Controller extends Controller
              ->pre_filter('trim', 'country')
              ->add_rules('country', 'required');
 
+        $this->validation->name('english', _("English name"))->add_rules('english', 'required', 'valid::alpha');
+
         return $this->validation->validate();
     }
     // }}}
     // {{{ edit_country_write_error
     function edit_country_write_error()
     {
-        $data = array ('id'         => $this->input->post('id', Null, true),
-                       'country'    => $this->input->post('country', Null, true),
+        $data = array ('id'         => $this->input->post('id'),
+                       'country'    => $this->input->post('country'),
                       );
 
         $this->layout->content = new View('backend/add_country', $data);
@@ -286,8 +293,8 @@ class Backend_Controller extends Controller
     // {{{ add_province_write
     public function add_province_write()
     {
-        $country_id = $this->input->post('country_id', Null, true);
-        $province   = $this->input->post('province', Null, true);
+        $country_id = $this->input->post('country_id');
+        $province   = $this->input->post('province');
 
         $tempProvince = $this->locations->isProvinceDefined($province, $country_id);
         if (!$tempProvince) {
@@ -314,11 +321,11 @@ class Backend_Controller extends Controller
     // {{{ add_province_write_error
     public function add_province_write_error()
     {
-        $country = $this->locations->getCountry($this->input->post('country_id', Null, true));
+        $country = $this->locations->getCountry($this->input->post('country_id'));
 
-        $data = array('country'  => array('id'       => $this->input->post('country_id', Null, true),
-                                          'country'  => $this->input->post('country_name', Null, true)),
-                      'province' => $this->input->post('province', Null, true));
+        $data = array('country'  => array('id'       => $this->input->post('country_id'),
+                                          'country'  => $this->input->post('country_name')),
+                      'province' => $this->input->post('province'));
 
         $this->global_tabs->addItem(_("Countries"), 'locations/backend/list_countries', 'locations/backend');
         $this->global_tabs->addItem(_("Add Country"), 'locations/backend/add_country', 'locations/backend');
@@ -368,8 +375,8 @@ class Backend_Controller extends Controller
     // {{{ edit_province_write
     function edit_province_write()
     {
-        $id          = $this->input->post('id', Null, true);
-        $province    = $this->input->post('province', Null, true);
+        $id          = $this->input->post('id');
+        $province    = $this->input->post('province');
         if ($old_province = $this->locations->getProvince($id)) {
             $tempProvince = $this->locations->isProvinceDefined($province, $old_province['country']);
             if (!($tempProvince and ($tempProvince['id'] != $id))) {
@@ -399,12 +406,12 @@ class Backend_Controller extends Controller
     // {{{ edit_province_write_error
     function edit_province_write_error()
     {
-        $id         = $this->input->post('id', Null, true);
+        $id         = $this->input->post('id');
         $province   = $this->locations->getProvince($id);
         $country    = $this->locations->getCountry($province['country']);
         $data       = array('id'       => $id,
                             'country'  => $country,
-                            'province' => $this->input->post('province', Null, true));
+                            'province' => $this->input->post('province'));
 
         $this->global_tabs->addItem(_("Countries"), 'locations/backend/list_countries', 'locations/backend');
         $this->global_tabs->addItem(_("Add Country"), 'locations/backend/add_country', 'locations/backend');
@@ -565,13 +572,14 @@ class Backend_Controller extends Controller
     // {{{ add_city_write
     public function add_city_write()
     {
-        $province_id    = $this->input->post('province_id', Null, true);
-        $city           = $this->input->post('city', Null, true);
-        $province       = $this->locations->getProvince($province_id);
+        $province_id    = $this->input->post('province_id');
+        $city           = $this->input->post('city');
+        $english        = $this->input->post('english');
+        $province       = $this->locations->getProvince($province_id); 
 
         $tempCity = $this->locations->isCityDefined($city, $province_id);
         if (!$tempCity) {
-            $this->locations->createCity($province['country'], $province_id, $city);
+            $this->locations->createCity($province['country'], $province_id, $city, $english);
         }
 
         $this->session->set('locations_city_saved', true);
@@ -588,17 +596,19 @@ class Backend_Controller extends Controller
              ->pre_filter('trim', 'city')
              ->add_rules('city', 'required');
 
+        $this->validation->name('english', _("English name"))->add_rules('english', 'required', 'valid::alpha');
+
         return $this->validation->validate();
     }
     // }}}
     // {{{ add_city_write_error
     public function add_city_write_error()
     {
-        $data = array('country'     => array('id'       => $this->input->post('country_id', Null, true),
-                                             'country'  => $this->input->post('country_name', Null, true)),
-                      'province'    => array('id'       => $this->input->post('province_id', Null, true),
-                                             'province' => $this->input->post('province_name', Null, true)),
-                      'city'        => $this->input->post('city', Null, true));
+        $data = array('country'     => array('id'       => $this->input->post('country_id'),
+                                             'country'  => $this->input->post('country_name')),
+                      'province'    => array('id'       => $this->input->post('province_id'),
+                                             'province' => $this->input->post('province_name')),
+                      'city'        => $this->input->post('city'));
 
         $this->global_tabs->addItem(_("Countries"), 'locations/backend/list_countries', 'locations/backend');
         $this->global_tabs->addItem(_("Add Country"), 'locations/backend/add_country', 'locations/backend');
@@ -608,8 +618,8 @@ class Backend_Controller extends Controller
         $this->global_tabs->addItem(sprintf(_("Cities of '%s'"), $data['province']['province']),
                                     'locations/backend/list_cities/%province_id%', 'locations/backend');
         $this->global_tabs->addItem(_("Add City"), 'locations/backend/add_city/%province_id%', 'locations/backend');
-        $this->global_tabs->setParameter('country_id', $this->input->post('country_id', Null, true));
-        $this->global_tabs->setParameter('province_id', $this->input->post('province_id', Null, true));
+        $this->global_tabs->setParameter('country_id', $this->input->post('country_id'));
+        $this->global_tabs->setParameter('province_id', $this->input->post('province_id'));
 
         $this->layout->content = new View('backend/add_city', $data);
     }
@@ -659,13 +669,13 @@ class Backend_Controller extends Controller
     // {{{ edit_city_write
     function edit_city_write()
     {
-        $id     = $this->input->post('id', Null, true);
-        $city   = $this->input->post('city', Null, true);
-
+        $id      = $this->input->post('id');
+        $city    = $this->input->post('city');
+        $english = $this->input->post('english');
         if ($old_city = $this->locations->getCity($id)) {
             $tempCity = $this->locations->isCityDefined($city, $old_city['province']);
             if (!($tempCity and ($tempCity['code'] != $id))) {
-                $this->locations->editCity($id, $old_city['country'], $old_city['province'], $city);
+                $this->locations->editCity($id, $old_city['country'], $old_city['province'], $city, $english);
             }
             $this->session->set('locations_city_saved', true);
             url::redirect('locations/backend/list_cities/' . $old_city['province']);
@@ -688,19 +698,21 @@ class Backend_Controller extends Controller
              ->pre_filter('trim', 'city')
              ->add_rules('city', 'required');
 
+        $this->validation->name('english', _("English name"))->add_rules('english', 'required', 'valid::alpha');
+
         return $this->validation->validate();
     }
     // }}}
     // {{{ edit_city_write_error
     function edit_city_write_error()
     {
-        $id   = $this->input->post('id', Null, true);
+        $id   = $this->input->post('id');
         $data = array('id'       => $id,
-                      'country'  => array('id'       => $this->input->post('country_id', Null, true),
-                                          'country'  => $this->input->post('country_name', Null, true)),
-                      'province' => array('id'       => $this->input->post('province_id', Null, true),
-                                          'province'  => $this->input->post('province_name', Null, true)),
-                      'city' => $this->input->post('city', Null, true));
+                      'country'  => array('id'       => $this->input->post('country_id'),
+                                          'country'  => $this->input->post('country_name')),
+                      'province' => array('id'       => $this->input->post('province_id'),
+                                          'province'  => $this->input->post('province_name')),
+                      'city' => $this->input->post('city'));
 
         $this->global_tabs->addItem(_("Countries"), 'locations/backend/list_countries', 'locations/backend');
         $this->global_tabs->addItem(_("Add Country"), 'locations/backend/add_country', 'locations/backend');

@@ -15,27 +15,33 @@
 {arag_form uri=$uri method="post"}
     {arag_block}
          <table border="0" dir="{dir}">
-             <tr>
-                 <td align="{right}">_("Country"):{asterisk}</td>
+            <tr>
+                <td align="{right}">_("Country"):{asterisk}</td>
+                <td>
+                {if isset($country|smarty:nodefaults)}{$country.country|smarty:nodefaults|default:'&nbsp;'}{/if}
+                <input type="hidden" name="country_name" value="{if isset($country|smarty:nodefaults)}{$country.country|smarty:nodefaults|default:null}{/if}"/>
+                <input type="hidden" name="country_id" value="{if isset($country|smarty:nodefaults)}{$country.id|smarty:nodefaults|default:null}{/if}" />
+                </td>
+            </tr>
+            <tr>
+                <td align="{right}">_("Province"):{asterisk}</td>
+                <td>
+                {if isset($province|smarty:nodefaults)}{$province.province|smarty:nodefaults|default:'&nbsp;'}{/if}
+                <input type="hidden" name="province_name" value="{if isset($province|smarty:nodefaults)}{$province.province|smarty:nodefaults|default:null}{/if}"/>
+                <input type="hidden" name="province_id" value="{if isset($province|smarty:nodefaults)}{$province.id|smarty:nodefaults|default:null}{/if}" />
+                </td>
+            </tr>
+            <tr>
+                <td align="{right}">_("City"):{asterisk}</td>
+                <td>
+                <input type="text" name="city" value="{if isset($city|smarty:nodefaults)}{$city|smarty:nodefaults|default:null}{/if}" />
+                {if isset($id|smarty:nodefaults)}<input type="hidden" name="id" value="{$id|smarty:nodefaults|default:null}" />{/if}
+                </td>
+            </tr>
+            <tr>
+                 <td align="{right}">_("English name"):{asterisk}</td>
                  <td>
-                    {if isset($country|smarty:nodefaults)}{$country.country|smarty:nodefaults|default:'&nbsp;'}{/if}
-                    <input type="hidden" name="country_name" value="{if isset($country|smarty:nodefaults)}{$country.country|smarty:nodefaults|default:null}{/if}"/>
-                    <input type="hidden" name="country_id" value="{if isset($country|smarty:nodefaults)}{$country.id|smarty:nodefaults|default:null}{/if}" />
-                 </td>
-             </tr>
-             <tr>
-                 <td align="{right}">_("Province"):{asterisk}</td>
-                 <td>
-                    {if isset($province|smarty:nodefaults)}{$province.province|smarty:nodefaults|default:'&nbsp;'}{/if}
-                    <input type="hidden" name="province_name" value="{if isset($province|smarty:nodefaults)}{$province.province|smarty:nodefaults|default:null}{/if}"/>
-                    <input type="hidden" name="province_id" value="{if isset($province|smarty:nodefaults)}{$province.id|smarty:nodefaults|default:null}{/if}" />
-                 </td>
-             </tr>
-             <tr>
-                 <td align="{right}">_("City"):{asterisk}</td>
-                 <td>
-                    <input type="text" name="city" value="{if isset($city|smarty:nodefaults)}{$city|smarty:nodefaults|default:null}{/if}" />
-                    {if isset($id|smarty:nodefaults)}<input type="hidden" name="id" value="{$id|smarty:nodefaults|default:null}" />{/if}
+                    <input type="text" name="english" value="{if isset($english|smarty:nodefaults)}{$english|smarty:nodefaults|default:null}{/if}" />
                  </td>
              </tr>
             <tr>

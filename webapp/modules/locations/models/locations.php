@@ -52,7 +52,7 @@ class Locations_Model extends Model
     // {{{ getCity
     public function getCity($code)
     {
-        $this->db->select('code, city, province, country, deleted')->from($this->tableNameCities)->where('code', $code);
+        $this->db->select('code, city, province, country, deleted, english')->from($this->tableNameCities)->where('code', $code);
         return $this->db->get()->result(False)->current();
     }
     // }}}
@@ -66,7 +66,7 @@ class Locations_Model extends Model
     // {{{ getCountry
     public function getCountry($id)
     {
-        $this->db->select('id, country, deleted')->from($this->tableNameCountries)->where('id', $id);
+        $this->db->select('id, country, deleted, english')->from($this->tableNameCountries)->where('id', $id);
         return $this->db->get()->result(False)->current();
     }
     // }}}
@@ -100,16 +100,17 @@ class Locations_Model extends Model
     }
     // }}}
     // {{{ createCountry
-    function createCountry($country)
+    function createCountry($country, $english)
     {
-        return $this->db->insert($this->tableNameCountries, array('country' => $country))->insert_id();
+        return $this->db->insert($this->tableNameCountries, array('country' => $country, 'english' => $english))->insert_id();
     }
     // }}}
     // {{{ editCountry
-    function editCountry($id, $country)
+    function editCountry($id, $country, $english)
     {
         $row = array('id'       => $id,
                      'country'  => $country,
+                     'english'  => $english
                      );
 
         return $this->db->where(array('id' => $id))->update($this->tableNameCountries, $row);
@@ -134,21 +135,23 @@ class Locations_Model extends Model
     }
     // }}}
     // {{{ createCity
-    function createCity($countryID, $provinceID, $city)
-    {
-        $row = array('city'         => $city,
-                     'province'     => $provinceID,
-                     'country'      => $countryID);
-        return $this->db->insert($this->tableNameCities, $row)->insert_id();
-    }
-    // }}}
-    // {{{ editCity
-    function editCity($id, $countryID, $provinceID, $city)
+    function createCity($countryID, $provinceID, $city, $english)
     {
         $row = array('city'         => $city,
                      'province'     => $provinceID,
                      'country'      => $countryID,
-                     );
+                     'english'      => $english);
+        return $this->db->insert($this->tableNameCities, $row)->insert_id();
+    }
+    // }}}
+    // {{{ editCity
+    function editCity($id, $countryID, $provinceID, $city, $english)
+    {
+        $row = array('city'         => $city,
+                     'province'     => $provinceID,
+                     'country'      => $countryID,
+                     'english'      => $english,
+                    );
 
         return $this->db->where(array('code' => $id))->update($this->tableNameCities, $row);
     }
