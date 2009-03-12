@@ -35,5 +35,11 @@ function smarty_function_kohana_helper($params, &$smarty)
 
     // Call the kohana helper, passing the argumens
     array_shift($params); // remove the 'function' key from the array
-    return call_user_func_array(array($class, $function), $params);
+
+    $result = call_user_func_array(array($class, $function), $params);
+    if (isset($params['assign']) && $params['assign']) {
+        $smarty->assign($params['assign'], $result);
+    } else {
+        return $result;
+    }
 }
