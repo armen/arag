@@ -28,6 +28,16 @@ class View extends View_Core {
         parent::__construct($name, $data, $type);
     }
     // }}}
+    // {{{ __toString
+    public function __toString()
+    {
+        try {
+            return parent::__toString();
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
+    }
+    // }}}
 }
 
 ?>
