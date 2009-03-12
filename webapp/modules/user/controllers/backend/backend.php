@@ -158,6 +158,12 @@ class Backend_Controller extends Controller
         $row     = $this->Groups->getAllAppGroups($appname);
         $default = $this->Groups->getDefaultGroup($appname);
 
+        $this->global_tabs->addItem(_("Groups"), 'user/backend/applications/groups/%name%', 'user/backend/applications');
+        $this->global_tabs->addItem(_("Default Group"), 'user/backend/applications/default_group/%name%', 'user/backend/applications');
+        $this->global_tabs->additem(_("New Group"), 'user/backend/applications/new_group/%name%', 'user/backend/applications');
+        $this->global_tabs->additem(_("New User"), 'user/backend/applications/new_user/%name%', 'user/backend/applications');
+
+
         $this->global_tabs->setParameter('name', $appname);
 
         $data = array("allgroups"    => $row,
@@ -186,6 +192,12 @@ class Backend_Controller extends Controller
     {
         $this->global_tabs->setParameter('name', $appname);
 
+        $this->global_tabs->addItem(_("Groups"), 'user/backend/applications/groups/%name%', 'user/backend/applications');
+        $this->global_tabs->addItem(_("Default Group"), 'user/backend/applications/default_group/%name%', 'user/backend/applications');
+        $this->global_tabs->additem(_("New Group"), 'user/backend/applications/new_group/%name%', 'user/backend/applications');
+        $this->global_tabs->additem(_("New User"), 'user/backend/applications/new_user/%name%', 'user/backend/applications');
+
+
         $data = array("flagsaved" => $this->session->get_once('new_group_saved'),
                       "flagform"  => $flagform,
                       "appname"   => $appname);
@@ -209,6 +221,12 @@ class Backend_Controller extends Controller
     protected function _new_user($appname, $flagform = true)
     {
         $this->global_tabs->setParameter('name', $appname);
+
+        $this->global_tabs->addItem(_("Groups"), 'user/backend/applications/groups/%name%', 'user/backend/applications');
+        $this->global_tabs->addItem(_("Default Group"), 'user/backend/applications/default_group/%name%', 'user/backend/applications');
+        $this->global_tabs->additem(_("New Group"), 'user/backend/applications/new_group/%name%', 'user/backend/applications');
+        $this->global_tabs->additem(_("New User"), 'user/backend/applications/new_user/%name%', 'user/backend/applications');
+
 
         $row     = $this->Groups->getAllAppGroups($appname);
         $default = $this->Groups->getDefaultGroup($appname);
