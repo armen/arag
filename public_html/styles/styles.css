@@ -1001,7 +1001,7 @@ input[type=reset][disabled] {
 
 /* {{{ arag_weather */
 .arag_weather {
-/*     width: 200px; */
+    width: 200px;
     background-color: #f3f3f3;
     border: 1px solid #eee;
     display: table;
