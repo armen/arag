@@ -84,10 +84,10 @@ class Backend_Controller extends Controller
 
         $groups = $this->groups->getGroups();
 
-        $this->layout->content = new View('backend/add');
-        $this->layout->uri     = $uri;
-        $this->layout->dialogs = $this->model->dialogs;
-        $this->layout->groups  = $groups;
+        $this->layout->content          = new View('backend/add');
+        $this->layout->content->uri     = $uri;
+        $this->layout->content->dialogs = $this->model->dialogs;
+        $this->layout->content->groups  = $groups;
     }
     // }}}
     // {{{ add_validate_read
@@ -148,10 +148,10 @@ class Backend_Controller extends Controller
             $groupList[] = $group; //groups is an iterator, but from a db result.so its untouchable.we store the new group array in another array
         }
 
-        $this->layout->content = new View('backend/edit');
-        $this->layout->help    = $help;
-        $this->layout->dialogs = $this->model->dialogs;
-        $this->layout->groups  = $groupList;
+        $this->layout->content          = new View('backend/edit');
+        $this->layout->content->help    = $help;
+        $this->layout->content->dialogs = $this->model->dialogs;
+        $this->layout->content->groups  = $groupList;
     }
     // }}}
     // {{{ edit_validate_read
@@ -213,8 +213,8 @@ class Backend_Controller extends Controller
         $this->global_tabs->addItem(_("Edit"), 'help/backend/edit/%id%', 'help/backend/index');
         $this->global_tabs->addItem(_("Delete"), 'help/backend/delete/%id%', 'help/backend/index');
 
-        $this->layout->content = new View('backend/delete');
-        $this->layout->help    = $help;
+        $this->layout->content       = new View('backend/delete');
+        $this->layout->content->help = $help;
     }
     // }}}
     // {{{ delete_validate_read

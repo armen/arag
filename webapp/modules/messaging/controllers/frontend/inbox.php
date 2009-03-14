@@ -36,8 +36,8 @@ class Inbox_Controller extends Messaging_Frontend
             $userOptions[$user['username']] = $user['user_name'];
         }
 
-        $this->layout->content      = new View('frontend/new_message');
-        $this->layout->user_options = $userOptions;
+        $this->layout->content               = new View('frontend/new_message');
+        $this->layout->content->user_options = $userOptions;
     }
     // }}}
     // {{{ new_message_validate_write

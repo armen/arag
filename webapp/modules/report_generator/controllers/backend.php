@@ -38,8 +38,8 @@ class Backend_Controller extends ReportGenerator_Backend
     // {{{ generate_report_read
     public function generate_report_read()
     {
-        $this->layout->allowed_tables = array_combine(Kohana::config('config.allowed_tables'), Kohana::config('config.allowed_tables'));
-        $this->layout->content = new View('backend/get_table');
+        $this->layout->content->allowed_tables = array_combine(Kohana::config('config.allowed_tables'), Kohana::config('config.allowed_tables'));
+        $this->layout->content                 = new View('backend/get_table');
     }
     // }}}
     // {{{ generate_report_write
@@ -52,16 +52,16 @@ class Backend_Controller extends ReportGenerator_Backend
         $table_name     = $this->input->post('table_name', Null);
         $table          = $rg->describe($table_name);
 
-        $this->layout->table              = $table;
-        $this->layout->columns            = !empty($table) ? array_combine(array_keys($table), array_keys($table)) : Array();
-        $this->layout->selected_columns   = $columns;
-        $this->layout->table_name         = $table_name;
-        $this->layout->report_name        = $this->input->post('report_name', Null);
-        $this->layout->report_description = $this->input->post('report_description', Null);
-        $this->layout->additional_columns = $this->additional_columns;
-        $this->layout->filters            = $this->filters;
-        $this->layout->actions            = $actions;
-        $this->layout->parameter_name     = $parameter_name;
+        $this->layout->content->table              = $table;
+        $this->layout->content->columns            = !empty($table) ? array_combine(array_keys($table), array_keys($table)) : Array();
+        $this->layout->content->selected_columns   = $columns;
+        $this->layout->content->table_name         = $table_name;
+        $this->layout->content->report_name        = $this->input->post('report_name', Null);
+        $this->layout->content->report_description = $this->input->post('report_description', Null);
+        $this->layout->content->additional_columns = $this->additional_columns;
+        $this->layout->content->filters            = $this->filters;
+        $this->layout->content->actions            = $actions;
+        $this->layout->content->parameter_name     = $parameter_name;
         $date_fields_name                 = Kohana::config('config.date_field_names');
 
         // Generate report's list
@@ -139,7 +139,7 @@ class Backend_Controller extends ReportGenerator_Backend
                 $errors     = $sa->getErrors();
                 $last_error = end($errors);
 
-                $this->layout->formula_splited_input = $last_error['params']['splitedinput'];
+                $this->layout->content->formula_splited_input = $last_error['params']['splitedinput'];
                 $this->validation->add_error('formula', 'formula_error');
                 $this->validation->message('formula_error', $last_error['message']);
                 $result = False;
@@ -176,7 +176,7 @@ class Backend_Controller extends ReportGenerator_Backend
                 $errors     = $sa->getErrors();
                 $last_error = end($errors);
 
-                $this->layout->formula_splited_input = $last_error['params']['splitedinput'];
+                $this->layout->content->formula_splited_input = $last_error['params']['splitedinput'];
                 $this->validation->add_error('formula', 'formula_error');
                 $this->validation->message('formula_error', $last_error['message']);
                 $result = False;

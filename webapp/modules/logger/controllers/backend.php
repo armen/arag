@@ -33,14 +33,14 @@ class Backend_Controller extends Logger_Backend
         $logs_list->setGroupActionParameterName('id');
         $logs_list->setEmptyListMessage(_("Nothing Found!"));
 
-        $this->layout->content  = new View('backend/logs_list');
-        $this->layout->massages = $this->messages;
-        $this->layout->archive  = $archive_array;
+        $this->layout->content           = new View('backend/logs_list');
+        $this->layout->content->massages = $this->messages;
+        $this->layout->content->archive  = $archive_array;
 
-        $this->layout->archive_status = $archive_status;
-        $this->layout->user_name      = $user_name;
-        $this->layout->date           = $this->input->post('date', null);
-        $this->layout->operation      = $operation;
+        $this->layout->content->archive_status = $archive_status;
+        $this->layout->content->user_name      = $user_name;
+        $this->layout->content->date           = $this->input->post('date', null);
+        $this->layout->content->operation      = $operation;
     }
     // }}}
     // {{{ show_operation

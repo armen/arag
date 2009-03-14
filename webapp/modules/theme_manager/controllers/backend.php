@@ -38,8 +38,8 @@ class Backend_Controller extends Controller
         }
 
         $this->layout->content = new View('backend/edit');
-        $this->layout->styles  = $styles;
-        $this->layout->flagsaved = $this->session->get('theme_manager_style_saved');
+        $this->layout->content->styles  = $styles;
+        $this->layout->content->flagsaved = $this->session->get('theme_manager_style_saved');
     }
     // }}}
     // {{{ edit_write
@@ -88,8 +88,8 @@ class Backend_Controller extends Controller
         foreach($styles as $style => $value) {
             ($styles[$style]['type'] != 'file') and $styles[$style]['value'] = $this->input->post($style, Null, true);;
         }
-        $this->layout->content = new View('backend/edit');
-        $this->layout->styles  = $styles;
+        $this->layout->content          = new View('backend/edit');
+        $this->layout->content->styles  = $styles;
     }
     // }}}
 }
