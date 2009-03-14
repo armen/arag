@@ -226,6 +226,7 @@ class Controller extends Controller_Core {
     public function _display()
     {
         if ($this->layout instanceof View) {
+            $this->layout->content = $this->layout->content->render(); //We render content before main layout in order to make things 
             $this->layout->render(True);
         }
     }
