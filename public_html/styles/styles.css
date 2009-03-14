@@ -985,6 +985,7 @@ input[type=reset][disabled] {
    background-color: #333;
    padding: 2px;
    opacity: 0.85;
+   filter: alpha(opacity=85);
 }
 .tooltip .tip-title {
    color: #fff;
