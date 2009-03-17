@@ -72,19 +72,20 @@ class Users_Model extends Model
                 }
             }
 
-            
-
             $result = (boolean)($status & self::USER_OK);  // Check if USER_OK flag is set
 
             if ($result) {
                 $profile = $this->getUser($user->username);
-                $group   = $profile['group_id'];
 
-                $groups  = Model::load('Groups', 'user');
-                if ($groups->isExpired($group)) {
-                    $status |= self::USER_GROUP_EXPIRED;
-                    $status &= ~self::USER_OK;
-                    return False;
+                if (isset($profile['group_id'])) {
+                    $group   = $profile['group_id'];
+                    $groups  = Model::load('Groups', 'user');
+
+                    if ($groups->isExpired($group)) {
+                        $status |= self::USER_GROUP_EXPIRED;
+                        $status &= ~self::USER_OK;
+                        return False;
+                    }
                 }
 
                 return $status;
