@@ -1,11 +1,12 @@
 <?php
 // vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:
 // +-------------------------------------------------------------------------+
-// | Author: Emil Sedgh <emilsedgh@gmail.com>                      |
+// | Author: Emil Sedgh <emilsedgh@gmail.com>                                |
 // +-------------------------------------------------------------------------+
 // $Id$
 // ---------------------------------------------------------------------------
 
+ini_set('include_path', LIBSPATH.'pear/'.PATH_SEPARATOR.ini_get('include_path'));
 include_once('Services/Weather.php');
 
 class Forecast_Model extends Model
@@ -42,9 +43,13 @@ class Forecast_Model extends Model
         if (is_array($id)) {
             $id = current(array_keys($id)); //it returned an array of results
         }
-        $this->cache->set('location_id_'.$location, $id);
 
-        return $id;
+        if (!PEAR::isError($id)) {
+            $this->cache->set('location_id_'.$location, $id);
+            return $id;
+        }
+
+        return False;
     }
 
     public function getLocation($location)
@@ -56,11 +61,15 @@ class Forecast_Model extends Model
             return $cached;
         }
 
-        $name = $this->weather()->getLocation($id);
+        if ($id && !PEAR::isError($id)) {
 
-        $this->cache->set('location_name_'.$id, $name);
+            $name = $this->weather()->getLocation($id);
+            $this->cache->set('location_name_'.$id, $name);
 
-        return $name;
+            return $name;
+        }
+
+        return False;
     }
 
 //     public function getForecast($location)
@@ -78,14 +87,19 @@ class Forecast_Model extends Model
             return $cached;
         }
 
-        $weather                = $this->weather()->getWeather($id);
-        $weather['temperature'] = (int)$weather['temperature'];
-        $weather['wind']        = (int)$weather['wind'];
-        $lifetime               = Kohana::config('cache.lifetime');
+        $weather = $this->weather()->getWeather($id);
 
-        $this->cache->set('location_weather_'.$id, $weather, Null, $lifetime);
+        if (!PEAR::isError($weather)) {
+            $weather['temperature'] = (int)$weather['temperature'];
+            $weather['wind']        = (int)$weather['wind'];
+            $lifetime               = Kohana::config('cache.lifetime');
 
-        return $weather;
+            $this->cache->set('location_weather_'.$id, $weather, Null, $lifetime);
+
+            return $weather;
+        }
+
+        return False;
     }
 }
 ?>

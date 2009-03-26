@@ -11,10 +11,12 @@ function smarty_function_arag_weather($params, &$smarty)
     $forecast = Model::load('Forecast', 'forecast');
     $weather  = $forecast->getWeather($params['location']);
     $location = $forecast->getLocation($params['location']);
-    if(isset($params['name'])) {
+
+    if (isset($params['name']) && $location) {
         $location['name'] = $params['name'];
     }
-    $size     = isset($params['size']) ? $params['size'] : 93;
+
+    $size = isset($params['size']) ? $params['size'] : 93;
     $smarty->assign('weather', $weather);
     $smarty->assign('size', $size);
     $smarty->assign('location', $location);
