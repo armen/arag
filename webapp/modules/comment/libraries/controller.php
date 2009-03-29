@@ -15,19 +15,20 @@ class Comments_Controller extends Controller
         $namespace    = $this->session->get('comment.'.$key.'.namespace');
         $reference_id = $this->session->get('comment.'.$key.'.reference_id');
         $uri          = $this->session->get('comment.'.$key.'.uri');
-        $body         = $this->input->post('comment');
+        $body         = $this->session->get('comment.'.$key.'.comment', $this->input->post('comment'));
         $users        = Model::load('Users', 'user');
 
         if (!$namespace || !$reference_id || !$uri) {
-          $this->_invalid_request();
+            $this->_invalid_request();
         }
 
-        $comment = Model::load('Comment', 'comment');
+        $comment  = Model::load('Comment', 'comment');
         $body    .= $this->attach();
 
-        $profile = $users->getUser($this->session->get('user.username'));
-
-        $comment->createComment($namespace, $reference_id, $this->session->get('user.username'), $body, 0, 0, $profile['name']);
+        if ($body) {
+            $profile = $users->getUser($this->session->get('user.username'));
+            $comment->createComment($namespace, $reference_id, $this->session->get('user.username'), $body, 0, 0, $profile['name']);
+        }
         url::redirect($uri);
     }
     // }}}
@@ -89,10 +90,10 @@ class Comments_Controller extends Controller
         }
     }
     // }}}
-    // {{{ order_validate_write
+    // {{{ comment_validate_write
     public function comment_add_validate_write()
     {
-        $this->validation->name('comment', _("Comment"))->add_rules('comment', 'required')->post_filter('security::xss_clean','comment');
+        $this->validation->name('comment', _("Comment"))->post_filter('security::xss_clean', 'comment');
         $this->validation->name('attachments.*', _("Attachments"))->add_rules('attachments.*',
                                                                               'upload::type['.Kohana::config('config.allowed_extensions').']');
 

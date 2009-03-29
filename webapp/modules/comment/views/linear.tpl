@@ -38,7 +38,7 @@
     <table border="0" dir="{dir}" width="100%">
         <tr>
             <td align="{right}" width="100">
-                _("Comment"){asterisk}:
+                _("Comment"):
             </td>
             <td align="{left}">
                 <textarea name="comment" rows="7" cols="15">{$comment|smarty:nodefaults|default:null}</textarea>
