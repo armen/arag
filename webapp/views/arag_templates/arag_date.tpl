@@ -35,7 +35,6 @@
 {/if}
 <img src="{$arag_base_url}images/date/date.png" width="22" height="22" id="{$id}_cal" alt={quote}_("Calendar"){/quote} style="cursor: pointer;" />
 <script type="text/javascript">
-    var id                  = "{$id}";
     var type                = "{$type}";
     var format              = "{$format}";
     var button              = "{$id}_cal";
@@ -44,7 +43,7 @@
     var {$prefix}Cal        = Calendar.setup(
     {literal}
         {
-            inputField      : multiple ? false : id,       // ID of the input field
+            inputField      : multiple ? false : "{/literal}{$id}{literal}",       // ID of the input field
             dateType        : type,     // the date format
             daFormat        : format,
             button          : button,   // ID of the button
@@ -54,7 +53,7 @@
             onClose         : function(cal) {
 
                 if (cal.multiple) {
-                    var element   = document.getElementById(id);
+                    var element   = document.getElementById("{/literal}{$id}{literal}");
                     element.value = '';
                     for (var i in cal.multiple) if (cal.multiple[i] instanceof Date) {
                         element.value += cal.multiple[i].print(cal.dateFormat, cal.dateType, cal.langNumbers)+',';
