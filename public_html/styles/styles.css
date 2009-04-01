@@ -535,6 +535,12 @@ input[type=reset][disabled] {
     width           : 16px;
     height          : 16px;
 }
+.edit_action_alt {
+    background      : transparent url(../images/list/disabled_edit.png) no-repeat center;
+    font-size       : 0px;
+    width           : 16px;
+    height          : 16px;
+}
 .view_action {
     background      : transparent url(../images/list/view.png) no-repeat center;
     font-size       : 0px;
