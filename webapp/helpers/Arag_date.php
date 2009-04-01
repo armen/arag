@@ -480,6 +480,10 @@ class date extends date_Core {
         // Are dates comma separated
         (is_string($values) && !empty($values) && (strpos($values, ',') !== False)) AND $values = explode(',', trim($values, ','));
 
+        if ($values === Null) {
+            return Null;
+        }
+
         $lang = Kohana::config('locale.lang') == "fa";
 
         if (!is_array($values)) {
