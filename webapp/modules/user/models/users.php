@@ -515,9 +515,10 @@ class Users_Model extends Model
     }
     // }}}
     // {{{ getUserGroups
-    public function getUserGroups($username, $appname = Array(), $include = True)
+    public function getUserGroups($username = Null, $appname = Array(), $include = True)
     {
-        !is_array($appname) AND $appname = Array($appname);
+        ($username === Null) AND $username = Session::instance()->get('user.username');
+        !is_array($appname)  AND $appname = Array($appname);
 
         $this->db->select('appname, '.$this->tableNameGroups.'.name as groupname, '.$this->tableNameGroups.'.id as group_id');
         $this->db->from($this->tableNameUsers);
