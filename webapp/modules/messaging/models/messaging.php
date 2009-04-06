@@ -1,6 +1,6 @@
 <?php
 // +-------------------------------------------------------------------------+
-// | Author: Jila Khaghani <jilakhaghani@gmail.com>                           |
+// | Author: Jila Khaghani <jilakhaghani@gmail.com>                          |
 // +-------------------------------------------------------------------------+
 // $Id$
 // ---------------------------------------------------------------------------
@@ -15,9 +15,9 @@ class Messaging_Model extends Model
     }
     // }}}
     // {{{ createMessage
-    function createMessage($message_from, $message_to, $subject, $body, $creatDate, $read_status, $parrent_id=null)
+    function createMessage($message_from, $message_to, $subject, $body, $creatDate, $read_status, $parent_id=null)
     {
-        $row = array('parrent_id'   => $parrent_id,
+        $row = array('parent_id'    => $parent_id,
                      'message_from' => $message_from,
                      'message_to'   => $message_to,
                      'subject'      => $subject,
@@ -31,7 +31,7 @@ class Messaging_Model extends Model
     // {{{ getMessages
     function getMessages($user_name, $id = '')
     {
-        $this->db->select('id, parrent_id, message_from, message_to, subject, body, created_date, read_status')
+        $this->db->select('id, parent_id, message_from, message_to, subject, body, created_date, read_status')
                  ->from($this->tableName)->where('message_to',$user_name)->orderby('created_date', 'DESC');
 
         if ($id) {
@@ -56,7 +56,7 @@ class Messaging_Model extends Model
     // {{{ getSentMessages
     function getSentMessages($user_name, $id = '')
     {
-        $this->db->select('id, parrent_id, message_from, message_to, subject, body, created_date, read_status')
+        $this->db->select('id, parent_id, message_from, message_to, subject, body, created_date, read_status')
                   ->from($this->tableName)->where('message_from', $user_name)->orderby('created_date', 'DESC');
 
         if ($id) {
@@ -119,6 +119,12 @@ class Messaging_Model extends Model
         $query  = $this->db->getwhere($this->tableName, array( 'id' => $id , 'message_from' => $user_name));
         $result = (boolean)$query->current()->count;
         return  $result;
+    }
+    // }}}
+    // {{{ getReadMessagesCount
+    public function getReadMessagesCount($username)
+    {
+        return (int) $this->db->select('count(id) as count')->from($this->tableName)->where('read_status', 0)->where('message_to', $username)->get()->current()->count;
     }
     // }}}
 }
