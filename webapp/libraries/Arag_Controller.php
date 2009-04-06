@@ -231,15 +231,21 @@ class Controller extends Controller_Core {
         }
     }
     // }}}
-    // {{{ load
+    // {{{ execute
     public static function execute($uri, $return_content = True)
     {
         $theme               = Kohana::config('theme.default');
         $old_current_uri     = Router::$current_uri;
-        Router::$current_uri = $uri;
+        Router::$current_uri = Router::routed_uri($uri);
         Router::setup();
 
-        include_once(Router::$controller_path);
+        if (strpos(Router::$controller_path, Router::$module) !== False) {
+            include_once(Router::$controller_path);
+        } else {
+            $controller_path = substr(Router::$controller_path, strpos(Router::$controller_path, 'controllers/'));
+            include_once(MODPATH.Router::$module.'/'.$controller_path);
+        }
+
         $controller = ucfirst(Router::$controller).'_Controller';
         $controller = new $controller;
 
@@ -253,4 +259,5 @@ class Controller extends Controller_Core {
 
         return $return_content ? $controller->layout->content->render() : $controller;
     }
+    // }}}
 }
