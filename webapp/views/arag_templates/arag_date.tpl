@@ -25,7 +25,7 @@
     </script>
 {/if}
 {if $multiple == "false"}
-    <input id="{$id}" name="{$name}" type="text" value="{$value}" onfocus="javascript:Calendar.show;" />
+    <input id="{$id}" name="{$name}" type="text" value="{$value}" onfocus="javascript:Calendar.show;" {$size|smarty:nodefaults} />
 {else}
     <input id="{$id}" name="{$name}" type="hidden" value="{$multiple_value}" />
 {/if}

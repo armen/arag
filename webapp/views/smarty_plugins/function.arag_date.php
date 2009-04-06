@@ -14,18 +14,23 @@
 
 function smarty_function_arag_date($params, &$smarty)
 {
+    $size = Null;
 
     foreach ($params as $_key => $_val) {
         switch ($_key) {
-            case 'value' :
-            case 'name'  :
-            case 'id'    :
-            case 'type'  :
+            case 'value':
+            case 'name':
+            case 'id':
+            case 'type':
             case 'toggle':
             case 'multiple':
             case 'format':
             case 'valid_dates':
                 $$_key = $_val;
+                break;
+
+            case 'size':
+                $size = 'size="'.$_val.'"';
                 break;
 
             default:
@@ -59,6 +64,7 @@ function smarty_function_arag_date($params, &$smarty)
     $data['multiple']       = (isset($multiple) && $multiple == 'true') ? 'true' : 'false';
     $data['multiple_value'] = (isset($value) && is_array($value)) ? implode(',', $value) : Null;
     $data['valid_dates']    = (isset($valid_dates) && is_array($valid_dates)) ? json_encode($valid_dates) : 'false';
+    $data['size']           = $size;
 
     $view = new View('arag_templates/arag_date', $data);
     return $view->render();
