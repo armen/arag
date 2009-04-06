@@ -226,9 +226,31 @@ class Controller extends Controller_Core {
     public function _display()
     {
         if ($this->layout instanceof View) {
-            isset($this->layout->content) AND $this->layout->content = $this->layout->content->render(); //We render content before main layout in order to make things 
+            isset($this->layout->content) AND $this->layout->content = $this->layout->content->render(); // We render content before main layout in order to make things
             $this->layout->render(True);
         }
     }
     // }}}
+    // {{{ load
+    public static function execute($uri, $return_content = True)
+    {
+        $theme               = Kohana::config('theme.default');
+        $old_current_uri     = Router::$current_uri;
+        Router::$current_uri = $uri;
+        Router::setup();
+
+        include_once(Router::$controller_path);
+        $controller = ucfirst(Router::$controller).'_Controller';
+        $controller = new $controller;
+
+        Event::clear('system.post_controller', array($controller, '_display'));
+
+        $controller->layout = new View('themes/'.$theme.'/empty_layout');
+        $controller->_call(Router::$method, Router::$arguments);
+
+        Router::$current_uri = $old_current_uri;
+        Router::setup();
+
+        return $return_content ? $controller->layout->content->render() : $controller;
+    }
 }
