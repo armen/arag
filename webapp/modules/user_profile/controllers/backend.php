@@ -52,30 +52,52 @@ class Backend_Controller extends Controller
     }
     // }}}
     // {{{ index_read
-    public function index_read()
+    public function index_read($username = Null)
     {
-        $data          = $this->Users->getUserProfile($this->username);
+
+        $is_admin = Arag_Auth::is_accessible('user_profile/backend');
+        if ($username) {
+            if (!$is_admin) {
+                return False;
+                $this->_invalid_request();
+            }
+        } else {
+            $username = $this->username;
+        }
+
+        $data          = $this->Users->getUserProfile($username);
         $isset_profile = False;
 
-        if ($isset_profile = $this->UserProfile->hasUserName($this->username)) {
-            $data          = array_merge($data, $this->UserProfile->getProfile($this->username));
+        if ($isset_profile = $this->UserProfile->hasUserName($username)) {
+            $data          = array_merge($data, $this->UserProfile->getProfile($username));
             $isset_profile = True;
         }
 
         $data = array_merge($data, array (
                                           'flagsaved'     => $this->session->get_once('user_profile_profile_saved'),
                                           'isset_profile' => $isset_profile,
-                                          'username'      => $this->username,
-                                          'section'       => $this->section
+                                          'username'      => $username,
+                                          'section'       => $this->section,
+                                          'is_admin'      => $is_admin
                                          ));
 
         $this->layout->content = new View($this->section.'_user_profile', $data);
     }
     // }}}
     // {{{ index_write
-    public function index_write()
-    {
-        $data        = $this->Users->getUserProfile($this->username);
+    public function index_write($username=Null)
+    {   
+        $is_admin = Arag_Auth::is_accessible('user_profile/backend');
+        if ($username) {
+            if (!$is_admin) {
+                $this->_invalid_request();
+                return False;
+            }
+        } else {
+            $username = $this->username;
+        }
+
+        $data        = $this->Users->getUserProfile($username);
         $province    = $this->input->post('province', Null, true);
         $city        = $this->input->post('city', Null, true);
         $country     = $this->input->post('country', Null, true);
@@ -84,10 +106,10 @@ class Backend_Controller extends Controller
         $cellphone   = $this->input->post('cellphone', Null, true);
         $postal_code = $this->input->post('postal_code', Null, true);
 
-        if ($this->UserProfile->hasUserName($this->username)) {
-            $this->UserProfile->editProfile($province, $city, $address, $phone, $cellphone, $postal_code, $this->username, $country);
+        if ($this->UserProfile->hasUserName($username)) {
+            $this->UserProfile->editProfile($province, $city, $address, $phone, $cellphone, $postal_code, $username, $country);
         } else {
-            $this->UserProfile->insertProfile($province, $city, $address, $phone, $cellphone, $postal_code, $this->username, $data['name'], $data['lastname'], $country);
+            $this->UserProfile->insertProfile($province, $city, $address, $phone, $cellphone, $postal_code, $username, $data['name'], $data['lastname'], $country);
         }
 
         $this->session->set('user_profile_profile_saved', true);
@@ -110,9 +132,9 @@ class Backend_Controller extends Controller
     }
     // }}}
     // {{{ index_write_error
-    public function index_write_error()
+    public function index_write_error($username=null)
     {
-        $this->index_read();
+        $this->index_read($username);
     }
     // }}}
     // {{{ password_read
