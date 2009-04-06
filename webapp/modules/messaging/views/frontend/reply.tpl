@@ -32,7 +32,7 @@
             </tr>
         </table>
         <input type="hidden" name="username" value="{$message_from}" />
-        <input type="hidden" name="parrent_id" value="{$id}" />
+        <input type="hidden" name="parent_id" value="{$id}" />
     {/arag_form}
 {/arag_block}
 {/arag_tabbed_block}

@@ -63,10 +63,10 @@ class Inbox_Controller extends Messaging_Frontend
         $message_to   = $this->input->post('username');
         $subject      = $this->input->post('subject');
         $body         = $this->input->post('body');
-        $parrent_id   = $this->input->post('parrent_id');
+        $parent_id    = $this->input->post('parent_id');
         $read_status  = 0;
 
-        $this->message->createMessage($message_from, $message_to, $subject, $body, $creatDate, $read_status, $parrent_id);
+        $this->message->createMessage($message_from, $message_to, $subject, $body, $creatDate, $read_status, $parent_id);
         url::redirect('messaging/frontend/inbox');
     }
     // }}}
