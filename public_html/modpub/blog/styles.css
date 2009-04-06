@@ -8,6 +8,7 @@
     padding           : 0px;
 }
 .blog_subject {
+    margin-top        : 10px;
     font-size         : 13px;
     font-weight       : bold;
     border-bottom     : 1px solid #ccc;
