@@ -2,7 +2,7 @@
 
 $config = array
 (
-    'blog'            => 'blog/frontend',
+    'blog'            => 'blog/frontend/entry',
     'blog/backend'    => 'blog/backend/entry/index',
     'blog/admin'      => 'blog/backend/entry/index',
     'blog/post'       => 'blog/backend/entry/post',

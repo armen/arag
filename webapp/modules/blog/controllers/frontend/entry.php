@@ -6,7 +6,7 @@
 // $Id$
 // ---------------------------------------------------------------------------
 
-class Frontend_Controller extends Controller
+class Entry_Controller extends Controller
 {
     // {{{ Constructor
     public function __construct()
@@ -38,7 +38,7 @@ class Frontend_Controller extends Controller
         // Load the Comment component, comment ain't used but just loaded
         $comments = new Comment_Component('comments');
 
-        $this->layout->content = new View('frontend/view', Array('entry_uri' => '/blog/frontend/view/#id#/extended'));
+        $this->layout->content = new View('frontend/view', Array('entry_uri' => '/blog/frontend/entry/view/#id#/extended'));
     }
     // }}}
     // {{{ view
@@ -49,12 +49,9 @@ class Frontend_Controller extends Controller
         $entry->setResource(Array($this->Blog->getEntry($id, True)));
         $entry->addColumn('Blog.getDate', Null, PList_Component::VIRTUAL_COLUMN);
 
-        $comments = new Comment_Component('comments');
-        $comments->setReferenceId($id);
-        $comments->setPostUri('blog/frontend/post_comment');
-
-        $data = Array('extended'  => $extended == 'extended',
-                      'entry_uri' => '/blog/frontend/view/#id#/extended');
+        $comments = new Comment_Component('comments', $id);
+        $data     = Array('extended'  => $extended == 'extended',
+                          'entry_uri' => '/blog/frontend/entry/view/#id#/extended');
 
         $this->layout->content = new View('frontend/view', $data);
     }
@@ -71,7 +68,7 @@ class Frontend_Controller extends Controller
     // {{{ view_any_error
     public function view_any_error()
     {
-        $this->_invalid_request('blog/frontend/index', _("Invalid ID"));
+        $this->_invalid_request('blog/frontend/entry/index', _("Invalid ID"));
     }
     // }}}
     // }}}
@@ -117,7 +114,7 @@ class Frontend_Controller extends Controller
     // {{{ post_comment_read
     public function post_comment_read()
     {
-        $this->_invalid_request('blog/frontend/index', _("Invalid reference ID"));
+        $this->_invalid_request('blog/frontend/entry/index', _("Invalid reference ID"));
     }
     // }}}
     // }}}
@@ -128,5 +125,3 @@ class Frontend_Controller extends Controller
     }
     // }}}
 }
-
-?>

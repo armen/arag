@@ -149,7 +149,7 @@ class Blog_Model extends Model
     // {{{ getModifiedBy
     public function getModifiedBy($row)
     {
-        return format::date($row['modified_by']);
+        return $row['modified_by'] ? $row['modified_by'] : '-';
     }
     // }}}
     // }}}
