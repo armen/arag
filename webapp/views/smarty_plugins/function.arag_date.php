@@ -26,6 +26,7 @@ function smarty_function_arag_date($params, &$smarty)
             case 'multiple':
             case 'format':
             case 'valid_dates':
+			case 'parent':
                 $$_key = $_val;
                 break;
 
@@ -65,6 +66,7 @@ function smarty_function_arag_date($params, &$smarty)
     $data['multiple_value'] = (isset($value) && is_array($value)) ? implode(',', $value) : Null;
     $data['valid_dates']    = (isset($valid_dates) && is_array($valid_dates)) ? json_encode($valid_dates) : 'false';
     $data['size']           = $size;
+    $data['parent']         = isset($parent) ? $parent : Null;
 
     $view = new View('arag_templates/arag_date', $data);
     return $view->render();

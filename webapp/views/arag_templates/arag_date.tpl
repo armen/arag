@@ -24,20 +24,24 @@
         {/literal}
     </script>
 {/if}
-{if $multiple == "false"}
-    <input id="{$id}" name="{$name}" type="text" value="{$value}" onfocus="javascript:Calendar.show;" {$size|smarty:nodefaults} />
-{else}
-    <input id="{$id}" name="{$name}" type="hidden" value="{$multiple_value}" />
-{/if}
 {if $toggle}
-    <img src="{$arag_base_url}images/date/toggle.png" width="22" height="22" id="{$id}_toggle" alt={quote}_("Change calendar system"){/quote} style="cursor: pointer;" />
-    <input id="{$id}_type" name="type_{$name}" type="hidden" value="{$type}" />
+	<img src="{$arag_base_url}images/date/toggle.png" width="22" height="22" id="{$id}_toggle" alt={quote}_("Change calendar system"){/quote} style="cursor: pointer;" />
+	<input id="{$id}_type" name="type_{$name}" type="hidden" value="{$type}" />
 {/if}
-<img src="{$arag_base_url}images/date/date.png" width="22" height="22" id="{$id}_cal" alt={quote}_("Calendar"){/quote} style="cursor: pointer;" />
+{if !$parent}
+    {if $multiple == "false"}
+    <input id="{$id}" name="{$name}" type="text" value="{$value}" onfocus="javascript:Calendar.show;" {$size|smarty:nodefaults} />
+    {else}
+        <input id="{$id}" name="{$name}" type="hidden" value="{$multiple_value}" />
+    {/if}
+    <img src="{$arag_base_url}images/date/date.png" width="22" height="22" id="{$id}_cal" alt={quote}_("Calendar"){/quote} style="cursor: pointer;" />
+{/if}
+
 <script type="text/javascript">
     var type                = "{$type}";
     var format              = "{$format}";
     var button              = "{$id}_cal";
+    var parent              = {if $parent}"{$parent}"{else}null{/if};
     var multiple            = {if $multiple == "true"}[{foreach from=$value item="date" name="dates"}Date.parseDate("{$date}", format, type){if !$smarty.foreach.dates.last},{/if}{/foreach}]{else}false{/if};
     var {$prefix}validDates = {$valid_dates|smarty:nodefaults};
     var {$prefix}Cal        = Calendar.setup(
@@ -50,6 +54,7 @@
             weekNumbers     : false,    // WeekNumbers
             autoShowOnFocus : true,     // Autoshowonfocus
             multiple        : multiple,
+            flat            : parent,
             onClose         : function(cal) {
 
                 if (cal.multiple) {

@@ -202,7 +202,7 @@ class Applications_Controller extends Backend_Controller
         $this->_create_users_plist($id, $appname);
 
         $this->users->addAction("user/backend/applications/app_user_profile/#username#", _("Edit"), 'edit_action');
-        $this->users->addAction("user_profile/backend/view/#username#", _("View Profile"), 'view_profile');
+        $this->users->addAction("user_profile/backend/index/#username#", _("Edit Profile"), 'view_profile');
         $this->users->addAction("user/backend/applications/delete/user/#username#", _("Delete"), 'delete_action');
         $this->users->addAction("user/backend/applications/delete/user", _("Delete"), 'delete_action', False, PList_Component::GROUP_ACTION);
         $this->users->setGroupActionParameterName('username');
@@ -256,7 +256,7 @@ class Applications_Controller extends Backend_Controller
         $this->_create_users_plist(NULL, $app_name, $group_name, $user, $email, true, $is_blocked, $is_not_verified);
 
         $this->users->addAction("user/backend/applications/user_profile/#username#", _("Edit"), 'edit_action');
-        $this->users->addAction("user_profile/backend/view/#username#", _("View Profile"), 'view_profile');
+        $this->users->addAction("user_profile/backend/index/#username#", _("Edit Profile"), 'view_profile');
         $this->users->addAction("user/backend/applications/delete/user/#username#", _("Delete"), 'delete_action');
         $this->users->addAction("user/backend/applications/delete/user", _("Delete"), 'delete_action', False, PList_Component::GROUP_ACTION);
         $this->users->setGroupActionParameterName('username');

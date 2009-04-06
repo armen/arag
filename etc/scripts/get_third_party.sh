@@ -71,18 +71,18 @@ if [ -d $PUB_PATH/scripts/JalaliJSCalendar ]; then
     rm -rf "${PUB_PATH}/scripts/JalaliJSCalendar"
 fi
 
-wget -c -P /tmp http://farhadi.ir/downloads/JalaliJSCalendar-1.1.5.tar.gz
+wget -c -P /tmp http://farhadi.ir/downloads/JalaliJSCalendar-1.3.tar.gz
 wget -c -P /tmp http://pub.vardump.org/calendar.patch
 
-mkdir JalaliJSCalendar-1.1.5
-tar xvfz /tmp/JalaliJSCalendar-1.1.5.tar.gz -C ./JalaliJSCalendar-1.1.5
+mkdir JalaliJSCalendar-1.3
+tar xvfz /tmp/JalaliJSCalendar-1.3.tar.gz -C ./JalaliJSCalendar-1.3
 
-rm -r ./JalaliJSCalendar-1.1.5/doc
-rm -r ./JalaliJSCalendar-1.1.5/examples
+rm -r ./JalaliJSCalendar-1.3/doc
+rm -r ./JalaliJSCalendar-1.3/examples
 
-patch ./JalaliJSCalendar-1.1.5/calendar.js /tmp/calendar.patch
+patch ./JalaliJSCalendar-1.3/calendar.js /tmp/calendar.patch
 
-mv ./JalaliJSCalendar-1.1.5 ${PUB_PATH}/scripts/JalaliJSCalendar
+mv ./JalaliJSCalendar-1.3 ${PUB_PATH}/scripts/JalaliJSCalendar
 
 # Cleanup
 
@@ -94,5 +94,5 @@ rm -rf /tmp/pear.tar.bz2
 rm -rf /tmp/tinymce_3_1_1.zip
 rm -rf /tmp/tinymce
 
-rm -rf /tmp/JalaliJSCalendar-1.1.5.tar.gz
+rm -rf /tmp/JalaliJSCalendar-1.3.tar.gz
 rm /tmp/calendar.patch
