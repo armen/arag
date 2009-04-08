@@ -65,4 +65,10 @@ class format_Core {
         return format::date($row[$field], false);
     }
     // }}}
+    // {{{ to_farsi
+    public function to_farsi($string)
+    {
+        return str_replace(array(1,2,3,4,5,6,7,8,9,0), array('۱','۲','۳','۴','۵','۶','۷','۸','۹','۰'), $string);
+    }
+    // }}}
 }
