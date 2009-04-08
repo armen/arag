@@ -35,9 +35,6 @@ function smarty_block_arag_tabbed_block($params, $content, &$smarty, &$repeat)
                     $template = $_val;
                     $template = text::strrtrim($template, '.'.$ext);
                     break;
-
-                default:
-                    $smarty->trigger_error("arag_tabbed_block: Unknown attribute '$_key'");
             }
         }
 
