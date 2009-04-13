@@ -27,7 +27,7 @@ class Component_Core {
     {
         $classname  = str_replace('_component', '', strtolower(get_class($this)));   // component class name
         $component  = empty($component) ? $classname : $component;                   // component is module name
-        $name       = empty($namespace) ? $component . Router::$module : $namespace;
+        $name       = empty($namespace) ? $component . Router::$module : '_'.$namespace;
         $controller = Kohana::instance();
 
         // Add component plugins directory to plugins_dir

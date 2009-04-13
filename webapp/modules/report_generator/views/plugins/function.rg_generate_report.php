@@ -20,7 +20,7 @@ function smarty_function_rg_generate_report($params, &$smarty)
     foreach ($params as $_key => $_val) {
         switch ($_key) {
             case 'name':
-                $name = $_val;
+                $name = '_'.$_val;
                 break;
 
             case 'template':

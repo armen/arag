@@ -28,7 +28,7 @@ function smarty_block_arag_tabbed_block($params, $content, &$smarty, &$repeat)
         foreach ($params as $_key => $_val) {
             switch ($_key) {
                 case 'name':
-                    $name = $_val;
+                    $name = '_'.$_val;
                     break;
 
                 case 'template':
