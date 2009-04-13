@@ -1,6 +1,6 @@
+{arag_load_script src="scripts/mootools.js"}
+{arag_load_script src="scripts/mootools-more.js"}
 {arag_header}
-    {arag_load_script src="scripts/mootools.js"}
-    {arag_load_script src="scripts/mootools-more.js"}
     <script type="text/javascript">
         //<![CDATA[
             {literal}
@@ -16,7 +16,7 @@
                     var myTip = new Tips($(activator), {
                             className: class_name
                         });
-        
+
             });
             {/literal}
         //]]>

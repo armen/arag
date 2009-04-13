@@ -22,6 +22,4 @@ body { behavior: url('{/literal}{$arag_base_url}{literal}/scripts/whateverhover.
 /* * { behavior: url('{/literal}{$arag_base_url}{literal}/scripts/iepngfix.htc') } */
 {/literal}
 </style>
-{foreach item='header' from=$headers|smarty:nodefaults}
-    {$header|smarty:nodefaults}
-{/foreach}
+{show_arag_headers}
