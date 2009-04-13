@@ -254,10 +254,16 @@ class Controller extends Controller_Core {
         $controller->layout = new View('themes/'.$theme.'/empty_layout');
         $controller->_call(Router::$method, Router::$arguments);
 
+        if ($return_content) {
+            $result = $controller->layout->content->render();
+        } else {
+            $result = $controller;
+        }
+
         Router::$current_uri = $old_current_uri;
         Router::setup();
 
-        return $return_content ? $controller->layout->content->render() : $controller;
+        return $result;
     }
     // }}}
 }
