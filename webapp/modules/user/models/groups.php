@@ -157,7 +157,8 @@ class Groups_Model extends Model
                      'appname'     => $appname,
                      'name'        => $newgroup,
                      'privileges'  => $privileges,
-                     'expire_date' => $expire_date);
+                     'expire_date' => $expire_date,
+                     'deletable'   => 1);
 
         $this->db->insert($this->tableNameGroups, $row);
     }
