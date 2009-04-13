@@ -485,11 +485,11 @@
                 </field>
                 <field>
                     <name>label</name>
-                    <value>Rule Manager</value>
+                    <value>Holidays calendar</value>
                 </field>
                 <field>
                     <name>privilege</name>
-                    <value>rule_manager/*</value>
+                    <value>calendar/*</value>
                 </field>
             </insert>
         </initialization>
