@@ -85,12 +85,17 @@ class PList_Component extends Component implements IteratorAggregate, ArrayAcces
     // {{{ setResource
     public function setResource($resource)
     {
+        $empty = !(bool) $resource;
+
         if (is_array($resource)) {
             $resource = new IteratorIterator(new ArrayIterator($resource));
         }
 
         if ($resource instanceof Traversable) {
             $this->resource = $resource;
+        }
+
+        if ($empty || is_array(current(iterator_to_array($this->resource)))) {
             return;
         }
 
