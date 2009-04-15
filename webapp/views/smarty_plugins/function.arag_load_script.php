@@ -36,8 +36,8 @@ function smarty_function_arag_load_script($params, &$smarty)
     global $_loaded;
 
     if (!isset($_loaded[sha1($src)])) {
-        $_loaded[sha1($src)] = True;
-        return html::script($src);
+        $_loaded[sha1($src)]  = True;
+        $GLOBALS['headers'][] = html::script($src);
     }
 
     return Null;
