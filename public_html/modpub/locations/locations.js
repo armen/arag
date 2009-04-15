@@ -26,20 +26,15 @@ var fetchData = function(sourceUrl, destination) {
 }
 
 var updateSelect = function(options, name) {
-
     var container = $(name+'_container');
-
     if (options.length) {
-        var select = $(name), optionTags;
-
+        var select = $(name);
+        select.empty();
         options.each(function(option) {
-            optionTags += '<option value="' + option.key + '">' + option.value + '</option>';
+            new Element('option', {'value':option.key, 'html':option.value}).inject(select);
         });
-        select.set('html', optionTags);
         container.appendChild(select);
-
         new Fx.Slide(container).slideIn();
-
     } else {
         $(name).setProperty('value', 0);
         new Fx.Slide(container).slideOut();
