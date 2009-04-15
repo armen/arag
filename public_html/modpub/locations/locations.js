@@ -1,17 +1,17 @@
-var initLocations = function(prefix) {
-    $(prefix+'country').addEvent('change', function (e) {
+var initLocations = function(country_name, province_name, city_name) {
+    $(country_name).addEvent('change', function (e) {
         e.stop();
-        getProvincesUrl = getProvincesBaseUrl + $(prefix+'country').getProperty('value');
-        getCitiesUrl    = getCitiesBaseUrl + $(prefix+'province').getProperty('value')  + '/' + $(prefix+'country').getProperty('value');
+        getProvincesUrl = getProvincesBaseUrl + ($(country_name).getProperty('value') ? $(country_name).getProperty('value') : 0);
+        getCitiesUrl    = getCitiesBaseUrl + ($(province_name).getProperty('value') ? $(province_name).getProperty('value') : 0)   + '/' + ($(country_name).getProperty('value') ? $(country_name).getProperty('value') : 0);
 
-        fetchData(getProvincesUrl, prefix+'province');
-        fetchData(getCitiesUrl, prefix+'city');
+        fetchData(getProvincesUrl, province_name);
+        fetchData(getCitiesUrl, city_name);
     });
 
-    $(prefix+'province').addEvent('change', function (e) {
+    $(province_name).addEvent('change', function (e) {
         e.stop();
-        getCitiesUrl = getCitiesBaseUrl + $(prefix+'province').getProperty('value')  + '/' + $(prefix+'country').getProperty('value');
-        fetchData(getCitiesUrl, prefix+'city');
+        getCitiesUrl = getCitiesBaseUrl + $(province_name).getProperty('value')  + '/' + $(country_name).getProperty('value');
+        fetchData(getCitiesUrl, city_name);
     });
 }
 
