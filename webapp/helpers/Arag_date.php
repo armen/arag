@@ -535,9 +535,9 @@ class date extends date_Core {
     }
     // }}}
     // {{{ timetostr
-    public static function timetostr($timestamp, $format = 'y/m/d')
+    public static function timetostr($timestamp, $format = 'y/m/d', $do_localization = true)
     {
-            if (Kohana::config('locale.lang') == "fa") {
+            if ($do_localization && Kohana::config('locale.lang') == "fa") {
                 $date = date::gregorian_to_jalali($timestamp);
                 $str  = $date['year'].'/'.$date['month'].'/'.$date['day'];
             } else {
