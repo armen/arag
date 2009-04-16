@@ -30,6 +30,18 @@ class Calendar_Model extends Model
         return $this->db->select('id', 'date', 'description')->from($this->tableName)->get()->result(False);
     }
     // }}}
+    // {{{ getHolidayDates
+    public function getHolidayDates()
+    {
+        $holidays = $this->db->select('date')->from($this->tableName)->get()->result(False);
+        $dates    = Array();
+        foreach($holidays as $holiday) {
+            $date         = (int)$holiday['date'];
+            $dates[$date] = $date;
+        }
+        return $dates;
+    }
+    // }}}
     // {{{ get
     public function get($id)
     {
