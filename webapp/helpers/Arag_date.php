@@ -312,7 +312,7 @@ class date extends date_Core {
             }
         }
 
-        return $fu_days;
+        return self::is_jleap($year-1) ? $fu_days : $fu_days + 1;
     }
     // }}}
     // {{{ calc_current
@@ -331,7 +331,10 @@ class date extends date_Core {
          * Assuming IRST +3:30.
          */
 
-        $n_seconds += (210 * 60);
+        $timezone = new DateTimeZone(Kohana::config('core.timezone'));
+        $time     = new DateTime("now", $timezone);
+
+        $n_seconds += $timezone ->getOffset($time);
         $n_days     = (int) ($n_seconds / self::JCAL_DAY_LEN);
 
         return self::convert_to_jalali($n_days);
@@ -349,7 +352,10 @@ class date extends date_Core {
          * Assuming IRST +3:30.
          */
 
-        $timestamp += (210 * 60);
+        $timezone = new DateTimeZone(Kohana::config('core.timezone'));
+        $time     = new DateTime("now", $timezone);
+
+        $timestamp += $timezone ->getOffset($time);
         $n_days     = (int) ($timestamp / self::JCAL_DAY_LEN);
 
         return self::convert_to_jalali($n_days);
@@ -525,8 +531,12 @@ class date extends date_Core {
             $lang   = Kohana::config('locale.lang') == "fa";
             $type   = $lang == 'fa' ? 'jalali' : 'gregorian';
         }
+
+        $timezone = new DateTimeZone(Kohana::config('core.timezone'));
+        $time     = new DateTime("now", $timezone);
+
         if ($type == "jalali") {
-            $timestamp = date::jalali_to_gregorian($array[0], $array[1], $array[2]) - (210 * 60);
+            $timestamp = date::jalali_to_gregorian($array[0], $array[1], $array[2]) - ($timezone ->getOffset($time));
         } else {
             $timestamp = mktime(0, 0, 0, $array[1], $array[2], $array[0]);
         }
