@@ -20,6 +20,16 @@
                             $('{/literal}{$id}{literal}').setProperty('value', '');
                             cal.recreate();
                         });
+            $('{/literal}{$id}{literal}').addEvent('focus', function() {
+                                if ($('{/literal}{$id}{literal}').get('value') == '{/literal}{$format|replace:'%':''}{literal}')
+                                    {$('{/literal}{$id}{literal}').setProperty('value', '');
+                                }
+                        });
+            $('{/literal}{$id}{literal}').addEvent('blur', function() {
+                                if (!$('{/literal}{$id}{literal}').get('value'))
+                                    {$('{/literal}{$id}{literal}').setProperty('value', '{/literal}{$format|replace:'%':''}{literal}');
+                                }
+                        });
         });
         {/literal}
     </script>
@@ -30,7 +40,7 @@
 {/if}
 {if !$parent}
     {if $multiple == "false"}
-    <input id="{$id}" name="{$name}" type="text" value="{$value}" onfocus="javascript:Calendar.show;" {$size|smarty:nodefaults} />
+    <input id="{$id}" name="{$name}" type="text" value="{$value|smarty:nodefaults|default:$format|replace:'%':''}" onfocus="javascript:Calendar.show;" {$size|smarty:nodefaults} />
     {else}
         <input id="{$id}" name="{$name}" type="hidden" value="{$multiple_value}" />
     {/if}
