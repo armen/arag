@@ -14,10 +14,14 @@
 
 function smarty_function_arag_location($params, &$smarty)
 {
-    $prefix   = Null;
-    $city     = Kohana::config('locale.default_city', 0);
-    $province = Kohana::config('locale.default_province', 0);
-    $country  = Kohana::config('locale.default_country', 0);
+    $prefix        = Null;
+    $city          = Kohana::config('locale.default_city', 0);
+    $province      = Kohana::config('locale.default_province', 0);
+    $country       = Kohana::config('locale.default_country', 0);
+    $city_name     = 'city';
+    $country_name  = 'country';
+    $province_name = 'province';
+    $width         = '180';
 
     foreach ($params as $_key => $_val) {
 
@@ -36,6 +40,13 @@ function smarty_function_arag_location($params, &$smarty)
                 ((isset($params['accept_null']) && $params['accept_null']) || (int) $_val) AND $$_key = (int) $_val;
                 break;
 
+            case 'city_name':
+            case 'province_name':
+            case 'country_name':
+            case 'width':
+                $$_key = $_val;
+                break;
+
             default:
                 $smarty->trigger_error("arag_location: Unknown attribute '$_key'");
         }
@@ -44,13 +55,16 @@ function smarty_function_arag_location($params, &$smarty)
     $locations = Model::load('Locations', 'locations');
     $view      = new View('frontend/arag_location');
 
-    $view->prefix    = $prefix;
-    $view->countries = $locations->getCountries();
-    $view->provinces = $locations->getProvinces($country);
-    $view->cities    = $locations->getCities($province, $country);
-    $view->country   = $country;
-    $view->province  = $province;
-    $view->city      = $city;
+    $view->countries     = $locations->getCountries();
+    $view->provinces     = $locations->getProvinces($country);
+    $view->cities        = $locations->getCities($province, $country);
+    $view->country       = $country;
+    $view->province      = $province;
+    $view->city          = $city;
+    $view->country_name  = $prefix.$country_name;
+    $view->province_name = $prefix.$province_name;
+    $view->city_name     = $prefix.$city_name;
+    $view->width         = $width;
 
     return $view->render();
 }
