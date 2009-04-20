@@ -85,8 +85,6 @@ class PList_Component extends Component implements IteratorAggregate, ArrayAcces
     // {{{ setResource
     public function setResource($resource)
     {
-        $empty = !(bool) $resource;
-
         if (is_array($resource)) {
             $resource = new IteratorIterator(new ArrayIterator($resource));
         }
@@ -95,7 +93,11 @@ class PList_Component extends Component implements IteratorAggregate, ArrayAcces
             $this->resource = $resource;
         }
 
-        if ($empty || is_array(current(iterator_to_array($this->resource)))) {
+        $array_resource = iterator_to_array($this->resource);
+        
+        if ($resource == False || $resource == Null || 
+            is_array(current($array_resource)) || 
+            empty($array_resource)) {
             return;
         }
 
