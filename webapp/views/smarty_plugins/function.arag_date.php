@@ -73,7 +73,7 @@ function smarty_function_arag_date($params, &$smarty)
     $data['toggle']            = isset($toggle) ? True : False;
     $data['format']            = isset($format) ? $format : '%Y/%m/%d';
     $data['format_sample']     = str_replace($format_character, $format_map, $data['format']);
-    $data['multiple']          = (isset($multiple) && $multiple == 'true') ? 'true' : 'false';
+    $data['multiple']          = (isset($multiple) && $multiple) ? true : false;
     $data['multiple_value']    = (isset($value) && is_array($value)) ? implode(',', $value) : Null;
     $data['dates_to_validate'] = (isset($dates_to_validate) && is_array($dates_to_validate)) ? json_encode($dates_to_validate) : 'false';
     $data['is_valid']          = isset($is_valid) && $is_valid;
