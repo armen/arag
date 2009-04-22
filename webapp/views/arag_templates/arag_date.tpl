@@ -84,15 +84,21 @@
                 var datesToValidate = {/literal}{$prefix}datesToValidate;{literal}
 
                 if (datesToValidate) {
-                    for (i = 0; i < datesToValidate.length; i++) {
-                        if (datesToValidate[i] == date.print(format, type, false)) {
-                            return false;
+                    for (valid_date in datesToValidate) {
+                        valid_date = new Date(datesToValidate[valid_date]*1000);
+                        if (valid_date.getYear() == date.getYear() && valid_date.getMonth() == date.getMonth() && valid_date.getDay() == date.getDay()) {
+                            {/literal}
+                                return {if $is_valid}true{else}false{/if};
+                            {literal}
                         }
                     }
-                    return {if $is_valid}true{else}false{/if};
+                    {/literal}
+                        return {if $is_valid}false{else}true{/if};
+                    {literal}
                 }
-
-                return {if $is_valid}false{else}true{/if};
+                {/literal}
+                    return {if $is_valid}true{else}false{/if};
+                {literal}
             }
         });
     {/literal}

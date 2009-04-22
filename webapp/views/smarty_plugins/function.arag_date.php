@@ -76,7 +76,7 @@ function smarty_function_arag_date($params, &$smarty)
     $data['multiple']          = (isset($multiple) && $multiple == 'true') ? 'true' : 'false';
     $data['multiple_value']    = (isset($value) && is_array($value)) ? implode(',', $value) : Null;
     $data['dates_to_validate'] = (isset($dates_to_validate) && is_array($dates_to_validate)) ? json_encode($dates_to_validate) : 'false';
-    $data['is_valid']          = $is_valid;
+    $data['is_valid']          = isset($is_valid) && $is_valid;
     $data['size']              = $size;
     $data['parent']            = isset($parent) ? $parent : Null;
     if (is_array($value)) {
