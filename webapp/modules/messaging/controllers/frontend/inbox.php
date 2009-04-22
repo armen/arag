@@ -27,17 +27,7 @@ class Inbox_Controller extends Messaging_Frontend
     // {{{ new_message_read
     public function new_message_read()
     {
-        $users     = Model::load('users','user');
-        $usersList = $users->getUsers(NULL, NULL, NULL, NULL, true);
-
-        $userOptions = array();
-
-        foreach ($usersList as $user) {
-            $userOptions[$user['username']] = $user['user_name'];
-        }
-
-        $this->layout->content               = new View('frontend/new_message');
-        $this->layout->content->user_options = $userOptions;
+        $this->layout->content = new View('frontend/new_message');
     }
     // }}}
     // {{{ new_message_validate_write

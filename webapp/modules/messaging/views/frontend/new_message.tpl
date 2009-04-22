@@ -13,10 +13,7 @@
             <tr>
                 <td>{asterisk}_("To"):</td>
                 <td>
-                    <select name="username">
-                    <option value="">&nbsp;</option>
-                    {html_options options=$user_options}
-                    </select>
+                    {arag_user_search name="username" value=$user|smarty:nodefaults|default:null}
                 </td>
             </tr>
             <tr>
