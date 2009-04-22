@@ -15,8 +15,8 @@ class Backend_Controller extends Logger_Backend
         $from           = $this->input->post('from', $this->session->get_once('from'), null);
         $to             = $this->input->post('to', $this->session->get_once('to'), null);
 
-        $datefrom       = strtotime($from);
-        $dateto         = strtotime($to);
+        $datefrom       = date::strtotime($from);
+        $dateto         = date::strtotime($to);
 
         if ($datefrom && $datefrom === $dateto) {
              $dateto += 86400;
@@ -50,17 +50,18 @@ class Backend_Controller extends Logger_Backend
         $this->layout->content->massages = $this->messages;
         $this->layout->content->archive  = $archive_array;
 
+        $this->session->set('username', $user_name);
         $this->session->set('from', $from);
         $this->session->set('to', $to);
         $this->session->set('operation', $operation);
         $this->session->set('archive_status', $archive_status);
 
 
-        $this->layout->archive_status = $archive_status;
-        $this->layout->from           = $from;
-        $this->layout->to             = $to;
-        $this->layout->username       = $user_name;
-        $this->layout->operation      = $operation;
+        $this->layout->content->archive_status = $archive_status;
+        $this->layout->content->from           = $from;
+        $this->layout->content->to             = $to;
+        $this->layout->content->username       = $user_name;
+        $this->layout->content->operation      = $operation;
     }
     // }}}
     // {{{ show_operation

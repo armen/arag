@@ -29,14 +29,14 @@ class Logger_Model extends Model
     function search($archive_status, $user_name, $operation, $datefrom, $dateto)
     {
         $this->db->select('id, namespace, uri, owner, date, archive');
-        $this->db->Where('archive', $params['archive_status']);
+        $this->db->Where('archive', $archive_status);
 
-        if (isset($params['user_name']) and $params['user_name']) {
-            $this->db->like('owner', $params['user_name']);
+        if (isset($user_name) and $user_name) {
+            $this->db->like('owner', $user_name);
         }
 
-        if (isset($params['operation']) and $params['operation']) {
-            $this->db->where('uri', $params['operation']);
+        if (isset($operation) and $operation) {
+            $this->db->where('uri', $operation);
         }
 
         if ($datefrom && !$dateto) {
