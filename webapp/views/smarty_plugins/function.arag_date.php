@@ -62,7 +62,6 @@ function smarty_function_arag_date($params, &$smarty)
     $data['prefix']         = str_replace(Array('[', ']'), '_', $name);
     $data['id']             = isset($id) ? $id : $name;
     $data['toggle']         = isset($toggle) ? True : False;
-    $data['value']          = isset($value) ? $value : Null;
     $data['format']         = isset($format) ? $format : '%Y/%m/%d';
     $data['format_sample']  = str_replace($format_character, $format_map, $data['format']);
     $data['multiple']       = (isset($multiple) && $multiple) ? true : false;
@@ -73,8 +72,10 @@ function smarty_function_arag_date($params, &$smarty)
         foreach($value as &$date) {
             $date = date::timetostr($date, 'Y/m/d', false);
         }
-        $data['value'] = $value;
+    } elseif($value) {
+        $value = date::timetostr($value);
     }
+    $data['value'] = $value;
 
     $view = new View('arag_templates/arag_date', $data);
     return $view->render();

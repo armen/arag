@@ -45,7 +45,7 @@ class Backend_Controller extends Controller
     public function add_read()
     {
         $this->layout->content              = New View('backend/add');
-        $this->layout->content->date        = $this->input->post('date');
+        $this->layout->content->date        = date::get_time('date');
         $this->layout->content->description = $this->input->post('description');
     }
     // }}}
@@ -74,7 +74,7 @@ class Backend_Controller extends Controller
         $holiday                            = $this->calendar->get($id);
         $this->layout->content              = New View('backend/edit');
         $this->layout->content->id          = $holiday['id'];
-        $this->layout->content->date        = date::timetostr($holiday['date']);
+        $this->layout->content->date        = $holiday['date'];
         $this->layout->content->description = $holiday['description'];
     }
     // }}}

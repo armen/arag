@@ -201,7 +201,7 @@ class Backend_Controller extends Controller
         $data = array("flagsaved"   => $this->session->get_once('new_group_saved'),
                       "flagform"    => $flagform,
                       "appname"     => $appname,
-                      "expire_date" => $this->input->post('expire_date'));
+                      "expire_date" => date::get_time('expire_date'));
 
         $this->layout->content = new View('backend/new_group', $data);
     }
