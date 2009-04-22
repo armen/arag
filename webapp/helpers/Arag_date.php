@@ -538,7 +538,7 @@ class date extends date_Core {
         if ($type == "jalali") {
             $timestamp = date::jalali_to_gregorian($array[0], $array[1], $array[2]) - ($timezone ->getOffset($time));
         } else {
-            $timestamp = mktime(0, 0, 0, $array[1], $array[2], $array[0]);
+            $timestamp = mktime(0, 0, 0, (int) $array[1], (int) $array[2], (int) $array[0]);
         }
 
         return $timestamp;
