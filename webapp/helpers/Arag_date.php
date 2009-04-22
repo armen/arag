@@ -312,7 +312,7 @@ class date extends date_Core {
             }
         }
 
-        return self::is_jleap($year-1) ? $fu_days : $fu_days + 1;
+        return self::is_jleap($year-1) ? $fu_days + 1 : $fu_days;
     }
     // }}}
     // {{{ calc_current
