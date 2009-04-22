@@ -35,17 +35,17 @@
     </script>
 {/if}
 {if $toggle}
-	<img src="{$arag_base_url}images/date/toggle.png" width="22" height="22" id="{$id}_toggle" alt={quote}_("Change calendar system"){/quote} style="cursor: pointer;" />
-	<input id="{$id}_type" name="type_{$name}" type="hidden" value="{$type}" />
+    <img src="{$arag_base_url}images/date/toggle.png" width="22" height="22" id="{$id}_toggle" alt={quote}_("Change calendar system"){/quote} style="cursor: pointer;" />
+    <input id="{$id}_type" name="type_{$name}" type="hidden" value="{$type}" />
 {/if}
 {if !$parent}
-    {if $multiple == "false"}
+    {if !$multiple}
     <input id="{$id}" name="{$name}" type="text"  onfocus="javascript:Calendar.show;" value="{$value|smarty:nodefaults|default:''}" {$size|smarty:nodefaults} />
     {else}
-        <input id="{$id}" name="{$name}" type="hidden" value="{$multiple_value}" />
+        <input id="{$id}" name="{$name}" type="hidden" value="" />
     {/if}
     <img src="{$arag_base_url}images/date/date.png" width="22" height="22" id="{$id}_cal" alt={quote}_("Calendar"){/quote} style="cursor: pointer;" />
-    {if $multiple == "false"}
+    {if !$multiple}
         &nbsp;[&nbsp;{$format_sample}&nbsp;]
     {/if}
 {/if}
@@ -55,8 +55,8 @@
     var format              = "{$format}";
     var button              = "{$id}_cal";
     var parent              = {if $parent}"{$parent}"{else}null{/if};
-    var multiple            = {if $multiple == "true"}[{foreach from=$value item="date" name="dates"}Date.parseDate("{$date}", format, type){if !$smarty.foreach.dates.last},{/if}{/foreach}]{else}false{/if};
-    var {$prefix}validDates = {$valid_dates|smarty:nodefaults};
+    var multiple            = {if $multiple}[{foreach from=$value item="date" name="dates"}new Date('{$date} GMT'){if !$smarty.foreach.dates.last},{/if}{/foreach}]{else}false{/if};
+    var {$prefix}validDates = '{$valid_dates|smarty:nodefaults}';
     var {$prefix}Cal        = Calendar.setup(
     {literal}
         {
