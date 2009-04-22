@@ -9,17 +9,30 @@ class Backend_Controller extends Logger_Backend
     // {{{ index
     function index_any()
     {
-        $archive_status = $this->input->post('archive_status', 0);
-        $user_name      = $this->input->post('username', null);
-        $operation      = $this->input->post('operation', null);
-        $date           = date::get_time('date');
-        $namespace      = $this->session->get("logger_appname", APPNAME);
+        $archive_status = $this->input->post('archive_status', $this->session->get_once('archive_status'), 0);
+        $user_name      = $this->input->post('username', $this->session->get_once('username'), null);
+        $operation      = $this->input->post('operation', $this->session->get_once('operation'), null);
+        $from           = $this->input->post('from', $this->session->get_once('from'), null);
+        $to             = $this->input->post('to', $this->session->get_once('to'), null);
 
-        $logs = $this->logger->search(array('archive_status'    => $archive_status,
-                                            'user_name'         => $user_name,
-                                            'operation'         => $operation,
-                                            'date'              => $date,
-                                            'namespace'         => $namespace));
+        $datefrom       = strtotime($from);
+        $dateto         = strtotime($to);
+
+        if ($datefrom && $datefrom === $dateto) {
+             $dateto += 86400;
+        }
+
+        if ($datefrom && $dateto && $datefrom > $dateto) {
+             $temp       = $dateto;
+             $dateto     = $datefrom;
+             $datefrom   = $temp;
+
+             $temp = $to;
+             $to   = $from;
+             $from = $temp;
+        }
+
+        $logs = $this->logger->search($archive_status, $user_name, $operation, $datefrom, $dateto);
 
         $archive_array = array(0 => _("Non Archived"), 1 => _("Archived"));
 
@@ -37,10 +50,17 @@ class Backend_Controller extends Logger_Backend
         $this->layout->content->massages = $this->messages;
         $this->layout->content->archive  = $archive_array;
 
-        $this->layout->content->archive_status = $archive_status;
-        $this->layout->content->user_name      = $user_name;
-        $this->layout->content->date           = $this->input->post('date', null);
-        $this->layout->content->operation      = $operation;
+        $this->session->set('from', $from);
+        $this->session->set('to', $to);
+        $this->session->set('operation', $operation);
+        $this->session->set('archive_status', $archive_status);
+
+
+        $this->layout->archive_status = $archive_status;
+        $this->layout->from           = $from;
+        $this->layout->to             = $to;
+        $this->layout->username       = $user_name;
+        $this->layout->operation      = $operation;
     }
     // }}}
     // {{{ show_operation

@@ -11,7 +11,7 @@
             </tr>
             <tr>
                 <td align="{right}">_("User"):</td>
-                <td><input type="text" name="username" value="{$user_name}" /></td>
+                <td><input type="text" name="username" value="{$username|smarty:nodefaults|default:''}" /></td>
             </tr>
             <tr>
                 <td align="{right}">_("Operation"):</td>
@@ -23,8 +23,12 @@
                 </td>
             </tr>
             <tr>
-                <td align="{right}">_("Date"):</td>
-                <td>{arag_date name="date" value="$date"}</td>
+                <td align="{right}">_("Date From"):</td>
+                <td>{arag_date name="from" value="$from"}</td>
+            </tr>
+            <tr>
+                <td align="{right}">_("Date To"):</td>
+                <td>{arag_date name="to" value="$to"}</td>
             </tr>
             <tr>
                 <td>&nbsp;</td>

@@ -26,7 +26,7 @@ class Logger_Model extends Model
     }
     // }}}
     // {{{ search
-    function search($params)
+    function search($archive_status, $user_name, $operation, $datefrom, $dateto)
     {
         $this->db->select('id, namespace, uri, owner, date, archive');
         $this->db->Where('archive', $params['archive_status']);
@@ -39,13 +39,18 @@ class Logger_Model extends Model
             $this->db->where('uri', $params['operation']);
         }
 
-        if (isset($params['date']) and $params['date']) {
-            $this->db->where('date >=', $params['date']);
-            $this->db->where('date <=', $params['date'] + 86400);
+        if ($datefrom && !$dateto) {
+            $this->db->where('date >=', $datefrom);
+            $this->db->where('date <=', $datefrom + 86400);
         }
 
-        if (isset($params['namespace']) and $params['namespace']) {
-            $this->db->where('namespace', $params['namespace']);
+        if ($datefrom && $dateto) {
+            $this->db->where('date >=', $datefrom);
+            $this->db->where('date <=', $dateto);
+        }
+
+        if (!$datefrom && $dateto) {
+            $this->db->where('date <=', $dateto);
         }
 
         $query = $this->db->get($this->tableName);
