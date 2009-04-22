@@ -56,8 +56,8 @@
     var button              = "{$id}_cal";
     var parent              = {if $parent}"{$parent}"{else}null{/if};
     var multiple            = {if $multiple}[{foreach from=$value item="date" name="dates"}new Date('{$date} GMT'){if !$smarty.foreach.dates.last},{/if}{/foreach}]{else}false{/if};
-    var {$prefix}validDates = '{$valid_dates|smarty:nodefaults}';
-    var {$prefix}Cal        = Calendar.setup(
+    var {$prefix}datesToValidate = {$dates_to_validate|smarty:nodefaults};
+    var {$prefix}Cal             = Calendar.setup(
     {literal}
         {
             inputField      : multiple ? false : "{/literal}{$id}{literal}",       // ID of the input field
@@ -81,18 +81,18 @@
             },
             disableFunc     : function(date) {
 
-                var validDates = {/literal}{$prefix}validDates;{literal}
+                var datesToValidate = {/literal}{$prefix}datesToValidate;{literal}
 
-                if (validDates) {
-                    for (i = 0; i < validDates.length; i++) {
-                        if (validDates[i] == date.print(format, type, false)) {
+                if (datesToValidate) {
+                    for (i = 0; i < datesToValidate.length; i++) {
+                        if (datesToValidate[i] == date.print(format, type, false)) {
                             return false;
                         }
                     }
-                    return true;
+                    return {if $is_valid}true{else}false{/if};
                 }
 
-                return false;
+                return {if $is_valid}false{else}true{/if};
             }
         });
     {/literal}
