@@ -14,7 +14,9 @@
 
 function smarty_function_arag_date($params, &$smarty)
 {
-    $size = Null;
+    $size             = Null;
+    $format_character = array('%Y', '%y', '%o', '%m', '%n', '%d', '%j');
+    $format_map       = array('yyyy', 'yy', 'o', 'mm', 'm', 'dd', 'd');
 
     foreach ($params as $_key => $_val) {
         switch ($_key) {
@@ -62,6 +64,7 @@ function smarty_function_arag_date($params, &$smarty)
     $data['toggle']         = isset($toggle) ? True : False;
     $data['value']          = isset($value) ? $value : Null;
     $data['format']         = isset($format) ? $format : '%Y/%m/%d';
+    $data['format_sample']  = str_replace($format_character, $format_map, $data['format']);
     $data['multiple']       = (isset($multiple) && $multiple == 'true') ? 'true' : 'false';
     $data['multiple_value'] = (isset($value) && is_array($value)) ? implode(',', $value) : Null;
     $data['valid_dates']    = (isset($valid_dates) && is_array($valid_dates)) ? json_encode($valid_dates) : 'false';

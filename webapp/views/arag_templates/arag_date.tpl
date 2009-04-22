@@ -21,13 +21,13 @@
                             cal.recreate();
                         });
             $('{/literal}{$id}{literal}').addEvent('focus', function() {
-                                if ($('{/literal}{$id}{literal}').get('value') == '{/literal}{$format|replace:'%':''}{literal}')
+                                if ($('{/literal}{$id}{literal}').get('value') == '{/literal}{$format_sample}{literal}')
                                     {$('{/literal}{$id}{literal}').setProperty('value', '');
                                 }
                         });
             $('{/literal}{$id}{literal}').addEvent('blur', function() {
                                 if (!$('{/literal}{$id}{literal}').get('value'))
-                                    {$('{/literal}{$id}{literal}').setProperty('value', '{/literal}{$format|replace:'%':''}{literal}');
+                                    {$('{/literal}{$id}{literal}').setProperty('value', '{/literal}{$format_sample}{literal}');
                                 }
                         });
         });
@@ -40,11 +40,14 @@
 {/if}
 {if !$parent}
     {if $multiple == "false"}
-    <input id="{$id}" name="{$name}" type="text" value="{$value|smarty:nodefaults|default:$format|replace:'%':''}" onfocus="javascript:Calendar.show;" {$size|smarty:nodefaults} />
+    <input id="{$id}" name="{$name}" type="text"  onfocus="javascript:Calendar.show;" value="{$value|smarty:nodefaults|default:''}" {$size|smarty:nodefaults} />
     {else}
         <input id="{$id}" name="{$name}" type="hidden" value="{$multiple_value}" />
     {/if}
     <img src="{$arag_base_url}images/date/date.png" width="22" height="22" id="{$id}_cal" alt={quote}_("Calendar"){/quote} style="cursor: pointer;" />
+    {if $multiple == "false"}
+        &nbsp;[&nbsp;{$format_sample}&nbsp;]
+    {/if}
 {/if}
 
 <script type="text/javascript">
