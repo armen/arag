@@ -132,7 +132,7 @@ class Arag_Auth {
     }
     // }}}
     // {{{ is_accessible
-    public static function is_accessible($uri, $routed_uri = True)
+    public static function is_accessible($uri, $routed_uri = True, $appname = Null)
     {
         static $cache = Array();
 
@@ -140,10 +140,10 @@ class Arag_Auth {
             $uri = Router::routed_uri($uri);
         }
 
-        if (!isset($cache[$uri])) {
+        if (!isset($cache[$uri.'::'.$appname])) {
 
             $session = Session::instance();
-            $appname = $session->get('user.appname', APPNAME);
+            $appname = ($appname != Null) ? $appname : $session->get('user.appname', APPNAME);
             $filters = $session->get('privilege_filters.'.$appname, False);
 
             // When user Logins privilege_filters unset by login method
@@ -163,10 +163,10 @@ class Arag_Auth {
                 $authorized = self::is_authorized($uri, $session->get('privilege_filters.'.$appname, Array()), False);
             }
 
-            $cache[$uri] = $authorized;
+            $cache[$uri.'::'.$appname] = $authorized;
         }
 
-        return $cache[$uri];
+        return $cache[$uri.'::'.$appname];
     }
     // }}}
 }
