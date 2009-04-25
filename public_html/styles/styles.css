@@ -589,6 +589,12 @@ input[type=reset][disabled] {
     width           : 16px;
     height          : 16px;
 }
+.resume_action_alt {
+    background      : transparent url(../images/list/disabled_resume.png) no-repeat center;
+    font-size       : 0px;
+    width           : 16px;
+    height          : 16px;
+}
 .users_list {
     background      : transparent url(../images/list/users_list.png) no-repeat center;
     font-size       : 0px;
