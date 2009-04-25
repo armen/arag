@@ -511,7 +511,7 @@ class Users_Model extends Model
             $appnames[] = $row['appname'].'::'.$row['groupname'];
         }
 
-        return implode(', ', $appnames);
+        return !empty($appnames) ? implode(', ', $appnames) : '-';
     }
     // }}}
     // {{{ getUserGroups
