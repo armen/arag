@@ -104,6 +104,7 @@ class Controller extends Controller_Core {
             $this->smarty->assign('arag_appname', APPNAME);
             $this->smarty->assign('arag_masterapp', MASTERAPP);
             $this->smarty->assign('arag_current_module', Router::$module);
+            $this->smarty->assign('arag_username', Session::instance()->get('user.username'));
 
             // Add current module plugins directory to plugins_dir
             $this->smarty->plugins_dir[] = MODPATH.Router::$module.'/views/plugins';

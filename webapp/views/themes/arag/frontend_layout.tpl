@@ -15,11 +15,11 @@
 <body>
     {arag_block align="right" template="blank"}
         {if $auth}
-            {capture assign="welcome"}_("Welcome %s %s"){/capture}
+            {capture assign="welcome"}_("Welcome %s %s (%s)"){/capture}
             {capture assign="logout"}_("Logout"){/capture}
             {capture assign="profile"}_("My Profile"){/capture}
             {capture assign="controlpanel"}_("Control Panel"){/capture}
-            {$welcome|sprintf:$firstname:$surname} |
+            {$welcome|sprintf:$firstname:$surname:$arag_username} |
             {kohana_helper function="html::anchor" uri="user_profile/backend/index" title=$profile} |
             {kohana_helper function="html::anchor" uri="user/frontend/logout" title=$logout} |
             {kohana_helper function="html::anchor" uri="controlpanel" title=$controlpanel}
