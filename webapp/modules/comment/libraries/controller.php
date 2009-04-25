@@ -51,7 +51,7 @@ class Comments_Controller extends Controller
     }
     // }}}
     // {{{ attach
-    private function attach()
+    protected function attach()
     {
         $attach_string = '';
         $attachments   = $this->input->post('attachments');
