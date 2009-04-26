@@ -156,7 +156,7 @@ class Arag_Auth {
             }
 
             $privileges = $session->get('user.privileges');
-            $authorized = self::is_authorized($uri, $privileges[$appname]);
+            $authorized = isset($privileges[$appname]) && self::is_authorized($uri, $privileges[$appname]);
 
             if ($authorized) {
                 // The user is authorized so we will try to filter his/her privileges with a blacklist
