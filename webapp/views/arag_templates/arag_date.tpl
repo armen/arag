@@ -34,31 +34,20 @@
         {/literal}
     </script>
 {/if}
+{if $toggle}
+    <img src="{$arag_base_url}images/date/toggle.png" width="22" height="22" id="{$id}_toggle" alt={quote}_("Change calendar system"){/quote} style="cursor: pointer;" />
+    <input id="{$id}_type" name="type_{$name}" type="hidden" value="{$type}" />
+{/if}
 {if !$parent}
-    {if $multiple == "false"}
+    {if !$multiple}
     <input id="{$id}" name="{$name}" type="text"  onfocus="javascript:Calendar.show;" value="{$value|smarty:nodefaults|default:''}" {$size|smarty:nodefaults} />
     {else}
-        <input id="{$id}" name="{$name}" type="hidden" value="{$multiple_value}" />
-    {/if}
-    {if $multiple == "false"}
-        {capture assign=title}_("Format"){/capture}
-        {arag_tooltip activator=$id title=$title}
-            {$format_sample}
-        {/arag_tooltip}
+        <input id="{$id}" name="{$name}" type="hidden" value="" />
     {/if}
     <img src="{$arag_base_url}images/date/date.png" width="22" height="22" id="{$id}_cal" alt={quote}_("Calendar"){/quote} style="cursor: pointer;" />
-    {capture assign=title}_("Select Date"){/capture}
-    {arag_tooltip activator="`$id`_cal" title=$title}
-        _("Click here to select date")
-    {/arag_tooltip}
-{/if}
-{if $toggle}
-	<img src="{$arag_base_url}images/date/toggle.png" width="22" height="22" id="{$id}_toggle" alt={quote}_("Change calendar system"){/quote} style="cursor: pointer;" />
-    {capture assign=title}_("Toggel Calendar"){/capture}
-    {arag_tooltip activator="`$id`_toggle" title=$title}
-        _("Click here to toggle calendar type")
-    {/arag_tooltip}
-	<input id="{$id}_type" name="type_{$name}" type="hidden" value="{$type}" />
+    {if !$multiple}
+        &nbsp;[&nbsp;{$format_sample}&nbsp;]
+    {/if}
 {/if}
 
 <script type="text/javascript">
@@ -66,9 +55,9 @@
     var format              = "{$format}";
     var button              = "{$id}_cal";
     var parent              = {if $parent}"{$parent}"{else}null{/if};
-    var multiple            = {if $multiple == "true"}[{foreach from=$value item="date" name="dates"}Date.parseDate("{$date}", format, type){if !$smarty.foreach.dates.last},{/if}{/foreach}]{else}false{/if};
-    var {$prefix}validDates = {$valid_dates|smarty:nodefaults};
-    var {$prefix}Cal        = Calendar.setup(
+    var multiple            = {if $multiple}[{foreach from=$value item="date" name="dates"}new Date('{$date} GMT'){if !$smarty.foreach.dates.last},{/if}{/foreach}]{else}false{/if};
+    var {$prefix}datesToValidate = {$dates_to_validate|smarty:nodefaults};
+    var {$prefix}Cal             = Calendar.setup(
     {literal}
         {
             inputField      : multiple ? false : "{/literal}{$id}{literal}",       // ID of the input field
@@ -92,18 +81,24 @@
             },
             disableFunc     : function(date) {
 
-                var validDates = {/literal}{$prefix}validDates;{literal}
+                var datesToValidate = {/literal}{$prefix}datesToValidate;{literal}
 
-                if (validDates) {
-                    for (i = 0; i < validDates.length; i++) {
-                        if (validDates[i] == date.print(format, type, false)) {
-                            return false;
+                if (datesToValidate) {
+                    for (valid_date in datesToValidate) {
+                        valid_date = new Date(datesToValidate[valid_date]*1000);
+                        if (valid_date.getYear() == date.getYear() && valid_date.getMonth() == date.getMonth() && valid_date.getDay() == date.getDay()) {
+                            {/literal}
+                                return {if $is_valid}true{else}false{/if};
+                            {literal}
                         }
                     }
-                    return true;
+                    {/literal}
+                        return {if $is_valid}false{else}true{/if};
+                    {literal}
                 }
-
-                return false;
+                {/literal}
+                    return {if $is_valid}true{else}false{/if};
+                {literal}
             }
         });
     {/literal}
