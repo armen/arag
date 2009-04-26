@@ -47,20 +47,7 @@ class Arag_Auth {
             // User switched between applications, fetch user information of selected
             // application and store it to session, as far as user will not switch between
             // applications often, so its ok to hit database every time.
-            $user = $username ? $users->getUser($username, APPNAME) : Null;
-
-            // Fetch Anonymous user in case of unknown user, in case of known authenticated
-            // user fetch default group of this application
-            $user = isset($user['username']) ? $user : $users->getAnonymousUser(APPNAME, (boolean) $session->get('user.authenticated', False));
-
-            // Throw away personal information, we already set those in session
-            if ($username) {
-                unset($user['name'], $user['username'], $user['lastname'], $user['email']);
-            }
-
-            // Merge user privileges of current application with existed privileges
-            $user['privileges'] = array_merge($session->get('user.privileges', Array()), $user['privileges']);
-            $session->set('user', array_merge($session->get('user', Array()), $user));
+            self::update_user_application_privileges();
         }
 
         if (!self::is_accessible($destination, False)) {
@@ -160,7 +147,13 @@ class Arag_Auth {
             }
 
             $privileges = $session->get('user.privileges');
-            $authorized = isset($privileges[$appname]) && self::is_authorized($uri, $privileges[$appname]);
+
+            if (!isset($privileges[$appname])) {
+                self::update_user_application_privileges($appname);
+                $privileges = $session->get('user.privileges');
+            }
+
+            $authorized = self::is_authorized($uri, $privileges[$appname]);
 
             if ($authorized) {
                 // The user is authorized so we will try to filter his/her privileges with a blacklist
@@ -171,6 +164,28 @@ class Arag_Auth {
         }
 
         return $cache[$uri.'::'.$appname];
+    }
+    // }}}
+    // {{{ update_user_application_privileges
+    private function update_user_application_privileges($appname = APPNAME)
+    {
+        $users    = Model::load('Users', 'user');
+        $session  = Session::instance();
+        $username = $session->get('user.username');
+        $user     = $username ? $users->getUser($username, $appname) : Null;
+
+        // Fetch Anonymous user in case of unknown user, in case of known authenticated
+        // user fetch default group of this application
+        $user = isset($user['username']) ? $user : $users->getAnonymousUser($appname, (boolean) $session->get('user.authenticated', False));
+
+        // Throw away personal information, we already set those in session
+        if ($username) {
+            unset($user['name'], $user['username'], $user['lastname'], $user['email']);
+        }
+
+        // Merge user privileges of current application with existed privileges
+        $user['privileges'] = array_merge($session->get('user.privileges', Array()), $user['privileges']);
+        $session->set('user', array_merge($session->get('user', Array()), $user));
     }
     // }}}
 }
