@@ -34,22 +34,32 @@
         {/literal}
     </script>
 {/if}
-{if $toggle}
-    <img src="{$arag_base_url}images/date/toggle.png" width="22" height="22" id="{$id}_toggle" alt={quote}_("Change calendar system"){/quote} style="cursor: pointer;" />
-    <input id="{$id}_type" name="type_{$name}" type="hidden" value="{$type}" />
-{/if}
 {if !$parent}
     {if !$multiple}
     <input id="{$id}" name="{$name}" type="text"  onfocus="javascript:Calendar.show;" value="{$value|smarty:nodefaults|default:''}" {$size|smarty:nodefaults} />
     {else}
         <input id="{$id}" name="{$name}" type="hidden" value="" />
     {/if}
-    <img src="{$arag_base_url}images/date/date.png" width="22" height="22" id="{$id}_cal" alt={quote}_("Calendar"){/quote} style="cursor: pointer;" />
     {if !$multiple}
-        &nbsp;[&nbsp;{$format_sample}&nbsp;]
+        {capture assign=title}_("Sample Format"){/capture}
+        {arag_tooltip activator="$id" title=$title}
+            {$format_sample}
+        {/arag_tooltip}
     {/if}
+    <img src="{$arag_base_url}images/date/date.png" width="22" height="22" id="{$id}_cal" alt={quote}_("Calendar"){/quote} style="cursor: pointer;" />
+    {capture assign=title}_("Select Date"){/capture}
+    {arag_tooltip activator="`$id`_cal" title=$title}
+        _("Click here to select date")
+    {/arag_tooltip}
 {/if}
-
+{if $toggle}
+    <img src="{$arag_base_url}images/date/toggle.png" width="22" height="22" id="{$id}_toggle" alt={quote}_("Change calendar system"){/quote} style="cursor: pointer;" />
+    <input id="{$id}_type" name="type_{$name}" type="hidden" value="{$type}" />
+    {capture assign=title}_("Toggel Calendar Type"){/capture}
+    {arag_tooltip activator="`$id`_toggle" title=$title}
+        _("Click here to toggle calendar type")
+    {/arag_tooltip}
+{/if}
 <script type="text/javascript">
     var type                = "{$type}";
     var format              = "{$format}";
