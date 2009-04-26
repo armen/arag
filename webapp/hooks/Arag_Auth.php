@@ -76,8 +76,12 @@ class Arag_Auth {
     // {{{ is_authorized
     private static function is_authorized($destination, $privileges, $whiteList = True)
     {
-        // Append a slash to $destination
-        $destination = rtrim($destination, '/').'/';
+        $destination = rtrim($destination, '/');
+
+        if (strpos($destination, '@') !== 0) {
+            // Append a slash to $destination
+            $destination .= '/';
+        }
 
         // XXX: We have to allow this destination otherwise it is possible to happen an infinity loop.
         if ($destination === 'core/frontend/messages/not_authorized/') {
