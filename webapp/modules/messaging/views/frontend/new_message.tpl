@@ -1,5 +1,4 @@
 {*Smarty*}
-{arag_tabbed_block name="global_tabs"}
 {arag_block}
     {arag_validation_errors}
     {arag_form uri='messaging/frontend/inbox/new_message' method='post'}
@@ -34,4 +33,3 @@
         </table>
     {/arag_form}
 {/arag_block}
-{/arag_tabbed_block}

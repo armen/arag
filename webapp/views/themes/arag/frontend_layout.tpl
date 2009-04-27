@@ -30,7 +30,9 @@
         {/if}
     {/arag_block}
 
-    {$content|smarty:nodefaults|default:""}
+    {arag_tabbed_block name="global_tabs"}
+        {$content|smarty:nodefaults|default:""}
+    {/arag_tabbed_block}
     {literal}
         Execution: <b>{execution_time}</b> Memory usage: <b>{memory_usage}</b> Included files: <b>{included_files}</b>
     {/literal}

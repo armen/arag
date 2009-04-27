@@ -49,6 +49,11 @@ function smarty_block_arag_tabbed_block($params, $content, &$smarty, &$repeat)
         // Returned tabbedBlock is an array, we need first element
         $tabbedBlock = $smarty->get_template_vars($name);
 
+        if (empty($tabbedBlock)) {
+            // Do nothing just return the content
+            return $content;
+        }
+
         // Get selected item
         $selectedItemName = Null;
         $selectedItem     = Null;

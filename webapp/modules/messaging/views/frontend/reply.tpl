@@ -1,5 +1,4 @@
 {*Smarty*}
-{arag_tabbed_block name="global_tabs"}
 {arag_block}
     {arag_form uri="messaging/frontend/inbox/new_message" method="post"}
         {arag_block template="info"}
@@ -35,4 +34,3 @@
         <input type="hidden" name="parent_id" value="{$id}" />
     {/arag_form}
 {/arag_block}
-{/arag_tabbed_block}

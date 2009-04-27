@@ -55,6 +55,7 @@ $config = Array
     ),
     'plugins_paths'         => Array
     (
+        MODPATH.'tabbedblock/views/plugins',
         MODPATH.'user/views/plugins/',
         MODPATH.'locations/views/plugins/',
         MODPATH.'forecast/views/plugins/',
