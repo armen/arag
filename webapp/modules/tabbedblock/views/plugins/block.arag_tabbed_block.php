@@ -35,6 +35,11 @@ function smarty_block_arag_tabbed_block($params, $content, &$smarty, &$repeat)
                     $template = $_val;
                     $template = text::strrtrim($template, '.'.$ext);
                     break;
+
+                default:
+                    // Pass all unknown variables to template, its odd but it adds more felexibility
+                    // for custom templates
+                    $smarty->assign($_key, $_val);
             }
         }
 
@@ -109,6 +114,7 @@ function smarty_block_arag_tabbed_block($params, $content, &$smarty, &$repeat)
             $smarty->assign('tabbedblock_selected_tab_name', $selectedItemName);
             $smarty->assign('tabbedblock_selected_tab', $selectedItem);
             $smarty->assign('tabbedblock_module', Router::$module);
+            $smarty->assign('tabbedblock_request_method', (Router::$request_method == 'read') ? 'get' : 'post');
 
             return $smarty->fetch(Arag::find_file('tabbedblock', 'views', $template, False, $ext));
 
