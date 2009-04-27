@@ -22,26 +22,7 @@ function smarty_block_arag_tabbed_block($params, $content, &$smarty, &$repeat)
         $ext      = Kohana::config('smarty.templates_ext');
         $dir      = smarty_function_dir(Null, $smarty);
         $left     = smarty_function_left(Null, $smarty);
-        $name     = $smarty->get_template_vars('_tabbedblock');
-        $template = 'arag_tabbed_block';
-
-        foreach ($params as $_key => $_val) {
-            switch ($_key) {
-                case 'name':
-                    $name = '_'.$_val;
-                    break;
-
-                case 'template':
-                    $template = $_val;
-                    $template = text::strrtrim($template, '.'.$ext);
-                    break;
-
-                default:
-                    // Pass all unknown variables to template, its odd but it adds more felexibility
-                    // for custom templates
-                    $smarty->assign($_key, $_val);
-            }
-        }
+        $name     = isset($params['name']) ? '_'.$params['name'] : $smarty->get_template_vars('_tabbedblock');
 
         if (is_array($name)) {
             // if name is array then we have to get just first element by default becuase name parameter
@@ -57,6 +38,27 @@ function smarty_block_arag_tabbed_block($params, $content, &$smarty, &$repeat)
         if (empty($tabbedBlock)) {
             // Do nothing just return the content
             return $content;
+        }
+
+        $template = $tabbedBlock->getTemplate();
+        $params   = array_merge($params, $tabbedBlock->_attributes);
+
+        foreach ($params as $_key => $_val) {
+            switch ($_key) {
+                case 'name':
+                    // name is handled already
+                    break;
+
+                case 'template':
+                    $template = $_val;
+                    $template = text::strrtrim($template, '.'.$ext);
+                    break;
+
+                default:
+                    // Pass all unknown variables to template, its odd but it adds more felexibility
+                    // for custom templates
+                    $smarty->assign($_key, $_val);
+            }
         }
 
         // Get selected item
@@ -116,7 +118,7 @@ function smarty_block_arag_tabbed_block($params, $content, &$smarty, &$repeat)
             $smarty->assign('tabbedblock_module', Router::$module);
             $smarty->assign('tabbedblock_request_method', (Router::$request_method == 'read') ? 'get' : 'post');
 
-            return $smarty->fetch(Arag::find_file('tabbedblock', 'views', $template, False, $ext));
+            return $smarty->fetch(Arag::find_file('tabbedblock', 'views', $template, True, $ext));
 
         } else {
 

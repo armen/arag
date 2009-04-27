@@ -20,6 +20,8 @@ class TabbedBlock_Component extends Component
     var $_items      = Array();
     var $_title      = Null;
     var $_parameters = Array();
+    var $_attributes = Array();
+    var $_template   = 'arag_tabbed_block';
 
     // }}}
     // {{{ Constructor
@@ -79,6 +81,36 @@ class TabbedBlock_Component extends Component
         $this->_parameters = array_merge($this->_parameters, $params);
 
         return True;
+    }
+    // }}}
+    // {{{ setAttribute
+    public function setAttribute($name, $value)
+    {
+        $attribute         = Array();
+        $attribute[$name]  = $value;
+        $this->_attributes = array_merge($this->_attributes, $attribute);
+
+        return True;
+    }
+    // }}}
+    // {{{ setAttributes
+    public function setAttributes($attributes)
+    {
+        $this->_attributes = array_merge($this->_attributes, $attributes);
+
+        return True;
+    }
+    // }}}
+    // {{{ setTemplate
+    public function setTemplate($template)
+    {
+        $this->_template = $template;
+    }
+    // }}}
+    // {{{ getTemplate
+    public function getTemplate()
+    {
+        return $this->_template;
     }
     // }}}
     // {{{ getTitle
