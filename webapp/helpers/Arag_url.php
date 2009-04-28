@@ -44,5 +44,15 @@ class url extends url_Core {
         return $protocols[$protocol].$uri;
     }
     // }}}
+    // {{{ redirect
+    public static function redirect($uri = '', $method = '302')
+    {
+        if (!isset($GLOBALS['controller_execute'])) {
+            parent::redirect($uri, $method);
+        } else {
+            Controller::execute($uri);
+        }
+    }
+    // }}}
 
 } // End url

@@ -235,32 +235,51 @@ class Controller extends Controller_Core {
     // {{{ execute
     public static function execute($uri, $return_content = True)
     {
-        $theme               = Kohana::config('theme.default');
-        $old_current_uri     = Router::$current_uri;
-        Router::$current_uri = Router::routed_uri($uri);
+        $GLOBALS['controller_execute'] = True;
+        $result                        = False;
+        $theme                         = Kohana::config('theme.default');
+        $old_current_uri               = Router::$current_uri;
+        Router::$current_uri           = Router::routed_uri($uri);
         Router::setup();
 
         if (strpos(Router::$controller_path, Router::$module) !== False) {
-            include_once(Router::$controller_path);
+            $controller_path = Router::$controller_path;
         } else {
-            $controller_path = substr(Router::$controller_path, strpos(Router::$controller_path, 'controllers/'));
-            include_once(MODPATH.Router::$module.'/'.$controller_path);
+            $controller_path = MODPATH.Router::$module.'/'.substr(Router::$controller_path, strpos(Router::$controller_path, 'controllers/'));
         }
 
-        $controller = ucfirst(Router::$controller).'_Controller';
-        $controller = new $controller;
+        if (file_exists($controller_path)) {
 
-        Event::clear('system.post_controller', array($controller, '_display'));
+            // Save old include paths
+            $old_include_paths = Kohana::include_paths();
+            Kohana::config_set('core.modules', Array(MODPATH.Router::$module));
 
-        $controller->layout = new View('themes/'.$theme.'/empty_layout');
-        $controller->_call(Router::$method, Router::$arguments);
+            include_once($controller_path);
 
-        if ($return_content) {
-            $result = $controller->layout->content->render();
+            $controller = ucfirst(Router::$controller).'_Controller';
+            $controller = new $controller;
+
+            Event::clear('system.post_controller', array($controller, '_display'));
+
+            $controller->layout = new View('themes/'.$theme.'/empty_layout');
+            $controller->_call(Router::$method, Router::$arguments);
+
+            if ($return_content) {
+                if ($controller->layout->content instanceOf View) {
+                    $controller->layout->content = $controller->layout->content->render();
+                }
+                $result = $controller->layout->render();
+            } else {
+                $result = $controller;
+            }
+
+            Kohana::config_set('core.modules', $old_include_paths);
+
         } else {
-            $result = $controller;
+            Kohana::log('debug', 'Given controller path `'.$controller_path.'` does not exists in Arag_Controller::execute');
         }
 
+        unset($GLOBALS['controller_execute']);
         Router::$current_uri = $old_current_uri;
         Router::setup();
 
