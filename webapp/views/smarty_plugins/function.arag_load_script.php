@@ -12,8 +12,6 @@
 // $Id$
 // ---------------------------------------------------------------------------
 
-static $_loaded = Array();
-
 function smarty_function_arag_load_script($params, &$smarty)
 {
     if (is_array($params) && count($params)) {
@@ -33,11 +31,16 @@ function smarty_function_arag_load_script($params, &$smarty)
         $smarty->trigger_error("arag_function_arag_load_script: You have to set 'src' attribute.");
     }
 
-    global $_loaded;
+    if (!isset($GLOBALS['loaded_headers'][sha1($src)])) {
 
-    if (!isset($_loaded[sha1($src)])) {
-        $_loaded[sha1($src)]  = True;
-        $GLOBALS['headers'][] = html::script($src);
+        $GLOBALS['loaded_headers'][sha1($src)] = True;
+
+        if (strpos($src, 'mootools.js') === False && isset($GLOBALS['load_scripts_inline'])) {
+            $GLOBALS['headers'][] = "<script type=\"text/javascript\">\n//<![CDATA[\n// Imported from external file: '".$src.
+                                    "'\n".file_get_contents(DOCROOT.$src)."\n//]]>\n</script>";
+        } else {
+            $GLOBALS['headers'][] = html::script($src);
+        }
     }
 
     return Null;
