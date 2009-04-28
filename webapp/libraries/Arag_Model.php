@@ -49,7 +49,7 @@ class Model extends Model_Core {
     }
     // }}}
     // {{{ instance
-    public static function instance($model = False, $module = False)
+    public static function instance($model = False, $module = False, $options = Null)
     {
         if ($module == False) {
             $module = Router::$module;
@@ -62,7 +62,7 @@ class Model extends Model_Core {
         Kohana::config_set('core.modules', array_unique(array_merge($old_include_paths, Array(MODPATH.$module))));
 
         $model = ucfirst(strtolower($model)).'_Model';
-        eval("\$model = $model::instance();");
+        eval("\$model = $model::instance($options);");
 
         return $model;
     }
