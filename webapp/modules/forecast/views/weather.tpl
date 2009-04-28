@@ -1,6 +1,6 @@
 {if $location}
     {assign var='id' value=weather_activator_`$location.latitude`_`$location.longitude`}
-    <div id={$id} class="arag_weather">
+    <div id="{$id}" class="arag_weather">
         <div class="location">
             {$location.name}
         </div>
@@ -10,9 +10,9 @@
         <div class="temperature">
             {$weather.temperature} °C
         </div>
-        <div style="clear:both;"></div>
+        <div style="clear:both;">&nbsp;</div>
         {arag_tooltip activator=$id title='_("Details")'}
-            <table dir={dir} id='tooltip' class='tooltip'>
+            <table dir="{dir}" id="tooltip" class="tooltip">
                 <tr>
                     <td>
                         <img src="{$arag_base_url}modpub/forecast/icons/wind.png" alt={quote}_("Wind"){/quote} /> _("Wind"):
