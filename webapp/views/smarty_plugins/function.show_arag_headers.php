@@ -18,6 +18,9 @@ function smarty_function_show_arag_headers($params, &$smarty)
 
     $smarty->assign('headers', $headers);
 
+    // Remove all headers, this will prevent duplication of already loaded scripts
+    unset($GLOBALS['headers']);
+
     return $smarty->fetch(Kohana::find_file('views', 'arag_templates/show_headers', True, 'tpl'));
 }
 
