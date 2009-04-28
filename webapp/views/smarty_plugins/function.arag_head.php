@@ -19,7 +19,7 @@ function smarty_function_arag_head($params, &$smarty)
 
     $smarty->assign('theme', $theme);
     $smarty->assign('headers', $headers);
-    
+
     return $smarty->fetch(Kohana::find_file('views', 'arag_templates/head', True, 'tpl'));
 }
 
