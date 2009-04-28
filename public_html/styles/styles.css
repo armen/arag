@@ -896,143 +896,184 @@ input[type=reset][disabled] {
 /* }}} end of Comment */
 /* {{{ user_autocomplete */
 .user_autocomplete {
-    background-color: #E8DEFF;
-    list-style: none;
-    border: 1px solid black;
-    margin:0px;
-    padding: 0px;
-    position: absolute;
+    background-color  : #E8DEFF;
+    list-style        : none;
+    border            : 1px solid black;
+    margin            : 0px;
+    padding           : 0px;
+    position          : absolute;
 }
 .user_autocomplete li {
-    border-bottom:1px dashed #ccc;
-    padding: 1px;
+    border-bottom     : 1px dashed #ccc;
+    padding           : 1px;
 }
 
 .user_autocomplete li:hover {
-    background-color: #ABA4BC;
+    background-color  : #ABA4BC;
 }
 /* }}} end */
 /* {{{ Profiler */
-#kohana-profiler
-{
-	font-family: Monaco, 'Courier New';
+#kohana-profiler {
+	font-family     : Monaco, 'Courier New';
 	background-color: #F8FFF8;
-	margin-top: 20px;
-	clear: both;
-	padding: 10px 10px 0;
-	border: 1px solid #E5EFF8;
-	text-align: left;
+	margin-top      : 20px;
+	clear           : both;
+	padding         : 10px 10px 0;
+	border          : 1px solid #E5EFF8;
+	text-align      : left;
 }
-#kohana-profiler pre
-{
-	margin: 0;
-	font: inherit;
+#kohana-profiler pre {
+	margin          : 0;
+	font            : inherit;
 }
-#kohana-profiler .kp-table
-{
-	font-size: 1.0em;
-	color: #4D6171;
-	width: 100%;
-	border-collapse: collapse;
-	border-top: 1px solid #E5EFF8;
-	border-right: 1px solid #E5EFF8;
-	border-left: 1px solid #E5EFF8;
-	margin-bottom: 10px;
+#kohana-profiler .kp-table {
+	font-size       : 1.0em;
+	color           : #4D6171;
+	width           : 100%;
+	border-collapse : collapse;
+	border-top      : 1px solid #E5EFF8;
+	border-right    : 1px solid #E5EFF8;
+	border-left     : 1px solid #E5EFF8;
+	margin-bottom   : 10px;
 }
-#kohana-profiler .kp-table td
-{
+#kohana-profiler .kp-table td {
 	background-color: #FFFFFF;
-	border-bottom: 1px solid #E5EFF8;
-	padding: 3px;
-	vertical-align: top;
+	border-bottom   : 1px solid #E5EFF8;
+	padding         : 3px;
+	vertical-align  : top;
 }
-#kohana-profiler .kp-table .kp-title td
-{
-	font-weight: bold;
+#kohana-profiler .kp-table .kp-title td {
+	font-weight     : bold;
 	background-color: inherit;
 }
-#kohana-profiler .kp-table .kp-altrow td
-{
+#kohana-profiler .kp-table .kp-altrow td {
 	background-color: #F7FBFF;
 }
-#kohana-profiler .kp-table .kp-totalrow td
-{
+#kohana-profiler .kp-table .kp-totalrow td {
 	background-color: #FAFAFA;
-	border-top: 1px solid #D2DCE5;
-	font-weight: bold;
+	border-top      : 1px solid #D2DCE5;
+	font-weight     : bold;
 }
-#kohana-profiler .kp-table .kp-column
-{
-	width: 100px;
-	border-left: 1px solid #E5EFF8;
-	text-align: center;
+#kohana-profiler .kp-table .kp-column {
+	width           : 100px;
+	border-left     : 1px solid #E5EFF8;
+	text-align      : center;
 }
-#kohana-profiler .kp-table .kp-data, #kohana-profiler .kp-table .kp-name
-{
+#kohana-profiler .kp-table .kp-data, #kohana-profiler .kp-table .kp-name {
 	background-color: #FAFAFB;
-	vertical-align: top;
+	vertical-align  : top;
 }
-#kohana-profiler .kp-table .kp-name
-{
-	width: 200px;
-	border-right: 1px solid #E5EFF8;
+#kohana-profiler .kp-table .kp-name {
+	width           : 200px;
+	border-right    : 1px solid #E5EFF8;
 }
-#kohana-profiler .kp-table .kp-altrow .kp-data, #kohana-profiler .kp-table .kp-altrow .kp-name
-{
+#kohana-profiler .kp-table .kp-altrow .kp-data, #kohana-profiler .kp-table .kp-altrow .kp-name {
 	background-color: #F6F8FB;
 }
 /* end of Profiler }}} */
 /* {{{ misc */
 .odd {
-    text-align: center;
+    text-align      : center;
     background-color: #ececec;
-    border: 1px solid #ccc;
+    border          : 1px solid #ccc;
 }
 .even {
-    text-align: center;
-    border: 1px solid #ccc;
+    text-align      : center;
+    border          : 1px solid #ccc;
 }
 /* }}} */
 /* {{{ Tooltip */
 .tooltip .tip {
-   background-color: #333;
-   padding: 2px;
-   opacity: 0.85;
-   filter: alpha(opacity=85);
+    background-color: #333;
+    padding         : 2px;
+    opacity         : 0.85;
+    filter          : alpha(opacity=85);
 }
 .tooltip .tip-title {
-   color: #fff;
-   font-size: 12px;
-   padding: 2px;
+    color           : #fff;
+    font-size       : 12px;
+    padding         : 2px;
 }
 .tooltip .tip-text {
-   color: #fff;
-   font-size: 10px;
-   background-color: #666;
-   padding: 2px;
+    color           : #fff;
+    font-size       : 10px;
+    background-color: #666;
+    padding         : 2px;
 }
 /* end of Tooltip }}} */
-
 /* {{{ arag_weather */
 .arag_weather {
-    width: 200px;
+    width           : 200px;
     background-color: #f3f3f3;
-    border: 1px solid #eee;
-    display: table;
-    padding: 2px;
+    border          : 1px solid #eee;
+    display         : table;
+    padding         : 2px;
 }
 .arag_weather:hover {
     background-color: #eee;
 }
 .arag_weather .location, .arag_weather .temperature {
-    font-size: 25px;
-    text-align: center;
+    font-size       : 25px;
+    text-align      : center;
 }
 .arag_weather .icon {
-    float:left;
+    float           : left;
 }
 .arag_weather .temperature {
-    padding-top: 25px;
-    float: center;
+    padding-top     : 25px;
+    float           : center;
+}
+/* }}} */
+/* {{{ morphtabs */
+.morphtabs_title {
+	list-style-image: none;
+	list-style-type : none;
+	margin          : 0px;
+	padding         : 0px;
+}
+.morphtabs_title li {
+	float           : left;
+    background      : url(../images/tabbed_block/tab_normal.png) 0 0 repeat-x #F5F4F4;
+	padding         : 2px 8px 2px 8px;
+	margin-right    : 2px;
+	cursor          : pointer;
+	font-family     : "Trebuchet MS";
+	font-size       : 12px;
+	height          : 24px;
+	line-height     : 24px;
+    border-left     : solid 1px #d4d4d4;
+    border-right    : solid 1px #d4d4d4;
+}
+.morphtabs_title li.over {
+    background      : url(../images/tabbed_block/tab_hover.png) 0 0 repeat-x #F5F4F4;
+    color           : #fff;
+    border-left     : solid 1px #727272;
+    border-right    : solid 1px #727272;
+}
+.morphtabs_title li.active {
+    color           : #fff;
+    background      : url(../images/tabbed_block/tab_hover.png) 0 0 repeat-x #F5F4F4;
+    border-left     : solid 1px #727272;
+    border-right    : solid 1px #727272;
+}
+.morphtabs_panelwrap {
+	position        : relative;
+	top             : -1px;
+	clear           : both;
+	overflow        : hidden;
+}
+.morphtabs_panel {
+	background-color: #fff;
+    border-top      : solid 3px #727272;
+    border-bottom   : solid 1px #727272;
+    border-left     : solid 1px #727272;
+    border-right    : solid 1px #727272;
+}
+.morpthtabs_panel p {
+	margin-left     : 5px;
+}
+.loading {
+    width           : 47px;
+    margin          : 0 auto;
 }
 /* }}} */
