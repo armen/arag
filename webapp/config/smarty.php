@@ -15,17 +15,19 @@ $config = Array
     (
         LIBSPATH.'arag/views',
         MODPATH.'user/views/frontend/',
-        MODPATH.'locations/views/'
+        MODPATH.'locations/views/',
+        MODPATH.'forecast/views/'
     ),
     'if_funcs'              => Array         // We'll allow these functions in if statement
     (
         'array',  'list',     'trim',       'isset', 'empty',
         'sizeof', 'in_array', 'is_array',   'true',  'false',
-        'null',   'reset',    'array_keys', 'end',   'count'
+        'null',   'reset',    'array_keys', 'end',   'count',
+        'strpos'
     ),
     'modifier_funcs'        => Array         // We'll allow these modifiers
     (
-        'sprintf', 'count', 'urlencode', 'urldecode'
+        'sprintf', 'count', 'urlencode', 'urldecode', 'htmlspecialchars_decode', 'trim', 'current'
     ),
 
     'post_filters'          => Array         // XXX: After change clear the cache to take effect
