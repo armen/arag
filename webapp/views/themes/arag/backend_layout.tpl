@@ -25,17 +25,30 @@
 </head>
 <body>
     {arag_block align="right" template="blank"}
-        {capture assign="welcome"}_("Welcome %s %s (%s)"){/capture}
-        {capture assign="logout"}_("Logout"){/capture}
-        {capture assign="profile"}_("My Profile"){/capture}
-        {capture assign="controlpanel"}_("Control Panel"){/capture}
-        {capture assign="home"}_("Home"){/capture}
-        {capture assign="home_url_site"}{kohana_helper function="url::site"}{/capture}
-        {$welcome|sprintf:$firstname:$surname:$arag_username} |
-        {kohana_helper function="html::anchor" uri="user_profile/backend/index" title="$profile"} |
-        {kohana_helper function="html::anchor" uri="user/frontend/logout" title="$logout"} |
-        {arag_is_accessible uri="controlpanel"}{kohana_helper function="html::anchor" uri="controlpanel" title="$controlpanel"} |{/arag_is_accessible}
-        {kohana_helper function="html::anchor" uri="$home_url_site" title="$home"}
+        {if $auth}
+            {capture assign="logout"}_("Logout"){/capture}
+            {capture assign="profile"}_("My Profile"){/capture}
+            {capture assign="controlpanel"}_("Control Panel"){/capture}
+            {capture assign="inbox"}_("Inbox (%d)"){/capture}
+            {kohana_helper function="html::anchor" uri="user/frontend/logout" title=$logout} |
+            {kohana_helper function="html::anchor" uri="user_profile/frontend/index" title=$profile} |
+            {kohana_helper function="html::anchor" uri="messaging/frontend/inbox" title=$inbox|sprintf:$messages_count} |
+            {kohana_helper function="html::anchor" uri="controlpanel" title=$controlpanel} |
+        {else}
+            {capture assign="login"}_("Login"){/capture}
+            {capture assign="forgot"}_("Forget your password?"){/capture}
+            {capture assign="register"}_("Register"){/capture}
+            {kohana_helper function="html::anchor" uri="user/frontend/login" title=$login} |
+            {kohana_helper function="html::anchor" uri="user/frontend/registration" title=$register} |
+            {kohana_helper function="html::anchor" uri="user/frontend/forget_password" title=$forgot} |
+        {/if}
+        <a href="{kohana_helper function="url::site"}">_("Home")</a>
+    {/arag_block}
+    {arag_block align="right" template="blank"}
+    {if $auth}
+        {capture assign="welcome"}_("Welcome %s %s! (%s)"){/capture}
+        {kohana_helper function="html::anchor" uri="user_profile/frontend/index" title=$welcome|sprintf:$firstname:$surname:$arag_username}
+    {/if}
     {/arag_block}
 
     {arag_tabbed_block name="global_tabs"}

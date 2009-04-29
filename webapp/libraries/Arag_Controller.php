@@ -69,6 +69,9 @@ class Controller extends Controller_Core {
         setlocale(LC_ALL, $locale);
 
         Event::add('system.post_controller', array($this, '_display'));
+
+        $messaging                    = Model::load('Messaging', 'messaging');
+        $this->layout->messages_count = $messaging->getReadMessagesCount($this->session->get('user.username'));
     }
     // }}}
     // {{{ _kohana_load_view
