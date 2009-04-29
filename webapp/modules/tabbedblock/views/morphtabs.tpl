@@ -12,7 +12,10 @@
 {if !isset($selected_id|smarty:nodefaults)}
     {assign var="selected_id" value='first'}
 {/if}
-
+{if isset($load_all_scripts|smarty:nodefaults) && $load_all_scripts}
+    <script type="text/javascript" src="{$arag_base_url|smarty:nodefaults}scripts/mootools.js"></script>
+    <script type="text/javascript" src="{$arag_base_url|smarty:nodefaults}scripts/mootools-more.js"></script>
+{/if}
 <script type="text/javascript" src="{$arag_base_url|smarty:nodefaults}scripts/morphtabs1.4.js"></script>
 <script type="text/javascript">
     //<![CDATA[
