@@ -30,7 +30,7 @@
                 useAjax:          {$use_ajax|smarty:nodefaults|default:'false'},
                 ajaxUrl:          '{$ajax_url|smarty:nodefaults|default:$tabbedblock->genURL('tabbedblock/frontend/tabcontroller/index/')}',
                 ajaxOptions:      {literal}{{/literal}method:'{$ajax_method|smarty:nodefaults|default:'get'}'{literal}, evalScripts: true}{/literal},
-                //evalScripts:      true,
+                evalScripts:      true,
                 ajaxLoadingText:  '{$ajax_loading_text|smarty:nodefaults|default:'<div class="loading"><img src="/scripts/MoodalBox/img/loading.gif" alt="Loading..." width="47" height="39" \/><\/div>'}',
                 width:            '{$width|smarty:nodefaults|default:'auto'}',
                 height:           '{$height|smarty:nodefaults|default:'auto'}',
