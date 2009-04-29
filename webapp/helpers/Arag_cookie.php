@@ -1,6 +1,6 @@
 <?php
 
-class cookie {
+class cookie extends cookie_Core {
 
     /**
      * Sets a cookie with the given parameters.
