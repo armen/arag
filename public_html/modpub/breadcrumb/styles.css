@@ -1,0 +1,28 @@
+.breadcrumb {
+		padding-top: 12px;
+		padding-right: 5px;
+		margin-right: 15px;
+		height:	30px;
+		font-weight: bold;
+		font-size: 13px;
+		color: #848484;
+    background-color: #e4e4e4;
+}
+.breadcrumb a {
+		text-decoration: none;
+}
+.breadcrumb a:hover {
+		text-decoration: none;
+		color: #848484;
+}
+.bread_crump_container {
+
+}
+.bread_crump_items {
+}
+.bread_crump_selected {
+
+}
+.bread_crump_not_selected {
+
+}
