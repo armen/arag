@@ -14,12 +14,13 @@
 
 function smarty_function_arag_breadcrumb($params, &$smarty)
 {
-    $ext         = Kohana::config('smarty.templates_ext');
-    $template    = 'breadcrumb';
-    $config      = 'config';
-    $module      = Null;
-    $config_file = Null;
-    $css         = Null;
+    $ext             = Kohana::config('smarty.templates_ext');
+    $template        = 'breadcrumb';
+    $config          = 'config';
+    $module          = Null;
+    $config_file     = Null;
+    $css             = Null;
+    $show_next_steps = False;
 
     foreach ($params as $_key => $_val) {
         switch ($_key) {
@@ -42,6 +43,10 @@ function smarty_function_arag_breadcrumb($params, &$smarty)
 
             case 'css':
                 $css = $_val;
+                break;
+
+            case 'show_next_steps':
+                $show_next_steps = $_val;
                 break;
 
             default:
@@ -86,6 +91,7 @@ function smarty_function_arag_breadcrumb($params, &$smarty)
         $smarty->assign('visited_uris', $breadcrumb->get_visited_uris($namespace));
         $smarty->assign('config', $config_file);
         $smarty->assign('namespace', $namespace);
+        $smarty->assign('show_next_steps', $show_next_steps);
 
         return $smarty->fetch(Arag::find_file('breadcrumb', 'views', $template, False, $ext));
     }

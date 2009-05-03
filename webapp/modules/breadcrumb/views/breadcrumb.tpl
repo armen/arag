@@ -25,6 +25,12 @@
                     </a>
                 </div>
             </div>
+        {elseif $show_next_steps}
+            <div class="bread_crump_items bread_crump_not_visited" style="float:{left}">
+                <div class="breadcrumb{if isset($item.class|smarty:nodefaults)} {$item.class}_not_visited{/if}">
+                    {$item.title}
+                </div>
+            </div>
         {/if}
     {/foreach}
     <div style="clear:both;">&nbsp;</div>
