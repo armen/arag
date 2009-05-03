@@ -20,7 +20,8 @@
         {elseif in_array($item.uri, $visited_uris)}
             <div class="bread_crump_items bread_crump_not_selected" style="float:{left}">
                 <div class="breadcrumb{if isset($item.class|smarty:nodefaults)} {$item.class}_deactive{/if}">
-                    <a href="{kohana_helper function="url::site" uri=`$item.uri`}">
+                    {capture assign=uri}{if isset($item.link|smarty:nodefaults)}{$item.link}{else}{$item.uri}{/if}{/capture}
+                    <a href="{kohana_helper function="url::site" uri=`$uri`}">
                         {$item.title}
                     </a>
                 </div>
