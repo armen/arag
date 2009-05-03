@@ -60,6 +60,13 @@ class Backend_Controller extends Controller
                 } 
             }
         }
+
+        // Let's do some clean-ups :) First remove old image files :)
+        $default_styles = $this->theme_manager->getDefaults();
+        foreach($this->theme_manager->get() as $style => $value) {
+            isset($default_styles[$style]) and $default_styles[$style]['type'] == 'file' and unlink($upload_path.$value);
+        }
+
         $this->theme_manager->set($styles);
         $this->session->set_flash('theme_manager_style_saved', true);
         $cache = Cache::instance();

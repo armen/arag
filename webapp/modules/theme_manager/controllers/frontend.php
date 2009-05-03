@@ -15,8 +15,8 @@ class Frontend_Controller extends Controller
         $this->theme_manager = new Thememanager_Model;
     }
     // }}}
-    // {{{ get_style_read
-    function get_style_read()
+    // {{{ get_style_any
+    function get_style_any()
     {
         $cache          = Cache::instance();
         $dump           = $cache->get(APPNAME.'_styles');
@@ -42,6 +42,8 @@ class Frontend_Controller extends Controller
             }
             $cache->set(APPNAME.'_styles', $dump);
         }
+
+        header("Content-type: text/css");
         echo $dump;
     }
     // }}}

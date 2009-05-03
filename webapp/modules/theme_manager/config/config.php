@@ -5,38 +5,61 @@ $config = array
 
     'default_styles' => array
      (
-        'v' => array(
-            'selector'      => 'img#logo',
+
+        'background' => array(
+            'selector'      => 'body',
+            'property'      => 'background-image',
+            'description'   => _("Background"),
+            'value'         => '../images/background.png',
+            'type'          => 'file'),
+
+        'header' => array(
+            'selector'      => '#header',
             'property'      => 'background',
             'description'   => _("Logo"),
-            'value'         => 'path_to_logo_file',
+            'value'         => '../images/header.jpg',
             'type'          => 'file'),
 
-        'w' => array(
-            'selector'      => 'body',
+        'links' => array(
+            'selector'      => 'a',
             'property'      => 'color',
-            'description'   => _("Color of body"),
-            'value'         => 'white',
+            'description'   => _("Links"),
+            'value'         => '#000',
             'type'          => 'color'),
 
-        'x' => array(
-            'selector'      => 'p',
+        'links_hover' => array(
+            'selector'      => 'a:hover',
             'property'      => 'color',
-            'description'   => _("Color of p elements"),
-            'value'         => 'black',
+            'description'   => _("Links Hover"),
+            'value'         => '#666',
             'type'          => 'color'),
 
-        'y' => array(
-            'selector'      => 'p',
+        'topmenu_links' => array(
+            'selector'      => '#topmenu a',
+            'property'      => 'color',
+            'description'   => _("Top Menu Links"),
+            'value'         => '#e5e5e5',
+            'type'          => 'color'),
+
+        'menu_links' => array(
+            'selector'      => '#menu a',
+            'property'      => 'color',
+            'description'   => _("Menu Links"),
+            'value'         => '#eee',
+            'type'          => 'color'),
+
+        'footermenu_links' => array(
+            'selector'      => '#footer-menu a',
+            'property'      => 'color',
+            'description'   => _("Footer Links"),
+            'value'         => '#6d7481',
+            'type'          => 'color'),
+
+        'footer_background' => array(
+            'selector'      => '#footer',
             'property'      => 'background',
-            'description'   => _("Background of p elements"),
-            'value'         => '',
+            'description'   => _("Footer Background"),
+            'value'         => '../images/footer_background.png',
             'type'          => 'file'),
-        'z' => array(
-            'selector'      => 'li',
-            'property'      => 'color',
-            'description'   => _("Color of li elements"),
-            'value'         => 'yellow',
-            'type'          => 'color'),
      )
 );
