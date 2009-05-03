@@ -45,7 +45,7 @@ class breadcrumb_Component extends Component
             $visited_uris[] = $this->real_uri;
         }
 
-        $session->set('breadcrumb.'.$namespace, $visited_uris);
+        $session->set('breadcrumb', array($namespace => $visited_uris));
     }
     // }}}
     // {{{ current_uri
