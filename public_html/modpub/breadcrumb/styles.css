@@ -15,17 +15,29 @@
 		text-decoration: none;
 		color: #848484;
 }
-.bread_crump_container {
+.breadcrumb_container {
 
 }
-.bread_crump_items {
+.breadcrumb_items {
 }
-.bread_crump_selected {
+.breadcrumb_selected {
 
 }
-.bread_crump_not_selected {
+.breadcrumb_not_selected {
 
 }
-.bread_crump_not_visited {
+.breadcrumb_not_visited {
+
+}
+.breadcrumb_progress_bar {
+		height: 10px;
+}
+.breadcrumb_progress_bar_current {
+
+}
+.breadcrumb_progress_bar_visited {
+
+}
+.breadcrumb_progress_bar_next_step {
 
 }

@@ -84,12 +84,16 @@ function smarty_function_arag_breadcrumb($params, &$smarty)
 
         $breadcrumb->set_visited_uri($namespace);
 
+        $visited_uris = $breadcrumb->get_visited_uris($namespace);
+
         $smarty->assign('breadcrumb', $breadcrumb);
         $smarty->assign('name', $name);
         $smarty->assign('css', $css);
         $smarty->assign('current_uri', $breadcrumb->current_uri());
-        $smarty->assign('visited_uris', $breadcrumb->get_visited_uris($namespace));
+        $smarty->assign('visited_uris', $visited_uris);
+        $smarty->assign('number_of_visited_uris', count($visited_uris) - 1);
         $smarty->assign('config', $config_file);
+        $smarty->assign('total_items', count($config_file) - 1);
         $smarty->assign('namespace', $namespace);
         $smarty->assign('show_next_steps', $show_next_steps);
 
