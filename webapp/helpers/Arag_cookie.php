@@ -16,7 +16,7 @@ class cookie extends cookie_Core {
      */
     public static function set($name, $value = NULL, $expire = NULL, $path = NULL, $domain = NULL, $secure = NULL, $httponly = NULL)
     {
-        $ob = ini_get('output_buffering'); 
+        $ob = ini_get('output_buffering');
 
         if (headers_sent() && (bool) $ob === false || strtolower($ob) == 'off') {
             return FALSE;
@@ -34,6 +34,10 @@ class cookie extends cookie_Core {
             }
         }
 
+        if ($expire < 0) {
+            return parent::set($name, $value, $expire, $path, $domain, $secure, $httponly);
+        }
+
         header('Set-Cookie: ' . rawurlencode($name) . '=' . rawurlencode($value)
                . (empty($expire) ? '' : '; Max-Age=' . $expire)
                . (empty($path)   ? '' : '; path=' . $path)
@@ -42,5 +46,25 @@ class cookie extends cookie_Core {
                . (!$httponly     ? '' : '; HttpOnly'), false);
 
         return true;
+    }
+
+    /**
+     * Nullify and unset a cookie.
+     *
+     * @param   string   cookie name
+     * @param   string   URL path
+     * @param   string   URL domain
+     * @return  boolean
+     */
+    public static function delete($name, $path = NULL, $domain = NULL)
+    {
+        if ( ! isset($_COOKIE[$name]))
+            return FALSE;
+
+        // Delete the cookie from globals
+        unset($_COOKIE[$name]);
+
+        // Sets the cookie value to an empty string, and the expiration to 24 hours ago
+        return cookie::set($name, '', -864000, $path, $domain, FALSE, FALSE);
     }
 }
