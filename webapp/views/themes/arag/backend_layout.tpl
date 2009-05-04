@@ -46,7 +46,7 @@
     {/arag_block}
     {arag_block align="right" template="blank"}
     {if $auth}
-        {capture assign="welcome"}_("Welcome %s %s! (%s)"){/capture}
+        {capture assign="welcome"}_("Welcome %s %s - %s"){/capture}
         {kohana_helper function="html::anchor" uri="user_profile/frontend/index" title=$welcome|sprintf:$firstname:$surname:$arag_username}
     {/if}
     {/arag_block}
