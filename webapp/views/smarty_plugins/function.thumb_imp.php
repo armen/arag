@@ -99,6 +99,8 @@
 //
 // cache [string] (Standard: images/cache/)
 //      Set to your favorite cache directory.
+// regen_cache [bool] 
+//      Regenerate cache
 //
 // crop [bool] (Standard: true)
 //      If set to »true«, image will be cropped in the center to destination width and
@@ -185,6 +187,7 @@ function smarty_function_thumb_imp($params, &$smarty) {/*{{{*/
     $params['longside']      = isset($params['longside']) ? $params['longside'] : Null;
     $params['shortside']     = isset($params['shortside'])? $params['shortside'] : Null;
     $params['dev']           = isset($params['dev']) ? $params['dev'] : Null;
+    $params['regen_cache']   = isset($params['regen_cache']) ? $params['regen_cache'] : False;
     $params['html']          = isset($params['html']) ? $params['html'] : Null;
     $params['sharpen']       = isset($params['sharpen']) ? $params['sharpen'] : Null;
     $params['addgreytohint'] = isset($params['addgreytohint']) ? $params['addgreytohint'] : Null;
@@ -414,8 +417,10 @@ function smarty_function_thumb_imp($params, &$smarty) {/*{{{*/
     ############################
 	### check for cache file ###
     ############################
-	if (file_exists($_DST['file']) AND !$params['dev']) return $returner;
-
+	if (file_exists($_DST['file']) AND !$params['dev'] AND !$params['regen_cache']) return $returner;
+    if (file_exists($_DST['file']) AND !$params['regen_cache']) {
+        unlink($_DST['file']);
+    }
 
     ############################
 	###  otherwise proceed   ###
