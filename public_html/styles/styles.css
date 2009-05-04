@@ -685,6 +685,12 @@ input[type=reset][disabled] {
     width           : 16px;
     height          : 16px;
 }
+.money_action {
+    background      : transparent url(../images/list/money.png) no-repeat center;
+    font-size       : 0px;
+    width           : 16px;
+    height          : 16px;
+}
 /* }}} end of List actions */
 /* {{{ Tabbed Block */
 .tabbed_block_title {
