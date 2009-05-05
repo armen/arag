@@ -49,8 +49,13 @@ class Model extends Model_Core {
     }
     // }}}
     // {{{ instance
-    public static function instance($model = False, $module = False, $options = Null)
+    public static function instance($model = False, $module = False)
     {
+        // Get options, ignor first two arguments
+        $options = func_get_args();
+        is_array($options) AND array_shift($options);
+        is_array($options) AND array_shift($options);
+
         if ($module == False) {
             $module = Router::$module;
         }
@@ -62,7 +67,7 @@ class Model extends Model_Core {
         Kohana::config_set('core.modules', array_unique(array_merge($old_include_paths, Array(MODPATH.$module))));
 
         $model = ucfirst(strtolower($model)).'_Model';
-        eval("\$model = $model::instance($options);");
+        $model = call_user_func_array(Array($model, 'instance'), $options);
 
         return $model;
     }
