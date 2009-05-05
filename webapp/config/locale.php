@@ -18,7 +18,7 @@ $config['country'] = 'USA';
  * Locale timezone. Defaults to use the server timezone.
  * @see http://php.net/timezones
  */
-$config['timezone'] = '';
+$config['timezone'] = 'Asia/Tehran';
 
 $config['lang']          = 'en';
 $config['multi_lingual'] = True;

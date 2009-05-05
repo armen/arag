@@ -331,7 +331,7 @@ class date extends date_Core {
          * Assuming IRST +3:30.
          */
 
-        $timezone = new DateTimeZone(Kohana::config('core.timezone'));
+        $timezone = new DateTimeZone(Kohana::config('locale.timezone'));
         $time     = new DateTime("now", $timezone);
 
         $n_seconds += $timezone ->getOffset($time);
@@ -352,7 +352,7 @@ class date extends date_Core {
          * Assuming IRST +3:30.
          */
 
-        $timezone = new DateTimeZone(Kohana::config('core.timezone'));
+        $timezone = new DateTimeZone(Kohana::config('locale.timezone'));
         $time     = new DateTime("now", $timezone);
 
         $timestamp += $timezone ->getOffset($time);
@@ -532,7 +532,7 @@ class date extends date_Core {
             $type   = $lang == 'fa' ? 'jalali' : 'gregorian';
         }
 
-        $timezone = new DateTimeZone(Kohana::config('core.timezone'));
+        $timezone = new DateTimeZone(Kohana::config('locale.timezone'));
         $time     = new DateTime("now", $timezone);
 
         if ($type == "jalali") {
