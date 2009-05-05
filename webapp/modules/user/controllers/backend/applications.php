@@ -35,6 +35,7 @@ class Applications_Controller extends Backend_Controller
 
         // Validation Messages
         $passwordLength = Arag_Config::get("passlength");
+        $this->validation->message('standard_text', _("%s should be standard text."));
         $this->validation->message('numeric', _("%s should be numeric."));
         $this->validation->message('required', _("%s is required"));
         $this->validation->message('_check_group_name', _("This %s is not available"));
