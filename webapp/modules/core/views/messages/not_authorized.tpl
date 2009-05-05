@@ -28,8 +28,9 @@
                 <td><input type="password" name="password" /></td>
             </tr>
             <tr>
+                {capture assign="forgot"}_("Forget your password?"){/capture}
                 <td>&nbsp;</td>
-                <td>{kohana_helper function="html::anchor" uri="user/frontend/forget_password" title="Forget your Password?"}</td>
+                <td>{kohana_helper function="html::anchor" uri="user/frontend/forget_password" title=$forgot}</td>
             </tr>
             <tr>
                 <td>&nbsp;</td>
