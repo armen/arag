@@ -38,3 +38,9 @@ $config['languages_direction'] = array
 $config['default_country']  = 32;
 $config['default_province'] = 7;
 $config['default_city']     = 111299;
+
+$config['currency'] = array
+(
+    'en' => _("USD"),
+    'fa' => _("IRR")
+);

@@ -47,16 +47,22 @@ class format_Core {
     }
     // }}}
     // {{{ money
-    public static function money($string, $decimals=2, $dec_point=".", $thousands_sep=",")
+    public static function money($string, $decimals=2, $dec_point=".", $thousands_sep=",", $show_currency = False)
     {
+        $lang     = Kohana::config('locale.lang');
+        $currency = Kohana::config('locale.currency.'.$lang);
+
+
         if (is_numeric($string)) // check if it's a number
         {
-            return number_format($string, $decimals, $dec_point, $thousands_sep);
+            $string =  number_format($string, $decimals, $dec_point, $thousands_sep);
         }
-        else
-        {
-            return $string;
+
+        if ($show_currency) {
+            return $string.' '._($currency);
         }
+
+        return $string;
     }
     // }}}
     // {{{ show_date
