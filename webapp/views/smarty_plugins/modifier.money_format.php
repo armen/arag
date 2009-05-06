@@ -19,11 +19,11 @@
  * Modfied on: 16 Aug 2003
  */
 
-function smarty_modifier_money_format($string, $decimals=2, $dec_point=".", $thousands_sep=",")
+function smarty_modifier_money_format($string, $decimals=2, $dec_point=".", $thousands_sep=",", $currency = False)
 {
     // check if it's a number
     if (is_numeric($string)) {
-        return number_format($string, $decimals, $dec_point, $thousands_sep);
+        return format::money($string, $decimals, $dec_point, $thousands_sep, $currency);
     } else {
         return $string;
     }
