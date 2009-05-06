@@ -1,0 +1,82 @@
+/*
+    vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:
+    File: $Id: styles.css 495 2007-12-22 13:09:36Z armen $
+*/
+
+/* {{{ Global */
+body {
+    padding         : 0px;
+    margin          : 0px;
+}
+/* end of Global }}} */
+/* {{{ Screen */
+#kohana-profiler {
+    display           : none;
+}
+.comments {
+    display           : none;
+}
+.comment {
+    display           : none;
+}
+.tabbed_block_simple {
+    display           : none;
+}
+.tabbed_block_title {
+    display           : none;
+}
+.tabbed_block_nav {
+    display           : none;
+}
+.arag_block {
+    display           : none;
+}
+.arag_default_block {
+    display           : none;
+}
+/* end of Screen }}} */
+/* {{{ print */
+div.print {
+	display         : block;
+	width           : 100%;
+	height          : 100%;
+	margin          : 0;
+	padding         : 0;
+}
+div.print table {
+	background-color: #fff;
+	font            : normal 12px Tahoma, sans-serif;
+	color           : inherit;
+}
+div.print table tbody td, div.print table td {
+	border-top      : 1px solid #CCCCCC;
+	border-left     : 1px solid #CCCCCC;
+	padding         : 3px 3px 3px 0;
+}
+div.print table tbody th, div.print>table th {
+	font            : bold 16px Georgia, "Times New Roman", Times, serif;
+	text-align      : right;
+	border-top      : 1px solid #CCCCCC;
+	border-left     : 1px solid #CCCCCC;
+}
+div.print tr.small {
+	font-size       : 10px;
+}
+.alter {
+	background-color: #EFEFEF;
+}
+table#print_physical_detail {
+	width           : 330px;
+	position        : absolute;
+	top             : 0;
+	left            : 0;
+	border-bottom   : 1px solid #CCCCCC;
+	border-right    : 1px solid #CCCCCC;
+}
+table#company_id_card {
+	width           : 400px;
+	position        : absolute;
+	top             : 35px;
+	left            : 110px;
+}
+/* end of print }}} */
