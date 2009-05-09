@@ -14,7 +14,8 @@
                     $(activator).store('tip:title', title);
                     $(activator).store("tip:text", content);
                     var myTip = new Tips($(activator), {
-                            className: class_name
+                            className: class_name,
+                            offsets: {'x': {/literal}{$x|smarty:nodefaults|default:16}, 'y':{$y|smarty:nodefaults|default:16}{literal}}
                         });
 
             });

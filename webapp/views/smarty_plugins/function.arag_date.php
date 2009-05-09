@@ -17,6 +17,8 @@ function smarty_function_arag_date($params, &$smarty)
     $size             = Null;
     $format_character = array('%Y', '%y', '%o', '%m', '%n', '%d', '%j');
     $format_map       = array('yyyy', 'yy', 'o', 'mm', 'm', 'dd', 'd');
+    $tip_x            = 16;
+    $tip_y            = 16;
 
     foreach ($params as $_key => $_val) {
         switch ($_key) {
@@ -27,6 +29,8 @@ function smarty_function_arag_date($params, &$smarty)
             case 'toggle':
             case 'multiple':
             case 'format':
+            case 'tip_x':
+            case 'tip_y':
 			case 'parent':
                 $$_key = $_val;
                 break;
@@ -78,6 +82,8 @@ function smarty_function_arag_date($params, &$smarty)
     $data['dates_to_validate'] = (isset($dates_to_validate) && is_array($dates_to_validate)) ? json_encode($dates_to_validate) : 'false';
     $data['is_valid']          = isset($is_valid) && $is_valid;
     $data['size']              = $size;
+    $data['tip_x']             = $tip_x;
+    $data['tip_y']             = $tip_y;
     $data['parent']            = isset($parent) ? $parent : Null;
     if (is_array($value)) {
         foreach($value as &$date) {

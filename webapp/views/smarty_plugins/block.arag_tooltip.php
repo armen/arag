@@ -14,6 +14,9 @@
 
 function smarty_block_arag_tooltip($params, $content, &$smarty, &$repeat)
 {
+    $x = 16;
+    $y = 16;
+
     if (!$repeat) {
         $class_name = 'tooltip';
 
@@ -22,6 +25,8 @@ function smarty_block_arag_tooltip($params, $content, &$smarty, &$repeat)
                 case 'activator':
                 case 'title':
                 case 'class_name':
+                case 'x':
+                case 'y':
                 case 'tooltip':
                     $$_key = $_val;
                     break;
@@ -40,6 +45,8 @@ function smarty_block_arag_tooltip($params, $content, &$smarty, &$repeat)
         $smarty->assign('activator', $activator);
         $smarty->assign('content', $content);
         $smarty->assign('class_name', $class_name);
+        $smarty->assign('x', $x);
+        $smarty->assign('y', $y);
 
         // Find template location
         $template = Kohana::find_file('views', 'arag_templates/arag_tooltip', True, 'tpl');

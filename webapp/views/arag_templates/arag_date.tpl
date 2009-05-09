@@ -42,13 +42,13 @@
     {/if}
     {if !$multiple}
         {capture assign=title}_("Sample Format"){/capture}
-        {arag_tooltip activator="$id" title=$title}
+        {arag_tooltip activator="$id" title=$title x=$tip_x y=$tip_y}
             {$format_sample}
         {/arag_tooltip}
     {/if}
     <img src="{$arag_base_url}images/date/date.png" width="22" height="22" id="{$id}_cal" alt={quote}_("Calendar"){/quote} style="cursor: pointer;" />
     {capture assign=title}_("Select Date"){/capture}
-    {arag_tooltip activator="`$id`_cal" title=$title}
+    {arag_tooltip activator="`$id`_cal" title=$title x=$tip_x y=$tip_y}
         _("Click here to select date")
     {/arag_tooltip}
 {/if}
