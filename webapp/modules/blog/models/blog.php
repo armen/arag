@@ -27,7 +27,7 @@ class Blog_Model extends Model
     }
     // }}}
     // {{{ createEntry
-    public function createEntry($subject, $entry, $extendedEntry, $author, $published, $allowComments, $requiresModeration, $category)
+    public function createEntry($subject, $entry, $extendedEntry, $author, $published, $allowComments, $requiresModeration, $category, $appname = APPNAME)
     {
         $row = Array('subject'             => $subject,
                      'entry'               => $entry,
@@ -39,13 +39,14 @@ class Blog_Model extends Model
                      'published'           => $published,
                      'allow_comments'      => $allowComments,
                      'requires_moderation' => $requiresModeration,
-                     'category'            => $category);
+                     'category'            => $category,
+                     'appname'             => $appname);
 
         $this->db->insert($this->tableName, $row);
     }
     // }}}
     // {{{ editEntry
-    public function editEntry($id, $subject, $entryBody, $extendedEntry, $modifiedBy, $published, $allowComments, $requiresModeration, $category)
+    public function editEntry($id, $subject, $entryBody, $extendedEntry, $modifiedBy, $published, $allowComments, $requiresModeration, $category, $appname = APPNAME)
     {
         $entry = $this->getEntry($id);
 
@@ -59,7 +60,8 @@ class Blog_Model extends Model
                      'published'           => $published,
                      'allow_comments'      => $allowComments,
                      'requires_moderation' => $requiresModeration,
-                     'category'            => $category);
+                     'category'            => $category,
+                     'appname'             => $appname);
 
        $this->db->where('id', $id);
        $this->db->update($this->tableName, $row);
@@ -78,9 +80,9 @@ class Blog_Model extends Model
                           'published, allow_comments, requires_moderation, category');
 
         if ($published) {
-            $query = $this->db->getwhere($this->tableName, Array('id' => $id, 'published' => '1'));
+            $query = $this->db->getwhere($this->tableName, Array('id' => $id, 'published' => '1', 'appname' => APPNAME));
         } else {
-            $query = $this->db->getwhere($this->tableName, Array('id' => $id));
+            $query = $this->db->getwhere($this->tableName, Array('id' => $id, 'appname' => APPNAME));
         }
 
         $retval = (array) $query->current();
@@ -91,9 +93,9 @@ class Blog_Model extends Model
     public function hasEntry($id, $published = false)
     {
         if ($published) {
-            $result = $this->db->select('count(id) as count')->getwhere($this->tableName, Array('id' => $id, 'published' => '1'))->current();
+            $result = $this->db->select('count(id) as count')->getwhere($this->tableName, Array('id' => $id, 'published' => '1', 'appname' => APPNAME))->current();
         } else {
-            $result = $this->db->select('count(id) as count')->getwhere($this->tableName, Array('id' => $id))->current();
+            $result = $this->db->select('count(id) as count')->getwhere($this->tableName, Array('id' => $id, 'appname' => APPNAME))->current();
         }
 
         return (boolean)$result->count;
@@ -103,7 +105,7 @@ class Blog_Model extends Model
     public function getEntrySubject($id)
     {
         $this->db->select('subject');
-        $query = $this->db->getwhere($this->tableName, Array('id' => $id));
+        $query = $this->db->getwhere($this->tableName, Array('id' => $id, 'appname' => APPNAME));
 
         return $query->current()->subject;
     }
@@ -116,9 +118,9 @@ class Blog_Model extends Model
         $this->db->orderby('create_date', 'desc');
 
         if ($published) {
-            $query = $this->db->getwhere($this->tableName, Array('published' => '1'));
+            $query = $this->db->getwhere($this->tableName, Array('published' => '1', 'appname' => APPNAME));
         } else {
-            $query = $this->db->get($this->tableName);
+            $query = $this->db->getwhere($this->tableName, Array('appname' => APPNAME));
         }
 
         $retval = $query->result(False);

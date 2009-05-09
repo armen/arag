@@ -65,6 +65,11 @@
                 <type>integer</type>
                 <length>1</length>
             </field>
+            <field>
+                <name>appname</name>
+                <type>text</type>
+                <length>255</length>
+            </field>
             <index>
                 <name>primary</name>
                 <primary>true</primary>
