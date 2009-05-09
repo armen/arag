@@ -95,7 +95,7 @@ class Comments_Controller extends Controller
     {
         $this->validation->name('comment', _("Comment"))->post_filter('security::xss_clean', 'comment');
         $this->validation->name('attachments.*', _("Attachments"))->add_rules('attachments.*',
-                                                                              'upload::type['.Kohana::config('config.allowed_extensions').']');
+                                                                              'upload::type['.Arag_Config::get('config.allowed_extensions', Null, Router::$module, True).']');
 
         return $this->validation->validate();
     }

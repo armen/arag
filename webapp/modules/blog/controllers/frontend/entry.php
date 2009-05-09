@@ -6,7 +6,9 @@
 // $Id$
 // ---------------------------------------------------------------------------
 
-class Entry_Controller extends Controller
+require_once(Arag::find_file('comment', 'libraries', 'controller'));
+
+class Entry_Controller extends Comments_Controller
 {
     // {{{ Constructor
     public function __construct()
