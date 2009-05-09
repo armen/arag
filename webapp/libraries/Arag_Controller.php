@@ -24,6 +24,9 @@ class Controller extends Controller_Core {
     public $layout = Null;
     public $smarty;
     public $validation;
+    public $cache_config  = False;
+    public $cached_result = False;
+    public $cache_id      = False;
 
     // }}}
     // {{{ Constructor
@@ -122,13 +125,26 @@ class Controller extends Controller_Core {
             $output = parent::_kohana_load_view($template, $vars);
         }
 
-
         return $output;
     }
     // }}}
     // {{{ __call
     public function __call($method, $arguments)
     {
+        $cache              = Kohana::config(Router::$module.'.cache', False, False);
+        $uri                = trim(strstr(substr(Router::$routed_uri, 0, strlen(Router::$routed_uri) - strlen(implode('/', Router::$arguments))), '/'), '/');
+        $this->cache_config = isset($cache[$uri]) ? $cache[$uri] : False;
+        //var_dump(isset($cache[$uri]), $uri, Router::$routed_uri.serialize($arguments));
+
+        if ($this->cache_config !== False) {
+
+            $this->cache_id = is_string($this->cache_id) ? $this->cache_id : md5(APPNAME.Router::$routed_uri.serialize($this->input->post()));
+            $cache          = new Cache($this->cache_config);
+            if ($this->cached_result = $cache->get($this->cache_id)) {
+                return;
+            }
+        }
+
         if (substr($method, 0, 1) == '_') {
             // The method is protected so just call 404
             Event::run('system.404');
@@ -229,12 +245,30 @@ class Controller extends Controller_Core {
     }
     // }}}
     // {{{ _display
-    public function _display()
+    public function _display($return = False)
     {
-        if ($this->layout instanceof View) {
-            ($this->layout->content InstanceOf View) AND $this->layout->content = $this->layout->content->render(); // We render content before main layout in order to make things
-            $this->layout->render(True);
+        if ($this->cache_config === False || !$this->cached_result) {
+
+            if ($this->layout instanceof View) {
+                // We render content before main layout in order to make things
+                ($this->layout->content InstanceOf View) AND $this->layout->content = $this->layout->content->render();
+                $this->cached_result = $this->layout->render();
+
+                if ($this->cache_config !== False) {
+                    $cache = new Cache($this->cache_config);
+                    $cache->set($this->cache_id, $this->cached_result);
+                }
+            }
+
+        } else {
+            Kohana::log('debug', 'Used cached version of \''.Router::$current_uri.'\'');
         }
+
+        if ($return) {
+            return $this->cached_result;
+        }
+
+        echo $this->cached_result;
     }
     // }}}
     // {{{ execute
@@ -266,17 +300,11 @@ class Controller extends Controller_Core {
 
             Event::clear('system.post_controller', array($controller, '_display'));
 
+            $controller->cache_id = md5(APPNAME.'execute'.Router::$routed_uri.serialize($controller->input->post()));
             $controller->layout = new View('themes/'.$theme.'/empty_layout');
-            $controller->_call(Router::$method, Router::$arguments);
+            $controller->__call(Router::$method, Router::$arguments);
 
-            if ($return_content) {
-                if ($controller->layout->content instanceOf View) {
-                    $controller->layout->content = $controller->layout->content->render();
-                }
-                $result = $controller->layout->render();
-            } else {
-                $result = $controller;
-            }
+            $result = ($return_content) ? $controller->_display(True) : $controller;
 
             Kohana::config_set('core.modules', $old_include_paths);
 
