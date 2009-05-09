@@ -56,7 +56,7 @@ class HelpManager_Model extends Model
     // {{{ getUris
     public function getUris()
     {
-        $results = $this->db->select('uri')->from($this->tableName)->groupBy('uri')->get()->result();
+        $results = $this->db->select('uri')->from($this->tableName)->where('appname',APPNAME)->groupBy('uri')->get()->result();
 
         $uris = Array();
         foreach($results as $result) {
@@ -73,7 +73,8 @@ class HelpManager_Model extends Model
         $row = Array('uri'     => $this->encode($uri),
                      'title'   => $title,
                      'message' => $message,
-                     'type'    => $type);
+                     'type'    => $type,
+                     'appname' => APPNAME);
 
         return $this->db->insert($this->tableName, $row)->insert_id();
     }
@@ -85,7 +86,8 @@ class HelpManager_Model extends Model
                      'message' => $message,
                      'type'    => $type);
 
-       $this->db->where('id', $id)->update($this->tableName, $row);
+       $this->db->where('id', $id);
+       $this->db->where('appname', APPNAME)->update($this->tableName, $row);
     }
     // }}}
     // {{{ delete
@@ -98,13 +100,20 @@ class HelpManager_Model extends Model
     // {{{ get
     public function get($id)
     {
-        return $this->db->select('id, title, uri, message, type')->from($this->tableName)->where('id', $id)->get()->current();
+        return $this->db->select('id, title, uri, message, type')->from($this->tableName)
+        ->where('id', $id)
+        ->where('appname', APPNAME)
+        ->get()->current();
     }
     // }}}
     // {{{ getByUri
     public function getByUri($uri, $listAll=false)
     {
-        $result = $this->db->select('id, title, uri, message, type')->from($this->tableName)->where('uri', $uri)->get()->result(false);
+        $result = $this->db->select('id, title, uri, message, type')
+        ->from($this->tableName)
+        ->where('uri', $uri)
+        ->where('appname', APPNAME)
+        ->get()->result(false);
 
         $helps = Array();
         foreach($result as $help) {

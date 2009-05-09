@@ -82,7 +82,7 @@ class Backend_Controller extends Controller
     {
         $this->global_tabs->setParameter('uri', $uri);
 
-        $groups = $this->groups->getGroups();
+        $groups = $this->groups->getGroups(APPNAME);
 
         $this->layout->content          = new View('backend/add');
         $this->layout->content->uri     = $uri;
@@ -135,7 +135,7 @@ class Backend_Controller extends Controller
     public function edit_read($id)
     {
         $help   = $this->model->get($id);
-        $groups = $this->groups->getGroups();
+        $groups = $this->groups->getGroups(APPNAME);
 
         $this->global_tabs->setParameter('id', $help->id);
         $this->global_tabs->setParameter('uri', $help->uri);
