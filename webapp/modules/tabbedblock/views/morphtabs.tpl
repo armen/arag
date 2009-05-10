@@ -47,43 +47,39 @@
 {if !isset($selected_id|smarty:nodefaults)}
     {assign var="selected_id" value='first'}
 {/if}
+{arag_load_script src="scripts/mootools.js"}
+{arag_load_script src="scripts/mootools-more.js"}
+{arag_load_script src="scripts/morphtabs1.4.js"}
+{arag_header}
+    <script type="text/javascript">
+        //<![CDATA[
+            {literal}
+            window.addEvent('domready', function() {
+            {/literal}
+                var tabbedblock = new MorphTabs('tabbedblock', {literal}{{/literal}
 
-{if isset($load_all_scripts|smarty:nodefaults) && $load_all_scripts}
-    <script type="text/javascript" src="{$arag_base_url|smarty:nodefaults}scripts/mootools.js"></script>
-    <script type="text/javascript" src="{$arag_base_url|smarty:nodefaults}scripts/mootools-more.js"></script>
-{/if}
-
-
-<script type="text/javascript" src="{$arag_base_url|smarty:nodefaults}scripts/morphtabs1.4.js"></script>
-<script type="text/javascript">
-    //<![CDATA[
-        {literal}
-        window.addEvent('domready', function() {
-        {/literal}
-            var tabbedblock = new MorphTabs('tabbedblock', {literal}{{/literal}
-
-                changeTransition: {literal}{{/literal}
-                                  transition: '{$transition|smarty:nodefaults|default:'linear'}',
-                                  duration: '{$duration|smarty:nodefaults|default:fast}'
-                                  {literal}}{/literal},
-                mouseOverClass:   '{$mouse_over_class|smarty:nodefaults|default:'over'}',
-                activateOnLoad:   '{$activate_on_load|smarty:nodefaults|default:$selected_id}',
-                useAjax:          {$use_ajax|smarty:nodefaults|default:'false'},
-                ajaxUrl:          '{$ajax_url|smarty:nodefaults|default:$tabbedblock->genURL('tabbedblock/frontend/tabcontroller/index/')}',
-                ajaxOptions:      {literal}{{/literal}method:'{$ajax_method|smarty:nodefaults|default:'get'}'{literal}, evalScripts: true}{/literal},
-                evalScripts:      true,
-                ajaxLoadingText:  '{$ajax_loading_text|smarty:nodefaults|default:'<div class="loading"><img src="/scripts/MoodalBox/img/loading.gif" alt="Loading..." width="47" height="39" \/><\/div>'}',
-                width:            '{$width|smarty:nodefaults|default:'auto'}',
-                height:           '{$height|smarty:nodefaults|default:'auto'}',
-                panelStartFx:     '{$panel_start_fx|smarty:nodefaults|default:"fade"}',
-                panelEndFx:       '{$panel_end_fx|smarty:nodefaults|default:"appear"}'
-        {literal}
+                    changeTransition: {literal}{{/literal}
+                                      transition: '{$transition|smarty:nodefaults|default:'linear'}',
+                                      duration: '{$duration|smarty:nodefaults|default:fast}'
+                                      {literal}}{/literal},
+                    mouseOverClass:   '{$mouse_over_class|smarty:nodefaults|default:'over'}',
+                    activateOnLoad:   '{$activate_on_load|smarty:nodefaults|default:$selected_id}',
+                    useAjax:          {$use_ajax|smarty:nodefaults|default:'false'},
+                    ajaxUrl:          '{$ajax_url|smarty:nodefaults|default:$tabbedblock->genURL('tabbedblock/frontend/tabcontroller/index/')}',
+                    ajaxOptions:      {literal}{{/literal}method:'{$ajax_method|smarty:nodefaults|default:'get'}'{literal}, evalScripts: true}{/literal},
+                    evalScripts:      true,
+                    ajaxLoadingText:  '{$ajax_loading_text|smarty:nodefaults|default:'<div class="loading"><img src="/scripts/MoodalBox/img/loading.gif" alt="Loading..." width="47" height="39" \/><\/div>'}',
+                    width:            '{$width|smarty:nodefaults|default:'auto'}',
+                    height:           '{$height|smarty:nodefaults|default:'auto'}',
+                    panelStartFx:     '{$panel_start_fx|smarty:nodefaults|default:"fade"}',
+                    panelEndFx:       '{$panel_end_fx|smarty:nodefaults|default:"appear"}'
+            {literal}
+                });
             });
-        });
-        {/literal}
-    //]]>
-</script>
-
+            {/literal}
+        //]]>
+    </script>
+{/arag_header}
 <div id="tabbedblock" dir="{dir}">
     <ul class="morphtabs_title">
     {foreach from=$tabbedblock_items item=tabbedblock_item}

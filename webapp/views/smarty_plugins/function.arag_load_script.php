@@ -34,13 +34,7 @@ function smarty_function_arag_load_script($params, &$smarty)
     if (!isset($GLOBALS['loaded_headers'][sha1($src)])) {
 
         $GLOBALS['loaded_headers'][sha1($src)] = True;
-
-        if (strpos($src, 'mootools.js') === False && isset($GLOBALS['load_scripts_inline'])) {
-            $GLOBALS['headers'][] = "<script type=\"text/javascript\">\n//<![CDATA[\n// Imported from external file: '".$src.
-                                    "'\n".file_get_contents(DOCROOT.$src)."\n//]]>\n</script>";
-        } else {
-            $GLOBALS['headers'][] = html::script($src);
-        }
+        $GLOBALS['headers'][]                  = html::script($src);
     }
 
     return Null;

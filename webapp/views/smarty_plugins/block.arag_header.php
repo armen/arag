@@ -14,7 +14,12 @@
 
 function smarty_block_arag_header($params, $content, &$smarty, &$repeat)
 {
-    $GLOBALS['headers'][] = $content;
+    $key = sha1($content);
+    if (!isset($GLOBALS['loaded_headers'][$key])) {
+
+        $GLOBALS['loaded_headers'][$key] = True;
+        $GLOBALS['headers'][]            = $content;
+    }
 }
 
 ?>

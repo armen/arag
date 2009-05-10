@@ -3,5 +3,7 @@
     vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:
     File: $Id$
 *}
-{show_arag_headers}
+{if $show_headers|smarty:nodefault|default:null}
+    {show_arag_headers}
+{/if}
 {$content|smarty:nodefaults|default:""}

@@ -234,13 +234,27 @@ class Controller extends Controller_Core {
     public function _display()
     {
         if ($this->layout instanceof View) {
-            ($this->layout->content InstanceOf View) AND $this->layout->content = $this->layout->content->render(); // We render content before main layout in order to make things
+
+            $theme = Kohana::config('theme.default');
+
+            if (strpos(Router::$controller_path, 'backend') !== False || Router::$controller === 'backend') {
+                $this->layout->content_wrapper = new View('themes/'.$theme.'/backend_content_wrapper');
+            } else {
+                $this->layout->content_wrapper = new View('themes/'.$theme.'/frontend_content_wrapper');
+            }
+
+            // We render content before main layout in order to make things
+            if ($this->layout->content InstanceOf View) {
+                $this->layout->content_wrapper->content = $this->layout->content->render();
+                $this->layout->content_wrapper          = $this->layout->content_wrapper->render();
+            }
+
             $this->layout->render(True);
         }
     }
     // }}}
     // {{{ execute
-    public static function execute($uri, $return_content = True)
+    public static function execute($uri, $return_content = True, $show_headers = False)
     {
         $GLOBALS['controller_execute'] = True;
         $result                        = False;
@@ -268,7 +282,8 @@ class Controller extends Controller_Core {
 
             Event::clear('system.post_controller', array($controller, '_display'));
 
-            $controller->layout = new View('themes/'.$theme.'/empty_layout');
+            $controller->layout               = new View('themes/'.$theme.'/empty_layout');
+            $controller->layout->show_headers = $show_headers;  // This is usefull for ajax requests that are loaded independent of main content
             $controller->_call(Router::$method, Router::$arguments);
 
             if ($return_content) {

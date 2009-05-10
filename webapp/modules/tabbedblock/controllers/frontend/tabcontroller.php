@@ -20,11 +20,7 @@ class TabController_Controller extends Controller
         $uri = isset($_GET['tab']) ? trim(str_replace('.', '/', $_GET['tab']), '/') : Null;
 
         if (strpos($uri, 'tabcontroller') === False) {
-            $GLOBALS['load_scripts_inline'] = True;
-
-            echo Controller::execute($uri, True);
-
-            unset($GLOBALS['load_scripts_inline']);
+            echo Controller::execute($uri, True, True);
         }
         exit;
     }
