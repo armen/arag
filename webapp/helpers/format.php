@@ -77,4 +77,18 @@ class format_Core {
         return str_replace(array(1,2,3,4,5,6,7,8,9,0), array('۱','۲','۳','۴','۵','۶','۷','۸','۹','۰'), $string);
     }
     // }}}
+    // {{{ filter_amount
+    public function filter_amount($field)
+    {
+        if (is_array($field)) {
+            foreach ($field as &$value) {
+                $value = str_replace(',', '', $value);
+            }
+        } else {
+            $field = str_replace(',', '', $field);
+        }
+
+        return $field;
+    }
+    // }}}
 }
