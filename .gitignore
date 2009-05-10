@@ -2,7 +2,6 @@ libs/kohana
 libs/smarty
 libs/pear
 public_html/modpub/tinymce
-public_html/scripts/JalaliJSCalendar/
 public_html/modpub/theme_manager/uploaded/
 webapp/cache/kohana_configuration
 webapp/cache/kohana_file_paths

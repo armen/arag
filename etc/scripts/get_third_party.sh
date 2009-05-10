@@ -65,25 +65,6 @@ mkdir ${MODS_PATH}/tinymce
 mv /tmp/tinymce/jscripts/tiny_mce/* ${MODS_PATH}/tinymce
 cp -rf ${WEBAPP_PATH}/modules/tinymce/other/easyUpload/ ${MODS_PATH}/tinymce/plugins/
 
-# Download JalaliJSCalendar
-
-if [ -d $PUB_PATH/scripts/JalaliJSCalendar ]; then
-    rm -rf "${PUB_PATH}/scripts/JalaliJSCalendar"
-fi
-
-wget -c -P /tmp http://farhadi.ir/downloads/JalaliJSCalendar-1.4.tar.gz
-wget -c -P /tmp http://pub.vardump.org/calendar.patch
-
-mkdir JalaliJSCalendar-1.4
-tar xvfz /tmp/JalaliJSCalendar-1.4.tar.gz -C ./JalaliJSCalendar-1.3
-
-rm -r ./JalaliJSCalendar-1.4/doc
-rm -r ./JalaliJSCalendar-1.4/examples
-
-patch ./JalaliJSCalendar-1.4/calendar.js /tmp/calendar.patch
-
-mv ./JalaliJSCalendar-1.4 ${PUB_PATH}/scripts/JalaliJSCalendar
-
 # Cleanup
 
 rm -rf ./Smarty-2.6.19/
@@ -93,6 +74,3 @@ rm -rf /tmp/pear.tar.bz2
 
 rm -rf /tmp/tinymce_3_1_1.zip
 rm -rf /tmp/tinymce
-
-rm -rf /tmp/JalaliJSCalendar-1.4.tar.gz
-rm /tmp/calendar.patch
