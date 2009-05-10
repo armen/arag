@@ -14,6 +14,7 @@ $config = Array
     'secure_dirs'           => Array         // Smarty secure directories
     (
         LIBSPATH.'arag/views',
+        MODPATH.'core/views/',
         MODPATH.'user/views/frontend/',
         MODPATH.'core/views/',
         MODPATH.'locations/views/',
