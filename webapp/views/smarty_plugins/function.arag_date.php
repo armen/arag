@@ -87,7 +87,7 @@ function smarty_function_arag_date($params, &$smarty)
     $data['parent']            = isset($parent) ? $parent : Null;
     if (is_array($value)) {
         foreach($value as &$date) {
-            $date = date::timetostr($date, 'Y/m/d', true, $type);
+            $date = date::timetostr($date, 'Y/m/d', false, 'gregorian');
         }
     } elseif($value) {
         $value = date::timetostr($value, 'Y/m/d', true, $type);
