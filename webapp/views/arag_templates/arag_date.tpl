@@ -96,6 +96,7 @@
                 if (datesToValidate) {
                     for (valid_date in datesToValidate) {
                         valid_date = new Date(datesToValidate[valid_date]*1000);
+                        valid_date = new Date(valid_date.getTime()-(valid_date.getTimezoneOffset()*60*1000));
                         if (valid_date.getYear() == date.getYear() && valid_date.getMonth() == date.getMonth() && valid_date.getDate() == date.getDate()) {
                             {/literal}
                                 return {if $is_valid}false{else}true{/if};
