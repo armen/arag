@@ -85,13 +85,22 @@ function smarty_function_arag_date($params, &$smarty)
     $data['tip_x']             = $tip_x;
     $data['tip_y']             = $tip_y;
     $data['parent']            = isset($parent) ? $parent : Null;
+
     if (is_array($value)) {
+
+        $init_values = Array();
+
         foreach($value as &$date) {
-            $date = date::timetostr($date, 'Y/m/d', false, 'gregorian');
+            $init_values[] = date::timetostr($date, 'Y/m/d', true, $type);
+            $date          = date::timetostr($date, 'Y/m/d', false, 'gregorian');
         }
+
+        $data['init_values'] = implode(",\n", $init_values);
+
     } elseif($value) {
         $value = date::timetostr($value, 'Y/m/d', true, $type);
     }
+
     $data['value'] = $value;
 
     $view = new View('arag_templates/arag_date', $data);

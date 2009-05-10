@@ -38,7 +38,7 @@
     {if !$multiple}
     <input id="{$id}" name="{$name}" type="text"  onfocus="javascript:Calendar.show;" value="{$value|smarty:nodefaults|default:''}" {$size|smarty:nodefaults} />
     {else}
-        <input id="{$id}" name="{$name}" type="hidden" value="" />
+        <input id="{$id}" name="{$name}" type="hidden" value="{$init_values|smarty:nodefaults|default:''}" />
     {/if}
     {if !$multiple}
         {capture assign=title}_("Sample Format"){/capture}
