@@ -65,7 +65,10 @@ class PList_Component extends Component implements IteratorAggregate, ArrayAcces
         $Controller = Kohana::instance();
 
         // Set default URI
-        $uri = implode('/', Router::$rsegments).'/'; // Add trailing slash
+        $uri = trim(Router::$routed_uri, '/').'/'; // Add trailing slash
+        if (Router::$method == 'index' && strpos($uri, 'index') === False) {
+            $uri .= 'index/';
+        }
 
         // If namespace is not empty add an underscore at the begining
         $namespace = ($namespace) ? '_'.$namespace : $namespace;
@@ -94,9 +97,9 @@ class PList_Component extends Component implements IteratorAggregate, ArrayAcces
         }
 
         $array_resource = iterator_to_array($this->resource);
-        
-        if ($resource == False || $resource == Null || 
-            is_array(current($array_resource)) || 
+
+        if ($resource == False || $resource == Null ||
+            is_array(current($array_resource)) ||
             empty($array_resource)) {
             return;
         }
