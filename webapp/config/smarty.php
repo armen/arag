@@ -15,6 +15,7 @@ $config = Array
     (
         LIBSPATH.'arag/views',
         MODPATH.'user/views/frontend/',
+        MODPATH.'core/views/',
         MODPATH.'locations/views/',
         MODPATH.'forecast/views/'
     ),

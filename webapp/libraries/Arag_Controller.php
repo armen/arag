@@ -148,6 +148,7 @@ class Controller extends Controller_Core {
         if (substr($method, 0, 1) == '_') {
             // The method is protected so just call 404
             Event::run('system.404');
+            return;
         }
 
         // Set the method of Router
@@ -191,6 +192,7 @@ class Controller extends Controller_Core {
 
             } else {
                 Event::run('system.404');
+                return;
             }
         }
 
