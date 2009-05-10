@@ -1,1 +1,42 @@
-var initLocations=function(a,c,b){$(a).addEvent("change",function(d){d.stop();getProvincesUrl=getProvincesBaseUrl+($(a).getProperty("value")?$(a).getProperty("value"):0);getCitiesUrl=getCitiesBaseUrl+($(c).getProperty("value")?$(c).getProperty("value"):0)+"/"+($(a).getProperty("value")?$(a).getProperty("value"):0);fetchData(getProvincesUrl,c);fetchData(getCitiesUrl,b)});$(c).addEvent("change",function(d){d.stop();getCitiesUrl=getCitiesBaseUrl+$(c).getProperty("value")+"/"+$(a).getProperty("value");fetchData(getCitiesUrl,b)})};var fetchData=function(b,a){var c=new Request.JSON({url:b,onComplete:function(d){updateSelect(d.entries,a)}}).send()};var updateSelect=function(d,c){var b=$(c+"_container");if(d.length){var a=$(c);a.empty();d.each(function(e){new Element("option",{value:e.key,html:e.value}).inject(a)});b.appendChild(a);new Fx.Slide(b).slideIn()}else{$(c).setProperty("value",0);new Fx.Slide(b).slideOut()}};
+var initLocations = function(country_name, province_name, city_name) {
+    $(country_name).addEvent('change', function (e) {
+        e.stop();
+        getProvincesUrl = getProvincesBaseUrl + ($(country_name).getProperty('value') ? $(country_name).getProperty('value') : 0);
+        getCitiesUrl    = getCitiesBaseUrl + ($(province_name).getProperty('value') ? $(province_name).getProperty('value') : 0)   + '/' + ($(country_name).getProperty('value') ? $(country_name).getProperty('value') : 0);
+
+        fetchData(getProvincesUrl, province_name);
+        fetchData(getCitiesUrl, city_name);
+    });
+
+    $(province_name).addEvent('change', function (e) {
+        e.stop();
+        getCitiesUrl = getCitiesBaseUrl + $(province_name).getProperty('value')  + '/' + $(country_name).getProperty('value');
+        fetchData(getCitiesUrl, city_name);
+    });
+}
+
+var fetchData = function(sourceUrl, destination) {
+
+    var request = new Request.JSON({
+        url: sourceUrl,
+        onComplete: function(jsonObj) {
+            updateSelect(jsonObj.entries, destination);
+        }
+    }).send();
+}
+
+var updateSelect = function(options, name) {
+    var container = $(name+'_container');
+    if (options.length) {
+        var select = $(name);
+        select.empty();
+        options.each(function(option) {
+            new Element('option', {'value':option.key, 'html':option.value}).inject(select);
+        });
+        container.appendChild(select);
+        new Fx.Slide(container).slideIn();
+    } else {
+        $(name).setProperty('value', 0);
+        new Fx.Slide(container).slideOut();
+    }
+}
