@@ -8,14 +8,52 @@
         {assign var="selected_id" value=$tabbedblock->parseURI($tabbedblock_item.uri)|replace:'/':'.'}
     {/if}
 {/foreach}
+<script type="text/javascript">
+{literal}
+    Request.HTML.implement({
+        success : function(text) {
+            var html    = this.processHTML(this.response.text);
+            var scripts = html.getElements('script');
 
+            scripts.each(function(script) {
+                if (script.get('src') == null) {
+                    return ;
+                }
+                if ($$('script[src='+script.get('src')+']').length < 1) {
+                    Asset.javascript(script.get('src'));
+                }
+            });
+
+            var options = this.options, response = this.response;
+        
+            response.html = text.stripScripts(function(script){
+                response.javascript = script;
+            });
+            
+            var temp = this.processHTML(response.html);
+            
+            response.tree = temp.childNodes;
+            response.elements = temp.getElements('*');
+            
+            if (options.filter) response.tree = response.elements.filter(options.filter);
+            if (options.update) $(options.update).empty().adopt(response.tree);
+            if (options.evalScripts) $exec(response.javascript);
+            
+            this.onSuccess(response.tree, response.elements, response.html, response.javascript);
+        }
+    });
+{/literal}
+</script>
 {if !isset($selected_id|smarty:nodefaults)}
     {assign var="selected_id" value='first'}
 {/if}
+
 {if isset($load_all_scripts|smarty:nodefaults) && $load_all_scripts}
     <script type="text/javascript" src="{$arag_base_url|smarty:nodefaults}scripts/mootools.js"></script>
     <script type="text/javascript" src="{$arag_base_url|smarty:nodefaults}scripts/mootools-more.js"></script>
 {/if}
+
+
 <script type="text/javascript" src="{$arag_base_url|smarty:nodefaults}scripts/morphtabs1.4.js"></script>
 <script type="text/javascript">
     //<![CDATA[
