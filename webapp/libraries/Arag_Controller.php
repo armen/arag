@@ -110,6 +110,7 @@ class Controller extends Controller_Core {
             $this->smarty->assign('arag_username', Session::instance()->get('user.username'));
             $this->smarty->assign('arag_current_theme', Kohana::config('theme.default'));
             $this->smarty->assign('arag_docroot', DOCROOT);
+            $this->smarty->assign('arag_lang', Kohana::Config('locale.lang'));
 
             // Add current module plugins directory to plugins_dir
             $this->smarty->plugins_dir[] = MODPATH.Router::$module.'/views/plugins';
