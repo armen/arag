@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-09-26 22:51+0330\n"
+"POT-Creation-Date: 2009-05-13 11:10+0430\n"
 "PO-Revision-Date: 2008-04-14 02:27-0800\n"
 "Last-Translator: vafaei\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,7 +16,6 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: views/backend/edit.tpl:35 views/backend/create.tpl:30
-
 msgid "Use availabe routes?"
 msgstr "آیا از مسیر های موجود استفاده می کنید؟"
 
@@ -30,7 +29,7 @@ msgstr "آیا مسیر جدید ایجاد می کنید؟"
 msgid "Subject"
 msgstr "موضوع"
 
-#: views/backend/edit.tpl:23 views/backend/create.tpl:22
+#: views/backend/edit.tpl:74 views/backend/create.tpl:61
 msgid "Submit"
 msgstr "ارسال"
 
@@ -67,79 +66,113 @@ msgstr "بله"
 msgid "No"
 msgstr "خیر"
 
-#: controllers/backend.php:17 controllers/frontend.php:17
+#: config/config.php:6
+msgid "ContactUs"
+msgstr "ارتباط با ما"
+
+#: config/config.php:7
+msgid "AboutUs"
+msgstr "درباره ما"
+
+#: config/config.php:8
+msgid "SiteMap"
+msgstr "نقشه سایت"
+
+#: config/config.php:9
+msgid "SideBar"
+msgstr "نوار کناری"
+
+#: config/config.php:10
+msgid "Footer"
+msgstr "پا نویس"
+
+#: controllers/backend.php:24 controllers/frontend.php:17
 msgid "Static Pages"
 msgstr "صفحه ثابت"
 
-#: controllers/backend.php:21
+#: controllers/backend.php:28
 msgid "StaticPages"
 msgstr "صفحات ثابت"
 
-#: controllers/backend.php:22
+#: controllers/backend.php:29
 msgid "List"
 msgstr "لیست"
 
-#: controllers/backend.php:23
+#: controllers/backend.php:30
 msgid "Create"
 msgstr "جدید"
 
-#: controllers/backend.php:24
+#: controllers/backend.php:31
 msgid "Settings"
 msgstr "تنظیمات"
 
-#: controllers/backend.php:25 controllers/backend.php:49
+#: controllers/backend.php:32 controllers/backend.php:59
 msgid "Edit"
 msgstr "ویرایش"
 
-#: controllers/backend.php:26 controllers/backend.php:48
+#: controllers/backend.php:33 controllers/backend.php:58
 msgid "Preview"
 msgstr "نمایش"
 
-#: controllers/backend.php:27 controllers/backend.php:50
-#: controllers/backend.php:51
+#: controllers/backend.php:34 controllers/backend.php:60
+#: controllers/backend.php:61
 msgid "Delete"
 msgstr "حذف"
 
-#: controllers/backend.php:30
+#: controllers/backend.php:37
+#, php-format
+msgid "%s should define"
+msgstr "%s باید مشخص شده باشد."
+
+#: controllers/backend.php:38
 #, php-format
 msgid "%s is required."
 msgstr "%s الزامی می باشد."
 
-#: controllers/backend.php:31
+#: controllers/backend.php:39
 #, php-format
 msgid "%s should be numeric"
 msgstr "%s باید عددی باشد."
 
-#: controllers/backend.php:45
+#: controllers/backend.php:52
+msgid "ID"
+msgstr ""
+
+#: controllers/backend.php:54
 msgid "Author"
 msgstr "نویسنده"
 
-#: controllers/backend.php:46
+#: controllers/backend.php:55
 msgid "Create Date"
 msgstr "تاریخ ایجاد"
 
-#: controllers/backend.php:47
+#: controllers/backend.php:56
 msgid "Modify Date"
 msgstr "تاریخ اصلاح"
 
-#: controllers/backend.php:86 controllers/backend.php:148
-#: controllers/backend.php:197 controllers/backend.php:220
-#: controllers/backend.php:236 controllers/backend.php:284
+#: controllers/backend.php:57 controllers/backend.php:135
+#: controllers/backend.php:186
+msgid "Route"
+msgstr "مسیر"
+
+#: controllers/backend.php:99 controllers/backend.php:171
+#: controllers/backend.php:226 controllers/backend.php:249
+#: controllers/backend.php:265 controllers/backend.php:313
 msgid "Invalid ID"
 msgstr "شناسه نا معتبر"
 
-#: controllers/backend.php:105 controllers/backend.php:256
+#: controllers/backend.php:122 controllers/backend.php:285
 msgid "No form is submitted"
 msgstr "هیچ فرمی ارسال نشده است"
 
-#: controllers/backend.php:115 controllers/backend.php:160
+#: controllers/backend.php:132 controllers/backend.php:183
 msgid "Page"
 msgstr "صفحه"
 
-#: controllers/backend.php:155
+#: controllers/backend.php:178
 msgid "id"
 msgstr "شناسه"
 
-#: controllers/backend.php:311
+#: controllers/backend.php:340
 msgid "Limit"
 msgstr "محدودیت"

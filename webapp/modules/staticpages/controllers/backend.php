@@ -2,6 +2,7 @@
 // vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:
 // +-------------------------------------------------------------------------+
 // | Author:    Sasan Rose <sasan.rose@gamil.com                             |
+// |            Jila Khaghani <jilakhaghani@gmail.com>                       |
 // +-------------------------------------------------------------------------+
 // $Id$
 // ---------------------------------------------------------------------------
@@ -12,6 +13,12 @@ class Backend_Controller extends Controller
     function __construct()
     {
         parent::__construct();
+
+        $this->available_routes =Kohana::Config('config.available_routes', null);
+
+        foreach ($this->available_routes as &$avelaible) {
+            $avelaible = _($avelaible);
+        }
 
         // Default page title
         $this->layout->page_title = _("Static Pages");
@@ -27,6 +34,7 @@ class Backend_Controller extends Controller
         $this->global_tabs->addItem(_("Delete"), 'staticpages/backend/delete/%id%', 'staticpages/backend/index');
 
         // Validation Messages
+        $this->validation->message('_select_route', _("%s should define"));
         $this->validation->message('required', _("%s is required."));
         $this->validation->message('numeric', _("%s should be numeric"));
     }
@@ -41,10 +49,12 @@ class Backend_Controller extends Controller
         $this->staticpages->setResource($this->StaticPages->getPages());
         $this->staticpages->setLimit(Arag_Config::get('limit', 0));
         $this->staticpages->addColumn('id', Null, PList_Component::HIDDEN_COLUMN);
+        $this->staticpages->addColumn('id', _("ID"));
         $this->staticpages->addColumn('subject', _("Subject"));
         $this->staticpages->addColumn('author', _("Author"));
         $this->staticpages->addColumn('StaticPages.getDate', _("Create Date"), PList_Component::VIRTUAL_COLUMN);
         $this->staticpages->addColumn('StaticPages.getModifyDate', _("Modify Date"), PList_Component::VIRTUAL_COLUMN);
+        $this->staticpages->addColumn('route', _("Route"));
         $this->staticpages->addAction('staticpages/backend/preview/#id#', _("Preview"), 'view_action');
         $this->staticpages->addAction('staticpages/backend/edit/#id#', _("Edit"), 'edit_action');
         $this->staticpages->addAction('staticpages/backend/delete/#id#', _("Delete"), 'delete_action');
@@ -58,6 +68,7 @@ class Backend_Controller extends Controller
     public function create_read()
     {
         $this->layout->content = new View('backend/create');
+        $this->layout->content->available_routes = $this->available_routes;
     }
     // }}}
     // {{{ edit_read
@@ -79,9 +90,11 @@ class Backend_Controller extends Controller
 
             $data = Array('id'      => $row['id'],
                           'subject' => $row['subject'],
-                          'page'    => $row['page']);
+                          'page'    => $row['page'],
+                          'route'   => $row['route']);
 
             $this->layout->content = new View('backend/edit', $data);
+            $this->layout->content->available_routes = $this->available_routes;
         } else {
             $this->_invalid_request("staticpages/backend/index", _("Invalid ID"));
         }
@@ -98,7 +111,11 @@ class Backend_Controller extends Controller
             $page    = $this->input->post('page', Null, True);
             $subject = $this->input->post('subject', Null, True);
 
-            $this->StaticPages->createPage($this->session->get('user.username'), $subject, $page);
+            $route   = $this->input->post('available_route', Null)
+                                         ? $this->input->post('available_route', Null):
+                                         $this->input->post('new_route', Null);
+
+            $this->StaticPages->createPage($this->session->get('user.username'), $subject, $page, $route);
 
             url::redirect('staticpages/backend/index');
         } else {
@@ -114,6 +131,9 @@ class Backend_Controller extends Controller
 
         $this->validation->name('page', _("Page"))->add_rules('page', 'required')
              ->post_filter('security::xss_clean', 'page');
+
+        $this->validation->name('routes', _("Route"))
+             ->add_rules('routes', array($this, '_select_route'));
 
         return $this->validation->validate();
     }
@@ -140,8 +160,11 @@ class Backend_Controller extends Controller
         if ($exist) {
             $page    = $this->input->post('page', Null, True);
             $subject = $this->input->post('subject', Null, True);
+            $route   = $this->input->post('available_route', Null) ?
+                                     $this->input->post('available_route', Null)
+                                    :$this->input->post('new_route', Null);
 
-            $this->StaticPages->editPage($id, $subject, $page);
+            $this->StaticPages->editPage($id, $subject, $page,$route);
 
             url::redirect('staticpages/backend/index');
         } else {
@@ -159,6 +182,10 @@ class Backend_Controller extends Controller
 
         $this->validation->name('page', _("Page"))->add_rules('page', 'required')
              ->post_filter('security::xss_clean', 'page');
+
+        $this->validation->name('routes', _("Route"))
+             ->add_rules('routes', array($this, '_select_route'));
+
 
         return $this->validation->validate();
     }
@@ -191,7 +218,9 @@ class Backend_Controller extends Controller
 
             $row = $this->StaticPages->getPage($id);
 
-            $this->layout->content = new View('backend/delete', array('ids' => array($id), 'subjects' => $row['subject']));
+            $this->layout->content = new View('backend/delete'
+                                              , array('ids' => array($id)
+                                              , 'subjects' => $row['subject']));
 
         } else {
             $this->_invalid_request("staticpages/backend/index", _("Invalid ID"));
@@ -320,5 +349,18 @@ class Backend_Controller extends Controller
         $this->settings_read();
     }
     // }}}
+    // }}}
+    // {{{ _select_route
+    public function _select_route($route)
+    {
+        $available_route = $this->input->post('available_route');
+        $new_route       = $this->input->post('new_route');
+
+        if (empty($available_route) && empty($new_route)) {
+            return False;
+        }
+
+        return True;
+    }
     // }}}
 }

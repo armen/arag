@@ -32,6 +32,16 @@
                 <name>modify_date</name>
                 <type>integer</type>
             </field>
+            <field>
+                <name>appname</name>
+                <type>text</type>
+                <length>255</length>
+            </field>
+            <field>
+                <name>route</name>
+                <type>text</type>
+                <length>255</length>
+            </field>
         </declaration>
     </table>
 </database>
