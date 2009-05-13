@@ -35,6 +35,11 @@
             <td>{kohana_helper function="html::anchor" uri="user/frontend/forget_password" title="Forget your Password?" attributes='tabindex="100"'}</td>
         </tr>
         <tr>
+            {capture assign="register"}_("Register"){/capture}
+            <td>&nbsp;</td>
+            <td>{kohana_helper function="html::anchor" uri="user/frontend/registration" title=$register}</td>
+        </tr>
+        <tr>
             <td>&nbsp;</td>
             <td>
                 <input type="submit" value={quote}_("Login"){/quote} />
