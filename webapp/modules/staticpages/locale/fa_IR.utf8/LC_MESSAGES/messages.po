@@ -15,9 +15,18 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: views/backend/edit.tpl:12 views/backend/create.tpl:12
-#: controllers/backend.php:44 controllers/backend.php:112
-#: controllers/backend.php:157
+#: views/backend/edit.tpl:35 views/backend/create.tpl:30
+
+msgid "Use availabe routes?"
+msgstr "آیا از مسیر های موجود استفاده می کنید؟"
+
+#: views/backend/edit.tpl:50 views/backend/create.tpl:41
+msgid "Make anew route?"
+msgstr "آیا مسیر جدید ایجاد می کنید؟"
+
+#: views/backend/edit.tpl:63 views/backend/create.tpl:51
+#: controllers/backend.php:53 controllers/backend.php:129
+#: controllers/backend.php:180
 msgid "Subject"
 msgstr "موضوع"
 
