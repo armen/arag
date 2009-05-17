@@ -28,6 +28,8 @@ class Locations_Model extends Model
         $this->db->where(array('province' => $province, 'deleted' => false));
         $country != null AND $this->db->where('country', $country);
 
+        $this->db->orderby('city');
+
         return $this->db->get()->result_array(False);
     }
     // }}}
@@ -36,7 +38,8 @@ class Locations_Model extends Model
     {
         $this->db->select('id, province')
                  ->where(array('country' => $country, 'deleted' => false))
-                 ->from($this->tableNameProvinces);
+                 ->from($this->tableNameProvinces)
+                 ->orderby('province');
 
         return $this->db->get()->result_array(False);
     }
@@ -44,7 +47,7 @@ class Locations_Model extends Model
     // {{{ getCountries
     public function getCountries()
     {
-        $this->db->select('id, country')->from($this->tableNameCountries)->where(array('deleted' => false));
+        $this->db->select('id, country')->from($this->tableNameCountries)->where(array('deleted' => false))->orderby('country');
 
         return $this->db->get()->result_array(False);
     }
