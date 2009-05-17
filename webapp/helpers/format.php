@@ -47,18 +47,19 @@ class format_Core {
     }
     // }}}
     // {{{ money
-    public static function money($string, $decimals=2, $dec_point=".", $thousands_sep=",", $show_currency = False)
+    public static function money($string, $decimals=2, $dec_point=".", $thousands_sep=",", $currency = False)
     {
-        $lang     = Kohana::config('locale.lang');
-        $currency = Kohana::config('locale.currency.'.$lang);
-
+        if ($currency === True) {
+            $lang     = Kohana::config('locale.lang');
+            $currency = Kohana::config('locale.currency.'.$lang);
+        }
 
         if (is_numeric($string)) // check if it's a number
         {
             $string =  number_format($string, $decimals, $dec_point, $thousands_sep);
         }
 
-        if ($show_currency) {
+        if ($currency) {
             return $string.' '._($currency);
         }
 
