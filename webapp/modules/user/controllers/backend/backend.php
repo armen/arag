@@ -373,13 +373,13 @@ class Backend_Controller extends Controller
     // {{{ _check_user_name_profile
     public function _check_user_name_profile($username)
     {
-        return $this->Users->hasUserName($username, $this->appname);
+        return $this->Users->hasUserName($username, $this->appname, Null, Null);
     }
     // }}}
     // {{{ _check_user_name_profile_master
     public function _check_user_name_profile_master($username)
     {
-        return $this->Users->hasUserName($username);
+        return $this->Users->hasUserName($username, Null, Null, Null);
     }
     // }}}
     // {{{ _check_filter
@@ -426,7 +426,7 @@ class Backend_Controller extends Controller
                     return false;
                 }
             } else {
-                if (!$this->Users->hasUserName($object, $this->appname)) {
+                if (!$this->Users->hasUserName($object, $this->appname, Null, Null)) {
                     return false;
                 }
             }

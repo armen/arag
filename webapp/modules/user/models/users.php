@@ -141,7 +141,7 @@ class Users_Model extends Model
     }
     // }}}
     // {{{ & getUser
-    public function & getUser($username, $appname = APPNAME)
+    public function & getUser($username, $appname = APPNAME, $verified = True, $blocked = False)
     {
         if ($appname) {
             $this->db->select('appname, '.$this->tableNameGroups.'.name as groupname, '.$this->tableNameUsers.'.username, privileges, redirect,'.
@@ -150,8 +150,8 @@ class Users_Model extends Model
             $this->db->join(Array($this->tableNameUsersGroups, $this->tableNameGroups), Array($this->tableNameUsers.'.username' => $this->tableNameUsersGroups.'.username',
                                                                                               $this->tableNameGroups.'.id' => $this->tableNameUsersGroups.'.group_id'));
             $this->db->where($this->tableNameUsers.'.username', $username);
-            $this->db->where('verified', True);
-            $this->db->where('blocked',  False);
+            ($verified !== Null) AND $this->db->where('verified', $verified);
+            ($blocked !== Null) AND $this->db->where('blocked',  $blocked);
             $this->db->where('appname',  $appname);
 
             $user = (Array) $this->db->get()->current();
@@ -173,8 +173,8 @@ class Users_Model extends Model
             $this->db->select('username, name, lastname, email');
             $this->db->from($this->tableNameUsers);
             $this->db->where('username', $username);
-            $this->db->where('verified', True);
-            $this->db->where('blocked',  False);
+            ($verified !== Null) AND $this->db->where('verified', $verified);
+            ($blocked !== Null) AND $this->db->where('blocked',  $blocked);
 
             $user = (Array) $this->db->get()->current();
         }
@@ -334,9 +334,9 @@ class Users_Model extends Model
     }
     // }}}
     // {{{ hasUserName
-    public function hasUserName($username, $appname = NULL)
+    public function hasUserName($username, $appname = NULL, $verified = True, $blocked = False)
     {
-        $user = $this->getUser($username, $appname);
+        $user = $this->getUser($username, $appname, $verified, $blocked);
 
         return isset($user['username']);
     }

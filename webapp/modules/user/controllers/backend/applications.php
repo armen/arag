@@ -359,7 +359,7 @@ class Applications_Controller extends Backend_Controller
             $exist = false;
 
             if (preg_match("/^user$/", $type)) {
-                $exist = $this->Users->hasUserName($key);
+                $exist = $this->Users->hasUserName($key, Null, Null, Null);
 
                 if (!$exist) {
                     $this->_invalid_request("user/backend/applications/index", _("Invalid Type"));
