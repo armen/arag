@@ -50,7 +50,11 @@ class url extends url_Core {
         if (!isset($GLOBALS['controller_execute'])) {
             parent::redirect($uri, $method);
         } else {
-            Controller::execute($uri);
+            $content = Controller::execute($uri);
+
+            if (isset($GLOBALS['controller_execute_display'])) {
+                echo $content;
+            }
         }
     }
     // }}}
