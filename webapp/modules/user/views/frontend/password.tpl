@@ -13,20 +13,6 @@
             {$message}
         {/arag_block}
     {/if}
-    {if $error_message}
-        {arag_block template="warning"}
-            {$error_message}
-        {/arag_block}
-    {/if}
-    {if $is_sent}
-        {arag_block template="info"}
-            _("Please follow the instruction contained in an email sent to your email address, to complete the proccess.")
-        {/arag_block}
-    {else}
-        {arag_block template="error"}
-            _("There was a problem in sending email. Sorry for the inconvenient but we are not able to do your request now. Please try later...")
-        {/arag_block}
-    {/if}
     {arag_block template="blank"}
 
         {arag_form uri="user/frontend/forget_password" method="post"}

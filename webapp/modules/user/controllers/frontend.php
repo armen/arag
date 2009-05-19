@@ -192,11 +192,7 @@ class Frontend_Controller extends Controller
     // {{{ forget_password_read
     public function forget_password_read()
     {
-        $this->layout->content = new View('frontend/password', array(
-                                                                     'error_message' => false,
-                                                                     'is_sent'       => false,
-                                                                     'message'       => $this->message
-                                                                    ));
+        $this->layout->content = new View('frontend/password', array('message' => $this->message));
     }
     // }}}
     // {{{ forget_password_write
@@ -242,11 +238,11 @@ class Frontend_Controller extends Controller
             }
         }
 
-        $this->layout->content = new View('frontend/password', array(
-                                                                     'error_message' => $error_message,
-                                                                     'is_sent'       => $is_sent,
-                                                                     'message'       => $this->message
-                                                                    ));
+        $this->layout->content = new View('frontend/password_sent', array(
+                                                                           'error_message' => $error_message,
+                                                                           'is_sent'       => $is_sent,
+                                                                           'message'       => $this->message
+                                                                          ));
     }
     // }}}
     // {{{ forget_password_validate_write
