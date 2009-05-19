@@ -964,7 +964,7 @@ msgstr ""
 
 #: controllers/frontend.php:318
 msgid "Your new password for %username%' is '%password%'"
-msgstr "کلمهی عبور جدید شما برای %username%، %password% است."
+msgstr "کلمه عبور جدید شما برای %username%، %password% است."
 
 #: controllers/frontend.php:385
 msgid "Please enter a valid uri"
