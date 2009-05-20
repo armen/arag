@@ -41,4 +41,44 @@ class valid extends valid_Core {
         return (bool) date::get_time(current($options));
     }
     // }}}
+    // {{{
+    public static function operator($value, $input)
+    {
+        list($operator, $operand) = $input;
+
+        if (is_numeric($operand)) {
+            $operand = (int)$operand;
+        } else if (stricmp($operand, 'null')) {
+            $operand = null;
+        } else if (stricmp($operand, 'true')) {
+            $operand = true;
+        } elseif (stricmp($operand, 'false')) {
+            $operand = false;
+        }
+
+        switch($operator) {
+
+            case '>':
+                return  $value > $operand;
+            case '<':
+                return  $value < $operand;
+            case '==':
+                return  $value == $operand;
+            case '!=':
+                return  $value != $operand;
+            case '<>':
+                return  $value <> $operand;
+            case '===':
+                return  $value === $operand;
+            case '!==':
+                return  $value !== $operand;
+            case '<=':
+                return  $value <= $operand;
+            case '>=':
+                return  $value >= $operand;
+        }
+
+        return false;
+    }
+    // }}}
 } // End valid
