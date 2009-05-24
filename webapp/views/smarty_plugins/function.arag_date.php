@@ -31,7 +31,8 @@ function smarty_function_arag_date($params, &$smarty)
             case 'format':
             case 'tip_x':
             case 'tip_y':
-			case 'parent':
+            case 'parent':
+            case 'disable_past':
                 $$_key = $_val;
                 break;
 
@@ -85,6 +86,7 @@ function smarty_function_arag_date($params, &$smarty)
     $data['tip_x']             = $tip_x;
     $data['tip_y']             = $tip_y;
     $data['parent']            = isset($parent) ? $parent : Null;
+    $data['disable_past']      = isset($disable_past) ? True : True;
 
     if (is_array($value)) {
 

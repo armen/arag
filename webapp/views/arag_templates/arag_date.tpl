@@ -65,6 +65,7 @@
     var format              = "{$format}";
     var button              = "{$id}_cal";
     var parent              = {if $parent}"{$parent}"{else}null{/if};
+    var disable_past        = {if $disable_past}true{else}false{/if};
     var multiple            = {if $multiple}[{foreach from=$value item="date" name="dates"}new Date('{$date} GMT'){if !$smarty.foreach.dates.last},{/if}{/foreach}]{else}false{/if};
     var {$prefix}datesToValidate = {$dates_to_validate|smarty:nodefaults};
     var {$prefix}Cal             = Calendar.setup(
@@ -90,6 +91,15 @@
                 cal.hide();
             },
             disableFunc     : function(date) {
+
+                if (disable_past) {
+                    var today = new Date();
+                    today     = new Date(today.getTime()-(today.getTimezoneOffset()*60*1000));
+
+                    if (date.getTime() < today.getTime()) {
+                        return true;
+                    }
+                }
 
                 var datesToValidate = {/literal}{$prefix}datesToValidate;{literal}
 
