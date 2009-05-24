@@ -61,7 +61,7 @@
                             </div>
                             <div style="clear:both"></div>
                 {else}
-                            <div class="breadcrumb_progress_bar breadcrumb_progress_bar_visited{if isset($item.class|smarty:nodefaults)} {$item.class}_progress_bar {$item.class}_progress_bar_visited{/if}" style="float:{left}">
+                            <div class="breadcrumb_progress_bar breadcrumb_progress_bar_visited_expand{if isset($item.class|smarty:nodefaults)} {$item.class}_progress_bar {$item.class}_progress_bar_visited{/if}" style="float:{left}">
                             </div>
                             <div style="clear:both"></div>
                 {/if}
