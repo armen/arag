@@ -72,6 +72,18 @@ class Controller extends Controller_Core {
 
         $messaging                    = Model::load('Messaging', 'messaging');
         $this->layout->messages_count = $messaging->getReadMessagesCount($this->session->get('user.username'));
+
+        static $cache = Null;
+
+        if ($cache == Null) {
+            $agency    = Model::load('Agency','agency');
+            $agency_id = $agency->getIdByApplicationName(APPNAME);
+            $agency    = $agency->fetchAgency($agency_id);
+
+            $cache = $agency['name'];
+        }
+
+        $this->layout->_agency_name = $cache;
     }
     // }}}
     // {{{ _kohana_load_view
@@ -255,13 +267,17 @@ class Controller extends Controller_Core {
     }
     // }}}
     // {{{ execute
-    public static function execute($uri, $return_content = True, $show_headers = False)
+    public static function execute($uri, $return_content = True, $show_headers = False, $post = array())
     {
+        // We want to simulate POST situation
+        $post && ($_POST += $post);
+
         $GLOBALS['controller_execute'] = True;
         $result                        = False;
         $theme                         = Kohana::config('theme.default');
         $old_current_uri               = Router::$current_uri;
         Router::$current_uri           = Router::routed_uri($uri);
+        Router::request_method(empty($post) ? 'read' : 'write');
         Router::setup();
 
         if (strpos(Router::$controller_path, Router::$module) !== False) {
