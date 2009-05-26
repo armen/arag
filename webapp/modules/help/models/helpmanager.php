@@ -109,7 +109,7 @@ class HelpManager_Model extends Model
     public function getByUri($uri, $listAll=false)
     {
         $old_current_uri     = Router::$current_uri;
-        Router::$current_uri = $uri;
+        Router::$current_uri = Router::routed_uri($uri);
         Router::setup();
 
         $uri = implode('|', array_diff(Router::$segments, Router::$arguments));
