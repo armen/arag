@@ -140,7 +140,7 @@ class Backend_Controller extends Controller
 
         $this->global_tabs->setParameter('id', $help->id);
         $this->global_tabs->setParameter('uri', $help->uri);
-        $this->global_tabs->setParameter('original_uri', $this->model->decode($uri));
+        $this->global_tabs->setParameter('original_uri', $this->model->decode($help->uri));
         $this->global_tabs->addItem(_("Edit"), 'help/backend/edit/%id%', 'help/backend/index');
         $this->global_tabs->addItem(_("Delete"), 'help/backend/delete/%id%', 'help/backend/index');
 
@@ -214,7 +214,7 @@ class Backend_Controller extends Controller
 
         $this->global_tabs->setParameter('id', $help->id);
         $this->global_tabs->setParameter('uri', $help->uri);
-        $this->global_tabs->setParameter('original_uri', $this->model->decode($uri));
+        $this->global_tabs->setParameter('original_uri', $this->model->decode($help->uri));
         $this->global_tabs->addItem(_("Edit"), 'help/backend/edit/%id%', 'help/backend/index');
         $this->global_tabs->addItem(_("Delete"), 'help/backend/delete/%id%', 'help/backend/index');
 
