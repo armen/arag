@@ -15,14 +15,22 @@
 <body>
     {arag_block align="right" template="blank"}
         {if $auth}
+            {capture assign="current_help_uri"}{kohana_helper function="url::current"}{/capture}
+            {assign var='current_help_uri' value=$current_help_uri|replace:'/':'|'}
             {capture assign="logout"}_("Logout"){/capture}
             {capture assign="profile"}_("My Profile"){/capture}
             {capture assign="controlpanel"}_("Control Panel"){/capture}
             {capture assign="inbox"}_("Inbox (%d)"){/capture}
+            {capture assign="add_help"}_("Add Help"){/capture}
+            {capture assign="manage_help"}_("Manage Helps"){/capture}
             {kohana_helper function="html::anchor" uri="user/frontend/logout" title=$logout} |
             {kohana_helper function="html::anchor" uri="user_profile/frontend/index" title=$profile} |
             {kohana_helper function="html::anchor" uri="messaging/frontend/inbox" title=$inbox|sprintf:$messages_count} |
             {kohana_helper function="html::anchor" uri="controlpanel" title=$controlpanel} |
+            {arag_is_accessible uri="/help/backend"}
+                {kohana_helper function="html::anchor" uri="help/backend/add/`$current_help_uri`" title=$add_help} |
+                {kohana_helper function="html::anchor" uri="help/backend/listing/`$current_help_uri`" title=$manage_help} |
+            {/arag_is_accessible}
         {else}
             {capture assign="login"}_("Login"){/capture}
             {capture assign="forgot"}_("Forget your password?"){/capture}
@@ -40,6 +48,7 @@
     {/if}
     {/arag_block}
 
+    {arag_help_messages}
     {$content_wrapper|smarty:nodefaults|default:""}
     {literal}
         Execution: <b>{execution_time}</b> Memory usage: <b>{memory_usage}</b> Included files: <b>{included_files}</b>
