@@ -665,6 +665,7 @@ class Frontend_Controller extends Controller
     public function search_write()
     {
         $usersMan = New users_Model;
+        $simple   = Array();
         $results  = $usersMan->getUsers(Null, Null, Null, $this->input->post('username'));
         foreach($results as $result) {
             $simple[] = $result['username'];
