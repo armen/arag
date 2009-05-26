@@ -58,7 +58,9 @@ class Arag_Config_Core
             // Change include_once to module path
             Kohana::config_set('core.modules', array_unique(array_merge($old_include_paths, Array(MODPATH.$namespace))));
 
-            $result = Kohana::config($name);
+            if ($result = Kohana::config($name)) {
+                return $result;
+            }
         }
 
         if ($namespace == Null) {
