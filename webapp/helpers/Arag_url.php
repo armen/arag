@@ -58,5 +58,16 @@ class url extends url_Core {
         }
     }
     // }}}
+    // {{{ current
+	public static function current($qs = FALSE, $strip_args = FALSE)
+	{
+        if ($qs === TRUE) {
+            // Ignore strip_args when $qs is true
+            return parent::current(TRUE);
+        }
+
+        return ($strip_args == TRUE) ? implode('/', array_diff(Router::$segments, Router::$arguments)) : Router::$current_uri;
+	}
+    // }}}
 
 } // End url
