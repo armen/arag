@@ -12,7 +12,6 @@ class Backend_Controller extends Controller
     private $model;
     private $groups;
     // }}}
-
     // {{{ __construct
     public function __construct()
     {
@@ -27,12 +26,7 @@ class Backend_Controller extends Controller
         $this->global_tabs->addItem(_("Index"), 'help/backend/index');
         $this->global_tabs->addItem(_("Listing"), 'help/backend/listing/%uri%', 'help/backend/index');
         $this->global_tabs->addItem(_("Add"), 'help/backend/add/%uri%', 'help/backend/index');
-    }
-    // }}}
-    // {{{ _invalid_request
-    public function _invalid_request()
-    {
-        parent::_invalid_request(null, _('Invalid uri'));
+        $this->global_tabs->addItem(_("Back to page"), '%original_uri%', 'help/backend/index');
     }
     // }}}
     // {{{ index
@@ -48,10 +42,12 @@ class Backend_Controller extends Controller
         $this->layout->content = new View('backend/index');
     }
     // }}}
+    // {{{ listing
     // {{{ listing_read
     public function listing_read($uri)
     {
         $this->global_tabs->setParameter('uri', $uri);
+        $this->global_tabs->setParameter('original_uri', $this->model->decode($uri));
 
         $helps = new PList_Component('helps');
         $helps->setResource($this->model->getByUri($uri, True, False));
@@ -77,10 +73,13 @@ class Backend_Controller extends Controller
         $this->_invalid_request();
     }
     // }}}
+    // }}}
+    // {{{ add
     // {{{ add_read
     public function add_read($uri)
     {
         $this->global_tabs->setParameter('uri', $uri);
+        $this->global_tabs->setParameter('original_uri', $this->model->decode($uri));
 
         $groups = $this->groups->getGroups(APPNAME);
 
@@ -131,6 +130,8 @@ class Backend_Controller extends Controller
         $this->_invalid_request();
     }
     // }}}
+    // }}}
+    // {{{ edit
     // {{{ edit_read
     public function edit_read($id)
     {
@@ -139,6 +140,7 @@ class Backend_Controller extends Controller
 
         $this->global_tabs->setParameter('id', $help->id);
         $this->global_tabs->setParameter('uri', $help->uri);
+        $this->global_tabs->setParameter('original_uri', $this->model->decode($uri));
         $this->global_tabs->addItem(_("Edit"), 'help/backend/edit/%id%', 'help/backend/index');
         $this->global_tabs->addItem(_("Delete"), 'help/backend/delete/%id%', 'help/backend/index');
 
@@ -157,7 +159,7 @@ class Backend_Controller extends Controller
     // {{{ edit_validate_read
     public function edit_validate_read()
     {
-        $this->validation->add_rules(0, 'required', 'valid::numeric');
+        $this->validation->add_rules(0, 'required', 'valid::numeric', Array($this, '_has_help'));
         return $this->validation->validate();
     }
     // }}}
@@ -193,7 +195,7 @@ class Backend_Controller extends Controller
     // {{{ edit_validate_write
     public function edit_validate_write()
     {
-        $this->validation->add_rules('id', 'required', 'valid::numeric');
+        $this->validation->add_rules('id', 'required', 'valid::numeric', Array($this, '_has_help'));
         return $this->validation->validate();
     }
     // }}}
@@ -203,13 +205,16 @@ class Backend_Controller extends Controller
         parent::_invalid_request(null, 'Invalid id');
     }
     // }}}
+    // }}}
+    // {{{ delete
     // {{{ delete_read
     public function delete_read($id)
     {
-        $help   = $this->model->get($id);
+        $help = $this->model->get($id);
 
         $this->global_tabs->setParameter('id', $help->id);
         $this->global_tabs->setParameter('uri', $help->uri);
+        $this->global_tabs->setParameter('original_uri', $this->model->decode($uri));
         $this->global_tabs->addItem(_("Edit"), 'help/backend/edit/%id%', 'help/backend/index');
         $this->global_tabs->addItem(_("Delete"), 'help/backend/delete/%id%', 'help/backend/index');
 
@@ -220,7 +225,7 @@ class Backend_Controller extends Controller
     // {{{ delete_validate_read
     public function delete_validate_read()
     {
-        $this->validation->add_rules(0, 'required', 'valid::numeric');
+        $this->validation->add_rules(0, 'required', 'valid::numeric', Array($this, '_has_help'));
         return $this->validation->validate();
     }
     // }}}
@@ -242,7 +247,7 @@ class Backend_Controller extends Controller
     // {{{ delete_validate_write
     public function delete_validate_write()
     {
-        $this->validation->add_rules('id', 'required', 'valid::numeric');
+        $this->validation->add_rules('id', 'required', 'valid::numeric', Array($this, '_has_help'));
         return $this->validation->validate();
     }
     // }}}
@@ -251,5 +256,20 @@ class Backend_Controller extends Controller
     {
         parent::_invalid_request(null, 'Invalid id');
     }
+    // }}}
+    // }}}
+    // {{{ callbacks
+    // {{{ _has_help
+    public function _has_help($id)
+    {
+        return (boolean) $this->model->get($id);
+    }
+    // }}}
+    // {{{ _invalid_request
+    public function _invalid_request()
+    {
+        parent::_invalid_request(null, _('Invalid uri'));
+    }
+    // }}}
     // }}}
 }

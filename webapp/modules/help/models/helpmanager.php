@@ -23,7 +23,6 @@ class HelpManager_Model extends Model
     const _DEFAULT           = 'default';
     const _EMPTY             = 'empty';
 
-
     // }}}
     // {{{ __construct
     public function __construct()
@@ -42,13 +41,13 @@ class HelpManager_Model extends Model
     }
     // }}}
     // {{{ decode
-    private function decode($uri)
+    public function decode($uri)
     {
         return str_replace('|', '/', $uri);
     }
     // }}}
     // {{{ encode
-    private function encode($uri)
+    public function encode($uri)
     {
         return str_replace('/', '|', $uri);
     }
@@ -109,11 +108,20 @@ class HelpManager_Model extends Model
     // {{{ getByUri
     public function getByUri($uri, $listAll=false)
     {
+        $old_current_uri     = Router::$current_uri;
+        Router::$current_uri = $uri;
+        Router::setup();
+
+        $uri = implode('|', array_diff(Router::$segments, Router::$arguments));
+
+        Router::$current_uri = $old_current_uri;
+        Router::setup();
+
         $result = $this->db->select('id, title, uri, message, type')
-        ->from($this->tableName)
-        ->where('uri', $uri)
-        ->where('appname', APPNAME)
-        ->get()->result(false);
+                       ->from($this->tableName)
+                       ->like('uri', $uri.'%', False)
+                       ->where('appname', APPNAME)
+                       ->get()->result(false);
 
         $helps = Array();
         foreach($result as $help) {
@@ -124,7 +132,7 @@ class HelpManager_Model extends Model
         return $helps;
     }
     // }}}
-    // {{{
+    // {{{ allow
     public function allow($id, $group_id)
     {
         if (!$this->isAllowed($id, $group_id)) {
@@ -132,7 +140,7 @@ class HelpManager_Model extends Model
         }
     }
     // }}}
-    // {{{
+    // {{{ deny
     public function deny($help_id, $group_id)
     {
         $this->db->delete($this->tableNameGroups, array('help_id'=>$help_id, 'group_id'=>$group_id));
@@ -170,5 +178,3 @@ class HelpManager_Model extends Model
     }
     // }}}
 }
-
-?>

@@ -14,8 +14,9 @@
 
 function smarty_function_arag_help_messages($params, &$smarty)
 {
-    $helpMan  = Model::load('HelpManager', 'help');
-    $helps = $helpMan->getByUri($params['uri']);
+    $helpMan = Model::load('HelpManager', 'help');
+    $uri     = isset($params['uri']) ? $params['uri'] : $helpMan->encode(url::current(False, True));
+    $helps   = $helpMan->getByUri($uri);
     $smarty->assign('helps', $helps);
 
     return $smarty->fetch(APPPATH.'views/arag_templates/helps.tpl');

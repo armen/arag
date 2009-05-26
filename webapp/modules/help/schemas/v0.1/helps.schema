@@ -20,7 +20,7 @@
             <field>
                 <name>uri</name>
                 <type>text</type>
-                <length>40</length>
+                <length>255</length>
                 <notnull>true</notnull>
             </field>
             <field>
