@@ -17,11 +17,16 @@ function smarty_block_arag_is_accessible($params, $content, &$smarty, &$repeat)
     if (!$repeat) {
 
         $uri = Null;
+        $not = False;
 
         foreach ($params as $_key => $_val) {
             switch ($_key) {
                 case 'uri':
                     $$_key = (string)$_val;
+                    break;
+
+                case 'not':
+                    $$_key = (boolean)$_val;
                     break;
 
                 default:
@@ -31,7 +36,7 @@ function smarty_block_arag_is_accessible($params, $content, &$smarty, &$repeat)
 
         empty($uri) AND $smarty->trigger_error("arag_accessible: uri parameter should be set.");
 
-        if (Arag_Auth::is_accessible($uri)) {
+        if ((!$not && Arag_Auth::is_accessible($uri)) || ($not && !Arag_Auth::is_accessible($uri))) {
             return $content;
         }
 
