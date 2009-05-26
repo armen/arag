@@ -56,7 +56,7 @@ class Arag_Config_Core
             $old_include_paths = Kohana::include_paths();
 
             // Change include_once to module path
-            Kohana::config_set('core.modules', array_unique(array_merge($old_include_paths, Array(MODPATH.$namespace))));
+            Kohana::config_set('core.modules', array_unique(array_merge($old_include_paths, Array(MODPATH.$namespace.'/'))));
 
             if ($result = Kohana::config($name)) {
                 return $result;
