@@ -9,6 +9,9 @@ $config = Array
     (
         'www'
     ),
+    'domains'           => array
+    (
+    ),
 
     // }}}
     // {{{ Global paths

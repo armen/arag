@@ -6,9 +6,17 @@ function multisite_fetch_appname()
 {
     (PHP_SAPI == 'cli') AND $_SERVER['SERVER_NAME'] = Null;
 
-    // Fetch application name
-    preg_match('/^(.*)\.[^.]++\.[^.]++$/', $_SERVER['SERVER_NAME'], $appname);
-    $appname = isset($appname[1]) ? $appname[1] : Kohana::config('arag.master_appname');
+    // Find subdomain and domain name
+    preg_match('/^(?:(.*)\.)?([^.]++\.[^.]++)$/', $_SERVER['SERVER_NAME'], $appname);
+
+    // Find appname from domain name
+    $domains = Kohana::config('arag.domains');
+
+    if (isset($domains[$appname[2]])) {
+        $appname = $domains[$appname[2]];
+    } else {
+        $appname = ($appname[1]) ? $appname[1] : Kohana::config('arag.master_appname');
+    }
 
     if ($appname == Kohana::config('arag.master_appname') ||
         in_array($appname, Kohana::config('arag.master_appaliases')) ||
