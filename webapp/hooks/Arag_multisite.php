@@ -12,10 +12,11 @@ function multisite_fetch_appname()
     // Find appname from domain name
     $domains = Kohana::config('arag.domains');
 
-    if (isset($domains[$appname[2]])) {
+    // Make sure that  $appname[1] and $appname[2] are set, in case of cli call, those are empty
+    if (isset($appname[2]) && isset($domains[$appname[2]])) {
         $appname = $domains[$appname[2]];
     } else {
-        $appname = ($appname[1]) ? $appname[1] : Kohana::config('arag.master_appname');
+        $appname = (isset($appname[1]) && $appname[1]) ? $appname[1] : Kohana::config('arag.master_appname');
     }
 
     if ($appname == Kohana::config('arag.master_appname') ||
