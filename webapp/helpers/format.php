@@ -32,13 +32,13 @@ class format_Core {
 
         if ($lang === 'en') {
             $date = date($dateFormat, $timestamp);
-            if ($showHours) {
+            if ($showHours && (int) date('His', $timestamp)) {
                 $date = $date . date($timeFormat, $timestamp);
             }
         } else {
             $date = date::gregorian_to_jalali((int) $timestamp);
             $date = $date['year'].'-'.$date['month'].'-'.$date['day'];
-            if ($showHours) {
+            if ($showHours && (int) date('His', $timestamp)) {
                 $date = $date . date($timeFormat, $timestamp);
             }
         }
@@ -67,9 +67,9 @@ class format_Core {
     }
     // }}}
     // {{{ show_date
-    public function show_date($row, $field)
+    public function show_date($row, $field, $showtime = true)
     {
-        return format::date($row[$field], false);
+        return format::date($row[$field], $showtime);
     }
     // }}}
     // {{{ to_farsi
