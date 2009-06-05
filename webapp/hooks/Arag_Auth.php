@@ -131,10 +131,11 @@ class Arag_Auth {
             $uri = Router::routed_uri($uri);
         }
 
+        $session = Session::instance();
+        $appname = ($appname != Null) ? $appname : $session->get('user.appname', APPNAME);
+
         if (!isset($cache[$uri.'::'.$appname])) {
 
-            $session = Session::instance();
-            $appname = ($appname != Null) ? $appname : $session->get('user.appname', APPNAME);
             $filters = $session->get('privilege_filters.'.$appname, False);
 
             // When user Logins privilege_filters unset by login method
