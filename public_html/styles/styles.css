@@ -9,7 +9,7 @@ body {
     font-family     : Tahoma, Verdana, Arial, Helvetica, sans-serif;
     margin          : 0px;
     padding         : 50px;
-    color           : #000;
+    color           : #777;
     background      : #fff url(../images/misc/background.png);
 }
 input, textarea, select {
