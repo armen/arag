@@ -100,7 +100,6 @@ class Comment_Model extends Model
         return $retval;
     }
     // }}}
-
     // {{{ List callbacks
     // {{{ getCreateDate
     public function getCreateDate($row)
@@ -128,5 +127,3 @@ class Comment_Model extends Model
     // }}}
     // }}}
 }
-
-?>
