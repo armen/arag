@@ -92,4 +92,10 @@ class format_Core {
         return $field;
     }
     // }}}
+    // {{{ show_money
+    public function show_money($row, $field)
+    {
+        return format::money($row[$field], null, null, ',', True);
+    }
+    // }}}
 }
