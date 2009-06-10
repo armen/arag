@@ -111,7 +111,7 @@
                                 {if $action.uri}
                                     {assign var=uri value=$plist->parseURI($action.uri, $row)}
                                     <a href="{kohana_helper function="url::site" uri=$uri}" title="{$action.label}" class="{$action.className}"
-                                       target="{$target}">{$action.label}</a>
+                                       {if $target != '_self'}target="{$target}"{/if}>{$action.label}</a>
                                 {else}
                                     <div title="{$action.label}" class="{$action.className}">{$action.label}</div>
                                 {/if}
