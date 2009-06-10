@@ -103,7 +103,7 @@ function smarty_function_arag_date($params, &$smarty)
         $value = date::timetostr($value, 'Y/m/d', true, $type);
     }
 
-    $data['value'] = $value;
+    $data['value'] = ($value) ? $value : null;
 
     $view = new View('arag_templates/arag_date', $data);
     return $view->render();
