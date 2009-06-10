@@ -36,6 +36,7 @@
 </select>
 <div id="{$province_name}_container">
     <select id="{$province_name}" name="{$province_name}" style="width:{$width}px;">
+        <option value="">&nbsp;</option>
         {foreach from=$provinces item=entry}
             <option value="{$entry.id}"{if isset($province|smarty:nodefaults) && $entry.id == $province} selected="selected"{/if}>
                 {$entry.province|default:"&nbsp;"}
@@ -47,6 +48,7 @@
 </div>
 <div id="{$city_name}_container">
     <select id="{$city_name}" name="{$city_name}" style="width:{$width}px">
+        <option value="">&nbsp;</option>
         {foreach from=$cities item=entry}
             <option value="{$entry.code}"{if isset($city|smarty:nodefaults) && $entry.code == $city} selected="selected"{/if}>
                 {$entry.city|default:"&nbsp;"}
