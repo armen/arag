@@ -41,33 +41,34 @@ class Comment_Component extends Component
         $this->setReferenceId($referenceId);
         $this->onlyComment(False);
 
-        $controller       = implode('/', array_diff(Router::$rsegments, Router::$arguments));
-        $controller       = rtrim($controller, Router::$method.'/'); // Append a slash to $destination
+        $controller = implode('/', array_diff(Router::$rsegments, Router::$arguments));
+        $controller = rtrim($controller, Router::$method.'/'); // Append a slash to $destination
         $this->setUri($controller);
 
-        $this->title      = _("Comments");
+        $this->title = _("Comments");
     }
     // }}}
     // {{{ setReferenceId
     public function setReferenceId($referenceId)
     {
         $this->referenceId = $referenceId;
-        $this->session->set_flash('comment.'.$this->getKey().'.reference_id', $referenceId);
+        $this->session->set('comment.'.$this->getKey().'.reference_id', $referenceId);
     }
     // }}}
     // {{{ setNamespace
     public function setNamespace($namespace = Null)
     {
         $this->namespace = empty($namespace) ? Router::$module : $namespace; //If namespace is not set, namespace is module name
-        $this->session->set_flash('comment.'.$this->getKey().'.namespace', $this->namespace);
+        $this->session->set('comment.'.$this->getKey().'.namespace', $this->namespace);
     }
     // }}}
     // {{{ setUri
     public function setUri($uri = Null)
     {
         $this->uri = $uri;
-        $this->session->set_flash('comment.'.$this->getKey().'.uri', Router::$current_uri); //Redirect back here baby
-        $this->session->set_flash('comment.'.$this->getKey().'.controller', $uri); //My address, for link to attachments
+        $uri       = $this->session->get('comment.'.$this->getKey().'.uri', Router::$current_uri);
+        $this->session->set('comment.'.$this->getKey().'.uri', $uri); //Redirect back here baby
+        $this->session->set('comment.'.$this->getKey().'.controller', $uri); //My address, for link to attachments
     }
     // }}}
     // {{{ setTitle
@@ -133,5 +134,3 @@ class Comment_Component extends Component
     }
     // }}}
 }
-
-?>
