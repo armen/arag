@@ -54,11 +54,17 @@ function smarty_block_arag_tabbed_block($params, $content, &$smarty, &$repeat)
                     $template = text::strrtrim($template, '.'.$ext);
                     break;
 
+                case 'show_icon':
+                    $show_icon = $_val;
                 default:
                     // Pass all unknown variables to template, its odd but it adds more felexibility
                     // for custom templates
                     $smarty->assign($_key, $_val);
             }
+        }
+
+        if (!isset($show_icon)) {
+            $show_icon = True;
         }
 
         // Get selected item
@@ -116,6 +122,7 @@ function smarty_block_arag_tabbed_block($params, $content, &$smarty, &$repeat)
             $smarty->assign('tabbedblock_selected_tab_name', $selectedItemName);
             $smarty->assign('tabbedblock_selected_tab', $selectedItem);
             $smarty->assign('tabbedblock_module', Router::$module);
+            $smarty->assign('show_icon', $show_icon);
 
             return $smarty->fetch(Arag::find_file('tabbedblock', 'views', $template, True, $ext));
 
