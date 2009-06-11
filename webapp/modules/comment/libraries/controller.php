@@ -12,10 +12,10 @@ class Comments_Controller extends Controller
     public function comment_add_write()
     {
         $key          = $this->input->post('key');
-        $namespace    = $this->session->get_once('comment.'.$key.'.namespace');
-        $reference_id = $this->session->get_once('comment.'.$key.'.reference_id');
-        $uri          = $this->session->get_once('comment.'.$key.'.uri');
-        $body         = $this->session->get_once('comment.'.$key.'.comment', $this->input->post('comment'));
+        $namespace    = $this->session->get('comment.'.$key.'.namespace');
+        $reference_id = $this->session->get('comment.'.$key.'.reference_id');
+        $uri          = $this->session->get('comment.'.$key.'.uri');
+        $body         = $this->session->get('comment.'.$key.'.comment', $this->input->post('comment'));
         $users        = Model::load('Users', 'user');
 
         if (!$namespace || !$reference_id || !$uri) {
