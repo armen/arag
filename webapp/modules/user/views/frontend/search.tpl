@@ -7,7 +7,7 @@
 {literal}
     window.addEvent('domready', function() {
         new Autocompleter.Request.JSON('{/literal}{$name|smarty:nodefaults|default:null}_id{literal}', '{/literal}{kohana_helper function="url::site"}{literal}user/frontend/search', {
-            'postVar'  : '{/literal}{$name|smarty:nodefaults|default:null}{literal}',
+            'postVar'  : '{/literal}username{literal}',
             'className': 'user_autocomplete'
         });
     });
