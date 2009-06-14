@@ -9,7 +9,7 @@
 require_once Arag::find_file('oauth', 'vendor', 'oauth-php/OAuthStore', True);
 require_once Arag::find_file('oauth', 'vendor', 'oauth-php/OAuthRequestVerifier', True);
 
-class oAuthApi extends Controller
+class OAuthApi extends Controller
 {
     // {{{ Constructor
     public function __construct()
