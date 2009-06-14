@@ -41,11 +41,9 @@ class Comment_Component extends Component
         $this->setReferenceId($referenceId);
         $this->onlyComment(False);
 
-        $controller       = implode('/', array_diff(Router::$rsegments, Router::$arguments));
-        $controller       = rtrim($controller, Router::$method.'/'); // Append a slash to $destination
-        $this->setUri($controller);
+        $this->setUri();
 
-        $this->title      = _("Comments");
+        $this->title = _("Comments");
     }
     // }}}
     // {{{ setReferenceId
@@ -63,11 +61,21 @@ class Comment_Component extends Component
     }
     // }}}
     // {{{ setUri
-    public function setUri($uri = Null)
+    public function setUri()
     {
-        $this->uri = $uri;
-        $this->session->set_flash('comment.'.$this->getKey().'.uri', Router::$current_uri); //Redirect back here baby
-        $this->session->set_flash('comment.'.$this->getKey().'.controller', $uri); //My address, for link to attachments
+        if ($redirect_uri = $this->session->get_once('comment.'.$this->getKey().'.uri')) {
+
+            $this->uri= $this->session->get_once('comment.'.$this->getKey().'.controller');
+
+        } else {
+
+            $this->uri    = implode('/', array_diff(Router::$rsegments, Router::$arguments));
+            $this->uri    = rtrim($this->uri, Router::$method.'/'); // Append a slash to $destination
+            $redirect_uri = Router::$current_uri;
+        }
+
+        $this->session->set_flash('comment.'.$this->getKey().'.uri', $redirect_uri); // Redirect back here baby
+        $this->session->set_flash('comment.'.$this->getKey().'.controller', $this->uri); // My address, for link to attachments
     }
     // }}}
     // {{{ setTitle
@@ -110,8 +118,14 @@ class Comment_Component extends Component
     public function getKey()
     {
         if (!$this->key) {
+            // In case of validation error try to fetch already existed key from post
+            $this->key = Input::instance()->post('key', Null);
+        }
+
+        if (!$this->key) {
             $this->key = sha1(microtime());
         }
+
         return $this->key;
     }
     // }}}
