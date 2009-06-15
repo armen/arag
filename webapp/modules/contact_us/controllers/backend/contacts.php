@@ -201,7 +201,7 @@ class Contacts_Controller extends Backend_Controller
         $multisite = Model::load('MultiSite', 'multisite');
 
         // Send an email to verify the user
-        $settings = Arag_Config::get('email_settings', NULL, 'core');
+        $settings = Arag_Config::get('email_settings', NULL, 'core', False, Kohana::config('arag.master_appname'));
 
         $lang      = Kohana::config('locale.lang');
         $direction = Kohana::config('locale.languages_direction.'.$lang);

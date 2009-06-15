@@ -31,7 +31,7 @@ class Backend_Controller extends Controller
     // {{{ email_read
     public function email_read()
     {
-        $data = Arag_Config::get("email_settings", array());
+        $data = Arag_Config::get("email_settings", array(), 'core', False, Kohana::config('arag.master_appname'));
 
         $data['saved']          = $this->session->get_once('core_settings_email_saved');
         $data['authenticators'] = array('PLAIN' => _("PLAIN"), 'LOGIN' => _("LOGIN"), 'CRAMMD5' => _("CRAMMD5"));
@@ -60,7 +60,7 @@ class Backend_Controller extends Controller
                                                     ));
         }
 
-        Arag_Config::set('email_settings', $settings);
+        Arag_Config::set('email_settings', $settings, 'core', Kohana::config('arag.master_appname'));
 
         $this->session->set('core_settings_email_saved', true);
 

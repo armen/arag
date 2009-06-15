@@ -31,7 +31,7 @@ class Install_Controller extends Backend_Controller
 
         $show_form = true;
         $messages  = array();
-        $settings  = Arag_Config::get('email_settings', False, 'core');
+        $settings  = Arag_Config::get('email_settings', False, 'core', False, Kohana::config('arag.master_appname'));
 
         if (!$settings || !isset($settings['smtpserver']) || !isset($settings['sender']) || !isset($settings['smtpport'])) {
             $messages[] = _("You should first set your email's SMTP settings in the core settings to continue.");
@@ -137,7 +137,7 @@ class Install_Controller extends Backend_Controller
         }
 
         // Send an email to verify the user
-        $settings = Arag_Config::get('email_settings', NULL, 'core');
+        $settings = Arag_Config::get('email_settings', NULL, 'core', False, Kohana::config('arag.master_appname'));
         $strings  = array ('appname'  => $appname,
                            'uri'      => html::anchor('multisite/frontend/index/' . $verify_uri),
                            'username' => $username,

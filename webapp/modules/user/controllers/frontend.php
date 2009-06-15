@@ -216,7 +216,7 @@ class Frontend_Controller extends Controller
             $verify_uri    = $multisite->generateVerifyUri(10);
 
             // Send an email to verify the user
-            $settings = Arag_Config::get('email_settings', NULL, 'core');
+            $settings = Arag_Config::get('email_settings', NULL, 'core', False, Kohana::config('arag.master_appname'));
             $settings['template'] = _("You asked to change your password, for '%username%'. So please follow the below link:\n\n%verifyuri%\n\n".
                                       "And if you didn't ask to do so, please strongly visit:\n\n%removeuri%");
             $settings['subject']  = "Change Password";
@@ -248,7 +248,7 @@ class Frontend_Controller extends Controller
     // {{{ forget_password_validate_write
     public function forget_password_validate_write()
     {
-        $settings  = Arag_Config::get('email_settings', False, 'core');
+        $settings  = Arag_Config::get('email_settings', False, 'core', False, Kohana::config('arag.master_appname'));
 
         if (!$settings || !isset($settings['smtpserver']) || !isset($settings['sender']) || !isset($settings['smtpport'])) {
             $this->validation->name('smtp_settings', _("SMTP Settings"));
@@ -325,7 +325,7 @@ class Frontend_Controller extends Controller
             $password   = strtolower(text::random('alnum', Arag_Config::get('passlength', 8)));
 
             // Send an email to verify the user
-            $settings = Arag_Config::get('email_settings', NULL, 'core');
+            $settings = Arag_Config::get('email_settings', NULL, 'core', False, Kohana::config('arag.master_appname'));
             $settings['template'] = _("Your new password for %username%' is '%password%'");
             $settings['subject']  = "Password Changed";
             $strings  = array (
@@ -358,7 +358,7 @@ class Frontend_Controller extends Controller
     // {{{ change_password_validate_write
     public function change_password_validate_write()
     {
-        $settings  = Arag_Config::get('email_settings', False, 'core');
+        $settings  = Arag_Config::get('email_settings', False, 'core', False, Kohana::config('arag.master_appname'));
 
         if (!$settings || !isset($settings['smtpserver']) || !isset($settings['sender']) || !isset($settings['smtpport'])) {
             $this->validation->name('smtp_settings', _("SMTP Settings"));
@@ -491,7 +491,7 @@ class Frontend_Controller extends Controller
         $users->createUser(APPNAME, $email, $name, $lastname, $groupname, $username, $password, 'Anonymous', $verify_uri , 0);
 
         // Send an email to verify the user
-        $settings = Arag_Config::get('email_settings', NULL, 'core');
+        $settings = Arag_Config::get('email_settings', NULL, 'core', False, Kohana::config('arag.master_appname'));
         $settings['template'] = _("Thank you for registering in %appname%. To complete you registration please visit the following link".
                                   ":\n\n%verifyuri%\n\nYour Username: %username%\nYour Password: %password%");
         $strings  = array (
@@ -522,7 +522,7 @@ class Frontend_Controller extends Controller
     // {{{ registration_validate_write
     public function registration_validate_write()
     {
-        $settings  = Arag_Config::get('email_settings', False, 'core');
+        $settings  = Arag_Config::get('email_settings', False, 'core', False, Kohana::config('arag.master_appname'));
 
         if (!$settings || !isset($settings['smtpserver']) || !isset($settings['sender']) || !isset($settings['smtpport'])) {
             $this->validation->name('smtp_settings', _("SMTP Settings"));
