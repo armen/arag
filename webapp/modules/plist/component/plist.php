@@ -62,8 +62,6 @@ class PList_Component extends Component implements IteratorAggregate, ArrayAcces
         $this->setResource(Array());
         $this->setProperties(self::CAPTION | self::HEADER | self::FOOTER | self::SORTABLE | self::COUNTER | self::STATS);
 
-        $Controller = Kohana::instance();
-
         // Set default URI
         $uri = trim(Router::$routed_uri, '/').'/'; // Add trailing slash
         if (Router::$method == 'index' && strpos($uri, 'index') === False) {
