@@ -24,7 +24,7 @@ class History_Component extends Component
         $history = $session->get('history.'.Router::$module, Array('rsegments' => Array(), 'uri_map' => Array()));
 
         $rsegments = implode('/', Router::$rsegments);
-        $title     = (Kohana::instance()->layout->title) ? Kohana::instance()->layout->title : ucwords(str_replace('_', ' ', Router::$method));
+        $title     = (Kohana::instance()->layout->content->title) ? Kohana::instance()->layout->content->title : ucwords(str_replace('_', ' ', Router::$method));
 
         $history['rsegments'][] = $rsegments;
         $history['uri_map'][]   = Router::$current_uri;
