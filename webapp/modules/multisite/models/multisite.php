@@ -90,6 +90,15 @@ class MultiSite_Model extends Model
     // {{{ sendEmail
     public function sendEmail($recipients, $strings, $settings, $newLines = True)
     {
+        // Default values
+        !isset($settings['smtpserver']) AND $settings['smtpserver'] = 'localhost';
+        !isset($settings['smtpport']) AND $settings['smtpport'] = Null;
+        !isset($settings['authentication']) AND $settings['authentication'] = 'PLAIN';
+        !isset($settings['authenticator']) AND $settings['authenticator'] = 'PLAIN';
+        !isset($settings['username']) AND $settings['username'] = Null;
+        !isset($settings['password']) AND $settings['password'] = Null;
+        !isset($settings['sender']) AND $settings['sender'] = 'noreply@example.com';
+
         foreach ($strings as $str => $replace) {
             $settings['template'] = str_replace("%$str%", $replace, $settings['template']);
         }
@@ -102,7 +111,7 @@ class MultiSite_Model extends Model
         $conn =& new Swift_Connection_SMTP($settings['smtpserver'], $settings['smtpport']);
 
         if ($settings['authentication']) {
-            require_once Kohana::find_file('vendor', 'swift/Swift/Authenticator/'.$settings['authenticator']);
+            require_once Kohana::find_file('vendor', 'swift/Swift/Authenticator/'.$settings['authenticator'], True);
             switch ($settings['authenticator']) {
                 case 'LOGIN':
                     $conn->attachAuthenticator(new Swift_Authenticator_LOGIN());
@@ -160,4 +169,3 @@ class MultiSite_Model extends Model
     }
     // }}}
 }
-?>
