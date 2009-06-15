@@ -8,12 +8,12 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-04-13 09:08+0430\n"
+"POT-Creation-Date: 2009-05-07 09:52+0430\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
 #: views/backend/edit.tpl:6
@@ -28,33 +28,45 @@ msgstr "عکس حاضر"
 msgid "Save"
 msgstr "ذخیره"
 
-#: config/config.php:11
+#: config/config.php:12
+msgid "Background"
+msgstr "زمینه"
+
+#: config/config.php:19
 msgid "Logo"
 msgstr "لوگو"
 
-#: config/config.php:18
-msgid "Color of body"
-msgstr ""
+#: config/config.php:26
+msgid "Links"
+msgstr "لینک ها"
 
-#: config/config.php:25
-msgid "Color of p elements"
-msgstr ""
+#: config/config.php:33
+msgid "Links Hover"
+msgstr "لینک ها زمان ایستادن موس روی آن"
 
-#: config/config.php:32
-msgid "Background of p elements"
-msgstr ""
+#: config/config.php:40
+msgid "Top Menu Links"
+msgstr "لینک های بالای صفحه (ورود|خروج|...)"
 
-#: config/config.php:38
-msgid "Color of li elements"
-msgstr ""
+#: config/config.php:47
+msgid "Menu Links"
+msgstr "لینک منو ها (صفحه اصلی|...)"
+
+#: config/config.php:54
+msgid "Footer Links"
+msgstr "لینک های پا نویس"
+
+#: config/config.php:61
+msgid "Footer Background"
+msgstr "زمینه پانویس"
 
 #: controllers/backend.php:20 controllers/backend.php:24
 msgid "Theme Manager"
-msgstr ""
+msgstr "مدیریت جلوه"
 
 #: controllers/backend.php:25
 msgid "Styles"
-msgstr ""
+msgstr "جلوه ها"
 
 #: controllers/backend.php:26
 msgid "Edit"
@@ -63,4 +75,4 @@ msgstr "ویرایش"
 #: controllers/backend.php:29
 #, php-format
 msgid "%s is not a valid file"
-msgstr ""
+msgstr "%s فایل معتبری نمی باشد"

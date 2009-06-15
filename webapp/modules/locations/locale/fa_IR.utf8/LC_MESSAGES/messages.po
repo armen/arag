@@ -1,0 +1,245 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-04-12 18:13+0430\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: views/backend/list_cities.tpl:5
+msgid "City saved successfuly!"
+msgstr "شهر جدید با موفقیت ذخیره شد!"
+
+#: views/backend/add_city.tpl:6 views/backend/add_province.tpl:6
+#: views/backend/add_country.tpl:6
+#, c-format
+msgid "Fields marked with a %s are required."
+msgstr "تکمیل مواردی که با %s مشخص شده اند الزامیست."
+
+#: views/backend/add_city.tpl:19 views/backend/add_province.tpl:19
+#: views/backend/add_country.tpl:19 controllers/backend.php:311
+#: controllers/backend.php:396 controllers/backend.php:691
+msgid "Country"
+msgstr "کشور"
+
+#: views/backend/add_city.tpl:27 views/backend/add_province.tpl:27
+#: controllers/backend.php:393 controllers/backend.php:592
+#: controllers/backend.php:694
+msgid "Province"
+msgstr "استان"
+
+#: views/backend/add_city.tpl:35 controllers/backend.php:688
+msgid "City"
+msgstr "شهر"
+
+#: views/backend/add_city.tpl:42 views/backend/add_country.tpl:25
+#: controllers/backend.php:85 controllers/backend.php:154
+#: controllers/backend.php:599 controllers/backend.php:701
+msgid "English name"
+msgstr "نام انگلیسی"
+
+#: views/backend/add_city.tpl:49 views/backend/add_province.tpl:35
+#: views/backend/add_country.tpl:33
+msgid "Save"
+msgstr "ذخیره"
+
+#: views/backend/delete_province.tpl:12 views/backend/delete_country.tpl:12
+#: views/backend/delete_city.tpl:12
+#, c-format
+msgid "Do you really want to delete the '%s' Entry?"
+msgstr "آیا واقعا می خواهید %s را حذف نمایید؟"
+
+#: views/backend/delete_province.tpl:18 views/backend/delete_country.tpl:18
+#: views/backend/delete_city.tpl:18
+msgid "Yes"
+msgstr "بله"
+
+#: views/backend/delete_province.tpl:23 views/backend/delete_country.tpl:23
+#: views/backend/delete_city.tpl:23
+msgid "No"
+msgstr "خیر"
+
+#: views/backend/list_provinces.tpl:5
+msgid "Province saved successfuly!"
+msgstr "استان جدیدبا موفقیت ذخیره شد"
+
+#: views/backend/list_countries.tpl:5
+msgid "Country saved successfuly!"
+msgstr "کشور جدید با موفقیت ذخیره شد"
+
+#: controllers/backend.php:22 controllers/backend.php:26
+#: controllers/backend.php:27
+msgid "Locations"
+msgstr ""
+
+#: controllers/backend.php:31
+#, php-format
+msgid "%s should be numeric"
+msgstr "$s باید بصورت عددی باشد"
+
+#: controllers/backend.php:32
+#, php-format
+msgid "%s is required"
+msgstr "%s الزامیست"
+
+#: controllers/backend.php:33
+#, php-format
+msgid "%s must be alph-numeric."
+msgstr ""
+
+#: controllers/backend.php:34
+#, php-format
+msgid "%s must be standard English text"
+msgstr "%s باید متن استاندارد انگلیسی با شد."
+
+#: controllers/backend.php:41 controllers/backend.php:60
+#: controllers/backend.php:93 controllers/backend.php:105
+#: controllers/backend.php:174 controllers/backend.php:229
+#: controllers/backend.php:268 controllers/backend.php:330
+#: controllers/backend.php:349 controllers/backend.php:416
+#: controllers/backend.php:436 controllers/backend.php:496
+#: controllers/backend.php:541 controllers/backend.php:613
+#: controllers/backend.php:639 controllers/backend.php:717
+#: controllers/backend.php:742
+msgid "Countries"
+msgstr "کشور ها"
+
+#: controllers/backend.php:42 controllers/backend.php:61
+#: controllers/backend.php:94 controllers/backend.php:106
+#: controllers/backend.php:175 controllers/backend.php:230
+#: controllers/backend.php:269 controllers/backend.php:331
+#: controllers/backend.php:350 controllers/backend.php:417
+#: controllers/backend.php:437 controllers/backend.php:497
+#: controllers/backend.php:542 controllers/backend.php:614
+#: controllers/backend.php:640 controllers/backend.php:718
+#: controllers/backend.php:743
+msgid "Add Country"
+msgstr "ایجاد کشور جدید"
+
+#: controllers/backend.php:47 controllers/backend.php:116
+#: controllers/backend.php:146 controllers/backend.php:190
+#: controllers/backend.php:211 controllers/backend.php:240
+#: controllers/backend.php:252 controllers/backend.php:282
+#: controllers/backend.php:364 controllers/backend.php:454
+#: controllers/backend.php:477 controllers/backend.php:512
+#: controllers/backend.php:523 controllers/backend.php:561
+#: controllers/backend.php:658 controllers/backend.php:764
+#: controllers/backend.php:787
+msgid "ID"
+msgstr "شناسه"
+
+#: controllers/backend.php:48 controllers/backend.php:241
+#: controllers/backend.php:513
+msgid "Name"
+msgstr "نام"
+
+#: controllers/backend.php:49 controllers/backend.php:242
+#: controllers/backend.php:514
+msgid "Edit"
+msgstr "ویرایش"
+
+#: controllers/backend.php:50 controllers/backend.php:243
+#: controllers/backend.php:515
+msgid "Delete"
+msgstr "حذف"
+
+#: controllers/backend.php:51
+msgid "View province of this country"
+msgstr "نمایش استان های این کشور"
+
+#: controllers/backend.php:81 controllers/backend.php:150
+msgid "Country Name"
+msgstr "نام کشور"
+
+#: controllers/backend.php:107 controllers/backend.php:176
+msgid "Edit Country"
+msgstr "ویرایش کشور"
+
+#: controllers/backend.php:124 controllers/backend.php:260
+#: controllers/backend.php:290 controllers/backend.php:372
+#: controllers/backend.php:531 controllers/backend.php:569
+#: controllers/backend.php:666
+msgid "ID is required"
+msgstr "شناسه الزامیست"
+
+#: controllers/backend.php:178
+msgid "Delete Country"
+msgstr "حذف کشور"
+
+#: controllers/backend.php:198 controllers/backend.php:219
+#: controllers/backend.php:462 controllers/backend.php:485
+#: controllers/backend.php:772 controllers/backend.php:795
+msgid "Invalid ID"
+msgstr "شناسه نا معتبر"
+
+#: controllers/backend.php:231 controllers/backend.php:270
+#: controllers/backend.php:332 controllers/backend.php:351
+#: controllers/backend.php:418 controllers/backend.php:438
+#: controllers/backend.php:498 controllers/backend.php:543
+#: controllers/backend.php:615 controllers/backend.php:641
+#: controllers/backend.php:719 controllers/backend.php:744
+#, php-format
+msgid "Provinces of '%s'"
+msgstr "استان های '%s'"
+
+#: controllers/backend.php:233 controllers/backend.php:272
+#: controllers/backend.php:334 controllers/backend.php:353
+#: controllers/backend.php:420 controllers/backend.php:440
+#: controllers/backend.php:500 controllers/backend.php:545
+#: controllers/backend.php:617 controllers/backend.php:643
+#: controllers/backend.php:721 controllers/backend.php:746
+msgid "Add Province"
+msgstr "ایجاد استان جدید"
+
+#: controllers/backend.php:244
+msgid "View cities of this province"
+msgstr "نمایش شهر های این استان"
+
+#: controllers/backend.php:314 controllers/backend.php:399
+msgid "Province Name"
+msgstr "نام استان"
+
+#: controllers/backend.php:354 controllers/backend.php:421
+#: controllers/backend.php:441
+msgid "Edit Province"
+msgstr "ویرایش استان"
+
+#: controllers/backend.php:442
+msgid "Delete Province"
+msgstr "حذف استان"
+
+#: controllers/backend.php:501 controllers/backend.php:546
+#: controllers/backend.php:618 controllers/backend.php:644
+#: controllers/backend.php:722 controllers/backend.php:747
+#, php-format
+msgid "Cities of '%s'"
+msgstr "شهر های '%s'"
+
+#: controllers/backend.php:504 controllers/backend.php:548
+#: controllers/backend.php:620 controllers/backend.php:646
+#: controllers/backend.php:724 controllers/backend.php:749
+msgid "Add City"
+msgstr "ایجاد شهر جدید"
+
+#: controllers/backend.php:595 controllers/backend.php:697
+msgid "City Name"
+msgstr "نام شهر"
+
+#: controllers/backend.php:647 controllers/backend.php:725
+#: controllers/backend.php:750
+msgid "Edit City"
+msgstr "ویرایش شهر"
+
+#: controllers/backend.php:751
+msgid "Delete City"
+msgstr "حذف شهر"

@@ -102,10 +102,8 @@ msgstr "خربد کارت"
 msgid "Copyright &copy; 2008 DES Inc. All rights reserved."
 msgstr "کلیه حقوق برای شرکت توسعه تجارت الکترونیک سامانه کیش محفوظ است."
 
-#: views/arag_templates/backend_layout.tpl:15
-#, c-format
-msgid "Welcome %s %s"
-msgstr "%s %s خوش آمدید"
+msgid "Welcome %s %s - %s"
+msgstr "خوش آمدید %s %s - %s"
 
 #: views/arag_templates/backend_layout.tpl:18
 msgid "Control Panel"
@@ -147,8 +145,46 @@ msgstr "روند ها"
 msgid "Static Pages"
 msgstr "صفحات ثابت"
 
+msgid "Agency Management"
+msgstr "مدیریت آژانس"
+
+msgid "Logger"
+msgstr "گزارش عملیات سیستم"
+
+msgid "Tariff Manager"
+msgstr "مدیریت تعرفه ها"
+
+msgid "Messaging"
+msgstr "تبادل پیام"
+
+msgid "Locations"
+msgstr "مدیریت مکان ها"
+
+msgid "Agency Accounting"
+msgstr "گزارشات مالی آژانس"
+
+msgid "Guest Profile"
+msgstr "مشخصات مسافران"
+
+msgid "Static pages"
+msgstr "صفحات ثابت"
+
+msgid "Theme Manager"
+msgstr "مدیرت جلوه "
+
+msgid "Payment"
+msgstr "پرداخت"
+
+msgid "Transaction Manager"
+msgstr "مدیریت تراکنش ها"
+
 msgid "Deliver Methods"
 msgstr "روش های ارسال"
+
+msgid "Hotel Management"
+msgstr "مدیریت هتل"
+
+
 
 msgid "Actions"
 msgstr "عملیات"
@@ -436,3 +472,69 @@ msgstr "مدیریت راهنما‌ها"
 
 msgid "Add Help to this page"
 msgstr "اضافه‌کردن راهنما به این صفحه"
+
+msgid "From"
+msgstr "از"
+
+msgid "Search"
+msgstr "جستجو"
+
+msgid "Search Tour"
+msgstr "جستجو تور"
+
+msgid "Search Packages"
+msgstr "جستجو پکیج"
+
+msgid "Tours"
+msgstr "تورها"
+
+msgid "My Orders"
+msgstr "سوابق رزرو"
+
+msgid "Flights"
+msgstr "پرواز ها"
+
+msgid "Hotels"
+msgstr "هتل ها"
+
+msgid "Site Map"
+msgstr "نقشه سایت"
+
+msgid "Forget your password?"
+msgstr "رمز عبور خود را فراموش کرده اید؟"
+
+msgid "Itinerary & Pricing"
+msgstr "برنامه سفر و قیمت ها"
+
+msgid "Package Overview"
+msgstr "جزییات پکیج"
+
+msgid "Reservation"
+msgstr "انجام رزرو"
+
+msgid "Inbox (%d)"
+msgstr "پیامها (%d)"
+
+msgid "IRR"
+msgstr "ریال"
+
+msgid "Select Date"
+msgstr "انتخاب تاریخ"
+
+msgid "Click here to select date"
+msgstr "برای انتخاب تاریخ اینجارا کلیک کنید"
+
+msgid "Sample Format"
+msgstr "نمونه"
+
+msgid "Book It"
+msgstr "رزرو"
+
+msgid "Add Help"
+msgstr "اضافه کردن راهنما"
+
+msgid "Manage Helps"
+msgstr "مدیریت راهنماها"
+
+msgid "Packages List"
+msgstr "پکیج ها"

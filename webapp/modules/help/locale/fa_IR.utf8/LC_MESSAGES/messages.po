@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-10-07 11:38+0330\n"
+"POT-Creation-Date: 2009-05-26 15:14+0430\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -21,7 +21,7 @@ msgid "Fields marked with a %s are required."
 msgstr "پر کردن بخش های %s دار الزامی است"
 
 #: views/backend/edit.tpl:17 views/backend/add.tpl:17
-#: controllers/backend.php:60
+#: controllers/backend.php:54
 msgid "Title"
 msgstr "عنوان"
 
@@ -54,120 +54,115 @@ msgstr "بلی"
 msgid "No"
 msgstr "خیر"
 
-#: libraries/Help_Backend.php:20
-#, php-format
-msgid "%s is required."
-msgstr "%s الزامی است"
-
-#: libraries/Help_Backend.php:21
-#, php-format
-msgid "%s should be numeric."
-msgstr "%s باید عدد باشد."
-
-#: libraries/Help_Backend.php:22
-#, php-format
-msgid "%s should be ordinary text."
-msgstr "%s باید متن معمولی باشد."
-
-#: libraries/Help_Backend.php:26
-msgid "Help"
-msgstr "کمک"
-
-#: libraries/Help_Backend.php:27
-msgid "Nodes"
-msgstr "گره ها"
-
-#: libraries/Help_Backend.php:28
-msgid "Edit Node"
-msgstr "ویرایش گره"
-
-#: libraries/Help_Backend.php:29
-msgid "Delete Node"
-msgstr "حذف گره"
-
-#: libraries/Help_Backend.php:30
-msgid "Settings"
-msgstr "تنظیمات"
-
-#: controllers/backend.php:26
+#: controllers/backend.php:25
 msgid "Helps"
 msgstr "راهنما ها"
 
-#: controllers/backend.php:27
+#: controllers/backend.php:26
 msgid "Index"
 msgstr "فهرست"
 
-#: controllers/backend.php:28
+#: controllers/backend.php:27
 msgid "Listing"
 msgstr "لیست"
 
-#: controllers/backend.php:29
+#: controllers/backend.php:28
 msgid "Add"
 msgstr "اضافه کردن"
 
-#: controllers/backend.php:30 controllers/backend.php:63
-msgid "Edit"
-msgstr "ویرایش"
+#: controllers/backend.php:29
+msgid "Back to page"
+msgstr "بازگشت به صفحه مورد نظر"
 
-#: controllers/backend.php:31 controllers/backend.php:64
-msgid "Delete"
-msgstr "حذف"
-
-#: controllers/backend.php:37
-msgid "Invalid uri"
-msgstr "آدرس نامعتبر"
-
-#: controllers/backend.php:47
+#: controllers/backend.php:39
 msgid "Url"
 msgstr "آدرس"
 
-#: controllers/backend.php:48
+#: controllers/backend.php:40
 msgid "View"
 msgstr "نمایش"
 
-#: controllers/backend.php:61
+#: controllers/backend.php:55
 msgid "Type"
 msgstr "نوع"
 
-#: controllers/backend.php:62
+#: controllers/backend.php:56
 msgid "Viewers"
 msgstr "گروه های مجاز"
 
-#: controllers/backend.php:98
+#: controllers/backend.php:57 controllers/backend.php:144
+#: controllers/backend.php:218
+msgid "Edit"
+msgstr "ویرایش"
+
+#: controllers/backend.php:58 controllers/backend.php:145
+#: controllers/backend.php:219
+msgid "Delete"
+msgstr "حذف"
+
+#: controllers/backend.php:95
 msgid "Uri"
 msgstr "آدرس"
 
-#: models/helpmanager.php:33
+#: controllers/backend.php:271
+msgid "Invalid uri"
+msgstr "آدرس نامعتبر"
+
+#: models/helpmanager.php:32
 msgid "Blank"
 msgstr "معمولی"
 
-#: models/helpmanager.php:34
+#: models/helpmanager.php:33
 msgid "Error"
 msgstr "خطا"
 
-#: models/helpmanager.php:35
+#: models/helpmanager.php:34
 msgid "Warning"
 msgstr "هشدار"
 
-#: models/helpmanager.php:36
+#: models/helpmanager.php:35
 msgid "Information"
 msgstr "اطلاعات"
 
-#: models/helpmanager.php:37
+#: models/helpmanager.php:36
 msgid "Tip"
 msgstr "نکته"
 
-#: models/helpmanager.php:38
+#: models/helpmanager.php:37
 msgid "Collapsible"
 msgstr "تا شو"
 
-#: models/helpmanager.php:39
+#: models/helpmanager.php:38
 msgid "Default"
 msgstr "پیش فرض"
 
-#: models/helpmanager.php:40
+#: models/helpmanager.php:39
 msgid "Empty"
 msgstr "خالی"
+
+#~ msgid "%s is required."
+#~ msgstr "%s الزامی است"
+
+#~ msgid "%s should be numeric."
+#~ msgstr "%s باید عدد باشد."
+
+#~ msgid "%s should be ordinary text."
+#~ msgstr "%s باید متن معمولی باشد."
+
+#~ msgid "Help"
+#~ msgstr "کمک"
+
+#~ msgid "Nodes"
+#~ msgstr "گره ها"
+
+#~ msgid "Edit Node"
+#~ msgstr "ویرایش گره"
+
+#~ msgid "Delete Node"
+#~ msgstr "حذف گره"
+
+#~ msgid "Settings"
+#~ msgstr "تنظیمات"
 
 #~ msgid "Subject"
 #~ msgstr "موضوع"
