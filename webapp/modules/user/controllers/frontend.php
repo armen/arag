@@ -65,7 +65,7 @@ class Frontend_Controller extends Controller
             $user = $users->getUser($username);
 
             if (!isset($user['username'])) {
-                // Fetch defauly group and merge it with user information
+                // Fetch default group and merge it with user information
                 $userinfo = $users->getUser($username, False);
                 $user     = array_merge($users->getAnonymousUser(APPNAME, True), $userinfo); // Fetch default group
             }
