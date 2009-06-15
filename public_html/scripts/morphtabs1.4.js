@@ -70,10 +70,19 @@ var MorphTabs = new Class({
 			'id': 'morphPanel',
 			'class': 'morphtabs_panel',
 			'styles': {
-				'width': this.panelWidth + 'px',
-				'height': this.panelHeight + 'px'
+				'width': this.panelWidth + 'px'
 			}
 		}).inject(this.el.getFirst(), 'after');
+
+        if(this.options.activateOnLoad != 'none') {
+			if(this.options.activateOnLoad == 'first') {
+				var first = this.titles[0];
+			} else {
+				var first = this.options.activateOnLoad;
+			}
+            this.panel.setStyle('height', $(first).getStyle('height'));
+            this.panelHeight = this.panel.getStyle('height').toInt();
+		}
 
 		this.panelWrapBorder = this.panel.getStyle('border-width').toInt() * 2;
 
@@ -253,9 +262,14 @@ var MorphTabs = new Class({
 
 		this.panel.set('html', this.options.ajaxLoadingText);
 
+        var panel = this.panel;
 		var newOptions = {
 			url: this.options.ajaxUrl + '?tab=' + this.activeTitle.getProperty('title'),
-			update: this.panel
+            update: this.panel,
+            onComplete: function(text) {
+                panel.setStyle('height', 'auto');
+                $('morphPanelWrap').setStyle('height', 'auto');
+            }
 		};
 
 		this.options.ajaxOptions = $merge(this.options.ajaxOptions, newOptions);
