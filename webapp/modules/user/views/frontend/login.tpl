@@ -32,7 +32,10 @@
         {/if}
         <tr>
             <td>&nbsp;</td>
-            <td>{kohana_helper function="html::anchor" uri="user/frontend/forget_password" title="Forget your Password?" attributes='tabindex="100"'}</td>
+            <td>
+                {capture assign="forgot"}_("Forget your password?"){/capture}
+                {kohana_helper function="html::anchor" uri="user/frontend/forget_password" title=$forgot attributes='tabindex="100"'}
+            </td>
         </tr>
         <tr>
             {capture assign="register"}_("Register"){/capture}
