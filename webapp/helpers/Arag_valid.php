@@ -29,6 +29,14 @@ class valid extends valid_Core {
         return str_replace('-', Null, $pan);
     }
     // }}}
+    // {{{ less_than
+    public static function less_than($value, $options)
+    {
+
+        return  (count($options) > 0) ? (int) $value < (int) Input::instance()->post(current($options), null, true)
+                                        : (int) $value < (int) current($options);
+    }
+    // }}}
     // {{{ equals
     public static function equals($value, $options)
     {
