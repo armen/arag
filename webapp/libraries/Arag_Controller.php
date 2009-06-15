@@ -72,18 +72,6 @@ class Controller extends Controller_Core {
 
         $messaging                    = Model::load('Messaging', 'messaging');
         $this->layout->messages_count = $messaging->getReadMessagesCount($this->session->get('user.username'));
-
-        static $cache = Null;
-
-        if ($cache == Null) {
-            $agency    = Model::load('Agency','agency');
-            $agency_id = $agency->getIdByApplicationName(APPNAME);
-            $agency    = $agency->fetchAgency($agency_id);
-
-            $cache = $agency['name'];
-        }
-
-        $this->layout->_agency_name = $cache;
     }
     // }}}
     // {{{ _kohana_load_view
