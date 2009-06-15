@@ -52,3 +52,9 @@ msgstr "ارسال"
 #: views/linear.tpl:72
 msgid "Reset"
 msgstr "فرم جدید"
+
+msgid "Attachment"
+msgstr "ضمیمه"
+
+
+
