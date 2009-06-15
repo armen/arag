@@ -15,6 +15,6 @@ In default behavior you have to create your view in content variable of layout v
 So, following example shows correct way to create a view and assign variables to it.
 
 {{{
-  $this->layout->content  = new View('index');
-  $this->layout->variable = "This is a sample data";
+  $this->layout->content  		   = new View('index');
+  $this->layout->content->variable = "This is a sample data";
 }}}
