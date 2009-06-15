@@ -23,7 +23,13 @@ class ThemeManager_Model extends Model
     // {{{ getDefaults
     public function getDefaults()
     {
-        return Arag_Config::get('config.default_styles', array(), 'theme_manager', true);
+        $default_styles = Arag_Config::get('config.default_styles', array(), 'theme_manager', true);
+
+        foreach ($default_styles as &$styl) {
+            $styl['description'] = _($styl['description']);
+        }
+
+        return $default_styles;
     }
     // }}}
 }
