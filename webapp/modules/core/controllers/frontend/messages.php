@@ -13,7 +13,7 @@ class Messages_Controller extends Controller
     {
         $this->layout->content = new View('messages/invalid_request');
 
-        $this->layout->content->page_title = _("Invalid Request!");
+        $this->layout->page_title = _("Invalid Request!");
         $this->layout->content->uri        = $this->session->get('_invalid_request_uri');
         $this->layout->content->message    = $this->session->get('_invalid_request_message');
     }
@@ -26,7 +26,7 @@ class Messages_Controller extends Controller
         $show_login = $this->session->get('not_authorized_redirect_url') || !$this->session->get('user.authenticated');
         $this->layout->content = new View('messages/not_authorized', array('show_login' => $show_login));
 
-        $this->layout->content->page_title = _("Not Authorized!");
+        $this->layout->page_title = _("Not Authorized!");
     }
     // }}}
     // {{{ page_not_found
@@ -34,7 +34,7 @@ class Messages_Controller extends Controller
     {
         $this->layout->content = new View('messages/page_not_found');
 
-        $this->layout->content->page_title = _("Page Not Found!");
+        $this->layout->page_title = _("Page Not Found!");
     }
     // }}}
 }
