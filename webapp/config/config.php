@@ -11,8 +11,9 @@ $config['index_page'] = basename($_SERVER['SCRIPT_NAME']);
  * specified, then the current protocol is used, or when possible, only an
  * absolute path (with no protocol/domain) is used.
  */
-$config['site_domain'] = $_SERVER['SERVER_NAME'].substr($_SERVER['SCRIPT_NAME'], 0, strpos($_SERVER['SCRIPT_NAME'], '/'.$config['index_page']));
-
+$config['site_domain'] = isset($_SERVER['SERVER_NAME'])
+                       ? $_SERVER['SERVER_NAME'].substr($_SERVER['SCRIPT_NAME'], 0, strpos($_SERVER['SCRIPT_NAME'], '/'.$config['index_page']))
+                       : '';
 /**
  * Name of the front controller for this application. Default: index.php
  *
