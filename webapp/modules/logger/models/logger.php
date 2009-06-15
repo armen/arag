@@ -26,10 +26,11 @@ class Logger_Model extends Model
     }
     // }}}
     // {{{ search
-    function search($archive_status, $user_name, $operation, $datefrom, $dateto)
+    function search($archive_status, $user_name, $operation, $datefrom, $dateto, $appname)
     {
         $this->db->select('id, namespace, uri, owner, date, archive');
         $this->db->Where('archive', $archive_status);
+        $this->db->Where('namespace', $appname);
 
         if (isset($user_name) and $user_name) {
             $this->db->like('owner', $user_name);
@@ -62,7 +63,7 @@ class Logger_Model extends Model
     // {{{ archive
     function archive($ids)
     {
-        $row = array('archive' => 1);
+        $row = array( 'archive' => 1);
         foreach ($ids as $id){
             $this->db->where('id', $id);
             $this->db->update($this->tableName, $row);

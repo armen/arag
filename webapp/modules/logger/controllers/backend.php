@@ -32,16 +32,19 @@ class Backend_Controller extends Logger_Backend
              $from = $temp;
         }
 
-        $logs = $this->logger->search($archive_status, $user_name, $operation, $datefrom, $dateto);
+        $appname = (MASTERAPP) ? $this->session->get('agency_appname') : APPNAME;
+
+        $logs    = $this->logger->search($archive_status, $user_name, $operation, $datefrom, $dateto, $appname);
 
         $archive_array = array(0 => _("Non Archived"), 1 => _("Archived"));
 
         $logs_list = new PList_Component('logs_list');
         $logs_list->setResource($logs);
+        $logs_list->setLimit(20, 0);
         $logs_list->addColumn('Backend_Controller::show_operation', _("Operation"), PList_Component::VIRTUAL_COLUMN);
         $logs_list->addColumn('owner', _("User"));
         $logs_list->addColumn('namespace', _("For"));
-        $logs_list->addColumn('Backend_Controller::show_date', _("Date"), PList_Component::VIRTUAL_COLUMN);
+        $logs_list->addColumn('format::show_date[date, true]', _("Date"), PList_Component::VIRTUAL_COLUMN);
         $logs_list->addAction('logger/backend/archive', _("Archive"), 'edit_action',  False, PList_Component::GROUP_ACTION);
         $logs_list->setGroupActionParameterName('id');
         $logs_list->setEmptyListMessage(_("Nothing Found!"));
@@ -58,8 +61,8 @@ class Backend_Controller extends Logger_Backend
 
 
         $this->layout->content->archive_status = $archive_status;
-        $this->layout->content->from           = $from;
-        $this->layout->content->to             = $to;
+        $this->layout->content->from           = $datefrom;
+        $this->layout->content->to             = $dateto;
         $this->layout->content->username       = $user_name;
         $this->layout->content->operation      = $operation;
     }
@@ -68,13 +71,7 @@ class Backend_Controller extends Logger_Backend
     function show_operation($row)
     {
         $messages = Arag_Config::get('logger.messages', Null, 'logger', True);
-        return  $messages[$row['uri']];
-    }
-    // }}}
-    // {{{
-    function show_date($row)
-    {
-        return format::date($row['date']);
+        return _($messages[$row['uri']]);
     }
     // }}}
     // {{{ archive
