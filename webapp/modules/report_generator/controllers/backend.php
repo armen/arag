@@ -283,6 +283,7 @@ class Backend_Controller extends ReportGenerator_Backend
     // {{{ execute_report_any
     public function execute_report_any($id = False)
     {
+        set_time_limit(0);
         ($id === False) AND $id = $this->input->post('id');
 
         $this->global_tabs->setParameter('id', $id);
