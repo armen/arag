@@ -57,7 +57,7 @@ class Contact_Model extends Model
     public function getAll()
     {
         $this->db->select('id, create_date, name, tel, email, title, content');
-        $this->db->from($this->tableContacts);
+        $this->db->from($this->tableContacts)->orderBy('create_date', 'DESC');
 
         $query = $this->db->get();
         return $query->result(False);
