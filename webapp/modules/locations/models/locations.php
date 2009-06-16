@@ -181,4 +181,44 @@ class Locations_Model extends Model
         return $this->db->update($this->tableNameCities, array('deleted' => 1));
     }
     // }}}
+    // {{{ getCoordinates
+    public function getCoordinates($country, $city)
+    {
+        $address = False;
+        if ($city) {
+            $city = $this->getCity($city);
+
+            if ($city['english']) {
+                $address = $city['english'];
+            }
+        }
+
+        if (!$address) {
+            $country = $this->getCountry($country);
+
+            if (!$country['english']) {
+                return False;
+            }
+            $address = $country['english'];
+        }
+
+        $cache = New Cache;
+        $coordinates = $cache->get('coordinates_'.$address);
+        if ($coordinates) {
+            return $coordinates;
+        }
+
+        $key    = Kohana::config('maps.key');
+        $url    = 'http://maps.google.com/maps/geo?q='.ucfirst($address).'&key='.$key.'&output=json';
+        $result = json_decode(file_get_contents($url));
+
+        if (isset($result->Placemark[0])) {
+            $coordinates = $result->Placemark[0]->Point->coordinates;
+            $cache->set('coordinates_'.$address, $coordinates);
+            return $coordinates;
+        }
+
+        return False;
+    }
+    // }}}
 }
