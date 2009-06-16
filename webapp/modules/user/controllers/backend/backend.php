@@ -77,6 +77,8 @@ class Backend_Controller extends Controller
         $this->users->addColumn('email', _("Email"));
         $this->users->addColumn('Applications.getDate', _("Create Date"), PList_Component::VIRTUAL_COLUMN);
         $this->users->addColumn('Applications.getModifyDate', _("Modify Date"), PList_Component::VIRTUAL_COLUMN);
+        $this->users->addColumn('Applications.getVerificationStatus', _("Verified"), PList_Component::VIRTUAL_COLUMN);
+        $this->users->addColumn('Applications.getBlockedStatus', _("Blocked"), PList_Component::VIRTUAL_COLUMN);
         $this->users->addColumn('modified_by', _("Modified By"));
         $this->users->addColumn('created_by', _("Created By"));
     }

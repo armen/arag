@@ -53,6 +53,18 @@ class Applications_Model extends Model
         return format::date($row['modify_date']);
     }
     // }}}
+    // {{{ getVerificationStatus
+    public function getVerificationStatus($row)
+    {
+        return $row['verified'] ? _("Yes") : _("No");
+    }
+    // }}}
+    // {{{ getBlockedStatus
+    public function getBlockedStatus($row)
+    {
+        return $row['blocked'] ? _("Yes") : _("No");
+    }
+    // }}}
     // {{{ hasApp
     public function hasApp($name)
     {
