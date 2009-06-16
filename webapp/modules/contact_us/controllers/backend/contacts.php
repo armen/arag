@@ -25,6 +25,7 @@ class Contacts_Controller extends Backend_Controller
 
         $contactList->setResource($contact->getAll());
 
+        $contactList->setLimit(Arag_Config::get('limit', 20));
         $contactList->addColumn('title', _("Message Title"));
         $contactList->addColumn('contact.getCreateDate', _("Create Date"), PLIST_Component::VIRTUAL_COLUMN);
         $contactList->addColumn('contact.getContent', _("Message Content"), Plist_Component::VIRTUAL_COLUMN);

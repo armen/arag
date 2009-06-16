@@ -114,6 +114,42 @@ class Setting_Controller extends Backend_Controller
     }
     // }}}
     // }}}
+    // {{{ list
+    // {{{ list_read
+    public function list_read()
+    {
+        $data          = Array();
+        $data['limit'] = Arag_Config::get('limit', 0);
+        $data['saved'] = $this->session->get('configuration_saved');
+
+        $this->layout->content = new View('backend/list_settings', $data);
+    }
+    // }}}
+    // {{{ list_write
+    public function list_write()
+    {
+        Arag_Config::set('limit', $this->input->post('limit'));
+
+        $this->session->set_flash('configuration_saved', True);
+
+        url::redirect('contact_us/backend/setting/list');
+    }
+    // }}}
+    // {{{ list_validate_write
+    public function list_validate_write()
+    {
+        $this->validation->name('limit', _("Limit"))->add_rules('limit', 'valid::numeric');
+
+        return $this->validation->validate();
+    }
+    // }}}
+    // {{{ list_write_error
+    public function list_write_error()
+    {
+        $this->list_read();
+    }
+    // }}}
+    // }}}
     // {{{ Callbacks
     // {{{ _check_product
     public function _check_contact($id)
