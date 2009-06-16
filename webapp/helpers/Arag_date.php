@@ -407,7 +407,7 @@ class date extends date_Core {
     }
     // }}}
     // {{{ fuzzy
-    public function fuzzy($date, $from = Null, $level = Null)
+    public function fuzzy($date, $from = Null, $level = 1)
     {
         if (!$from) {
             $from = time();
@@ -421,19 +421,20 @@ class date extends date_Core {
         $units['century'] =  2903040000;
         $units['year']    = 29030400;
         $units['month']   = 2419200;
-        $units['week']    = 604800;
         $units['day']     = 86400;
         $units['hour']    = 3600;
         $units['minute']  = 60;
+        $units['second']  = 1;
 
         $names['century'] = array(_("century"), _("centuries"));
         $names['year']    = array(_("year"), _("years"));
         $names['month']   = array(_("month"), _("months"));
-        $names['week']    = array(_("week"), _("weeks"));
         $names['day']     = array(_("day"), _("days"));
         $names['hour']    = array(_("hour"), _("hours"));
         $names['minute']  = array(_("minute"), _("minutes"));
+        $names['second']  = array(_("second"), _("seconds"));
 
+        $result = Array();
         foreach($units as $name => $value) {
             $num  = (int) ($diff / $value);
             if ($num > 0) {
