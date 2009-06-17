@@ -14,6 +14,10 @@ class OAuthApi extends Controller
     // {{{ Constructor
     public function __construct()
     {
+        $this->layout = 'themes/'.$theme = Kohana::config('theme.default').'/empty_layout';
+
+        parent::__construct();
+
         $connection  = parse_url(Kohana::config('database.default.connection'));
         $this->store = OAuthStore::instance('MySQL', Array('server' => $connection['host'],
                                                            'password' => $connection['pass'],
@@ -53,6 +57,7 @@ class OAuthApi extends Controller
         header('HTTP/1.1 403 Forbidden');
         header('WWW-Authenticate: OAuth realm=""');
         header('Content-Type: text/plain; charset=utf8');
+        echo "403 Forbidden";
         exit;
     }
     // }}}
