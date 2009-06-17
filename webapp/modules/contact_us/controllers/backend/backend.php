@@ -20,9 +20,10 @@ class Backend_Controller extends Controller
         $this->global_tabs->addItem(_("Contacts"), 'contact_us/backend/contacts');
         $this->global_tabs->addItem(_("List"), 'contact_us/backend/contacts', 'contact_us/backend/contacts');
 
-        $this->global_tabs->addItem(_("Setting"), 'contact_us/backend/setting/top_template');
+        $this->global_tabs->addItem(_("Settings"), 'contact_us/backend/setting/top_template');
         $this->global_tabs->addItem(_("Top Template"), 'contact_us/backend/setting/top_template', 'contact_us/backend/setting/top_template');
         $this->global_tabs->addItem(_("Bottom Template"), 'contact_us/backend/setting/bottom_template', 'contact_us/backend/setting/top_template');
+        $this->global_tabs->addItem(_("List Settings"), 'contact_us/backend/setting/list', 'contact_us/backend/setting/top_template');
 
         // Default page title
         $this->layout->page_title = _("Contacts Management");
