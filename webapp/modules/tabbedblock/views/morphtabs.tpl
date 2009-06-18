@@ -54,7 +54,7 @@
     <script type="text/javascript">
         //<![CDATA[
             {literal}
-            window.addEvent('domready', function() {
+            window.addEvent('load', function() {
             {/literal}
                 var tabbedblock = new MorphTabs('tabbedblock', {literal}{{/literal}
 
