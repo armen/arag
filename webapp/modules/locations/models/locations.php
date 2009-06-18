@@ -182,26 +182,8 @@ class Locations_Model extends Model
     }
     // }}}
     // {{{ getCoordinates
-    public function getCoordinates($country, $city)
+    public function getCoordinates($address)
     {
-        $address = False;
-        if ($city) {
-            $city = $this->getCity($city);
-
-            if ($city['english']) {
-                $address = $city['english'];
-            }
-        }
-
-        if (!$address) {
-            $country = $this->getCountry($country);
-
-            if (!$country['english']) {
-                return False;
-            }
-            $address = $country['english'];
-        }
-
         $cache = New Cache;
         $coordinates = $cache->get('coordinates_'.$address);
         if ($coordinates) {
