@@ -55,6 +55,11 @@ class Arag_Auth {
             if (!$session->get('user.authenticated')) {
                 $session->set_flash('not_authorized_redirect_url', $destination);
             }
+
+            if (PHP_SAPI == 'cli') {
+                die("You are not authorized to access this section!\n");
+            }
+
             url::redirect('not_authorized');
             exit;
         }
