@@ -104,10 +104,16 @@ class Arag_Auth {
                     ((boolean) $whiteList == True &&
                      preg_match('/^(([a-z_]+(((\/[a-z_]+){0,2}\/\*)|((\/[a-z_]+){2,3})))|(@[a-z_]+\/(([a-z_]+)|(\*))))$/', $privilege))) {
 
-                    // Replace * with .*
-                    $privilege = '|^'.str_replace('*', '.*', $privilege).'$|';
+                    if (strpos($privilege, '*') === False) {
+                        // Add a trailing slash if there is no * in $privilege
+                        $privilege = rtrim($privilege, '/').'/';
 
-                    if (preg_match($privilege, $destination)) {
+                    } else {
+                        // Replace * with .*
+                        $privilege = str_replace('*', '.*', $privilege);
+                    }
+
+                    if (preg_match('|^'.$privilege.'$|', $destination)) {
                         return (boolean) $whiteList;
                     }
 
