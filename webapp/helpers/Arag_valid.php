@@ -8,7 +8,7 @@ class valid extends valid_Core {
         return parent::credit_card($number, 'saman');
     }
     // }}}
-    // {{{
+    // {{{ credit_card
     public static function credit_card($number, $type='default') //Its just a wrapper on Kohana's credit_card validation
     {
         if (is_array($type)) {
@@ -43,13 +43,13 @@ class valid extends valid_Core {
         return $value == current($options);
     }
     // }}}
-    // {{{
+    // {{{ date
     public static function date($date, $options)
     {
         return (bool) date::get_time(current($options));
     }
     // }}}
-    // {{{
+    // {{{ oprator
     public static function operator($value, $input)
     {
         list($operator, $operand) = $input;
