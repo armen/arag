@@ -100,10 +100,13 @@ class Controller extends Controller_Core {
             // Send Kohana::instance and base url to all templates
             $this->smarty->assign('this', $this);
 
-            $base_url = Kohana::config('sites/'.APPNAME.'.core.parent_base_url', False, False) ?
-                        Kohana::config('sites/'.APPNAME.'.core.parent_base_url') :
-                        url::base();
-            $this->smarty->assign('arag_base_url', $base_url);
+            if (PHP_SAPI != 'cli') {
+                $base_url = Kohana::config('sites/'.APPNAME.'.core.parent_base_url', False, False) ?
+                            Kohana::config('sites/'.APPNAME.'.core.parent_base_url') :
+                            url::base();
+                $this->smarty->assign('arag_base_url', $base_url);
+            }
+
             $this->smarty->assign('arag_appname', APPNAME);
             $this->smarty->assign('arag_masterapp', MASTERAPP);
             $this->smarty->assign('arag_current_module', Router::$module);
