@@ -56,13 +56,13 @@ class Applications_Model extends Model
     // {{{ getVerificationStatus
     public function getVerificationStatus($row)
     {
-        return $row['verified'] ? _("Yes") : _("No");
+        return isset($row['verified']) && $row['verified'] ? _("Yes") : _("No");
     }
     // }}}
     // {{{ getBlockedStatus
     public function getBlockedStatus($row)
     {
-        return $row['blocked'] ? _("Yes") : _("No");
+        return isset($row['blocked']) && $row['blocked'] ? _("Yes") : _("No");
     }
     // }}}
     // {{{ hasApp
