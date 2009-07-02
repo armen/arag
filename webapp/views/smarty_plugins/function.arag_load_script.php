@@ -34,7 +34,11 @@ function smarty_function_arag_load_script($params, &$smarty)
     if (!isset($GLOBALS['loaded_headers'][sha1($src)])) {
 
         $GLOBALS['loaded_headers'][sha1($src)] = True;
-        $GLOBALS['headers'][]                  = html::script($src);
+        if (isset($GLOBALS['controller_execute'])) {
+            $GLOBALS['headers'][] = "<script type='text/javascript'>window.addEvent('domready', function() { Asset.javascript('".url::base().'/'.$src."'); });</script>";
+        } else {
+            $GLOBALS['headers'][] = html::script($src);
+        }
     }
 
     return Null;
