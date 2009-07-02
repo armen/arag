@@ -2,7 +2,7 @@
 {arag_load_script src="scripts/mootools-more.js"}
 {arag_load_script src="scripts/MoodalBox/js/moodalbox.js"}
 {arag_load_script src="modpub/locations/arag_map.js"}
-{arag_load_script src="scripts/MarkerManager.js"}
+{arag_load_script src="modpub/locations/MarkerManager.js"}
 
 {arag_header}
         <script type="text/javascript">
