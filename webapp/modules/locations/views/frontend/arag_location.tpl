@@ -3,8 +3,8 @@
 {arag_load_script src="modpub/locations/locations.js"}
 <script type="text/javascript">
 
-    var getProvincesBaseUrl = '{kohana_helper function="url::site" uri="locations/frontend/get_provinces_of"}/';
-    var getCitiesBaseUrl    = '{kohana_helper function="url::site" uri="locations/frontend/get_cities_of"}/';
+    var getProvincesBaseUrl = '{kohana_helper function="url::site" uri="locations/frontend/search/get_provinces_of"}/';
+    var getCitiesBaseUrl    = '{kohana_helper function="url::site" uri="locations/frontend/search/get_cities_of"}/';
 
     {literal}
     window.addEvent('domready', function() {

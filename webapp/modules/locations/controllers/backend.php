@@ -40,6 +40,7 @@ class Backend_Controller extends Controller
     {
         $this->global_tabs->addItem(_("Countries"), 'locations/backend/list_countries', 'locations/backend');
         $this->global_tabs->addItem(_("Add Country"), 'locations/backend/add_country', 'locations/backend');
+        $this->global_tabs->addItem(_("Google api keys"), 'locations/backend/google_api_keys', 'locations/backend');
         $data = array('flagsaved' => $this->session->get_once('locations_country_saved'));
         $countries = new PList_Component('countries');
         $countries->setResource($this->locations->getCountries());
@@ -795,6 +796,48 @@ class Backend_Controller extends Controller
         $this->_invalid_request(Null, _("Invalid ID"));
     }
     // }}}
+    // }}}
+    // {{{ google_api_keys_read
+    public function google_api_keys_read()
+    {
+        $keys = New PList_Component('google_api_keys');
+        $keys->setResource($this->locations->getKeys());
+        $keys->addcolumn('domain', _("Domain"));
+        $keys->addColumn('key', _("API Key"));
+        $keys->addAction('locations/backend/google_api_keys_delete/#domain#', _("Delete"), 'delete_action');
+
+        $this->layout->content                 = New View('backend/google_api_keys');
+        $this->layout->content->domain         = $this->input->post('domain');
+        $this->layout->content->google_api_key = $this->input->post('google_api_key');
+    }
+    // }}}
+    // {{{ google_api_key_validate_write
+    public function google_api_keys_validate_write()
+    {
+        $this->validation->name('domain', _("Domain"))->add_rules('domain', 'required');
+        $this->validation->name('google_api_key', _("Google API key"))->add_rules('domain', 'required');
+        return $this->validation->validate();
+    }
+    // }}}
+    // {{{ google_api_key_write_error
+    public function google_api_keys_write_error()
+    {
+        $this->google_api_keys_read();
+    }
+    // }}}
+    // {{{ google_api_keys_write
+    public function google_api_keys_write()
+    {
+        $this->locations->addKey($this->input->post('domain'), $this->input->post('google_api_key'));
+        $this->google_api_keys_read();
+    }
+    // }}}
+    // {{{ google_api_keys_delete_read
+    public function google_api_keys_delete_read($domain)
+    {
+        $this->locations->deleteKey($domain);
+        url::redirect('locations/backend/google_api_keys');
+    }
     // }}}
     // }}}
 }

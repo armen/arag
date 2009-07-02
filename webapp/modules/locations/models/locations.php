@@ -184,15 +184,18 @@ class Locations_Model extends Model
     // {{{ getCoordinates
     public function getCoordinates($address)
     {
+        if (!strlen($address)) {
+            return False;
+        }
         $cache = New Cache;
         $coordinates = $cache->get('coordinates_'.$address);
         if ($coordinates) {
             return $coordinates;
         }
 
-        $key    = Kohana::config('maps.key');
-        $url    = 'http://maps.google.com/maps/geo?q='.ucfirst($address).'&key='.$key.'&output=json';
-        $result = json_decode(file_get_contents($url));
+        $url = 'http://maps.google.com/maps/geo?q='.ucfirst($address).'&output=json&key='.$this->getProperKey();
+
+        $result  = json_decode(file_get_contents($url));
 
         if (isset($result->Placemark[0])) {
             $coordinates = $result->Placemark[0]->Point->coordinates;
@@ -201,6 +204,51 @@ class Locations_Model extends Model
         }
 
         return False;
+    }
+    // }}}
+    // {{{ setKeys
+    public function setKeys($keys)
+    {
+        return Arag_Config::set('google_api_keys', $keys, 'locations', Kohana::config('arag.master_appname'));
+    }
+    // }}}
+    // {{{ getKeys
+    public function getKeys()
+    {
+        return Arag_Config::get('google_api_keys', Array(), 'locations', False, Kohana::config('arag.master_appname'));
+    }
+    // }}}
+    // {{{ addKey
+    public function addKey($domain, $key)
+    {
+        $keys          = Arag_Config::get('google_api_keys', Array());
+        $keys[$domain] = Array('domain' => strtolower($domain), 'key' => $key);
+        $this->setKeys($keys);
+    }
+    // }}}
+    // {{{ deleteKey
+    public function deleteKey($domain)
+    {
+        $keys = $this->getKeys();
+        if (isset($keys[$domain])) {
+            unset($keys[$domain]);
+        }
+        $this->setKeys($keys);
+    }
+    // }}}
+    // {{{ getProperKey
+    public function getProperKey()
+    {
+        $keys    = $this->getKeys();
+        $current = Input::instance()->server('HTTP_HOST');
+
+        foreach($keys as $domain => $key) {
+
+            if (stristr($current, $domain) !== False) {
+                return $key['key'];
+            }
+        }
+        return '';
     }
     // }}}
 }
