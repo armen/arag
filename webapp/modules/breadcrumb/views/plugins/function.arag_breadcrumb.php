@@ -16,6 +16,7 @@ function smarty_function_arag_breadcrumb($params, &$smarty)
 {
     $ext             = Kohana::config('smarty.templates_ext');
     $template        = 'breadcrumb';
+    $breadcrumb_type = 'progress';
     $config          = 'config';
     $module          = Null;
     $config_file     = Null;
@@ -76,7 +77,8 @@ function smarty_function_arag_breadcrumb($params, &$smarty)
         $namespace = $smarty->get_template_vars($name.'_namespace');
 
         // Config File
-        $config_file = $breadcrumb->get_config($config, $module);
+        $config_file = is_array($config) ? $config : $breadcrumb->get_config($config, $module);
+        is_array($config) and $breadcrumb_type = 'simple';
 
         if (!isset($config_file) || empty($config_file)) {
            $smarty->trigger_error('arag_breadcrumb: invalid or empty config file!', E_USER_ERROR);
@@ -87,6 +89,7 @@ function smarty_function_arag_breadcrumb($params, &$smarty)
         $visited_uris = $breadcrumb->get_visited_uris($namespace);
 
         $smarty->assign('breadcrumb', $breadcrumb);
+        $smarty->assign('breadcrumb_type', $breadcrumb_type);
         $smarty->assign('name', $name);
         $smarty->assign('css', $css);
         $smarty->assign('current_uri', $breadcrumb->current_uri());

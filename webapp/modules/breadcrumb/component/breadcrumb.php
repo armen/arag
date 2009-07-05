@@ -19,13 +19,13 @@ class breadcrumb_Component extends Component
     public $real_uri;
     // }}}
     // {{{ Constructor
-    public function __construct($namespace = Null)
+    public function __construct($namespace = Null, $use_arguments = False)
     {
         parent::__construct($namespace);
 
         $destination    = implode('/', Router::$rsegments);
         $arguments      = implode('/', Router::$arguments);
-        $this->real_uri = rtrim(str_replace($arguments, '', $destination), '/');
+        $this->real_uri = $use_arguments ? $destination : rtrim(str_replace($arguments, '', $destination), '/');
     }
     // }}}
     // {{{ get_visited_uris
