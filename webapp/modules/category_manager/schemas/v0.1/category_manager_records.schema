@@ -16,10 +16,19 @@
                 <notnull>true</notnull>
             </field>
             <field>
+                <name>entity_id</name>
+                <type>integer</type>
+                <notnull>true</notnull>
+            </field>
+            <field>
+                <name>module</name>
+                <type>text</type>
+                <length>255</length>
+            </field>
+            <field>
                 <name>application_name</name>
                 <type>text</type>
                 <length>255</length>
-                <notnull>true</notnull>
             </field>
             <index>
                 <name>primary</name>

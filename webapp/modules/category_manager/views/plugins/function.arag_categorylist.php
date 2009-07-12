@@ -28,9 +28,12 @@ function smarty_function_arag_categorylist($params, &$smarty)
                 $template = rtrim($template, '.'.$ext);
                 break;
 
+            case 'extra':
+                $extra = $_val ? $_val : $extra;
+                break;
+
             case 'category_id':
             case 'uri_schema':
-            case 'extra':
             case 'name':
                 $$_key = $_val;
                 break;

@@ -30,7 +30,7 @@ class Category_Manager_Model extends Model
         }
 
         $appname and $this->db->in('application_name', array($appname, '__ALL__'));
-        $module and $this->db->where('module', $module);
+        $module  and $this->db->where('module', $module);
 
         $result = $this->db->get()->result_array(false);
 
@@ -41,6 +41,32 @@ class Category_Manager_Model extends Model
         }
 
         return $flatten ? $this->_flattenResult($result) : $result;
+    }
+    // }}}
+    // {{{ getChilds
+    public function getChilds($parent = null, $module = null, $appname = null)
+    {
+        $childs = array();
+
+        $this->db->select('id')->from($this->tableNameCategories);
+
+        if ($parent) {
+            $this->db->where('parent', $parent);
+        } else {
+            $this->db->where('parent IS NULL');
+        }
+
+        $appname and $this->db->in('application_name', array($appname, '__ALL__'));
+        $module  and $this->db->where('module', $module);
+
+        $result = $this->db->get()->result_array(false);
+
+        foreach($result as $category) {
+            $childs[] = $category['id'];
+            $childs   = array_merge($childs, $this->getChilds($category['id']));
+        }
+
+        return $childs;
     }
     // }}}
     // {{{ _flattenCategoryTree
@@ -78,15 +104,15 @@ class Category_Manager_Model extends Model
     }
     // }}}
     // {{{ getCategory
-    public function getCategory($id = null, $name = null, $label = null, $module = null, $appname = null, $parent = null)
+    public function getCategory($id = null, $name = null, $label = null, $module = null, $appname = null, $parent = false)
     {
-        $this->db->select('id' , 'name', 'label', 'application_name', 'module', 'parent')->from($this->tableNameCategories);
+        $this->db->select('id', 'name', 'label', 'application_name', 'module', 'parent')->from($this->tableNameCategories);
         $id      and $this->db->where('id', $id);
         $name    and $this->db->where('name', $name);
         $label   and $this->db->where('label', $label);
         $appname and $this->db->where('application_name', $appname);
         $module  and $this->db->where('module', $module);
-        $parent  and $this->db->where('parent', $parent);
+        ($parent !== false) and $this->db->where('parent', $parent);
 
         return $this->db->get()->result(False)->current();
     }
@@ -120,20 +146,47 @@ class Category_Manager_Model extends Model
         $this->db->from($this->tableNameCategories)->where(array('id' => $id, 'application_name' => $appname))->delete();
     }
     // }}}
-    // {{{ addToCategory
-    function addToCategory($category_id, $entity_id, $appname)
+    // {{{ addEntity
+    function addEntity($categories, $entity_id, $module, $appname)
     {
-        $row = array('category_id'      => $category_id,
-                     'entity_id'        => $entity_id,
+        if (!is_array($categories)) {
+            $categories = array($categories);
+        }
+
+        $row = array('entity_id'        => $entity_id,
+                     'module'           => $module,
                      'application_name' => $appname);
 
-        return $this->db->insert($this->tableNameRecords, $row)->insert_id();
+        foreach($categories as $category) {
+            $row['category_id'] = $category;
+            $this->db->insert($this->tableNameRecords, $row);
+        }
     }
     // }}}
-    // {{{ deleteCategoryRecord
-    function deleteCategoryRecord($id, $appname)
+    // {{{ deleteEntity
+    function deleteEntity($parent, $entity_id, $module, $appname)
     {
-        $this->db->from($this->tableNameRecords)->where(array('id' => $id, 'application_name' => $appname))->delete();
+        $childs = $this->getChilds($parent);
+        $row    = array('entity_id' => $entity_id, 'module' => $module, 'application_name' => $appname);
+        $this->db->from($this->tableNameRecords)->where($row)->in('category_id', $childs)->delete();
+    }
+    // }}}
+    // {{{ getEntityCategories
+    public function getEntityCategories($parent, $entity_id, $module = null, $appname = null)
+    {
+        $categories = array();
+        $childs     = $this->getChilds($parent);
+
+        $this->db->select('category_id')->from($this->tableNameRecords)->where('entity_id', $entity_id)->in('category_id', $childs);
+
+        $appname and $this->db->where('application_name', $appname);
+        $module  and $this->db->where('module', $module);
+
+        $result = $this->db->get()->result_array(false);
+        foreach($result as $category) {
+            $categories[] = $category['category_id'];
+        }
+        return $categories;
     }
     // }}}
 }

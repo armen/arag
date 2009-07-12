@@ -13,7 +13,7 @@
  * @since   PHP 5
  */
 
-class Category_Component extends Component
+class Category_Manager_Component extends Component
 {
     // {{{ Properties
     private $message = Null;
@@ -54,10 +54,10 @@ class Category_Component extends Component
             $this->currentCategory = $matches[1];
             $uri                   = str_replace($matches[0], null, $uri);
         } else {
-            if ($parent = $this->categoryManager->getCategory(null, $name, $namespace, $module, $this->appname)) {
+            if ($parent = $this->categoryManager->getCategory(null, $namespace, $name, $module, $this->appname)) {
                 $this->currentCategory = $parent['id'];
             } else {
-                $this->currentCategory = $this->categoryManager->createCategory($name, $namespace, $module, $this->appname);
+                $this->currentCategory = $this->categoryManager->createCategory($namespace, $name, $module, $this->appname);
             }
             $uri = str_replace("category_{$namespace}/", null, $uri);
         }
