@@ -66,38 +66,10 @@
         {if $isset_profile}
             <tr>
                 <td align="{right}">
-                    _("Country"):
+                    _("Location"):
                 </td>
                 <td align="{left}">
-                    {foreach from=$countries|smarty:nodefaults|default:null item=item}
-                        {if $isset_profile && $item.id == $country}
-                            {$item.country}
-                        {/if}
-                    {/foreach}
-                </td>
-            </tr>
-            <tr>
-                <td align="{right}">
-                    _("Province"):
-                </td>
-                <td align="{left}">
-                    {foreach from=$provinces|smarty:nodefaults|default:null item=item}
-                        {if $isset_profile && $item.id == $province}
-                            {$item.province}
-                        {/if}
-                    {/foreach}
-                </td>
-            </tr>
-            <tr>
-                <td align="{right}">
-                    _("City"):
-                </td>
-                <td align="{left}" id="cities">
-                    {foreach from=$cities|smarty:nodefaults|default:null item=item}
-                        {if $isset_profile && $item.code == $city}
-                            {$item.city}
-                        {/if}
-                    {/foreach}
+                    {arag_location value=$location readonly=true}
                 </td>
             </tr>
         {/if}

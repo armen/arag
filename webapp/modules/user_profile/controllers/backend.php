@@ -98,18 +98,16 @@ class Backend_Controller extends Controller
         }
 
         $data        = $this->Users->getUserProfile($username);
-        $province    = $this->input->post('province', Null, true);
-        $city        = $this->input->post('city', Null, true);
-        $country     = $this->input->post('country', Null, true);
+        $location    = Model::load('Locations', 'locations')->getSelectedLocation($this->input->post('location', Null, true));
         $address     = $this->input->post('address', Null, true);
         $phone       = $this->input->post('phone', Null, true);
         $cellphone   = $this->input->post('cellphone', Null, true);
         $postal_code = $this->input->post('postal_code', Null, true);
 
         if ($this->UserProfile->hasUserName($username)) {
-            $this->UserProfile->editProfile($province, $city, $address, $phone, $cellphone, $postal_code, $username, $country);
+            $this->UserProfile->editProfile($address, $phone, $cellphone, $postal_code, $username, $location);
         } else {
-            $this->UserProfile->insertProfile($province, $city, $address, $phone, $cellphone, $postal_code, $username, $data['name'], $data['lastname'], $country);
+            $this->UserProfile->insertProfile($address, $phone, $cellphone, $postal_code, $username, $data['name'], $data['lastname'], $location);
         }
 
         $this->session->set('user_profile_profile_saved', true);
@@ -122,10 +120,7 @@ class Backend_Controller extends Controller
     {
         $this->validation->name('phone', _("Phone"))->add_rules('phone', 'required', 'valid::numeric', 'length[0, 8]');
         $this->validation->name('cellphone', _("Cellphone"))->add_rules('cellphone', 'valid::numeric', 'length[11, 11]');
-        $this->validation->name('address', _("Address"))->add_rules('address', 'required');
-        $this->validation->name('country', _("Country"))->add_rules('country', 'required', 'numeric');
-        $this->validation->name('province', _("Province"))->add_rules('province', 'numeric', 'depends_on[country]');
-        $this->validation->name('city', _("City"))->add_rules('city', 'numeric', 'depends_on[province]');
+        $this->validation->name('location', _("Location"))->add_rules('location', 'required');
         $this->validation->name('postal_code', _("Postal Code"))->add_rules('postal_code', 'valid::numeric', 'length[5, 10]');
 
         return $this->validation->validate();
@@ -182,9 +177,7 @@ class Backend_Controller extends Controller
         $this->global_tabs->addItem(_("View User Profile"), 'user_profile/'.$this->section.'/view/'.$username);
 
         $data              = $this->Users->getUserProfile($username);
-        $data['city']      = Kohana::config('locale.default_city', 0);
-        $data['province']  = Kohana::config('locale.default_province', 0);
-        $data['country']   = Kohana::config('locale.default_country', 0);
+        $data['location']  = Kohana::config('locale.default_location', 0);
 
         $isset_profile = False;
 
@@ -200,9 +193,6 @@ class Backend_Controller extends Controller
                                          ));
 
         $this->layout->content            = new View('view_user_profile', $data);
-        $view->layout->content->countries = $locations->getCountries();
-        $view->layout->content->provinces = $locations->getProvinces($data['country']);
-        $view->layout->content->cities    = $locations->getCities($data['province'], $data['country']);
     }
     // }}}
     // {{{ view_validate_read

@@ -78,8 +78,7 @@
                 </tr>
                 <tr>
                     <td align="{right}">{asterisk}_("Country/Province/City"):</td>
-                    <td align="{left}">{arag_location city=$city|smarty:nodefaults|default:null country=$country|smarty:nodefaults|default:null 
-                                                      province=$province|smarty:nodefaults|default:null}</td>
+                    <td align="{left}">{arag_location name='location' value=$location}</td>
                 </tr>
                 <tr>
                     <td align="{right}" colspan="2">

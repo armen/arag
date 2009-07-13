@@ -44,17 +44,7 @@
                 <length>20</length>
             </field>
             <field>
-                <name>country</name>
-                <type>integer</type>
-                <notnull>true</notnull>
-            </field>
-            <field>
-                <name>city</name>
-                <type>integer</type>
-                <notnull>true</notnull>
-            </field>
-            <field>
-                <name>province</name>
+                <name>location</name>
                 <type>integer</type>
                 <notnull>true</notnull>
             </field>
