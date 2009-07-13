@@ -1,187 +1,90 @@
 <?php
 // vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:
 // +-------------------------------------------------------------------------+
-// | Authors: Sasan Rose <sasan.rose@gmail.com>                              |
-// |          Peyman Karimi <peykar@gmail.com>                               |
+// | Authors: Emil Sedgh <emilsedgh@gmail.com>                               |
 // +-------------------------------------------------------------------------+
 // $Id$
 // ---------------------------------------------------------------------------
 
 class Locations_Model extends Model
 {
-    // {{{ Constructor
-    public function __construct()
-    {
+    const CONTAINMENT = 'containment';
+    const COUNTRY     = 'country';
+    const PROVINCE    = 'province';
+    const STATE       = 'state';
+    const CITY        = 'city';
+    const VILLAGE     = 'village';
+    const AIRPORT     = 'airport';
+    const STREET      = 'street';
+    const SIGHT       = 'sight';
+
+    private $tableName = 'locations';
+    public $names      = Array();
+    // {{{ __construct
+    public function __construct() {
         parent::__construct();
 
-        // Set table name
-        $this->tableNameCities    = 'locations_cities';
-        $this->tableNameProvinces = 'locations_provinces';
-        $this->tableNameCountries = 'locations_countries';
+        $this->names = Array( self::CONTAINMENT => _("Containment"),
+                              self::COUNTRY     => _("Country"),
+                              self::PROVINCE    => _("Province"),
+                              self::STATE       => _("State"),
+                              self::CITY        => _("City"),
+                              self::VILLAGE     => _("Village"),
+                              self::AIRPORT     => _("Airport"),
+                              self::STREET      => _("Street"),
+                              self::SIGHT       => _("Sight")
+                        );
+                            
     }
     // }}}
-    // {{{ getCities
-    public function getCities($province = null, $country = null)
+    // {{{ get
+    public function get($id) {
+        $this->db->select('id', 'parent', 'name', 'english', 'code', 'type', 'latitude', 'longitude')->from($this->tableName)->where('id', $id);
+        return current($this->db->get()->result_array(False));
+    }
+    // }}}
+    // {{{ getByParent
+    public function getByParent($parent)
     {
-        $this->db->select('code, city, province, country')->from($this->tableNameCities);
-
-        $this->db->where(array('province' => $province, 'deleted' => false));
-        $country != null AND $this->db->where('country', $country);
-
-        $this->db->orderby('city');
-
+        $this->db->select('id', 'parent', 'name', 'english', 'code', 'type', 'latitude', 'longitude')->from($this->tableName)->where('parent', $parent);
         return $this->db->get()->result_array(False);
     }
     // }}}
-    // {{{ getProvinces
-    public function getProvinces($country)
+    // {{{ add
+    public function add($parent, $english, $type, $code, $name, $latitude, $longitude)
     {
-        $this->db->select('id, province')
-                 ->where(array('country' => $country, 'deleted' => false))
-                 ->from($this->tableNameProvinces)
-                 ->orderby('province');
-
-        return $this->db->get()->result_array(False);
+        $row = Array( 'parent'    => $parent,
+                      'name'      => $name,
+                      'english'   => $english,
+                      'code'      => $code,
+                      'latitude'  => $latitude,
+                      'longitude' => $longitude,
+                      'type'      => $type 
+                );
+        return $this->db->insert($this->tableName, $row)->insert_id();
     }
     // }}}
-    // {{{ getCountries
-    public function getCountries()
+    // {{{ edit
+    public function edit($id, $parent, $english, $type, $code, $name, $latitude, $longitude)
     {
-        $this->db->select('id, country')->from($this->tableNameCountries)->where(array('deleted' => false))->orderby('country');
-
-        return $this->db->get()->result_array(False);
+        $row = Array( 'parent'    => $parent,
+                      'name'      => $name,
+                      'english'   => $english,
+                      'code'      => $code,
+                      'latitude'  => $latitude,
+                      'longitude' => $longitude,
+                      'type'      => $type 
+                );
+        return $this->db->where('id', $id)->update($this->tableName, $row);
     }
     // }}}
-    // {{{ getCity
-    public function getCity($code)
+    // {{{ delete
+    public function delete($id)
     {
-        $this->db->select('code, city, province, country, deleted, english')->from($this->tableNameCities)->where('code', $code);
-        return $this->db->get()->result(False)->current();
+        return $this->db->where('id', $id)->delete($this->tableName);
     }
     // }}}
-    // {{{ getProvince
-    public function getProvince($id)
-    {
-        $this->db->select('id, province, country, deleted')->from($this->tableNameProvinces)->where('id', $id);
-        return $this->db->get()->result(False)->current();
-    }
-    // }}}
-    // {{{ getCountry
-    public function getCountry($id)
-    {
-        $this->db->select('id, country, deleted, english')->from($this->tableNameCountries)->where('id', $id);
-        return $this->db->get()->result(False)->current();
-    }
-    // }}}
-    // {{{ isCityDefined
-    public function isCityDefined($name, $province = null)
-    {
-        $this->db->select('code, city, province, country, deleted')->from($this->tableNameCities);
-        ($province) ? $this->db->where(array('city' => $name, 'province' => $province, 'deleted' => false))
-                    : $this->db->where(array('city' => $name, 'deleted' => false));
-        $result = $this->db->get()->result(False)->current();
-        return ($result) ? (array) $result : null;
-    }
-    // }}}
-    // {{{ isProvinceDefined
-    public function isProvinceDefined($name, $country = null)
-    {
-        $this->db->select('id, province, country, deleted')->from($this->tableNameProvinces);
-        ($country) ? $this->db->where(array('province' => $name, 'country' => $country, 'deleted' => false))
-                   : $this->db->where(array('province' => $name, 'deleted' => false));
-        $result = $this->db->get()->result(False)->current();
-        return ($result) ? (array) $result : null;
-    }
-    // }}}
-    // {{{ isCountryDefined
-    public function isCountryDefined($name)
-    {
-        $this->db->select('id, country, deleted')->from($this->tableNameCountries);
-        $this->db->where(array('country' => $name, 'deleted' => false));
-        $result = $this->db->get()->result(False)->current();
-        return ($result) ? (array) $result : null;
-    }
-    // }}}
-    // {{{ createCountry
-    function createCountry($country, $english)
-    {
-        return $this->db->insert($this->tableNameCountries, array('country' => $country, 'english' => $english))->insert_id();
-    }
-    // }}}
-    // {{{ editCountry
-    function editCountry($id, $country, $english)
-    {
-        $row = array('id'       => $id,
-                     'country'  => $country,
-                     'english'  => $english
-                     );
-
-        return $this->db->where(array('id' => $id))->update($this->tableNameCountries, $row);
-    }
-    // }}}
-    // {{{ createProvince
-    function createProvince($countryID, $province)
-    {
-        $row = array('province'    => $province,
-                     'country'     => $countryID);
-        return $this->db->insert($this->tableNameProvinces, $row)->insert_id();
-    }
-    // }}}
-    // {{{ editProvince
-    function editProvince($id, $countryID, $province)
-    {
-        $row = array('province'     => $province,
-                     'country'      => $countryID,
-                     );
-
-        return $this->db->where(array('id' => $id))->update($this->tableNameProvinces, $row);
-    }
-    // }}}
-    // {{{ createCity
-    function createCity($countryID, $provinceID, $city, $english)
-    {
-        $row = array('city'         => $city,
-                     'province'     => $provinceID,
-                     'country'      => $countryID,
-                     'english'      => $english);
-        return $this->db->insert($this->tableNameCities, $row)->insert_id();
-    }
-    // }}}
-    // {{{ editCity
-    function editCity($id, $countryID, $provinceID, $city, $english)
-    {
-        $row = array('city'         => $city,
-                     'province'     => $provinceID,
-                     'country'      => $countryID,
-                     'english'      => $english,
-                    );
-
-        return $this->db->where(array('code' => $id))->update($this->tableNameCities, $row);
-    }
-    // }}}
-    // {{{ deleteCountry
-    function deleteCountry($countryID)
-    {
-        $this->db->where('country', $countryID)->update($this->tableNameCities, array('deleted' => 1));
-        $this->db->where('country', $countryID)->update($this->tableNameProvinces, array('deleted' => 1));
-        $this->db->where('id', $countryID)->update($this->tableNameCountries, array('deleted' => 1));
-    }
-    // }}}
-    // {{{ deleteProvince
-    function deleteProvince($provinceID)
-    {
-        $this->db->where('province', $provinceID)->update($this->tableNameCities, array('deleted' => 1));
-        $this->db->where('id', $provinceID)->update($this->tableNameProvinces, array('deleted' => 1));
-    }
-    // }}}
-    // {{{ deleteCity
-    function deleteCity($cityID)
-    {
-        $this->db->where('code', $cityID);
-        return $this->db->update($this->tableNameCities, array('deleted' => 1));
-    }
-    // }}}
-    // {{{ getCoordinates
+        // {{{ getCoordinates
     public function getCoordinates($address)
     {
         if (!strlen($address)) {
@@ -202,7 +105,6 @@ class Locations_Model extends Model
             $cache->set('coordinates_'.$address, $coordinates);
             return $coordinates;
         }
-
         return False;
     }
     // }}}
@@ -241,14 +143,85 @@ class Locations_Model extends Model
     {
         $keys    = $this->getKeys();
         $current = Input::instance()->server('HTTP_HOST');
-
         foreach($keys as $domain => $key) {
-
             if (stristr($current, $domain) !== False) {
                 return $key['key'];
             }
         }
         return '';
+        return $this->db->where('id', $id)->delete($this->tableName);
+     }
+    // }}}
+    // {{{ getSelectedLocation
+    public function getSelectedLocation($array)
+    {
+        $current = '';
+        while(!strlen($current)) {
+            $current = array_pop($array);
+        }
+        return $current;
+        
     }
     // }}}
-}
+    // {{{ convert
+    public function convert()
+    {
+        set_time_limit(0);
+        $airports_table = 'ticketing_airports';
+        $countries      = Array();
+        $states         = Array();
+        $cities         = Array();
+        $airports       = Array();
+
+        $this->db->select('country_name', 'country_code')->from($airports_table)->groupby('country_code')->orderby('country_name');
+        foreach($this->db->get()->result_array(False) as $country) {
+            $countries[] = Array('code' => $country['country_code'], 'english' => ucfirst(strtolower($country['country_name'])));
+        }
+
+        foreach($countries as $country) {
+            $country['type'] = Locations_Model::COUNTRY;
+            $this->db->insert($this->tableName, $country);
+        }
+//         var_dump($countries);
+
+        $this->db->select('state', 'country_code')->from($airports_table)->groupby('state')->orderby('state')->where('state <>', '');
+        foreach($this->db->get()->result_array(False) as $state) {
+            $country = current($this->db->select('id')->from($this->tableName)->where(Array('type' => Locations_Model::COUNTRY, 'code' => $state['country_code']))->get()->result_array(False));
+            $states[] = Array('code' => $state['state'], 'parent' => $country['id']);
+        }
+
+        foreach($states as $state) {
+            $state['type'] = Locations_Model::STATE;
+            $this->db->insert($this->tableName, $state);
+        }
+//         var_dump($states);
+
+        $this->db->select('state', 'country_code', 'city_code', 'city_name', 'iata_code')->from($airports_table)->groupby('city_code')->orderby('city_name')->where('city_code = iata_code');
+        foreach($this->db->get()->result_array(False) as $city) {
+            if ($city['state']) {
+                $parent = current($this->db->select('id')->from($this->tableName)->where(Array('type' => Locations_Model::STATE, 'code' => $city['state']))->get()->result_array(False));
+            } else {
+                $parent = current($this->db->select('id')->from($this->tableName)->where(Array('type' => Locations_Model::COUNTRY, 'code' => $city['country_code']))->get()->result_array(False));
+            }
+            $cities[] = Array('english' => ucfirst(strtolower($city['city_name'])), 'code' => $city['city_code'], 'parent' => $parent['id']);
+        }
+
+        foreach($cities as $city) {
+            $city['type'] = Locations_Model::CITY;
+            $this->db->insert($this->tableName, $city);
+        }
+
+
+        $this->db->select('state', 'country_code', 'city_code', 'airport_name', 'iata_code')->from($airports_table)->orderby('airport_name')->where('airport_name <>', '');
+        foreach($this->db->get()->result_array(False) as $airport) {
+            $parent = current($this->db->select('id')->from($this->tableName)->where(Array('type' => Locations_Model::CITY, 'code' => $airport['city_code']))->get()->result_array(False));
+            $airports[] = Array('english' => ucfirst(strtolower($airport['airport_name'])), 'code' => $airport['iata_code'], 'parent' => $parent['id']);
+        }
+
+        foreach($airports as $airport) {
+            $airport['type'] = Locations_Model::AIRPORT;
+            $this->db->insert($this->tableName, $airport);
+        }
+    }
+    // }}}
+ }

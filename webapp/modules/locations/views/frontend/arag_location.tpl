@@ -1,60 +1,62 @@
 {arag_load_script src="scripts/mootools.js"}
 {arag_load_script src="scripts/mootools-more.js"}
-{arag_load_script src="modpub/locations/locations.js"}
-<script type="text/javascript">
 
-    var getProvincesBaseUrl = '{kohana_helper function="url::site" uri="locations/frontend/search/get_provinces_of"}/';
-    var getCitiesBaseUrl    = '{kohana_helper function="url::site" uri="locations/frontend/search/get_cities_of"}/';
-
-    {literal}
-    window.addEvent('domready', function() {
-
-        {/literal}
-        var country_name  = '{$country_name}';
-        var city_name     = '{$city_name}';
-        var province_name = '{$province_name}';
-        {literal}
-
-        initLocations(country_name, province_name, city_name);
-
-        {/literal}
-        {if empty($cities|smarty:nodefaults)}updateSelect(new Array(), city_name);{/if}
-        {if empty($provinces|smarty:nodefaults)}updateSelect(new Array(), province_name);{/if}
-        {literal}
-    });
-    {/literal}
-</script>
-<select id="{$country_name}" name="{$country_name}" style="width:{$width}px">
-    <option value="">&nbsp;</option>
-    {foreach from=$countries item=entry}
-        <option value="{$entry.id}"{if isset($country|smarty:nodefaults) && $entry.id == $country} selected="selected"{/if}>
-            {$entry.country|smarty:nodefaults|default:"&nbsp;"}
-        </option>
-    {foreachelse}
-        <option value="">&nbsp;</option>
-    {/foreach}
-</select>
-<div id="{$province_name}_container">
-    <select id="{$province_name}" name="{$province_name}" style="width:{$width}px;">
-        <option value="">&nbsp;</option>
-        {foreach from=$provinces item=entry}
-            <option value="{$entry.id}"{if isset($province|smarty:nodefaults) && $entry.id == $province} selected="selected"{/if}>
-                {$entry.province|default:"&nbsp;"}
-            </option>
-        {foreachelse}
-            <option value="">&nbsp;</option>
+{foreach from=$all item='location' key='index'}
+    <select name="{$name}[]" class="locations_{$name}" {if $readonly}readonly="readonly"{/if}>
+        <option value="">--</option>
+        {foreach from=$location.children item='child'}
+            {assign var='id' value=$child.id}
+            <option value="{$child.id}" {if isset($path.$id|smarty:nodefaults)}selected="selected"{/if}>{$child.english}</option>
         {/foreach}
     </select>
-</div>
-<div id="{$city_name}_container">
-    <select id="{$city_name}" name="{$city_name}" style="width:{$width}px">
-        <option value="">&nbsp;</option>
-        {foreach from=$cities item=entry}
-            <option value="{$entry.code}"{if isset($city|smarty:nodefaults) && $entry.code == $city} selected="selected"{/if}>
-                {$entry.city|default:"&nbsp;"}
-            </option>
-        {foreachelse}
-            <option value="">&nbsp;</option>
-        {/foreach}
-    </select>
-</div>
+    <br />
+{/foreach}
+
+{arag_header}
+    <script type="text/javascript">
+        function refresh(select) {literal}{{/literal}
+                if (select.get('value') == '') // Blank is selected, do nothing.
+                    return false;
+
+                select.getAllNext().dispose(); //Destroy all 'Next' elements.
+ 
+                var location = select.get('value'); //Get the selected option's value.
+
+                new Request.JSON({literal}{{/literal}
+                    url      : '{kohana_helper function="url::site"}/locations/frontend/search/getByParent/'+location,
+                    onSuccess: function(response) {literal}{{/literal}
+                        if (!response || response.length == 0)
+                            return false;
+
+                        new_select = new Element('select', {literal}{{/literal}
+                            name : '{$name}[]',
+                            class : 'locations_{$name}'
+                        {literal}});{/literal}
+                        new_select.addEvent('change', {literal}function(e) { refresh(e.target); }{/literal});
+
+                        var blank = new Element('option', {literal}{value:'', html:'--', selected:'selected'}{/literal});
+                        new_select.adopt(blank);
+
+                        response.each(function(location) {literal}{{/literal}
+                            var option = new Element('option', {literal}{{/literal}
+                                value : location.id,
+                                {if $readonly}
+                                readonly: 'readonly',
+                                {/if}
+                                html  : location.english
+                            {literal}});{/literal}
+                            new_select.adopt(option);
+                        {literal}});{/literal}
+
+                        select.getParent().adopt(new Element('br'));
+                        select.getParent().adopt(new_select);
+                    {literal}}{/literal}
+
+                {literal}}).get();{/literal}
+        {literal}}{/literal}
+
+        window.addEvent('domready', function() {literal}{{/literal}
+            $$('.locations_{$name}').addEvent('change', {literal}function(e) { refresh(e.target); }{/literal});
+        {literal}});{/literal}
+    </script>
+{/arag_header}

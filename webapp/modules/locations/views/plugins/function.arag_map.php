@@ -14,9 +14,7 @@
 
 function smarty_function_arag_map($params, &$smarty)
 {
-    $show_weather = True;
-    $show_photos  = True;
-    $show_path    = True;
+    $weather = True;
     foreach ($params as $_key => $_val) {
 
         switch ($_key) {
@@ -63,16 +61,14 @@ function smarty_function_arag_map($params, &$smarty)
         }
     }
 
-    $view               = New View('frontend/arag_map');                 
-    $view->id           = $id;
-    $view->key          = $locations->getProperKey();
-    $view->maxX         = $maxX;
-    $view->minX         = $minX;
-    $view->maxY         = $maxY;
-    $view->minY         = $minY;
-    $view->path         = $new_path;
-    $view->show_weather = $show_weather ? 'true' : 'false';
-    $view->show_photos  = $show_photos  ? 'true' : 'false';
-    $view->show_path    = $show_path    ? 'true' : 'false';
+    $view          = New View('frontend/arag_map');                 
+    $view->id      = $id;
+    $view->key     = $locations->getProperKey();
+    $view->maxX    = $maxX;
+    $view->minX    = $minX;
+    $view->maxY    = $maxY;
+    $view->minY    = $minY;
+    $view->path    = $new_path;
+    $view->weather = $weather;
     return $view->render();
 }

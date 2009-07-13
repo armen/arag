@@ -14,36 +14,20 @@
 
 function smarty_function_arag_location($params, &$smarty)
 {
-    $prefix        = Null;
-    $city          = Kohana::config('locale.default_city', 0);
-    $province      = Kohana::config('locale.default_province', 0);
-    $country       = Kohana::config('locale.default_country', 0);
-    $city_name     = 'city';
-    $country_name  = 'country';
-    $province_name = 'province';
-    $width         = '180';
-
     foreach ($params as $_key => $_val) {
+        $value    = Null;
+        $type     = Null;
+        $parent   = Null;
+        $readonly = False;
+        $all      = Array();
+        $name     = 'location';
 
         switch ($_key) {
-            case 'prefix':
-                $$_key = $_val.'_';
-                break;
-
-            case 'accept_null':
-                // This is dummy
-                break;
-
-            case 'city':
-            case 'province':
-            case 'country':
-                ((isset($params['accept_null']) && $params['accept_null']) || (int) $_val) AND $$_key = (int) $_val;
-                break;
-
-            case 'city_name':
-            case 'province_name':
-            case 'country_name':
-            case 'width':
+            case 'name':
+            case 'value':
+            case 'type':
+            case 'parent':
+            case 'readonly':
                 $$_key = $_val;
                 break;
 
@@ -55,16 +39,26 @@ function smarty_function_arag_location($params, &$smarty)
     $locations = Model::load('Locations', 'locations');
     $view      = new View('frontend/arag_location');
 
-    $view->countries     = $locations->getCountries();
-    $view->provinces     = $locations->getProvinces($country);
-    $view->cities        = $locations->getCities($province, $country);
-    $view->country       = $country;
-    $view->province      = $province;
-    $view->city          = $city;
-    $view->country_name  = $prefix.$country_name;
-    $view->province_name = $prefix.$province_name;
-    $view->city_name     = $prefix.$city_name;
-    $view->width         = $width;
+    if ($value) {
+        $parent = $value;
+        while($location = $locations->get($parent)) {
+            $path[$location['id']] = $location;
+            $parent                = $location['parent'];
+        }
+        $world['id'] = 0;
+        $path[0] = $world;
+        $all = array_reverse($path);
+    }
+
+    foreach($all as $index => &$location) {
+        $location['children'] = $locations->getByParent($location['id']);
+    }
+
+    $view->name     = $name;
+    $view->all      = $all;
+    $view->path     = $path;
+    $view->readonly = $readonly;
+
 
     return $view->render();
 }
