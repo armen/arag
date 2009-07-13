@@ -7,7 +7,9 @@ Arag_Map = new Class({
             maxX         : false,
             minY         : false,
             maxY         : false,
-            onload       : function(){}
+            weather      : true,
+            photos       : true,
+            path         : true
         },
         map          : false,
 
@@ -49,11 +51,17 @@ Arag_Map = new Class({
             this.layers.set('photos', new MarkerManager(this.map));
             this.layers.set('weather', new MarkerManager(this.map));
 
-            this.options.onload.bind(this)();
+            this.fireEvent('onload');
 
-            this.showPath();
-            this.getPanoramioPhotos();
-            this.getWeatherIcons();
+            if (this.options.path) {
+                this.showPath();
+            }
+            if (this.options.photos) {
+                this.getPanoramioPhotos();
+            }
+            if (this.options.weather) {
+                this.getWeatherIcons();
+            }
         },
 
         addDestination : function(name, latitude, longitude) {
@@ -81,17 +89,13 @@ Arag_Map = new Class({
         },
 
         getPanoramioPhotos : function() {
-            this.photos = Array();
-
             var get = function(dest) {
                 var add = function(response) {
                     if (!response) {
                         return false;
                     }
-                    for(var i=0;i<=response.photos.length-1;i++) {
-                        this.photos.include(response.photos[i]);
-                        this.addPhoto(response.photos[i]);
-                    }
+                    dest.set('photos', response.photos);
+                    this.showPhotos(dest.get('photos'));
                 }
 
                 var Req = new Request.JSON({
@@ -104,8 +108,11 @@ Arag_Map = new Class({
             this.destinations.each(get.bind(this));
 
             var rezoom = function(old_level, new_level) {
-                this.layers.get('photos').clearMarkers();
-                this.photos.each(this.addPhoto.bind(this));
+                this.layers.get('photos').clearMarkers();    
+
+                this.destinations.each(function(dest) {
+                    this.showPhotos(dest.get('photos'));
+                }.bind(this));
             }
 
             GEvent.addListener(this.map, 'zoomend', rezoom.bind(this));
@@ -136,9 +143,22 @@ Arag_Map = new Class({
             this.destinations.each(get.bind(this));
         },
 
-        addPhoto: function (photo) {
-            var width     = photo.width*(this.map.getZoom()/100)*3;
-            var height    = photo.height*(this.map.getZoom()/100)*3;
+        showPhotos : function(photos) {
+            photos.each(function(photo, index) {
+                var scale = 3;
+
+                if (index < 1) {
+                    scale = 10;
+                }
+
+                var width     = photo.width*(this.map.getZoom()/100)*scale;
+                var height    = photo.height*(this.map.getZoom()/100)*scale;
+
+                this.showPhoto(photo, width, height);
+            }.bind(this));
+        },
+
+        showPhoto: function (photo, width, height) {
             var icon      = new GIcon(G_DEFAULT_ICON, photo.photo_file_url);
             icon.shadow   = '';
             icon.iconSize = new GSize(width, height);
