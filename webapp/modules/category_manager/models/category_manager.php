@@ -175,8 +175,8 @@ class Category_Manager_Model extends Model
     public function getEntityCategories($parent, $entity_id, $module = null, $appname = null)
     {
         $categories = array();
-        $childs     = $this->getChilds($parent);
-
+        $cats       = $this->getChilds($parent);
+        $cats[]     = $parent;
         $this->db->select('category_id')->from($this->tableNameRecords)->where('entity_id', $entity_id)->in('category_id', $childs);
 
         $appname and $this->db->where('application_name', $appname);
