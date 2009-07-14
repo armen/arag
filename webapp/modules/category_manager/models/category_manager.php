@@ -177,7 +177,7 @@ class Category_Manager_Model extends Model
         $categories = array();
         $cats       = $this->getChilds($parent);
         $cats[]     = $parent;
-        $this->db->select('category_id')->from($this->tableNameRecords)->where('entity_id', $entity_id)->in('category_id', $childs);
+        $this->db->select('category_id')->from($this->tableNameRecords)->where('entity_id', $entity_id)->in('category_id', $cats);
 
         $appname and $this->db->where('application_name', $appname);
         $module  and $this->db->where('module', $module);
