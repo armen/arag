@@ -20,7 +20,7 @@ $config = Array
         MODPATH.'locations/views/',
         MODPATH.'forecast/views/',
         MODPATH.'category_manager/views/',
-        MODPATH.'theme_manager/views/
+        MODPATH.'theme_manager/views/'
     ),
     'if_funcs'              => Array         // We'll allow these functions in if statement
     (
