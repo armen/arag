@@ -88,7 +88,7 @@ class Backend_Controller extends Controller
         return $this->validation->validate();
     }
     // }}}
-    // {{{ add_write_error
+    // {{{ edit_write_error
     public function edit_write_error()
     {
         $styles = $this->theme_manager->getDefaults();

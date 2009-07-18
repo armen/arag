@@ -12,12 +12,19 @@ class ThemeManager_Model extends Model
     public function set($styles)
     {
         Arag_Config::set('styles', $styles);
+        Arag_Config::set('makeup_time', time());
     }
     // }}}
     // {{{ get
     public function get()
     {
         return Arag_Config::get('styles', array());
+    }
+    // }}}
+    // {{{ getMakeupTime
+    public function getMakeupTime()
+    {
+        return Arag_Config::get('makeup_time', 0, 'theme_manager');
     }
     // }}}
     // {{{ getDefaults

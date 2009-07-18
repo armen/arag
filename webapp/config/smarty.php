@@ -19,7 +19,8 @@ $config = Array
         MODPATH.'core/views/',
         MODPATH.'locations/views/',
         MODPATH.'forecast/views/',
-        MODPATH.'category_manager/views/'
+        MODPATH.'category_manager/views/',
+        MODPATH.'theme_manager/views/
     ),
     'if_funcs'              => Array         // We'll allow these functions in if statement
     (
@@ -65,6 +66,7 @@ $config = Array
         MODPATH.'locations/views/plugins/',
         MODPATH.'forecast/views/plugins/',
         MODPATH.'category_manager/views/plugins/',
+        MODPATH.'theme_manager/views/plugins/',
         APPPATH.'views/smarty_plugins/'
     )
 );
