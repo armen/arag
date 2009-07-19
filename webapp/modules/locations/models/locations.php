@@ -84,26 +84,24 @@ class Locations_Model extends Model
         return $this->db->where('id', $id)->delete($this->tableName);
     }
     // }}}
-        // {{{ getCoordinates
-    public function getCoordinates($address)
+    // {{{ getCoordinates
+    public function getCoordinates($location)
     {
-        if (!strlen($address)) {
+        if ($location['latitude'] && $location['longitude']) {
+            return True;
+        }
+        if (!strlen($location['english'])) {
             return False;
         }
-        $cache = New Cache;
-        $coordinates = $cache->get('coordinates_'.$address);
-        if ($coordinates) {
-            return $coordinates;
-        }
 
-        $url = 'http://maps.google.com/maps/geo?q='.ucfirst($address).'&output=json&key='.$this->getProperKey();
+        $url = 'http://maps.google.com/maps/geo?q='.ucfirst($location['english']).'&output=json&key='.$this->getProperKey();
 
         $result  = json_decode(file_get_contents($url));
 
         if (isset($result->Placemark[0])) {
             $coordinates = $result->Placemark[0]->Point->coordinates;
-            $cache->set('coordinates_'.$address, $coordinates);
-            return $coordinates;
+            $this->edit($location['id'], $location['parent'], $location['english'], $location['type'], $location['code'], $location['name'], $coordinates[1], $coordinates[0]);
+            return True;
         }
         return False;
     }
@@ -155,12 +153,63 @@ class Locations_Model extends Model
     // {{{ getSelectedLocation
     public function getSelectedLocation($array)
     {
+        if (!is_array($array)) {
+            return 0;
+        }
         $current = '';
         while(!strlen($current)) {
+            if (!count($array)) {
+                return False;
+            }
             $current = array_pop($array);
         }
         return $current;
         
+    }
+    // }}}
+    // {{{ getChildIds
+    public function getChildIds($parent)
+    {
+        $id     = 'childs_'.$parent;
+        $cache  = New Cache;
+        $cached = $cache->get($id);
+        if ($cached) {
+            return $cached;
+        }
+        $childs   = $this->db->select('id')->from($this->tableName)->where('parent', $parent)->get()->result_array(False);
+        $grands[] = Array();
+
+        foreach($childs as &$child) {
+            $child = current($child);
+        }
+
+        foreach($childs as $child) {
+            $grands[] = $this->getChildIds($child);
+        }
+
+        foreach($grands as $grand) {
+            $childs = array_unique(array_merge($childs, $grand));
+        }
+
+        $cache->set($id, $childs);
+        return $childs;
+    }
+    // }}}
+    // {{{ getCountryByLocation
+    public function getCountryByLocation($id)
+    {
+        $location = $this->get($id);
+        if ($location['type'] == Locations_Model::COUNTRY) {
+            return $location['id'];
+        }
+
+        while($parent = $this->get($location['parent'])) {
+            if ($parent['type'] == Locations_Model::COUNTRY) {
+                return $parent['id'];
+            }
+            $location = $parent;
+        }
+        return False;
     }
     // }}}
     // {{{ convert

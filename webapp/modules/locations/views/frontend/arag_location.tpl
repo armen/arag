@@ -18,7 +18,7 @@
                 if (select.get('value') == '') // Blank is selected, do nothing.
                     return false;
 
-                select.getAllNext().dispose(); //Destroy all 'Next' elements.
+                select.getAllNext(select.get('name')).dispose(); //Destroy all 'Next' elements.
  
                 var location = select.get('value'); //Get the selected option's value.
 
@@ -48,15 +48,18 @@
                             new_select.adopt(option);
                         {literal}});{/literal}
 
-                        select.getParent().adopt(new Element('br'));
-                        select.getParent().adopt(new_select);
+                        var br = new Element('br').inject(select, 'after');
+                        new_select.inject(br, 'after');
                     {literal}}{/literal}
 
                 {literal}}).get();{/literal}
         {literal}}{/literal}
 
         window.addEvent('domready', function() {literal}{{/literal}
-            $$('.locations_{$name}').addEvent('change', {literal}function(e) { refresh(e.target); }{/literal});
+            $$('.locations_{$name}').each(function(el) {literal}{{/literal}
+                el.addEvent('change', {literal}function(e) { refresh(e.target); }{/literal});
+
+            {literal}}{/literal});
         {literal}});{/literal}
     </script>
 {/arag_header}

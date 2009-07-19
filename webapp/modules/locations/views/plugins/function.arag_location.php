@@ -14,14 +14,14 @@
 
 function smarty_function_arag_location($params, &$smarty)
 {
-    foreach ($params as $_key => $_val) {
-        $value    = Null;
-        $type     = Null;
-        $parent   = Null;
-        $readonly = False;
-        $all      = Array();
-        $name     = 'location';
+    $value    = Null;
+    $type     = Null;
+    $parent   = Null;
+    $readonly = False;
+    $all      = Array();
+    $name     = 'location';
 
+    foreach ($params as $_key => $_val) {
         switch ($_key) {
             case 'name':
             case 'value':
@@ -36,8 +36,9 @@ function smarty_function_arag_location($params, &$smarty)
         }
     }
 
-    $locations = Model::load('Locations', 'locations');
-    $view      = new View('frontend/arag_location');
+    $locations   = Model::load('Locations', 'locations');
+
+    $world['id'] = 0;
 
     if ($value) {
         $parent = $value;
@@ -45,15 +46,19 @@ function smarty_function_arag_location($params, &$smarty)
             $path[$location['id']] = $location;
             $parent                = $location['parent'];
         }
-        $world['id'] = 0;
-        $path[0] = $world;
-        $all = array_reverse($path);
     }
-
+    $path[0] = $world;
+    $all     = array_reverse($path);
     foreach($all as $index => &$location) {
         $location['children'] = $locations->getByParent($location['id']);
     }
 
+    if ($readonly) {
+        $view  = new View('frontend/arag_location_readonly');
+        $path = array_reverse($path);
+    } else {
+        $view  = new View('frontend/arag_location');
+    }
     $view->name     = $name;
     $view->all      = $all;
     $view->path     = $path;

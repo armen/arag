@@ -20,7 +20,7 @@
                             weather_icons : '{$arag_base_url}/modpub/forecast/icons',
                             onload        : function() {literal}{{/literal}
                                                 {foreach from=$path item='dest'} 
-                                                    this.addDestination('{$dest.name}', {$dest.coordinates.1}, {$dest.coordinates.0});
+                                                    this.addDestination('{$dest.english}', {$dest.latitude}, {$dest.longitude});
                                                 {/foreach}
 
                                             {literal}}{/literal}
@@ -34,4 +34,4 @@
         </script>
 {/arag_header}
 
-<div id='{$id}'></div>
+<div id='{$id}' class="map"></div>

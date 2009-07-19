@@ -28,10 +28,10 @@ function smarty_function_arag_map($params, &$smarty)
     $forecast  = Model::load('Forecast', 'forecast');
     $new_path  = Array();
 
-    foreach($path as $name) {
-        $location['name']        = $name;
-        $location['coordinates'] = $locations->getCoordinates($name);
-        if (!$location['coordinates']) {
+    foreach($path as $id) {
+        $location = $locations->get($id);
+
+        if (!$locations->getCoordinates($location)) {
             //We cant get the coordinates of a destinition, be'd better not to show any map.
             return False;
         }
@@ -44,20 +44,20 @@ function smarty_function_arag_map($params, &$smarty)
     $maxY = -99999;
 
     foreach($new_path as $d) {
-        if ($d['coordinates'][1] > $maxX) {
-            $maxX = $d['coordinates'][1];
+        if ($d['latitude'] > $maxX) {
+            $maxX = $d['latitude'];
         }
 
-        if ($d['coordinates'][0] > $maxY) {
-            $maxY = $d['coordinates'][0];
+        if ($d['latitude'] > $maxY) {
+            $maxY = $d['latitude'];
         }
 
-        if ($d['coordinates'][1] < $minX) {
-            $minX = $d['coordinates'][1];
+        if ($d['longitude'] < $minX) {
+            $minX = $d['longitude'];
         }
 
-        if ($d['coordinates'][0] < $minY) {
-            $minY = $d['coordinates'][0];
+        if ($d['longitude'] < $minY) {
+            $minY = $d['longitude'];
         }
     }
 
