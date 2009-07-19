@@ -246,9 +246,17 @@ class PList_Component extends Component implements IteratorAggregate, ArrayAcces
     }
     // }}}
     // {{{ calculateSum
-    public function calculateSum($name)
+    public function calculateSum($name, $sourceColumn = False, $format = False)
     {
-        $this->sums[$name] = 0;
+        $sourceColumn = $sourceColumn ? $sourceColumn : $name;
+
+        $this->sums[$name] = Array
+        (
+            'sum'              => 0,
+            'current_page_sum' => 0,
+            'format'           => $format,
+            'source_column'    => $sourceColumn
+        );
     }
     // }}}
     // {{{ & getVirtualColumns
@@ -323,12 +331,26 @@ class PList_Component extends Component implements IteratorAggregate, ArrayAcces
     {
         if (!empty($this->sums)) {
             foreach (iterator_to_array($this->resource) as $key => $resource) {
-                foreach($this->sums as $sum => $value) {
-                    $this->sums[$sum] += $resource[$sum];
+                foreach($this->sums as &$entry) {
+                    isset($resource[$entry['source_column']]) AND $entry['sum'] += $resource[$entry['source_column']];
                 }
+
+                if ($this->limit != 0 && $key >= ((($current_page-1) * $this->limit)) && $key <= (($current_page * $this->limit) - 1)) {
+                    foreach($this->sums as &$entry) {
+                        isset($resource[$entry['source_column']]) AND $entry['current_page_sum'] += $resource[$entry['source_column']];
+                    }
+                }
+
                 if ($this->limit != 0 && $key == (($current_page * $this->limit) - 1)) {
                     break;
                 }
+            }
+        }
+
+        foreach ($this->sums as $entry) {
+            if ($entry['format']) {
+                $entry['sum']              = format::money($entry['sum']);
+                $entry['current_page_sum'] = format::money($entry['current_page_sum']);
             }
         }
 

@@ -48,9 +48,6 @@
                     {foreach from=$columnNames item=name}
                         {if isset($columns.$name|smarty:nodefaults) && !$columns.$name.hidden}
                             <th>{$columns.$name.label}</th>
-                            {if !$columns.$name.virtual && isset($sums.$name|smarty:nodefaults)}
-                                {assign var=_$name value=0}
-                            {/if}
                         {/if}
                     {/foreach}
 
@@ -87,11 +84,6 @@
                     {if is_array($row) && count($row) > 0}
                         {foreach from=$columnNames item=name}
                             {if count($columns) == 0 || (isset($columns.$name|smarty:nodefaults) && !$columns.$name.hidden && !$columns.$name.virtual)}
-                                {if !$columns.$name.virtual && isset($sums.$name|smarty:nodefaults)}
-                                    {assign var="temp" value=$row.$name|default:0}
-                                    {arag_get_var assign="item" var=_$name}
-                                    {assign var=_$name value="`$item+$temp`"}
-                                {/if}
                                 <td {$onclick|smarty:nodefaults}>{$row.$name|default:"&nbsp;"}</td>
                             {elseif isset($columns.$name|smarty:nodefaults) && $columns.$name.virtual}
                                 <td {$onclick|smarty:nodefaults}>{$plist->callCallback($name, $row)|smarty:nodefaults}</td>
@@ -135,7 +127,7 @@
                     {foreach from=$columnNames item=name}
                         {if isset($columns.$name|smarty:nodefaults) && !$columns.$name.hidden}
                             {if !$columns.$name.virtual && isset($sums.$name|smarty:nodefaults)}
-                                <td dir="ltr">&nbsp;{arag_get_var var=_$name}&nbsp;/&nbsp;{$sums.$name}&nbsp;</td>
+                                <td dir="ltr">&nbsp;{$sums.$name.current_page_sum}&nbsp;/&nbsp;{$sums.$name.sum}&nbsp;</td>
                             {else}
                                 <td>-</td>
                             {/if}
