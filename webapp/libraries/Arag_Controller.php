@@ -258,12 +258,13 @@ class Controller extends Controller_Core {
     }
     // }}}
     // {{{ execute
-    public static function execute($uri, $return_content = True, $show_headers = False, $post = array())
+    public static function execute($uri, $return_content = True, $show_headers = False, $post = array(), $ajax = True)
     {
         // We want to simulate POST situation
         $post && ($_POST += $post);
 
         $GLOBALS['controller_execute'] = True;
+        $GLOBALS['ajax']               = $ajax;
         $result                        = False;
         $theme                         = Kohana::config('theme.default');
         $old_current_uri               = Router::$current_uri;
@@ -310,6 +311,7 @@ class Controller extends Controller_Core {
         }
 
         unset($GLOBALS['controller_execute']);
+        unset($GLOBALS['ajax']);
         Router::$current_uri = $old_current_uri;
         Router::setup();
 
