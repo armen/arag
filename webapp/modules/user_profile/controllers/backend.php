@@ -98,7 +98,7 @@ class Backend_Controller extends Controller
         }
 
         $data        = $this->Users->getUserProfile($username);
-        $location    = Model::load('Locations', 'locations')->getSelectedLocation($this->input->post('location', Null, true));
+        $location    = locations::get($this->input->post('location', Null, true));
         $address     = $this->input->post('address', Null, true);
         $phone       = $this->input->post('phone', Null, true);
         $cellphone   = $this->input->post('cellphone', Null, true);
