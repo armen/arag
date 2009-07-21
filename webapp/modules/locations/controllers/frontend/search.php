@@ -24,6 +24,9 @@ class Search_Controller extends Controller
     // {{{ getSiblings
     public function getSiblings($id = 1)
     {
+        if ($id ==0 ) { // 0 has no sibling and will cause errors.sometimes null values will cause sending 0, it just avoids problems.
+            $id = 1;
+        }
         $locations = Model::load('Locations', 'locations');
         print json_encode($locations->getSiblings($id));
     }

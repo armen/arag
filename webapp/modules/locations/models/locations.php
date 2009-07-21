@@ -156,23 +156,6 @@ class Locations_Model extends Model
         return $this->db->where('id', $id)->delete($this->tableName);
      }
     // }}}
-    // {{{ getSelectedLocation
-    public function getSelectedLocation($array)
-    {
-        if (!is_array($array)) {
-            return 0;
-        }
-        $current = '';
-        while(!strlen($current)) {
-            if (!count($array)) {
-                return False;
-            }
-            $current = array_pop($array);
-        }
-        return $current;
-        
-    }
-    // }}}
     // {{{ getChildIds
     public function getChildIds($parent)
     {
