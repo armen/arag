@@ -18,8 +18,14 @@ class Search_Controller extends Controller
     public function getByParent($id = 0)
     {
         $locations = Model::load('Locations', 'locations');
-
         print json_encode($locations->getByParent($id));
+    }
+    // }}}
+    // {{{ getSiblings
+    public function getSiblings($id = 1)
+    {
+        $locations = Model::load('Locations', 'locations');
+        print json_encode($locations->getSiblings($id));
     }
     // }}}
     public function convert_any()

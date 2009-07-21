@@ -16,7 +16,6 @@ function smarty_function_arag_location($params, &$smarty)
 {
     $value    = Null;
     $type     = Null;
-    $parent   = Null;
     $readonly = False;
     $all      = Array();
     $name     = 'location';
@@ -26,7 +25,6 @@ function smarty_function_arag_location($params, &$smarty)
             case 'name':
             case 'value':
             case 'type':
-            case 'parent':
             case 'readonly':
                 $$_key = $_val;
                 break;
@@ -36,34 +34,31 @@ function smarty_function_arag_location($params, &$smarty)
         }
     }
 
-    $locations   = Model::load('Locations', 'locations');
-
-    $world['id'] = 0;
-
-    if ($value) {
-        $parent = $value;
-        while($location = $locations->get($parent)) {
-            $path[$location['id']] = $location;
-            $parent                = $location['parent'];
-        }
-    }
-    $path[0] = $world;
-    $all     = array_reverse($path);
-    foreach($all as $index => &$location) {
-        $location['children'] = $locations->getByParent($location['id']);
-    }
+    $locations = Model::load('Locations', 'locations');
 
     if ($readonly) {
-        $view  = new View('frontend/arag_location_readonly');
+        $world['id'] = 0;
+        if ($value) {
+            $parent = $value;
+            while($location = $locations->get($parent)) {
+                $path[$location['id']] = $location;
+                $parent                = $location['parent'];
+            }
+        }
+        $path[0] = $world;
+        $all     = array_reverse($path);
+        foreach($all as $index => &$location) {
+            $location['children'] = $locations->getByParent($location['id']);
+        }
         $path = array_reverse($path);
+
+        $view  = new View('frontend/arag_location_readonly');        
+        $view->all      = $all;
+        $view->path     = $path;
     } else {
         $view  = new View('frontend/arag_location');
     }
-    $view->name     = $name;
-    $view->all      = $all;
-    $view->path     = $path;
-    $view->readonly = $readonly;
-
-
+    $view->name  = $name;
+    $view->value = $value;
     return $view->render();
 }

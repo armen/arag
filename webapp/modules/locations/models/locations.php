@@ -44,10 +44,16 @@ class Locations_Model extends Model
     }
     // }}}
     // {{{ getByParent
-    public function getByParent($parent)
+    public function getByParent($parent = 0)
     {
         $this->db->select('id', 'parent', 'name', 'english', 'code', 'type', 'latitude', 'longitude')->from($this->tableName)->where('parent', $parent);
         return $this->db->get()->result_array(False);
+    }
+    // }}}
+    // {{{ getSiblings
+    public function getSiblings($id = 1)
+    {
+        return $this->getByParent(current(current($this->db->select('parent')->from($this->tableName)->where('id', $id)->get()->result_array(False))));
     }
     // }}}
     // {{{ add
