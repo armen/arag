@@ -24,7 +24,6 @@ function smarty_function_arag_location($params, &$smarty)
         switch ($_key) {
             case 'name':
             case 'value':
-            case 'type':
             case 'readonly':
                 $$_key = $_val;
                 break;
@@ -58,7 +57,7 @@ function smarty_function_arag_location($params, &$smarty)
     } else {
         $view  = new View('frontend/arag_location');
     }
-    $view->name  = $name;
+    $view->gname  = $name;
     $view->value = $value;
     return $view->render();
 }
