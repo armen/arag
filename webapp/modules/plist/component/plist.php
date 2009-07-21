@@ -339,6 +339,11 @@ class PList_Component extends Component implements IteratorAggregate, ArrayAcces
                     foreach($this->sums as &$entry) {
                         isset($resource[$entry['source_column']]) AND $entry['current_page_sum'] += $resource[$entry['source_column']];
                     }
+
+                } elseif ($this->limit == 0) {
+                    foreach($this->sums as &$entry) {
+                        isset($resource[$entry['source_column']]) AND $entry['current_page_sum'] = $entry['sum'];
+                    }
                 }
 
                 if ($this->limit != 0 && $key == (($current_page * $this->limit) - 1)) {
@@ -347,7 +352,7 @@ class PList_Component extends Component implements IteratorAggregate, ArrayAcces
             }
         }
 
-        foreach ($this->sums as $entry) {
+        foreach ($this->sums as &$entry) {
             if ($entry['format']) {
                 $entry['sum']              = format::money($entry['sum']);
                 $entry['current_page_sum'] = format::money($entry['current_page_sum']);
