@@ -189,12 +189,12 @@ class Locations_Model extends Model
     {
         $location = $this->get($id);
         if ($location['type'] == Locations_Model::COUNTRY) {
-            return $location['id'];
+            return $location;
         }
 
         while($parent = $this->get($location['parent'])) {
             if ($parent['type'] == Locations_Model::COUNTRY) {
-                return $parent['id'];
+                return $parent;
             }
             $location = $parent;
         }
