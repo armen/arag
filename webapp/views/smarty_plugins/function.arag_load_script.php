@@ -31,15 +31,36 @@ function smarty_function_arag_load_script($params, &$smarty)
         $smarty->trigger_error("arag_function_arag_load_script: You have to set 'src' attribute.");
     }
 
-    if (!isset($GLOBALS['loaded_headers'][sha1($src)])) {
+    $dependencies = Kohana::config('scripts');
+    $scripts      = Array($src);
+    $stack        = Array();
 
-        $GLOBALS['loaded_headers'][sha1($src)] = True;
-
-        if (isset($GLOBALS['ajax']) && $GLOBALS['ajax']) {
-            $GLOBALS['headers'][] = "<script type='text/javascript'>window.addEvent('domready', function() { Asset.javascript('".url::base().'/'.$src."'); });</script>";
+    while (isset($dependencies[$src])) {
+        if (is_array($dependencies[$src])) {
+            $scripts =  array_merge($scripts, $dependencies[$src]);
         } else {
-            $GLOBALS['headers'][] = html::script($src);
+            $scripts[] = $dependencies[$src];
         }
+
+        $src = $dependencies[$src];
+
+        if (is_null($src) && !empty($stack)) {
+            $src = array_pop($stack);
+
+        } elseif (is_array($src)) {
+            $stack = array_merge($stack, $src);
+            $src   = array_pop($stack);
+        }
+    }
+
+    foreach (array_reverse($scripts) as $src) {
+
+        if (!isset($GLOBALS['loaded_headers'][sha1($src)])) {
+
+            $GLOBALS['loaded_headers'][sha1($src)] = True;
+            $GLOBALS['headers'][]                  = html::script($src);
+        }
+
     }
 
     return Null;

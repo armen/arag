@@ -47,7 +47,7 @@
 {if !isset($selected_id|smarty:nodefaults)}
     {assign var="selected_id" value='first'}
 {/if}
-{arag_load_script src="scripts/mootools.js"}
+{arag_load_script src="scripts/mootools/core.js"}
 {arag_load_script src="scripts/mootools-more.js"}
 {arag_load_script src="scripts/morphtabs1.4.js"}
 {arag_header}

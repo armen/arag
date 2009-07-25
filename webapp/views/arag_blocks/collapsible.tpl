@@ -4,7 +4,7 @@
     File: $Id$
 *}
 
-{arag_load_script src="scripts/mootools.js"}
+{arag_load_script src="scripts/mootools/core.js"}
 {arag_load_script src="scripts/arag_collapsible_block.js"}
 
 {if isset($arag_block_title|smarty:nodefaults) && trim($arag_block_title) != ""}

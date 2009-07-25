@@ -3,7 +3,7 @@
     vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:
     File: $Id$
 *}
-{arag_load_script src="scripts/mootools.js"}
+{arag_load_script src="scripts/mootools/core.js"}
 {assign var=comments value=$component->getComments()}
 {assign var=title value=$component->getTitle()}
 

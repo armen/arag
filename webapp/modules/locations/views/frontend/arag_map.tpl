@@ -1,4 +1,4 @@
-{arag_load_script src="scripts/mootools.js"}
+{arag_load_script src="scripts/mootools/core.js"}
 {arag_load_script src="scripts/mootools-more.js"}
 {arag_load_script src="scripts/MoodalBox/js/moodalbox.js"}
 {arag_load_script src="modpub/locations/arag_map.js"}
@@ -19,7 +19,7 @@
                             weather_url   : '{kohana_helper function="url::site" uri="locations/frontend/weather"}',
                             weather_icons : '{$arag_base_url}/modpub/forecast/icons',
                             onload        : function() {literal}{{/literal}
-                                                {foreach from=$path item='dest'} 
+                                                {foreach from=$path item='dest'}
                                                     this.addDestination('{$dest.english}', {$dest.latitude}, {$dest.longitude});
                                                 {/foreach}
 
@@ -27,7 +27,7 @@
                 {literal}
                 });
                 {/literal}
-                
+
            {literal}
             });
            {/literal}

@@ -11,7 +11,7 @@
     var fields_combines  = {$combines|smarty:nodefaults};
     var right_align      = '{right}';
 </script>
-{arag_load_script src="scripts/mootools.js"}
+{arag_load_script src="scripts/mootools/core.js"}
 {arag_load_script src="scripts/mootools-more.js"}
 {arag_load_script src="modpub/report_generator/filters.js"}
 

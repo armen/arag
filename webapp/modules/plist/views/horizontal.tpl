@@ -4,7 +4,7 @@
     File: $Id$
 *}
 
-{arag_load_script src="scripts/mootools.js"}
+{arag_load_script src="scripts/mootools/core.js"}
 {arag_load_script src="scripts/plist.js"}
 
 {assign var=columns value=$plist->getColumns()}

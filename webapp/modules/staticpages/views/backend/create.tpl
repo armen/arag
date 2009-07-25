@@ -3,7 +3,7 @@
     vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:
     File: $Id$
 *}
-{arag_load_script src="scripts/mootools.js"}
+{arag_load_script src="scripts/mootools/core.js"}
 <script language="javascripts" type="text/javascript">
 {literal}
 function EnableDisable(val)

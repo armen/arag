@@ -3,7 +3,7 @@
 {arag_load_script src="scripts/JalaliJSCalendar/calendar-setup.js"}
 {arag_load_script src="scripts/JalaliJSCalendar/jalali.js"}
 {if $toggle}
-    {arag_load_script src="scripts/mootools.js"}
+    {arag_load_script src="scripts/mootools/core.js"}
     <script type="text/javascript">
         {literal}
         window.addEvent('domready', function() {

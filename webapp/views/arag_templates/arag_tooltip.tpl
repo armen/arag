@@ -1,5 +1,4 @@
-{arag_load_script src="scripts/mootools.js"}
-{arag_load_script src="scripts/mootools-more.js"}
+{arag_load_script src="scripts/mootools/interface.js"}
 {arag_header}
     <script type="text/javascript">
         //<![CDATA[

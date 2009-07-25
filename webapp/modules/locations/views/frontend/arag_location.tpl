@@ -1,4 +1,4 @@
-{arag_load_script src="scripts/mootools.js"}
+{arag_load_script src="scripts/mootools/core.js"}
 {arag_load_script src="scripts/mootools-more.js"}
 {arag_load_script src="modpub/locations/locations.js"}
 <div id="container_{$gname}">
