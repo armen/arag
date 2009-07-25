@@ -32,6 +32,7 @@ class Applications_Controller extends Backend_Controller
         $this->global_tabs->addItem(_("Password Settings"), 'user/backend/applications/password', 'user/backend/applications/settings');
         $this->global_tabs->addItem(_("Expire Time"), 'user/backend/applications/expire_time', 'user/backend/applications/settings');
         $this->global_tabs->addItem(_("User Blocking"), 'user/backend/applications/user_blocking', 'user/backend/applications/settings');
+        $this->global_tabs->addItem(_("New Application"), 'user/backend/applications/add', 'user/backend/applications');
 
         // Validation Messages
         $passwordLength = Arag_Config::get("passlength");
@@ -58,7 +59,6 @@ class Applications_Controller extends Backend_Controller
     public function index_any($page = Null)
     {
         $this->index_validate();
-        $this->global_tabs->addItem(_("New Application"), 'user/backend/applications/add', 'user/backend/applications');
 
         $applications = new PList_Component('applications');
 
@@ -100,12 +100,14 @@ class Applications_Controller extends Backend_Controller
     // {{{ groups_read
     public function groups_read($appname)
     {
-        $this->global_tabs->addItem(_("Groups"), 'user/backend/applications/groups/%name%', 'user/backend/applications');
-        $this->global_tabs->addItem(_("Default Group"), 'user/backend/applications/default_group/%name%', 'user/backend/applications');
-        $this->global_tabs->additem(_("New Group"), 'user/backend/applications/new_group/%name%', 'user/backend/applications');
-        $this->global_tabs->additem(_("New User"), 'user/backend/applications/new_user/%name%', 'user/backend/applications');
-        
         $this->_create_groups_list($appname);
+
+        $this->global_tabs->setParameter('appname', $appname);
+
+        $this->global_tabs->addItem(_("Groups of '%appname%'"), 'user/backend/applications/groups/%appname%', 'user/backend/applications');
+        $this->global_tabs->addItem(_("Default Group of '%appname%'"), 'user/backend/applications/default_group/%appname%', 'user/backend/applications');
+        $this->global_tabs->additem(_("New Group for '%appname%'"), 'user/backend/applications/new_group/%appname%', 'user/backend/applications');
+        $this->global_tabs->additem(_("New User for '%appname%'"), 'user/backend/applications/new_user/%appname%', 'user/backend/applications');
 
         $this->groups->addAction('user/backend/applications/group_privileges_edit/#id#/'.$appname, _("Privileges"), 'privileges_action');
         $this->groups->addAction('user/backend/applications/users/#id#/'.$appname, _("Users List"), 'users_list');
@@ -196,9 +198,13 @@ class Applications_Controller extends Backend_Controller
     // {{{ users_read
     public function users_read($id, $appname)
     {
-        $this->global_tabs->setParameter('name', $appname);
-
-        $this->global_tabs->addItem(_("Users"), "user/backend/applications/users/".$id."/".$appname, "user/backend/applications");
+        $this->global_tabs->setParameter('appname', $appname);
+        $this->global_tabs->setParameter('appname', $appname);
+        $this->global_tabs->addItem(_("Groups of '%appname%'"), 'user/backend/applications/groups/%appname%', 'user/backend/applications');
+        $this->global_tabs->addItem(_("Default Group of '%appname%'"), 'user/backend/applications/default_group/%appname%', 'user/backend/applications');
+        $this->global_tabs->additem(_("New Group for '%appname%'"), 'user/backend/applications/new_group/%appname%', 'user/backend/applications');
+        $this->global_tabs->additem(_("New User for '%appname%'"), 'user/backend/applications/new_user/%appname%', 'user/backend/applications');
+        $this->global_tabs->addItem(_("Users of '%appname%'"), "user/backend/applications/users/".$id."/".$appname, "user/backend/applications");
 
         $this->_create_users_plist($id, $appname);
 
@@ -545,9 +551,9 @@ class Applications_Controller extends Backend_Controller
     {
         $filters = $this->Filters->getFilters($appname);
 
-        $this->global_tabs->addItem(_("Edit Filters"), 'user/backend/applications/filters_edit/%name%/%id%', 'user/backend/applications/apps_filters');
+        $this->global_tabs->addItem(_("Edit Filters"), 'user/backend/applications/filters_edit/%appname%/%id%', 'user/backend/applications/apps_filters');
         $this->global_tabs->setParameter('id', $id);
-        $this->global_tabs->setParameter('name', $appname);
+        $this->global_tabs->setParameter('appname', $appname);
 
         $data = array('appname'   => $appname,
                       'id'        => $id,
@@ -963,10 +969,15 @@ class Applications_Controller extends Backend_Controller
     {
         $row  = $this->Groups->getGroup($id);
         $name = $row['name'];
-        $this->global_tabs->setParameter('name', $appname);
 
-        $this->global_tabs->addItem(sprintf(_("Edit '%s's' privileges"), $name), "user/backend/applications/group_privileges_edit/".$id."/".$appname,
-                                                                  "user/backend/applications");
+        $this->global_tabs->setParameter('appname', $appname);
+        $this->global_tabs->setParameter('id', $id);
+        $this->global_tabs->addItem(_("Groups of '%appname%'"), 'user/backend/applications/groups/%appname%', 'user/backend/applications');
+        $this->global_tabs->addItem(_("Default Group of '%appname%'"), 'user/backend/applications/default_group/%appname%', 'user/backend/applications');
+        $this->global_tabs->additem(_("New Group for '%appname%'"), 'user/backend/applications/new_group/%appname%', 'user/backend/applications');
+        $this->global_tabs->additem(_("New User for '%appname%'"), 'user/backend/applications/new_user/%appname%', 'user/backend/applications');
+        $this->global_tabs->addItem(_("Edit '%appname%'s' privileges"), 'user/backend/applications/group_privileges_edit/%id%/%appname%', 'user/backend/applications');
+
         $this->_privileges_edit_read($id, $appname);
     }
     // }}}
@@ -1253,8 +1264,6 @@ class Applications_Controller extends Backend_Controller
     // {{{ add_read
     public function add_read()
     {
-        $this->global_tabs->addItem(_("New Application"), 'user/backend/applications/add', 'user/backend/applications');
-
         $this->layout->content               = New View('backend/add_app');
         $this->layout->content->name         = $this->input->post('name');
         $this->layout->content->applications = $this->Applications->getApps();
