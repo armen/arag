@@ -116,7 +116,7 @@ class TabbedBlock_Component extends Component
     // {{{ getTitle
     public function getTitle()
     {
-        return $this->_title;
+        return $this->replaceParameter($this->_title);
     }
     // }}}
     // {{{ parseURI
@@ -153,6 +153,19 @@ class TabbedBlock_Component extends Component
         }
     }
     // }}}
+    // {{{ replaceParameter
+    public function replaceParameter($parameter)
+    {
+        if (preg_match('/%(.+?)%/', $parameter, $matches)) {
+
+            $value     = isset($this->_parameters[$matches[1]]) ? $this->_parameters[$matches[1]] : Null;
+            $parameter = str_replace("%{$matches[1]}%", $value, $parameter);
+        }
+
+        return $parameter;
+    }
+    // }}}
+
 }
 
 ?>

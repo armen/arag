@@ -73,6 +73,11 @@ function smarty_block_arag_tabbed_block($params, $content, &$smarty, &$repeat)
 
         foreach ($tabbedBlock->getItems() as $key => $item) {
 
+            // We can't replace parameters in addItems, just because it's possible that setParameter is called after addItem
+            if (isset($item['name'])) {
+                $tabbedBlock->_items[$key]['name'] = $tabbedBlock->replaceParameter($tabbedBlock->_items[$key]['name']);
+            }
+
             if (isset($item['uri'])) {
 
                 // Remove the trailing /index and trim /
