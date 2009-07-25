@@ -126,7 +126,7 @@
 
                     {foreach from=$columnNames item=name}
                         {if isset($columns.$name|smarty:nodefaults) && !$columns.$name.hidden}
-                            {if !$columns.$name.virtual && isset($sums.$name|smarty:nodefaults)}
+                            {if isset($sums.$name|smarty:nodefaults)}
                                 <td dir="ltr">&nbsp;{$sums.$name.current_page_sum}&nbsp;/&nbsp;{$sums.$name.sum}&nbsp;</td>
                             {else}
                                 <td>-</td>
