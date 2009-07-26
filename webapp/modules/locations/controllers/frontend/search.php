@@ -31,8 +31,4 @@ class Search_Controller extends Controller
         print json_encode($locations->getSiblings($id));
     }
     // }}}
-    public function convert_any()
-    {
-        Model::load('Locations', 'locations')->convert();
-    }
 }
