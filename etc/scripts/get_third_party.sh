@@ -58,9 +58,10 @@ mv ./pear $LIBS_PATH
 
 find $MODS_PATH/tinymce | grep -r tinymce.css | xargs rm -rf #Delete tinymce, but not the css file
 
-wget -c -P /tmp http://prdownloads.sourceforge.net/tinymce/tinymce_3_1_1.zip?download
-unzip -u /tmp/tinymce_3_1_1.zip -d /tmp
+wget -c -P /tmp http://prdownloads.sourceforge.net/tinymce/tinymce_3_2_5.zip?download
+unzip -u /tmp/tinymce_3_2_5.zip -d /tmp
 
+rm -rf ${MODS_PATH}/tinymce
 mkdir ${MODS_PATH}/tinymce
 mv /tmp/tinymce/jscripts/tiny_mce/* ${MODS_PATH}/tinymce
 cp -rf ${WEBAPP_PATH}/modules/tinymce/other/easyUpload/ ${MODS_PATH}/tinymce/plugins/
