@@ -12,33 +12,33 @@
 {if $breadcrumb_type == 'progress'}
     <div class="breadcrumb_container">
         {foreach from=$config item=item key=key}
-            {if $current_uri == $item.uri}
+            {if (is_array($item.uri|smarty:nodefaults) && in_array($current_uri, $item.uri)) || $current_uri == $item.uri}
                 <div class="breadcrumb_items breadcrumb_selected" style="float:{left}">
                     <div class="breadcrumb{if isset($item.class|smarty:nodefaults)} {$item.class}_active{/if}">
                         {$item.title}
                     </div>
                     <div>
-                    {if $key == 0}
-                                <div class="breadcrumb_progress_bar breadcrumb_progress_bar_current_{left}{if isset($item.class|smarty:nodefaults)} {$item.class}_progress_bar {$item.class}_progress_bar_current_{left}{/if}" style="float:{left}">
-                                </div>
-                                <div class="breadcrumb_progress_bar breadcrumb_progress_bar_current{if $number_of_visited_uris == 0}_middle{/if} {if isset($item.class|smarty:nodefaults)} {$item.class}_progress_bar {$item.class}_progress_bar_current{/if}" style="float:{left}">
-                                </div>
-                                {if $number_of_visited_uris == 0}
-                                    <div class="breadcrumb_progress_bar breadcrumb_progress_bar_current_{right}{if isset($item.class|smarty:nodefaults)} {$item.class}_progress_bar {$item.class}_progress_bar_current_{right}{/if}" style="float:{left}">
-                                    </div>
-                                {/if}
-                                <div style="clear:both"></div>
-                    {elseif $key == $number_of_visited_uris}
-                                <div class="breadcrumb_progress_bar breadcrumb_progress_bar_current{if isset($item.class|smarty:nodefaults)} {$item.class}_progress_bar {$item.class}_progress_bar_current{/if}" style="float:{left}">
-                                </div>
+                        {if $key == 0}
+                            <div class="breadcrumb_progress_bar breadcrumb_progress_bar_current_{left}{if isset($item.class|smarty:nodefaults)} {$item.class}_progress_bar {$item.class}_progress_bar_current_{left}{/if}" style="float:{left}">
+                            </div>
+                            <div class="breadcrumb_progress_bar breadcrumb_progress_bar_current{if $number_of_visited_uris == 0}_middle{/if} {if isset($item.class|smarty:nodefaults)} {$item.class}_progress_bar {$item.class}_progress_bar_current{/if}" style="float:{left}">
+                            </div>
+                            {if $number_of_visited_uris == 0}
                                 <div class="breadcrumb_progress_bar breadcrumb_progress_bar_current_{right}{if isset($item.class|smarty:nodefaults)} {$item.class}_progress_bar {$item.class}_progress_bar_current_{right}{/if}" style="float:{left}">
                                 </div>
-                                <div style="clear:both"></div>
-                    {else}
-                                <div class="breadcrumb_progress_bar breadcrumb_progress_bar_current_expand{if isset($item.class|smarty:nodefaults)} {$item.class}_progress_bar {$item.class}_progress_bar_current{/if}" style="float:{left}">
-                                </div>
-                                <div style="clear:both"></div>
-                    {/if}
+                            {/if}
+                            <div style="clear:both"></div>
+                        {elseif $key == $number_of_visited_uris}
+                            <div class="breadcrumb_progress_bar breadcrumb_progress_bar_current{if isset($item.class|smarty:nodefaults)} {$item.class}_progress_bar {$item.class}_progress_bar_current{/if}" style="float:{left}">
+                            </div>
+                            <div class="breadcrumb_progress_bar breadcrumb_progress_bar_current_{right}{if isset($item.class|smarty:nodefaults)} {$item.class}_progress_bar {$item.class}_progress_bar_current_{right}{/if}" style="float:{left}">
+                            </div>
+                            <div style="clear:both"></div>
+                        {else}
+                            <div class="breadcrumb_progress_bar breadcrumb_progress_bar_current_expand{if isset($item.class|smarty:nodefaults)} {$item.class}_progress_bar {$item.class}_progress_bar_current{/if}" style="float:{left}">
+                            </div>
+                            <div style="clear:both"></div>
+                        {/if}
                     </div>
                 </div>
             {elseif in_array($item.uri, $visited_uris)}
@@ -49,23 +49,23 @@
                             {$item.title}
                         </a>
                     </div>
-                    {if $key == 0}
-                                <div class="breadcrumb_progress_bar breadcrumb_progress_bar_visited_{left}{if isset($item.class|smarty:nodefaults)} {$item.class}_progress_bar {$item.class}_progress_bar_visited_{left}{/if}" style="float:{left}">
-                                </div>
-                                <div class="breadcrumb_progress_bar breadcrumb_progress_bar_visited{if isset($item.class|smarty:nodefaults)} {$item.class}_progress_bar {$item.class}_progress_bar_visited{/if}" style="float:{left}">
-                                </div>
-                                <div style="clear:both"></div>
-                    {elseif $key == $number_of_visited_uris}
-                                <div class="breadcrumb_progress_bar breadcrumb_progress_bar_visited{if isset($item.class|smarty:nodefaults)} {$item.class}_progress_bar {$item.class}_progress_bar_visited{/if}" style="float:{left}">
-                                </div>
-                                <div class="breadcrumb_progress_bar breadcrumb_progress_bar_visited_{right}{if isset($item.class|smarty:nodefaults)} {$item.class}_progress_bar {$item.class}_progress_bar_visited_{right}{/if}" style="float:{left}">
-                                </div>
-                                <div style="clear:both"></div>
-                    {else}
-                                <div class="breadcrumb_progress_bar breadcrumb_progress_bar_visited_expand{if isset($item.class|smarty:nodefaults)} {$item.class}_progress_bar {$item.class}_progress_bar_visited{/if}" style="float:{left}">
-                                </div>
-                                <div style="clear:both"></div>
-                    {/if}
+                        {if $key == 0}
+                            <div class="breadcrumb_progress_bar breadcrumb_progress_bar_visited_{left}{if isset($item.class|smarty:nodefaults)} {$item.class}_progress_bar {$item.class}_progress_bar_visited_{left}{/if}" style="float:{left}">
+                            </div>
+                            <div class="breadcrumb_progress_bar breadcrumb_progress_bar_visited{if isset($item.class|smarty:nodefaults)} {$item.class}_progress_bar {$item.class}_progress_bar_visited{/if}" style="float:{left}">
+                            </div>
+                            <div style="clear:both"></div>
+                        {elseif $key == $number_of_visited_uris}
+                            <div class="breadcrumb_progress_bar breadcrumb_progress_bar_visited{if isset($item.class|smarty:nodefaults)} {$item.class}_progress_bar {$item.class}_progress_bar_visited{/if}" style="float:{left}">
+                            </div>
+                            <div class="breadcrumb_progress_bar breadcrumb_progress_bar_visited_{right}{if isset($item.class|smarty:nodefaults)} {$item.class}_progress_bar {$item.class}_progress_bar_visited_{right}{/if}" style="float:{left}">
+                            </div>
+                            <div style="clear:both"></div>
+                        {else}
+                            <div class="breadcrumb_progress_bar breadcrumb_progress_bar_visited_expand{if isset($item.class|smarty:nodefaults)} {$item.class}_progress_bar {$item.class}_progress_bar_visited{/if}" style="float:{left}">
+                            </div>
+                            <div style="clear:both"></div>
+                        {/if}
                 </div>
             {elseif $show_next_steps}
                 <div class="breadcrumb_items breadcrumb_not_visited" style="float:{left}">
@@ -91,21 +91,21 @@
                         {$item.title}
                     </div>
                     <div>
-                    {if $key == 0}
-                                <div class="breadcrumb_progress_bar breadcrumb_progress_bar_current_{left}{if isset($item.class|smarty:nodefaults)} {$item.class}_progress_bar {$item.class}_progress_bar_current_{left}{/if}" style="float:{left}">
-                                </div>
-                                <div class="breadcrumb_progress_bar breadcrumb_progress_bar_current_middle {if isset($item.class|smarty:nodefaults)} {$item.class}_progress_bar {$item.class}_progress_bar_current{/if}" style="float:{left}">
-                                </div>
-                                <div class="breadcrumb_progress_bar breadcrumb_progress_bar_current_{right}{if isset($item.class|smarty:nodefaults)} {$item.class}_progress_bar {$item.class}_progress_bar_current_{right}{/if}" style="float:{left}">
-                                </div>
-                                <div style="clear:both"></div>
-                    {else}
-                                <div class="breadcrumb_progress_bar breadcrumb_progress_bar_current{if isset($item.class|smarty:nodefaults)} {$item.class}_progress_bar {$item.class}_progress_bar_current{/if}" style="float:{left}">
-                                </div>
-                                <div class="breadcrumb_progress_bar breadcrumb_progress_bar_current_{right}{if isset($item.class|smarty:nodefaults)} {$item.class}_progress_bar {$item.class}_progress_bar_current_{right}{/if}" style="float:{left}">
-                                </div>
-                                <div style="clear:both"></div>
-                    {/if}
+                        {if $key == 0}
+                            <div class="breadcrumb_progress_bar breadcrumb_progress_bar_current_{left}{if isset($item.class|smarty:nodefaults)} {$item.class}_progress_bar {$item.class}_progress_bar_current_{left}{/if}" style="float:{left}">
+                            </div>
+                            <div class="breadcrumb_progress_bar breadcrumb_progress_bar_current_middle {if isset($item.class|smarty:nodefaults)} {$item.class}_progress_bar {$item.class}_progress_bar_current{/if}" style="float:{left}">
+                            </div>
+                            <div class="breadcrumb_progress_bar breadcrumb_progress_bar_current_{right}{if isset($item.class|smarty:nodefaults)} {$item.class}_progress_bar {$item.class}_progress_bar_current_{right}{/if}" style="float:{left}">
+                            </div>
+                            <div style="clear:both"></div>
+                        {else}
+                            <div class="breadcrumb_progress_bar breadcrumb_progress_bar_current{if isset($item.class|smarty:nodefaults)} {$item.class}_progress_bar {$item.class}_progress_bar_current{/if}" style="float:{left}">
+                            </div>
+                            <div class="breadcrumb_progress_bar breadcrumb_progress_bar_current_{right}{if isset($item.class|smarty:nodefaults)} {$item.class}_progress_bar {$item.class}_progress_bar_current_{right}{/if}" style="float:{left}">
+                            </div>
+                            <div style="clear:both"></div>
+                        {/if}
                     </div>
                 </div>
             {elseif !$visited_current_uri}
@@ -116,17 +116,17 @@
                             {$item.title}
                         </a>
                     </div>
-                    {if $key == 0}
-                                <div class="breadcrumb_progress_bar breadcrumb_progress_bar_visited_{left}{if isset($item.class|smarty:nodefaults)} {$item.class}_progress_bar {$item.class}_progress_bar_visited_{left}{/if}" style="float:{left}">
-                                </div>
-                                <div class="breadcrumb_progress_bar breadcrumb_progress_bar_visited{if isset($item.class|smarty:nodefaults)} {$item.class}_progress_bar {$item.class}_progress_bar_visited{/if}" style="float:{left}">
-                                </div>
-                                <div style="clear:both"></div>
-                    {else}
-                                <div class="breadcrumb_progress_bar breadcrumb_progress_bar_visited_expand{if isset($item.class|smarty:nodefaults)} {$item.class}_progress_bar {$item.class}_progress_bar_visited{/if}" style="float:{left}">
-                                </div>
-                                <div style="clear:both"></div>
-                    {/if}
+                        {if $key == 0}
+                            <div class="breadcrumb_progress_bar breadcrumb_progress_bar_visited_{left}{if isset($item.class|smarty:nodefaults)} {$item.class}_progress_bar {$item.class}_progress_bar_visited_{left}{/if}" style="float:{left}">
+                            </div>
+                            <div class="breadcrumb_progress_bar breadcrumb_progress_bar_visited{if isset($item.class|smarty:nodefaults)} {$item.class}_progress_bar {$item.class}_progress_bar_visited{/if}" style="float:{left}">
+                            </div>
+                            <div style="clear:both"></div>
+                        {else}
+                            <div class="breadcrumb_progress_bar breadcrumb_progress_bar_visited_expand{if isset($item.class|smarty:nodefaults)} {$item.class}_progress_bar {$item.class}_progress_bar_visited{/if}" style="float:{left}">
+                            </div>
+                            <div style="clear:both"></div>
+                        {/if}
                 </div>
             {elseif $show_next_steps}
                 <div class="breadcrumb_items breadcrumb_not_visited" style="float:{left}">
