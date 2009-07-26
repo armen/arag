@@ -46,7 +46,7 @@ class Locations_Model extends Model
     // {{{ getByParent
     public function getByParent($parent = 0)
     {
-        $this->db->select('id', 'parent', 'name', 'english', 'code', 'type', 'latitude', 'longitude')->from($this->tableName)->where('parent', $parent);
+        $this->db->select('id', 'parent', 'name', 'english', 'code', 'type', 'latitude', 'longitude')->from($this->tableName)->where('parent', $parent)->orderby('name', 'english', 'code');
         return $this->db->get()->result_array(False);
     }
     // }}}
@@ -54,6 +54,32 @@ class Locations_Model extends Model
     public function getSiblings($id = 1)
     {
         return $this->getByParent(current(current($this->db->select('parent')->from($this->tableName)->where('id', $id)->get()->result_array(False))));
+    }
+    // }}}
+    // {{{ search
+    public function search($name = Null, $english = Null, $type = Null)
+    {
+        $this->db->select('id')->from($this->tableName);
+
+        if ($name) {
+            $this->db->like('name', $name);
+        }
+
+        if ($english) {
+            $this->db->like('english', $english);
+        }
+
+        if ($type) {
+            $this->db->like('type', $type);
+        }
+
+        $ids    = $this->db->orderby('name', 'english', 'code')->get()->result_array(False);
+        $reults = Array();
+
+        foreach($ids as $id) {
+            $results = $this->get($id['id']);
+        }
+        return $results;
     }
     // }}}
     // {{{ add
@@ -87,7 +113,11 @@ class Locations_Model extends Model
     // {{{ delete
     public function delete($id)
     {
-        return $this->db->where('id', $id)->delete($this->tableName);
+        $this->db->where('id', $id)->delete($this->tableName);
+
+        foreach($this->getByParent($id) as $child) {
+            $this->delete($child['id']);
+        }
     }
     // }}}
     // {{{ getCoordinates
@@ -205,61 +235,47 @@ class Locations_Model extends Model
     public function convert()
     {
         set_time_limit(0);
-        $airports_table = 'ticketing_airports';
-        $countries      = Array();
-        $states         = Array();
-        $cities         = Array();
-        $airports       = Array();
 
-        $this->db->select('country_name', 'country_code')->from($airports_table)->groupby('country_code')->orderby('country_name');
-        foreach($this->db->get()->result_array(False) as $country) {
-            $countries[] = Array('code' => $country['country_code'], 'english' => ucfirst(strtolower($country['country_name'])));
-        }
+//         var_dump('DELETING');
+//         foreach($this->getByParent(96) as $lo) {
+//             var_dump($lo);
+//             $this->delete($lo['id']);
+//         }
 
-        foreach($countries as $country) {
-            $country['type'] = Locations_Model::COUNTRY;
-            $this->db->insert($this->tableName, $country);
-        }
-//         var_dump($countries);
+//         $provinces = MODPATH.'/locations/schemas/v0.1/locations_provinces.csv';
+//         $file      = file_get_contents($provinces);
+//         $lines     = explode("\n", $file);
+// 
+//         $provinces = Array();
+//         foreach($lines as $line) {
+//             $columns            = explode(';', $line);
+//             if (isset($columns[1])) {
+//                 $province['parent'] = 96; //Iran.
+//                 $province['name']   = str_replace('"', Null, $columns[1]);
+// 
+//                 $provinces[] = $province;
+//                 $this->db->insert($this->tableName, $province);
+//             }
+//         }
+// 
+//         var_dump($provinces);
+// 
 
-        $this->db->select('state', 'country_code')->from($airports_table)->groupby('state')->orderby('state')->where('state <>', '');
-        foreach($this->db->get()->result_array(False) as $state) {
-            $country = current($this->db->select('id')->from($this->tableName)->where(Array('type' => Locations_Model::COUNTRY, 'code' => $state['country_code']))->get()->result_array(False));
-            $states[] = Array('code' => $state['state'], 'parent' => $country['id']);
-        }
 
-        foreach($states as $state) {
-            $state['type'] = Locations_Model::STATE;
-            $this->db->insert($this->tableName, $state);
-        }
-//         var_dump($states);
+        $cities = MODPATH.'/locations/schemas/v0.1/locations_cities.csv';
+        $file      = file_get_contents($cities);
+        $lines     = explode("\n", $file);
 
-        $this->db->select('state', 'country_code', 'city_code', 'city_name', 'iata_code')->from($airports_table)->groupby('city_code')->orderby('city_name')->where('city_code = iata_code');
-        foreach($this->db->get()->result_array(False) as $city) {
-            if ($city['state']) {
-                $parent = current($this->db->select('id')->from($this->tableName)->where(Array('type' => Locations_Model::STATE, 'code' => $city['state']))->get()->result_array(False));
-            } else {
-                $parent = current($this->db->select('id')->from($this->tableName)->where(Array('type' => Locations_Model::COUNTRY, 'code' => $city['country_code']))->get()->result_array(False));
-            }
-            $cities[] = Array('english' => ucfirst(strtolower($city['city_name'])), 'code' => $city['city_code'], 'parent' => $parent['id']);
-        }
-
-        foreach($cities as $city) {
-            $city['type'] = Locations_Model::CITY;
+        foreach($lines as $line) {
+            $columns            = explode(';', $line);
+            $city['parent']   = $columns[3] + 11600;
+            $city['name']   = str_replace('"', Null, $columns[1]);
+            $city['type']   = Locations_Model::CITY;
+            var_dump($city);
             $this->db->insert($this->tableName, $city);
         }
 
-
-        $this->db->select('state', 'country_code', 'city_code', 'airport_name', 'iata_code')->from($airports_table)->orderby('airport_name')->where('airport_name <>', '');
-        foreach($this->db->get()->result_array(False) as $airport) {
-            $parent = current($this->db->select('id')->from($this->tableName)->where(Array('type' => Locations_Model::CITY, 'code' => $airport['city_code']))->get()->result_array(False));
-            $airports[] = Array('english' => ucfirst(strtolower($airport['airport_name'])), 'code' => $airport['iata_code'], 'parent' => $parent['id']);
-        }
-
-        foreach($airports as $airport) {
-            $airport['type'] = Locations_Model::AIRPORT;
-            $this->db->insert($this->tableName, $airport);
-        }
+        die('e');
     }
     // }}}
  }

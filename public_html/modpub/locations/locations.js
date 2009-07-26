@@ -29,7 +29,15 @@ locations = new Class({
         var option = new Element('option');
 
         if (location) {
-            option.set({value:location.id, html:location.english});
+            option.set({value:location.id});
+
+            if (location.name.length > 1) {
+                option.set({html:location.name});
+            } else if(location.english.length > 1) {
+                option.set({html:location.english});
+            } else {
+                option.set({html:location.code});
+            }
             if (this.default_value == location.id) {
                 option.set({selected:'selected'});
             }

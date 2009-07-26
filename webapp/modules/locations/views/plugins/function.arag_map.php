@@ -48,12 +48,12 @@ function smarty_function_arag_map($params, &$smarty)
             $maxX = $d['latitude'];
         }
 
-        if ($d['latitude'] > $maxY) {
-            $maxY = $d['latitude'];
+        if ($d['longitude'] > $maxY) {
+            $maxY = $d['longitude'];
         }
 
-        if ($d['longitude'] < $minX) {
-            $minX = $d['longitude'];
+        if ($d['latitude'] < $minX) {
+            $minX = $d['latitude'];
         }
 
         if ($d['longitude'] < $minY) {

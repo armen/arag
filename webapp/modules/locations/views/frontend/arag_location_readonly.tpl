@@ -1,6 +1,6 @@
 <table dir="{dir}" class="location readonly">
     {foreach from=$path item='location'}
-        {if isset($location.english|smarty:nodefaults)}
+        {if isset($location.type|smarty:nodefaults)}
             <tr>
                 <td>
                     {if $location.type == 'country'}
@@ -10,7 +10,13 @@
                     {/if}
                 </td>
                 <td>
-                    {$location.english}
+                    {if $location.name|@strlen > 1}
+                        {$location.name}
+                    {elseif $location.english|@strlen > 1}
+                        {$location.english}
+                    {else}
+                        {$location.code}
+                    {/if}
                 </td>
             </tr>
         {/if}
