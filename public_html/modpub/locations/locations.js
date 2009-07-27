@@ -17,10 +17,7 @@ locations = new Class({
     },
 
     select : function() {
-        new_select = new Element('select', {
-                                    name : this.name+'[]',
-                                    class : 'locations_'+this.name
-                                });
+        new_select = new Element('select', {name : this.name+'[]'}).set('class', 'locations_'+this.name);
         new_select.addEvent('change', function(e) { this.refresh(e.target); }.bind(this));
         return new_select;
     },
