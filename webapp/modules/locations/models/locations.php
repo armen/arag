@@ -193,25 +193,23 @@ class Locations_Model extends Model
         $cache  = New Cache;
         $cached = $cache->get($id);
         if ($cached) {
-            return $cached;
+//             return $cached;
         }
-        $childs   = $this->db->select('id')->from($this->tableName)->where('parent', $parent)->get()->result_array(False);
-        $grands[] = Array();
-
-        foreach($childs as &$child) {
-            $child = current($child);
-        }
+        $all    = Array();
+        $childs = $this->db->select('id')->from($this->tableName)->where('parent', $parent)->get()->result_array(False);
 
         foreach($childs as $child) {
-            $grands[] = $this->getChildIds($child);
-        }
+            $id = current($child);
+            $all[] = $id;
 
-        foreach($grands as $grand) {
-            $childs = array_unique(array_merge($childs, $grand));
+            foreach($this->getChildIds($id) as $grand) {
+                $grandId = $grand;
+                $all[]   = $grandId;
+            }
         }
-
-        $cache->set($id, $childs);
-        return $childs;
+        $all = array_unique($all);
+        $cache->set($id, $all);
+        return $all;
     }
     // }}}
     // {{{ getCountryByLocation
@@ -236,30 +234,30 @@ class Locations_Model extends Model
     {
         set_time_limit(0);
 
-//         var_dump('DELETING');
-//         foreach($this->getByParent(96) as $lo) {
-//             var_dump($lo);
-//             $this->delete($lo['id']);
-//         }
+        var_dump('DELETING');
+        foreach($this->getByParent(96) as $lo) {
+            var_dump($lo);
+            $this->delete($lo['id']);
+        }
 
-//         $provinces = MODPATH.'/locations/schemas/v0.1/locations_provinces.csv';
-//         $file      = file_get_contents($provinces);
-//         $lines     = explode("\n", $file);
-// 
-//         $provinces = Array();
-//         foreach($lines as $line) {
-//             $columns            = explode(';', $line);
-//             if (isset($columns[1])) {
-//                 $province['parent'] = 96; //Iran.
-//                 $province['name']   = str_replace('"', Null, $columns[1]);
-// 
-//                 $provinces[] = $province;
-//                 $this->db->insert($this->tableName, $province);
-//             }
-//         }
-// 
-//         var_dump($provinces);
-// 
+        $provinces = MODPATH.'/locations/schemas/v0.1/locations_provinces.csv';
+        $file      = file_get_contents($provinces);
+        $lines     = explode("\n", $file);
+
+        $provinces = Array();
+        foreach($lines as $line) {
+            $columns            = explode(';', $line);
+            if (isset($columns[1])) {
+                $province['parent'] = 96; //Iran.
+                $province['name']   = str_replace('"', Null, $columns[1]);
+                $province['type']   = Locations_Model::PROVINCE;
+                $provinces[] = $province;
+                $this->db->insert($this->tableName, $province);
+            }
+        }
+
+        var_dump($provinces);
+
 
 
         $cities = MODPATH.'/locations/schemas/v0.1/locations_cities.csv';
