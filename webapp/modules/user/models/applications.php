@@ -41,6 +41,24 @@ class Applications_Model extends Model
         return $this->db->get()->result(False);
     }
     // }}}
+    // {{{ getAppsName
+    public function getAppsName()
+    {
+        $applications = Array();
+
+        $this->db->select('name');
+        $this->db->from($this->tableNameApps);
+        $this->db->orderby('name', 'ASC');
+
+        $result = $this->db->get()->result(False);
+
+        foreach ($result as $row) {
+            $applications[] = $row['name'];
+        }
+
+        return $applications;
+    }
+    // }}}
     // {{{ getDate
     public function getDate($row)
     {

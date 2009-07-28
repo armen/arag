@@ -67,6 +67,22 @@ class Privileges_Model extends Model
         return $privileges;
     }
     // }}}
+    // {{{ getParentLabels
+    public function getParentLabels()
+    {
+        $this->db->select('id, label')->from($this->tableNamePrivileges);
+        $this->db->where('parent_id', 0);
+
+        $privileges = $this->db->orderby('label')->get()->result_array(False);
+        $labels     = Array();
+
+        foreach ($privileges as $privilege) {
+            $labels[$privilege['id']] = $privilege['label'];
+        }
+
+        return $labels;
+    }
+    // }}}
     // {{{ getLabel
     public function getLabel($id)
     {
@@ -87,12 +103,14 @@ class Privileges_Model extends Model
                        'modify_date' => time(),
                        'create_date' => time());
 
-        $this->db->insert($this->tableNamePrivileges, $rows);
+        $id = $this->db->insert($this->tableNamePrivileges, $rows)->insert_id();
 
         if ($parentid != 0) {
             $this->db->where('id', $parentid);
             $this->db->update($this->tableNamePrivileges, array('modified_by' => $author, 'modify_date' => time()));
         }
+
+        return $id;
     }
     // }}}
     // {{{ editLabel
@@ -209,8 +227,10 @@ class Privileges_Model extends Model
     }
     // }}}
     // {{{ getSelectedPrivileges
-    public function getSelectedPrivileges($subpris, $allselected)
+    public function getSelectedPrivileges($subpris, $allselected, $return_ids = False)
     {
+        $ids = Array();
+
         foreach ($subpris as $id => $privilege) {
             foreach ($privilege as $key => $subprivilege) {
                 if ($allselected != NULL) {
@@ -218,6 +238,7 @@ class Privileges_Model extends Model
                         if (preg_match('|^'.str_replace('*', '',$subprivilege['privilege']).'$|', str_replace('*', '',$selected)) ||
                             preg_match('|^'.str_replace('*', '',$selected).'|', str_replace('*', '',$subprivilege['privilege']))) {
                             $subpris[$id][$key]['selected'] = true;
+                            $ids[]                          = $subpris[$id][$key]['id'];
                             break;
                         } else {
                             $subpris[$id][$key]['selected'] = false;
@@ -228,7 +249,8 @@ class Privileges_Model extends Model
                 }
             }
         }
-        return $subpris;
+
+        return ($return_ids) ? $ids : $subpris;
     }
     // }}}
     // {{{ getSelectedParents

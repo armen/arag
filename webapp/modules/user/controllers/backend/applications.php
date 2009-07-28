@@ -27,6 +27,7 @@ class Applications_Controller extends Backend_Controller
         $this->global_tabs->addItem(_("Privileges"), 'user/backend/applications/privileges_parents');
         $this->global_tabs->addItem(_("Parents"), 'user/backend/applications/privileges_parents', 'user/backend/applications/privileges_parents');
         $this->global_tabs->addItem(_("All"), 'user/backend/applications/privileges_all', 'user/backend/applications/privileges_parents');
+        $this->global_tabs->addItem(_("Deploy"), 'user/backend/applications/privileges_deploy', 'user/backend/applications/privileges_parents');
         $this->global_tabs->addItem(_("Settings"), 'user/backend/applications/settings');
         $this->global_tabs->addItem(_("Page Limit"), 'user/backend/applications/settings', 'user/backend/applications/settings');
         $this->global_tabs->addItem(_("Password Settings"), 'user/backend/applications/password', 'user/backend/applications/settings');
@@ -967,16 +968,17 @@ class Applications_Controller extends Backend_Controller
     // {{{ group_privileges_edit_read
     public function group_privileges_edit_read($id, $appname)
     {
-        $row  = $this->Groups->getGroup($id);
-        $name = $row['name'];
+        $row       = $this->Groups->getGroup($id);
+        $groupname = $row['name'];
 
         $this->global_tabs->setParameter('appname', $appname);
+        $this->global_tabs->setParameter('groupname', $groupname);
         $this->global_tabs->setParameter('id', $id);
         $this->global_tabs->addItem(_("Groups of '%appname%'"), 'user/backend/applications/groups/%appname%', 'user/backend/applications');
         $this->global_tabs->addItem(_("Default Group of '%appname%'"), 'user/backend/applications/default_group/%appname%', 'user/backend/applications');
         $this->global_tabs->additem(_("New Group for '%appname%'"), 'user/backend/applications/new_group/%appname%', 'user/backend/applications');
         $this->global_tabs->additem(_("New User for '%appname%'"), 'user/backend/applications/new_user/%appname%', 'user/backend/applications');
-        $this->global_tabs->addItem(_("Edit '%appname%'s' privileges"), 'user/backend/applications/group_privileges_edit/%id%/%appname%', 'user/backend/applications');
+        $this->global_tabs->addItem(_("Edit '%groupname%'s' privileges"), 'user/backend/applications/group_privileges_edit/%id%/%appname%', 'user/backend/applications');
 
         $this->_privileges_edit_read($id, $appname);
     }
@@ -1297,5 +1299,127 @@ class Applications_Controller extends Backend_Controller
         url::redirect('user/backend/applications');
     }
     // }}}
+    // }}}
+    // {{{ privileges_deploy
+    // {{{ privileges_deploy_read
+    public function privileges_deploy_read()
+    {
+        $selected_apps = $this->input->post('applications');
+        $app_groups    = Array();
+
+        if ($selected_apps) {
+            // We are in validation error stage
+            foreach ($selected_apps as $appname) {
+
+                $_appname = ($appname == '_all_') ? Null : $appname;
+                $groups   = $this->Groups->getGroupsName($_appname);
+
+                $app_groups[$appname] = Array();
+                $app_groups[$appname] = array_merge($app_groups[$appname], array_combine($groups, $groups));
+            }
+        }
+
+        $applications  = $this->Applications->getApps();
+        $_applications = Array();
+
+        $parent_labels = $this->Privileges->getParentLabels();
+
+        foreach ($applications as $application) {
+            $_applications[] = $application['name'];
+        }
+
+        $this->layout->content                = new View('backend/privileges_deploy');
+        $this->layout->content->app_labels    = array_combine($_applications, $_applications);
+        $this->layout->content->parent_labels = $parent_labels;
+        $this->layout->content->app_groups    = $app_groups;
+        $this->layout->content->success       = $this->session->get_once('privileges_deploy_success', False);
+    }
+    // }}}
+    // {{{ privileges_deploy_write
+    public function privileges_deploy_write()
+    {
+        $applications = $this->input->post('applications');
+        $groups       = $this->input->post('groups');
+        $parent       = $this->input->post('parent');
+        $label        = $this->input->post('label');
+        $privilege    = $this->input->post('privilege');
+
+        while (($key = array_search('_all_', $applications)) !== False) {
+
+            $all_apps   = $this->Applications->getAppsName();
+            $all_groups = ($groups[$key] == '_all_') ? $this->Groups->getGroupsName() : Array($groups[$key]);
+
+            unset($applications[$key]);
+            unset($groups[$key]);
+
+            foreach ($all_groups as $group) {
+                $applications = array_merge($applications, $all_apps);
+                $apps_count   = count($applications);
+                $groups       = array_pad($groups, $apps_count, $group);
+            }
+        }
+
+        $id = $this->Privileges->addLabel($label, $parent, $privilege, $this->session->get('user.username'));
+
+        foreach ($applications as $key => $appname) {
+
+            if ($appname == '_all_') {
+                continue;
+            }
+
+            $group = $this->Groups->getGroup(Null, $appname, $groups[$key]);
+
+            if (isset($group['id'])) {
+                $subpris     = $this->Privileges->getAppPrivileges($appname);
+                $allselected = $this->Privileges->getPrivileges($group['id'], true);
+                $ids         = $this->Privileges->getSelectedPrivileges($subpris, $allselected, True);
+                $ids[]       = $id;
+
+                $this->Privileges->editPrivileges($ids, $group['id'], $appname);
+            }
+        }
+
+        $this->session->set_flash('privileges_deploy_success', True);
+        url::redirect('user/backend/applications/privileges_deploy');
+    }
+    // }}}
+    // {{{ privileges_deploy_validate_write
+    public function privileges_deploy_validate_write()
+    {
+        $this->validation->name('applications.*', _("Applications"))->add_rules('applications', 'required');
+        $this->validation->name('groups.*', _("Applications"))->add_rules('groups', 'required');
+        $this->validation->name('parent', _("Parent"))->add_rules('parent', 'required');
+        $this->validation->name('label', _("Label"))->pre_filter('trim', 'newlabel')->add_rules('label', 'required');
+        $this->validation->name('privilege', _("Privilege"))->pre_filter('trim', 'privilege')
+             ->add_rules('privilege', 'required', array($this, '_check_privilege'));
+
+        return $this->validation->validate();
+    }
+    // }}}
+    // {{{ privileges_deploy_write_error
+    public function privileges_deploy_write_error()
+    {
+        $this->privileges_deploy_read();
+    }
+    // }}}
+    // }}}
+    // {{{ get_groups_of
+    public function get_groups_of($appname = Null)
+    {
+        $entries = Array();
+
+        if ($appname) {
+
+            $_appname = ($appname == '_all_') ? Null : $appname;
+            $groups   = $this->Groups->getGroupsName($_appname);
+
+            foreach ($groups as $group) {
+                $entries[] = Array('key' => $group, 'value' => $group);
+            }
+        }
+
+        $this->layout = new View('backend/groups_list');
+        $this->layout->json = json_encode(Array('entries' => $entries));
+    }
     // }}}
 }

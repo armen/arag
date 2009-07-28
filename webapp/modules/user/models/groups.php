@@ -79,6 +79,28 @@ class Groups_Model extends Model
         return $retval;
     }
     // }}}
+    // {{{ getGroupsName
+    public function getGroupsName($appName = NULL)
+    {
+        $this->db->select('name');
+        $this->db->from($this->tableNameGroups);
+
+        if ($appName != NULL) {
+            $this->db->where('appname', $appName);
+        }
+
+        $this->db->orderby('id', 'ASC');
+
+        $result = $this->db->get()->result(False);
+        $groups = Array();
+
+        foreach ($result as $row) {
+            $groups[] = $row['name'];
+        }
+
+        return array_unique($groups);
+    }
+    // }}}
     // {{{ & getGroup
     public function & getGroup($id = NULL, $appname = NULL, $groupname = NULL)
     {
