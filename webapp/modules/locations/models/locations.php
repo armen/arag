@@ -126,13 +126,12 @@ class Locations_Model extends Model
         if ($location['latitude'] && $location['longitude']) {
             return True;
         }
-        if (!strlen($location['english'])) {
+        if (strlen($location['english']) < 2) {
             return False;
         }
 
-        $url = 'http://maps.google.com/maps/geo?q='.ucfirst($location['english']).'&output=json&key='.$this->getProperKey();
-
-        $result  = json_decode(file_get_contents($url));
+        $url = 'http://maps.google.com/maps/geo?q='.urlencode(ucfirst($location['english'])).'&output=json&key='.urlencode($this->getProperKey());
+        $result  = json_decode(@file_get_contents($url));
 
         if (isset($result->Placemark[0])) {
             $coordinates = $result->Placemark[0]->Point->coordinates;
