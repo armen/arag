@@ -58,8 +58,8 @@ locations = new Class({
             new_select.adopt(this.option(location));
         }.bind(this));
 
-        var br = new Element('br').inject(this.container(), 'after');
-        new_select.inject(br, 'after');
+        new_select.inject(this.container(), 'bottom');
+        new Element('br').inject(new_select, 'after');
 
         var parent = locations['0']['parent'];
 
