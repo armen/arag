@@ -35,9 +35,7 @@ $config['languages_direction'] = array
     'fa' => 'rtl'
 );
 
-$config['default_country']  = 32;
-$config['default_province'] = 7;
-$config['default_city']     = 111299;
+$config['default_location'] = 11813;
 
 $config['currency'] = array
 (
