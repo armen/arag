@@ -46,8 +46,13 @@ class Locations_Model extends Model
     // {{{ getByParent
     public function getByParent($parent = 0)
     {
-        $this->db->select('id', 'parent', 'name', 'english', 'code', 'type', 'latitude', 'longitude')->from($this->tableName)->where('parent', $parent)->orderby('name', 'english', 'code');
-        return $this->db->get()->result_array(False);
+        $this->db->select('*')->from($this->tableName)->where('parent', $parent)->where('name <>', '')->orderby('name', 'english', 'code');
+        $localized = $this->db->get()->result_array(False);
+
+        $this->db->select('*')->from($this->tableName)->where('parent', $parent)->where('name', '')->orderby('name', 'english', 'code');
+        $unlocalized = $this->db->get()->result_array(False);
+
+        return array_merge($localized, $unlocalized);
     }
     // }}}
     // {{{ getSiblings

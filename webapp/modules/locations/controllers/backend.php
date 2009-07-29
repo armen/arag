@@ -80,8 +80,8 @@ class Backend_Controller extends Controller
     // {{{ add_validate_write
     public function add_validate_write()
     {
-        $this->validation->name('english', _("English name"))->add_rules('english', 'required', 'standard_text');
-        $this->validation->name('name', _("Name"))->add_rules('name', 'required');
+        $this->validation->name('english', _("English name"))->add_rules('english', 'standard_text');
+        $this->validation->name('name', _("Name"))->add_rules('name');
         $this->validation->name('code', _("Code"))->add_rules('code', 'alpha');
         $this->validation->name('latitude', _("Latitude"))->add_rules('latitude', 'numeric');
         $this->validation->name('longitude', _("Longitude"))->add_rules('longitude', 'numeric');
@@ -113,8 +113,8 @@ class Backend_Controller extends Controller
     // {{{ edit_validate_write
     public function edit_validate_write()
     {
-        $this->validation->name('english', _("English name"))->add_rules('english', 'required', 'standard_text');
-        $this->validation->name('name', _("Name"))->add_rules('name', 'required');
+        $this->validation->name('english', _("English name"))->add_rules('english', 'standard_text');
+        $this->validation->name('name', _("Name"))->add_rules('name');
         $this->validation->name('code', _("Code"))->add_rules('code', 'alpha');
         $this->validation->name('latitude', _("Latitude"))->add_rules('latitude', 'numeric');
         $this->validation->name('longitude', _("Longitude"))->add_rules('longitude', 'numeric');
