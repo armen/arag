@@ -1,5 +1,3 @@
-{arag_load_script src="scripts/mootools/core.js"}
-{arag_load_script src="scripts/mootools-more.js"}
 {arag_load_script src="modpub/theme_manager/js/colorpicker/color_functions.js"}
 {arag_load_script src="modpub/theme_manager/js/colorpicker/js_color_picker_v2.js"}
 <div id="color{$ending}_container">

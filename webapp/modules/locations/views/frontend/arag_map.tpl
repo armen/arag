@@ -1,5 +1,4 @@
-{arag_load_script src="scripts/mootools.js"}
-{arag_load_script src="scripts/mootools-more.js"}
+{arag_load_script src="scripts/mootools/core.js"}
 {arag_load_script src="scripts/MoodalBox/js/moodalbox.js"}
 {arag_load_script src="modpub/locations/arag_map.js"}
 {arag_load_script src="modpub/locations/MarkerManager.js"}
