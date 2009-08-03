@@ -29,12 +29,22 @@
                     <td width="200"><input type="text" size="30" name="subject[]" disabled="disabled" /></td>
                     <td align="{right}" width="50">_("Type"):{asterisk}</td>
                     <td width="120">{html_options options=$types name="type[]" attribute="diabled=\"disabled\""}</td>
-                    <td><input type="button" value="-" style="width:24px;height:20px" onclick="this.getParent().getParent().getParent().getParent().empty();" /></td>
+                    <td style="width:24px;">
+                        <input type="button" value="-" style="width:24px;height:20px" onclick="this.getParent().getParent().getParent().getParent().empty();" />
+                    </td>
                 </tr>
                 </table>
             </div>
             <div id="ids_container">
-                {if !isset($id|smarty:nodefaults)}
+                <table border="0" dir="{dir}" width="100%">
+                <tr>
+                    <td align="{right}">
+                        <input type="button" value="+" style="width:24px;height:20px"
+                               onclick="$('ids').clone().inject('ids_container').set('style', 'display:block;').getElements('*').removeProperty('disabled');" />
+                    </td>
+                </tr>
+                </table>
+                {if !isset($id|smarty:nodefaults) || empty($id|smarty:nodefaults)}
                 <table border="0" dir="{dir}" width="100%">
                 <tr>
                     <td align="{right}" width="50">_("ID"):{asterisk}</td>
@@ -43,8 +53,9 @@
                     <td width="200"><input type="text" size="30" name="subject[]" value="{$subject|smarty:nodefaults|default:null}" /></td>
                     <td align="{right}" width="50">_("Type"):{asterisk}</td>
                     <td width="120">{html_options options=$types name="type[]" selected=$type|smarty:nodefaults|default:null}</td>
-                    <td><input type="button" value="+" style="width:24px;height:20px"
-                               onclick="$('ids').clone().inject('ids_container').set('style', 'display:block;').getElements('*').removeProperty('disabled');" /></td>
+                    <td style="width:24px;">
+                        <input type="button" value="-" style="width:24px;height:20px" onclick="this.getParent().getParent().getParent().getParent().empty();" />
+                    </td>
                 </tr>
                 </table>
                 {else}
@@ -57,12 +68,9 @@
                         <td width="200"><input type="text" size="30" name="subject[]" value="{$subject[$key]|smarty:nodefaults|default:null}" /></td>
                         <td align="{right}" width="50">_("Type"):{asterisk}</td>
                         <td width="120">{html_options options=$types name="type[]" selected=$type[$key]|smarty:nodefaults|default:null}</td>
-                        {if $smarty.foreach.ids.first}
-                            <td><input type="button" value="+" style="width:24px;height:20px"
-                                       onclick="$('ids').clone().inject('ids_container').set('style', 'display:block;').getElements('*').removeProperty('disabled');" /></td>
-                        {else}
-                            <td><input type="button" value="-" style="width:24px;height:20px" onclick="this.getParent().getParent().getParent().getParent().empty();" /></td>
-                        {/if}
+                        <td style="width:24px;">
+                            <input type="button" value="-" style="width:24px;height:20px" onclick="this.getParent().getParent().getParent().getParent().empty();" />
+                        </td>
                     </tr>
                     </table>
                     {/foreach}

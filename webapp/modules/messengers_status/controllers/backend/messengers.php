@@ -48,6 +48,10 @@ class Messengers_Controller extends Controller
                            'type'    => $this->input->post('type')
                           );
 
+        if (empty($settings['id'])) {
+            $settings = Array();
+        }
+
         Arag_Config::set('messenger_status_settings_add', $settings);
 
         $this->session->set('messenger_status_settings_add_saved', true);
