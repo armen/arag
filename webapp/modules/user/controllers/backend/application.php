@@ -387,31 +387,4 @@ class Application_Controller extends Backend_Controller
         $this->_settings_read(false);
     }
     // }}}
-    // {{{ settings_write
-    public function settings_write()
-    {
-        Arag_Config::set('limit', $this->input->post('limit'));
-
-
-        $this->session->set('settings_saved', true);
-
-        //url::redirect('user/backend/applications/settings');
-        $this->settings_read();
-    }
-    // }}}
-    // {{{ settings_validate_write
-    public function settings_validate_write()
-    {
-        $this->validation->name('limit', _("Limit"))->pre_filter('trim', 'limit')
-             ->add_rules('limit', 'valid::numeric');
-
-        $this->validation->validate();
-    }
-    // }}}
-    // {{{ settings_write_error
-    public function settings_write_error()
-    {
-        $this->settings_read();
-    }
-    // }}}
 }

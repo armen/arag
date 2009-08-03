@@ -41,19 +41,9 @@
         <td align="{right}" width="100">_("Sender's Email"):{asterisk}</td>
         <td><input type="text" name="sender" value="{$sender|smarty:nodefaults|default:null}" dir="ltr" /></td>
     </tr>
-    <tr><td colspan="2">&nbsp;</td></tr>
     <tr>
         <td align="{right}" width="100">_("Authenticator"):{asterisk}</td>
         <td>{html_options options=$authenticators name="authenticator" selected=$authenticator|smarty:nodefaults|default:null}</td>
-    </tr>
-    <tr><td colspan="2">&nbsp;</td></tr>
-    <tr>
-        <td align="{right}" width="100">_("Subject"):{asterisk}</td>
-        <td><input type="text" name="subject" value="{$subject|smarty:nodefaults|default:null}" /></td>
-    </tr>
-    <tr>
-        <td align="{right}" width="100" valign="top">_("Email Template"):{asterisk}</td>
-        <td><textarea name="template" rows="7" cols="15">{$template|smarty:nodefaults|default:null}</textarea></td>
     </tr>
     <tr>
         <td>&nbsp;</td>

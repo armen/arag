@@ -33,6 +33,7 @@ class Applications_Controller extends Backend_Controller
         $this->global_tabs->addItem(_("Password Settings"), 'user/backend/applications/password', 'user/backend/applications/settings');
         $this->global_tabs->addItem(_("Expire Time"), 'user/backend/applications/expire_time', 'user/backend/applications/settings');
         $this->global_tabs->addItem(_("User Blocking"), 'user/backend/applications/user_blocking', 'user/backend/applications/settings');
+        $this->global_tabs->addItem(_("Email Template"), 'user/backend/applications/email_template', 'user/backend/applications/settings');
         $this->global_tabs->addItem(_("New Application"), 'user/backend/applications/add', 'user/backend/applications');
 
         // Validation Messages
@@ -1098,33 +1099,6 @@ class Applications_Controller extends Backend_Controller
         $this->_settings_read(true);
     }
     // }}}
-    // {{{ settings_write
-    public function settings_write()
-    {
-        Arag_Config::set('limit', $this->input->post('limit'));
-
-
-        $this->session->set('settings_saved', true);
-
-        //url::redirect('user/backend/applications/settings');
-        $this->settings_read();
-    }
-    // }}}
-    // {{{ settings_validate_write
-    public function settings_validate_write()
-    {
-        $this->validation->name('limit', _("Limit"))->pre_filter('trim', 'limit')
-             ->add_rules('limit', 'valid::numeric');
-
-        return $this->validation->validate();
-    }
-    // }}}
-    // {{{ settings_write_error
-    public function settings_write_error()
-    {
-        $this->settings_read();
-    }
-    // }}}
     // }}}
     // {{{ password
     // {{{ password_read
@@ -1263,6 +1237,55 @@ class Applications_Controller extends Backend_Controller
         $this->user_blocking_read();
     }
     // }}}
+    // }}}
+    // {{{ email_template
+    // {{{ email_template_read
+    public function email_template_read()
+    {
+        $data          = Arag_Config::get("email_settings", array(), 'core', False, Kohana::config('arag.master_appname'));
+        $data['saved'] = $this->session->get_once('user_settings_email_template_saved');
+
+        $this->layout->content = new View('backend/settings_email_template', $data);
+    }
+    // }}}
+    // {{{ email_template_write
+    public function email_template_write()
+    {
+        $data     = Arag_Config::get("email_settings", array(), 'core', False, Kohana::config('arag.master_appname'));
+        $settings = array (
+                            'subject'  => $this->input->post('subject'),
+                            'template' => $this->input->post('template')
+                          );
+
+        // Merge with core settings
+        $settings = array_merge($settings, $data);
+
+        Arag_Config::set('email_settings', $settings, 'core', Kohana::config('arag.master_appname'));
+
+        $this->session->set('user_settings_email_template_saved', true);
+        $this->email_template_read();
+    }
+    // }}}
+    // {{{ email_template_validate_write
+    public function email_template_validate_write()
+    {
+        $this->validation->name('subject', _("Subject"))->pre_filter('trim', 'subject')
+             ->add_rules('subject', 'required');
+
+        $this->validation->name('template', _("Email's template"))->pre_filter('trim', 'template')
+             ->add_rules('template', 'required');
+
+        return $this->validation->validate();
+    }
+    // }}}
+    // {{{ email_template_write_error
+    public function email_template_write_error()
+    {
+        $this->email_template_read();
+    }
+    // }}}
+    // }}}
+    // {{{ add
     // {{{ add_read
     public function add_read()
     {

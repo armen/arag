@@ -42,11 +42,10 @@ class Backend_Controller extends Controller
     // {{{ email_write
     public function email_write()
     {
+        $data     = Arag_Config::get("email_settings", array(), 'core', False, Kohana::config('arag.master_appname'));
         $settings = array (
                            'smtpserver'     => $this->input->post('smtpserver'),
                            'sender'         => $this->input->post('sender'),
-                           'subject'        => $this->input->post('subject'),
-                           'template'       => $this->input->post('template'),
                            'smtpport'       => $this->input->post('smtpport'),
                            'authenticator'  => $this->input->post('authenticator'),
                            'authentication' => false
@@ -59,6 +58,9 @@ class Backend_Controller extends Controller
                                                      'authentication' => true
                                                     ));
         }
+
+        // Merge with user settings
+        $settings = array_merge($settings, $data);
 
         Arag_Config::set('email_settings', $settings, 'core', Kohana::config('arag.master_appname'));
 
@@ -81,14 +83,8 @@ class Backend_Controller extends Controller
 
         $this->validation->name('username', _("Username"))->pre_filter('trim', 'username');
 
-        $this->validation->name('subject', _("Subject"))->pre_filter('trim', 'subject')
-             ->add_rules('subject', 'required');
-
         $this->validation->name('authenticator', _("Authenticator"))->pre_filter('trim', 'authenticator')
              ->add_rules('authenticator', 'required');
-
-        $this->validation->name('template', _("Email's template"))->pre_filter('trim', 'template')
-             ->add_rules('template', 'required');
 
         return $this->validation->validate();
     }
@@ -100,4 +96,3 @@ class Backend_Controller extends Controller
     }
     // }}}
 }
-?>

@@ -337,6 +337,33 @@ class Backend_Controller extends Controller
         $this->group_privileges_edit_read($groupid, $appname);
     }
     // }}}
+    // {{{ settings
+    // {{{ settings_write
+    public function settings_write()
+    {
+        Arag_Config::set('limit', $this->input->post('limit'));
+
+        $this->session->set('settings_saved', true);
+
+        $this->settings_read();
+    }
+    // }}}
+    // {{{ settings_validate_write
+    public function settings_validate_write()
+    {
+        $this->validation->name('limit', _("Limit"))->pre_filter('trim', 'limit')
+             ->add_rules('limit', 'valid::numeric');
+
+        $this->validation->validate();
+    }
+    // }}}
+    // {{{ settings_write_error
+    public function settings_write_error()
+    {
+        $this->settings_read();
+    }
+    // }}}
+    // }}}
     // {{{ callbacks
     // {{{ _check_app
     public function _check_app($name)
