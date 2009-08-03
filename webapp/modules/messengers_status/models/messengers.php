@@ -21,6 +21,10 @@ class Messengers_Model extends Model
         $settings   = Arag_Config::get('messenger_status_settings_add', array());
         $details    = Kohana::config('messengers.details');
 
+        if (!isset($settings['id'])) {
+            return $messengers;
+        }
+
         foreach ($settings['id'] as $idx => $id) {
 
             $type = $settings['type'][$idx];
