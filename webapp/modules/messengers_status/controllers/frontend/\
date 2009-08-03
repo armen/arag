@@ -1,0 +1,35 @@
+<?php
+// vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:
+// +-------------------------------------------------------------------------+
+// | Authors: Armen Baghumian <armen@OpenSourceClub.org>                     |
+// +-------------------------------------------------------------------------+
+// $Id$
+// ---------------------------------------------------------------------------
+
+class Status_Controller extends Controller
+{
+    // {{{ Constructor
+    public function __construct()
+    {
+        parent::__construct();
+
+        // Default page title
+        $this->layout->page_title = 'Messengers Status';
+    }
+    // }}}
+    // {{{ index
+    public function index_any()
+    {
+        $messengers = Array();
+        $details    = Kohana::config('messengers.details');
+
+        foreach ($details as $messenger => $detail) {
+            $status = strpos(file_get_contents($detail['status_url']), $details['offline_status_msg']) === False;
+            $messengers['']
+        }
+
+        $data                  = Arag_Config::get('messenger_status_settings_add', array());
+        $this->layout->content = new View('frontend/status', $data);
+    }
+    // }}}
+}
