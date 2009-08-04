@@ -12,6 +12,16 @@
 {if $breadcrumb_type == 'progress'}
     <div class="breadcrumb_container">
         {foreach from=$config item=item key=key}
+            {assign var=visited value=false}
+            {if is_array($item.uri|smarty:nodefaults)}
+                {foreach from=$item.uri item=uri}
+                    {if in_array($uri, $visited_uris)}
+                        {assign var=visited value=true}
+                    {/if}
+                {/foreach}
+            {elseif in_array($item.uri, $visited_uris)}
+                {assign var=visited value=true}
+            {/if}
             {if (is_array($item.uri|smarty:nodefaults) && in_array($current_uri, $item.uri)) || $current_uri == $item.uri}
                 <div class="breadcrumb_items breadcrumb_selected" style="float:{left}">
                     <div class="breadcrumb{if isset($item.class|smarty:nodefaults)} {$item.class}_active{/if}">
@@ -41,7 +51,7 @@
                         {/if}
                     </div>
                 </div>
-            {elseif in_array($item.uri, $visited_uris)}
+            {elseif $visited}
                 <div class="breadcrumb_items breadcrumb_not_selected" style="float:{left}">
                     <div class="breadcrumb{if isset($item.class|smarty:nodefaults)} {$item.class}_deactive{/if}">
                         {capture assign=uri}{if isset($item.link|smarty:nodefaults)}{$item.link}{else}{$item.uri}{/if}{/capture}
