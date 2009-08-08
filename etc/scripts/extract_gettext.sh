@@ -13,7 +13,7 @@ do
         echo ""
         echo "Extracting messages of '${module}'..."
 
-        find . -type f | grep -v '.svn' | grep -v -e '/\..*' | grep -v "vendors" | grep -v 'schemas' | grep -v 'LC_MESSAGES' | xgettext --keyword=_ --language=PHP --force-po --files-from - --output=ref.po
+        find . -type f | grep -v '.svn' | grep -v -e '/\..*' | grep -v "vendors" | grep -v 'schemas' | grep -v 'LC_MESSAGES' | xgettext --keyword=_ --force-po --files-from - --output=ref.po
         sed -i -e 's/CHARSET/utf-8/' ./ref.po
 
         echo "Merging/Creating messages of '${module}'..."
