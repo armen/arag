@@ -8,13 +8,63 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-08-08 10:33+0430\n"
+"POT-Creation-Date: 2009-08-08 10:43+0430\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: views/frontend/delete.tpl:8 views/frontend/delete_sent.tpl:8
+#, c-format
+msgid "Are you really want to delet the '%s' message?"
+msgstr ""
+
+#: views/frontend/delete.tpl:15 views/frontend/delete_sent.tpl:15
+msgid "Yes"
+msgstr ""
+
+#: views/frontend/delete.tpl:20 views/frontend/delete_sent.tpl:20
+msgid "No"
+msgstr ""
+
+#: views/frontend/new_message.tpl:7 views/frontend/reply.tpl:6
+#, c-format
+msgid "Fields marked with a %s are required."
+msgstr ""
+
+#: views/frontend/new_message.tpl:13 views/frontend/message_body.tpl:17
+#: views/frontend/reply.tpl:12 controllers/frontend/inbox.php:36
+#: controllers/frontend/inbox.php:70
+msgid "To"
+msgstr ""
+
+#: views/frontend/new_message.tpl:19 views/frontend/message_body.tpl:5
+#: views/frontend/reply.tpl:18 controllers/frontend/inbox.php:18
+#: controllers/frontend/inbox.php:37 controllers/frontend/inbox.php:71
+msgid "Subject"
+msgstr ""
+
+#: views/frontend/new_message.tpl:23 views/frontend/reply.tpl:22
+msgid "Message body"
+msgstr ""
+
+#: views/frontend/new_message.tpl:29 views/frontend/reply.tpl:28
+msgid "Send"
+msgstr ""
+
+#: views/frontend/new_message.tpl:30 views/frontend/reply.tpl:29
+msgid "Reset"
+msgstr ""
+
+#: views/frontend/message_body.tpl:9
+msgid "Date"
+msgstr ""
+
+#: views/frontend/message_body.tpl:13 controllers/frontend/inbox.php:17
+msgid "From"
+msgstr ""
 
 #: libraries/Messaging_Frontend.php:17
 #, php-format
@@ -45,15 +95,6 @@ msgstr ""
 msgid "Created Date"
 msgstr ""
 
-#: controllers/frontend/inbox.php:17
-msgid "From"
-msgstr ""
-
-#: controllers/frontend/inbox.php:18 controllers/frontend/inbox.php:37
-#: controllers/frontend/inbox.php:71
-msgid "Subject"
-msgstr ""
-
 #: controllers/frontend/inbox.php:19 controllers/frontend/inbox.php:82
 #: controllers/frontend/inbox.php:95
 msgid "Body"
@@ -63,10 +104,6 @@ msgstr ""
 #: controllers/frontend/inbox.php:84 controllers/frontend/inbox.php:96
 #: controllers/frontend/inbox.php:108 controllers/frontend/inbox.php:157
 msgid "Delete"
-msgstr ""
-
-#: controllers/frontend/inbox.php:36 controllers/frontend/inbox.php:70
-msgid "To"
 msgstr ""
 
 #: controllers/frontend/inbox.php:74

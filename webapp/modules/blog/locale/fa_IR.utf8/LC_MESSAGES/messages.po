@@ -8,13 +8,103 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-08-08 10:33+0430\n"
+"POT-Creation-Date: 2009-08-08 10:43+0430\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: views/list/blog.tpl:17
+#, c-format
+msgid "Posted by %s at %s"
+msgstr "ارسال شده توسط %s در تاریخ %s"
+
+#: views/backend/settings.tpl:12
+msgid "Settings are updated successfuly!"
+msgstr "تنظیمات با موفقیت ویرایش شدند"
+
+#: views/backend/settings.tpl:19
+msgid "List items per page"
+msgstr "تعداد عناصر لیست در هر صفحه"
+
+#: views/backend/settings.tpl:21 views/backend/settings.tpl:26
+msgid "0 means unlimited."
+msgstr "0 به معنای نامحدود است"
+
+#: views/backend/settings.tpl:24
+msgid "Number of posts per page"
+msgstr "تعداد پست های هر صفخه"
+
+#: views/backend/settings.tpl:31
+msgid "Save"
+msgstr "ذخیره"
+
+#: views/backend/settings.tpl:32 views/backend/post.tpl:21
+#: views/backend/edit.tpl:22
+msgid "Reset"
+msgstr "فرم جدید"
+
+#: views/backend/entry_form.tpl:8 controllers/backend/entry.php:18
+#: controllers/backend/entry.php:61 controllers/backend/entry.php:122
+msgid "Subject"
+msgstr "موضوع"
+
+#: views/backend/entry_form.tpl:12
+msgid "Status"
+msgstr "وضعیت"
+
+#: views/backend/entry_form.tpl:19
+msgid "Category"
+msgstr "طبقه بندی ها"
+
+#: views/backend/entry_form.tpl:22
+msgid "[No Category]"
+msgstr "بدون طبقه بندی"
+
+#: views/backend/entry_form.tpl:29 controllers/backend/entry.php:62
+#: controllers/backend/entry.php:123
+msgid "Entry Body"
+msgstr "خلاصه ی متن"
+
+#: views/backend/entry_form.tpl:37
+msgid "Allow comments to this entry"
+msgstr "امکان ارسال نظر برای این پست"
+
+#: views/backend/entry_form.tpl:41
+msgid "Comments to this entry requires moderation"
+msgstr "ارسال نظر برای این پست نیازمند دسترسی های مدیریتی است"
+
+#: views/backend/entry_form.tpl:47
+msgid "Extended Body"
+msgstr "متن کامل"
+
+#: views/backend/post.tpl:11 views/backend/edit.tpl:11
+#, fuzzy, c-format
+msgid "Fields marked with a %s are required."
+msgstr "پر کردن بخش های ستاره دار الزامی است"
+
+#: views/backend/post.tpl:20
+msgid "Create"
+msgstr "ایجاد"
+
+#: views/backend/delete.tpl:12
+#, c-format
+msgid "Do you really want to delete the '%s' Entry?"
+msgstr "حذف %s. آیا مطمئن هستید?"
+
+#: views/backend/delete.tpl:18
+msgid "Yes"
+msgstr "بله"
+
+#: views/backend/delete.tpl:23
+msgid "No"
+msgstr "خیر"
+
+#: views/backend/edit.tpl:21
+msgid "Edit"
+msgstr "ویرایش"
 
 #: libraries/Blog_Backend.php:23 controllers/frontend/entry.php:22
 #, php-format
@@ -110,11 +200,6 @@ msgstr "نظر"
 msgid "Invalid reference ID"
 msgstr "شناسه ی مرجع"
 
-#: controllers/backend/entry.php:18 controllers/backend/entry.php:61
-#: controllers/backend/entry.php:122
-msgid "Subject"
-msgstr "موضوع"
-
 #: controllers/backend/entry.php:19
 msgid "Author"
 msgstr "نویسنده"
@@ -135,10 +220,6 @@ msgstr "ویرایش شده توسط"
 msgid "There is no entry!"
 msgstr "هیچ رکوردی یافت نشد!"
 
-#: controllers/backend/entry.php:62 controllers/backend/entry.php:123
-msgid "Entry Body"
-msgstr "خلاصه ی متن"
-
 #: controllers/backend/entry.php:63 controllers/backend/entry.php:124
 msgid "Extended Entry"
 msgstr "رکورد جدید"
@@ -158,60 +239,3 @@ msgstr "چرک نویس"
 #: models/blog.php:163
 msgid "Publish"
 msgstr "ارسال"
-
-#~ msgid "Posted by %s at %s"
-#~ msgstr "ارسال شده توسط %s در تاریخ %s"
-
-#~ msgid "Fields marked with a %s are required."
-#~ msgstr "پر کردن بخش های ستاره دار الزامی است"
-
-#~ msgid "Edit"
-#~ msgstr "ویرایش"
-
-#~ msgid "Reset"
-#~ msgstr "فرم جدید"
-
-#~ msgid "Status"
-#~ msgstr "وضعیت"
-
-#~ msgid "Category"
-#~ msgstr "طبقه بندی ها"
-
-#~ msgid "[No Category]"
-#~ msgstr "بدون طبقه بندی"
-
-#~ msgid "Allow comments to this entry"
-#~ msgstr "امکان ارسال نظر برای این پست"
-
-#~ msgid "Comments to this entry requires moderation"
-#~ msgstr "ارسال نظر برای این پست نیازمند دسترسی های مدیریتی است"
-
-#~ msgid "Extended Body"
-#~ msgstr "متن کامل"
-
-#~ msgid "Create"
-#~ msgstr "ایجاد"
-
-#~ msgid "Settings are updated successfuly!"
-#~ msgstr "تنظیمات با موفقیت ویرایش شدند"
-
-#~ msgid "List items per page"
-#~ msgstr "تعداد عناصر لیست در هر صفحه"
-
-#~ msgid "0 means unlimited."
-#~ msgstr "0 به معنای نامحدود است"
-
-#~ msgid "Number of posts per page"
-#~ msgstr "تعداد پست های هر صفخه"
-
-#~ msgid "Save"
-#~ msgstr "ذخیره"
-
-#~ msgid "Do you really want to delete the '%s' Entry?"
-#~ msgstr "حذف %s. آیا مطمئن هستید?"
-
-#~ msgid "Yes"
-#~ msgstr "بله"
-
-#~ msgid "No"
-#~ msgstr "خیر"

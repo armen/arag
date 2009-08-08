@@ -7,13 +7,123 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-08-08 10:33+0430\n"
+"POT-Creation-Date: 2009-08-08 10:43+0430\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: views/component/generate_report.tpl:23
+msgid "Add filter"
+msgstr "اضافه کردن فیلتر"
+
+#: views/component/generate_report.tpl:35
+msgid "Update"
+msgstr "جدید کردن"
+
+#: views/backend/settings_limit.tpl:12
+msgid "Settings are updated successfuly!"
+msgstr "تنظیمات با موفقیت تغییر یافت!"
+
+#: views/backend/settings_limit.tpl:19
+msgid "List items per page"
+msgstr "تعداد رکورد ها در هر صفحه"
+
+#: views/backend/settings_limit.tpl:20
+msgid "0 means Unlimited"
+msgstr "0 به معنای نا محدود است"
+
+#: views/backend/settings_limit.tpl:25 views/backend/generate_report.tpl:202
+msgid "Save"
+msgstr "ذخیره"
+
+#: views/backend/settings_limit.tpl:26
+msgid "Reset"
+msgstr "فرم جدید"
+
+#: views/backend/delete_report.tpl:12
+#, c-format
+msgid "Do you really want to delete the '%s' Report?"
+msgstr "آیا از خذف گزارش %s مطئن هستید"
+
+#: views/backend/delete_report.tpl:18
+msgid "Yes"
+msgstr "بلی"
+
+#: views/backend/delete_report.tpl:23
+msgid "No"
+msgstr "خیر"
+
+#: views/backend/get_table.tpl:14 controllers/backend.php:28
+msgid "Table Name"
+msgstr "نام جدول"
+
+#: views/backend/get_table.tpl:18 controllers/backend.php:26
+msgid "Name"
+msgstr "نام"
+
+#: views/backend/get_table.tpl:22 controllers/backend.php:27
+msgid "Description"
+msgstr "توضیح"
+
+#: views/backend/get_table.tpl:32
+msgid "URI"
+msgstr ""
+
+#: views/backend/get_table.tpl:34
+msgid "Class Name"
+msgstr "نام کلاس"
+
+#: views/backend/get_table.tpl:36
+msgid "Tool Tip"
+msgstr "جعبه ابزار"
+
+#: views/backend/get_table.tpl:39
+msgid "Group Action"
+msgstr "عملیات گروهی"
+
+#: views/backend/get_table.tpl:44
+msgid "Parameter Name of Group Action"
+msgstr "اسم پارامتر برای Group Action"
+
+#: views/backend/get_table.tpl:52
+msgid "Next"
+msgstr "مرحله ی بعد"
+
+#: views/backend/generate_report.tpl:76 views/backend/generate_report.tpl:95
+msgid "Label"
+msgstr "بر چسب"
+
+#: views/backend/generate_report.tpl:78 views/backend/generate_report.tpl:97
+#: controllers/backend.php:196
+msgid "Formula"
+msgstr "فرمول"
+
+#: views/backend/generate_report.tpl:83 views/backend/generate_report.tpl:150
+msgid "Insert column"
+msgstr "درج ستون"
+
+#: views/backend/generate_report.tpl:142 views/backend/generate_report.tpl:162
+msgid "Filter"
+msgstr "فیلتر"
+
+#: views/backend/generate_report.tpl:165
+msgid "Combine"
+msgstr "ترکیب کردن"
+
+#: views/backend/generate_report.tpl:168
+msgid "OR"
+msgstr "یا"
+
+#: views/backend/generate_report.tpl:170
+msgid "AND"
+msgstr "و"
+
+#: views/backend/generate_report.tpl:201
+msgid "Preview"
+msgstr "پیش نمایش"
 
 #: component/reportgenerator.php:66 controllers/backend.php:72
 msgid "There is no record!"
@@ -65,18 +175,6 @@ msgstr "اجرای گزارش"
 msgid "There is no report!"
 msgstr "هیچ گزارشی وجود ندارد!"
 
-#: controllers/backend.php:26
-msgid "Name"
-msgstr "نام"
-
-#: controllers/backend.php:27
-msgid "Description"
-msgstr "توضیح"
-
-#: controllers/backend.php:28
-msgid "Table Name"
-msgstr "نام جدول"
-
 #: controllers/backend.php:29
 msgid "Create Date"
 msgstr "تاریخ ایجاد"
@@ -88,10 +186,6 @@ msgstr "تاریخ ویرایش"
 #: controllers/backend.php:194
 msgid "Column Label"
 msgstr "برچسب ستون"
-
-#: controllers/backend.php:196
-msgid "Formula"
-msgstr "فرمول"
 
 #: controllers/backend.php:246 controllers/backend.php:270
 #: controllers/backend.php:300 controllers/backend.php:308
@@ -106,69 +200,3 @@ msgstr "شناسه نا معتبر"
 #: controllers/backend.php:353
 msgid "Limit"
 msgstr "محدودیت"
-
-#~ msgid "Add filter"
-#~ msgstr "اضافه کردن فیلتر"
-
-#~ msgid "Update"
-#~ msgstr "جدید کردن"
-
-#~ msgid "Label"
-#~ msgstr "بر چسب"
-
-#~ msgid "Insert column"
-#~ msgstr "درج ستون"
-
-#~ msgid "Filter"
-#~ msgstr "فیلتر"
-
-#~ msgid "Combine"
-#~ msgstr "ترکیب کردن"
-
-#~ msgid "OR"
-#~ msgstr "یا"
-
-#~ msgid "AND"
-#~ msgstr "و"
-
-#~ msgid "Preview"
-#~ msgstr "پیش نمایش"
-
-#~ msgid "Save"
-#~ msgstr "ذخیره"
-
-#~ msgid "Do you really want to delete the '%s' Report?"
-#~ msgstr "آیا از خذف گزارش %s مطئن هستید"
-
-#~ msgid "Yes"
-#~ msgstr "بلی"
-
-#~ msgid "No"
-#~ msgstr "خیر"
-
-#~ msgid "Settings are updated successfuly!"
-#~ msgstr "تنظیمات با موفقیت تغییر یافت!"
-
-#~ msgid "List items per page"
-#~ msgstr "تعداد رکورد ها در هر صفحه"
-
-#~ msgid "0 means Unlimited"
-#~ msgstr "0 به معنای نا محدود است"
-
-#~ msgid "Reset"
-#~ msgstr "فرم جدید"
-
-#~ msgid "Class Name"
-#~ msgstr "نام کلاس"
-
-#~ msgid "Tool Tip"
-#~ msgstr "جعبه ابزار"
-
-#~ msgid "Group Action"
-#~ msgstr "عملیات گروهی"
-
-#~ msgid "Parameter Name of Group Action"
-#~ msgstr "اسم پارامتر برای Group Action"
-
-#~ msgid "Next"
-#~ msgstr "مرحله ی بعد"

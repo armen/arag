@@ -8,13 +8,77 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-08-08 10:33+0430\n"
+"POT-Creation-Date: 2009-08-08 10:43+0430\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: views/backend/add.tpl:8 views/backend/edit.tpl:8 controllers/backend.php:83
+#: controllers/backend.php:115
+msgid "English name"
+msgstr "نام انگلیسی"
+
+#: views/backend/add.tpl:16 views/backend/edit.tpl:16
+#: controllers/backend.php:44
+msgid "Name"
+msgstr "نام"
+
+#: views/backend/add.tpl:24 views/backend/edit.tpl:24
+#: controllers/backend.php:42 controllers/backend.php:84
+#: controllers/backend.php:116
+msgid "Code"
+msgstr ""
+
+#: views/backend/add.tpl:32 views/backend/edit.tpl:32
+#: controllers/backend.php:45
+msgid "Type"
+msgstr ""
+
+#: views/backend/add.tpl:44 views/backend/edit.tpl:46
+#: controllers/backend.php:46 controllers/backend.php:85
+#: controllers/backend.php:117
+msgid "Latitude"
+msgstr ""
+
+#: views/backend/add.tpl:52 views/backend/edit.tpl:54
+#: controllers/backend.php:47 controllers/backend.php:86
+#: controllers/backend.php:118
+msgid "Longitude"
+msgstr ""
+
+#: views/backend/add.tpl:60 views/backend/add.tpl:63
+#: views/backend/google_api_keys.tpl:29 views/backend/edit.tpl:62
+#: views/backend/edit.tpl:65
+msgid "Submit"
+msgstr ""
+
+#: views/backend/delete.tpl:5
+#, c-format
+msgid "Do you really want to delete the '%s' Entry?"
+msgstr "آیا واقعا می خواهید %s را حذف نمایید؟"
+
+#: views/backend/delete.tpl:10
+msgid "Yes"
+msgstr "بله"
+
+#: views/backend/delete.tpl:15
+msgid "No"
+msgstr "خیر"
+
+#: views/backend/google_api_keys.tpl:5
+msgid "Add"
+msgstr ""
+
+#: views/backend/google_api_keys.tpl:10
+msgid "Domain:"
+msgstr ""
+
+#: views/backend/google_api_keys.tpl:18
+msgid "Google API key:"
+msgstr ""
 
 #: controllers/backend.php:21 controllers/backend.php:22
 #: controllers/backend.php:29
@@ -44,33 +108,10 @@ msgstr "$s باید بصورت عددی باشد"
 msgid "Flag"
 msgstr ""
 
-#: controllers/backend.php:42 controllers/backend.php:84
-#: controllers/backend.php:116
-msgid "Code"
-msgstr ""
-
 #: controllers/backend.php:43
 #, fuzzy
 msgid "English"
 msgstr "نام انگلیسی"
-
-#: controllers/backend.php:44
-msgid "Name"
-msgstr "نام"
-
-#: controllers/backend.php:45
-msgid "Type"
-msgstr ""
-
-#: controllers/backend.php:46 controllers/backend.php:85
-#: controllers/backend.php:117
-msgid "Latitude"
-msgstr ""
-
-#: controllers/backend.php:47 controllers/backend.php:86
-#: controllers/backend.php:118
-msgid "Longitude"
-msgstr ""
 
 #: controllers/backend.php:48
 msgid "View children"
@@ -83,10 +124,6 @@ msgstr "ویرایش"
 #: controllers/backend.php:50
 msgid "Add child"
 msgstr ""
-
-#: controllers/backend.php:83 controllers/backend.php:115
-msgid "English name"
-msgstr "نام انگلیسی"
 
 #: controllers/backend.php:155 controllers/backend.php:167
 msgid "Domain"
@@ -147,15 +184,6 @@ msgstr ""
 
 #~ msgid "Fields marked with a %s are required."
 #~ msgstr "تکمیل مواردی که با %s مشخص شده اند الزامیست."
-
-#~ msgid "Do you really want to delete the '%s' Entry?"
-#~ msgstr "آیا واقعا می خواهید %s را حذف نمایید؟"
-
-#~ msgid "Yes"
-#~ msgstr "بله"
-
-#~ msgid "No"
-#~ msgstr "خیر"
 
 #~ msgid "Province saved successfuly!"
 #~ msgstr "استان جدیدبا موفقیت ذخیره شد"

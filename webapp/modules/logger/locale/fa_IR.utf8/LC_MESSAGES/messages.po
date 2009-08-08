@@ -8,13 +8,37 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-08-08 10:33+0430\n"
+"POT-Creation-Date: 2009-08-08 10:43+0430\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: views/backend/logs_list.tpl:7
+msgid "Archive atatus"
+msgstr ""
+
+#: views/backend/logs_list.tpl:13 controllers/backend.php:45
+msgid "User"
+msgstr ""
+
+#: views/backend/logs_list.tpl:17 controllers/backend.php:44
+msgid "Operation"
+msgstr ""
+
+#: views/backend/logs_list.tpl:26
+msgid "Date From"
+msgstr ""
+
+#: views/backend/logs_list.tpl:30
+msgid "Date To"
+msgstr ""
+
+#: views/backend/logs_list.tpl:35
+msgid "Search"
+msgstr ""
 
 #: libraries/Logger_Backend.php:17
 #, php-format
@@ -51,14 +75,6 @@ msgstr ""
 
 #: controllers/backend.php:39
 msgid "Archived"
-msgstr ""
-
-#: controllers/backend.php:44
-msgid "Operation"
-msgstr ""
-
-#: controllers/backend.php:45
-msgid "User"
 msgstr ""
 
 #: controllers/backend.php:46

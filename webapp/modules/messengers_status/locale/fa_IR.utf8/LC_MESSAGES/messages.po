@@ -8,13 +8,40 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-08-08 10:33+0430\n"
+"POT-Creation-Date: 2009-08-08 10:43+0430\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: views/backend/add.tpl:15
+msgid "Settings are updated successfuly!"
+msgstr ""
+
+#: views/backend/add.tpl:26 views/backend/add.tpl:50 views/backend/add.tpl:65
+#: controllers/backend/messengers.php:64
+msgid "ID"
+msgstr "شناسه"
+
+#: views/backend/add.tpl:28 views/backend/add.tpl:52 views/backend/add.tpl:67
+#: controllers/backend/messengers.php:65
+msgid "Subject"
+msgstr "موضوع"
+
+#: views/backend/add.tpl:30 views/backend/add.tpl:54 views/backend/add.tpl:69
+#: controllers/backend/messengers.php:66
+msgid "Type"
+msgstr "نوع"
+
+#: views/backend/add.tpl:84
+msgid "Save"
+msgstr ""
+
+#: views/backend/add.tpl:85
+msgid "Reset"
+msgstr ""
 
 #: controllers/backend/messengers.php:17 controllers/backend/messengers.php:21
 msgid "Messenger's Status"
@@ -33,15 +60,3 @@ msgstr "%S اجباری است"
 #, php-format
 msgid "%s must be a valid email address"
 msgstr "%S باید آدرس پست الکترونیکی معتبر باشد"
-
-#: controllers/backend/messengers.php:64
-msgid "ID"
-msgstr "شناسه"
-
-#: controllers/backend/messengers.php:65
-msgid "Subject"
-msgstr "موضوع"
-
-#: controllers/backend/messengers.php:66
-msgid "Type"
-msgstr "نوع"

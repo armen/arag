@@ -7,13 +7,64 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-08-08 10:33+0430\n"
+"POT-Creation-Date: 2009-08-08 10:43+0430\n"
 "PO-Revision-Date: 2008-04-14 02:27-0800\n"
 "Last-Translator: vafaei\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: views/backend/settings.tpl:12
+msgid "Settings are updated successfuly!"
+msgstr "تنظیمات با موفقیت به روز شد!"
+
+#: views/backend/settings.tpl:19
+msgid "List items per page"
+msgstr "تعداد آیتم ها در صفحه"
+
+#: views/backend/settings.tpl:20
+msgid "0 means Unlimited"
+msgstr "صفر به معنی نامحدود است"
+
+#: views/backend/settings.tpl:25
+msgid "Save"
+msgstr "ذخیره"
+
+#: views/backend/settings.tpl:26
+msgid "Reset"
+msgstr "فرم جدید"
+
+#: views/backend/delete.tpl:11
+#, c-format
+msgid "Do you really want to delete '%s'?"
+msgstr "آیا واقعا مایل به حذف '%s' هستید؟"
+
+#: views/backend/delete.tpl:19
+msgid "Yes"
+msgstr "بله"
+
+#: views/backend/delete.tpl:24
+msgid "No"
+msgstr "خیر"
+
+#: views/backend/edit.tpl:35 views/backend/create.tpl:30
+msgid "Use availabe routes?"
+msgstr "آیا از مسیر های موجود استفاده می کنید؟"
+
+#: views/backend/edit.tpl:50 views/backend/create.tpl:41
+msgid "Make anew route?"
+msgstr "آیا مسیر جدید ایجاد می کنید؟"
+
+#: views/backend/edit.tpl:63 views/backend/create.tpl:51
+#: controllers/backend.php:53 controllers/backend.php:129
+#: controllers/backend.php:180
+msgid "Subject"
+msgstr "موضوع"
+
+#: views/backend/edit.tpl:74 views/backend/create.tpl:61
+msgid "Submit"
+msgstr "ارسال"
 
 #: config/config.php:6
 msgid "ContactUs"
@@ -87,11 +138,6 @@ msgstr "%s باید عددی باشد."
 msgid "ID"
 msgstr ""
 
-#: controllers/backend.php:53 controllers/backend.php:129
-#: controllers/backend.php:180
-msgid "Subject"
-msgstr "موضوع"
-
 #: controllers/backend.php:54
 msgid "Author"
 msgstr "نویسنده"
@@ -130,36 +176,3 @@ msgstr "شناسه"
 #: controllers/backend.php:340
 msgid "Limit"
 msgstr "محدودیت"
-
-#~ msgid "Use availabe routes?"
-#~ msgstr "آیا از مسیر های موجود استفاده می کنید؟"
-
-#~ msgid "Make anew route?"
-#~ msgstr "آیا مسیر جدید ایجاد می کنید؟"
-
-#~ msgid "Submit"
-#~ msgstr "ارسال"
-
-#~ msgid "Settings are updated successfuly!"
-#~ msgstr "تنظیمات با موفقیت به روز شد!"
-
-#~ msgid "List items per page"
-#~ msgstr "تعداد آیتم ها در صفحه"
-
-#~ msgid "0 means Unlimited"
-#~ msgstr "صفر به معنی نامحدود است"
-
-#~ msgid "Save"
-#~ msgstr "ذخیره"
-
-#~ msgid "Reset"
-#~ msgstr "فرم جدید"
-
-#~ msgid "Do you really want to delete '%s'?"
-#~ msgstr "آیا واقعا مایل به حذف '%s' هستید؟"
-
-#~ msgid "Yes"
-#~ msgstr "بله"
-
-#~ msgid "No"
-#~ msgstr "خیر"
