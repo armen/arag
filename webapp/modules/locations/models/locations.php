@@ -39,8 +39,17 @@ class Locations_Model extends Model
     // }}}
     // {{{ get
     public function get($id) {
+        $cache_id = 'location_'.$id;
+        $cache    = New Cache;
+        $cached   = $cache->get($cache_id);
+        if ($cached) {
+            return $cached;
+        }
         $this->db->select('id', 'parent', 'name', 'english', 'code', 'type', 'latitude', 'longitude')->from($this->tableName)->where('id', $id);
-        return current($this->db->get()->result_array(False));
+        $loc = current($this->db->get()->result_array(False));
+
+        $cache->set($cache_id, $loc);
+        return $loc;
     }
     // }}}
     // {{{ getByParent
@@ -62,28 +71,33 @@ class Locations_Model extends Model
     }
     // }}}
     // {{{ search
-    public function search($name = Null, $english = Null, $type = Null)
+    public function search($name = Null, $english = Null, $code = Null, $type = Null)
     {
         $this->db->select('id')->from($this->tableName);
 
         if ($name) {
-            $this->db->like('name', $name);
+            $this->db->orlike('name', $name);
         }
 
         if ($english) {
-            $this->db->like('english', $english);
+            $this->db->orlike('english', $english);
+        }
+
+        if ($code) {
+            $this->db->orwhere('code', $code);
         }
 
         if ($type) {
-            $this->db->like('type', $type);
+            $this->db->where('type', $type);
         }
 
-        $ids    = $this->db->orderby('name', 'english', 'code')->get()->result_array(False);
-        $reults = Array();
+        $ids     = $this->db->orderby('name', 'english', 'code', 'type')->get()->result_array(False);
+        $results = Array();
 
         foreach($ids as $id) {
-            $results = $this->get($id['id']);
+            $results[] = $this->get($id['id']);
         }
+
         return $results;
     }
     // }}}
@@ -217,15 +231,21 @@ class Locations_Model extends Model
     }
     // }}}
     // {{{ getCountryByLocation
-    public function getCountryByLocation($id)
+    public function getCountryByLocation($id) //TODO: To be deprecated.
+    {
+        return $this->getParentOfType($id, Locations_Model::COUNTRY);
+    }
+    // }}}
+    // {{{ getParentOfType
+    public function getParentOfType($id, $type)
     {
         $location = $this->get($id);
-        if ($location['type'] == Locations_Model::COUNTRY) {
+        if ($location['type'] == $type) {
             return $location;
         }
 
         while($parent = $this->get($location['parent'])) {
-            if ($parent['type'] == Locations_Model::COUNTRY) {
+            if ($parent['type'] == $type) {
                 return $parent;
             }
             $location = $parent;
