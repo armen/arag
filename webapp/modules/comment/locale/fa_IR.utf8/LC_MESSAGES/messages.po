@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-01-04 10:42+0330\n"
+"POT-Creation-Date: 2009-08-08 10:33+0430\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15,46 +15,49 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: component/comment.php:39
+#: component/comment.php:46
 msgid "Comments"
 msgstr "پیام ها"
 
-#: views/linear.tpl:16
-#, c-format
-msgid "#%d. %s on %s"
-msgstr "%d. %s در %s"
+#: libraries/controller.php:73
+msgid "File "
+msgstr ""
 
-#: views/linear.tpl:38
-#, c-format
-msgid "Fields marked with a %s are required."
-msgstr "تکمیل بخش های دارای علامت %s الزامی می باشد."
+#: libraries/controller.php:80
+#, fuzzy
+msgid "Attachments:"
+msgstr "ضمیمه"
 
-#: views/linear.tpl:46
-msgid "Name"
-msgstr "نام"
+#: libraries/controller.php:87
+msgid "Cannot upload attachment(s). Please contact website's administrator"
+msgstr ""
 
-#: views/linear.tpl:50
-msgid "Email"
-msgstr "ایمیل"
-
-#: views/linear.tpl:54
-msgid "Home page"
-msgstr "صفحه ی خانگی"
-
-#: views/linear.tpl:59
+#: libraries/controller.php:96
 msgid "Comment"
 msgstr "پیام"
 
-#: views/linear.tpl:71
-msgid "Submit"
-msgstr "ارسال"
-
-#: views/linear.tpl:72
-msgid "Reset"
-msgstr "فرم جدید"
-
-msgid "Attachment"
+#: libraries/controller.php:97
+#, fuzzy
+msgid "Attachments"
 msgstr "ضمیمه"
 
+#~ msgid "#%d. %s on %s"
+#~ msgstr "%d. %s در %s"
 
+#~ msgid "Fields marked with a %s are required."
+#~ msgstr "تکمیل بخش های دارای علامت %s الزامی می باشد."
 
+#~ msgid "Name"
+#~ msgstr "نام"
+
+#~ msgid "Email"
+#~ msgstr "ایمیل"
+
+#~ msgid "Home page"
+#~ msgstr "صفحه ی خانگی"
+
+#~ msgid "Submit"
+#~ msgstr "ارسال"
+
+#~ msgid "Reset"
+#~ msgstr "فرم جدید"

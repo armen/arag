@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-10-04 12:41+0330\n"
+"POT-Creation-Date: 2009-08-08 10:33+0430\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15,22 +15,18 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: views/horizontal.tpl:30
-msgid "Number of Pages"
-msgstr "تعداد صفحات"
-
-#: views/horizontal.tpl:31
-msgid "Number of Resources"
-msgstr "تعداد رکوردها"
-
-#: views/horizontal.tpl:44
-msgid "Row"
-msgstr "ردیف"
-
-#: views/horizontal.tpl:54
-msgid "Actions"
-msgstr "عملیات"
-
 #: component/plist.php:60
 msgid "List content is Empty!"
 msgstr "هیچ رکوردی یافت نشد!"
+
+#~ msgid "Number of Pages"
+#~ msgstr "تعداد صفحات"
+
+#~ msgid "Number of Resources"
+#~ msgstr "تعداد رکوردها"
+
+#~ msgid "Row"
+#~ msgstr "ردیف"
+
+#~ msgid "Actions"
+#~ msgstr "عملیات"

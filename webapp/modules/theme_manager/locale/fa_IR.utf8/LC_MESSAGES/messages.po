@@ -8,25 +8,13 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-05-07 09:52+0430\n"
+"POT-Creation-Date: 2009-08-08 10:33+0430\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-
-#: views/backend/edit.tpl:6
-msgid "Styles saved successfuly!"
-msgstr "style با موفقیت ذخیره شد."
-
-#: views/backend/edit.tpl:19
-msgid "current picture"
-msgstr "عکس حاضر"
-
-#: views/backend/edit.tpl:26
-msgid "Save"
-msgstr "ذخیره"
 
 #: config/config.php:12
 msgid "Background"
@@ -76,3 +64,12 @@ msgstr "ویرایش"
 #, php-format
 msgid "%s is not a valid file"
 msgstr "%s فایل معتبری نمی باشد"
+
+#~ msgid "Styles saved successfuly!"
+#~ msgstr "style با موفقیت ذخیره شد."
+
+#~ msgid "current picture"
+#~ msgstr "عکس حاضر"
+
+#~ msgid "Save"
+#~ msgstr "ذخیره"

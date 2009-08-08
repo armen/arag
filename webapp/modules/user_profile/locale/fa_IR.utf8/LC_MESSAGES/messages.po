@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-10-05 14:43+0330\n"
+"POT-Creation-Date: 2009-08-08 10:33+0430\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15,158 +15,140 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: views/change_password.tpl:10
-msgid "Password changed successfuly!"
-msgstr "کلمه ی عبور با موفقیت تغییر یافت!"
-
-#: views/change_password.tpl:18 controllers/backend.php:178
-msgid "Old Password"
-msgstr "کلمه ی عبور قدیمی"
-
-#: views/change_password.tpl:26
-msgid "New Password"
-msgstr "کلمه ی عبور جدید"
-
-#: views/change_password.tpl:34
-msgid "Re-New Password"
-msgstr "تکرار کلمه ی عبور جدید"
-
-#: views/change_password.tpl:45 views/user_profile.tpl:241
-msgid "Submit"
-msgstr "ارسال"
-
-#: views/user_profile.tpl:53
-msgid "You hadn't enter your personal information yet"
-msgstr "شما باید اطلاعات فردی خود را کامل کنید"
-
-#: views/user_profile.tpl:58
-msgid "Profile edited successfuly!"
-msgstr "اطلاعات فردی شما با موفقیت تغییر یافت!"
-
-#: views/user_profile.tpl:66 views/view_user_profile.tpl:15
-#: controllers/backend.php:242
-msgid "Username"
-msgstr "نام کاربری"
-
-#: views/user_profile.tpl:75 views/view_user_profile.tpl:23
-msgid "Name"
-msgstr "نام"
-
-#: views/user_profile.tpl:84 views/view_user_profile.tpl:31
-msgid "Last Name"
-msgstr "نام خانوادگی"
-
-#: views/user_profile.tpl:93 views/view_user_profile.tpl:39
-msgid "Email"
-msgstr "ایمیل"
-
-#: views/user_profile.tpl:107 views/view_user_profile.tpl:52
-#: controllers/backend.php:127
-msgid "Phone"
-msgstr "تلفن"
-
-#: views/user_profile.tpl:115 views/view_user_profile.tpl:60
-#: controllers/backend.php:129
-msgid "Cellphone"
-msgstr "تلفن همراه"
-
-#: views/user_profile.tpl:128 views/view_user_profile.tpl:73
-#: controllers/backend.php:133
-msgid "Country"
-msgstr "کشور"
-
-#: views/user_profile.tpl:153 views/view_user_profile.tpl:86
-#: controllers/backend.php:137
-msgid "Province"
-msgstr "استان"
-
-#: views/user_profile.tpl:185 views/view_user_profile.tpl:100
-#: controllers/backend.php:136
-msgid "City"
-msgstr "شهر"
-
-#: views/user_profile.tpl:217 views/view_user_profile.tpl:118
-#: controllers/backend.php:131
-msgid "Address"
-msgstr "آدرس"
-
-#: views/user_profile.tpl:225 views/view_user_profile.tpl:126
-#: controllers/backend.php:140
-msgid "Postal Code"
-msgstr "کد پستی"
-
-#: views/view_user_profile.tpl:8
-msgid "This user hadn't enter his/her personal information yet"
-msgstr "این کاربر باید اطلاعات فردی خود را کامل نکرده است"
-
-#: controllers/backend.php:41
+#: controllers/backend.php:37
 msgid "User Profile"
 msgstr "اطلاعات فردی کاربر"
 
-#: controllers/backend.php:42
+#: controllers/backend.php:38
 msgid "Personal Information"
 msgstr "اطلاعات شخصی"
 
-#: controllers/backend.php:43
+#: controllers/backend.php:39
 msgid "Change Password"
 msgstr "تغییر کلمه عبور"
 
-#: controllers/backend.php:47
+#: controllers/backend.php:43
 #, php-format
 msgid "%s is required"
 msgstr "%s لازم است"
 
-#: controllers/backend.php:48
+#: controllers/backend.php:44
 #, php-format
 msgid "%ss do not match"
 msgstr "%s ها با هم تطابق ندارند"
 
-#: controllers/backend.php:49
+#: controllers/backend.php:45
 #, php-format
 msgid "%s should be numeric"
 msgstr "%s باید یک عدد باشد"
 
-#: controllers/backend.php:50
+#: controllers/backend.php:46
 #, php-format
 msgid "%s should be between 5 to 10 digits"
 msgstr "%s باید ۵ تا ۱۰ رقم باشد"
 
-#: controllers/backend.php:51
+#: controllers/backend.php:47
 #, php-format
 msgid "%s should be 8 digits or shorter."
 msgstr "%s باید ۸ رقم و یا کمتر باشد"
 
-#: controllers/backend.php:52
+#: controllers/backend.php:48
 #, php-format
 msgid "%s should be exactly 11 digits"
 msgstr "%s باید دقیقا ۱۱ رقم باشد"
 
-#: controllers/backend.php:53
+#: controllers/backend.php:49
 #, php-format
 msgid "Please enter correct %s"
 msgstr "لطفا %s صحیح را وارد نمایید"
 
-#: controllers/backend.php:54
+#: controllers/backend.php:50
 #, php-format
 msgid "Password length should be at least %s characters "
 msgstr "طول کلمه ی عبور باید حداقل %s حرف باشد"
 
-#: controllers/backend.php:55
+#: controllers/backend.php:51
 #, php-format
 msgid "New Password length should be at least %s characters "
 msgstr "طول کلمه ی عبور جدید باید حداقل %s حرف باشد"
 
-#: controllers/backend.php:180
+#: controllers/backend.php:121
+msgid "Phone"
+msgstr "تلفن"
+
+#: controllers/backend.php:122
+msgid "Cellphone"
+msgstr "تلفن همراه"
+
+#: controllers/backend.php:123
+msgid "Location"
+msgstr ""
+
+#: controllers/backend.php:124
+msgid "Postal Code"
+msgstr "کد پستی"
+
+#: controllers/backend.php:159
+msgid "Old Password"
+msgstr "کلمه ی عبور قدیمی"
+
+#: controllers/backend.php:160
 msgid "Password"
 msgstr "کلمه ی عبور"
 
-#: controllers/backend.php:182
+#: controllers/backend.php:161
 msgid "Re-Password"
 msgstr "تکرار کلمه ی عبور"
 
-#: controllers/backend.php:196
+#: controllers/backend.php:177
 msgid "View User Profile"
 msgstr "نمایش اطلاعات فردی کاربر"
+
+#: controllers/backend.php:205
+msgid "Username"
+msgstr "نام کاربری"
+
+#~ msgid "Password changed successfuly!"
+#~ msgstr "کلمه ی عبور با موفقیت تغییر یافت!"
+
+#~ msgid "New Password"
+#~ msgstr "کلمه ی عبور جدید"
+
+#~ msgid "Re-New Password"
+#~ msgstr "تکرار کلمه ی عبور جدید"
+
+#~ msgid "Submit"
+#~ msgstr "ارسال"
+
+#~ msgid "You hadn't enter your personal information yet"
+#~ msgstr "شما باید اطلاعات فردی خود را کامل کنید"
+
+#~ msgid "Profile edited successfuly!"
+#~ msgstr "اطلاعات فردی شما با موفقیت تغییر یافت!"
+
+#~ msgid "Name"
+#~ msgstr "نام"
+
+#~ msgid "Last Name"
+#~ msgstr "نام خانوادگی"
+
+#~ msgid "Email"
+#~ msgstr "ایمیل"
+
+#~ msgid "Country"
+#~ msgstr "کشور"
+
+#~ msgid "Province"
+#~ msgstr "استان"
+
+#~ msgid "City"
+#~ msgstr "شهر"
+
+#~ msgid "Address"
+#~ msgstr "آدرس"
+
+#~ msgid "This user hadn't enter his/her personal information yet"
+#~ msgstr "این کاربر باید اطلاعات فردی خود را کامل نکرده است"
 
 #~ msgid "PAN Number"
 #~ msgstr "شماره ی PAN"

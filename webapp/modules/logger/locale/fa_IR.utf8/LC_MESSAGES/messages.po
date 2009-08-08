@@ -1,0 +1,82 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-08-08 10:33+0430\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: libraries/Logger_Backend.php:17
+#, php-format
+msgid "%s is required"
+msgstr ""
+
+#: libraries/Logger_Backend.php:28
+msgid "Logs"
+msgstr ""
+
+#: libraries/Logger_Backend.php:29
+msgid "List"
+msgstr ""
+
+#: config/logger.php:7
+msgid "Create a new message"
+msgstr ""
+
+#: config/logger.php:8
+msgid "Message deleted"
+msgstr ""
+
+#: config/logger.php:9
+msgid "Logs query executed"
+msgstr ""
+
+#: config/logger.php:10
+msgid "Logs checked"
+msgstr ""
+
+#: controllers/backend.php:39
+msgid "Non Archived"
+msgstr ""
+
+#: controllers/backend.php:39
+msgid "Archived"
+msgstr ""
+
+#: controllers/backend.php:44
+msgid "Operation"
+msgstr ""
+
+#: controllers/backend.php:45
+msgid "User"
+msgstr ""
+
+#: controllers/backend.php:46
+msgid "For"
+msgstr ""
+
+#: controllers/backend.php:47
+msgid "Date"
+msgstr ""
+
+#: controllers/backend.php:48
+msgid "Archive"
+msgstr ""
+
+#: controllers/backend.php:50
+msgid "Nothing Found!"
+msgstr ""
+
+#: controllers/backend.php:89
+msgid "ID"
+msgstr ""

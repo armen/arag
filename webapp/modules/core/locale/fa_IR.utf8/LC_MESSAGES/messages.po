@@ -7,108 +7,13 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-09-26 23:02+0330\n"
+"POT-Creation-Date: 2009-08-08 10:33+0430\n"
 "PO-Revision-Date: 2008-04-12 23:47-0800\n"
 "Last-Translator: vafaei\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-
-#: views/messages/not_authorized.tpl:9
-msgid "You are not authorized to access this section!"
-msgstr "شما اجازه مشاهده این بخش را ندارید"
-
-#: views/messages/not_authorized.tpl:10 views/messages/invalid_request.tpl:13
-#: views/messages/page_not_found.tpl:10
-msgid "Return to the Main Page"
-msgstr "بازگشت به صفحه اصلی"
-
-#: views/messages/not_authorized.tpl:16
-msgid "You must login to continue."
-msgstr "برای ادامه، باید وارد شوید"
-
-#: views/messages/not_authorized.tpl:23 views/backend/settings_email.tpl:33
-#: controllers/backend.php:80
-msgid "Username"
-msgstr "کلمه کاربری"
-
-#: views/messages/not_authorized.tpl:27 views/backend/settings_email.tpl:37
-msgid "Password"
-msgstr "رمز عبور"
-
-#: views/messages/not_authorized.tpl:37
-msgid "Login"
-msgstr "ورود به سیستم"
-
-#: views/messages/invalid_request.tpl:8
-msgid "Your request is invalid!"
-msgstr "درخواست شما معتبر نمیباشد"
-
-#: views/messages/invalid_request.tpl:10
-msgid "Reason:"
-msgstr "دلیل:"
-
-#: views/messages/invalid_request.tpl:12
-msgid ""
-"If your are sure that your request isn't invalid then contact your website "
-"administrator."
-msgstr ""
-"چنانچه از صحت درخواست خود اطمینان دارید، با مدیر سایت(پشتیبانی) تماس بگیرید."
-
-#: views/messages/page_not_found.tpl:9
-msgid "Page not found"
-msgstr "صفحه مورد نظر، پیدا نشد"
-
-#: views/backend/settings_email.tpl:9
-msgid ""
-"To have a dynamic template which has replaceable items, you should use %"
-"variableName% like the following example template in which %username% will "
-"be replaced by username variable in the application:"
-msgstr ""
-"برای داشتن قالبی پویا که امکان تغییر ورودیها را داشته باشد، شما باید از یک %"
-"نام متغیر% استفاده کنید، مانند مثال زیر که در آن %username%  با نام کاربری "
-"موجود در برنامه جایگزین می شود:"
-
-#: views/backend/settings_email.tpl:10
-msgid "Your username is %username%."
-msgstr "کلمه کاربری شما %username% میباشد"
-
-#: views/backend/settings_email.tpl:11
-msgid "Avialable variables are %username%, %password%, %appname% and %uri%"
-msgstr "متغیرهای معتبر عبارتند از %username%، %password%، %appname%و %uri%"
-
-#: views/backend/settings_email.tpl:18
-msgid "Settings are updated successfuly!"
-msgstr "تنظیمات با موفقیت به روز شد!"
-
-#: views/backend/settings_email.tpl:25
-msgid "SMTP Server"
-msgstr "سرور SMTP"
-
-#: views/backend/settings_email.tpl:29 controllers/backend.php:74
-msgid "SMTP Port"
-msgstr "پورت SMTP"
-
-#: views/backend/settings_email.tpl:41
-msgid "Sender's Email"
-msgstr "ایمیل فرستنده"
-
-#: views/backend/settings_email.tpl:46 controllers/backend.php:82
-msgid "Subject"
-msgstr "موضوع"
-
-#: views/backend/settings_email.tpl:50
-msgid "Email Template"
-msgstr "قالب ایمیل"
-
-#: views/backend/settings_email.tpl:56
-msgid "Save"
-msgstr "ذخیره"
-
-#: views/backend/settings_email.tpl:57
-msgid "Reset"
-msgstr "فرم جدید"
 
 #: controllers/backend.php:17 controllers/backend.php:21
 msgid "Core Settings"
@@ -138,26 +43,116 @@ msgstr "باید ایمیل معتبر باشد%s "
 msgid "%s must be alph-numeric."
 msgstr "باید حروف الفبا باشد%s "
 
-#: controllers/backend.php:71
+#: controllers/backend.php:37
+msgid "PLAIN"
+msgstr ""
+
+#: controllers/backend.php:37
+msgid "LOGIN"
+msgstr ""
+
+#: controllers/backend.php:37
+msgid "CRAMMD5"
+msgstr ""
+
+#: controllers/backend.php:75
 msgid "SMTP server"
 msgstr "SMTP سرور"
 
-#: controllers/backend.php:77
+#: controllers/backend.php:78
+msgid "SMTP Port"
+msgstr "پورت SMTP"
+
+#: controllers/backend.php:81
 msgid "Sender's email"
 msgstr "ایمیل فرستنده"
 
-#: controllers/backend.php:85
-msgid "Email's template"
-msgstr "قالب ایمیل"
+#: controllers/backend.php:84
+msgid "Username"
+msgstr "کلمه کاربری"
+
+#: controllers/backend.php:86
+msgid "Authenticator"
+msgstr ""
 
 #: controllers/frontend/messages.php:16
 msgid "Invalid Request!"
 msgstr "درخواست غیر مجاز"
 
-#: controllers/frontend/messages.php:28
+#: controllers/frontend/messages.php:29
 msgid "Not Authorized!"
 msgstr "مجاز نمی باشد!"
 
-#: controllers/frontend/messages.php:36
+#: controllers/frontend/messages.php:37
 msgid "Page Not Found!"
 msgstr "صفحه مورد نظر پیدا نشد !"
+
+#~ msgid "You are not authorized to access this section!"
+#~ msgstr "شما اجازه مشاهده این بخش را ندارید"
+
+#~ msgid "Return to the Main Page"
+#~ msgstr "بازگشت به صفحه اصلی"
+
+#~ msgid "You must login to continue."
+#~ msgstr "برای ادامه، باید وارد شوید"
+
+#~ msgid "Password"
+#~ msgstr "رمز عبور"
+
+#~ msgid "Login"
+#~ msgstr "ورود به سیستم"
+
+#~ msgid "Your request is invalid!"
+#~ msgstr "درخواست شما معتبر نمیباشد"
+
+#~ msgid "Reason:"
+#~ msgstr "دلیل:"
+
+#~ msgid ""
+#~ "If your are sure that your request isn't invalid then contact your "
+#~ "website administrator."
+#~ msgstr ""
+#~ "چنانچه از صحت درخواست خود اطمینان دارید، با مدیر سایت(پشتیبانی) تماس "
+#~ "بگیرید."
+
+#~ msgid "Page not found"
+#~ msgstr "صفحه مورد نظر، پیدا نشد"
+
+#~ msgid ""
+#~ "To have a dynamic template which has replaceable items, you should use %"
+#~ "variableName% like the following example template in which %username% "
+#~ "will be replaced by username variable in the application:"
+#~ msgstr ""
+#~ "برای داشتن قالبی پویا که امکان تغییر ورودیها را داشته باشد، شما باید از "
+#~ "یک %نام متغیر% استفاده کنید، مانند مثال زیر که در آن %username%  با نام "
+#~ "کاربری موجود در برنامه جایگزین می شود:"
+
+#~ msgid "Your username is %username%."
+#~ msgstr "کلمه کاربری شما %username% میباشد"
+
+#~ msgid "Avialable variables are %username%, %password%, %appname% and %uri%"
+#~ msgstr "متغیرهای معتبر عبارتند از %username%، %password%، %appname%و %uri%"
+
+#~ msgid "Settings are updated successfuly!"
+#~ msgstr "تنظیمات با موفقیت به روز شد!"
+
+#~ msgid "SMTP Server"
+#~ msgstr "سرور SMTP"
+
+#~ msgid "Sender's Email"
+#~ msgstr "ایمیل فرستنده"
+
+#~ msgid "Subject"
+#~ msgstr "موضوع"
+
+#~ msgid "Email Template"
+#~ msgstr "قالب ایمیل"
+
+#~ msgid "Save"
+#~ msgstr "ذخیره"
+
+#~ msgid "Reset"
+#~ msgstr "فرم جدید"
+
+#~ msgid "Email's template"
+#~ msgstr "قالب ایمیل"

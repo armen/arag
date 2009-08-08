@@ -8,13 +8,156 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-09-25 10:51+0330\n"
+"POT-Creation-Date: 2009-08-08 10:33+0430\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: libraries/Blog_Backend.php:23 controllers/frontend/entry.php:22
+#, php-format
+msgid "%s is required."
+msgstr "%s لازم است."
+
+#: libraries/Blog_Backend.php:24 controllers/frontend/entry.php:23
+#, php-format
+msgid "%s should be numeric."
+msgstr "%s باید عدد باشد."
+
+#: libraries/Blog_Backend.php:25 controllers/frontend/entry.php:24
+#, php-format
+msgid "%s should be ordinary text."
+msgstr "%s باید یک متن معمولی باشد."
+
+#: libraries/Blog_Backend.php:29
+msgid "Blog"
+msgstr "بلاگ"
+
+#: libraries/Blog_Backend.php:30
+msgid "Entries"
+msgstr "پست ها"
+
+#: libraries/Blog_Backend.php:31
+msgid "Edit Entry"
+msgstr "ویرایش پست"
+
+#: libraries/Blog_Backend.php:32
+msgid "Delete Entry"
+msgstr "حذف پست"
+
+#: libraries/Blog_Backend.php:33
+msgid "Preview Entry"
+msgstr "نمایش پست"
+
+#: libraries/Blog_Backend.php:34
+msgid "New Entry"
+msgstr "پست جدید"
+
+#: libraries/Blog_Backend.php:39
+msgid "Settings"
+msgstr "تنظیمات"
+
+#: libraries/Blog_Backend.php:40
+msgid "Preview"
+msgstr "پیش نمایش"
+
+#: controllers/frontend/entry.php:25
+#, php-format
+msgid "%s should be a valid email."
+msgstr "%s باید یک ایمیل معتبر باشد."
+
+#: controllers/frontend/entry.php:26
+#, php-format
+msgid "%s should be a valid url."
+msgstr "%s باید یک آدرس url معتبر باشد."
+
+#: controllers/frontend/entry.php:64 controllers/backend/entry.php:92
+#: controllers/backend/entry.php:121 controllers/backend/entry.php:157
+#: controllers/backend/entry.php:179 controllers/backend/entry.php:212
+msgid "ID"
+msgstr "شناسه"
+
+#: controllers/frontend/entry.php:73 controllers/backend/entry.php:100
+#: controllers/backend/entry.php:165 controllers/backend/entry.php:187
+#: controllers/backend/entry.php:220
+msgid "Invalid ID"
+msgstr ""
+
+#: controllers/frontend/entry.php:101
+msgid "Reference Id"
+msgstr "شناسه ی مرجع"
+
+#: controllers/frontend/entry.php:102
+msgid "Name"
+msgstr "نام"
+
+#: controllers/frontend/entry.php:103
+msgid "Email"
+msgstr "ایمیل"
+
+#: controllers/frontend/entry.php:104
+msgid "Homepage"
+msgstr "صفحه ی خانگی"
+
+#: controllers/frontend/entry.php:105
+msgid "Comment"
+msgstr "نظر"
+
+#: controllers/frontend/entry.php:119
+#, fuzzy
+msgid "Invalid reference ID"
+msgstr "شناسه ی مرجع"
+
+#: controllers/backend/entry.php:18 controllers/backend/entry.php:61
+#: controllers/backend/entry.php:122
+msgid "Subject"
+msgstr "موضوع"
+
+#: controllers/backend/entry.php:19
+msgid "Author"
+msgstr "نویسنده"
+
+#: controllers/backend/entry.php:20
+msgid "Create Date"
+msgstr "تاریخ ایجاد"
+
+#: controllers/backend/entry.php:21
+msgid "Modify Date"
+msgstr "تاریخ ویرایش"
+
+#: controllers/backend/entry.php:22
+msgid "Modified By"
+msgstr "ویرایش شده توسط"
+
+#: controllers/backend/entry.php:28
+msgid "There is no entry!"
+msgstr "هیچ رکوردی یافت نشد!"
+
+#: controllers/backend/entry.php:62 controllers/backend/entry.php:123
+msgid "Entry Body"
+msgstr "خلاصه ی متن"
+
+#: controllers/backend/entry.php:63 controllers/backend/entry.php:124
+msgid "Extended Entry"
+msgstr "رکورد جدید"
+
+#: controllers/backend/settings.php:42
+msgid "Limit"
+msgstr "محدودیت"
+
+#: controllers/backend/settings.php:43
+msgid "Post Limit"
+msgstr "محدودیت پست"
+
+#: models/blog.php:162
+msgid "Draft"
+msgstr "چرک نویس"
+
+#: models/blog.php:163
+msgid "Publish"
+msgstr "ارسال"
 
 #~ msgid "Posted by %s at %s"
 #~ msgstr "ارسال شده توسط %s در تاریخ %s"
@@ -28,9 +171,6 @@ msgstr ""
 #~ msgid "Reset"
 #~ msgstr "فرم جدید"
 
-#~ msgid "Subject"
-#~ msgstr "موضوع"
-
 #~ msgid "Status"
 #~ msgstr "وضعیت"
 
@@ -39,9 +179,6 @@ msgstr ""
 
 #~ msgid "[No Category]"
 #~ msgstr "بدون طبقه بندی"
-
-#~ msgid "Entry Body"
-#~ msgstr "خلاصه ی متن"
 
 #~ msgid "Allow comments to this entry"
 #~ msgstr "امکان ارسال نظر برای این پست"
@@ -78,90 +215,3 @@ msgstr ""
 
 #~ msgid "No"
 #~ msgstr "خیر"
-
-#~ msgid "%s is required."
-#~ msgstr "%s لازم است."
-
-#~ msgid "%s should be numeric."
-#~ msgstr "%s باید عدد باشد."
-
-#~ msgid "%s should be ordinary text."
-#~ msgstr "%s باید یک متن معمولی باشد."
-
-#~ msgid "Blog"
-#~ msgstr "بلاگ"
-
-#~ msgid "Entries"
-#~ msgstr "پست ها"
-
-#~ msgid "Edit Entry"
-#~ msgstr "ویرایش پست"
-
-#~ msgid "Delete Entry"
-#~ msgstr "حذف پست"
-
-#~ msgid "Preview Entry"
-#~ msgstr "نمایش پست"
-
-#~ msgid "New Entry"
-#~ msgstr "پست جدید"
-
-#~ msgid "Settings"
-#~ msgstr "تنظیمات"
-
-#~ msgid "Preview"
-#~ msgstr "پیش نمایش"
-
-#~ msgid "Limit"
-#~ msgstr "محدودیت"
-
-#~ msgid "Post Limit"
-#~ msgstr "محدودیت پست"
-
-#~ msgid "Author"
-#~ msgstr "نویسنده"
-
-#~ msgid "Create Date"
-#~ msgstr "تاریخ ایجاد"
-
-#~ msgid "Modify Date"
-#~ msgstr "تاریخ ویرایش"
-
-#~ msgid "Modified By"
-#~ msgstr "ویرایش شده توسط"
-
-#~ msgid "There is no entry!"
-#~ msgstr "هیچ رکوردی یافت نشد!"
-
-#~ msgid "Extended Entry"
-#~ msgstr "رکورد جدید"
-
-#~ msgid "ID"
-#~ msgstr "شناسه"
-
-#~ msgid "%s should be a valid email."
-#~ msgstr "%s باید یک ایمیل معتبر باشد."
-
-#~ msgid "%s should be a valid url."
-#~ msgstr "%s باید یک آدرس url معتبر باشد."
-
-#~ msgid "Reference Id"
-#~ msgstr "شناسه ی مرجع"
-
-#~ msgid "Name"
-#~ msgstr "نام"
-
-#~ msgid "Email"
-#~ msgstr "ایمیل"
-
-#~ msgid "Homepage"
-#~ msgstr "صفحه ی خانگی"
-
-#~ msgid "Comment"
-#~ msgstr "نظر"
-
-#~ msgid "Draft"
-#~ msgstr "چرک نویس"
-
-#~ msgid "Publish"
-#~ msgstr "ارسال"

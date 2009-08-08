@@ -1,0 +1,47 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2009-08-08 10:33+0430\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: controllers/backend/messengers.php:17 controllers/backend/messengers.php:21
+msgid "Messenger's Status"
+msgstr "وضعیت پیغام رسان"
+
+#: controllers/backend/messengers.php:22
+msgid "Add ID"
+msgstr "اضافه کردن شناسه"
+
+#: controllers/backend/messengers.php:25
+#, php-format
+msgid "%s is required"
+msgstr "%S اجباری است"
+
+#: controllers/backend/messengers.php:26
+#, php-format
+msgid "%s must be a valid email address"
+msgstr "%S باید آدرس پست الکترونیکی معتبر باشد"
+
+#: controllers/backend/messengers.php:64
+msgid "ID"
+msgstr "شناسه"
+
+#: controllers/backend/messengers.php:65
+msgid "Subject"
+msgstr "موضوع"
+
+#: controllers/backend/messengers.php:66
+msgid "Type"
+msgstr "نوع"

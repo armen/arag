@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2008-10-06 10:57+0330\n"
+"POT-Creation-Date: 2009-08-08 10:33+0430\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15,78 +15,70 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: views/backend/delete_confirm.tpl:11
-#, c-format
-msgid "Do you really want to delete this contact : '%s'?"
-msgstr "آیا از حذف '%s' مطمئن هستید?"
-
-#: views/backend/delete_confirm.tpl:16
-msgid "Yes"
-msgstr "بلی"
-
-#: views/backend/delete_confirm.tpl:22
-msgid "No"
-msgstr "خیر"
-
-#: views/backend/template_editor.tpl:10
-msgid "Template"
-msgstr "قالب"
-
-#: views/backend/view_contact.tpl:15 views/frontend.tpl:17
-msgid "Full name"
-msgstr "نام کامل"
-
-#: views/backend/view_contact.tpl:19 views/frontend.tpl:23
-msgid "Phone Number"
-msgstr "شماره ی تماس"
-
-#: views/backend/view_contact.tpl:23 views/frontend.tpl:29
-msgid "Email Address"
-msgstr "آدرس ایمیل"
-
-#: views/backend/view_contact.tpl:27 controllers/backend/contacts.php:29
-msgid "Create Date"
-msgstr "تاریخ ایجاد"
-
-#: views/backend/view_contact.tpl:31 views/frontend.tpl:35
-#: controllers/backend/contacts.php:28
+#: controllers/backend/contacts.php:29
 msgid "Message Title"
 msgstr "موضوع متن"
 
-#: views/backend/view_contact.tpl:35 views/frontend.tpl:41
 #: controllers/backend/contacts.php:30
+msgid "Create Date"
+msgstr "تاریخ ایجاد"
+
+#: controllers/backend/contacts.php:31
 msgid "Message Content"
 msgstr "متن پیغام"
 
-#: views/backend/reply_contact.tpl:13 controllers/backend/contacts.php:240
+#: controllers/backend/contacts.php:33 controllers/backend/contacts.php:43
+#: controllers/backend/contacts.php:107 controllers/backend/contacts.php:149
+#: controllers/backend/setting.php:91
+msgid "View"
+msgstr "نمایش"
+
+#: controllers/backend/contacts.php:34 controllers/backend/contacts.php:55
+#: controllers/backend/contacts.php:118 controllers/backend/contacts.php:155
+msgid "Delete"
+msgstr "حذف"
+
+#: controllers/backend/contacts.php:50 controllers/backend/contacts.php:114
+#: controllers/backend/contacts.php:152
+msgid "Reply"
+msgstr "پاسخ"
+
+#: controllers/backend/contacts.php:66 controllers/backend/contacts.php:91
+#: controllers/backend/contacts.php:133 controllers/backend/contacts.php:183
+#: controllers/backend/contacts.php:238 controllers/backend/setting.php:105
+msgid "Contact Id"
+msgstr "شناسه ی تماس"
+
+#: controllers/backend/contacts.php:74 controllers/backend/contacts.php:141
+#: controllers/backend/contacts.php:191
+msgid "Invalid contanct ID"
+msgstr "شناسه تماس نا معتبر"
+
+#: controllers/backend/contacts.php:99
+msgid "Invalid contact ID"
+msgstr "شناسه تماس نا معتبر"
+
+#: controllers/backend/contacts.php:219
+msgid "Email Sent successfuly!"
+msgstr "ایمیل با موفقیت ارسال شد."
+
+#: controllers/backend/contacts.php:222
+msgid "Sent by: "
+msgstr "ارسال شده توسط: "
+
+#: controllers/backend/contacts.php:227
+msgid "There was a problem in sending email"
+msgstr "مشکلی در ارسال ایمیل بوجود امد."
+
+#: controllers/backend/contacts.php:241
 msgid "Subject"
 msgstr "موضوع"
 
-#: views/backend/reply_contact.tpl:28 controllers/backend/contacts.php:242
+#: controllers/backend/contacts.php:243
 msgid "Body"
 msgstr "متن"
 
-#: views/backend/reply_contact.tpl:45
-msgid "Send"
-msgstr "ارسال"
-
-#: views/frontend.tpl:47
-msgid "Type the text you see in image"
-msgstr "متن داخل تصویر را وارد نمایید"
-
-#: views/frontend.tpl:55
-msgid "Submit"
-msgstr "ارسال"
-
-#: views/result.tpl:9
-msgid "Your message has been sent successfully ."
-msgstr "پیغام شما با موفقیت ارسال شد"
-
-#: views/result.tpl:13
-msgid "Your message failed!"
-msgstr "متاسفانه در ارسال پیغام شما مشکلی پیش آمد"
-
-#: controllers/backend/backend.php:18 controllers/backend/backend.php:28
+#: controllers/backend/backend.php:18 controllers/backend/backend.php:29
 msgid "Contacts Management"
 msgstr "مدیریت تماس ها"
 
@@ -99,7 +91,8 @@ msgid "List"
 msgstr "لیست"
 
 #: controllers/backend/backend.php:23
-msgid "Setting"
+#, fuzzy
+msgid "Settings"
 msgstr "تنظیمات"
 
 #: controllers/backend/backend.php:24 controllers/backend/setting.php:40
@@ -110,62 +103,29 @@ msgstr "قالب بالا"
 msgid "Bottom Template"
 msgstr "قالب پایین"
 
-#: controllers/backend/backend.php:31 controllers/frontend.php:19
+#: controllers/backend/backend.php:26
+#, fuzzy
+msgid "List Settings"
+msgstr "تنظیمات"
+
+#: controllers/backend/backend.php:32 controllers/frontend.php:19
 #, php-format
 msgid "%s is required."
 msgstr "%s الزامی است"
 
-#: controllers/backend/backend.php:32
+#: controllers/backend/backend.php:33
 #, php-format
 msgid "%s should be numeric."
 msgstr "%s باید یک عدد باشد"
 
-#: controllers/backend/backend.php:33
+#: controllers/backend/backend.php:34
 msgid "This contact does not exists!"
 msgstr "این تماس وجود ندارد"
 
-#: controllers/backend/setting.php:91 controllers/backend/contacts.php:32
-#: controllers/backend/contacts.php:42 controllers/backend/contacts.php:106
-#: controllers/backend/contacts.php:148
-msgid "View"
-msgstr "نمایش"
-
-#: controllers/backend/setting.php:105 controllers/backend/contacts.php:65
-#: controllers/backend/contacts.php:90 controllers/backend/contacts.php:132
-#: controllers/backend/contacts.php:182 controllers/backend/contacts.php:237
-msgid "Contact Id"
-msgstr "شناسه ی تماس"
-
-#: controllers/backend/contacts.php:33 controllers/backend/contacts.php:54
-#: controllers/backend/contacts.php:117 controllers/backend/contacts.php:154
-msgid "Delete"
-msgstr "حذف"
-
-#: controllers/backend/contacts.php:49 controllers/backend/contacts.php:113
-#: controllers/backend/contacts.php:151
-msgid "Reply"
-msgstr "پاسخ"
-
-#: controllers/backend/contacts.php:73 controllers/backend/contacts.php:140
-#: controllers/backend/contacts.php:190
-msgid "Invalid contanct ID"
-msgstr "شناسه تماس نا معتبر"
-
-#: controllers/backend/contacts.php:98
-msgid "Invalid contact ID"
-msgstr "شناسه تماس نا معتبر"
-
-#: controllers/backend/contacts.php:218
-msgid "Email Sent successfuly!"
-msgstr "ایمیل با موفقیت ارسال شد."
-
-#: controllers/backend/contacts.php:221
-msgid "Sent by: "
-msgstr "ارسال شده توسط: "
-
-#: controllers/backend/contacts.php:226
-msgid "There was a problem in sending email"
-msgstr "مشکلی در ارسال ایمیل بوجود امد."
+#: controllers/backend/setting.php:141
+#, fuzzy
+msgid "Limit"
+msgstr "لیست"
 
 #: controllers/frontend.php:16
 #, php-format
@@ -210,6 +170,42 @@ msgstr "متن پیغام"
 #: controllers/frontend.php:72
 msgid "Image's Text"
 msgstr "متن داخل تصویر"
+
+#~ msgid "Do you really want to delete this contact : '%s'?"
+#~ msgstr "آیا از حذف '%s' مطمئن هستید?"
+
+#~ msgid "Yes"
+#~ msgstr "بلی"
+
+#~ msgid "No"
+#~ msgstr "خیر"
+
+#~ msgid "Template"
+#~ msgstr "قالب"
+
+#~ msgid "Full name"
+#~ msgstr "نام کامل"
+
+#~ msgid "Phone Number"
+#~ msgstr "شماره ی تماس"
+
+#~ msgid "Email Address"
+#~ msgstr "آدرس ایمیل"
+
+#~ msgid "Send"
+#~ msgstr "ارسال"
+
+#~ msgid "Type the text you see in image"
+#~ msgstr "متن داخل تصویر را وارد نمایید"
+
+#~ msgid "Submit"
+#~ msgstr "ارسال"
+
+#~ msgid "Your message has been sent successfully ."
+#~ msgstr "پیغام شما با موفقیت ارسال شد"
+
+#~ msgid "Your message failed!"
+#~ msgstr "متاسفانه در ارسال پیغام شما مشکلی پیش آمد"
 
 #~ msgid "Contact Management"
 #~ msgstr "مدیریت تماس ها"
