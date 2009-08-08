@@ -37,11 +37,11 @@ msgstr "نوع"
 
 #: views/backend/add.tpl:84
 msgid "Save"
-msgstr ""
+msgstr "ذخیره"
 
 #: views/backend/add.tpl:85
 msgid "Reset"
-msgstr ""
+msgstr "بارگزاری مجداد"
 
 #: controllers/backend/messengers.php:17 controllers/backend/messengers.php:21
 msgid "Messenger's Status"
