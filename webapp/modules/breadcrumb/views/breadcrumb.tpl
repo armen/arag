@@ -8,6 +8,9 @@
     {if isset($css|smarty:nodefaults)}
         <link rel="stylesheet" media="all" type="text/css" href="{$arag_base_url|smarty:nodefaults}{$css}" />
     {/if}
+    {if isset($i18n_css|smarty:nodefaults)}
+        <link rel="stylesheet" media="all" type="text/css" href="{$arag_base_url|smarty:nodefaults}{$i18n_css}" />
+    {/if}
 {/arag_header}
 {if $breadcrumb_type == 'progress'}
     <div class="breadcrumb_container">

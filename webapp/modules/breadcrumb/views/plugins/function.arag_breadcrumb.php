@@ -21,6 +21,7 @@ function smarty_function_arag_breadcrumb($params, &$smarty)
     $module          = Null;
     $config_file     = Null;
     $css             = Null;
+    $i18n_css        = Null;
     $show_next_steps = False;
 
     foreach ($params as $_key => $_val) {
@@ -44,6 +45,10 @@ function smarty_function_arag_breadcrumb($params, &$smarty)
 
             case 'css':
                 $css = $_val;
+                break;
+
+            case 'i18n_css':
+                $i18n_css = $_val;
                 break;
 
             case 'show_next_steps':
@@ -92,6 +97,7 @@ function smarty_function_arag_breadcrumb($params, &$smarty)
         $smarty->assign('breadcrumb_type', $breadcrumb_type);
         $smarty->assign('name', $name);
         $smarty->assign('css', $css);
+        $smarty->assign('i18n_css', $i18n_css);
         $smarty->assign('current_uri', $breadcrumb->current_uri());
         $smarty->assign('visited_uris', $visited_uris);
         $smarty->assign('number_of_visited_uris', count($visited_uris) - 1);
