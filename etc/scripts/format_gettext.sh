@@ -12,7 +12,7 @@ do
 
         if [ -f $global ]; then
             echo -n "    Meging the message.po with global.po"
-            msgmerge --no-fuzzy-matching --multi-domain --previous $global "${path}/messages.po" -o "${path}/temp.po"
+            msgmerge --no-fuzzy-matching --multi-domain --previous "${path}/messages.po" $global -o "${path}/temp.po"
         fi
 
         if [ -f "${path}/temp.po" ]; then
