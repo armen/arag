@@ -225,7 +225,8 @@ class Locations_Model extends Model
                 $all[]   = $grandId;
             }
         }
-        $all = array_unique($all);
+        $all[] = $parent;
+        $all   = array_unique($all);
         $cache->set($id, $all);
         return $all;
     }
