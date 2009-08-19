@@ -45,6 +45,7 @@ class Locations_Model extends Model
         if ($cached) {
             return $cached;
         }
+
         $this->db->select('id', 'parent', 'name', 'english', 'code', 'type', 'latitude', 'longitude')->from($this->tableName)->where('id', $id);
         $loc = current($this->db->get()->result_array(False));
 
@@ -71,29 +72,42 @@ class Locations_Model extends Model
     }
     // }}}
     // {{{ search
-    public function search($name = Null, $english = Null, $code = Null, $type = Null)
+    public function search($name = Null, $english = Null, $code = Null, $type = Null, $orderOfTypes = array(), $takeCareOfCode = true)
     {
-        $this->db->select('id')->from($this->tableName);
+        $where = '';
 
         if ($name) {
-            $this->db->orlike('name', $name);
+            $where = "name LIKE '%$name%' ";
         }
 
         if ($english) {
-            $this->db->orlike('english', $english);
+            $where .= $where ? " OR english LIKE '%$english%' " : " english LIKE '%$english%' ";
         }
 
         if ($code) {
-            $this->db->orwhere('code', $code);
+            $where .= $where ? " OR code = '$code' " : " code = '$code' ";
         }
 
         if ($type) {
-            $this->db->where('type', $type);
+            $where = $where ? "($where) AND type = '$type' " : " type = '$type' ";
         }
 
-        $ids     = $this->db->orderby('name', 'english', 'code', 'type')->get()->result_array(False);
-        $results = Array();
+        $order_by = '';
 
+        $takeCareOfCode and $order_by = "oct(code REGEXP '$code') * 100 + ";
+
+        $orderOfTypes = is_array($orderOfTypes) ? $orderOfTypes : array($orderOfTypes);
+        $index = count($orderOfTypes);
+        foreach($orderOfTypes as $order) {
+            $order_by .= "oct(type = '$order') * $index + ";
+            $index--;
+        }
+        $order_by .= '0 DESC, name, english, code, type';
+
+        $ids = $this->db->query("SELECT id FROM ".$this->db->table_prefix().$this->tableName.' '.'WHERE '.$where.'ORDER BY '.$order_by)
+                    ->result_array(False);
+
+        $results = Array();
         foreach($ids as $id) {
             $results[] = $this->get($id['id']);
         }
