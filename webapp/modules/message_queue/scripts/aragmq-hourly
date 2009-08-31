@@ -1,0 +1,19 @@
+#!/bin/sh
+
+CONFIG="$1"
+
+DISPATCHERDIR=/home/armen/projects/irancell/public_html
+PHP=/usr/bin/php
+
+if [ -e "$CONFIG" ]
+then
+    . "$CONFIG"
+else
+    if [ -e /etc/default/aragmq.cfg ]
+    then
+        . /etc/default/aragmq.cfg
+    fi
+fi
+
+cd $DISPATCHERDIR
+$PHP index.php message_queue/frontend/server/hourly

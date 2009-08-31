@@ -1,0 +1,75 @@
+#! /bin/sh
+### BEGIN INIT INFO
+# Provides:          skeleton
+# Required-Start:    $local_fs $remote_fs
+# Required-Stop:     $local_fs $remote_fs
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Example initscript
+# Description:       This file should be used to construct scripts to be
+#                    placed in /etc/init.d.
+### END INIT INFO
+
+# Do NOT "set -e"
+
+# PATH should only include /usr/* if it runs after the mountnfs.sh script
+PATH=/sbin:/usr/sbin:/bin:/usr/bin
+DESC="Arag message queue spool service"
+
+NAME=aragmqd
+CONFIG="$1"
+
+DAEMON=/usr/sbin/$NAME
+DAEMON_ARGS="$CONFIG"
+
+PIDFILE=/var/run/$NAME.pid
+
+SCRIPTNAME=/etc/init.d/$NAME
+
+CWD=`dirname "$CONFIG"`
+if [ -e "$CONFIG" ]
+then
+    . "$CONFIG"
+else
+    if [ -e /etc/default/aragmq.cfg ]
+    then
+        . /etc/default/aragmq.cfg
+    fi
+fi
+
+case "$1" in
+    start)
+        if [ -e $PIDFILE ]
+        then
+            echo
+            echo "Error: $PIDFILE already exists."
+            echo "Cannot start $NAME more than once."
+            echo
+        else
+            /sbin/start-stop-daemon --start --quiet --background \
+                --chuid www-data:www-data --make-pidfile \
+                --pidfile $PIDFILE --exec $DAEMON -- "$DAEMON_ARGS"
+        fi
+	;;
+    stop)
+        if [ -e $PIDFILE ]
+        then
+            /sbin/start-stop-daemon --stop --pidfile $PIDFILE
+            rm -f $PIDFILE
+        else
+            echo
+            echo "Error: $PIDFILE not found."
+            echo "Could not stop $NAME."
+            echo
+        fi
+	;;
+    status)
+        ps aux | grep -e "$NAME" | grep www-data
+	;;
+    restart|force-reload)
+	;;
+    *)
+	echo "Usage: $SCRIPTNAME {start|stop|status}" >&2
+	exit 3
+	;;
+esac
