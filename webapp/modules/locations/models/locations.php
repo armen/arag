@@ -47,7 +47,14 @@ class Locations_Model extends Model
         }
 
         $this->db->select('id', 'parent', 'name', 'english', 'code', 'type', 'latitude', 'longitude')->from($this->tableName)->where('id', $id);
-        $loc = current($this->db->get()->result_array(False));
+        $loc            = current($this->db->get()->result_array(False));
+        if ($loc['english']) {
+            $loc['english'] = ucwords($loc['english']);
+        }
+
+        if ($loc['code']) {
+            $loc['code'] = strtoupper($loc['code']);
+        }
 
         $cache->set($cache_id, $loc);
         return $loc;
@@ -75,6 +82,10 @@ class Locations_Model extends Model
     public function search($name = Null, $english = Null, $code = Null, $type = Null, $orderOfTypes = array(), $takeCareOfCode = true)
     {
         $where = '';
+
+        $name    = strtolower($name);
+        $english = strtolower($english);
+        $code    = strtolower($code);
 
         if ($name) {
             $where = "name LIKE '%$name%' ";
