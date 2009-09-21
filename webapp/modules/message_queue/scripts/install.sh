@@ -11,6 +11,10 @@ then
 
   case "$1" in
     remove)
+        # remove dropr
+        cd ../vendor/dropr/client/bin/
+        ./install.sh remove
+
         if [ -f /etc/init.d/aragmq ]
         then
             /etc/init.d/aragmq stop
@@ -29,6 +33,11 @@ then
         echo
     ;;
     *)
+
+        if [ ! -d $SPOOLDIR ]
+        then
+            mkdir -p $SPOOLDIR
+        fi
         chmod -R ug+rwx $SPOOLDIR
         chown -R www-data:www-data $SPOOLDIR
 
@@ -52,7 +61,16 @@ then
         echo
         update-rc.d aragmq defaults 99 01
         echo
-    ;;
+
+        # install dropr
+        cd ../vendor/dropr/client/bin/
+        ./install.sh
+
+        REGEX="s|%dropr_dir%|$CWD/../vendor/dropr/client/bin/|"
+        sed -i -e $REGEX /etc/default/dropr
+
+        /etc/init.d/dropr start
+   ;;
    esac
 
 else
