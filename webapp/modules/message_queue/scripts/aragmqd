@@ -27,7 +27,6 @@ while [ 1 ]
 do
     cd $DISPATCHERDIR
     $PHP index.php message_queue/frontend/server/common/keep_alive &
-    beep
     SLAVE=$!
     wait $SLAVE
 done
