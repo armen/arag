@@ -19,10 +19,14 @@ class Statistics_Controller extends MessageQueue_Backend
     {
         parent::__construct();
 
+        $server_storage_dsn = Kohana::config('dropr.server_storage_dsn');
+        if (is_dir($server_storage_dsn) && !is_writeable($server_storage_dsn)) {
+            return;
+        }
+
         require Arag::find_file('message_queue', 'vendor', 'dropr/classes/dropr', True);
 
         $server_storage_type  = Kohana::config('dropr.server_storage_type');
-        $server_storage_dsn   = Kohana::config('dropr.server_storage_dsn');
         $this->server_storage = dropr_Server_Storage_Abstract::factory($server_storage_type, $server_storage_dsn);
 
         $client_storage_type  = Kohana::config('dropr.client_storage_type');
@@ -42,7 +46,15 @@ class Statistics_Controller extends MessageQueue_Backend
     // {{{ index_any
     public function index_any($channel)
     {
+        $messages_list         = new PList_Component('messages');
         $this->layout->content = new View('backend/statistics');
+        $server_storage_dsn    = Kohana::config('dropr.server_storage_dsn');
+
+        if (is_dir($server_storage_dsn) && !is_writeable($server_storage_dsn)) {
+            $this->layout->content->queue_is_not_writeable = True;
+            $this->layout->content->queue = $server_storage_dsn;
+            return;
+        }
 
         if ($channel === 'dropr') {
             $queued    = $this->client_storage->countQueuedMessages();
@@ -77,12 +89,11 @@ class Statistics_Controller extends MessageQueue_Backend
 
         $columns = empty($entries) ? Array() : array_keys(current($entries));
 
-        $messages = new PList_Component('messages');
-        $messages->setResource($entries);
-        $messages->setLimit(Arag_Config::get('limit', 0));
+        $messages_list->setResource($entries);
+        $messages_list->setLimit(Arag_Config::get('limit', 0));
 
         foreach ($columns as $column) {
-            $messages->addColumn($column, _(ucfirst($column)));
+            $messages_list->addColumn($column, _(ucfirst($column)));
         }
 
         $this->layout->content->queued  = $queued;
