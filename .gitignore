@@ -13,6 +13,7 @@ webapp/logs/cli/*.log.php
 webapp/logs/cli/*.log
 webapp/logs/apache2handler/*.log.php
 webapp/logs/apache2handler/*.log
+webapp/modules/message_queue/queue/*
 messages.mo
 *.swp
 *.swo
