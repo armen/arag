@@ -55,34 +55,54 @@ class Server_Controller extends MessageQueue_Frontend
 
                 $this->_log("Got {$count} message(s) from '{$method}' channel.", LOG_DEBUG);
                 $this->messages_count += $count;
+                $pids = Array();
 
                 foreach ($messages as $message) {
 
                     $params = @unserialize($message);
 
-                    if (isset($params['module']) && isset($params['model']) && isset($params['method'])) {
+                    $pid = pcntl_fork();
 
-                        $arguments = isset($params['arguments']) && is_array($params['arguments']) ? $params['arguments'] : Array();
-                        $model     = Model::load($params['model'], $params['module']);
+                    if ($pid == 0) {
 
-                        $this->_log("Calling... '{$params['model']}::{$params['method']}' from '{$params['module']}' module.", LOG_DEBUG);
+                        if (isset($params['module']) && isset($params['model']) && isset($params['method'])) {
 
-                        $result = call_user_func_array(array($model, $params['method']), $arguments);
+                            $arguments = isset($params['arguments']) && is_array($params['arguments']) ? $params['arguments'] : Array();
+                            $model     = Model::load($params['model'], $params['module']);
 
-                        if ($result) {
-                            $this->_log("Set it as processed.", LOG_DEBUG);
-                            $this->server_storage->setProcessed($message);
+                            $this->_log("Calling... '{$params['model']}::{$params['method']}' from '{$params['module']}' module.", LOG_DEBUG);
+
+                            $result = call_user_func_array(array($model, $params['method']), $arguments);
+
+                            if ($result) {
+                                $this->_log("Set it as processed.", LOG_DEBUG);
+                                $this->server_storage->setProcessed($message);
+                                exit(0);
+                            } else {
+                                $this->_log("It's been failed. moved it in to the end of queue.", LOG_DEBUG);
+                                exit(-1);
+                            }
+
                         } else {
-                            $this->_log("It's been failed. moved it in to the end of queue.", LOG_DEBUG);
+                            $this->_log("Got invalid message and removed it from queue.", LOG_ERR);
+                            Kohana::log('error', "Dropr message is not a valid message, it should be contain at ".
+                                                 "least three paramaters (module, model, method). received message is:\n".
+                                                 var_export($message, True));
+                            $this->server_storage->setProcessed($message);
+                            exit(-2);
                         }
 
-                    } else {
-                        $this->_log("Got invalid message and removed it from queue.", LOG_ERR);
-                        Kohana::log('error', "Dropr message is not a valid message, it should be contain at ".
-                                             "least three paramaters (module, model, method). received message is:\n".
-                                             var_export($message, True));
-                        $this->server_storage->setProcessed($message);
+                    } else if ($pid > 0) {
+                        Database::instance('default');
+                        Session::instance();
+                        $pids[] = $pid;
                     }
+                }
+
+                foreach ($pids as $pid) {
+                    $this->_log("Waiting for '{$pid}'.", LOG_DEBUG);
+                    pcntl_waitpid($pid, $status);
+                    $this->_log("'{$pid}' returned with '{$status}' status.", LOG_DEBUG);
                 }
 
             } else {
