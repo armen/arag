@@ -12,7 +12,7 @@ class Arag_Logger {
         $messages    = Arag_Config::get('logger.messages', Null, 'logger', True);
 
         if (array_key_exists($uri, $messages)) {
-            $username  = session::get('user.username');
+            $username  = Session::instance()->get('user.username');
             $date      = time();
             $model     = Model::load('logger','logger');
             $model->insertLog($uri, $username, $date);
