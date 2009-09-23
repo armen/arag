@@ -90,6 +90,9 @@ class Controller extends Controller_Core {
 
         if (substr(strrchr($template, '.'), 1) === Kohana::config('smarty.templates_ext')) {
 
+            // Save current template_vars
+            $template_vars = $this->smarty->get_template_vars();
+
             // Assign variables to the template
             if (is_array($vars) && count($vars) > 0) {
                 foreach ($vars as $key => $val) {
@@ -121,6 +124,9 @@ class Controller extends Controller_Core {
 
             // Fetch the output
             $output = $this->smarty->fetch($template);
+
+            // Get rid of all variables of current template
+            $this->smarty->_tpl_vars = $template_vars;
 
         } else {
             $output = parent::_kohana_load_view($template, $vars);
