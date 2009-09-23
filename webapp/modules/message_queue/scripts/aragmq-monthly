@@ -16,4 +16,4 @@ else
 fi
 
 cd $DISPATCHERDIR
-$PHP index.php message_queue/frontend/server/monthly
+$PHP index.php $SERVER/monthly
