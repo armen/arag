@@ -16,6 +16,8 @@ class MessageQueue_Frontend extends Controller
     // {{{ Constructor
     function __construct()
     {
+        parent::__construct();
+
         // Dummy? but important :)
         // This disabled displaying site layout
 
