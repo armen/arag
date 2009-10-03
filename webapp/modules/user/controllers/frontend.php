@@ -45,13 +45,13 @@ class Frontend_Controller extends Controller
     }
     // }}}
     // {{{ login_write
-    public function login_write()
+    public function login_write($output_type = null)
     {
         $users = new Users_Model;
 
-        $username = $this->input->post('username');
-        $password = $this->input->post('password');
-
+        $username  = $this->input->post('username');
+        $password  = $this->input->post('password');
+        $logged_in = false;
         if ($users->check($username, $password, $status, Arag_Config::get('block_expire', 0.5) * 3600)) {
 
             // Set the privilege_filter to False, This is too
@@ -73,12 +73,16 @@ class Frontend_Controller extends Controller
             $this->session->set(Array('user' => array_merge($user, Array('authenticated' => True))));
             $users->unBlockUser($username);
 
-            // Redirect to front controller or Redirect URL
-            if ($this->session->get('not_authorized_redirect_url')) {
-                url::redirect($this->session->get_once('not_authorized_redirect_url'));
+            if (is_null($output_type)) {
+                // Redirect to front controller or Redirect URL
+                if ($this->session->get('not_authorized_redirect_url')) {
+                    url::redirect($this->session->get_once('not_authorized_redirect_url'));
+                } else {
+                    $redirect_url = Kohana::config('user.login_redirect', False, False);
+                    Arag_Auth::is_accessible($redirect_url) ? url::redirect($redirect_url) : url::redirect(url::site());
+                }
             } else {
-                $redirect_url = Kohana::config('user.login_redirect', False, False);
-                Arag_Auth::is_accessible($redirect_url) ? url::redirect($redirect_url) : url::redirect(url::site());
+                $logged_in = true;
             }
 
         } else {
@@ -144,13 +148,20 @@ class Frontend_Controller extends Controller
                 $error_message[] = _("Your group is expired.");
             }
 
-            if (!isset($error_message)) {
-                $error_message[] = _("Unknown error");
-            }
+            if (is_null($output_type)) {
+                if (!isset($error_message)) {
+                    $error_message[] = _("Unknown error");
+                }
 
-            $error_message                          = implode("\n", $error_message);
-            $this->layout->content                  = new View('frontend/login', array('status' => $status, 'error_message' => $error_message));
-            $this->layout->content->display_captcha = $this->_check_display_captcha();
+                $error_message                          = implode("\n", $error_message);
+                $this->layout->content                  = new View('frontend/login', array('status' => $status, 'error_message' => $error_message));
+                $this->layout->content->display_captcha = $this->_check_display_captcha();
+            }
+        }
+
+        if (!is_null($output_type)) {
+            print json_encode(array('logged_in' => (int)$logged_in));
+            die();
         }
     }
     // }}}
