@@ -7,13 +7,44 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-08-08 10:43+0430\n"
+"POT-Creation-Date: 2009-09-29 14:58+0330\n"
 "PO-Revision-Date: 2008-04-14 02:27-0800\n"
 "Last-Translator: vafaei\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: views/backend/create.tpl:30 views/backend/edit.tpl:35
+msgid "Use availabe routes?"
+msgstr "آیا از مسیر های موجود استفاده می کنید؟"
+
+#: views/backend/create.tpl:41 views/backend/edit.tpl:50
+msgid "Make anew route?"
+msgstr "آیا مسیر جدید ایجاد می کنید؟"
+
+#: views/backend/create.tpl:51 views/backend/edit.tpl:63
+#: controllers/backend.php:53 controllers/backend.php:129
+#: controllers/backend.php:180
+msgid "Subject"
+msgstr "موضوع"
+
+#: views/backend/create.tpl:61 views/backend/edit.tpl:74
+msgid "Submit"
+msgstr "ارسال"
+
+#: views/backend/delete.tpl:11
+#, c-format
+msgid "Do you really want to delete '%s'?"
+msgstr "آیا واقعا مایل به حذف '%s' هستید؟"
+
+#: views/backend/delete.tpl:19
+msgid "Yes"
+msgstr "بله"
+
+#: views/backend/delete.tpl:24
+msgid "No"
+msgstr "خیر"
 
 #: views/backend/settings.tpl:12
 msgid "Settings are updated successfuly!"
@@ -35,37 +66,6 @@ msgstr "ذخیره"
 msgid "Reset"
 msgstr "فرم جدید"
 
-#: views/backend/delete.tpl:11
-#, c-format
-msgid "Do you really want to delete '%s'?"
-msgstr "آیا واقعا مایل به حذف '%s' هستید؟"
-
-#: views/backend/delete.tpl:19
-msgid "Yes"
-msgstr "بله"
-
-#: views/backend/delete.tpl:24
-msgid "No"
-msgstr "خیر"
-
-#: views/backend/edit.tpl:35 views/backend/create.tpl:30
-msgid "Use availabe routes?"
-msgstr "آیا از مسیر های موجود استفاده می کنید؟"
-
-#: views/backend/edit.tpl:50 views/backend/create.tpl:41
-msgid "Make anew route?"
-msgstr "آیا مسیر جدید ایجاد می کنید؟"
-
-#: views/backend/edit.tpl:63 views/backend/create.tpl:51
-#: controllers/backend.php:53 controllers/backend.php:129
-#: controllers/backend.php:180
-msgid "Subject"
-msgstr "موضوع"
-
-#: views/backend/edit.tpl:74 views/backend/create.tpl:61
-msgid "Submit"
-msgstr "ارسال"
-
 #: config/config.php:6
 msgid "ContactUs"
 msgstr "ارتباط با ما"
@@ -86,7 +86,7 @@ msgstr "نوار کناری"
 msgid "Footer"
 msgstr "پا نویس"
 
-#: controllers/backend.php:24 controllers/frontend.php:17
+#: controllers/frontend.php:17 controllers/backend.php:24
 msgid "Static Pages"
 msgstr "صفحه ثابت"
 

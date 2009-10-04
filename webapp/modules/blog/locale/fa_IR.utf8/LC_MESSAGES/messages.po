@@ -1,50 +1,51 @@
-# SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
+# Emil Sedgh <emilsedgh@gmail.com>, 2009.
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-08-08 10:43+0430\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
-"Language-Team: LANGUAGE <LL@li.org>\n"
+"POT-Creation-Date: 2009-09-29 14:58+0330\n"
+"PO-Revision-Date: 2009-09-29 12:57+0330\n"
+"Last-Translator: Emil Sedgh <emilsedgh@gmail.com>\n"
+"Language-Team: American English <kde-i18n-doc@kde.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Lokalize 1.0\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: views/list/blog.tpl:17
-#, c-format
-msgid "Posted by %s at %s"
-msgstr "ارسال شده توسط %s در تاریخ %s"
+#: views/backend/post.tpl:11 views/backend/edit.tpl:11
+#, fuzzy, c-format
+msgid "Fields marked with a %s are required."
+msgstr "پر کردن بخش های ستاره دار الزامی است"
 
-#: views/backend/settings.tpl:12
-msgid "Settings are updated successfuly!"
-msgstr "تنظیمات با موفقیت ویرایش شدند"
+#: views/backend/post.tpl:20
+msgid "Create"
+msgstr "ایجاد"
 
-#: views/backend/settings.tpl:19
-msgid "List items per page"
-msgstr "تعداد عناصر لیست در هر صفحه"
-
-#: views/backend/settings.tpl:21 views/backend/settings.tpl:26
-msgid "0 means unlimited."
-msgstr "0 به معنای نامحدود است"
-
-#: views/backend/settings.tpl:24
-msgid "Number of posts per page"
-msgstr "تعداد پست های هر صفخه"
-
-#: views/backend/settings.tpl:31
-msgid "Save"
-msgstr "ذخیره"
-
-#: views/backend/settings.tpl:32 views/backend/post.tpl:21
-#: views/backend/edit.tpl:22
+#: views/backend/post.tpl:21 views/backend/edit.tpl:22
+#: views/backend/settings.tpl:32
 msgid "Reset"
 msgstr "فرم جدید"
+
+#: views/backend/edit.tpl:21
+msgid "Edit"
+msgstr "ویرایش"
+
+#: views/backend/delete.tpl:12
+#, c-format
+msgid "Do you really want to delete the '%s' Entry?"
+msgstr "حذف %s. آیا مطمئن هستید?"
+
+#: views/backend/delete.tpl:18
+msgid "Yes"
+msgstr "بله"
+
+#: views/backend/delete.tpl:23
+msgid "No"
+msgstr "خیر"
 
 #: views/backend/entry_form.tpl:8 controllers/backend/entry.php:18
 #: controllers/backend/entry.php:61 controllers/backend/entry.php:122
@@ -80,31 +81,30 @@ msgstr "ارسال نظر برای این پست نیازمند دسترسی ه�
 msgid "Extended Body"
 msgstr "متن کامل"
 
-#: views/backend/post.tpl:11 views/backend/edit.tpl:11
-#, fuzzy, c-format
-msgid "Fields marked with a %s are required."
-msgstr "پر کردن بخش های ستاره دار الزامی است"
+#: views/backend/settings.tpl:12
+msgid "Settings are updated successfuly!"
+msgstr "تنظیمات با موفقیت ویرایش شدند"
 
-#: views/backend/post.tpl:20
-msgid "Create"
-msgstr "ایجاد"
+#: views/backend/settings.tpl:19
+msgid "List items per page"
+msgstr "تعداد عناصر لیست در هر صفحه"
 
-#: views/backend/delete.tpl:12
+#: views/backend/settings.tpl:21 views/backend/settings.tpl:26
+msgid "0 means unlimited."
+msgstr "0 به معنای نامحدود است"
+
+#: views/backend/settings.tpl:24
+msgid "Number of posts per page"
+msgstr "تعداد پست های هر صفخه"
+
+#: views/backend/settings.tpl:31
+msgid "Save"
+msgstr "ذخیره"
+
+#: views/list/blog.tpl:17
 #, c-format
-msgid "Do you really want to delete the '%s' Entry?"
-msgstr "حذف %s. آیا مطمئن هستید?"
-
-#: views/backend/delete.tpl:18
-msgid "Yes"
-msgstr "بله"
-
-#: views/backend/delete.tpl:23
-msgid "No"
-msgstr "خیر"
-
-#: views/backend/edit.tpl:21
-msgid "Edit"
-msgstr "ویرایش"
+msgid "Posted by %s at %s"
+msgstr "ارسال شده توسط %s در تاریخ %s"
 
 #: libraries/Blog_Backend.php:23 controllers/frontend/entry.php:22
 #, php-format
@@ -153,6 +153,14 @@ msgstr "تنظیمات"
 msgid "Preview"
 msgstr "پیش نمایش"
 
+#: models/blog.php:162
+msgid "Draft"
+msgstr "چرک نویس"
+
+#: models/blog.php:163
+msgid "Publish"
+msgstr "ارسال"
+
 #: controllers/frontend/entry.php:25
 #, php-format
 msgid "%s should be a valid email."
@@ -173,7 +181,7 @@ msgstr "شناسه"
 #: controllers/backend/entry.php:165 controllers/backend/entry.php:187
 #: controllers/backend/entry.php:220
 msgid "Invalid ID"
-msgstr ""
+msgstr "سناسه نا‌معتبر"
 
 #: controllers/frontend/entry.php:101
 msgid "Reference Id"
@@ -196,9 +204,16 @@ msgid "Comment"
 msgstr "نظر"
 
 #: controllers/frontend/entry.php:119
-#, fuzzy
 msgid "Invalid reference ID"
-msgstr "شناسه ی مرجع"
+msgstr "شناسه ی مرجع نا‌معتبر"
+
+#: controllers/backend/settings.php:42
+msgid "Limit"
+msgstr "محدودیت"
+
+#: controllers/backend/settings.php:43
+msgid "Post Limit"
+msgstr "محدودیت پست"
 
 #: controllers/backend/entry.php:19
 msgid "Author"
@@ -223,19 +238,3 @@ msgstr "هیچ رکوردی یافت نشد!"
 #: controllers/backend/entry.php:63 controllers/backend/entry.php:124
 msgid "Extended Entry"
 msgstr "رکورد جدید"
-
-#: controllers/backend/settings.php:42
-msgid "Limit"
-msgstr "محدودیت"
-
-#: controllers/backend/settings.php:43
-msgid "Post Limit"
-msgstr "محدودیت پست"
-
-#: models/blog.php:162
-msgid "Draft"
-msgstr "چرک نویس"
-
-#: models/blog.php:163
-msgid "Publish"
-msgstr "ارسال"

@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-08-08 10:43+0430\n"
+"POT-Creation-Date: 2009-09-29 14:58+0330\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -15,33 +15,42 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: views/component/generate_report.tpl:23
-msgid "Add filter"
-msgstr "اضافه کردن فیلتر"
+#: views/backend/generate_report.tpl:76 views/backend/generate_report.tpl:95
+msgid "Label"
+msgstr "بر چسب"
 
-#: views/component/generate_report.tpl:35
-msgid "Update"
-msgstr "جدید کردن"
+#: views/backend/generate_report.tpl:78 views/backend/generate_report.tpl:97
+#: controllers/backend.php:196
+msgid "Formula"
+msgstr "فرمول"
 
-#: views/backend/settings_limit.tpl:12
-msgid "Settings are updated successfuly!"
-msgstr "تنظیمات با موفقیت تغییر یافت!"
+#: views/backend/generate_report.tpl:83 views/backend/generate_report.tpl:150
+msgid "Insert column"
+msgstr "درج ستون"
 
-#: views/backend/settings_limit.tpl:19
-msgid "List items per page"
-msgstr "تعداد رکورد ها در هر صفحه"
+#: views/backend/generate_report.tpl:142 views/backend/generate_report.tpl:162
+msgid "Filter"
+msgstr "فیلتر"
 
-#: views/backend/settings_limit.tpl:20
-msgid "0 means Unlimited"
-msgstr "0 به معنای نا محدود است"
+#: views/backend/generate_report.tpl:165
+msgid "Combine"
+msgstr "ترکیب کردن"
 
-#: views/backend/settings_limit.tpl:25 views/backend/generate_report.tpl:202
+#: views/backend/generate_report.tpl:168
+msgid "OR"
+msgstr "یا"
+
+#: views/backend/generate_report.tpl:170
+msgid "AND"
+msgstr "و"
+
+#: views/backend/generate_report.tpl:201
+msgid "Preview"
+msgstr "پیش نمایش"
+
+#: views/backend/generate_report.tpl:202 views/backend/settings_limit.tpl:25
 msgid "Save"
 msgstr "ذخیره"
-
-#: views/backend/settings_limit.tpl:26
-msgid "Reset"
-msgstr "فرم جدید"
 
 #: views/backend/delete_report.tpl:12
 #, c-format
@@ -92,42 +101,29 @@ msgstr "اسم پارامتر برای Group Action"
 msgid "Next"
 msgstr "مرحله ی بعد"
 
-#: views/backend/generate_report.tpl:76 views/backend/generate_report.tpl:95
-msgid "Label"
-msgstr "بر چسب"
+#: views/backend/settings_limit.tpl:12
+msgid "Settings are updated successfuly!"
+msgstr "تنظیمات با موفقیت تغییر یافت!"
 
-#: views/backend/generate_report.tpl:78 views/backend/generate_report.tpl:97
-#: controllers/backend.php:196
-msgid "Formula"
-msgstr "فرمول"
+#: views/backend/settings_limit.tpl:19
+msgid "List items per page"
+msgstr "تعداد رکورد ها در هر صفحه"
 
-#: views/backend/generate_report.tpl:83 views/backend/generate_report.tpl:150
-msgid "Insert column"
-msgstr "درج ستون"
+#: views/backend/settings_limit.tpl:20
+msgid "0 means Unlimited"
+msgstr "0 به معنای نا محدود است"
 
-#: views/backend/generate_report.tpl:142 views/backend/generate_report.tpl:162
-msgid "Filter"
-msgstr "فیلتر"
+#: views/backend/settings_limit.tpl:26
+msgid "Reset"
+msgstr "فرم جدید"
 
-#: views/backend/generate_report.tpl:165
-msgid "Combine"
-msgstr "ترکیب کردن"
+#: views/component/generate_report.tpl:23
+msgid "Add filter"
+msgstr "اضافه کردن فیلتر"
 
-#: views/backend/generate_report.tpl:168
-msgid "OR"
-msgstr "یا"
-
-#: views/backend/generate_report.tpl:170
-msgid "AND"
-msgstr "و"
-
-#: views/backend/generate_report.tpl:201
-msgid "Preview"
-msgstr "پیش نمایش"
-
-#: component/reportgenerator.php:66 controllers/backend.php:72
-msgid "There is no record!"
-msgstr "هیچ رکوردی وجود ندارد!"
+#: views/component/generate_report.tpl:35
+msgid "Update"
+msgstr "جدید کردن"
 
 #: libraries/ReportGenerator_Backend.php:20
 #, php-format
@@ -170,6 +166,10 @@ msgstr "حذف گزارش گزارش"
 #: libraries/ReportGenerator_Backend.php:33
 msgid "Execute Report"
 msgstr "اجرای گزارش"
+
+#: component/reportgenerator.php:66 controllers/backend.php:72
+msgid "There is no record!"
+msgstr "هیچ رکوردی وجود ندارد!"
 
 #: controllers/backend.php:25
 msgid "There is no report!"

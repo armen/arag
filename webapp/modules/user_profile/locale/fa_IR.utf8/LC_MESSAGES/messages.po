@@ -7,13 +7,57 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-08-08 10:43+0430\n"
+"POT-Creation-Date: 2009-09-29 14:58+0330\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: views/view_user_profile.tpl:8
+msgid "This user hadn't enter his/her personal information yet"
+msgstr "این کاربر باید اطلاعات فردی خود را کامل نکرده است"
+
+#: views/view_user_profile.tpl:16 views/user_profile.tpl:23
+#: controllers/backend.php:205
+msgid "Username"
+msgstr "نام کاربری"
+
+#: views/view_user_profile.tpl:24 views/user_profile.tpl:31
+msgid "Name"
+msgstr "نام"
+
+#: views/view_user_profile.tpl:32 views/user_profile.tpl:39
+msgid "Last Name"
+msgstr "نام خانوادگی"
+
+#: views/view_user_profile.tpl:40 views/user_profile.tpl:47
+msgid "Email"
+msgstr "ایمیل"
+
+#: views/view_user_profile.tpl:49 views/user_profile.tpl:60
+#: controllers/backend.php:121
+msgid "Phone"
+msgstr "تلفن"
+
+#: views/view_user_profile.tpl:59 views/user_profile.tpl:68
+#: controllers/backend.php:122
+msgid "Cellphone"
+msgstr "تلفن همراه"
+
+#: views/view_user_profile.tpl:69 controllers/backend.php:123
+msgid "Location"
+msgstr ""
+
+#: views/view_user_profile.tpl:79 views/user_profile.tpl:90
+msgid "Address"
+msgstr "آدرس"
+
+#: views/view_user_profile.tpl:89 views/user_profile.tpl:98
+#: controllers/backend.php:124
+msgid "Postal Code"
+msgstr "کد پستی"
 
 #: views/user_profile.tpl:10
 msgid "You hadn't enter your personal information yet"
@@ -23,45 +67,9 @@ msgstr "شما باید اطلاعات فردی خود را کامل کنید"
 msgid "Profile edited successfuly!"
 msgstr "اطلاعات فردی شما با موفقیت تغییر یافت!"
 
-#: views/user_profile.tpl:23 views/view_user_profile.tpl:16
-#: controllers/backend.php:205
-msgid "Username"
-msgstr "نام کاربری"
-
-#: views/user_profile.tpl:31 views/view_user_profile.tpl:24
-msgid "Name"
-msgstr "نام"
-
-#: views/user_profile.tpl:39 views/view_user_profile.tpl:32
-msgid "Last Name"
-msgstr "نام خانوادگی"
-
-#: views/user_profile.tpl:47 views/view_user_profile.tpl:40
-msgid "Email"
-msgstr "ایمیل"
-
-#: views/user_profile.tpl:60 views/view_user_profile.tpl:49
-#: controllers/backend.php:121
-msgid "Phone"
-msgstr "تلفن"
-
-#: views/user_profile.tpl:68 views/view_user_profile.tpl:59
-#: controllers/backend.php:122
-msgid "Cellphone"
-msgstr "تلفن همراه"
-
 #: views/user_profile.tpl:80
 msgid "Country/Province/City"
 msgstr ""
-
-#: views/user_profile.tpl:90 views/view_user_profile.tpl:79
-msgid "Address"
-msgstr "آدرس"
-
-#: views/user_profile.tpl:98 views/view_user_profile.tpl:89
-#: controllers/backend.php:124
-msgid "Postal Code"
-msgstr "کد پستی"
 
 #: views/user_profile.tpl:114 views/change_password.tpl:45
 msgid "Submit"
@@ -82,14 +90,6 @@ msgstr "کلمه ی عبور جدید"
 #: views/change_password.tpl:34
 msgid "Re-New Password"
 msgstr "تکرار کلمه ی عبور جدید"
-
-#: views/view_user_profile.tpl:8
-msgid "This user hadn't enter his/her personal information yet"
-msgstr "این کاربر باید اطلاعات فردی خود را کامل نکرده است"
-
-#: views/view_user_profile.tpl:69 controllers/backend.php:123
-msgid "Location"
-msgstr ""
 
 #: controllers/backend.php:37
 msgid "User Profile"

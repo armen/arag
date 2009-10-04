@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-08-08 10:43+0430\n"
+"POT-Creation-Date: 2009-09-29 14:58+0330\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -53,6 +53,38 @@ msgstr "بلی"
 #: views/backend/delete.tpl:24
 msgid "No"
 msgstr "خیر"
+
+#: models/helpmanager.php:32
+msgid "Blank"
+msgstr "معمولی"
+
+#: models/helpmanager.php:33
+msgid "Error"
+msgstr "خطا"
+
+#: models/helpmanager.php:34
+msgid "Warning"
+msgstr "هشدار"
+
+#: models/helpmanager.php:35
+msgid "Information"
+msgstr "اطلاعات"
+
+#: models/helpmanager.php:36
+msgid "Tip"
+msgstr "نکته"
+
+#: models/helpmanager.php:37
+msgid "Collapsible"
+msgstr "تا شو"
+
+#: models/helpmanager.php:38
+msgid "Default"
+msgstr "پیش فرض"
+
+#: models/helpmanager.php:39
+msgid "Empty"
+msgstr "خالی"
 
 #: controllers/backend.php:25
 msgid "Helps"
@@ -107,38 +139,6 @@ msgstr "آدرس"
 #: controllers/backend.php:271
 msgid "Invalid uri"
 msgstr "آدرس نامعتبر"
-
-#: models/helpmanager.php:32
-msgid "Blank"
-msgstr "معمولی"
-
-#: models/helpmanager.php:33
-msgid "Error"
-msgstr "خطا"
-
-#: models/helpmanager.php:34
-msgid "Warning"
-msgstr "هشدار"
-
-#: models/helpmanager.php:35
-msgid "Information"
-msgstr "اطلاعات"
-
-#: models/helpmanager.php:36
-msgid "Tip"
-msgstr "نکته"
-
-#: models/helpmanager.php:37
-msgid "Collapsible"
-msgstr "تا شو"
-
-#: models/helpmanager.php:38
-msgid "Default"
-msgstr "پیش فرض"
-
-#: models/helpmanager.php:39
-msgid "Empty"
-msgstr "خالی"
 
 #~ msgid "%s is required."
 #~ msgstr "%s الزامی است"

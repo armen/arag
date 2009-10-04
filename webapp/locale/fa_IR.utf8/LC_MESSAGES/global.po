@@ -58,6 +58,9 @@ msgstr "دریافت اطلاعات کارت"
 msgid "Login"
 msgstr "ورود"
 
+msgid "login"
+msgstr "ورود"
+
 #: views/arag_templates/frontend_layout.tpl:51
 msgid "Username"
 msgstr "نام کاربری"
@@ -538,3 +541,24 @@ msgstr "مدیریت راهنماها"
 
 msgid "Packages List"
 msgstr "پکیج ها"
+
+msgid "Orders"
+msgstr "سفارش‌ها"
+
+msgid "Transactions"
+msgstr "تراکنش‌ها"
+
+msgid "Accounting"
+msgstr "حسابداری"
+
+msgid "‌Buy Card"
+msgstr "خرید کارت"
+
+msgid "Transfer credit"
+msgstr "انتقال اعتبار"
+
+msgid "Members"
+msgstr "اعضا"
+
+msgid "Go"
+msgstr "برو"

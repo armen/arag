@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-08-08 10:43+0430\n"
+"POT-Creation-Date: 2009-09-29 14:57+0330\n"
 "PO-Revision-Date: 2008-04-13 23:58-0800\n"
 "Last-Translator: vafaei\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -41,38 +41,50 @@ msgstr "لطفا متن داخل تصویر را وارد نمایید"
 msgid "Verify"
 msgstr "شناسایی شد"
 
-#: views/backend/settings_limit.tpl:12
 #: views/backend/settings_privileges.tpl:12
-#: views/backend/settings_password.tpl:12 views/backend/settings_email.tpl:18
+#: views/backend/settings_password.tpl:12 views/backend/settings_limit.tpl:12
 #: views/backend/settings_user_blocking.tpl:17
-#: views/backend/settings_expire.tpl:16
+#: views/backend/settings_expire.tpl:16 views/backend/settings_email.tpl:18
 msgid "Settings are updated successfuly!"
 msgstr "!تنظیمات با موفقیت به روز شد"
 
-#: views/backend/settings_limit.tpl:19
-msgid "List items per page"
-msgstr "فهرست موارد هر صفحه"
+#: views/backend/settings_privileges.tpl:19
+msgid "Set default privileges for Admin groups"
+msgstr "سطوح دسترسی پیش فرض را برای گروه Admin"
 
-#: views/backend/settings_limit.tpl:20 views/backend/settings_expire.tpl:9
-#: views/backend/settings_expire.tpl:24
-msgid "0 means Unlimited"
-msgstr "0 به معنی نامحدود میباشد"
+#: views/backend/settings_privileges.tpl:24
+msgid "Set default privileges for Anonymous groups"
+msgstr "سطوح دسترسی پیش فرض را برای گروه Anonymous"
 
-#: views/backend/settings_limit.tpl:25
 #: views/backend/settings_privileges.tpl:30
-#: views/backend/settings_password.tpl:25 views/backend/settings_email.tpl:56
+#: views/backend/settings_password.tpl:25 views/backend/settings_limit.tpl:25
 #: views/backend/settings_user_blocking.tpl:38
-#: views/backend/settings_expire.tpl:29
+#: views/backend/settings_expire.tpl:29 views/backend/settings_email.tpl:56
 msgid "Save"
 msgstr "ذخیره"
 
-#: views/backend/settings_limit.tpl:26
 #: views/backend/settings_privileges.tpl:31
-#: views/backend/settings_password.tpl:26 views/backend/settings_email.tpl:57
+#: views/backend/settings_password.tpl:26 views/backend/settings_limit.tpl:26
 #: views/backend/settings_user_blocking.tpl:39
-#: views/backend/settings_expire.tpl:30
+#: views/backend/settings_expire.tpl:30 views/backend/settings_email.tpl:57
 msgid "Reset"
 msgstr "فرم جدید"
+
+#: views/backend/settings_password.tpl:19
+msgid "Random Password's length"
+msgstr "طول رمز تصادفی"
+
+#: views/backend/site.tpl:12
+msgid "Application Name"
+msgstr "نام برنامه"
+
+#: views/backend/site.tpl:20
+msgid "Database ID"
+msgstr "شناسه پایگاه داده"
+
+#: views/backend/site.tpl:43
+msgid "Search"
+msgstr "جستجو"
 
 #: views/backend/post_installer.tpl:12 views/backend/post_installer.tpl:17
 msgid "New application added successfuly!"
@@ -91,25 +103,14 @@ msgstr "!در ارسال ایمیل مشکلی بوجود  آمده است"
 msgid "Please Implement Post Installer :)"
 msgstr ""
 
-#: views/backend/settings_privileges.tpl:19
-msgid "Set default privileges for Admin groups"
-msgstr "سطوح دسترسی پیش فرض را برای گروه Admin"
+#: views/backend/settings_limit.tpl:19
+msgid "List items per page"
+msgstr "فهرست موارد هر صفحه"
 
-#: views/backend/settings_privileges.tpl:24
-msgid "Set default privileges for Anonymous groups"
-msgstr "سطوح دسترسی پیش فرض را برای گروه Anonymous"
-
-#: views/backend/site.tpl:12
-msgid "Application Name"
-msgstr "نام برنامه"
-
-#: views/backend/site.tpl:20
-msgid "Database ID"
-msgstr "شناسه پایگاه داده"
-
-#: views/backend/site.tpl:43
-msgid "Search"
-msgstr "جستجو"
+#: views/backend/settings_limit.tpl:20 views/backend/settings_expire.tpl:9
+#: views/backend/settings_expire.tpl:24
+msgid "0 means Unlimited"
+msgstr "0 به معنی نامحدود میباشد"
 
 #: views/backend/install.tpl:21 controllers/backend/install.php:163
 msgid "Application name"
@@ -131,9 +132,33 @@ msgstr "ماژول ها"
 msgid "Submit"
 msgstr "تایید"
 
-#: views/backend/settings_password.tpl:19
-msgid "Random Password's length"
-msgstr "طول رمز تصادفی"
+#: views/backend/settings_user_blocking.tpl:9
+msgid "0 for expire time means unlimited"
+msgstr "عدد 0 برای تاریخ انقضاء به معنای نامحدود می باشد"
+
+#: views/backend/settings_user_blocking.tpl:10
+msgid ""
+"Remember, blocking and uri removing will be disabled if you set blocking "
+"attempts to 0"
+msgstr ""
+"توجه داشته باشید که چنانچه تعداد دفعات غیر مجاز صفر گذاشته شود، مسدود شدن "
+"آدرس غیر فعال میگردد."
+
+#: views/backend/settings_user_blocking.tpl:24
+msgid "Number of verify attempts before blocking"
+msgstr "تعداد دفعات مجاز پیش از مسدود شدن"
+
+#: views/backend/settings_user_blocking.tpl:28
+msgid "Blocking duration (hours)"
+msgstr "طول مدت مسدود بودن کاربر"
+
+#: views/backend/settings_user_blocking.tpl:32
+msgid "Block action"
+msgstr "فعالیت غیر مجاز"
+
+#: views/backend/settings_expire.tpl:23
+msgid "Expire time for verification url (hours)"
+msgstr "اتمام زمان برای شناسایی آدرس "
 
 #: views/backend/settings_email.tpl:9
 msgid ""
@@ -176,78 +201,89 @@ msgstr "موضوع"
 msgid "Email Template"
 msgstr "قالب ایمیل"
 
-#: views/backend/settings_user_blocking.tpl:9
-msgid "0 for expire time means unlimited"
-msgstr "عدد 0 برای تاریخ انقضاء به معنای نامحدود می باشد"
-
-#: views/backend/settings_user_blocking.tpl:10
-msgid ""
-"Remember, blocking and uri removing will be disabled if you set blocking "
-"attempts to 0"
-msgstr ""
-"توجه داشته باشید که چنانچه تعداد دفعات غیر مجاز صفر گذاشته شود، مسدود شدن "
-"آدرس غیر فعال میگردد."
-
-#: views/backend/settings_user_blocking.tpl:24
-msgid "Number of verify attempts before blocking"
-msgstr "تعداد دفعات مجاز پیش از مسدود شدن"
-
-#: views/backend/settings_user_blocking.tpl:28
-msgid "Blocking duration (hours)"
-msgstr "طول مدت مسدود بودن کاربر"
-
-#: views/backend/settings_user_blocking.tpl:32
-msgid "Block action"
-msgstr "فعالیت غیر مجاز"
-
-#: views/backend/settings_expire.tpl:23
-msgid "Expire time for verification url (hours)"
-msgstr "اتمام زمان برای شناسایی آدرس "
-
-#: controllers/backend/backend.php:18 controllers/backend/backend.php:22
-#: controllers/frontend.php:17
+#: controllers/frontend.php:17 controllers/backend/backend.php:18
+#: controllers/backend/backend.php:22
 msgid "MultiSite"
 msgstr "چند بخش"
 
-#: controllers/backend/backend.php:23
-msgid "Sites"
-msgstr "بخش ها"
+#: controllers/frontend.php:19
+msgid "Image's text does not match !"
+msgstr "متن ورودی با متن داخل تصویر یکسان نمی باشد."
 
-#: controllers/backend/backend.php:24
-msgid "Install"
-msgstr "نصب"
+#: controllers/frontend.php:20
+#, php-format
+msgid "%s is required!"
+msgstr "%s الزامی می باشد."
 
-#: controllers/backend/backend.php:25
-msgid "Post Installer"
+#: controllers/frontend.php:32
+msgid "Please enter a valid uri!"
+msgstr "لطفا آدرس URL صحیح را وارد نماید."
+
+#: controllers/frontend.php:37
+msgid ""
+"This uri is expired! Please contact site administrator for further "
+"information."
 msgstr ""
+"آدرس معتبر نمیباشد. لطفا برای اطلاعات بیشتر با بخش پشتیبانی تماس بگیرید."
 
-#: controllers/backend/backend.php:26
-msgid "Delete Site"
-msgstr "پاک کردن سایت(بخش)"
+#: controllers/frontend.php:66 controllers/frontend.php:76
+msgid "Wrong Username or Password."
+msgstr "نام "
 
-#: controllers/backend/backend.php:27
-msgid "Edit Site"
-msgstr "ویرایش سایت(بخش)"
+#: controllers/frontend.php:68 controllers/frontend.php:98
+msgid ""
+"Attention!! Your url will be removed and your username will get blocked if "
+"you miss %s% times while verifying!"
+msgstr ""
+"توجه!!چنانچه %s% بار رمز خودرا اشتباه وارد نمایید، کلمه کاربری شما مسدود "
+"میگردد."
 
-#: controllers/backend/backend.php:28
-msgid "Preview Site"
-msgstr "مشاهده سایت(بخش)"
+#: controllers/frontend.php:91
+msgid ""
+"Attention!! Your url removed and your username got blocked! Contact site "
+"administrator for further information"
+msgstr ""
+"توجه!! کلمه کاربری شما مسدود شده است. لطفا برای اطلاعات بیشتر با بخش "
+"پشتیبانی تماس بگیرید"
 
-#: controllers/backend/backend.php:29
-msgid "Settings"
-msgstr "تنظیمات"
+#: controllers/frontend.php:110
+msgid ""
+"This user name is blocked. Please contact site administrator for further "
+"information or wait for %h% hours and %m% minutes"
+msgstr ""
+" %h% ساعت و %m%کلمه کاریری شما مسدود شده است لطفا برای اطلاعات بیشتر با "
+"پشتیبانی تماس گرفته و یا به مدت صبر نماید"
 
-#: controllers/backend/backend.php:30
-msgid "Page Limits"
-msgstr "محدودیت صفحه"
+#: controllers/frontend.php:117
+msgid ""
+"This user name is blocked. Please contact site administrator for further "
+"information."
+msgstr ""
+"کلمه کاربری مسدود شده است.لطفا برای اطلاعات بیشتر با پشتیبانی تماس بگیرید"
 
-#: controllers/backend/backend.php:31
-msgid "Default Privileges"
-msgstr "سطوح دسترسی پیش فرض"
+#: controllers/frontend.php:135
+msgid "Image's Text"
+msgstr "متن داخل تصویر"
 
-#: controllers/backend/backend.php:32
-msgid "User Blocking"
-msgstr "مسدود شدن کاربر"
+#: controllers/backend/site.php:32
+msgid "Name"
+msgstr "نام"
+
+#: controllers/backend/site.php:33
+msgid "Default Group"
+msgstr "گروه پیش فرض "
+
+#: controllers/backend/site.php:34
+msgid "Create Date"
+msgstr "تاریخ ایجاد"
+
+#: controllers/backend/site.php:35
+msgid "Database Name"
+msgstr "نام پایگاه داده"
+
+#: controllers/backend/site.php:36
+msgid "View"
+msgstr "مشاهده"
 
 #: controllers/backend/settings.php:19
 #, php-format
@@ -319,81 +355,42 @@ msgstr ""
 msgid "Your 'config/sites' directory doesn't exist or isn't writeable."
 msgstr "دایرکتوری 'config/sites' وجود ندارد و یا فاقد دسترسی نوشتن می باشد."
 
-#: controllers/backend/site.php:32
-msgid "Name"
-msgstr "نام"
+#: controllers/backend/backend.php:23
+msgid "Sites"
+msgstr "بخش ها"
 
-#: controllers/backend/site.php:33
-msgid "Default Group"
-msgstr "گروه پیش فرض "
+#: controllers/backend/backend.php:24
+msgid "Install"
+msgstr "نصب"
 
-#: controllers/backend/site.php:34
-msgid "Create Date"
-msgstr "تاریخ ایجاد"
-
-#: controllers/backend/site.php:35
-msgid "Database Name"
-msgstr "نام پایگاه داده"
-
-#: controllers/backend/site.php:36
-msgid "View"
-msgstr "مشاهده"
-
-#: controllers/frontend.php:19
-msgid "Image's text does not match !"
-msgstr "متن ورودی با متن داخل تصویر یکسان نمی باشد."
-
-#: controllers/frontend.php:20
-#, php-format
-msgid "%s is required!"
-msgstr "%s الزامی می باشد."
-
-#: controllers/frontend.php:32
-msgid "Please enter a valid uri!"
-msgstr "لطفا آدرس URL صحیح را وارد نماید."
-
-#: controllers/frontend.php:37
-msgid ""
-"This uri is expired! Please contact site administrator for further "
-"information."
+#: controllers/backend/backend.php:25
+msgid "Post Installer"
 msgstr ""
-"آدرس معتبر نمیباشد. لطفا برای اطلاعات بیشتر با بخش پشتیبانی تماس بگیرید."
 
-#: controllers/frontend.php:66 controllers/frontend.php:76
-msgid "Wrong Username or Password."
-msgstr "نام "
+#: controllers/backend/backend.php:26
+msgid "Delete Site"
+msgstr "پاک کردن سایت(بخش)"
 
-#: controllers/frontend.php:68 controllers/frontend.php:98
-msgid ""
-"Attention!! Your url will be removed and your username will get blocked if "
-"you miss %s% times while verifying!"
-msgstr ""
-"توجه!!چنانچه %s% بار رمز خودرا اشتباه وارد نمایید، کلمه کاربری شما مسدود "
-"میگردد."
+#: controllers/backend/backend.php:27
+msgid "Edit Site"
+msgstr "ویرایش سایت(بخش)"
 
-#: controllers/frontend.php:91
-msgid ""
-"Attention!! Your url removed and your username got blocked! Contact site "
-"administrator for further information"
-msgstr ""
-"توجه!! کلمه کاربری شما مسدود شده است. لطفا برای اطلاعات بیشتر با بخش "
-"پشتیبانی تماس بگیرید"
+#: controllers/backend/backend.php:28
+msgid "Preview Site"
+msgstr "مشاهده سایت(بخش)"
 
-#: controllers/frontend.php:110
-msgid ""
-"This user name is blocked. Please contact site administrator for further "
-"information or wait for %h% hours and %m% minutes"
-msgstr ""
-" %h% ساعت و %m%کلمه کاریری شما مسدود شده است لطفا برای اطلاعات بیشتر با "
-"پشتیبانی تماس گرفته و یا به مدت صبر نماید"
+#: controllers/backend/backend.php:29
+msgid "Settings"
+msgstr "تنظیمات"
 
-#: controllers/frontend.php:117
-msgid ""
-"This user name is blocked. Please contact site administrator for further "
-"information."
-msgstr ""
-"کلمه کاربری مسدود شده است.لطفا برای اطلاعات بیشتر با پشتیبانی تماس بگیرید"
+#: controllers/backend/backend.php:30
+msgid "Page Limits"
+msgstr "محدودیت صفحه"
 
-#: controllers/frontend.php:135
-msgid "Image's Text"
-msgstr "متن داخل تصویر"
+#: controllers/backend/backend.php:31
+msgid "Default Privileges"
+msgstr "سطوح دسترسی پیش فرض"
+
+#: controllers/backend/backend.php:32
+msgid "User Blocking"
+msgstr "مسدود شدن کاربر"

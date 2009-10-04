@@ -8,13 +8,31 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2009-08-08 10:43+0430\n"
+"POT-Creation-Date: 2009-09-29 14:58+0330\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+
+#: views/backend/google_api_keys.tpl:5
+msgid "Add"
+msgstr ""
+
+#: views/backend/google_api_keys.tpl:10
+msgid "Domain:"
+msgstr ""
+
+#: views/backend/google_api_keys.tpl:18
+msgid "Google API key:"
+msgstr ""
+
+#: views/backend/google_api_keys.tpl:29 views/backend/add.tpl:60
+#: views/backend/add.tpl:63 views/backend/edit.tpl:62
+#: views/backend/edit.tpl:65
+msgid "Submit"
+msgstr ""
 
 #: views/backend/add.tpl:8 views/backend/edit.tpl:8 controllers/backend.php:83
 #: controllers/backend.php:115
@@ -49,12 +67,6 @@ msgstr ""
 msgid "Longitude"
 msgstr ""
 
-#: views/backend/add.tpl:60 views/backend/add.tpl:63
-#: views/backend/google_api_keys.tpl:29 views/backend/edit.tpl:62
-#: views/backend/edit.tpl:65
-msgid "Submit"
-msgstr ""
-
 #: views/backend/delete.tpl:5
 #, c-format
 msgid "Do you really want to delete the '%s' Entry?"
@@ -68,16 +80,42 @@ msgstr "بله"
 msgid "No"
 msgstr "خیر"
 
-#: views/backend/google_api_keys.tpl:5
-msgid "Add"
+#: models/locations.php:27
+#, fuzzy
+msgid "Containment"
+msgstr "نام کشور"
+
+#: models/locations.php:28
+msgid "Country"
+msgstr "کشور"
+
+#: models/locations.php:29
+msgid "Province"
+msgstr "استان"
+
+#: models/locations.php:30
+#, fuzzy
+msgid "State"
+msgstr "ذخیره"
+
+#: models/locations.php:31
+msgid "City"
+msgstr "شهر"
+
+#: models/locations.php:32
+msgid "Village"
 msgstr ""
 
-#: views/backend/google_api_keys.tpl:10
-msgid "Domain:"
+#: models/locations.php:33
+msgid "Airport"
 msgstr ""
 
-#: views/backend/google_api_keys.tpl:18
-msgid "Google API key:"
+#: models/locations.php:34
+msgid "Street"
+msgstr ""
+
+#: models/locations.php:35
+msgid "Sight"
 msgstr ""
 
 #: controllers/backend.php:21 controllers/backend.php:22
@@ -139,44 +177,6 @@ msgstr "حذف"
 
 #: controllers/backend.php:168
 msgid "Google API key"
-msgstr ""
-
-#: models/locations.php:27
-#, fuzzy
-msgid "Containment"
-msgstr "نام کشور"
-
-#: models/locations.php:28
-msgid "Country"
-msgstr "کشور"
-
-#: models/locations.php:29
-msgid "Province"
-msgstr "استان"
-
-#: models/locations.php:30
-#, fuzzy
-msgid "State"
-msgstr "ذخیره"
-
-#: models/locations.php:31
-msgid "City"
-msgstr "شهر"
-
-#: models/locations.php:32
-msgid "Village"
-msgstr ""
-
-#: models/locations.php:33
-msgid "Airport"
-msgstr ""
-
-#: models/locations.php:34
-msgid "Street"
-msgstr ""
-
-#: models/locations.php:35
-msgid "Sight"
 msgstr ""
 
 #~ msgid "City saved successfuly!"
