@@ -505,6 +505,7 @@ class Frontend_Controller extends Controller
         $settings = Arag_Config::get('email_settings', NULL, 'core', False, Kohana::config('arag.master_appname'));
         $settings['template'] = _("Thank you for registering in %appname%. To complete you registration please visit the following link".
                                   ":\n\n%verifyuri%\n\nYour Username: %username%\nYour Password: %password%");
+        $settings['subject']  = "Registration";
         $strings  = array (
                            'verifyuri' => html::anchor('user/frontend/verify/' . $verify_uri),
                            'username'  => $username,
