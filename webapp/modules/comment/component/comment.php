@@ -61,17 +61,22 @@ class Comment_Component extends Component
     }
     // }}}
     // {{{ setUri
-    public function setUri()
+    public function setUri($uri = Null, $redirect_uri = Null)
     {
-        if ($redirect_uri = $this->session->get_once('comment.'.$this->getKey().'.uri')) {
+        ($redirect_uri == Null) AND $redirect_uri = Router::$current_uri;
 
-            $this->uri= $this->session->get_once('comment.'.$this->getKey().'.controller');
+        if ($this->session->get('comment.'.$this->getKey().'.uri')) {
+            $this->uri    = $this->session->get_once('comment.'.$this->getKey().'.controller');
+            $redirect_uri = $this->session->get_once('comment.'.$this->getKey().'.uri');
+
+        } else if ($uri != Null) {
+            $this->uri = $uri;
 
         } else {
 
-            $this->uri    = implode('/', array_diff(Router::$rsegments, Router::$arguments));
-            $this->uri    = rtrim($this->uri, Router::$method.'/'); // Append a slash to $destination
-            $redirect_uri = Router::$current_uri;
+            $this->uri  = implode('/', array_diff(Router::$rsegments, Router::$arguments));
+            $this->uri  = rtrim($this->uri, Router::$method.'/'); // Append a slash to $destination
+            $this->uri .= '/comment_add';
         }
 
         $this->session->set_flash('comment.'.$this->getKey().'.uri', $redirect_uri); // Redirect back here baby
@@ -99,7 +104,7 @@ class Comment_Component extends Component
     // {{{ getUri
     public function getUri()
     {
-        return $this->uri.'/comment_add';
+        return $this->uri;
     }
     // }}}
     // {{{ getComments
