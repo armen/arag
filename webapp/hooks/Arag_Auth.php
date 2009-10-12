@@ -106,7 +106,9 @@ class Arag_Auth {
 
                     if (strpos($privilege, '*') === False) {
                         // Add a trailing slash if there is no * in $privilege
-                        $privilege = rtrim($privilege, '/').'/';
+                        if (strpos($privilege, '@') !== 0) {
+                            $privilege = rtrim($privilege, '/').'/';
+                        }
 
                     } else {
                         // Replace * with .*
