@@ -47,6 +47,7 @@ class Arag {
                 break;
 
             default:
+                // Ok, return false so auto_load of Kohana has chance to find it
                 return False;
         }
 
