@@ -7,9 +7,7 @@
 // $Id$
 // ---------------------------------------------------------------------------
 
-require_once "backend.php";
-
-class PostInstaller_Controller extends Backend_Controller
+class PostInstaller_Controller extends Multisite_Backend
 {
     // {{{ index_read
     public function index_read()
@@ -28,5 +26,3 @@ class PostInstaller_Controller extends Backend_Controller
     }
     // }}}
 }
-
-?>

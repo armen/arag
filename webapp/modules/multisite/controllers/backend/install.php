@@ -7,9 +7,7 @@
 // $Id$
 // ---------------------------------------------------------------------------
 
-require_once "backend.php";
-
-class Install_Controller extends Backend_Controller
+class Install_Controller extends Multisite_Backend
 {
     // {{{ Construct
     public function __construct()
@@ -179,4 +177,3 @@ class Install_Controller extends Backend_Controller
     }
     // }}}
 }
-?>

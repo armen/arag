@@ -7,7 +7,7 @@
 // $Id$
 // ---------------------------------------------------------------------------
 
-class Backend_Controller extends Controller
+class Multisite_Backend extends Controller
 {
     // {{{ Constructor
     public function __construct()
@@ -41,4 +41,3 @@ class Backend_Controller extends Controller
     }
     // }}}
 }
-?>

@@ -6,9 +6,7 @@
 // $Id$
 // ---------------------------------------------------------------------------
 
-require_once "backend.php";
-
-class Site_Controller extends Backend_Controller
+class Site_Controller extends Multisite_Backend
 {
     // {{{ index_any
     public function index_any($page = NULL)
