@@ -4,9 +4,10 @@
 // +-------------------------------------------------------------------------+
 // $Id$
 // ---------------------------------------------------------------------------
+
 class  Logger_Backend extends Controller
 {
-    // {{{
+    // {{{ __construct
     function __construct()
     {
         parent::__construct();
@@ -28,4 +29,5 @@ class  Logger_Backend extends Controller
         $this->global_tabs->setTitle(_("Logs"));
         $this->global_tabs->addItem(_("List"), "logger/backend");
     }
+    // }}}
 }
