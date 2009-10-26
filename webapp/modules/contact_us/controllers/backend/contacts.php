@@ -6,9 +6,7 @@
 // $Id$
 // ---------------------------------------------------------------------------
 
-require_once "backend.php";
-
-class Contacts_Controller extends Backend_Controller
+class Contacts_Controller extends ContactUs_Backend
 {
     // {{{ Constructor
     public function __construct()
