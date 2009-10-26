@@ -6,9 +6,7 @@
 // $Id$
 // ---------------------------------------------------------------------------
 
-require_once "backend.php";
-
-class Applications_Controller extends Backend_Controller
+class Applications_Controller extends User_Backend
 {
     // {{{ Constructor
     public function __construct()

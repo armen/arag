@@ -6,7 +6,7 @@
 // $Id$
 // ---------------------------------------------------------------------------
 
-class Backend_Controller extends Controller
+class User_Backend extends Controller
 {
     // {{{ Properties
 
@@ -109,7 +109,7 @@ class Backend_Controller extends Controller
         $privileges->addColumn('Applications.getModifyDate', _("Modify Date"), PList_Component::VIRTUAL_COLUMN);
         $privileges->addColumn('privilege', _("Privilege"));
         $privileges->addAction('user/backend/applications/privileges_edit/#id#', _("Edit"), 'edit_action');
-        $privileges->addAction('Backend_Controller::_view_tree_action');
+        $privileges->addAction('User_Backend::_view_tree_action');
         $privileges->addAction('user/backend/applications/privileges_delete/#id#', _("Delete"), 'delete_action');
         $privileges->addAction("user/backend/applications/privileges_delete", _("Delete"), 'delete_action', False, PList_Component::GROUP_ACTION);
         $privileges->setGroupActionParameterName('id');
