@@ -550,9 +550,9 @@ class date extends date_Core {
     {
             if (($do_localization && Kohana::config('locale.lang') == "fa") || $type == 'jalali') {
                 $date = date::gregorian_to_jalali($timestamp);
-                $str  = $date['year'].'/'.
-                        (((int) $date['month']) < 10 ? '0' . $date['month'] : $date['month']).'/'.
-                        (((int) $date['day']) < 10 ? '0' . $date['day'] : $date['day']);
+                $str = str_replace(Array('y', 'Y', 'm', 'd'),
+                                   Array($date['year'], $date['year'], (((int) $date['month']) < 10 ? '0' . $date['month'] : $date['month']),
+                                         (((int) $date['day']) < 10 ? '0' . $date['day'] : $date['day'])), $format);
             } else {
                 $str  = date($format, $timestamp);
             }
