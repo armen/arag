@@ -53,7 +53,7 @@ class Backend_Controller extends Controller
         $this->layout->content->to = $to;
     }
 
-    public function index_read()
+    public function pie_read()
     {
         $plugins = $this->statistics->getPlugins();
         set_time_limit(0);

@@ -1,5 +1,5 @@
 {arag_block}
-    {arag_form uri="statistics/backend/plain" method="post"}
+    {arag_form uri="statistics/backend/index" method="post"}
         <table align="{dir}">
             <tr>
                 <td>
