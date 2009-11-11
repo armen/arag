@@ -44,8 +44,14 @@ class Backend_Controller extends Controller
     // }}}
     // {{{ listing
     // {{{ listing_read
-    public function listing_read($uri)
+    public function listing_read($uri = Null)
     {
+        if ($uri == Null) {
+            $uri = Router::routed_uri('_default');
+            $url = url::site('help/backend/listing/'.$this->model->encode($uri));
+            url::redirect($url);
+        }
+
         $this->global_tabs->setParameter('uri', $uri);
         $this->global_tabs->setParameter('original_uri', $this->model->decode($uri));
 
@@ -58,19 +64,6 @@ class Backend_Controller extends Controller
         $helps->addAction('help/backend/delete/#id#', _("Delete"), 'delete_action');
 
         $this->layout->content = new View('backend/listing');
-    }
-    // }}}
-    // {{{ listing_validate_read
-    public function listing_validate_read($uri=null)
-    {
-        $this->validation->add_rules(0, 'required');
-        return $this->validation->validate();
-    }
-    // }}}
-    // {{{ listing_read_error
-    public function listing_read_error($uri=null)
-    {
-        $this->_invalid_request();
     }
     // }}}
     // }}}
