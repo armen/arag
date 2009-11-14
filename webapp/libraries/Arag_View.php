@@ -38,6 +38,12 @@ class View extends View_Core {
         }
     }
     // }}}
+    // {{{ toArray
+    public function toArray()
+    {
+        return array_merge(parent::$kohana_global_data, $this->kohana_local_data);
+    }
+    // }}}
 }
 
 ?>
