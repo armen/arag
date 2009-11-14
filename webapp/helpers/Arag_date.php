@@ -488,7 +488,7 @@ class date extends date_Core {
         (is_string($values) && !empty($values) && (strpos($values, ',') !== False)) AND $values = explode(',', trim($values, ','));
 
         if ($values === Null) {
-            return Null;
+            return False;
         }
 
         $lang = Kohana::config('locale.lang') == "fa";
