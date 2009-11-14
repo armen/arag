@@ -24,7 +24,7 @@ if [ -d $LIBS_PATH/kohana ]; then
     svn update ${LIBS_PATH}/kohana
 else
     mkdir -p ${LIBS_PATH}/kohana
-    svn co http://source.kohanaphp.com/tags/2.2.1/system ${LIBS_PATH}/kohana
+    svn co http://source.kohanaphp.com/svn/kohana2/tags/2.2.1/system ${LIBS_PATH}/kohana
 fi
 
 # Checkout kohana's payment module
@@ -32,7 +32,7 @@ if [ -d $LIBS_PATH/kohana_payment ]; then
     svn update ${LIBS_PATH}/kohana_payment
 else
     mkdir -p ${LIBS_PATH}/kohana_payment
-    svn co http://source.kohanaphp.com/tags/2.2.1/modules/payment ${LIBS_PATH}/kohana_payment
+    svn co http://source.kohanaphp.com/svn/kohana2/tags/2.2.1/modules/payment ${LIBS_PATH}/kohana_payment
 fi
 
 # Download smarty
