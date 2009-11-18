@@ -102,7 +102,7 @@ class Arag_Auth {
                     //     contain two sections. in which the second one can
                     //     contain * too.
                     ((boolean) $whiteList == True &&
-                     preg_match('/^(([a-z_]+(((\/[a-z_]+){0,2}\/\*)|((\/[a-z_]+){2,3})))|(@[a-z_]+\/(([a-z_]+)|(\*))))$/', $privilege))) {
+                     preg_match('/^(([a-z_]+(((\/[a-z_]+){0,3}\/\*)|((\/[a-z_]+){2,3})))|(@[a-z_]+\/(([a-z_]+)|(\*))))$/', $privilege))) {
 
                     if (strpos($privilege, '*') === False) {
                         // Add a trailing slash if there is no * in $privilege
