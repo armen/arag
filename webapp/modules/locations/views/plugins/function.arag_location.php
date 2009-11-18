@@ -51,7 +51,7 @@ function smarty_function_arag_location($params, &$smarty)
         }
         $path = array_reverse($path);
 
-        $view  = new View('frontend/arag_location_readonly');        
+        $view  = new View('frontend/arag_location_readonly');
         $view->all      = $all;
         $view->path     = $path;
     } else {

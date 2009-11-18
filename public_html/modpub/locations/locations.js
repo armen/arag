@@ -58,7 +58,7 @@ locations = new Class({
             new_select.adopt(this.option(location));
         }.bind(this));
 
-        new_select.inject(this.container(), 'bottom');
+        new_select.inject(this.container(), 'top');
         new Element('br').inject(new_select, 'after');
 
         var parent = locations['0']['parent'];
@@ -82,7 +82,7 @@ locations = new Class({
 
         var location = select.get('value'); //Get the selected option's value.
 
-        new Request.JSON({    
+        new Request.JSON({
             url      : this.url+'/locations/frontend/search/getByParent/'+location,
             onSuccess: function(locations) {
                 if (!locations || locations.length == 0)
