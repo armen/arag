@@ -32,7 +32,14 @@ class locations {
             $current = array_pop($array);
         }
         return $current;
-        
+    }
+    // }}}
+    // {{{ display
+    public function display($row, $field)
+    {
+        $view = New View('arag_templates/location');
+        $view->location = $row[$field];
+        return $view->render();
     }
     // }}}
 }

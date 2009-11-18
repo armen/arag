@@ -1,0 +1,1 @@
+{arag_location readonly=true value=$location}
