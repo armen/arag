@@ -60,6 +60,7 @@ class Arag_Auth {
                 die("You are not authorized to access this section!\n");
             }
 
+            Kohana::log('info', 'User is not authorized to access `'.$destination.'`');
             url::redirect('not_authorized');
             exit;
         }
