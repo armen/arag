@@ -417,7 +417,7 @@ class User_Backend extends Controller
         if ($this->input->post('parentid') === "0") {
             return true;
         }
-        return (boolean) preg_match('/^(([a-z_]+(((\/[a-z_]+){0,3}\/\*)|((\/[a-z_]+){2,3})))|(@[a-z_]+\/(([a-z_]+)|(\*))))$/', strtolower(trim($privilege, '/')));
+        return (boolean) preg_match('/^@?[a-z_]+(((\/[a-z_]+){0,3}\/\*)|((\/[a-z_]+){1,3}))$/', strtolower(trim($privilege, '/')));
     }
     // }}}
     // {{{ _check_label

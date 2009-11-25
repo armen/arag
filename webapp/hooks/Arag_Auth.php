@@ -94,16 +94,16 @@ class Arag_Auth {
                     //     and other sections are lower case cheractrer(s)
                     ((boolean) $whiteList == False && preg_match('/^[a-z_]+(\/[a-z_]+){0,2}\/\*$/', $privilege)) ||
                     // WHITELIST:
-                    //     Which can include urls and rules. URL contains four section which every section
-                    //     separated with a /. It should contain at least two
-                    //     sections. Each section can contain *
-                    //     (except first and last section when we have 4 or 3 sections) or
+                    //     Which can include urls and rules. URL contains five
+                    //     sections which every section separated with a /.
+                    //     It should contain at least two sections. Each section can contain *
+                    //     (except first and last section when we have 5, 4 or 3 sections) or
                     //     lower case character(s). At the other hand, a rule
-                    //     should be initialized with a @ at the beggining and
-                    //     contain two sections. in which the second one can
+                    //     should be initialized with an @ at the beggining and
+                    //     contain five sections. in which the last one can
                     //     contain * too.
                     ((boolean) $whiteList == True &&
-                     preg_match('/^(([a-z_]+(((\/[a-z_]+){0,3}\/\*)|((\/[a-z_]+){2,3})))|(@[a-z_]+\/(([a-z_]+)|(\*))))$/', $privilege))) {
+                     preg_match('/^@?[a-z_]+(((\/[a-z_]+){0,3}\/\*)|((\/[a-z_]+){1,3}))$/', $privilege))) {
 
                     if (strpos($privilege, '*') === False) {
                         // Add a trailing slash if there is no * in $privilege
