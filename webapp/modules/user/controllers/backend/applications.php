@@ -1335,7 +1335,7 @@ class Applications_Controller extends User_Backend
                 $_appname = ($appname == '_all_') ? Null : $appname;
                 $groups   = $this->Groups->getGroupsName($_appname);
 
-                $app_groups[$appname] = Array();
+                $app_groups[$appname] = Array('_all_' => _("All"));
                 $app_groups[$appname] = array_merge($app_groups[$appname], array_combine($groups, $groups));
             }
         }
@@ -1367,20 +1367,38 @@ class Applications_Controller extends User_Backend
 
         while (($key = array_search('_all_', $applications)) !== False) {
 
-            $all_apps   = $this->Applications->getAppsName();
-            $all_groups = ($groups[$key] == '_all_') ? $this->Groups->getGroupsName() : Array($groups[$key]);
+            $all_apps = $this->Applications->getAppsName();
+            $group    = $groups[$key];
 
             unset($applications[$key]);
             unset($groups[$key]);
 
-            foreach ($all_groups as $group) {
-                $applications = array_merge($applications, $all_apps);
-                $apps_count   = count($applications);
-                $groups       = array_pad($groups, $apps_count, $group);
-            }
+            $applications = array_merge($applications, $all_apps);
+            $apps_count   = count($applications);
+            $groups       = array_pad($groups, $apps_count, $group);
         }
 
-        $id = $this->Privileges->addLabel($label, $parent, $privilege, $this->session->get('user.username'));
+        while (($key = array_search('_all_', $groups)) !== False) {
+
+            $all_groups  = $this->Groups->getGroupsName();
+            $application = $applications[$key];
+
+            unset($applications[$key]);
+            unset($groups[$key]);
+
+            $groups       = array_merge($groups, $all_groups);
+            $groups_count = count($groups);
+            $applications = array_pad($applications, $groups_count, $application);
+        }
+
+        $result = $this->Privileges->getLabelsByPrivilege($privilege, $parent);
+
+        if (empty($result)) {
+            $id = $this->Privileges->addLabel($label, $parent, $privilege, $this->session->get('user.username'));
+        } else {
+            $result = current($result);
+            $id     = (int) $result['id'];
+        }
 
         foreach ($applications as $key => $appname) {
 

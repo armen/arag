@@ -177,7 +177,8 @@ class Privileges_Model extends Model
             return $filter = array();
         }
 
-        $rows = unserialize($row[0]['privileges']);
+        // Use @ here, in case of broken serilized string it will not throw an error
+        $rows = @unserialize($row[0]['privileges']);
 
         if ($flag) {
             return $rows;
@@ -294,6 +295,18 @@ class Privileges_Model extends Model
 
         $this->db->where('id', $groupid);
         $this->db->update($this->tableNameGroups, array('privileges' => $privileges));
+    }
+    // }}}
+    // {{{ getLabelsByPrivilege
+    public function getLabelsByPrivilege($privilege, $parent = False)
+    {
+        $this->db->select('id, label, parent_id, privilege, modified_by, created_by, modify_date, create_date')
+                 ->from($this->tableNamePrivileges)
+                 ->where('privilege', $privilege);
+
+        ($parent !== False) AND $this->db->where('parent_id', (int) $parent);
+
+        return $this->db->get()->result_array(False);
     }
     // }}}
 }
