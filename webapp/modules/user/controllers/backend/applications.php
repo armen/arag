@@ -1070,7 +1070,7 @@ class Applications_Controller extends User_Backend
     public function new_group_validate_write()
     {
         $this->validation->name('newgroup', _("Name for new group"))->pre_filter('trim', 'newgroup')
-             ->add_rules('newgroup', 'required', array($this, '_check_group_name'));
+             ->add_rules('newgroup', 'required', 'alpha_dash', array($this, '_check_group_name'));
 
         $this->validation->name('expire_date', _("Expire date"))->add_rules('expire_date', 'valid::date[expire_date]');
 

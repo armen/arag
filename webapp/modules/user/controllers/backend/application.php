@@ -368,7 +368,7 @@ class Application_Controller extends User_Backend
     public function new_group_validate_write()
     {
         $this->validation->name('newgroup', _("Name for new group"))->pre_filter('trim', 'newgroup')
-             ->add_rules('newgroup', 'required', array($this, '_check_group_name'));
+             ->add_rules('newgroup', 'required', 'alpha_dash', array($this, '_check_group_name'));
 
         return $this->validation->validate();
     }
