@@ -56,11 +56,12 @@ class Arag_Auth {
                 $session->set_flash('not_authorized_redirect_url', $destination);
             }
 
+            Kohana::log('info', 'User is not authorized to access `'.$destination.'`');
+
             if (PHP_SAPI == 'cli') {
                 die("You are not authorized to access this section!\n");
             }
 
-            Kohana::log('info', 'User is not authorized to access `'.$destination.'`');
             url::redirect('not_authorized');
             exit;
         }
