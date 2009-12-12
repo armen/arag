@@ -31,17 +31,6 @@
 
 {foreach from=$plugins item='plugin'}
     {arag_block title=$plugin->title() template='default'}
-        <table align"{dir}">
-            {foreach from=$plugin->series() key='name' item='title'}
-                <tr>
-                    <td>
-                        {$title}:
-                    </td>
-                    <td>
-                        {$plugin->data.$name}
-                    </td>
-                </tr>
-            {/foreach}
-        </table>
+        {$plugin->plain($plugin->data, $from, $to)}
     {/arag_block}
 {/foreach}

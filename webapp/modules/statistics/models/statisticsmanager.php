@@ -8,12 +8,15 @@
 
 class StatisticsManager_Model extends Model
 {
-    public function getPlugins()
+    public function getPlugins($feature = Null)
     {
-        $plugins = Kohana::Config('plugins');
-
-        foreach($plugins as $plugin_name => $module) {
+        $plugins_list = Kohana::Config('plugins');
+        $plugins      = Array();
+        foreach($plugins_list as $plugin_name => $module) {
             $plugin                = Model::load($plugin_name.'_statistics', $module);
+            if ($feature && !in_array($feature, $plugin->supports())) {
+                continue;
+            }
             $plugins[$plugin_name] = $plugin;
         }
 

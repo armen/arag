@@ -20,9 +20,8 @@ class Backend_Controller extends Controller
         $this->global_tabs->setTitle(_("Statistics"));
         $this->global_tabs->addItem(_("Statistics"), 'statistics/backend');
         $this->global_tabs->addItem(_("Plain"), 'statistics/backend/index', 'statistics/backend');
-//         $this->global_tabs->addItem(_("Today"), 'statistics/backend/plain', 'statistics/backend');
         $this->global_tabs->addItem(_("Overall"), 'statistics/backend/timeline/'.self::OVERALL, 'statistics/backend');
-//         $this->global_tabs->addItem(_("Daily"), 'statistics/backend/timeline/'.self::DAILY, 'statistics/backend');
+        $this->global_tabs->addItem(_("Daily"), 'statistics/backend/timeline/'.self::DAILY, 'statistics/backend');
 
         $this->statistics = Model::load('StatisticsManager', 'statistics');
     }
@@ -40,13 +39,12 @@ class Backend_Controller extends Controller
             $to = mktime(23,59,59);
         }
 
-        $plugins = $this->statistics->getPlugins();
+        $plugins = $this->statistics->getPlugins(Statistic_Model::PLAIN);
         foreach($plugins as $plugin_name => &$plugin) {
             $data         = Array();
             $data         = $plugin->fetch($from, $to);
             $plugin->data = $data;
         }
-
         $this->layout->content = New View('backend/plain_result');
         $this->layout->content->plugins = $plugins;
         $this->layout->content->from = $from;
@@ -55,14 +53,9 @@ class Backend_Controller extends Controller
 
     public function pie_read()
     {
-        $plugins = $this->statistics->getPlugins();
+        $plugins = $this->statistics->getPlugins(Statistic_Model::PIE);
         set_time_limit(0);
         foreach($plugins as $plugin_name => &$plugin) {
-
-            if (!in_array(Statistic_Model::PIE, $plugin->supports())) {
-                continue;
-            }
-
             $data    = Array();
             $from    = mktime(0, 0, 0);
 
@@ -82,10 +75,9 @@ class Backend_Controller extends Controller
 
     public function timeline_read($timeline = self::DAY)
     {
-        $plugins = $this->statistics->getPlugins();
+        $plugins = $this->statistics->getPlugins(Statistic_Model::TIMELINE);
         set_time_limit(0);
         foreach($plugins as $plugin_name => &$plugin) {
-
             $data    = Array();
             $from    = $this->statistics->getBeginning();
             $to      = time();
@@ -103,7 +95,7 @@ class Backend_Controller extends Controller
 
             $chart = $plugin->timeline($data);
 
-            $filename = 'modpub/statistics/cache/'.$plugin_name.'_'.$from.'_'.$time.'.png';
+            $filename = 'modpub/statistics/cache/'.$plugin_name.'_'.$from.'_'.$time.'_'.$timeline.'.png';
             $chart->Render(DOCROOT.'/'.$filename);
             $plugin->image = $filename;
         }

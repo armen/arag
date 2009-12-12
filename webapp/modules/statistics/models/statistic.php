@@ -13,6 +13,7 @@ class Statistic_Model extends Model
 
     const TIMELINE = 'timeline';
     const PIE      = 'pie';
+    const PLAIN    = 'plain';
 
     public function __construct()
     {
@@ -45,7 +46,7 @@ class Statistic_Model extends Model
 
     public function supports()
     {
-        return array(self::TIMELINE, self::PIE);
+        return array(self::PLAIN, self::TIMELINE, self::PIE);
     }
 
     public function timeline($data)
@@ -124,5 +125,10 @@ class Statistic_Model extends Model
         $Test->drawPieLegend(310,15,$pData->GetData(),$pData->GetDataDescription(),250,250,250);  
 
         return $Test;
+    }
+
+    public function plain($data, $from, $to)
+    {
+        return New View('backend/plain', array('data' => $data, 'from' => $from, 'to' => $to));
     }
 }
