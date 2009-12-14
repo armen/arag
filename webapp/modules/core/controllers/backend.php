@@ -60,7 +60,7 @@ class Backend_Controller extends Controller
         }
 
         // Merge with user settings
-        $settings = array_merge($settings, $data);
+        $settings = array_merge($data, $settings);
 
         Arag_Config::set('email_settings', $settings, 'core', Kohana::config('arag.master_appname'));
 
