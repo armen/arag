@@ -26,6 +26,12 @@
             {if $plist->hasStats()}
                 <table border="0" cellpadding="0" cellspacing="0" dir="{dir}" width="100%">
                     <tr>
+                        <td class="plist_icon">
+                            <a href="{kohana_helper function="url::site" uri="plist/frontend/download_csv/index/`$namespace`"}"
+                               title={quote}_("Download as CSV"){/quote} class="plist_download">
+                                _("Download as CSV")
+                            </a>
+                        </td>
                         <td align="{right}" dir="{dir}" width="100%">
                             _("Number of Pages"):&nbsp;{$pager.numpages}<br />
                             _("Number of Resources"):&nbsp;{$resource_count}

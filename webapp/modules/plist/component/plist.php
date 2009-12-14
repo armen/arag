@@ -48,6 +48,7 @@ class PList_Component extends Component implements IteratorAggregate, ArrayAcces
     const SORTABLE                    = 8;
     const COUNTER                     = 16;
     const STATS                       = 32;
+    const CSV                         = 64;
 
     private $properties               = 0;
 
@@ -60,7 +61,7 @@ class PList_Component extends Component implements IteratorAggregate, ArrayAcces
         $this->emptyListMessage = _("List content is Empty!");
 
         $this->setResource(Array());
-        $this->setProperties(self::CAPTION | self::HEADER | self::FOOTER | self::SORTABLE | self::COUNTER | self::STATS);
+        $this->setProperties(self::CAPTION | self::HEADER | self::FOOTER | self::SORTABLE | self::COUNTER | self::STATS | self::CSV);
 
         // Set default URI
         $uri = trim(Router::$routed_uri, '/').'/'; // Add trailing slash
@@ -185,6 +186,12 @@ class PList_Component extends Component implements IteratorAggregate, ArrayAcces
         return $this->properties & self::STATS;
     }
     // }}}
+    // {{{ hasCsv
+    public function hasCsv()
+    {
+        return $this->properties & self::CSV;
+    }
+    // }}}    
     // {{{ hasCounter
     public function hasCounter()
     {

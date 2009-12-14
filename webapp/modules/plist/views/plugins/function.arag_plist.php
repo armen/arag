@@ -54,6 +54,14 @@ function smarty_function_arag_plist($params, &$smarty)
         // Get namespace
         $namespace = $smarty->get_template_vars($name.'_namespace');
 
+        if ($plist->hasCsv()) {
+            Session::instance()->set_flash('plist_'.$namespace, Array
+            (
+                'resource' => iterator_to_array($plist),
+                'columns'  => $plist->getColumns()
+            ));
+        }
+
         $smarty->assign('plist', $plist);
         $smarty->assign('namespace', $namespace);
         $smarty->assign('plist_templates_path', MODPATH . 'plist/views/');

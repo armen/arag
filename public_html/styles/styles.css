@@ -673,6 +673,13 @@ input[type=reset][disabled] {
     width           : 16px;
     height          : 16px;
 }
+.download_action,
+.plist_download {
+    background      : transparent url(../images/list/download.png) no-repeat center;
+    font-size       : 0px;
+    width           : 16px;
+    height          : 16px;
+}
 .view_profile {
     background      : transparent url(../images/list/view_profile.png) no-repeat center;
     font-size       : 0px;
