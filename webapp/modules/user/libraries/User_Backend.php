@@ -354,7 +354,7 @@ class User_Backend extends Controller
         $this->validation->name('limit', _("Limit"))->pre_filter('trim', 'limit')
              ->add_rules('limit', 'valid::numeric');
 
-        $this->validation->validate();
+        return $this->validation->validate();
     }
     // }}}
     // {{{ settings_write_error
