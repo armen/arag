@@ -45,13 +45,15 @@ class View extends View_Core {
     }
     // }}}
     // {{{ set_filename
-	public function set_filename($name, $type = NULL)
-	{
+    public function set_filename($name, $type = NULL)
+    {
+        $type = empty($type) ? Kohana::config('smarty.templates_ext') : $type;
+
         if (file::is_path_absolute($name)) {
             $this->kohana_filename = $name;
 
             // Use the specified type
-			($this->kohana_filetype == NULL && isset($type)) AND $this->kohana_filetype = $type;
+            ($this->kohana_filetype == NULL && isset($type)) AND $this->kohana_filetype = $type;
 
             return $this;
         }
