@@ -27,7 +27,8 @@
                 <table border="0" cellpadding="0" cellspacing="0" dir="{dir}" width="100%">
                     <tr>
                         <td class="plist_icon">
-                            <a href="{kohana_helper function="url::site" uri="plist/frontend/download_csv/index/`$namespace`"}"
+                            {capture assign="module_name"}{kohana_helper function="request::module"}{/capture}
+                            <a href="{kohana_helper function="url::site" uri="plist/frontend/download_csv/index/`$module_name`/`$namespace`"}"
                                title={quote}_("Download as CSV"){/quote} class="plist_download">
                                 _("Download as CSV")
                             </a>

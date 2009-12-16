@@ -430,7 +430,7 @@ class PList_Component extends Component implements IteratorAggregate, ArrayAcces
             // Classname and function separated with a ::
             list($className, $functionName) = explode('::', $callback);
 
-            if (method_exists($className, $functionName)) {
+            if (class_exists($className) && method_exists($className, $functionName)) {
                 $action              = call_user_func_array(array($className, $functionName), $args);
                 $action['uri']       = isset($action['uri']) ? $action['uri'] : Null;
                 $action['label']     = isset($action['label']) ? $action['label'] : Null;
