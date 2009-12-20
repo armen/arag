@@ -371,7 +371,7 @@ input[type=reset][disabled] {
     height          : 24px;
 }
 .plist_odd td {
-    background      : #fff url(../images/misc/background.jpg);
+    background      : #fff url(../images/misc/background.png);
 }
 .plist_even td{
     background-color: #fff;
