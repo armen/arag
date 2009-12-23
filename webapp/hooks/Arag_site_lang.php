@@ -55,9 +55,12 @@ function site_lang()
                 }
             }
 
+            // XXX: Following lines has been commented becaus the redirect is problematic
+            //      But I hope that there is no any other requests that make
+
             // Remove language from url
-            $uri = preg_replace('|^[a-zA-Z]{2}/|', '', url::current());
-            url::redirect($lang.'/'.$uri);
+            // $uri = preg_replace('|^[a-zA-Z]{2}/|', '', url::current());
+            // url::redirect($lang.'/'.$uri);
         }
 
         // Store locale config values
