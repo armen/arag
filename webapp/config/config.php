@@ -107,3 +107,8 @@ $config['modules'] = array
     // MODPATH.'unit_test', // Unit testing
     // MODPATH.'object_db', // New OOP Database library (testing only!)
 );
+
+$config['content_types'] = array
+(
+    'json', 'xml'
+);

@@ -27,6 +27,7 @@ class Router extends Router_Core {
     // {{{ Properties
 
     public static $module          = False;
+    public static $content_type    = False;
     public static $request_method  = Null;
     public static $request_methods = Array('GET' => 'read', 'POST' => 'write', 'PUT' => 'create', 'DELETE' => 'remove');
 
@@ -100,7 +101,15 @@ class Router extends Router_Core {
 
         // Find requested module
         $rsegments    = self::$rsegments;
-        self::$module = current(array_splice($rsegments, 0, 1));
+        self::$module = array_shift($rsegments);
+
+        if (in_array(self::$module, Kohana::config('core.content_types'))) {
+            self::$content_type = self::$module;
+            self::$module       = array_shift($rsegments);
+
+            // Remove first segment of rsegment, its content_type
+            array_shift(self::$rsegments);
+        }
 
         // Set requested module in core.module
         $include_paths = array_unique(array_merge($old_include_paths, Array(MODPATH.self::$module)));

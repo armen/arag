@@ -148,7 +148,11 @@ class Controller extends Controller_Core {
         // Set the method of Router
         Router::$method = $method;
 
-        $alt_validator = $method . '_validate_' . Router::$request_method;
+        $suffix = (Router::$content_type)
+                ? '_' . Router::$content_type . '_' . Router::$request_method
+                : '_' . Router::$request_method;
+
+        $alt_validator = $method . '_validate' . $suffix;
         $validator     = $method . '_validate_any';
         $validator     = method_exists($this, $alt_validator)
                        ? (method_exists($this, $alt_validator) ? $alt_validator : False)
@@ -168,7 +172,7 @@ class Controller extends Controller_Core {
             }
         }
 
-        $alt_method = $method . '_' . Router::$request_method;
+        $alt_method = $method . $suffix;
         $alt_method = ($validated) ? $alt_method : $alt_method . '_error';
         $method     = ($validated) ? $method . '_any' : $method . '_any_error';
 
