@@ -18,6 +18,13 @@ class Messages_Controller extends Controller
         $this->layout->content->message    = $this->session->get('_invalid_request_message');
     }
     // }}}
+    // {{{ invalid_request_json
+    public function invalid_request_json_any()
+    {
+        header("HTTP/1.0 400 Bad Request");
+        die("Invalid Request!");
+    }
+    // }}}
     // {{{ not_authorized
     public function not_authorized_any()
     {
@@ -29,12 +36,26 @@ class Messages_Controller extends Controller
         $this->layout->page_title = _("Not Authorized!");
     }
     // }}}
+    // {{{ not_authorized_json
+    public function not_authorized_json_any()
+    {
+        header("HTTP/1.0 401 Unauthorized");
+        die("Not Authorized!");
+    }
+    // }}}
     // {{{ page_not_found
     public function page_not_found_any()
     {
         $this->layout->content = new View('messages/page_not_found');
 
         $this->layout->page_title = _("Page Not Found!");
+    }
+    // }}}
+    // {{{ page_not_found_json
+    public function page_not_found_json_any()
+    {
+        header("HTTP/1.0 404 Not Found");
+        die("Page Not Found!");
     }
     // }}}
 }
