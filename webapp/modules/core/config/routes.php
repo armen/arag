@@ -16,6 +16,7 @@ $config = array
 (
     'invalid_request' => 'core/frontend/messages/invalid_request',
     'not_authorized'  => 'core/frontend/messages/not_authorized',
+    'page_not_found'  => 'core/frontend/messages/page_not_found',
     'core/backend'    => 'core/backend/email',
     'captcha/default' => 'core/frontend/captcha/index'
 );

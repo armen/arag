@@ -261,7 +261,7 @@ class Controller extends Controller_Core {
         $this->session->set('_invalid_request_message', $message);
         $trace = debug_backtrace();
         Kohana::log('error', 'Invalid request: '.$trace[0]['file'].':'.$trace[0]['line']);
-        url::redirect('invalid_request');
+        url::redirect(ltrim(Router::$content_type.'/invalid_request', '/'));
     }
     // }}}
     // {{{ _display

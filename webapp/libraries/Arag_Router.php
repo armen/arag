@@ -99,18 +99,21 @@ class Router extends Router_Core {
         // Routed segments will never be empty
         self::$rsegments = explode('/', self::$rsegments);
 
-        // Find requested module
+        // Find requested module and content_type
         $rsegments    = self::$rsegments;
         self::$module = array_shift($rsegments);
 
-        $content_types = Kohana::config('core.content_types');
+        // Its possible that content type has already set in routed_uri() method
+        if (! self::$content_type) {
+            $content_types = Kohana::config('core.content_types');
 
-        if (isset($content_types[self::$module])) {
-            self::$content_type = self::$module;
-            self::$module       = array_shift($rsegments);
+            if (isset($content_types[self::$module])) {
+                self::$content_type = self::$module;
+                self::$module       = array_shift($rsegments);
 
-            // Remove first segment of rsegment, its content_type
-            array_shift(self::$rsegments);
+                // Remove first segment of rsegment, its content_type
+                array_shift(self::$rsegments);
+            }
         }
 
         // Set requested module in core.module
@@ -230,6 +233,14 @@ class Router extends Router_Core {
     // {{{ routed_uri
     public static function routed_uri($uri)
     {
+        $segments      = explode('/', $uri);
+        $content_types = Kohana::config('core.content_types');
+
+        if (isset($content_types[current($segments)])) {
+            self::$content_type = array_shift($segments);
+            $uri                = implode('/', $segments);
+        }
+
         static $cache = Array();
 
         if (!isset($cache[$uri])) {

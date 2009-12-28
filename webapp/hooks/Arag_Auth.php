@@ -62,7 +62,7 @@ class Arag_Auth {
                 die("You are not authorized to access this section!\n");
             }
 
-            url::redirect('not_authorized');
+            url::redirect(ltrim(Router::$content_type.'/not_authorized', '/'));
             exit;
         }
     }
