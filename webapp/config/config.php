@@ -110,5 +110,17 @@ $config['modules'] = array
 
 $config['content_types'] = array
 (
-    'json', 'xml'
+    'default' => Array
+    (
+        'backend_layout'  => 'themes/%theme_name%/backend_layout',
+        'frontend_layout' => 'themes/%theme_name%/frontend_layout',
+    ),
+    'json' => Array
+    (
+        'layout' => 'themes/%theme_name%/empty_layout'
+    ),
+    'xml' => Array
+    (
+        'layout' => 'themes/%theme_name%/empty_layout'
+    )
 );

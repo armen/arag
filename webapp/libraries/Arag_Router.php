@@ -103,7 +103,9 @@ class Router extends Router_Core {
         $rsegments    = self::$rsegments;
         self::$module = array_shift($rsegments);
 
-        if (in_array(self::$module, Kohana::config('core.content_types'))) {
+        $content_types = Kohana::config('core.content_types');
+
+        if (isset($content_types[self::$module])) {
             self::$content_type = self::$module;
             self::$module       = array_shift($rsegments);
 

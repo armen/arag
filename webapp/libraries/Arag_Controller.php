@@ -38,13 +38,29 @@ class Controller extends Controller_Core {
         $this->validation = Validation::factory();
 
         if ($this->layout == Null) {
-            $theme = Kohana::config('theme.default');
+            $theme         = Kohana::config('theme.default');
+            $content_types = Kohana::config('core.content_types');
 
-            if (strpos(Router::$controller_path, 'backend') !== False || Router::$controller === 'backend') {
-                $this->layout = 'themes/'.$theme.'/backend_layout';
-            } else {
-                $this->layout = 'themes/'.$theme.'/frontend_layout';
+            $content_type = Router::$content_type ? Router::$content_type : 'default';
+
+            if (isset($content_types[$content_type])) {
+
+                if (isset($content_types[$content_type]['layout'])) {
+                    $this->layout = $content_types[$content_type]['layout'];
+                } else {
+                    $prefix = (strpos(Router::$controller_path, 'backend') !== False || Router::$controller === 'backend')
+                            ? 'backend_'
+                            : 'frontend_';
+
+                    $this->layout = $content_types[$content_type][$prefix.'layout'];
+                }
             }
+
+            $this->layout = str_replace('%theme_name%', $theme, $this->layout);
+        }
+
+        if ($this->layout == Null) {
+            throw new Exception('There is no layout for current content_type, please set a layout in core.content_types');
         }
 
         $this->session = Session::instance();
@@ -152,8 +168,12 @@ class Controller extends Controller_Core {
                 ? '_' . Router::$content_type . '_' . Router::$request_method
                 : '_' . Router::$request_method;
 
+        $any_suffix = (Router::$content_type)
+                    ? '_' . Router::$content_type . '_any'
+                    : '_any';                
+
         $alt_validator = $method . '_validate' . $suffix;
-        $validator     = $method . '_validate_any';
+        $validator     = $method . '_validate' . $any_suffix;
         $validator     = method_exists($this, $alt_validator)
                        ? (method_exists($this, $alt_validator) ? $alt_validator : False)
                        : (method_exists($this, $validator) ? $validator : False);
