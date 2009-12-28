@@ -209,6 +209,9 @@ class Controller extends Controller_Core {
                 return;
 
             } else {
+                if (strpos($alt_method, 'error') !== False) {
+                    throw new Exception("Couldn't find any of the expected error handler methods, neither '{$alt_method}' nor '{$err_method}'!");
+                }
                 Event::run('system.404');
                 return;
             }
