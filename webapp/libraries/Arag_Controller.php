@@ -170,7 +170,7 @@ class Controller extends Controller_Core {
 
         $any_suffix = (Router::$content_type)
                     ? '_' . Router::$content_type . '_any'
-                    : '_any';                
+                    : '_any';
 
         $alt_validator = $method . '_validate' . $suffix;
         $validator     = $method . '_validate' . $any_suffix;
@@ -194,12 +194,12 @@ class Controller extends Controller_Core {
 
         $alt_method = $method . $suffix;
         $alt_method = ($validated) ? $alt_method : $alt_method . '_error';
-        $method     = ($validated) ? $method . '_any' : $method . '_any_error';
+        $err_method = ($validated) ? $method . $any_suffix : $method . $any_suffix .'_error';
 
         // Is method exists?
         $method = method_exists($this, $alt_method)
                 ? (method_exists($this, $alt_method) ? $alt_method : False)
-                : (method_exists($this, $method) ? $method : False);
+                : (method_exists($this, $err_method) ? $err_method : False);
 
         if ($method == False) {
             // There is no method, try to find _default method
