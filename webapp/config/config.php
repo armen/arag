@@ -117,7 +117,7 @@ $config['content_types'] = array
     ),
     'json' => Array
     (
-        'layout' => 'themes/%theme_name%/empty_layout'
+        'layout' => 'themes/%theme_name%/json_layout'
     ),
     'xml' => Array
     (

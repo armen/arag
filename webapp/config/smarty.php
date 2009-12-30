@@ -31,7 +31,8 @@ $config = Array
     ),
     'modifier_funcs'        => Array         // We'll allow these modifiers
     (
-        'sprintf', 'count', 'urlencode', 'urldecode', 'htmlspecialchars_decode', 'trim', 'current', 'gettext', 'strtolower', 'strlen'
+        'sprintf', 'count', 'urlencode', 'urldecode', 'htmlspecialchars_decode', 'trim', 'current', 'gettext', 'strtolower', 'strlen',
+        'json_encode'
     ),
 
     'post_filters'          => Array         // XXX: After change clear the cache to take effect

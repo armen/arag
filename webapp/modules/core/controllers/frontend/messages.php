@@ -22,7 +22,8 @@ class Messages_Controller extends Controller
     public function invalid_request_json_any()
     {
         header("HTTP/1.0 400 Bad Request");
-        die("Invalid Request!");
+
+        $this->layout->content = 'Invalid Request!';
     }
     // }}}
     // {{{ not_authorized
@@ -40,7 +41,8 @@ class Messages_Controller extends Controller
     public function not_authorized_json_any()
     {
         header("HTTP/1.0 401 Unauthorized");
-        die("Not Authorized!");
+
+        $this->layout->content = 'Not Authorized!';
     }
     // }}}
     // {{{ page_not_found
@@ -55,7 +57,8 @@ class Messages_Controller extends Controller
     public function page_not_found_json_any()
     {
         header("HTTP/1.0 404 Not Found");
-        die("Page Not Found!");
+
+        $this->layout->content = 'Page Not Found!';
     }
     // }}}
 }
