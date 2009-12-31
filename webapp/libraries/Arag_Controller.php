@@ -196,7 +196,7 @@ class Controller extends Controller_Core {
         $alt_method = ($validated) ? $alt_method : $alt_method . '_error';
         $err_method = ($validated) ? $method . $any_suffix : $method . $any_suffix .'_error';
 
-        // Is method exists?
+        // Does method exists?
         $method = method_exists($this, $alt_method)
                 ? (method_exists($this, $alt_method) ? $alt_method : False)
                 : (method_exists($this, $err_method) ? $err_method : False);
@@ -210,9 +210,17 @@ class Controller extends Controller_Core {
 
             } else {
                 if (strpos($alt_method, 'error') !== False) {
-                    throw new Exception("Couldn't find any of the expected error handler methods, neither '{$alt_method}' nor '{$err_method}'!");
+
+                    if (method_exists($this, '_'.Router::$content_type.'_default_error')) {
+                        $this->_call('_'.Router::$content_type.'_default_error');
+                    } else {
+                        throw new Exception("Couldn't find any of the expected error handler methods, neither '{$alt_method}' nor '{$err_method}'!");
+                    }
+
+                } else {
+                    Event::run('system.404');
                 }
-                Event::run('system.404');
+
                 return;
             }
         }
@@ -221,7 +229,7 @@ class Controller extends Controller_Core {
     }
     // }}}
     // {{{ _call
-    private function _call($method, $arguments)
+    private function _call($method, $arguments = Array())
     {
         $result = True;
 
@@ -349,6 +357,19 @@ class Controller extends Controller_Core {
         Router::setup();
 
         return $result;
+    }
+    // }}}
+    // {{{ _json_default_error
+    public function _json_default_error()
+    {
+        $errors         = $this->validation->get_errors();
+        $messages       = $this->validation->get_messages();
+        $error_messages = Array();
+
+        foreach($errors as $error) {
+            $error_messages[] = $messages[ $error ];
+        }
+        $this->layout->content = $error_messages;
     }
     // }}}
 }
