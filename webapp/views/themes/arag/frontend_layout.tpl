@@ -49,6 +49,7 @@
     {/arag_block}
 
     {arag_help_messages}
+    {* DO NOT USE $content HERE, IT CAUSES LAYOUT TO BE RENDERED TWICE *}
     {$content_wrapper|smarty:nodefaults|default:""}
     {literal}
         Execution: <b>{execution_time}</b> Memory usage: <b>{memory_usage}</b> Included files: <b>{included_files}</b>
