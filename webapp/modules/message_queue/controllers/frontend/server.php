@@ -35,7 +35,9 @@ class Server_Controller extends MessageQueue_Frontend
         declare(ticks = 1);
 
         @list($keep_alive) = $arguments;
-        $_keep_alive = $keep_alive;
+        $_keep_alive       = $keep_alive;
+        $_in_progress_msgs = Array();
+        $_pids             = Array();
 
         openlog('aragmq', LOG_ODELAY | LOG_PID, LOG_DAEMON);
         $this->_log("Starting up Aragmq...", LOG_INFO);
@@ -53,62 +55,69 @@ class Server_Controller extends MessageQueue_Frontend
 
             if ($count) {
 
-                $this->_log("Got {$count} message(s) from '{$method}' channel.", LOG_DEBUG);
-                $this->messages_count += $count;
-                $pids = Array();
-
                 foreach ($messages as $message) {
 
-                    $params = @unserialize($message);
+                    if (!in_array($message->getId(), $_in_progress_msgs)) {
 
-                    $pid = pcntl_fork();
+                        $this->_log("Got a message from '{$method}' channel.", LOG_DEBUG);
+                        $this->messages_count++;
+                        $_in_progress_msgs[$message->getId()] = $message->getId();
 
-                    if ($pid == 0) {
+                        $params = @unserialize($message);
+                        $pid    = pcntl_fork();
 
-                        if (isset($params['module']) && isset($params['model']) && isset($params['method'])) {
+                        if ($pid == 0) {
+                            // We are the child
+                            if (isset($params['module']) && isset($params['model']) && isset($params['method'])) {
 
-                            $arguments = isset($params['arguments']) && is_array($params['arguments']) ? $params['arguments'] : Array();
-                            $model     = Model::load($params['model'], $params['module']);
+                                $arguments = isset($params['arguments']) && is_array($params['arguments']) ? $params['arguments'] : Array();
+                                $model     = Model::load($params['model'], $params['module']);
+                                $cpid      = posix_getpid();
 
-                            $this->_log("Calling... '{$params['model']}::{$params['method']}' from '{$params['module']}' module.", LOG_DEBUG);
+                                $this->_log("Calling({$cpid})... '{$params['model']}::{$params['method']}' from '{$params['module']}' module.", LOG_DEBUG);
 
-                            $result = call_user_func_array(array($model, $params['method']), $arguments);
+                                $result = call_user_func_array(array($model, $params['method']), $arguments);
 
-                            if ($result) {
-                                $this->_log("Set it as processed.", LOG_DEBUG);
-                                $this->server_storage->setProcessed($message);
-                                exit(0);
+                                if ($result) {
+                                    $this->_log("Set it as processed.", LOG_DEBUG);
+                                    $this->server_storage->setProcessed($message);
+                                    exit(0);
+                                } else {
+                                    $this->_log("It's been failed. moved it in to the end of queue.", LOG_DEBUG);
+                                    exit(-1);
+                                }
+
                             } else {
-                                $this->_log("It's been failed. moved it in to the end of queue.", LOG_DEBUG);
-                                exit(-1);
+                                $this->_log("Got invalid message and removed it from queue.", LOG_ERR);
+                                Kohana::log('error', "Dropr message is not a valid message, it should be contain at ".
+                                                     "least three paramaters (module, model, method). received message is:\n".
+                                                     var_export($message, True));
+                                $this->server_storage->setProcessed($message);
+                                exit(-2);
                             }
 
-                        } else {
-                            $this->_log("Got invalid message and removed it from queue.", LOG_ERR);
-                            Kohana::log('error', "Dropr message is not a valid message, it should be contain at ".
-                                                 "least three paramaters (module, model, method). received message is:\n".
-                                                 var_export($message, True));
-                            $this->server_storage->setProcessed($message);
-                            exit(-2);
+                        } else if ($pid > 0) {
+                            Database::instance('default');
+                            Session::instance();
+                            Kohana::log_save();
+                            $_pids[$pid] = $message->getId();
                         }
-
-                    } else if ($pid > 0) {
-                        Database::instance('default');
-                        Session::instance();
-                        $pids[] = $pid;
                     }
-                }
-
-                foreach ($pids as $pid) {
-                    $this->_log("Waiting for '{$pid}'.", LOG_DEBUG);
-                    pcntl_waitpid($pid, $status);
-                    $this->_log("'{$pid}' returned with '{$status}' status.", LOG_DEBUG);
                 }
 
             } else {
                 $this->_log("Nothing to do. going to sleep.", LOG_DEBUG);
                 sleep(self::SLEEP_TIMEOUT);
                 $this->_log("Woke up from sleep - checking for messages ...", LOG_DEBUG);
+            }
+
+            if (($pid = pcntl_waitpid(0, $status, WNOHANG)) > 0) {
+                $this->_log("'{$pid}' returned with '".pcntl_wexitstatus($status)."' code.", LOG_DEBUG);
+                $messageId = $_pids[$pid];
+                unset($_in_progress_msgs[$messageId]);
+                unset($_pids[$pid]);
+                $this->_log(var_export($_pids, true), LOG_DEBUG);
+                $this->_log(var_export($_in_progress_msgs, true), LOG_DEBUG);
             }
         }
 
