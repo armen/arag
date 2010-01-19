@@ -115,6 +115,10 @@ $config['content_types'] = array
         'backend_layout'  => 'themes/%theme_name%/backend_layout',
         'frontend_layout' => 'themes/%theme_name%/frontend_layout',
     ),
+    'empty' => Array
+    (
+        'layout' => 'themes/%theme_name%/empty_layout',
+    ),
     'json' => Array
     (
         'layout' => 'themes/%theme_name%/json_layout'
@@ -122,5 +126,9 @@ $config['content_types'] = array
     'xml' => Array
     (
         'layout' => 'themes/%theme_name%/empty_layout'
+    ),
+    'jsonp' => Array
+    (
+        'layout' => 'themes/%theme_name%/jsonp_layout'
     )
 );

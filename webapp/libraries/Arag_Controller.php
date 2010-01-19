@@ -101,6 +101,9 @@ class Controller extends Controller_Core {
      */
     public function _kohana_load_view($template, $vars)
     {
+        if (method_exists($this, '_'.Router::$content_type.'_load_view'))
+            $this->_call('_'.Router::$content_type.'_load_view');
+
         if ($template == '')
             return;
 
@@ -370,6 +373,18 @@ class Controller extends Controller_Core {
             $error_messages[] = $messages[ $error ];
         }
         $this->layout->content = $error_messages;
+    }
+    // }}}
+    // {{{ _jsonp_default_error
+    public function _jsonp_default_error()
+    {
+        return $this->_json_default_error();
+    }
+    // }}}
+    // {{{ _jsonp_load_view
+    public function _jsonp_load_view()
+    {
+        $this->smarty->assign('padding', $this->input->get('callback'));
     }
     // }}}
 }
