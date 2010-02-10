@@ -341,6 +341,12 @@ class Users_Model extends Model
         return isset($user['username']);
     }
     // }}}
+    // {{{ isRegistered
+    public function isRegistered($username)
+    {
+        return (boolean) $this->db->select('count(username) as count')->getwhere($this->tableNameUsers, array('username' => $username))->current()->count;
+    }
+    // }}}
     // {{{ deleteUsers
     public function deleteUsers($usernames = NULL, $groupid = NULL, $author)
     {

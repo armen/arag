@@ -655,7 +655,7 @@ class Frontend_Controller extends Controller
         $users = new Users_Model;
 
         return (!preg_match("/^[a-z0-9_.]+_admin$/", strtolower($username)) &&
-                !$users->hasUserName($username) && preg_match("/^[a-z][a-z0-9_.]*$/", strtolower($username)));
+                !$users->isRegistered($username) && preg_match("/^[a-z][a-z0-9_.]*$/", strtolower($username)));
     }
     // }}}
     // {{{ _check_display_captcha
