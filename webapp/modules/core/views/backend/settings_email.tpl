@@ -46,6 +46,10 @@
         <td>{html_options options=$authenticators name="authenticator" selected=$authenticator|smarty:nodefaults|default:null}</td>
     </tr>
     <tr>
+        <td align="{right}" width="100">_("Encryption"):{asterisk}</td>
+        <td>{html_options options=$encryptions name="encryption" selected=$encryption|smarty:nodefaults|default:null}</td>
+    </tr>
+    <tr>
         <td>&nbsp;</td>
         <td>
             <input type="submit" value={quote}_("Save"){/quote} />

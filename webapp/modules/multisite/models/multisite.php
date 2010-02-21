@@ -95,6 +95,7 @@ class MultiSite_Model extends Model
         !isset($settings['smtpport']) AND $settings['smtpport'] = Null;
         !isset($settings['authentication']) AND $settings['authentication'] = 'PLAIN';
         !isset($settings['authenticator']) AND $settings['authenticator'] = 'PLAIN';
+        !isset($settings['encryption']) AND $settings['encryption'] = 'NONE';
         !isset($settings['username']) AND $settings['username'] = Null;
         !isset($settings['password']) AND $settings['password'] = Null;
         !isset($settings['sender']) AND $settings['sender'] = 'noreply@example.com';
@@ -108,7 +109,18 @@ class MultiSite_Model extends Model
         require_once Kohana::find_file('vendor', 'swift/Swift');
         require_once Kohana::find_file('vendor', 'swift/Swift/Connection/SMTP');
 
-        $conn =& new Swift_Connection_SMTP($settings['smtpserver'], $settings['smtpport']);
+        switch ($settings['encryption']) {
+            case 'SSL':
+                $encryption = Swift_Connection_SMTP::ENC_SSL;
+                break;
+            case 'TLS':
+                $encryption = Swift_Connection_SMTP::ENC_TLS;
+                break;
+            default:
+                $encryption = Swift_Connection_SMTP::ENC_OFF;
+        }
+
+        $conn =& new Swift_Connection_SMTP($settings['smtpserver'], $settings['smtpport'], $encryption);
 
         if ($settings['authentication']) {
             require_once Kohana::find_file('vendor', 'swift/Swift/Authenticator/'.$settings['authenticator'], True);

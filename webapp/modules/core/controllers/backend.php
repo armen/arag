@@ -35,6 +35,7 @@ class Backend_Controller extends Controller
 
         $data['saved']          = $this->session->get_once('core_settings_email_saved');
         $data['authenticators'] = array('PLAIN' => _("PLAIN"), 'LOGIN' => _("LOGIN"), 'CRAMMD5' => _("CRAMMD5"));
+        $data['encryptions']    = array('NONE' => _("NONE"), 'TLS' => _("TLS"), 'SSL' => _("SSL"));
 
         $this->layout->content = new View('backend/settings_email', $data);
     }
@@ -48,7 +49,8 @@ class Backend_Controller extends Controller
                            'sender'         => $this->input->post('sender'),
                            'smtpport'       => $this->input->post('smtpport'),
                            'authenticator'  => $this->input->post('authenticator'),
-                           'authentication' => false
+                           'authentication' => false,
+                           'encryption'     => $this->input->post('encryption')
                           );
 
         if ($this->input->post('username')) {
