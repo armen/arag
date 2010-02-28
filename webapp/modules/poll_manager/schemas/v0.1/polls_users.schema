@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<database>
+    <name><variable>DATABASE_NAME</variable></name>
+    <table>
+        <name><variable>TABLES_PREFIX</variable>polls_users</name>
+        <declaration>
+            <field>
+                <name>id</name>
+                <type>integer</type>
+                <notnull>true</notnull>
+                <default>0</default>
+                <autoincrement>true</autoincrement>
+            </field>
+            <field>
+                <name>poll_id</name>
+                <type>integer</type>
+                <notnull>true</notnull>
+                <default>0</default>
+            </field>
+            <field>
+                <name>choice_id</name>
+                <type>integer</type>
+                <notnull>true</notnull>
+                <default>0</default>
+            </field>
+            <field>
+                <name>username</name>
+                <type>text</type>
+                <notnull>true</notnull>
+                <length>256</length>
+            </field>
+            <field>
+                <name>ip</name>
+                <type>text</type>
+                <notnull>true</notnull>
+                <length>15</length>
+            </field>
+            <index>
+                <name>primary</name>
+                <primary>true</primary>
+                <field>
+                    <name>id</name>
+                </field>
+            </index>
+        </declaration>
+    </table>
+</database>
