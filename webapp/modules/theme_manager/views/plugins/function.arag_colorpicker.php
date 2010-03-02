@@ -29,10 +29,9 @@ function smarty_function_arag_colorpicker($params, &$smarty)
         }
     }
 
-    $view           = new View('backend/arag_colorpicker');
-    $view->ending   = $ending;
-    $view->name     = $name;
-    $view->color    = $color;
+    $smarty->assign('ending', $ending);
+    $smarty->assign('name', $name);
+    $smarty->assign('color', $color);
 
-    return $view->render();
+    return $smarty->fetch(Arag::find_file('theme_manager', 'views', 'backend/arag_colorpicker', True, Kohana::config('smarty.templates_ext')));
 }
