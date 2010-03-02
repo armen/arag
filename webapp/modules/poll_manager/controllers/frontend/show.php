@@ -22,6 +22,7 @@ class Show_Controller extends PollManager_Frontend
     {
         $choices     = Array();
         $vote_before = False;
+        $total_votes = 0;
 
         if (!isset($poll_id)) {
             $poll = $this->poll_model->getLatestPoll();
@@ -32,9 +33,8 @@ class Show_Controller extends PollManager_Frontend
             $poll = $this->poll_model->getPoll($poll_id);
         }
 
-        $total_votes = $this->poll_model->getTotalVotes($poll->id);
-
         if ($poll) {
+            $total_votes = $this->poll_model->getTotalVotes($poll->id);
             $choices     = $this->poll_model->getChoices($poll->id);
             $vote_before = $this->_vote_before($poll->id);
         }
@@ -57,7 +57,7 @@ class Show_Controller extends PollManager_Frontend
 
         $this->poll_model->vote($poll_id, $poll_choice, $this->session->get('user.username'), $ip);
 
-        cookie::set('polls_'.$poll_id, True, 31536000);
+        cookie::set('polls_'.$poll_id.'_'.$this->session->get('user.username'), True, 31536000);
 
         url::redirect('poll_manager/frontend/show/index/'.$poll_id);
     }
@@ -114,7 +114,7 @@ class Show_Controller extends PollManager_Frontend
                                      ? $poll_model->voteBeforeByUsername($id, $session->get('user.username'))
                                      : False;
 
-            $cookie = $session->get('user.authenticated', False) ? False : cookie::get('polls_'.$id, False, True);
+            $cookie = $session->get('user.authenticated', False) ? False : cookie::get('polls_'.$id.'_'.$session->get('user.username'), False, True);
 
             return $vote_before_by_username || $cookie;
     }

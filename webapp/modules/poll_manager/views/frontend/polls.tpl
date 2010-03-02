@@ -11,11 +11,6 @@
             {arag_block}
                 <div style="padding-bottom: 5px;">
                     {foreach from=$choices item=choice}
-                        {if $total_votes != 0}
-                            {math assign=percentage equation="(x * 100) / z" x=$choice.number z=$total_votes}
-                        {else}
-                            {assign var=percentage value=0}
-                        {/if}
                         <div>
                             <label><input type="radio" value="{$choice.id}" name="poll_choice"> {$choice.title}</label>
                         </div>
@@ -47,6 +42,7 @@
     {else}
         {arag_block}
             <div style="padding-bottom: 5px;">
+                {capture assign=msg}_("%s votes"){/capture}
                 {foreach from=$choices item=choice}
                     {if $total_votes != 0}
                         {math assign=percentage equation="(x * 100) / z" x=$choice.number z=$total_votes}
@@ -54,7 +50,7 @@
                         {assign var=percentage value=0}
                     {/if}
                     <div>
-                        <label>{$choice.title} <span style="font-size:10px">({$percentage|string_format:"%.2f"}%)</span></label>
+                        <label>{$choice.title} <span style="font-size:10px">({$msg|sprintf:$choice.number}, {$percentage|string_format:"%.2f"}%)</span></label>
                     </div>
                     <div style="width:100%; border: 1px solid #000; height: 10px;">
                         <div style="background-color:{$choice.color}; width:{$percentage}%;height:10px;"></div>
