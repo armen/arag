@@ -122,6 +122,16 @@ class Entry_Controller extends Comments_Controller
     }
     // }}}
     // }}}
+    // {{{ latest_entry_read
+    public function latest_entry_read()
+    {
+        $entry = new PList_Component('entry');
+        $entry->setResource(Array($this->Blog->getLatestEntry()));
+        $entry->addColumn('Blog.getDate', Null, PList_Component::VIRTUAL_COLUMN);
+
+        $this->layout->content = new View('frontend/latest', Array('entry_uri' => '/blog/frontend/entry/view/#id#/extended'));
+    }
+    // }}}
     // {{{ _check_entry
     public function _check_entry($id)
     {

@@ -134,7 +134,12 @@ class Blog_Model extends Model
         return $retval;
     }
     // }}}
-
+    // {{{ getLatestEntry
+    public function getLatestEntry()
+    {
+        return (array)$this->db->select('*')->from($this->tableName)->orderby('create_date')->limit(1)->get()->current();
+    }
+    // }}}
     // {{{ List callbacks
     // {{{ getDate
     public function getDate($row)
