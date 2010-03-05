@@ -59,8 +59,18 @@ class Comment_Model extends Model
                      'modify_date'  => time(),
                      'modified_by'  => $author);
 
-       $this->db->where('id', $id);
-       $this->db->update($this->tableName, $row);
+        $this->db->where('id', $id);
+        $this->db->update($this->tableName, $row);
+    }
+    // }}}
+    // {{{ verify
+    public function verify($id)
+    {
+        $comment  = $this->getComment($id);
+        $verified = (int)$comment['verified'] === 0 ? 1 : 0;
+
+        $this->db->where('id', $id);
+        $this->db->update($this->tableName, Array('verified' => $verified));
     }
     // }}}
     // {{{ deleteComment

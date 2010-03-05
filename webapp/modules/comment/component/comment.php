@@ -25,9 +25,12 @@ class Comment_Component extends Component
     private $title;
     private $comments = Null;
     private $uri;
+    private $verify_uri;
     private $key;
     private $session;
     private $controller;
+    private $editable;
+    private $showOnlyVerified = False;
 
     // }}}
     // {{{ Constructor
@@ -42,6 +45,9 @@ class Comment_Component extends Component
         $this->onlyComment(False);
 
         $this->setUri();
+        $this->setVerifyUri();
+
+        $this->editable = in_array('backend', Router::$rsegments);
 
         $this->title = _("Comments");
     }
@@ -83,6 +89,29 @@ class Comment_Component extends Component
         $this->session->set_flash('comment.'.$this->getKey().'.controller', $this->uri); // My address, for link to attachments
     }
     // }}}
+    // {{{ setVerifyUri
+    public function setVerifyUri($uri = Null, $redirect_uri = Null)
+    {
+        ($redirect_uri == Null) AND $redirect_uri = Router::$current_uri;
+
+        if ($this->session->get('comment.'.$this->getKey().'.verify_uri')) {
+            $this->verify_uri = $this->session->get_once('comment.'.$this->getKey().'.controller');
+            $redirect_uri     = $this->session->get_once('comment.'.$this->getKey().'.verify_uri');
+
+        } else if ($uri != Null) {
+            $this->verify_uri = $uri;
+
+        } else {
+
+            $this->verify_uri  = implode('/', array_diff(Router::$rsegments, Router::$arguments));
+            $this->verify_uri  = rtrim($this->verify_uri, Router::$method.'/'); // Append a slash to $destination
+            $this->verify_uri .= '/comment_verify';
+        }
+
+        $this->session->set_flash('comment.'.$this->getKey().'.verify_uri', $redirect_uri); // Redirect back here baby
+        $this->session->set_flash('comment.'.$this->getKey().'.controller', $this->verify_uri); // My address, for link to attachments
+    }
+    // }}}
     // {{{ setTitle
     public function setTitle($title = Null)
     {
@@ -105,6 +134,12 @@ class Comment_Component extends Component
     public function getUri()
     {
         return $this->uri;
+    }
+    // }}}
+    // {{{ getVerifyUri
+    public function getVerifyUri()
+    {
+        return $this->verify_uri;
     }
     // }}}
     // {{{ getComments
@@ -144,11 +179,23 @@ class Comment_Component extends Component
         return $this->onlyComment;
     }
     // }}}
+    // {{{ isEditable
+    public function isEditable()
+    {
+        return $this->editable;
+    }
+    // }}}
     // {{{ build
     public function build()
     {
         $comment        = new Comment_Model;
-        $this->comments = $comment->getComments($this->namespace, $this->referenceId);
+        $this->comments = $comment->getComments($this->namespace, $this->referenceId, $this->showOnlyVerified ? 1 : Null);
+    }
+    // }}}
+    // {{{ showOnlyVerified
+    public function showOnlyVerified()
+    {
+        $this->showOnlyVerified = True;
     }
     // }}}
 }

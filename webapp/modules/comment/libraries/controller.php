@@ -32,6 +32,25 @@ class Comments_Controller extends Controller
         url::redirect($uri);
     }
     // }}}
+    // {{{ comment_verify_write
+    public function comment_verify_write()
+    {
+        $key          = $this->input->post('key');
+        $id           = $this->input->post('id');
+        $namespace    = $this->session->get('comment.'.$key.'.namespace');
+        $reference_id = $this->session->get('comment.'.$key.'.reference_id');
+        $uri          = $this->session->get('comment.'.$key.'.uri');
+
+        if (!$namespace || !$reference_id || !$uri) {
+            $this->_invalid_request();
+        }
+
+        $comment  = Model::load('Comment', 'comment');
+        $comment->verify($id);
+
+        url::redirect($uri);
+    }
+    // }}}
     // {{{ comment_upload_path
     protected function comment_upload_path()
     {

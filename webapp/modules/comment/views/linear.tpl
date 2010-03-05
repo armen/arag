@@ -14,14 +14,37 @@
             {foreach from=$comments item=_comment key=key}
                 <div class="comment">
                     <div class="comment_posted">
-                        {capture assign="posted"}_("#%d. %s on %s"){/capture}
-                        {capture assign="date"}{kohana_helper function="format::date" date=$_comment->create_date}{/capture}
-                        {counter assign="counter"}
-                        {if empty($_comment->homepage|smarty:nodefaults)}
-                            {$posted|sprintf:$counter:$_comment->name:$date}
-                        {else}
-                            {kohana_helper function="html::anchor" uri=$_comment->homepage title=$posted|sprintf:$counter:$_comment->name:$date}
+                        <div style="float:{left}">
+                            {capture assign="posted"}_("#%d. %s on %s"){/capture}
+                            {capture assign="date"}{kohana_helper function="format::date" date=$_comment->create_date}{/capture}
+                            {counter assign="counter"}
+                            {if empty($_comment->homepage|smarty:nodefaults)}
+                                {$posted|sprintf:$counter:$_comment->name:$date}
+                            {else}
+                                {kohana_helper function="html::anchor" uri=$_comment->homepage title=$posted|sprintf:$counter:$_comment->name:$date}
+                            {/if}
+                        </div>
+                        {if $component->isEditable()}
+                            {capture assign=verify_uri}{$component->getVerifyUri()}{/capture}
+                            {arag_form uri=$component->getVerifyUri() name="form_`$_comment->id`"}
+                                <input type="hidden" name="id" value="{$_comment->id}" />
+                                <input type="hidden" name="key" value="{$component->getKey()}" />
+                                <div style="float:{right}">
+                                    <a href="javascript:document.form_{$_comment->id}.submit()"
+                                       title={quote}_("Verify"){/quote}>
+                                        {if !$_comment->verified}
+                                            {capture assign=alt}_("Verified"){/capture}
+                                            {kohana_helper function="html::image" url="`$arag_base_url`/images/comments/verified.png" alt=$alt}
+                                        {else}
+                                            {capture assign=alt}_("Disapprove"){/capture}
+                                            {kohana_helper function="html::image" url="`$arag_base_url`/images/comments/cancel.png" alt=$alt}
+                                        {/if}
+                                    </a>
+                                </div>
+                            {/arag_form}
                         {/if}
+                        <div style="clear:both">
+                        </div>
                     </div>
                     <div class="comment_body">
                         {$_comment->comment|nl2br|smarty:nodefaults}
