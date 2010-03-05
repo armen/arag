@@ -4,3 +4,4 @@
     File: $Id$
 *}
 {arag_plist name="entry" template="list/blog.tpl"}
+{arag_comment name="comments"}

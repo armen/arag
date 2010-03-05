@@ -203,6 +203,8 @@ class Entry_Controller extends Blog_Backend
         // $entry->addColumn('entry');
         // $entry->addColumn('extended_entry');
 
+        $comments = new Comment_Component('comments', $id);
+
         $this->layout->content = new View('backend/preview', Array('extended'  => True, 'entry_uri' => '/blog/backend/entry/preview/#id#'));
     }
     // }}}

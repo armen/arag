@@ -52,6 +52,8 @@ class Entry_Controller extends Comments_Controller
         $entry->addColumn('Blog.getDate', Null, PList_Component::VIRTUAL_COLUMN);
 
         $comments = new Comment_Component('comments', $id);
+        $comments->showOnlyVerified();
+
         $data     = Array('extended'  => $extended == 'extended',
                           'entry_uri' => '/blog/frontend/entry/view/#id#/extended');
 
