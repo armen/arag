@@ -44,7 +44,7 @@ class Backend_Controller extends Controller
         $this->validation->message('matches', _("%ss do not match"));
         $this->validation->message('numeric', _("%s should be numeric"));
         $this->validation->message('postal_code_length', _("%s should be between 5 to 10 digits"));
-        $this->validation->message('phone_length', _("%s should be 8 digits or shorter."));
+        $this->validation->message('phone_length', _("%s should be between 8 to 11 digits."));
         $this->validation->message('cellphone_length', _("%s should be exactly 11 digits"));
         $this->validation->message('_check_old_password', _("Please enter correct %s"));
         $this->validation->message('oldpassword_length',sprintf(_("Password length should be at least %s characters "), $passwordLength));
@@ -71,6 +71,10 @@ class Backend_Controller extends Controller
         if ($isset_profile = $this->UserProfile->hasUserName($username)) {
             $data          = array_merge($data, $this->UserProfile->getProfile($username));
             $isset_profile = True;
+        }
+
+        if (!isset($data['location'])) {
+            $data['location'] = Kohana::config('locale.default_location', 0);
         }
 
         $data = array_merge($data, array (
@@ -118,7 +122,7 @@ class Backend_Controller extends Controller
     // {{{ index_validate_write
     public function index_validate_write()
     {
-        $this->validation->name('phone', _("Phone"))->add_rules('phone', 'required', 'valid::numeric', 'length[0, 8]');
+        $this->validation->name('phone', _("Phone"))->add_rules('phone', 'required', 'valid::numeric', 'length[8, 11]');
         $this->validation->name('cellphone', _("Cellphone"))->add_rules('cellphone', 'valid::numeric', 'length[11, 11]');
         $this->validation->name('location', _("Location"))->add_rules('location', 'required');
         $this->validation->name('postal_code', _("Postal Code"))->add_rules('postal_code', 'valid::numeric', 'length[5, 10]');
