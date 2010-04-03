@@ -55,11 +55,17 @@ function smarty_function_arag_plist($params, &$smarty)
         $namespace = $smarty->get_template_vars($name.'_namespace');
 
         if ($plist->hasCsv()) {
+
+	    $limit = $plist->getLimit();
+	    $plist->setLimit(0);
+
             Session::instance()->set_flash('plist_'.$namespace, Array
             (
                 'resource' => iterator_to_array($plist),
                 'columns'  => $plist->getColumns()
             ));
+
+	    $plist->setLimit($limit);
         }
 
         $smarty->assign('plist', $plist);
