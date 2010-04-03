@@ -39,7 +39,7 @@ class Comments_Controller extends Controller
         $id           = $this->input->post('id');
         $namespace    = $this->session->get('comment.'.$key.'.namespace');
         $reference_id = $this->session->get('comment.'.$key.'.reference_id');
-        $uri          = $this->session->get('comment.'.$key.'.uri');
+        $uri          = $this->session->get('comment.'.$key.'.verify_uri');
 
         if (!$namespace || !$reference_id || !$uri) {
             $this->_invalid_request();

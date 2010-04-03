@@ -95,7 +95,7 @@ class Comment_Component extends Component
         ($redirect_uri == Null) AND $redirect_uri = Router::$current_uri;
 
         if ($this->session->get('comment.'.$this->getKey().'.verify_uri')) {
-            $this->verify_uri = $this->session->get_once('comment.'.$this->getKey().'.controller');
+            $this->verify_uri = $this->session->get_once('comment.'.$this->getKey().'.verify_controller');
             $redirect_uri     = $this->session->get_once('comment.'.$this->getKey().'.verify_uri');
 
         } else if ($uri != Null) {
@@ -109,7 +109,7 @@ class Comment_Component extends Component
         }
 
         $this->session->set_flash('comment.'.$this->getKey().'.verify_uri', $redirect_uri); // Redirect back here baby
-        $this->session->set_flash('comment.'.$this->getKey().'.controller', $this->verify_uri); // My address, for link to attachments
+        $this->session->set_flash('comment.'.$this->getKey().'.verify_controller', $this->verify_uri); // My address, for link to attachments
     }
     // }}}
     // {{{ setTitle
