@@ -41,7 +41,6 @@ class Backend_Controller extends Controller
 
         $plugins = $this->statistics->getPlugins(Statistic_Model::PLAIN);
         foreach($plugins as $plugin_name => &$plugin) {
-            $data         = Array();
             $data         = $plugin->fetch($from, $to);
             $plugin->data = $data;
         }
