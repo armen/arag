@@ -31,8 +31,12 @@ class Users_Model extends Model
     }
     // }}}
     // {{{ check
-    public function check($username, $password, &$status = 0, $expiretime = 0)
+    public function check($username, $password, &$status = 0, $expiretime = 0, $plain = True)
     {
+    	if ($plain) {
+            $password = sha1($password);
+	}
+
         $this->db->select('username, verified, blocked, block_date');
         $this->db->where('username', $username);
 
@@ -44,14 +48,14 @@ class Users_Model extends Model
 
             $this->db->select('username, password, verified, blocked, block_date');
             $this->db->where('username', $username);
-            $this->db->where('password', sha1($password));
+            $this->db->where('password', $password);
 
             $query      = $this->db->get($this->tableNameUsers);
             $secureUser = $query->current();
 
             $status = self::USER_OK;
 
-            if (count($query) != 1 || sha1($password) !== $secureUser->password) {
+            if (count($query) != 1 || $password !== $secureUser->password) {
                 $status |= self::USER_INCORRECT_PASS;
                 $status &= ~self::USER_OK;
             }
