@@ -3,6 +3,7 @@
     vim: set expandtab tabstop=4 shiftwidth=4 foldmethod=marker:
     File: $Id: index.tpl 53 2007-10-11 18:38:57Z sasan $
 *}
+{arag_load_script src="scripts/mootools/core.js"}
 {arag_validation_errors}
 {if $flagsaved}
     {arag_block align="left" template="info"}
@@ -17,9 +18,9 @@
         {assign var=uri value="user/backend/application/user_profile/$username"}
     {/if}
     {arag_form uri=$uri}
-        <table border="0" dir="{dir}">
+        <table border="0" dir="{dir}" width="100%">
             <tr>
-                <td align="{right}">
+                <td align="{right}" width="150">
                     _("Username"):{asterisk}
                 </td>
                 <td align="{left}">
@@ -89,20 +90,41 @@
                 </tr>
             {/if}
             <tr>
-                <td align="{right}">
+                <td align="{right}" valign="top">
                     _("Group"):{asterisk}
                 </td>
                 <td align="{left}">
-                    <select name="group">
-                        {if isset($group|smarty:nodefaults)}{assign var="defaultgroup" value=$group}{/if}
-                        {html_options values=$allgroups|smarty:nodefaults selected=$defaultgroup|smarty:nodefaults|default:null
-                                      output=$allgroups|smarty:nodefaults}
-                    </select>
-                    &nbsp;
-                    <span>
-                    {capture assign="msg"}_("From '%s' application"){/capture}
-                    {$msg|sprintf:$appname}
-                    </span>
+                    {capture assign=count}{$groups|@count}{/capture}
+                    <div id="new_group" style="display:none;">
+                        <select name="groups[]">
+                            {html_options values=$allgroups|smarty:nodefaults output=$allgroups|smarty:nodefaults}
+                        </select>
+                        &nbsp;
+                        <span>
+                        {capture assign="msg"}_("From '%s' application"){/capture}
+                        {$msg|sprintf:$appname}
+                        </span>
+                        <input type="button" value="-" onclick="this.getParent().destroy();" />
+                    </div>
+                    {foreach from=$groups item=group key=key}
+                        <div id="group_{$key+1}">
+                            <select name="groups[]">
+                                {html_options values=$allgroups|smarty:nodefaults selected=$group|smarty:nodefaults|default:null
+                                              output=$allgroups|smarty:nodefaults}
+                            </select>
+                            &nbsp;
+                            <span>
+                            {capture assign="msg"}_("From '%s' application"){/capture}
+                            {$msg|sprintf:$appname}
+                            </span>
+                            &nbsp;
+                            {if $key == 0}
+                                <input type="button" value="+" onclick="$('new_group').clone().injectAfter('group_{$count}').set('style', 'display:block;');" />
+                            {else}
+                                <input type="button" value="-" onclick="$('group_{$key+1}').destroy();" />
+                            {/if}
+                        </div>
+                    {/foreach}
                 </td>
             </tr>
             <tr>

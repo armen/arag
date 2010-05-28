@@ -158,13 +158,34 @@ class Users_Model extends Model
             ($blocked !== Null) AND $this->db->where('blocked',  $blocked);
             $this->db->where('appname',  $appname);
 
-            $user = (Array) $this->db->get()->current();
+            $users = $this->db->get()->result_array(False);
 
-            if (isset($user['privileges'])) {
-                $user['privileges'] = unserialize($user['privileges']);
+            if (empty($users)) {
+                $user = array(False);
             } else {
-                $user['privileges'] = Array();
+                foreach ($users as $usr) {
+                    if (empty($user)) {
+                        $user               = $usr;
+                        $user['groupname']  = Array();
+                        $user['group_id']   = Array();
+                        if (isset($user['privileges'])) {
+                            $user['privileges'] = unserialize($user['privileges']);
+                        } else {
+                            $user['privileges'] = Array();
+                        }
+                    }
+                    $user['groupname'][] = $usr['groupname'];
+                    $user['group_id'][]  = $usr['group_id'];
+                    $user['privileges']  = array_merge($user['privileges'], unserialize($usr['privileges']));
+
+                }
+
+                $user['groupname']  = array_unique($user['groupname']);
+                $user['group_id']   = array_unique($user['group_id']);
+                $user['privileges'] = array_unique($user['privileges']);
+
             }
+
 
             // Save privilege grouped by application name
             $privileges                   = $user['privileges'];
@@ -213,7 +234,20 @@ class Users_Model extends Model
         $this->db->join($this->tableNameUsersGroups, $this->tableNameUsers.'.username', $this->tableNameUsersGroups.'.username');
         $this->db->where($this->tableNameUsers.'.username', $username);
 
-        $userProfile = (Array) $this->db->get()->current();
+        $userProfiles = $this->db->get()->result_array(False);
+
+        if (!empty($userProfiles)) {
+            foreach ($userProfiles as $profile) {
+                if (empty($userProfile)) {
+                    $userProfile             = $profile;
+                    $userProfile['group_id'] = Array();
+                }
+
+                $userProfile['group_id'][] = $profile['group_id'];
+            }
+
+            $userProfile['group_id'] = array_unique($userProfile['group_id']);
+        }
 
         return $userProfile;
     }
@@ -306,10 +340,9 @@ class Users_Model extends Model
     }
     // }}}
     // {{{ editUser
-    public function editUser($appname, $email, $name, $lastname, $groupname, $username, $password = "", $blocked, $author, $verified)
+    public function editUser($appname, $email, $name, $lastname, $groups, $username, $password = "", $blocked, $author, $verified)
     {
-        $groups = new Groups_Model;
-        $group  = $groups->getGroup(NULL, $appname, $groupname);
+        $groups = is_array($groups) ? array_unique($groups) : array($groups);
 
         $row = Array(
                      'modify_date' => time(),
@@ -329,12 +362,32 @@ class Users_Model extends Model
             $row['password'] = sha1($password);
         }
 
-        $groups->changeModifiers($group['id'], $author);
         $this->db->where('username', $username);
         $this->db->update($this->tableNameUsers, $row);
 
-        $this->db->where('username', $username);
-        $this->db->update($this->tableNameUsersGroups, array('group_id' => $group['id']));
+        $groupsMan = new Groups_Model;
+
+        $selectedGroups = Array();
+
+        $userGroups = $groupsMan->getUserGroups($username);
+
+        foreach ($groups as $groupname) {
+            $group  = $groupsMan->getGroup(NULL, $appname, $groupname);
+
+            $selectedGroups[] = $group['id'];
+
+            if (!$groupsMan->isInGroup($username, $group['id'])) {
+                $groupsMan->changeModifiers($group['id'], $author);
+
+                $this->db->insert($this->tableNameUsersGroups, array('group_id' => $group['id'], 'username' => $username));
+            }
+        }
+
+        foreach ($userGroups as $userGroup) {
+            if (!in_array($userGroup, $selectedGroups)) {
+                $this->db->delete($this->tableNameUsersGroups, array('group_id' => $userGroup));
+            }
+        }
     }
     // }}}
     // {{{ hasUserName

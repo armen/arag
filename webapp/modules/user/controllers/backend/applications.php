@@ -1052,8 +1052,8 @@ class Applications_Controller extends User_Backend
         $this->validation->name('email', _("Email"))->pre_filter('trim', 'email')
              ->add_rules('email', 'required', 'valid::email');
 
-        $this->validation->name('group', _("Group"))->pre_filter('trim', 'group')
-             ->add_rules('group', 'required');
+        $this->validation->name('groups', _("Group"))->pre_filter('trim', 'groups')
+             ->add_rules('groups', 'required');
 
         return $this->validation->validate();
     }

@@ -242,12 +242,40 @@ class Groups_Model extends Model
     // {{{ isExpired
     public function isExpired($group_id)
     {
-        $expiration_date = $this->db->select('expire_date')->from($this->tableNameGroups)->where('id', $group_id)->get(False)->current()->expire_date;
-        if ( $expiration_date == 0 ) {
-            return False;
-        } else {
-            return $expiration_date <= time();
+        $group_id   = is_array($group_id) ? $group_id : array($group_id);
+        $is_expired = False;
+
+        foreach ($group_id as $id) {
+            $expiration_date = $this->db->select('expire_date')->from($this->tableNameGroups)->where('id', $id)->get(False)->current()->expire_date;
+            if ( $expiration_date == 0 ) {
+                continue;
+            } else {
+                $is_expired = ($is_expired && $expiration_date <= time());
+            }
         }
+
+        return $is_expired;
+    }
+    // }}}
+    // {{{ isInGroup
+    public function isInGroup($username, $id)
+    {
+        $this->db->select('count(*) as count')->from($this->tableNameUsersGroups)->where('username', $username)->where('group_id', $id);
+
+        return (boolean) $this->db->get()->current()->count;
+    }
+    // }}}
+    // {{{ getUserGroups
+    public function getUserGroups($username)
+    {
+        $results =  $this->db->select('group_id')->from($this->tableNameUsersGroups)->where('username', $username)->get()->result_array(false);
+        $groups  = Array();
+
+        foreach ($results as $result) {
+            $groups[] = $result['group_id'];
+        }
+
+        return $groups;
     }
     // }}}
 }

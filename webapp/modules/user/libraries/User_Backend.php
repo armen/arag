@@ -259,13 +259,19 @@ class User_Backend extends Controller
     protected function _user_profile($username, $flagform = true, $oldpassword = false)
     {
         $userprofile = $this->Users->getUserProfile($username);
-        $group       = $this->Groups->getGroup($userprofile['group_id']);
-        $row         = $this->Groups->getAllAppGroups($group['appname']);
+        $groups      = Array();
+
+        foreach ($userprofile['group_id'] as $group_id) {
+            $group    = $this->Groups->getGroup($group_id);
+            $groups[] = $group['name'];
+        }
+
+        $row = $this->Groups->getAllAppGroups($group['appname']);
 
         $data = array("appname"      => $group['appname'],
                       "flagsaved"    => $this->session->get_once('edit_user_saved'),
                       "allgroups"    => $row,
-                      "defaultgroup" => $group['name'],
+                      "groups"       => $groups,
                       "username"     => $userprofile['username'],
                       "name"         => $userprofile['name'],
                       "lastname"     => $userprofile['lastname'],
@@ -284,13 +290,13 @@ class User_Backend extends Controller
         $email     = $this->input->post('email', Null, true);
         $name      = $this->input->post('name', Null, true);
         $lastname  = $this->input->post('lastname', Null, true);
-        $groupname = $this->input->post('group', Null, true);
+        $groups    = $this->input->post('groups', Null, true);
         $username  = $this->input->post('username', Null, true);
         $password  = $this->input->post('password', Null, true);
         $blocked   = $this->input->post('blocked', Null, true);
         $verified  = $this->input->post('verified', Null, true);
 
-        $this->Users->editUser($appname, $email, $name, $lastname, $groupname, $username, $password, $blocked,
+        $this->Users->editUser($appname, $email, $name, $lastname, $groups, $username, $password, $blocked,
                                $this->session->get('user.username'), $verified);
 
         $this->session->set('edit_user_saved', true);
