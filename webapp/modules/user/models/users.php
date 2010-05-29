@@ -605,4 +605,29 @@ class Users_Model extends Model
         return $appnames;
     }
     // }}}
+    // {{{ addUserToGroup
+    public function addUserToGroup($username, $groupId = Null, $groupName = Null, $appName = Null)
+    {
+        if (!isset($groupId) && (!isset($groupName) && !isset($appName))) {
+            return False;
+        } elseif (isset($groupId)) {
+            $groups = new Groups_Model;
+            if (!$groups->isInGroup($username, $groupId)) {
+                $this->db->insert($this->tableNameUsersGroups, array('username' => $username, 'group_id' => $groupId));
+            } else {
+                Return False;
+            }
+        } else {
+            $groups = new Groups_Model;
+            $group  = $groups->getGroup(NULL, $appName, $groupName);
+            if (!$groups->isInGroup($username, $group['id'])) {
+                $this->db->insert($this->tableNameUsersGroups, array('username' => $username, 'group_id' => $group['id']));
+            } else {
+                return False;
+            }
+        }
+
+        return True;
+    }
+    // }}}
 }
