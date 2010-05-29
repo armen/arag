@@ -176,7 +176,7 @@ class Users_Model extends Model
                     }
                     $user['groupname'][] = $usr['groupname'];
                     $user['group_id'][]  = $usr['group_id'];
-                    $user['privileges']  = array_merge($user['privileges'], unserialize($usr['privileges']));
+                    $user['privileges']  = array_merge($user['privileges'], isset($usr['privileges']) ? unserialize($usr['privileges']) : Array());
 
                 }
 
