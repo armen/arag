@@ -30,7 +30,7 @@ class Backend_Controller extends Controller
         if (MASTERAPP) {
             $modules = $modules->getModules();
         } else {
-            $modules = $modules->getModules(Array('multisite', 'ta_locator', 'core'));
+            $modules = $modules->getModules(Array('multisite', 'core'));
         }
 
         $accessible_modules = Array();
