@@ -385,7 +385,7 @@ class Users_Model extends Model
 
         foreach ($userGroups as $userGroup) {
             if (!in_array($userGroup, $selectedGroups)) {
-                $this->db->delete($this->tableNameUsersGroups, array('group_id' => $userGroup));
+                $this->db->delete($this->tableNameUsersGroups, array('group_id' => $userGroup, 'username' => $username));
             }
         }
     }
