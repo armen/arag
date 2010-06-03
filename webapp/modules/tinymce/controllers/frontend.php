@@ -40,15 +40,47 @@ class Frontend_Controller extends Controller
           mkdir($attachmentsPath);
         }
 
-        $filename = md5($file['name'].'_'.time()).'.'.$extension;
-        $i        = 0;
+        $filename       = md5($file['name'].'_'.time()).'.'.$extension;
+        $filename_thumb = md5($file['name'].'_'.time()).'-thumb.'.$extension;
+        $i              = 0;
+        $size           = Arag_Config::get('tiny_mce.size', Array(), $module, True);
 
-        while(file_exists($filename)) {
-          $filename = '('.$i.') '.$filename;
+        while(file_exists($attachmentsPath.'/'.$filename)) {
+            $filename = '('.$i.') '.$filename;
+            $i++;
         }
+
+        while(file_exists($attachmentsPath.'/'.$filename_thumb)) {
+            $filename_thumb = '('.$i.') '.$filename_thumb;
+            $i++;
+        }
+
         $result = move_uploaded_file($file['tmp_name'], $attachmentsPath.'/'.$filename);
 
-        $this->layout->content      = new View('result');
-        $this->layout->content->url = $attachmentsUrl.'/'.$filename;
+        $thumb = False;
+
+        if (!empty($size)) {
+            $image     = New Image($attachmentsPath.'/'.$filename);
+            $imagesize = array('width' => $image->__get('width'), 'height' => $image->__get('height'));
+
+            if (isset($size['width']) && $size['width'] < $imagesize['width']) {
+                $image->resize($size['width'], $imagesize['height'], Image::WIDTH);
+                $thumb = True;
+
+                $imagesize = array('width' => $image->__get('width'), 'height' => $image->__get('height'));
+            }
+
+            if (isset($size['height']) && $size['height'] < $imagesize['height']) {
+                $image->resize($imagesize['width'], $size['height'], Image::HEIGHT);
+                $thumb = True;
+            }
+
+            $thumb && $image->save($attachmentsPath.'/'.$filename_thumb);
+        }
+
+        $this->layout->content            = new View('result');
+        $this->layout->content->url       = $attachmentsUrl.'/'.$filename;
+        $this->layout->content->url_thumb = $attachmentsUrl.'/'.$filename_thumb;
+        $this->layout->content->thumb     = $thumb;
     }
 }
