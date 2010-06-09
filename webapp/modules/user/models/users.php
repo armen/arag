@@ -33,9 +33,9 @@ class Users_Model extends Model
     // {{{ check
     public function check($username, $password, &$status = 0, $expiretime = 0, $plain = True)
     {
-    	if ($plain) {
+	    if ($plain) {
             $password = sha1($password);
-	}
+	    }
 
         $this->db->select('username, verified, blocked, block_date');
         $this->db->where('username', $username);
