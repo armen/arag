@@ -188,7 +188,7 @@ class Users_Model extends Model
 
 
             // Save privilege grouped by application name
-            $privileges                   = $user['privileges'];
+            $privileges                   = isset($user['privileges']) ? $user['privileges'] : Array();
             $user['privileges']           = Null;
             $user['privileges'][$appname] = $privileges;
 
