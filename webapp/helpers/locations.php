@@ -42,4 +42,14 @@ class locations {
         return $view->render();
     }
     // }}}
+    // {{{ convert
+    public function convert($id)
+    {
+        $locations = model::load('Locations', 'locations');
+
+        $location = $locations->get($id);
+
+        return isset($location['name']) ? $location['name'] : $location['english'];
+    }
+    // }}}
 }
