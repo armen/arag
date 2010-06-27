@@ -55,6 +55,19 @@ function smarty_function_arag_location($params, &$smarty)
         $view->all      = $all;
         $view->path     = $path;
     } else {
+        if (is_array($value)) {
+            $current = '';
+            while(!strlen($current)) {
+                if (!count($value)) {
+                    $current = Null;
+                    break;
+                } else {
+                    $current = array_pop($value);
+                }
+            }
+            $value = $current;
+        }
+
         $view  = new View('frontend/arag_location');
     }
     $view->gname  = $name;
