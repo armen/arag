@@ -12,7 +12,7 @@
 // $Id$
 // ---------------------------------------------------------------------------
 
-function smarty_modifier_arag_date($string, $input_name = Null, $index = Null)
+function smarty_modifier_arag_date($string, $input_name = Null, $index = Null, $timestamp = False)
 {
     if (!isset($string) || $string == '') {
         return Null;
@@ -25,6 +25,6 @@ function smarty_modifier_arag_date($string, $input_name = Null, $index = Null)
     } else {
         $type = isset($input_name) ? (Input::instance()->Post('type_'.$input_name) ? Input::instance()->Post('type_'.$input_name) : Null) : Null;
 
-        return date::strtotime($string, $type);
+        return $timestamp ? date::timetostr($string, 'y/m/d', true, $type) : date::strtotime($string, $type);
     }
 }
