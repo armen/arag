@@ -88,7 +88,7 @@ class MultiSite_Model extends Model
     }
     // }}}
     // {{{ sendEmail
-    public function sendEmail($recipients, $strings, $settings, $newLines = True)
+    public function sendEmail($recipients, $strings, $settings, $newLines = True, $attachments = Array())
     {
         // Default values
         !isset($settings['smtpserver']) AND $settings['smtpserver'] = 'localhost';
@@ -160,6 +160,11 @@ class MultiSite_Model extends Model
         }
 
         $message->attach(new Swift_Message_Part($settings['template'], "text/html"));
+
+        foreach ($attachments as $attachment) {
+            $attach = new Swift_Message_Attachment(new Swift_File($attachment['data']), $attachment['file_name'], $attachment['mime']);
+            $message->attach($attach);
+        }
 
         return $swift->send($message, $addresses, $settings['sender']);
 
