@@ -100,7 +100,7 @@ function smarty_function_arag_date($params, &$smarty)
         $data['init_values'] = implode(",\n", $init_values);
 
     } elseif($value) {
-        $value = date::timetostr($value, 'Y/m/d', true, $type);
+        $value = date::timetostr($value, 'Y/m/d', false, $type);
     }
 
     $data['value'] = ($value) ? $value : null;

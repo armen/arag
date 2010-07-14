@@ -25,6 +25,6 @@ function smarty_modifier_arag_date($string, $input_name = Null, $index = Null, $
     } else {
         $type = isset($input_name) ? (Input::instance()->Post('type_'.$input_name) ? Input::instance()->Post('type_'.$input_name) : Null) : Null;
 
-        return $timestamp ? date::timetostr($string, 'y/m/d', true, $type) : date::strtotime($string, $type);
+        return $timestamp ? date::timetostr($string, 'Y/m/d', false, $type) : date::strtotime($string, $type);
     }
 }
