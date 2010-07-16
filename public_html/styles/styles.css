@@ -521,6 +521,11 @@ input[type=reset][disabled] {
 .plist_icon {
     width           : 24px;
 }
+.plist_icon_vertical a,
+.plist_icon_vertical div {
+    display         : block;
+    margin          : 0px auto;
+}
 .plist_group_actions .plist_icon {
     width           : 16px;
 }
