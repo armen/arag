@@ -71,12 +71,12 @@ class Comment_Component extends Component
     {
         ($redirect_uri == Null) AND $redirect_uri = Router::$current_uri;
 
-        if ($this->session->get('comment.'.$this->getKey().'.uri')) {
+        if ($uri != Null) {
+            $this->uri = $uri;
+
+        } else if ($this->session->get('comment.'.$this->getKey().'.uri')) {
             $this->uri    = $this->session->get_once('comment.'.$this->getKey().'.controller');
             $redirect_uri = $this->session->get_once('comment.'.$this->getKey().'.uri');
-
-        } else if ($uri != Null) {
-            $this->uri = $uri;
 
         } else {
 
@@ -94,12 +94,12 @@ class Comment_Component extends Component
     {
         ($redirect_uri == Null) AND $redirect_uri = Router::$current_uri;
 
-        if ($this->session->get('comment.'.$this->getKey().'.verify_uri')) {
+        if ($uri != Null) {
+            $this->verify_uri = $uri;
+
+        } else if ($this->session->get('comment.'.$this->getKey().'.verify_uri')) {
             $this->verify_uri = $this->session->get_once('comment.'.$this->getKey().'.verify_controller');
             $redirect_uri     = $this->session->get_once('comment.'.$this->getKey().'.verify_uri');
-
-        } else if ($uri != Null) {
-            $this->verify_uri = $uri;
 
         } else {
 
