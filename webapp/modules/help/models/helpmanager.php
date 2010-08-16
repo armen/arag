@@ -149,7 +149,12 @@ class HelpManager_Model extends Model
     // {{{ isAllowed
     public function isAllowed($help_id, $group_id)
     {
-        $result = $this->db->select('count(*) as count')->from($this->tableNameGroups)->where(array('help_id'=>$help_id, 'group_id'=>$group_id))->get()->result()->current();
+        $group_id = is_array($group_id) ? $group_id : array($group_id);
+        $result = $this->db->select('count(*) as count')
+                       ->from($this->tableNameGroups)
+                       ->where('help_id', $help_id)
+                       ->in('group_id', $group_id)
+                       ->get()->result()->current();
         return (bool) $result->count;
     }
     // }}}
