@@ -229,7 +229,9 @@ class Groups_Model extends Model
     // {{{ changeModifiers
     public function changeModifiers($groupid, $author)
     {
-        $this->db->where('id', $groupid);
+        $groupid = is_array($groupid) ? $groupid : array($groupid);
+
+        $this->db->in('id', $groupid);
         $this->db->update($this->tableNameGroups, array('modify_date' => time(), 'modified_by' => $author));
     }
     // }}}
