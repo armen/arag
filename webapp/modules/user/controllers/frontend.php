@@ -185,7 +185,7 @@ class Frontend_Controller extends Controller
         $username  = $this->input->post('username');
         $password  = $this->input->post('password');
 
-        if ($users->check($username, $password, $status, Arag_Config::get('block_expire', 0.5) * 3600)) {
+        if ($users->check($username, $password, $status, Arag_Config::get('block_expire', 0.5) * 3600, False)) {
 
             // Set the privilege_filter to False, This is too
             // important to Arag_Auth! we will fetch privilege
