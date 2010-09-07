@@ -45,13 +45,13 @@ class Frontend_Controller extends Controller
     }
     // }}}
     // {{{ login_write
-    public function login_write($output_type = null)
+    public function login_write()
     {
         $users = new Users_Model;
 
         $username  = $this->input->post('username');
         $password  = $this->input->post('password');
-        $logged_in = false;
+
         if ($users->check($username, $password, $status, Arag_Config::get('block_expire', 0.5) * 3600)) {
 
             // Set the privilege_filter to False, This is too
@@ -73,16 +73,12 @@ class Frontend_Controller extends Controller
             $this->session->set(Array('user' => array_merge($user, Array('authenticated' => True))));
             $users->unBlockUser($username);
 
-            if (is_null($output_type)) {
-                // Redirect to front controller or Redirect URL
-                if ($this->session->get('not_authorized_redirect_url')) {
-                    url::redirect($this->session->get_once('not_authorized_redirect_url'));
-                } else {
-                    $redirect_url = Kohana::config('user.login_redirect', False, False);
-                    Arag_Auth::is_accessible($redirect_url) ? url::redirect($redirect_url) : url::redirect(url::site());
-                }
+            // Redirect to front controller or Redirect URL
+            if ($this->session->get('not_authorized_redirect_url')) {
+                url::redirect($this->session->get_once('not_authorized_redirect_url'));
             } else {
-                $logged_in = true;
+                $redirect_url = Kohana::config('user.login_redirect', False, False);
+                Arag_Auth::is_accessible($redirect_url) ? url::redirect($redirect_url) : url::redirect(url::site());
             }
 
         } else {
@@ -148,20 +144,13 @@ class Frontend_Controller extends Controller
                 $error_message[] = _("Your group is expired.");
             }
 
-            if (is_null($output_type)) {
-                if (!isset($error_message)) {
-                    $error_message[] = _("Unknown error");
-                }
-
-                $error_message                          = implode("\n", $error_message);
-                $this->layout->content                  = new View('frontend/login', array('status' => $status, 'error_message' => $error_message));
-                $this->layout->content->display_captcha = $this->_check_display_captcha();
+            if (!isset($error_message)) {
+                $error_message[] = _("Unknown error");
             }
-        }
 
-        if (!is_null($output_type)) {
-            print json_encode(array('logged_in' => (int)$logged_in));
-            die();
+            $error_message                          = implode("\n", $error_message);
+            $this->layout->content                  = new View('frontend/login', array('status' => $status, 'error_message' => $error_message));
+            $this->layout->content->display_captcha = $this->_check_display_captcha();
         }
     }
     // }}}
@@ -186,6 +175,112 @@ class Frontend_Controller extends Controller
     public function login_write_error()
     {
         $this->login_read();
+    }
+    // }}}
+    // {{{ login_json_write
+    public function login_json_write()
+    {
+        $users = new Users_Model;
+
+        $username  = $this->input->post('username');
+        $password  = $this->input->post('password');
+
+        if ($users->check($username, $password, $status, Arag_Config::get('block_expire', 0.5) * 3600)) {
+
+            // Set the privilege_filter to False, This is too
+            // important to Arag_Auth! we will fetch privilege
+            // filters of current application there.
+            $this->session->delete('privilege_filters');
+            $this->session->delete('user');
+
+            // Try to fetch user for this application, if there was not, try to fetch user information only
+            // and grant default group access to him/her
+            $user = $users->getUser($username);
+
+            if (!isset($user['username'])) {
+                // Fetch default group and merge it with user information
+                $userinfo = $users->getUser($username, False);
+                $user     = array_merge($users->getAnonymousUser(APPNAME, True), $userinfo); // Fetch default group
+            }
+
+            $this->session->set(Array('user' => array_merge($user, Array('authenticated' => True))));
+            $users->unBlockUser($username);
+
+            header("HTTP/1.0 200 OK");
+
+        } else {
+
+            // Shit, you missed!
+
+            if ($status === Users_Model::USER_NOT_FOUND) {
+
+                $error_message[] = _("Wrong Username or Password.");
+
+                if (Arag_Config::get('block_counter', 3) != 0) {
+                    $error_message[] = sprintf(_("Attention!! You will be blocked if you miss more than %s times while login!"),
+                                               Arag_Config::get('block_counter', 3));
+                }
+            }
+
+            if ($status & Users_Model::USER_INCORRECT_PASS) {
+
+                $error_message[] = _("Wrong Username or Password.");
+                $block_info = $users->getBlockInfo($username);
+
+                if ((arag_config::get('block_counter', 3) != 0 && $block_info->block_counter >= arag_config::get('block_counter', 3))) {
+
+                    $users->blockUser($username);
+                    $error_message[] = sprintf(_("Attention!! Your username got blocked for %s hours!"), Arag_Config::get('block_expire', 0.5));
+
+                } else if (!$block_info->blocked) { // If user is not already blocked
+
+                    $users->addUserBlockCounter($username);
+
+                    if (Arag_Config::get('block_counter', 3) != 0) {
+                        $error_message[] = sprintf(_("Attention!! You will be blocked if you miss more than %s times while login!"),
+                                                   Arag_Config::get('block_counter', 3) - $block_info->block_counter);
+                    }
+                }
+            }
+
+            if ($status & Users_Model::USER_NOT_VERIFIED) {
+                $error_message[] = _("You are not a verified user.");
+            }
+
+            if ($status & Users_Model::USER_BLOCKED) {
+
+                $block_info = $users->getBlockInfo($username);
+
+                if ($block_info->block_date > 0) {
+
+                    $error           = _("This user name is blocked. Please contact site administrator for further information or wait ".
+                                         "for %s hours and %s minutes");
+                    $waiting_hours   = floor((((Arag_Config::get('block_expire', 0.5) * 3600) + $block_info->block_date) - time()) / 3600);
+                    $waiting_mins    = floor(((((Arag_Config::get('block_expire', 0.5) * 3600) + $block_info->block_date) - time()) % 3600) / 60);
+                    $error_message[] = sprintf($error, $waiting_hours, $waiting_mins);
+
+                } else {
+
+                    $error_message[] = _("This user name is blocked. Please contact site administrator for further information.");
+                }
+            }
+
+            if ($status & Users_Model::USER_GROUP_EXPIRED) {
+                $error_message[] = _("Your group is expired.");
+            }
+
+            if (!isset($error_message)) {
+                $error_message[] = _("Unknown error");
+            }
+
+            $error_message = implode("\n", $error_message);
+
+            header("HTTP/1.0 401 Unauthorized");
+
+            $this->layout->content = array('error' => $error_message);
+
+        }
+
     }
     // }}}
     // }}}
