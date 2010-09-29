@@ -167,6 +167,22 @@ class Backend_Controller extends Controller
         return $this->validation->validate();
     }
     // }}}
+    // {{{ password_json_write
+    public function password_json_write()
+    {
+        $newpassword   = $this->input->post('newpassword');
+        $oldpassword   = $this->input->post('oldpassword');
+
+        $this->Users->check($this->username, $oldpassword, $status, False, False);
+
+        if ($status != Users_Model::USER_OK) {
+            header("HTTP/1.0 401 Unauthorized");
+        }
+
+        $this->Users->changePassword($this->username, '', $newpassword);
+        header("HTTP/1.0 200 OK");
+    }
+    // }}}
     // {{{ password_write_error
     public function password_write_error()
     {

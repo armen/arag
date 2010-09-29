@@ -497,7 +497,7 @@ class Users_Model extends Model
     }
     // }}}
     // {{{ changePassword
-    public function changePassword($username, $verify_string = "", $password = NULL)
+    public function changePassword($username, $verify_string = "", $password = NULL, $sha1 = True)
     {
         $this->db->where('username', $username);
         if ($verify_string !== "") {
@@ -506,7 +506,8 @@ class Users_Model extends Model
         }
 
         if ($password != NULL) {
-            $this->db->update($this->tableNameUsers, array('password' => sha1($password)));
+            $password = $sha1 ? sha1($password) : $password;
+            $this->db->update($this->tableNameUsers, array('password' => $password));
         }
     }
     // }}}
