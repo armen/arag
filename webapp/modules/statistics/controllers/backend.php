@@ -37,6 +37,8 @@ class Backend_Controller extends Controller
 
         if (!$to) {
             $to = mktime(23,59,59);
+        } else {
+            $to += mktime(23,59,59);
         }
 
         $plugins = $this->statistics->getPlugins(Statistic_Model::PLAIN);
