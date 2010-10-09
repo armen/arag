@@ -17,12 +17,14 @@ function smarty_function_arag_captcha($params, &$smarty)
     $width  = Kohana::config('captcha.width');
     $height = Kohana::config('captcha.height');
     $length = Kohana::config('captcha.num_chars');
+    $id     = Null;
 
     foreach ($params as $_key => $_val) {
         switch ($_key) {
             case 'width':
             case 'height':
             case 'length':
+            case 'id':
                 $$_key = $_val;
                 break;
 
@@ -33,7 +35,7 @@ function smarty_function_arag_captcha($params, &$smarty)
 
     $captcha = new Captcha();
     $content = '<div>'.$captcha->render().'</div>'.
-               '<div style="padding: 5px 0px;"><input name="captcha" type="text" /></div>';
+               '<div style="padding: 5px 0px;"><input name="captcha"'.(isset($id) ? 'id="'.$id.'"' : ' ').'type="text" /></div>';
 
     return $content;
 }
