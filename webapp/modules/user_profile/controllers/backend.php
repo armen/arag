@@ -177,6 +177,7 @@ class Backend_Controller extends Controller
 
         if ($status != Users_Model::USER_OK) {
             header("HTTP/1.0 401 Unauthorized");
+            return;
         }
 
         $this->Users->changePassword($this->username, '', $newpassword);
