@@ -296,6 +296,8 @@ class User_Backend extends Controller
         $blocked   = $this->input->post('blocked', Null, true);
         $verified  = $this->input->post('verified', Null, true);
 
+        unset($groups[0]);
+
         $this->Users->editUser($appname, $email, $name, $lastname, $groups, $username, $password, $blocked,
                                $this->session->get('user.username'), $verified);
 
