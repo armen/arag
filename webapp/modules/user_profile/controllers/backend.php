@@ -180,7 +180,7 @@ class Backend_Controller extends Controller
             return;
         }
 
-        $this->Users->changePassword($this->username, '', $newpassword);
+        $this->Users->changePassword($this->username, '', $newpassword, False);
         header("HTTP/1.0 200 OK");
     }
     // }}}
