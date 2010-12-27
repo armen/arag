@@ -132,6 +132,26 @@ class Entry_Controller extends Comments_Controller
         $this->layout->content = new View('frontend/latest', Array('entry_uri' => '/blog/frontend/entry/view/#id#/extended'));
     }
     // }}}
+    //{{{ get_dailynews_json_read
+    public function get_dailynews_json_read($id)
+    {
+        $news = &$this->Blog->getEntry($id);
+        $this->layout->content = Array( $news["id"], $news["subject"], strip_tags($news["entry"]), date::timetostr($news["create_date"],"ymd"));
+    }
+    //}}}
+    //{{{ list_dailynews_json_any
+    public function list_dailynews_json_any()
+    {
+        $list = Array();
+        $entries = &$this->Blog->getEntries();
+
+        foreach ($entries as $entry) {
+            $list[] = array( $entry["id"], $entry["subject"] );
+        }
+
+        $this->layout->content = $list;
+    }
+    //}}}
     // {{{ _check_entry
     public function _check_entry($id)
     {

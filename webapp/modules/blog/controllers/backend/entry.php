@@ -223,26 +223,6 @@ class Entry_Controller extends Blog_Backend
     }
     // }}}
     // }}}
-    //{{{ get_dailynews_json_read
-    public function get_dailynews_json_read($id)
-    {
-        $news = &$this->Blog->getEntry($id);
-        $this->layout->content = Array( $news["id"], $news["subject"], $news["entry"] );
-    }
-    //}}}
-    //{{{ list_dailynews_json_any
-    public function list_dailynews_json_any()
-    {
-        $list = Array();
-        $entries = &$this->Blog->getEntries();
-
-        foreach ($entries as $entry) {
-            $list[] = array( $entry["id"], $entry["subject"] );
-        }
-
-        $this->layout->content = $list;
-    }
-    //}}}
     // {{{ _check_entry
     public function _check_entry($id)
     {
