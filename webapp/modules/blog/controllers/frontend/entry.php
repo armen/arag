@@ -136,17 +136,23 @@ class Entry_Controller extends Comments_Controller
     public function get_dailynews_json_read($id)
     {
         $news = &$this->Blog->getEntry($id);
-        $this->layout->content = Array( $news["id"], $news["subject"], strip_tags($news["entry"]), date::timetostr($news["create_date"],"ymd"));
+        $this->layout->content = Array( "id"            => $news["id"],
+                                        "subject"       => $news["subject"],
+                                        "entry"         => strip_tags($news["entry"]),
+                                        "create_date"   => date::timetostr($news["create_date"],"ymd") );
     }
     //}}}
     //{{{ list_dailynews_json_any
     public function list_dailynews_json_any()
     {
-        $list = Array();
+        $list    = Array();
+        $body    = Array();
         $entries = &$this->Blog->getEntries();
 
         foreach ($entries as $entry) {
-            $list[] = array( $entry["id"], $entry["subject"] );
+            $body["id"]      = $entry["id"];
+            $body["subject"] = $entry["subject"];
+            $list[] = $body;
         }
 
         $this->layout->content = $list;
