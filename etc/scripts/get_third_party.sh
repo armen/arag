@@ -41,9 +41,9 @@ if [ -d $LIBS_PATH/smarty ]; then
     rm -rf "${LIBS_PATH}/smarty"
 fi
 
-wget -c -P /tmp http://www.smarty.net/do_download.php?download_file=Smarty-2.6.19.tar.gz
-tar xvfz /tmp/Smarty-2.6.19.tar.gz
-mv ./Smarty-2.6.19/libs ${LIBS_PATH}/smarty
+wget -c -P /tmp http://www.smarty.net/files/Smarty-2.6.26.tar.gz
+tar xvfz /tmp/Smarty-2.6.26.tar.gz
+mv ./Smarty-2.6.26/libs ${LIBS_PATH}/smarty
 
 # Download pear
 if [ -d $LIBS_PATH/pear ]; then
@@ -58,8 +58,8 @@ mv ./pear $LIBS_PATH
 
 find $MODS_PATH/tinymce | grep -r tinymce.css | xargs rm -rf #Delete tinymce, but not the css file
 
-wget -c -P /tmp http://prdownloads.sourceforge.net/tinymce/tinymce_3_2_5.zip?download
-unzip -u /tmp/tinymce_3_2_5.zip -d /tmp
+wget -c --no-check-certificate -P /tmp https://www.github.com/downloads/tinymce/tinymce/tinymce_3_3_9_3.zip
+unzip -u /tmp/tinymce_3_3_9_3.zip -d /tmp
 
 rm -rf ${MODS_PATH}/tinymce
 mkdir ${MODS_PATH}/tinymce
@@ -68,8 +68,8 @@ cp -rf ${WEBAPP_PATH}/modules/tinymce/other/easyUpload/ ${MODS_PATH}/tinymce/plu
 
 # Cleanup
 
-rm -rf ./Smarty-2.6.19/
-rm -rf /tmp/Smarty-2.6.19.tar.gz
+rm -rf ./Smarty-2.6.26/
+rm -rf /tmp/Smarty-2.6.26.tar.gz
 
 rm -rf /tmp/pear.tar.bz2
 
