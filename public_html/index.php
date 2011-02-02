@@ -54,7 +54,10 @@ $kohana_system = $arag_libraries . '/kohana';
  * Set the error reporting level. Unless you have a special need, E_ALL is a
  * good level for error reporting.
  */
-error_reporting(E_ALL & ~E_STRICT);
+
+defined('E_DEPRECATED') OR define('E_DEPRECATED', 8192);
+defined('E_USER_DEPRECATED') OR define('E_USER_DEPRECATED', 16384);
+error_reporting(E_ALL & ~E_STRICT & ~E_DEPRECATED);
 
 /**
  * Turning off display_errors will effectively disable Kohana error display
