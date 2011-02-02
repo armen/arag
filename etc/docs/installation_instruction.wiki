@@ -10,11 +10,11 @@
 {{{
   ./arag/etc/scripts/get_third_party.sh
 }}}
-This command simply downloads and extracts the "Smarty-2.6.19" and moves libs directory content to "libs/smarty".
+This command simply downloads and extracts the "Smarty-2.6.26" and moves libs directory content to "libs/smarty".
 
 3. Set "webapp/cache" and "webapp/logs" directories to be writable by your web server:
 {{{
-  chmod 777 arag/webapp/cache/ arag/webapp/logs/
+  chmod 777 arag/webapp/cache/ arag/webapp/logs/ -R
 }}}
 === Installation of Sample module ===
 
