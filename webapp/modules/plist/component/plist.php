@@ -18,6 +18,7 @@ class PList_Component extends Component implements IteratorAggregate, ArrayAcces
     // {{{ properties
 
     private $resource;
+    private $resource_counter;
     private $columns                  = Array();
     private $virtualColumns           = Array();
     private $actions                  = Array();
@@ -85,8 +86,16 @@ class PList_Component extends Component implements IteratorAggregate, ArrayAcces
     }
     // }}}
     // {{{ setResource
-    public function setResource($resource)
+    public function setResource($resource, $resource_counter = Null)
     {
+        if ($resource instanceof Database) {
+            // We are going to convert this resource to an array later after
+            // we recived limit setting
+            $this->resource         =& $resource;
+            $this->resource_counter = ($resource_counter) ? $resource_counter : clone $resource;
+            return;
+        }
+
         if (is_array($resource)) {
             $resource = new IteratorIterator(new ArrayIterator($resource));
         }
@@ -148,12 +157,6 @@ class PList_Component extends Component implements IteratorAggregate, ArrayAcces
     public function getProperties()
     {
         return $this->properties;
-    }
-    // }}}
-    // {{{ getNumberOfResources
-    public function getNumberOfResources()
-    {
-        return count($this->resource);
     }
     // }}}
     // {{{ setGroupActionType
@@ -454,13 +457,19 @@ class PList_Component extends Component implements IteratorAggregate, ArrayAcces
     // {{{ getPager
     public function getPager()
     {
+        static $pager = false;
+
+        if ($pager !== false) {
+            return $pager;
+        }
+
         include_once 'pager.php';
 
         // Get pager result
-        $pager = Pager::getData($this->page, $this->limit, count(iterator_to_array($this->resource)), $this->maxpages);
+        $pager = Pager::getData($this->page, $this->limit, $this->getResourceCount(), $this->maxpages);
 
         // Set offset to fetch what we need to get depend on what page we are in
-        $this->setLimit($this->limit, (($pager['from'] - 1) < 0)?0:$pager['from'] - 1);
+        $this->setLimit($this->limit, (($pager['from'] - 1) < 0) ? 0 : $pager['from'] - 1);
 
         return $pager;
     }
@@ -468,14 +477,47 @@ class PList_Component extends Component implements IteratorAggregate, ArrayAcces
     // {{{ getResourceCount
     public function getResourceCount()
     {
-        return count(iterator_to_array($this->resource));
+        static $count = 0;
+
+        if ($count) {
+            return $count;
+        }
+
+        if ($this->resource instanceof Database) {
+            $count = $this->resource_counter->count_records();
+        } else {
+            $count = count(iterator_to_array($this->resource));
+        }
+
+        return $count;
+    }
+    // }}}
+    // {{{ getResource
+    public function getResource($as_array = False)
+    {
+        return $as_array ? iterator_to_array($this->resource) : $this->resource;
     }
     // }}}
     // {{{ getIterator
     public function getIterator()
     {
+        static $iterator = false;
+
+        if ($iterator !== false) {
+            return $iterator;
+        }            
+
+        if ($this->resource instanceof Database) {
+            $this->setResource($this->resource->limit($this->limit, $this->offset)->get()->result_array(false));
+
+            // resource_counter is not needed any more, destroy it
+            unset($this->resource_counter);
+
+            return $iterator = $this->resource;
+        }
+
         $limit = ($this->limit <= 0) ? -1 : $this->limit;
-        return new LimitIterator($this->resource, $this->offset, $limit);
+        return $iterator = new LimitIterator($this->resource, $this->offset, $limit);
     }
     // }}}
     // {{{ offsetExists

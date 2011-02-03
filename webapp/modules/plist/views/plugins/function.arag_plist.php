@@ -54,25 +54,22 @@ function smarty_function_arag_plist($params, &$smarty)
         // Get namespace
         $namespace = $smarty->get_template_vars($name.'_namespace');
 
-        if ($plist->hasCsv()) {
-
-	    $limit = $plist->getLimit();
-	    $plist->setLimit(0);
-
-            Session::instance()->set_flash('plist_'.$namespace, Array
-            (
-                'resource' => iterator_to_array($plist),
-                'columns'  => $plist->getColumns()
-            ));
-
-	    $plist->setLimit($limit);
-        }
-
         $smarty->assign('plist', $plist);
         $smarty->assign('namespace', $namespace);
         $smarty->assign('plist_templates_path', MODPATH . 'plist/views/');
 
-        return $smarty->fetch(Arag::find_file('plist', 'views', $template, False, $ext));
+        $result = $smarty->fetch(Arag::find_file('plist', 'views', $template, False, $ext));
+
+        if ($plist->hasCsv()) {
+
+            Session::instance()->set_flash('plist_'.$namespace, Array
+            (
+                'resource' => $plist->getResource(True),
+                'columns'  => $plist->getColumns()
+            ));
+        }
+
+        return $result;
     }
 
     return Null;

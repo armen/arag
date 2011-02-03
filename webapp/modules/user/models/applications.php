@@ -27,18 +27,15 @@ class Applications_Model extends Model
     }
     // }}}
     // {{{ getApps
-    public function getApps($name=Null)
+    public function getApps($name=Null, $return_result=true)
     {
         $this->db->select('name, default_group, create_date');
         $this->db->from($this->tableNameApps);
 
-        if ($name != "") {
-            $this->db->like("name", $name);
-        }
+        $name != "" AND $this->db->like("name", $name);
+        $return_result AND $this->db->orderby('name', 'ASC');
 
-        $this->db->orderby('name', 'ASC');
-
-        return $this->db->get()->result(False);
+        return ($return_result) ? $this->db->get()->result(False) : $this->db;
     }
     // }}}
     // {{{ getAppsName

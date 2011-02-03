@@ -15,8 +15,8 @@ class Applications_Controller extends User_Backend
 
         // Global tabbedbock
         $this->global_tabs->setTitle(_("User Management"));
-        $this->global_tabs->addItem(_("Apllications"), 'user/backend/applications');
-        $this->global_tabs->addItem(_("Apllications"), 'user/backend/applications', 'user/backend/applications');
+        $this->global_tabs->addItem(_("Apllications"), 'user/backend/applications/index');
+        $this->global_tabs->addItem(_("Apllications"), 'user/backend/applications/index', 'user/backend/applications/index');
         $this->global_tabs->addItem(_("Users"), 'user/backend/applications/all_users');
         $this->global_tabs->addItem(_("Users List"), 'user/backend/applications/all_users', 'user/backend/applications/all_users');
         $this->global_tabs->addItem(_("Filters"), 'user/backend/applications/apps_filters');
@@ -32,7 +32,7 @@ class Applications_Controller extends User_Backend
         $this->global_tabs->addItem(_("Expire Time"), 'user/backend/applications/expire_time', 'user/backend/applications/settings');
         $this->global_tabs->addItem(_("User Blocking"), 'user/backend/applications/user_blocking', 'user/backend/applications/settings');
         $this->global_tabs->addItem(_("Email Template"), 'user/backend/applications/email_template', 'user/backend/applications/settings');
-        $this->global_tabs->addItem(_("New Application"), 'user/backend/applications/add', 'user/backend/applications');
+        $this->global_tabs->addItem(_("New Application"), 'user/backend/applications/add', 'user/backend/applications/index');
 
         // Validation Messages
         $passwordLength = Arag_Config::get("passlength");
@@ -58,8 +58,6 @@ class Applications_Controller extends User_Backend
     // {{{ index
     public function index_any($page = Null)
     {
-        $this->index_validate();
-
         $applications = new PList_Component('applications');
 
         if ($page != Null && preg_match('|^page_applications$|', $page)) {
@@ -70,7 +68,7 @@ class Applications_Controller extends User_Backend
 
         $this->session->set('user_app_name', $name);
 
-        $applications->setResource($this->Applications->getApps($name));
+        $applications->setResource($this->Applications->getApps($name, false));
         $applications->setLimit(Arag_Config::get('limit', 0));
         $applications->addColumn('name', _("Name"));
         $applications->addColumn('default_group', _("Default Group"));
@@ -80,8 +78,8 @@ class Applications_Controller extends User_Backend
         $this->layout->content = new View('backend/index', array("name" => $name, "flag" => false));
     }
     // }}}
-    // {{{ index_validate_any
-    public function index_validate_any()
+    // {{{ index_validate_write
+    public function index_validate_write()
     {
         $this->validation->name('name', _("Name"))->pre_filter('trim', 'name')
              ->add_rules('name', 'required');
