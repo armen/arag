@@ -93,6 +93,7 @@ class PList_Component extends Component implements IteratorAggregate, ArrayAcces
             // we recived limit setting
             $this->resource         =& $resource;
             $this->resource_counter = ($resource_counter) ? $resource_counter : clone $resource;
+            $this->resource_summer  = clone $resource;
             return;
         }
 
@@ -194,7 +195,7 @@ class PList_Component extends Component implements IteratorAggregate, ArrayAcces
     {
         return $this->properties & self::CSV;
     }
-    // }}}    
+    // }}}
     // {{{ hasCounter
     public function hasCounter()
     {
@@ -341,24 +342,49 @@ class PList_Component extends Component implements IteratorAggregate, ArrayAcces
     public function getPageSums($current_page)
     {
         if (!empty($this->sums)) {
-            foreach (iterator_to_array($this->resource) as $key => $resource) {
-                foreach($this->sums as &$entry) {
-                    isset($resource[$entry['source_column']]) AND $entry['sum'] += $resource[$entry['source_column']];
+
+            if ($this->resource instanceof Database) {
+
+                foreach ($this->sums as &$entry) {
+
+                    $ecol = $this->resource->escape_column($entry['source_column']);
+                    $col  = $entry['source_column'];
+
+                    $resource_summer  = clone $this->resource_summer;
+                    $subquery         = $resource_summer->limit($this->limit, $this->offset)->compile();
+                    $current_page_sum = $this->resource_summer->query('SELECT SUM('.$ecol.') as '.$ecol.' FROM ('.
+                                                                      $subquery.') as q')->current()->$col;
+
+                    $resource_summer  = clone $this->resource_summer;
+                    $subquery         = $resource_summer->limit($current_page * $this->limit)->compile();
+                    $sums             = $this->resource_summer->query('SELECT SUM('.$ecol.') as sums FROM ('.
+                                                                      $subquery.') as q')->current()->sums;
+
+                    $entry['sum']              = $sums;
+                    $entry['current_page_sum'] = $current_page_sum;
                 }
 
-                if ($this->limit != 0 && $key >= ((($current_page-1) * $this->limit)) && $key <= (($current_page * $this->limit) - 1)) {
+            } else {
+
+                foreach (iterator_to_array($this->resource) as $key => $resource) {
                     foreach($this->sums as &$entry) {
-                        isset($resource[$entry['source_column']]) AND $entry['current_page_sum'] += $resource[$entry['source_column']];
+                        isset($resource[$entry['source_column']]) AND $entry['sum'] += $resource[$entry['source_column']];
                     }
 
-                } elseif ($this->limit == 0) {
-                    foreach($this->sums as &$entry) {
-                        isset($resource[$entry['source_column']]) AND $entry['current_page_sum'] = $entry['sum'];
-                    }
-                }
+                    if ($this->limit != 0 && $key >= ((($current_page-1) * $this->limit)) && $key <= (($current_page * $this->limit) - 1)) {
+                        foreach($this->sums as &$entry) {
+                            isset($resource[$entry['source_column']]) AND $entry['current_page_sum'] += $resource[$entry['source_column']];
+                        }
 
-                if ($this->limit != 0 && $key == (($current_page * $this->limit) - 1)) {
-                    break;
+                    } elseif ($this->limit == 0) {
+                        foreach($this->sums as &$entry) {
+                            isset($resource[$entry['source_column']]) AND $entry['current_page_sum'] = $entry['sum'];
+                        }
+                    }
+
+                    if ($this->limit != 0 && $key == (($current_page * $this->limit) - 1)) {
+                        break;
+                    }
                 }
             }
         }
@@ -505,7 +531,7 @@ class PList_Component extends Component implements IteratorAggregate, ArrayAcces
 
         if ($iterator !== false) {
             return $iterator;
-        }            
+        }
 
         if ($this->resource instanceof Database) {
             $this->setResource($this->resource->limit($this->limit, $this->offset)->get()->result_array(false));
