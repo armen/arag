@@ -27,7 +27,7 @@ class MessageQueue_Model extends Model
     {
         parent::__construct();
 
-        require Arag::find_file('message_queue', 'vendor', 'dropr/classes/dropr', True);
+        require_once Arag::find_file('message_queue', 'vendor', 'dropr/classes/dropr', True);
 
         $client_storage_type  = Kohana::config('dropr.client_storage_type');
         $client_storage_dsn   = Kohana::config('dropr.client_storage_dsn');
