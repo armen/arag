@@ -29,6 +29,11 @@ class Controller extends Controller_Core {
     // {{{ Constructor
     public function __construct()
     {
+        // A Dirty Hack for IE to support third-party coockies.
+        if (PHP_SAPI != 'cli') {
+            header('P3P:CP="IDC DSP COR ADM DEVi TAIi PSA PSD IVAi IVDi CONi HIS OUR IND CNT"');
+        }
+
         parent::__construct();
 
         if (Kohana::config('smarty.integration') == True) {
