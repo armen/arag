@@ -42,7 +42,7 @@ class Messages_Controller extends Controller
     {
         header("HTTP/1.0 401 Unauthorized");
 
-        $this->layout->content = 'Not Authorized!';
+        $this->layout->content = array('msg' => 'Not Authorized!', 'code' => 100);
     }
     // }}}
     // {{{ page_not_found
