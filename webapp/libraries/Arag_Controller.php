@@ -132,6 +132,8 @@ class Controller extends Controller_Core {
                             Kohana::config('sites/'.APPNAME.'.core.parent_base_url') :
                             url::base();
                 $this->smarty->assign('arag_base_url', $base_url);
+            } else {
+                $this->smarty->assign('arag_base_url', '');
             }
 
             $this->smarty->assign('arag_appname', APPNAME);
