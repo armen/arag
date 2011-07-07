@@ -535,7 +535,11 @@ class PList_Component extends Component implements IteratorAggregate, ArrayAcces
         }
 
         if ($this->resource instanceof Database) {
-            $this->setResource($this->resource->limit($this->limit, $this->offset)->get()->result_array(false));
+            if ($this->limit == 0) {
+                $this->setResource($this->resource->get()->result_array(false));
+            } else {
+                $this->setResource($this->resource->limit($this->limit, $this->offset)->get()->result_array(false));
+            }
 
             // resource_counter is not needed any more, destroy it
             unset($this->resource_counter);
