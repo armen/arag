@@ -510,6 +510,7 @@ class PList_Component extends Component implements IteratorAggregate, ArrayAcces
         }
 
         if ($this->resource instanceof Database) {
+            $this->resource_counter->reset_select_only();
             $count = $this->resource_counter->count_records();
         } else {
             $count = count(iterator_to_array($this->resource));
