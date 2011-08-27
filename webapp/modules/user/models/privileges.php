@@ -237,7 +237,7 @@ class Privileges_Model extends Model
                 if ($allselected != NULL) {
                     foreach ($allselected as $selected) {
                         if (preg_match('|^'.str_replace('*', '',$subprivilege['privilege']).'$|', str_replace('*', '',$selected)) ||
-                            preg_match('|^'.str_replace('*', '',$selected).'|', str_replace('*', '',$subprivilege['privilege']))) {
+                            preg_match('|^'.str_replace('*', '',$selected).'$|', str_replace('*', '',$subprivilege['privilege']))) {
                             $subpris[$id][$key]['selected'] = true;
                             $ids[]                          = $subpris[$id][$key]['id'];
                             break;
