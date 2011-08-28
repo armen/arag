@@ -17,11 +17,12 @@ class TabbedBlock_Component extends Component
 {
     // {{{ properties
 
-    var $_items      = Array();
-    var $_title      = Null;
-    var $_parameters = Array();
-    var $_attributes = Array();
-    var $_template   = 'arag_tabbed_block';
+    var $_items            = Array();
+    var $_title            = Null;
+    var $_parameters       = Array();
+    var $_attributes       = Array();
+    var $_template         = 'arag_tabbed_block';
+    var $_check_privileges = False;
 
     // }}}
     // {{{ Constructor
@@ -48,6 +49,9 @@ class TabbedBlock_Component extends Component
                       'enabled'             => $enabled,
                       'title'               => ($title == Null) ? $name : $title);
 
+        if ($this->_check_privileges &&  !Arag_Auth::is_accessible($uri)){
+            return ;
+        }
         if ($parentUri == Null) {
             $this->_items[md5($uri.$parentUri)] = $item;
 
@@ -165,7 +169,12 @@ class TabbedBlock_Component extends Component
         return $parameter;
     }
     // }}}
-
+    // {{{ checkPriviledge
+    public function checkPriviledge($check = False)
+    {
+        $this->_check_privileges = $check;
+    }
+    // }}}
 }
 
 ?>
