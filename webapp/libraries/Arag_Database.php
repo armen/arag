@@ -22,4 +22,16 @@ class Database extends Database_Core {
         $this->select = array();
     }
     // }}}
+    // {{{ get_sql
+    public function get_sql()
+    {
+        return $this->driver->compile_select(get_object_vars($this));
+    }
+    // }}}
+    // {{{ is_select_dependent
+    public function is_select_dependent()
+    {
+        return count($this->groupby) || count($this->having) || $this->distinct;
+    }
+    // }}}
 }

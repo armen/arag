@@ -92,7 +92,7 @@ class PList_Component extends Component implements IteratorAggregate, ArrayAcces
             // We are going to convert this resource to an array later after
             // we recived limit setting
             $this->resource         =& $resource;
-            $this->resource_counter = ($resource_counter) ? $resource_counter : clone $resource;
+            $this->resource_counter = $resource_counter;
             $this->resource_summer  = clone $resource;
             return;
         }
@@ -510,8 +510,25 @@ class PList_Component extends Component implements IteratorAggregate, ArrayAcces
         }
 
         if ($this->resource instanceof Database) {
-            $this->resource_counter->reset_select_only();
-            $count = $this->resource_counter->count_records();
+
+            if ($this->resource_counter) {
+
+                $count = current(current($this->resource_counter->get()->result_array(False)));
+
+            } else {
+
+                $resource_counter = clone $this->getResource();
+                if ($resource_counter->is_select_dependent()) {
+                    $db     = new Database;
+                    $result = $db->query('SELECT count(*) as count from ('.$resource_counter->get_sql().') as main')->result(TRUE);
+                    $count  = (int) $result->current()->count;
+                } else {
+                    $resource_counter->reset_select_only();
+                    $count = $resource_counter->count_records();
+                }
+
+            }
+
         } else {
             $count = count(iterator_to_array($this->resource));
         }
@@ -522,7 +539,13 @@ class PList_Component extends Component implements IteratorAggregate, ArrayAcces
     // {{{ getResource
     public function getResource($as_array = False)
     {
-        return $as_array ? iterator_to_array($this->resource) : $this->resource;
+        $resource = $this->resource;
+
+        //if ($as_array && $resource instanceof Database) {
+        //    return $this->getIterator();
+        //}
+
+        return $as_array ? iterator_to_array($resource) : $resource;
     }
     // }}}
     // {{{ getIterator
