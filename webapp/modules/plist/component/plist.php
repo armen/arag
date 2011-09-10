@@ -547,9 +547,9 @@ class PList_Component extends Component implements IteratorAggregate, ArrayAcces
     {
         $resource = $this->resource;
 
-        //if ($as_array && $resource instanceof Database) {
-        //    return $this->getIterator();
-        //}
+        if ($as_array && $resource instanceof Database) {
+            return $this->getIterator();
+        }
 
         return $as_array ? iterator_to_array($resource) : $resource;
     }
