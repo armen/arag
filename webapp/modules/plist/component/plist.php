@@ -18,7 +18,10 @@ class PList_Component extends Component implements IteratorAggregate, ArrayAcces
     // {{{ properties
 
     private $resource;
-    private $resource_counter;
+    private $resource_counter         = Null;
+    private $iterator                 = False;
+    private $pager                    = False;
+    private $count                    = 0;
     private $columns                  = Array();
     private $virtualColumns           = Array();
     private $actions                  = Array();
@@ -88,6 +91,11 @@ class PList_Component extends Component implements IteratorAggregate, ArrayAcces
     // {{{ setResource
     public function setResource($resource, $resource_counter = Null)
     {
+        // Reset resource related values
+        $this->iterator = False;
+        $this->pager    = False;
+        $this->count    = 0;
+
         if ($resource instanceof Database) {
             // We are going to convert this resource to an array later after
             // we recived limit setting
@@ -483,37 +491,33 @@ class PList_Component extends Component implements IteratorAggregate, ArrayAcces
     // {{{ getPager
     public function getPager()
     {
-        static $pager = false;
-
-        if ($pager !== false) {
-            return $pager;
+        if ($this->pager !== false) {
+            return $this->pager;
         }
 
         include_once 'pager.php';
 
         // Get pager result
-        $pager = Pager::getData($this->page, $this->limit, $this->getResourceCount(), $this->maxpages);
+        $this->pager = Pager::getData($this->page, $this->limit, $this->getResourceCount(), $this->maxpages);
 
         // Set offset to fetch what we need to get depend on what page we are in
-        $this->setLimit($this->limit, (($pager['from'] - 1) < 0) ? 0 : $pager['from'] - 1);
+        $this->setLimit($this->limit, (($this->pager['from'] - 1) < 0) ? 0 : $this->pager['from'] - 1);
 
-        return $pager;
+        return $this->pager;
     }
     // }}}
     // {{{ getResourceCount
     public function getResourceCount()
     {
-        static $count = 0;
-
-        if ($count) {
-            return $count;
+        if ($this->count) {
+            return $this->count;
         }
 
         if ($this->resource instanceof Database) {
 
             if ($this->resource_counter) {
 
-                $count = current(current($this->resource_counter->get()->result_array(False)));
+                $this->count = current(current($this->resource_counter->get()->result_array(False)));
 
             } else {
 
@@ -521,19 +525,21 @@ class PList_Component extends Component implements IteratorAggregate, ArrayAcces
                 if ($resource_counter->is_select_dependent()) {
                     $db     = new Database;
                     $result = $db->query('SELECT count(*) as count from ('.$resource_counter->get_sql().') as main')->result(TRUE);
-                    $count  = (int) $result->current()->count;
+                    $this->count  = (int) $result->current()->count;
                 } else {
+
                     $resource_counter->reset_select_only();
-                    $count = $resource_counter->count_records();
+                    $this->count = $resource_counter->count_records();
+
                 }
 
             }
 
         } else {
-            $count = count(iterator_to_array($this->resource));
+            $this->count = count(iterator_to_array($this->resource));
         }
 
-        return $count;
+        return $this->count;
     }
     // }}}
     // {{{ getResource
@@ -551,10 +557,8 @@ class PList_Component extends Component implements IteratorAggregate, ArrayAcces
     // {{{ getIterator
     public function getIterator()
     {
-        static $iterator = false;
-
-        if ($iterator !== false) {
-            return $iterator;
+        if ($this->iterator !== false) {
+            return $this->iterator;
         }
 
         if ($this->resource instanceof Database) {
@@ -567,11 +571,11 @@ class PList_Component extends Component implements IteratorAggregate, ArrayAcces
             // resource_counter is not needed any more, destroy it
             unset($this->resource_counter);
 
-            return $iterator = $this->resource;
+            return $this->iterator = $this->resource;
         }
 
         $limit = ($this->limit <= 0) ? -1 : $this->limit;
-        return $iterator = new LimitIterator($this->resource, $this->offset, $limit);
+        return $this->iterator = new LimitIterator($this->resource, $this->offset, $limit);
     }
     // }}}
     // {{{ offsetExists
