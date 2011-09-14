@@ -29,7 +29,7 @@
                     <tr>
                         <td class="plist_icon">
                             <a href="{kohana_helper function="url::site" uri="plist/frontend/download_csv/index/`$module_name`/`$namespace`/page"}"
-                               title={quote}_("Download Current Page as CSV"){/quote} class="plist_download">
+                               title={quote}_("Download Current Page as CSV"){/quote} class="plist_page_download">
                                 _("Download Current Page as CSV")
                             </a>
                         </td>
