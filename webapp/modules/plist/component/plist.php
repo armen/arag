@@ -18,8 +18,10 @@ class PList_Component extends Component implements IteratorAggregate, ArrayAcces
     // {{{ properties
 
     private $resource;
+    private $full_resource;
     private $resource_counter         = Null;
     private $iterator                 = False;
+    private $full_iterator            = False;
     private $pager                    = False;
     private $count                    = 0;
     private $columns                  = Array();
@@ -113,7 +115,7 @@ class PList_Component extends Component implements IteratorAggregate, ArrayAcces
             $this->resource = $resource;
         }
 
-        $array_resource = iterator_to_array($this->resource);
+        $array_resource = iterator_to_array($this->resource); // FIX: better way to check if it is array of arrays!
 
         if ($resource == False || $resource == Null ||
             is_array(current($array_resource)) ||
@@ -122,6 +124,34 @@ class PList_Component extends Component implements IteratorAggregate, ArrayAcces
         }
 
         throw new Exception('The specified resource is not valid resource.');
+    }
+    // }}}
+    // {{{ setFullResource
+    public function setFullResource($full_resource)
+    {
+        if ($full_resource instanceof Database) {
+            // We are going to convert this resource to an array later after
+            // we recived download full CSV
+            $this->full_resource =& $full_resource;
+            return;
+        }
+        if (is_array($full_resource)) {
+            $full_resource = new IteratorIterator(new ArrayIterator($full_resource));
+        }
+
+        if ($full_resource instanceof Traversable) {
+            $this->full_resource = $full_resource;
+        }
+
+        $array_resource = iterator_to_array($this->full_resource);
+
+        if ($full_resource == False || $full_resource == Null ||
+            is_array(current($array_resource)) ||
+            empty($array_resource)) {
+            return;
+        }
+
+        throw new Exception('The specified full resource is not valid resource.');
     }
     // }}}
     // {{{ setLimit
@@ -554,6 +584,14 @@ class PList_Component extends Component implements IteratorAggregate, ArrayAcces
         return $as_array ? iterator_to_array($resource) : $resource;
     }
     // }}}
+    // {{{ getFullResource
+    public function getFullResource()
+    {
+        $resource = $this->full_resource;
+
+        return $resource;
+    }
+    // }}}
     // {{{ getIterator
     public function getIterator()
     {
@@ -565,6 +603,10 @@ class PList_Component extends Component implements IteratorAggregate, ArrayAcces
             if ($this->limit == 0) {
                 $this->setResource($this->resource->get()->result_array(false));
             } else {
+                if ($this->hasCsv() && !$this->getFullResource()) {
+                    $full_resource = clone $this->resource;
+                    $this->setFullResource($full_resource);
+                }
                 $this->setResource($this->resource->limit($this->limit, $this->offset)->get()->result_array(false));
             }
 

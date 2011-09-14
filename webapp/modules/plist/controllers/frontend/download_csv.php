@@ -9,7 +9,7 @@
 class Download_Csv_Controller extends Controller
 {
     // {{{ index_any
-    public function index_any($module, $namespace = Null)
+    public function index_any($module, $namespace = Null, $section = 'page')
     {
         // Save old include paths
         $old_include_paths = Kohana::include_paths();
@@ -18,7 +18,19 @@ class Download_Csv_Controller extends Controller
         Kohana::config_set('core.modules', array_unique(array_merge($old_include_paths, Array(MODPATH.$module))));
 
         Session::instance()->keep_flash('plist_'.$namespace);
-        $resource = Session::instance()->get('plist_'.$namespace.'.resource', Array());
+
+        if ($section == 'page') {
+            $resource = Session::instance()->get('plist_'.$namespace.'.resource', Array());
+        } else {
+            $resource = Session::instance()->get('plist_'.$namespace.'.full_resource', Array());
+            if (is_string($resource)) {
+                $db = new Database;
+                $resource = $db->query($resource)->result_array(false);
+            } else {
+                $resource = $resource;
+            }
+        }
+
         $columns  = Session::instance()->get('plist_'.$namespace.'.columns', Array());
 
         $content = Null;

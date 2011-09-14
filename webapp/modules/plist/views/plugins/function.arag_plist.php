@@ -61,11 +61,20 @@ function smarty_function_arag_plist($params, &$smarty)
         $result = $smarty->fetch(Arag::find_file('plist', 'views', $template, False, $ext));
 
         if ($plist->hasCsv()) {
+            $full_resource = $plist->getFullResource();
+            if (!$full_resource) {
+                $full_resource = iterator_to_array($plist->getResource());
+
+            }
+            if ($full_resource instanceof Database) {
+                $full_resource = $full_resource->get_sql();
+            }
 
             Session::instance()->set_flash('plist_'.$namespace, Array
             (
-                'resource' => $plist->getResource(True),
-                'columns'  => $plist->getColumns()
+                'resource'      => iterator_to_array($plist->getIterator()),
+                'full_resource' => $full_resource,
+                'columns'       => $plist->getColumns()
             ));
         }
 

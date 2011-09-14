@@ -24,11 +24,17 @@
 
         {arag_form method="post" id="plist_$namespace" class="plist_form"}
             {if $plist->hasStats()}
+                {capture assign="module_name"}{kohana_helper function="request::module"}{/capture}
                 <table border="0" cellpadding="0" cellspacing="0" dir="{dir}" width="100%">
                     <tr>
                         <td class="plist_icon">
-                            {capture assign="module_name"}{kohana_helper function="request::module"}{/capture}
-                            <a href="{kohana_helper function="url::site" uri="plist/frontend/download_csv/index/`$module_name`/`$namespace`"}"
+                            <a href="{kohana_helper function="url::site" uri="plist/frontend/download_csv/index/`$module_name`/`$namespace`/page"}"
+                               title={quote}_("Download Current Page as CSV"){/quote} class="plist_download">
+                                _("Download Current Page as CSV")
+                            </a>
+                        </td>
+                        <td class="plist_icon">
+                            <a href="{kohana_helper function="url::site" uri="plist/frontend/download_csv/index/`$module_name`/`$namespace`/complete"}"
                                title={quote}_("Download as CSV"){/quote} class="plist_download">
                                 _("Download as CSV")
                             </a>
