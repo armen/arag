@@ -102,10 +102,10 @@ class Applications_Controller extends User_Backend
 
         $this->global_tabs->setParameter('appname', $appname);
 
-        $this->global_tabs->addItem(_("Groups of '%appname%'"), 'user/backend/applications/groups/%appname%', 'user/backend/applications');
-        $this->global_tabs->addItem(_("Default Group of '%appname%'"), 'user/backend/applications/default_group/%appname%', 'user/backend/applications');
-        $this->global_tabs->additem(_("New Group for '%appname%'"), 'user/backend/applications/new_group/%appname%', 'user/backend/applications');
-        $this->global_tabs->additem(_("New User for '%appname%'"), 'user/backend/applications/new_user/%appname%', 'user/backend/applications');
+        $this->global_tabs->addItem(_("Groups of '%appname%'"), 'user/backend/applications/groups/%appname%', 'user/backend/applications/index');
+        $this->global_tabs->addItem(_("Default Group of '%appname%'"), 'user/backend/applications/default_group/%appname%', 'user/backend/applications/index');
+        $this->global_tabs->additem(_("New Group for '%appname%'"), 'user/backend/applications/new_group/%appname%', 'user/backend/applications/index');
+        $this->global_tabs->additem(_("New User for '%appname%'"), 'user/backend/applications/new_user/%appname%', 'user/backend/applications/index');
 
         $this->groups->addAction('user/backend/applications/group_privileges_edit/#id#/'.$appname, _("Privileges"), 'privileges_action');
         $this->groups->addAction('user/backend/applications/users/#id#/'.$appname, _("Users List"), 'users_list');
@@ -198,10 +198,10 @@ class Applications_Controller extends User_Backend
     {
         $this->global_tabs->setParameter('appname', $appname);
         $this->global_tabs->setParameter('appname', $appname);
-        $this->global_tabs->addItem(_("Groups of '%appname%'"), 'user/backend/applications/groups/%appname%', 'user/backend/applications');
-        $this->global_tabs->addItem(_("Default Group of '%appname%'"), 'user/backend/applications/default_group/%appname%', 'user/backend/applications');
-        $this->global_tabs->additem(_("New Group for '%appname%'"), 'user/backend/applications/new_group/%appname%', 'user/backend/applications');
-        $this->global_tabs->additem(_("New User for '%appname%'"), 'user/backend/applications/new_user/%appname%', 'user/backend/applications');
+        $this->global_tabs->addItem(_("Groups of '%appname%'"), 'user/backend/applications/groups/%appname%', 'user/backend/applications/index');
+        $this->global_tabs->addItem(_("Default Group of '%appname%'"), 'user/backend/applications/default_group/%appname%', 'user/backend/applications/index');
+        $this->global_tabs->additem(_("New Group for '%appname%'"), 'user/backend/applications/new_group/%appname%', 'user/backend/applications/index');
+        $this->global_tabs->additem(_("New User for '%appname%'"), 'user/backend/applications/new_user/%appname%', 'user/backend/applications/index');
         $this->global_tabs->addItem(_("Users of '%appname%'"), "user/backend/applications/users/".$id."/".$appname, "user/backend/applications");
 
         $this->_create_users_plist($id, $appname);
@@ -306,7 +306,7 @@ class Applications_Controller extends User_Backend
     public function app_user_profile($username)
     {
         $this->user_profile_read($username);
-        $this->global_tabs->addItem(_("User's Profile"), 'user/backend/applications/app_user_profile/%username%', 'user/backend/applications');
+        $this->global_tabs->addItem(_("User's Profile"), 'user/backend/applications/app_user_profile/%username%', 'user/backend/applications/index');
     }
     // }}}
     // {{{ user_profile_read
@@ -336,7 +336,7 @@ class Applications_Controller extends User_Backend
     // {{{ delete
     public function delete_any($type, $objects = NULL)
     {
-        $parent_uri = ($type == 'group') ? 'user/backend/applications' : 'user/backend/applications/all_users';
+        $parent_uri = ($type == 'group') ? 'user/backend/applications/index' : 'user/backend/applications/all_users';
 
         if ($objects != NULL) {
             $this->global_tabs->addItem(_("Delete"), "user/backend/applications/delete/".$type."/".$objects, $parent_uri);
@@ -971,11 +971,11 @@ class Applications_Controller extends User_Backend
         $this->global_tabs->setParameter('appname', $appname);
         $this->global_tabs->setParameter('groupname', $groupname);
         $this->global_tabs->setParameter('id', $id);
-        $this->global_tabs->addItem(_("Groups of '%appname%'"), 'user/backend/applications/groups/%appname%', 'user/backend/applications');
-        $this->global_tabs->addItem(_("Default Group of '%appname%'"), 'user/backend/applications/default_group/%appname%', 'user/backend/applications');
-        $this->global_tabs->additem(_("New Group for '%appname%'"), 'user/backend/applications/new_group/%appname%', 'user/backend/applications');
-        $this->global_tabs->additem(_("New User for '%appname%'"), 'user/backend/applications/new_user/%appname%', 'user/backend/applications');
-        $this->global_tabs->addItem(_("Edit '%groupname%'s' privileges"), 'user/backend/applications/group_privileges_edit/%id%/%appname%', 'user/backend/applications');
+        $this->global_tabs->addItem(_("Groups of '%appname%'"), 'user/backend/applications/groups/%appname%', 'user/backend/applications/index');
+        $this->global_tabs->addItem(_("Default Group of '%appname%'"), 'user/backend/applications/default_group/%appname%', 'user/backend/applications/index');
+        $this->global_tabs->additem(_("New Group for '%appname%'"), 'user/backend/applications/new_group/%appname%', 'user/backend/applications/index');
+        $this->global_tabs->additem(_("New User for '%appname%'"), 'user/backend/applications/new_user/%appname%', 'user/backend/applications/index');
+        $this->global_tabs->addItem(_("Edit '%groupname%'s' privileges"), 'user/backend/applications/group_privileges_edit/%id%/%appname%', 'user/backend/applications/index');
 
         $this->_privileges_edit_read($id, $appname);
     }
@@ -1315,7 +1315,7 @@ class Applications_Controller extends User_Backend
         $template = $this->input->post('template');
 
         $this->Applications->addApp($name, $author, 'admin', 1, $template);
-        url::redirect('user/backend/applications');
+        url::redirect('user/backend/applications/index');
     }
     // }}}
     // }}}
